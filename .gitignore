@@ -54,6 +54,9 @@ wandb/
 .DS_Store
 Thumbs.db
 
+# Claude Code
+.claude/
+
 # Temporary
 tmp/
 temp/
