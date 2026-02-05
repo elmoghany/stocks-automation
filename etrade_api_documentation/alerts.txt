@@ -1,0 +1,241 @@
+Alerts API
+Overview
+Interface for all of the Alert-related APIs
+
+List Alerts link
+Description
+This API provides a list of alerts.
+
+HTTP Method: GET
+Live URL
+content_copy
+                    https://api.etrade.com/v1/user/alerts
+                
+Sandbox URL
+content_copy
+                    https://apisb.etrade.com/v1/user/alerts
+                
+Request
+Property	Type	Required?	Description	Allowable Values
+count	query	no	The alert count. By default it returns 25. Max values that can be returned: 300.	
+category	query	no	The alert category. By default it will return STOCK and ACCOUNT.	STOCK, ACCOUNT
+status	query	no	The alert status. By default it will return READ and UNREAD.	READ, UNREAD, DELETED
+direction	query	no	Sorting is done based on the createDate	ASC, DESC
+search	query	no	The alert search. Search is done based on the subject.	
+Response
+Status Code	Reason	Response Model	Error Code
+200	Successful Operation.	AlertsResponse	
+404	There are currently no alerts in your inbox.		53
+500	Service unrecoverable error.		25
+500	Service SQL fetch error.		36
+500	Alert service is not available, try after sometime.		300
+500	Service no memory.		27
+500	Alerts exceeded maximum allowed alerts.		160
+500	Service failure, Please try again after some time.		163
+List Alert Details link
+Description
+This API provides details for an alert.
+
+HTTP Method: GET
+Live URL
+content_copy
+                    https://api.etrade.com/v1/user/alerts/{id}
+                
+Sandbox URL
+content_copy
+                    https://apisb.etrade.com/v1/user/alerts/{id}
+                
+Request
+Property	Type	Required?	Description	Allowable Values
+id	path	yes	The alert ID value. Alert id whose details are needed	
+htmlTags	query	no	The HTML tags on the alert. By default it is false. If set to true, it returns the alert details msgText with html tags.	
+Response
+Status Code	Reason	Response Model	Error Code
+200	Successful Operation.	AlertDetailsResponse	
+400	Incorrect symbol.		464
+400	Alert Id should be greater than 0.		499
+400	Specified Type code does not exist for Index symbols.		700
+404	There are currently no alerts in your inbox.		53
+500	Requested alert does not exist.		11
+500	Alert service is not available, try after sometime.		300
+500	Service unrecoverable error.		25
+500	Service SQL fetch error.		36
+500	Service no memory.		27
+500	Alerts exceeded maximum allowed alerts.		160
+500	Service failure, Please try again after some time.		163
+Delete Alert link
+Description
+This API deletes a list of alerts.
+
+HTTP Method: DELETE
+Live URL
+content_copy
+                    https://api.etrade.com/v1/user/alerts/{alert_id_list}
+                
+Sandbox URL
+content_copy
+                    https://apisb.etrade.com/v1/user/alerts/{alert_id_list}
+                
+Request
+Property	Type	Required?	Description	Allowable Values
+id	path	yes	Comma separated alertId list	
+Response
+Status Code	Reason	Response Model	Error Code
+200	Successful Operation.	DeleteAlertsResponse	
+400	Incorrect symbol.		464
+400	Alert Id should be greater than 0.		499
+404	There are currently no alerts in your inbox.		53
+500	Requested alert does not exist.		11
+500	Alert service is not available, try after sometime.		300
+500	Service unrecoverable error.		25
+500	Service SQL fetch error.		36
+500	Service no memory.		27
+500	Alerts exceeded maximum allowed alerts.		160
+500	Service failure, Please try again after some time.		163
+Alert link
+Property	Type	Description	Possible Values
+id	integer (int64)	The numeric alert ID	
+createTime	integer (int64)	The date and time the alert was issued, in Epoch time	
+subject	string	The subject of the alert	
+status	string	The current status of the alert	UNREAD, READ, DELETED, UNDELETED
+AlertDetailsResponse link
+Property	Type	Description	Possible Values
+id	integer (int64)	The numeric alert ID	
+createTime	integer (int64)	The date and time the alert was issued, in Epoch time	
+subject	string	The subject of the alert	
+msgText	string	The text of the alert message	
+readTime	integer (int64)	The time the alert was read	
+deleteTime	integer (int64)	The time the alert was deleted	
+symbol	string	The market symbol for the instrument related to this alert, if any; for example, GOOG. It is set only in case of Stock alerts.	
+next	string	Contains url for next alert	
+prev	string	Contains url for previous alert	
+AlertsResponse link
+Property	Type	Description	Possible Values
+totalAlerts	integer (int64)	The total number of alerts for the user including READ, UNREAD and DELETED	
+alerts	array[Alert]	The array of alert responses	
+DeleteAlertsResponse link
+Property	Type	Description	Possible Values
+result	string	The result status of the alert	SUCCESS, ERROR
+failedAlerts	FailedAlerts	The failed alerts response	
+FailedAlerts link
+Property	Type	Description	Possible Values
+alertId	array[integer]	The array of failed alert IDs	
+Example
+List Alerts Request URL
+content_copy
+https://api.etrade.com/v1/user/alerts
+                
+Response
+content_copy
+                   
+<?xml version="1.0" encoding="UTF-8"?>
+<AlertsResponse>
+   <totalAlerts>148</totalAlerts>
+   <Alert>
+      <id>6774</id>
+      <createTime>1529426402</createTime>
+      <subject>Transfer failed-Insufficient Funds</subject>
+      <status>UNREAD</status>
+   </Alert>
+   <Alert>
+      <id>6773</id>
+      <createTime>1529416825</createTime>
+      <subject>AAPL down by at least 2.00%</subject>
+      <status>UNREAD</status>
+   </Alert>
+   <Alert>
+      <id>6772</id>
+      <createTime>1529393902</createTime>
+      <subject>External Account Added</subject>
+      <status>UNREAD</status>
+   </Alert>
+   <Alert>
+      <id>6771</id>
+      <createTime>1529392976</createTime>
+      <subject>External Account Added</subject>
+      <status>UNREAD</status>
+   </Alert>
+   <Alert>
+      <id>6770</id>
+      <createTime>1529392374</createTime>
+      <subject>External Account Added</subject>
+      <status>UNREAD</status>
+   </Alert>
+   <Alert>
+      <id>6767</id>
+      <createTime>1529352321</createTime>
+      <subject>Buy 4 AAPL Expired</subject>
+      <status>UNREAD</status>
+   </Alert>
+   <Alert>
+      <id>6769</id>
+      <createTime>1529352321</createTime>
+      <subject>Buy 4 AAPL Expired</subject>
+      <status>UNREAD</status>
+   </Alert>
+   <Alert>
+      <id>6768</id>
+      <createTime>1529352321</createTime>
+      <subject>Buy 4 AAPL Expired</subject>
+      <status>UNREAD</status>
+   </Alert>
+   <Alert>
+      <id>6750</id>
+      <createTime>1528857024</createTime>
+      <subject>Your Core Portfolios Rebalanced</subject>
+      <status>UNREAD</status>
+   </Alert>
+</AlertsResponse>
+                  
+                
+Read Alert Request URL
+content_copy
+https://api.etrade.com/v1/user/alerts/6773
+                
+Response
+content_copy
+                   
+<?xml version="1.0" encoding="UTF-8"?>
+<AlertDetailsResponse>
+   <id>6773</id>
+   <createTime>1529416825</createTime>
+   <subject>AAPL down by at least 2.00%</subject>
+   <symbol>AAPL</symbol>
+   <msgText>APPLE INC COM (AAPL) stock has met your target percentage decrease of 2.00%. The stock is currently trading at $184.96.
+""
+""
+""
+""
+""
+APPLE INC COMnbsp;AAPL Stock
+""
+""
+""
+""
+""
+""
+""
+""
+LastPrice184.96Bid (size)184.92 (x600)
+""
+Today'sChange -3.78 (-2.00%)Ask (size)184.93 (x100)</msgText>
+   <readTime>0</readTime>
+   <deleteTime>0</deleteTime>
+   <next>https://api.etrade.com/v1/user/alerts/6772</next>
+   <prev>https://api.etrade.com/v1/user/alerts/6774</prev>
+</AlertDetailsResponse>
+                  
+                
+Delete Alert Request URL
+content_copy
+                    https://api.etrade.com/v1/user/alerts/6772,6774
+                
+Response
+content_copy
+                   
+<?xml version="1.0" encoding="UTF-8"?>
+<AlertsResponse>
+   <result>Success</result>
+</AlertsResponse>
+                  
+                
