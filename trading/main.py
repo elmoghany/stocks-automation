@@ -93,12 +93,20 @@ def is_market_open() -> bool:
 # ---------------------------------------------------------------------------
 # Account selection
 # ---------------------------------------------------------------------------
-def select_account(etrade: ETradeSession) -> dict:
-    """Let user pick an account from their E*TRADE account list."""
+def select_account(etrade: ETradeSession, account_index: int = None) -> dict:
+    """Pick an account. If account_index is given, use it directly."""
     accounts = etrade.get_account_list()
     if not accounts:
         print("No accounts found. Exiting.")
         sys.exit(1)
+
+    if account_index is not None:
+        if account_index >= len(accounts):
+            print(f"Account index {account_index} out of range (0-{len(accounts)-1}).")
+            sys.exit(1)
+        acct = accounts[account_index]
+        print(f"Using account: {acct.get('accountId')} - {acct.get('accountDesc', '')}")
+        return acct
 
     print("\nAvailable accounts:")
     for i, acct in enumerate(accounts, 1):
@@ -116,7 +124,7 @@ def select_account(etrade: ETradeSession) -> dict:
 # ---------------------------------------------------------------------------
 # Main loop
 # ---------------------------------------------------------------------------
-def run(mode: str, sandbox: bool):
+def run(mode: str, sandbox: bool, account_index: int = None, ignore_market_hours: bool = False):
     logger = setup_logging()
     logger.info("Starting trading system: mode=%s, sandbox=%s", mode, sandbox)
 
@@ -126,7 +134,7 @@ def run(mode: str, sandbox: bool):
     # --- Authenticate ---
     etrade = ETradeSession(sandbox=sandbox)
     etrade.authenticate()
-    account = select_account(etrade)
+    account = select_account(etrade, account_index)
     logger.info("Using account: %s", account.get("accountId"))
 
     last_renew = time.time()
@@ -180,7 +188,7 @@ def run(mode: str, sandbox: bool):
                 logger.warning("Token renewal failed, may need re-auth at midnight")
 
         # 2. Market hours check
-        if not is_market_open():
+        if not ignore_market_hours and not is_market_open():
             logger.info("Market closed. Sleeping until next cycle.")
             _sleep(POLL_INTERVAL_SECONDS, lambda: running)
             continue
@@ -316,8 +324,20 @@ def main():
         default=False,
         help="Use E*TRADE sandbox environment",
     )
+    parser.add_argument(
+        "--account",
+        type=int,
+        default=None,
+        help="Account index (0-based). Skips interactive selection.",
+    )
+    parser.add_argument(
+        "--ignore-market-hours",
+        action="store_true",
+        default=False,
+        help="Bypass market hours check (for testing off-hours)",
+    )
     args = parser.parse_args()
-    run(args.mode, args.sandbox)
+    run(args.mode, args.sandbox, args.account, args.ignore_market_hours)
 
 
 if __name__ == "__main__":

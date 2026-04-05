@@ -61,3 +61,6 @@ Thumbs.db
 tmp/
 temp/
 config.ini
+
+# Generated backtest results
+plan/*.json

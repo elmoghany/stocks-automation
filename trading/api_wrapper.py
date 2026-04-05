@@ -7,9 +7,11 @@ exposes them as plain method calls suitable for automated trading.
 import configparser
 import json
 import logging
+import pickle
 import random
 import webbrowser
 from logging.handlers import RotatingFileHandler
+from pathlib import Path
 
 from rauth import OAuth1Service
 
@@ -22,6 +24,11 @@ from trading.config import (
     PROD_BASE_URL,
 )
 
+def _token_path(sandbox: bool) -> Path:
+    """Return the token file path for the given environment."""
+    suffix = "sandbox" if sandbox else "prod"
+    return Path(f"data/.etrade_access_token_{suffix}.pkl")
+
 logger = logging.getLogger("trading")
 
 
@@ -29,20 +36,25 @@ class ETradeSession:
     """Manages OAuth1 authentication and provides API helper methods."""
 
     def __init__(self, sandbox: bool = True):
-        config = configparser.ConfigParser()
-        config.read(CONFIG_INI_PATH)
-        self.consumer_key = config["DEFAULT"]["CONSUMER_KEY"]
-        self.consumer_secret = config["DEFAULT"]["CONSUMER_SECRET"]
+        import os as _os
+        if sandbox and _os.environ.get("SANDBOX_API"):
+            self.consumer_key = _os.environ["SANDBOX_API"]
+            self.consumer_secret = _os.environ["SANDBOX_SECRET_API"]
+        else:
+            config = configparser.ConfigParser()
+            config.read(CONFIG_INI_PATH)
+            self.consumer_key = config["DEFAULT"]["CONSUMER_KEY"]
+            self.consumer_secret = config["DEFAULT"]["CONSUMER_SECRET"]
         self.base_url = SANDBOX_BASE_URL if sandbox else PROD_BASE_URL
+        self.sandbox = sandbox
         self.session = None
         self._service = None
 
     # ------------------------------------------------------------------
     # Authentication
     # ------------------------------------------------------------------
-    def authenticate(self) -> None:
-        """Run the full OAuth1 flow (opens browser, requires verifier)."""
-        self._service = OAuth1Service(
+    def _make_service(self) -> OAuth1Service:
+        return OAuth1Service(
             name="etrade",
             consumer_key=self.consumer_key,
             consumer_secret=self.consumer_secret,
@@ -51,6 +63,45 @@ class ETradeSession:
             authorize_url=ETRADE_AUTHORIZE_URL,
             base_url=ETRADE_AUTH_BASE,
         )
+
+    def _load_saved_token(self) -> bool:
+        """Try to restore a saved access token. Returns True if successful."""
+        if not _token_path(self.sandbox).exists():
+            return False
+        try:
+            with open(_token_path(self.sandbox), "rb") as f:
+                saved = pickle.load(f)
+            service = self._make_service()
+            self.session = service.get_session(
+                (saved["access_token"], saved["access_token_secret"])
+            )
+            # Validate by renewing — if this fails the token is stale
+            if self.renew_token():
+                logger.info("Restored saved access token")
+                return True
+            _token_path(self.sandbox).unlink(missing_ok=True)
+            return False
+        except Exception:
+            _token_path(self.sandbox).unlink(missing_ok=True)
+            return False
+
+    def _save_token(self) -> None:
+        """Persist access token to disk for reuse across runs."""
+        _token_path(self.sandbox).parent.mkdir(exist_ok=True)
+        with open(_token_path(self.sandbox), "wb") as f:
+            pickle.dump({
+                "access_token": self.session.access_token,
+                "access_token_secret": self.session.access_token_secret,
+            }, f)
+        logger.info("Access token saved to %s", _token_path(self.sandbox))
+
+    def authenticate(self) -> None:
+        """Authenticate: reuse saved token if available, else full OAuth flow."""
+        if self._load_saved_token():
+            print("Reusing saved E*TRADE session (no login needed).")
+            return
+
+        self._service = self._make_service()
 
         # Step 1 -- request token
         request_token, request_token_secret = self._service.get_request_token(
@@ -72,7 +123,13 @@ class ETradeSession:
             request_token_secret,
             params={"oauth_verifier": text_code},
         )
+        self._save_token()
         logger.info("OAuth authentication successful")
+
+    def logout(self) -> None:
+        """Delete saved token (force re-login next time)."""
+        _token_path(self.sandbox).unlink(missing_ok=True)
+        logger.info("Saved token deleted")
 
     def renew_token(self) -> bool:
         """Renew the access token to keep the session alive."""
@@ -179,8 +236,14 @@ class ETradeSession:
         quantity: int,
         limit_price: float,
         order_term: str = "GOOD_FOR_DAY",
+        market_session: str = "REGULAR",
     ) -> dict:
-        """Preview a LIMIT equity order. Returns preview response dict."""
+        """Preview a LIMIT equity order. Returns preview response dict.
+
+        Args:
+            market_session: "REGULAR" for normal hours, "EXTENDED" for pre/post market.
+                            Extended hours requires GOOD_FOR_DAY term and LIMIT price type.
+        """
         url = (
             f"{self.base_url}/v1/accounts/"
             f"{account['accountIdKey']}/orders/preview.json"
@@ -197,7 +260,7 @@ class ETradeSession:
                 <allOrNone>false</allOrNone>
                 <priceType>LIMIT</priceType>
                 <orderTerm>{term}</orderTerm>
-                <marketSession>REGULAR</marketSession>
+                <marketSession>{session}</marketSession>
                 <stopPrice></stopPrice>
                 <limitPrice>{price}</limitPrice>
                 <Instrument>
@@ -213,6 +276,7 @@ class ETradeSession:
         </PreviewOrderRequest>""".format(
             cid=client_order_id,
             term=order_term,
+            session=market_session,
             price=limit_price,
             sym=symbol,
             act=action,
@@ -236,6 +300,7 @@ class ETradeSession:
         limit_price: float,
         client_order_id: int = None,
         order_term: str = "GOOD_FOR_DAY",
+        market_session: str = "REGULAR",
     ) -> dict:
         """Place an order using the preview IDs from preview_order."""
         url = (
@@ -272,7 +337,7 @@ class ETradeSession:
                 <allOrNone>false</allOrNone>
                 <priceType>LIMIT</priceType>
                 <orderTerm>{term}</orderTerm>
-                <marketSession>REGULAR</marketSession>
+                <marketSession>{session}</marketSession>
                 <stopPrice></stopPrice>
                 <limitPrice>{price}</limitPrice>
                 <Instrument>
@@ -289,6 +354,7 @@ class ETradeSession:
             cid=client_order_id,
             pid=preview_id,
             term=order_term,
+            session=market_session,
             price=limit_price,
             sym=symbol,
             act=action,
@@ -301,3 +367,21 @@ class ETradeSession:
             logger.error("place_order failed: %s", resp.text)
             return {}
         return resp.json().get("PlaceOrderResponse", {})
+
+    def cancel_order(self, account: dict, order_id: int) -> dict:
+        """Cancel an existing open order by order ID."""
+        url = (
+            f"{self.base_url}/v1/accounts/"
+            f"{account['accountIdKey']}/orders/cancel.json"
+        )
+        headers = {
+            "Content-Type": "application/xml",
+            "consumerKey": self.consumer_key,
+        }
+        payload = f"<CancelOrderRequest><orderId>{order_id}</orderId></CancelOrderRequest>"
+        resp = self.session.put(url, header_auth=True, headers=headers, data=payload)
+        logger.debug("cancel_order response: %s", resp.text)
+        if resp.status_code != 200:
+            logger.error("cancel_order failed: %s", resp.text)
+            return {}
+        return resp.json().get("CancelOrderResponse", {})

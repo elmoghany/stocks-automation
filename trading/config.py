@@ -84,3 +84,31 @@ COLLAPSE_SCORE_THRESHOLD = 30  # sell regardless of window if score < this
 # Historical Data
 # ---------------------------------------------------------------------------
 HISTORICAL_PERIOD = "1y"  # yfinance period for historical data
+
+# ---------------------------------------------------------------------------
+# Wave Trader (Never Lose strategy)
+# ---------------------------------------------------------------------------
+WAVE_TRADES_FILE = os.path.join(DATA_DIR, "wave_trades.json")
+WAVE_ORDERS_FILE = os.path.join(DATA_DIR, "wave_orders.json")
+WAVE_STATE_FILE = os.path.join(DATA_DIR, "wave_state.json")
+
+WAVE_POLL_INTERVAL_SECONDS = 3600   # 60 minutes
+WAVE_EXTENDED_OPEN_HOUR = 4         # 4 AM ET
+WAVE_EXTENDED_CLOSE_HOUR = 20       # 8 PM ET
+WAVE_INITIAL_CASH = 100_000.0
+
+# Indicators
+WAVE_BB_PERIOD = 20
+WAVE_BB_STD_DEV = 2.0
+WAVE_RSI_PERIOD = 14
+WAVE_ATR_PERIOD = 14
+
+# Position sizing
+# In top6 mode: capital split equally among 6 stocks, each compounds independently
+# WAVE_MAX_POSITION_PCT is per-stock allocation of total portfolio
+WAVE_MAX_POSITION_PCT = 0.167       # ~1/6 of portfolio per stock (for 6-stock mode)
+WAVE_MAX_CONCURRENT_TRADES = 6      # Max 6 trades active (one per top6 stock)
+
+# Never Lose: no stop loss, hold until profitable
+# Flag for review if held longer than this (don't auto-sell)
+WAVE_MAX_HOLD_DAYS = 30
