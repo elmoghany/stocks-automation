@@ -54,8 +54,9 @@ wandb/
 .DS_Store
 Thumbs.db
 
-# Claude Code
-.claude/
+# Claude Code (keep skills, ignore config and plans)
+.claude/settings.local.json
+.claude/plans/
 
 # Temporary
 tmp/
