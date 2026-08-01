@@ -32,19 +32,41 @@ def _token_path(sandbox: bool) -> Path:
 logger = logging.getLogger("trading")
 
 
+def resolve_consumer_keys(sandbox: bool) -> tuple[str, str]:
+    """Resolve API consumer key/secret. Lookup order:
+
+    1. Windows Credential Manager (trading/win_cred.py) --
+       ETRADE_SANDBOX_KEY/ETRADE_SANDBOX_SECRET or ETRADE_PROD_KEY/ETRADE_PROD_SECRET
+    2. Environment variables SANDBOX_API / SANDBOX_SECRET_API (sandbox only)
+    3. etrade_python_client/config.ini (CONSUMER_KEY / CONSUMER_SECRET)
+    """
+    try:
+        from trading.win_cred import get_secret
+
+        prefix = "ETRADE_SANDBOX" if sandbox else "ETRADE_PROD"
+        key = get_secret(f"{prefix}_KEY")
+        secret = get_secret(f"{prefix}_SECRET")
+        if key and secret:
+            logger.info("Consumer keys loaded from Windows Credential Manager (%s)", prefix)
+            return key, secret
+    except Exception:
+        logger.debug("Credential Manager lookup unavailable", exc_info=True)
+
+    import os
+
+    if sandbox and os.environ.get("SANDBOX_API"):
+        return os.environ["SANDBOX_API"], os.environ["SANDBOX_SECRET_API"]
+
+    config = configparser.ConfigParser()
+    config.read(CONFIG_INI_PATH)
+    return config["DEFAULT"]["CONSUMER_KEY"], config["DEFAULT"]["CONSUMER_SECRET"]
+
+
 class ETradeSession:
     """Manages OAuth1 authentication and provides API helper methods."""
 
     def __init__(self, sandbox: bool = True):
-        import os as _os
-        if sandbox and _os.environ.get("SANDBOX_API"):
-            self.consumer_key = _os.environ["SANDBOX_API"]
-            self.consumer_secret = _os.environ["SANDBOX_SECRET_API"]
-        else:
-            config = configparser.ConfigParser()
-            config.read(CONFIG_INI_PATH)
-            self.consumer_key = config["DEFAULT"]["CONSUMER_KEY"]
-            self.consumer_secret = config["DEFAULT"]["CONSUMER_SECRET"]
+        self.consumer_key, self.consumer_secret = resolve_consumer_keys(sandbox)
         self.base_url = SANDBOX_BASE_URL if sandbox else PROD_BASE_URL
         self.sandbox = sandbox
         self.session = None

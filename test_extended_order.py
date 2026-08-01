@@ -32,9 +32,9 @@ TOKEN_FILE = Path("data/.etrade_tokens.pkl")
 
 
 def load_config():
-    config = configparser.ConfigParser()
-    config.read(CONFIG_INI_PATH)
-    return config["DEFAULT"]["CONSUMER_KEY"], config["DEFAULT"]["CONSUMER_SECRET"]
+    # PROD keys: Windows Credential Manager first, config.ini fallback
+    from trading.api_wrapper import resolve_consumer_keys
+    return resolve_consumer_keys(sandbox=False)
 
 
 def make_service(consumer_key, consumer_secret):
