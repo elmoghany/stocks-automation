@@ -157,7 +157,7 @@ class ETradeSession:
         """Renew the access token to keep the session alive."""
         url = f"{ETRADE_AUTH_BASE}/oauth/renew_access_token"
         try:
-            resp = self.session.get(url, header_auth=True)
+            resp = self.session.get(url, header_auth=True, params={})
             if resp.status_code == 200:
                 logger.info("Access token renewed")
                 return True
@@ -173,7 +173,7 @@ class ETradeSession:
     def get_account_list(self) -> list:
         """Return list of non-CLOSED account dicts."""
         url = f"{self.base_url}/v1/accounts/list.json"
-        resp = self.session.get(url, header_auth=True)
+        resp = self.session.get(url, header_auth=True, params={})
         if resp.status_code != 200:
             logger.error("account_list failed: %s", resp.text)
             return []
@@ -210,7 +210,7 @@ class ETradeSession:
             f"{self.base_url}/v1/accounts/"
             f"{account['accountIdKey']}/portfolio.json"
         )
-        resp = self.session.get(url, header_auth=True)
+        resp = self.session.get(url, header_auth=True, params={})
         if resp.status_code == 204:
             return []
         if resp.status_code != 200:

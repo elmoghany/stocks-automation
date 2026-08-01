@@ -5,6 +5,22 @@ then a detailed explanation of what was done and why.
 
 ---
 
+## Sandbox Order Test (2026-08-01)
+
+Full E*TRADE sandbox chain verified end-to-end: two-phase OAuth via
+`plan/sandbox_auth.py` (--auth opens browser, --verifier CODE saves token to
+`data/.etrade_access_token_sandbox.pkl`), smoke test returned 3 sandbox
+accounts, then `plan/sandbox_place_test.py` previewed and PLACED a LIMIT BUY
+1 x AMD @ $100 on account 823145980 -> orderId 529, "Normal: order created".
+Fixed a rauth 0.7.3 bug hit on the way: GET calls without a `params` argument
+crash inside rauth (`TypeError: NoneType is not iterable`) — added `params={}`
+to `renew_token`, `get_account_list`, `get_portfolio` in api_wrapper.py; this
+would also have crashed the 90-min renew loop in live trading. Sandbox quirks:
+quotes/estimated totals come back None or canned — it validates plumbing
+(auth, XML payloads, preview->place), not prices or fills. AMD wave params
+also recalibrated in wave_config.py to dip 8% / sell +20% / lookback 3d per
+the walk-forward backtest.
+
 ## Secure Key Storage (2026-08-01)
 
 E*TRADE API keys (PROD + SANDBOX, key + secret for each) moved into the Windows

@@ -36,7 +36,9 @@ WAVE_STOCKS = {
     "FIX":  {"dip_pct": 2.0, "sell_pct": 12.0, "lookback": 5, "tier": "top6", "backtest_ret": 397},
     "VRT":  {"dip_pct": 2.0, "sell_pct": 12.0, "lookback": 5, "tier": "top6", "backtest_ret": 392},
     "LRCX": {"dip_pct": 3.0, "sell_pct": 12.0, "lookback": 5, "tier": "top6", "backtest_ret": 329},
-    "AMD":  {"dip_pct": 2.5, "sell_pct": 10.0, "lookback": 5, "tier": "top6", "backtest_ret": 212},
+    # AMD recalibrated 2026-08-01: walk-forward (train Aug15-Jul25, OOS Aug25-Jul26)
+    # dip 8/sell 20/lb 3 made +201% OOS vs +143% for old 2.5/10/5; beat B&H (+180%)
+    "AMD":  {"dip_pct": 8.0, "sell_pct": 20.0, "lookback": 3, "tier": "top6", "backtest_ret": 201},
     "TDW":  {"dip_pct": 2.0, "sell_pct": 11.0, "lookback": 5, "tier": "top6", "backtest_ret": 206},
     "TSM":  {"dip_pct": 3.0, "sell_pct": 10.0, "lookback": 5, "tier": "top6", "backtest_ret": 170},
 
