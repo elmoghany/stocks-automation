@@ -114,9 +114,14 @@ SURGE_PCT = 2.0                  # "strong surge": +2% within the window
 SURGE_WINDOW_MIN = 10            # ...over at most 10 one-minute candles
 DIP_MIN_CENTS = 0.05             # a real dip: >= 5c retrace from surge high
 
-# DEFAULTS (calibrated 2026-08-01 via candletest on 7-10 AM ET gapper data):
-# hammer-family entries + volume-reversal confirmation + strong-bearish exits
-DEFAULT_BUY_SET = "hammer_family"
+# DEFAULTS (recalibrated 2026-08-02 via the 60-day market-wide backtest:
+# trail20+all-patterns +181% vs hammer default +30.8% on $1000):
+# ALL bullish patterns for entry, no volume gate, ride with a 20% trailing
+# stop / 5% hard stop. The old hammer calibration remains available to the
+# experiment commands via BUY_SETS/SELL_MODES.
+DEFAULT_TRAIL_PCT = 20.0         # trailing exit: sell on 20% retrace from peak
+DEFAULT_STOP_PCT = 5.0           # hard stop below entry (trailing mode)
+DEFAULT_BUY_SET = "hammer_family"     # used only by legacy experiment paths
 DEFAULT_SELL_MODE = "strong_if_profit"
 ENTRY_VOL_MULT = 1.5             # reversal candle volume must be >= 1.5x ...
 VOL_AVG_BARS = 20                # ... the trailing 20-bar average (momentum
@@ -915,7 +920,12 @@ def cmd_backtest(symbol: str, days: int) -> None:
         print(f"\n{symbol.upper()}  {day}  7-10 AM  "
               f"(open {day_df['Open'].iloc[0]:.2f}, "
               f"window close {day_df['Close'].iloc[-1]:.2f})")
-        trades = simulate_trades(day_df, prev_close=prev_map.get(day))
+        # PENNY DEFAULT (60d backtest winner): all bullish patterns,
+        # no volume gate, trail 20% from peak, hard stop -5%
+        trades = simulate_trades(day_df, prev_close=prev_map.get(day),
+                                 buy_set=None, vol_confirm=False,
+                                 trail_pct=DEFAULT_TRAIL_PCT,
+                                 stop_pct=DEFAULT_STOP_PCT)
         if not trades:
             print("  no setups triggered (or not up 10%+)")
         all_trades.extend(trades)

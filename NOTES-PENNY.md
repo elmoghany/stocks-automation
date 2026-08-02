@@ -6,6 +6,29 @@ Normal (large-cap wave/value) trading notes live in `NOTES.md`.
 
 ---
 
+## Trail Default Sensitivity (2026-08-02)
+
+Made trail20+all-patterns the penny DEFAULT (DEFAULT_TRAIL_PCT=20,
+DEFAULT_STOP_PCT=5; backtest command now uses it; halal + up>=10% held
+fixed per user). Then plan/penny_sensitivity.py: one-parameter-at-a-time
+sweep over the same 60-day qualifying days (26 variants; note a few May
+days aged out of yfinance's rolling 5-min window so the sweep baseline is
++$1,525 not +$1,810 -- comparisons across variants are apples-to-apples).
+RESULTS vs baseline: only 2 variants improved: (1) trade top-2 gappers/day
++$130 (+8.5%) -- but that deploys up to $2k/day, it's capital scaling, not
+a better strategy per dollar; (2) surge 3% (stricter arming) +$47 -- within
+noise. Band ceiling $20/$30: zero effect (no entries above $16 occur).
+EVERYTHING else hurts, often badly: trail 10-15% and stop 3% destroy the
+edge (-$1,150 to -$1,341: tight exits sell the runners -- the whole edge
+is letting winners breathe); max 1 trade/day -$1,256 (first entry often
+stops, re-entry carries the day); vol-confirm ON -$354 (blocks explosive
+marubozu entries); deeper dips -$196..-$340 (late entries); stricter rvol
+day-filters -$413..-$566 (drops profitable days); hammer-only -$66 with
+only 15 trades. CONCLUSION: the trail20/stop5/all-pattern baseline sits on
+a flat optimum plateau -- keep it; the only real lever is capital (top-2
+gappers) which scales P&L ~linearly; consider surge 3% only after more
+sample accumulates.
+
 ## Robinhood Backfill Results (2026-08-02)
 
 Backfilled the 60-day backtest's missing days with Robinhood 5-min
