@@ -38,8 +38,10 @@ back ~7 days -- a production version needs a real-time scanner feed.
 """
 
 import argparse
+import json
 import sys
 from datetime import datetime, time as dtime, timedelta
+from pathlib import Path
 from zoneinfo import ZoneInfo
 
 import numpy as np
@@ -47,6 +49,41 @@ import pandas as pd
 import yfinance as yf
 
 ET = ZoneInfo("America/New_York")
+
+# ---------------------------------------------------------------------------
+# Robinhood data caches (populated via the robinhood-trading MCP by Claude --
+# see .claude/skills/penny-morning.md). Both are gitignored under data/.
+# ---------------------------------------------------------------------------
+RH_BARS_DIR = Path("data/rh_bars")       # {SYM}_{YYYY-MM-DD}.csv 1-min bars
+RH_FUND_FILE = Path("data/rh_fundamentals.json")  # {SYM: {...}} fundamentals
+RH_SCAN_ID = "5f132877-7730-4a18-9e72-b3f0d2c9df83"  # saved Robinhood scan:
+# Last $2-16, %Change>=10 (1d), RelVolume>=5x (30d), Float<=16M, %Chg desc
+
+
+def load_rh_fundamentals() -> dict:
+    """Robinhood fundamentals cache: float, sector, industry, avg volumes."""
+    try:
+        with open(RH_FUND_FILE) as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+
+def load_rh_bars(symbol: str) -> pd.DataFrame | None:
+    """Load cached Robinhood 1-min bars (REAL premarket volume, unlike
+    yfinance). Files: data/rh_bars/{SYM}_{YYYY-MM-DD}.csv with columns
+    begins_at (UTC), open, high, low, close, volume. Interpolated gap-fill
+    bars must not be written to the cache."""
+    files = sorted(RH_BARS_DIR.glob(f"{symbol.upper()}_*.csv"))
+    if not files:
+        return None
+    df = pd.concat([pd.read_csv(f) for f in files])
+    df["begins_at"] = (pd.to_datetime(df["begins_at"], utc=True)
+                       .dt.tz_convert(ET))
+    df = df.rename(columns={"open": "Open", "high": "High", "low": "Low",
+                            "close": "Close", "volume": "Volume"})
+    df = df.set_index("begins_at").sort_index()
+    return df[["Open", "High", "Low", "Close", "Volume"]]
 
 # ---------------------------------------------------------------------------
 # Strategy configuration (rules 1-8)
@@ -460,15 +497,22 @@ def screen_symbol(symbol: str, now_et: datetime | None = None,
     checks["rel_volume"] = round(rel_vol, 1)
     checks["rule5_relvol_5x"] = rel_vol >= MIN_REL_VOLUME
 
-    # rule 4 + 8: sector and float from ticker info
+    # rule 4 + 8: sector and float -- Robinhood cache first, yfinance fallback
     sector = ""
     flt = None
-    try:
-        info = t.info or {}
-        sector = f"{info.get('sector', '')} / {info.get('industry', '')}"
-        flt = info.get("floatShares")
-    except Exception:
-        pass
+    rh = load_rh_fundamentals().get(symbol.upper())
+    if rh:
+        sector = f"{rh.get('sector', '')} / {rh.get('industry', '')}"
+        flt = rh.get("float")
+    if not sector.strip(" /") or flt is None:
+        try:
+            info = t.info or {}
+            if not sector.strip(" /"):
+                sector = f"{info.get('sector', '')} / {info.get('industry', '')}"
+            if flt is None:
+                flt = info.get("floatShares")
+        except Exception:
+            pass
     checks["sector"] = sector
     checks["rule4_hot_sector"] = any(
         s in sector.lower() for s in HOT_SECTORS)
@@ -635,6 +679,11 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
         elif state == "ARMED":
             if max_trades is not None and len(trades) >= max_trades:
                 break                          # daily trade budget used up
+            # rule 1 at ENTRY time: price must be inside the $2-16 band at
+            # the moment we buy (a $1.93 open that runs through $2+ is
+            # tradeable once it is in band)
+            if not (PRICE_MIN <= price <= PRICE_MAX):
+                continue
             # rule 3 at ENTRY time: stock must be up >10% vs yesterday's
             # close at the moment we buy, not just at scan time
             if (prev_close is not None
@@ -830,16 +879,19 @@ def _window_data(symbols: list[str], days: int,
     a stock that later ran to $20 still counts on the days it was in band
     (that is exactly when the strategy would have traded it).
     """
+    rh_fund = load_rh_fundamentals()
     out = {}
     for sym in symbols:
         t = yf.Ticker(sym.upper())
         # rule 8: float must be <= 16M shares -- oversized floats are not
-        # tradeable under this strategy at all (unknown float passes,
-        # best effort: yfinance float data is patchy for small caps)
-        try:
-            flt = (t.info or {}).get("floatShares")
-        except Exception:
-            flt = None
+        # tradeable under this strategy at all. Robinhood cache first
+        # (authoritative), yfinance fallback (patchy); unknown float passes.
+        flt = (rh_fund.get(sym.upper()) or {}).get("float")
+        if flt is None:
+            try:
+                flt = (t.info or {}).get("floatShares")
+            except Exception:
+                flt = None
         if flt is not None and flt > MAX_FLOAT:
             print(f"{sym.upper()}: float {flt / 1e6:.1f}M > "
                   f"{MAX_FLOAT / 1e6:.0f}M limit, symbol excluded")
@@ -849,16 +901,31 @@ def _window_data(symbols: list[str], days: int,
             print(f"{sym}: no 1-min data, skipped")
             continue
         df.index = df.index.tz_convert(ET)
+
+        # merge cached Robinhood bars: RH rows win on overlapping minutes
+        # (real premarket volume), yfinance fills everything else
+        rh = load_rh_bars(sym)
+        if rh is not None:
+            df = pd.concat([df[~df.index.isin(rh.index)],
+                            rh[["Open", "High", "Low", "Close", "Volume"]]]
+                           ).sort_index()
+            print(f"  {sym.upper()}: merged {len(rh)} Robinhood bars "
+                  f"(real premarket volume)")
+
         w = df[(df.index.time >= NEWS_START) & (df.index.time < NEWS_END)]
+        # keep a day if the band was REACHABLE during the window (entries
+        # themselves are band-checked per bar inside simulate_trades)
         lo = min_price if min_price is not None else PRICE_MIN
         keep = []
         for day, day_df in w.groupby(w.index.date):
-            open_px = float(day_df["Open"].iloc[0])
-            if lo <= open_px <= PRICE_MAX:
+            day_hi = float(day_df["High"].max())
+            day_lo = float(day_df["Low"].min())
+            if day_hi >= lo and day_lo <= PRICE_MAX:
                 keep.append(day_df)
             else:
-                print(f"  {sym.upper()} {day}: window open ${open_px:.2f} "
-                      f"outside ${lo:.0f}-{PRICE_MAX:.0f} band, day skipped")
+                print(f"  {sym.upper()} {day}: window range ${day_lo:.2f}-"
+                      f"${day_hi:.2f} never inside ${lo:.0f}-{PRICE_MAX:.0f} "
+                      f"band, day skipped")
         w = pd.concat(keep) if keep else w.iloc[0:0]
         print(f"{sym.upper()}: {len(w)} one-min bars 7-10 AM ET across "
               f"{len({d for d in w.index.date})} in-band days")

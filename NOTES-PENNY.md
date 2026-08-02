@@ -6,6 +6,30 @@ Normal (large-cap wave/value) trading notes live in `NOTES.md`.
 
 ---
 
+## Robinhood Integration Implemented (2026-08-02)
+
+Wired the Robinhood data into penny-stocks.py + a repeatable workflow:
+(1) `data/rh_bars/{SYM}_{DATE}.csv` cache (1-min bars, real premarket
+volume, interpolated bars excluded) — _window_data merges them over
+yfinance, Robinhood wins on overlapping minutes; (2)
+`data/rh_fundamentals.json` cache — float (rule 8 gate, now authoritative:
+REPL 77.6M auto-excluded) + sector/industry (rule 4) consulted before
+yfinance; (3) RH_SCAN_ID constant = saved server-side scan
+5f132877-7730-4a18-9e72-b3f0d2c9df83; (4) rule 1 band now checked AT ENTRY
+per bar (like rule 3) instead of at day open — a $1.93 open that runs
+through $2+ is tradeable once in band; day filter only requires the band to
+be reachable in the window; (5) seeded caches with FCUV Jul 31 premarket
+(73 real bars incl. the 8:18-8:30 explosion) + fundamentals for
+FCUV/SCYX/TCX/REPL; (6) `.claude/skills/penny-morning.md` = full morning
+workflow: run_scan -> refresh caches via MCP -> screen (Finnhub news last)
+-> livescreen/livebars (E*TRADE) -> LIMIT order. End-to-end test on merged
+real-volume data: optimizer full-ruleset best = trail 20-25% + all-pattern
+entries -> $1,000 -> $1,926 (+92.6%) on the one qualifying day (FCUV);
+hammer+trail took 1 trade +28.5% (real premarket volume makes vol-confirm
+meaningful premarket for the first time — with yfinance it silently
+passed on zero volume). Cent-target default on FCUV: 1 trade, -1.9% —
+confirms fixed targets waste explosive days; trailing exits capture them.
+
 ## Robinhood Data Goldmine (2026-08-02)
 
 Connected the robinhood-trading MCP server (53 tools) and it fills EVERY data
