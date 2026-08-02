@@ -1,7 +1,8 @@
-# Project Notes
+# Normal Trading Notes
 
 Convention: new notes go at the TOP of this file. Each note = a **3-word title**,
 then a detailed explanation of what was done and why.
+Penny-stock day-trading notes live in `NOTES-PENNY.md`.
 
 ---
 
@@ -47,7 +48,10 @@ device" on the 2FA screen and reuse the same browser profile (incognito forces
 SMS every time), and/or switch 2FA from SMS to an authenticator app (TOTP) in
 the Security Center — the TOTP seed can be stored in Credential Manager so the
 daily re-auth is fully automatable. Never disable 2FA outright on a brokerage
-account. Sandbox uses the same OAuth login flow.
+account. Sandbox uses the same OAuth login flow. E*TRADE tokens hard-expire at
+midnight ET daily (server-side, cannot extend to weekly); for 1 login/week or
+zero-login APIs consider Schwab (7-day refresh token), Alpaca (permanent API
+keys), or IBKR gateway.
 
 ## AMD Walkforward Backtest (2026-08-01)
 
