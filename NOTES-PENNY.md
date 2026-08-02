@@ -6,6 +6,23 @@ Normal (large-cap wave/value) trading notes live in `NOTES.md`.
 
 ---
 
+## News Source Comparison (2026-08-02)
+
+Robinhood MCP has NO news feed (all 53 tools checked; `search` resolves
+tickers only). What it has instead: EARNINGS data -- get_earnings_calendar
+(market-wide, 31-day window, am/pm timing, high-mcap filter) and
+get_earnings_results (8 quarters est-vs-actual EPS per symbol; SCYX next
+reports 2026-08-17 pm, tentative). Use for scheduled-catalyst discovery
+("which penny biotechs report tomorrow morning?") and earnings-risk checks;
+Finnhub stays the rule-2 breaking-news source (timestamps to the second:
+SCYX GSK catalyst at 08:04:34, Benzinga). KEY CAVEAT from live test:
+Finnhub had NO real catalyst headline for FCUV's +836% day -- only generic
+"stocks moving" roundups (which technically pass the 18h rule since they
+mention the ticker, but are echo coverage, not catalysts). Sub-1M-float
+movers often rip on promotions/filings/social buzz that news APIs miss --
+treat the news gate as confirmation, not an absolute veto, when float is
+ultra-low and rvol is extreme.
+
 ## Robinhood Integration Implemented (2026-08-02)
 
 Wired the Robinhood data into penny-stocks.py + a repeatable workflow:
