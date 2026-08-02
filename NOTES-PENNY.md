@@ -6,6 +6,37 @@ Normal (large-cap wave/value) trading notes live in `NOTES.md`.
 
 ---
 
+## Robinhood Data Goldmine (2026-08-02)
+
+Connected the robinhood-trading MCP server (53 tools) and it fills EVERY data
+gap yfinance/E*TRADE left, verified live: (1) get_equity_historicals returns
+TRUE 1-min OHLCV bars with REAL premarket volume -- FCUV Jul 31 premarket
+explosion captured minute-by-minute (8:19 84k shares @ $2.58, 8:20 427k @
+$4.38, 8:22 725k @ $7.90, 8:30 601k @ $8.88) where yfinance reported
+Volume=0; bars carry session (pre/reg) + interpolated flags; explicit RFC3339
+ranges, bounds=extended, split-adjusted; DEPTH: 1-min real at >=2 weeks back
+(Jul 20 verified; gone by 3 months), 5-min real at >=3 months -- both beat
+yfinance's 7 days. Even 15second/30second intervals exist. (2)
+get_equity_fundamentals gives FLOAT directly (FCUV 601K -- 0.6M float
+explains the +836% day; SCYX 9.5M, TCX 8.8M pass; REPL 77.6M correctly out),
+plus sector/industry (rule 4), avg_volume 2wk/30d + extended-hours day volume
+(rvol: FCUV = 21.8x), market cap, PE/PB, 52wk range, company profile. (3)
+SCANNER (create_scan/run_scan): full server-side screener on Robinhood's
+real-time feed -- created scan 5f132877-7730-4a18-9e72-b3f0d2c9df83 with the
+complete rule set: Last BETWEEN $2-16, %Change>=10% (1d, plot=Close --
+plot is REQUIRED or the filter errors), RelativeVolume>=5x (1d, length
+pinned to 30 by server), Float<=16M; sorted %Change desc; 0 matches on
+Sunday (evaluates live day data -- populates Monday premarket). Title stays
+'Untitled Scan' (rename only in Legend UI). Filter specs also offer GAP,
+VWAP, RSI/MACD/EMA/Bollinger, sector -- room for tighter A+ filters.
+Replaces yfinance items #1 (intraday history, better depth + real premarket
+vol), #3 (float+sector), #4 (market-wide scan), and most of #2/#6. Morning
+workflow upgrade: run_scan (Robinhood, all rules server-side) -> news check
+(Finnhub) -> livebars/livescreen (E*TRADE) -> order (E*TRADE). Note: MCP
+tools are session-level (Claude calls them); penny-stocks.py python code
+still uses yfinance -- for in-script access the robin_stocks python lib with
+the same account is the path if needed.
+
 ## Etrade Realtime Data (2026-08-02)
 
 Replaced yfinance with E*TRADE real-time data wherever the API allows.
