@@ -6,6 +6,32 @@ Normal (large-cap wave/value) trading notes live in `NOTES.md`.
 
 ---
 
+## Sixty Day Backtest (2026-08-02)
+
+plan/penny_backtest_60d.py: market-wide 60-day backtest of the FULL
+methodology. Funnel: 5,400+ US common stocks (nasdaqtrader symbol files,
+ETFs/warrants/units excluded) -> 1,218 gapper stock-days / 674 symbols
+(band $2-16 reachable, day high >=10% over prev close, volume >=5x 50-day
+avg) -> 80 stock-days / 40 symbols after float<=16M + hot sector + HALAL
+(~94% of gapper symbols eliminated, mostly by sector+halal) -> 48
+one-gapper-per-day days -> 28 days simulated (yfinance 5-min prepost only
+reaches ~60 calendar days; 16 earlier days + a few thin-premarket days had
+no intraday data -- including monsters TGHL +613%, PIII +256%, AMST +240%,
+FIEE +285%: Robinhood 5-min could backfill these, results likely
+UNDERSTATED). RESULTS ($1000/trade, 7-10 AM window, same-day flatten):
+A calibrated default (hammer+volconfirm+strong_if_profit): 14 trades,
++$293.33 = +29.3% on $1000 in 2 months. B trail20+all-patterns: 30 trades,
++$833.22 = +83.3%. B's big days: ADVB Jul 23 +$325, YAAS Jul 30 +$285,
+SLBT Jun 16 +$135, ADVB Jul 22 +$125; worst day only -$100 (CLRO Jul 2) --
+trailing exits kept losses tiny while catching runners. A took few trades
+(hammer patterns rarer on 5-min bars than the 1-min they were calibrated
+on). CPHI's +2009% day: 0 trades both configs (out of band / no signal at
+entry) -- even the best day is missable. Caveats: float/sector/halal are
+TODAY'S snapshots (survivorship approximation), news rule skipped (not
+backtestable), 5-min granularity, yf premarket volume=0 (vol-confirm soft
+premarket). Both configs profitable over 28 A+ days: methodology validated;
+trail-the-runner remains the clear winner.
+
 ## Halal Gate Added (2026-08-02)
 
 Wired halal compliance into the penny screener as a lazy rule, ordered
