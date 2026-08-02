@@ -66,6 +66,12 @@ write the CSV first — Robinhood 1-min history reaches ~2+ weeks back,
 
 ## Rules recap (all enforced in penny-stocks.py)
 
-price $2-16 AT ENTRY | news within 18h (Finnhub) | up >=10% AT ENTRY |
-rvol >=5x (50d avg) | float <=16M (RH cache) | hot sector | buy AND sell
-inside the same day's 7-10 AM window, force-flat at window close.
+price $2-16 AT ENTRY | up >=10% AT ENTRY | rvol >=5x (50d avg) |
+float <=16M (RH cache) | hot sector | HALAL (loans/mcap <=10%,
+deposits/mcap <=10%, combined <=20%, haram revenue <5%, no haram industry
+-- checked lazily AFTER the cheap rules, BEFORE news; see /halal-check) |
+news within 18h (Finnhub, last gate) | buy AND sell inside the same day's
+7-10 AM window, force-flat at window close.
+WARNING from live testing: low-mcap gappers frequently fail halal on the
+cash or debt ratio (small mcap denominator) -- expect the halal gate to
+eliminate many scanner hits; that is by design.

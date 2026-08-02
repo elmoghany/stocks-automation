@@ -6,6 +6,24 @@ Normal (large-cap wave/value) trading notes live in `NOTES.md`.
 
 ---
 
+## Halal Gate Added (2026-08-02)
+
+Wired halal compliance into the penny screener as a lazy rule, ordered
+cheap rules -> HALAL -> news (news only runs for halal stocks). Same
+criteria as plan/full_screen.py + /halal-check skill: loans/mcap <=10%,
+deposits/mcap <=10%, combined <=20%, haram revenue <5% (interest income /
+annualized quarterly revenue, yfinance quarterly statements), plus a
+haram-industry keyword screen (bank/gambling/alcohol/tobacco/defense/
+insurance/lending/adult...); market cap from RH fundamentals cache first.
+Screen table shows a halal column + NOT HALAL reason row with ratios.
+LIVE FINDING: the gate failed BOTH of Friday's tradeable gappers -- SCYX
+deposits 123.7% of mcap (biotech cash pile vs $48M mcap), TCX loans 321.9%
+of mcap -- confirming that low-mcap gappers frequently breach the ratios
+because the denominator (mcap) is tiny. Expect the halal gate to eliminate
+many scanner hits; trading list will be much more selective. Note: ratios
+use market cap per the user's established criteria (some methodologies use
+total assets, which would pass more small caps -- not our rule).
+
 ## News Source Comparison (2026-08-02)
 
 Robinhood MCP has NO news feed (all 53 tools checked; `search` resolves

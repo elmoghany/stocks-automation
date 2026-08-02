@@ -400,6 +400,91 @@ def etrade_live_metrics(symbols: list[str]) -> dict:
     return out
 
 
+HARAM_INDUSTRY_WORDS = ["bank", "gambling", "casino", "alcohol", "brewer",
+                        "distiller", "tobacco", "defense", "aerospace",
+                        "insurance", "lending", "mortgage", "adult"]
+
+
+def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
+    """Halal compliance (same criteria as plan/full_screen.py and the
+    /halal-check skill): loans/mcap <= 10%, deposits/mcap <= 10%,
+    combined <= 20% (one side may exceed 10% if combined stays under 20),
+    haram revenue < 5% (interest income / annualized revenue), plus a
+    haram-industry keyword screen. Uses yfinance quarterly statements --
+    call lazily (2-3 API requests)."""
+    t = t or yf.Ticker(symbol)
+
+    def get_val(df, names):
+        if df is None or df.empty:
+            return 0
+        for n in names:
+            if n in df.index:
+                v = df.iloc[df.index.get_loc(n), 0]
+                if not pd.isna(v):
+                    return float(v)
+        return 0
+
+    try:
+        bs = t.quarterly_balance_sheet
+        inc = t.quarterly_income_stmt
+    except Exception:
+        bs = inc = None
+    if mcap is None:
+        rh = load_rh_fundamentals().get(symbol.upper())
+        mcap = (rh or {}).get("market_cap")
+        if not mcap:
+            try:
+                mcap = (t.info or {}).get("marketCap")
+            except Exception:
+                mcap = None
+    mcap = float(mcap or 0)
+
+    total_debt = get_val(bs, ["Total Debt"])
+    cash_total = get_val(bs, ["Cash Cash Equivalents And Short Term Investments"])
+    total_rev = get_val(inc, ["Total Revenue", "Operating Revenue"])
+    interest_inc = get_val(inc, ["Interest Income",
+                                 "Interest Income Non Operating",
+                                 "Net Interest Income"])
+    annual_rev = total_rev * 4
+
+    loan_pct = (total_debt / mcap * 100) if mcap > 0 else 0
+    cash_pct = (cash_total / mcap * 100) if mcap > 0 else 0
+    combined = loan_pct + cash_pct
+    haram_pct = (abs(interest_inc) / annual_rev * 100) if annual_rev > 0 else 0
+
+    loan_ok = loan_pct <= 10 or combined <= 20
+    cash_ok = cash_pct <= 10 or combined <= 20
+    combined_ok = combined <= 20
+    haram_ok = haram_pct < 5
+
+    # industry screen: RH cache sector/industry first, yfinance fallback
+    rh = load_rh_fundamentals().get(symbol.upper())
+    ind = f"{(rh or {}).get('sector', '')} {(rh or {}).get('industry', '')}"
+    if not ind.strip():
+        try:
+            info = t.info or {}
+            ind = f"{info.get('sector', '')} {info.get('industry', '')}"
+        except Exception:
+            ind = ""
+    industry_ok = not any(w in ind.lower() for w in HARAM_INDUSTRY_WORDS)
+
+    halal = loan_ok and cash_ok and combined_ok and haram_ok and industry_ok
+    return {
+        "loan_pct": round(loan_pct, 2),
+        "cash_pct": round(cash_pct, 2),
+        "combined": round(combined, 2),
+        "haram_pct": round(haram_pct, 2),
+        "halal": halal,
+        "fail_reason": "" if halal else (
+            "HARAM INDUSTRY" if not industry_ok else
+            "LOAN>10+COMBINED>20" if not loan_ok else
+            "CASH>10+COMBINED>20" if not cash_ok else
+            "COMBINED>20" if not combined_ok else
+            "HARAM>=5%"
+        ),
+    }
+
+
 def _finnhub_key() -> str | None:
     try:
         from trading.win_cred import get_secret
@@ -519,16 +604,26 @@ def screen_symbol(symbol: str, now_et: datetime | None = None,
     checks["float_m"] = round(flt / 1e6, 1) if flt else None
     checks["rule8_float_under_16m"] = (flt is not None and flt <= MAX_FLOAT)
 
-    # rule 2 LAST and LAZY: only call the news API when every other rule
-    # already passed -- keeps news calls rare (rate limits, cost)
+    # LAZY gates, in cost order, each run only if everything before passed:
+    # halal (yfinance quarterly statements) BEFORE news (Finnhub API)
     pre_rules = [k for k in checks if k.startswith("rule")]
     checks["news"] = ""
+    checks["halal_fail"] = ""
     if all(checks[k] for k in pre_rules):
-        hit, title = news_within_18h(symbol, t, now_et)
-        checks["rule2_news_18h"] = hit
-        checks["news"] = title
+        h = halal_check(symbol, t)
+        checks["rule9_halal"] = h["halal"]
+        checks["halal_fail"] = h["fail_reason"]
+        checks["halal_detail"] = (f"loans {h['loan_pct']}% dep {h['cash_pct']}% "
+                                  f"comb {h['combined']}% haram {h['haram_pct']}%")
+        if h["halal"]:
+            hit, title = news_within_18h(symbol, t, now_et)
+            checks["rule2_news_18h"] = hit
+            checks["news"] = title
+        else:
+            checks["rule2_news_18h"] = None   # not checked -- not halal
     else:
-        checks["rule2_news_18h"] = None   # not checked -- pre-rules failed
+        checks["rule9_halal"] = None      # not checked -- pre-rules failed
+        checks["rule2_news_18h"] = None
 
     rules = [k for k in checks if k.startswith("rule")]
     checks["PASS"] = all(bool(checks[k]) for k in rules)
@@ -541,8 +636,9 @@ def cmd_screen(symbols: list[str]) -> None:
         print(f"(real-time price/gain/rvol via E*TRADE for: "
               f"{sorted(live)}; yfinance fallback for the rest)")
     print(f"{'SYM':<6} {'PASS':<5} {'$':>6} {'1<16':>5} {'gain%':>6} {'r3':>3} "
-          f"{'rvol':>5} {'r5':>3} {'news':>5} {'sector':>7} {'floatM':>7} {'r8':>3}")
-    print("-" * 78)
+          f"{'rvol':>5} {'r5':>3} {'halal':>6} {'news':>5} {'sector':>7} "
+          f"{'floatM':>7} {'r8':>3}")
+    print("-" * 86)
     passed = []
     for sym in symbols:
         c = screen_symbol(sym.upper(), live=live.get(sym.upper()))
@@ -554,9 +650,13 @@ def cmd_screen(symbols: list[str]) -> None:
               f"{c['price']:>6.2f} {b(c['rule1_price_2_to_16']):>5} "
               f"{c['day_gain_pct']:>6.1f} {b(c['rule3_up_10pct']):>3} "
               f"{c['rel_volume']:>5.1f} {b(c['rule5_relvol_5x']):>3} "
+              f"{b(c['rule9_halal']):>6} "
               f"{b(c['rule2_news_18h']):>5} {b(c['rule4_hot_sector']):>7} "
               f"{(c['float_m'] if c['float_m'] is not None else '?'):>7} "
               f"{b(c['rule8_float_under_16m']):>3}")
+        if c.get("halal_fail"):
+            print(f"{'':<6}   NOT HALAL: {c['halal_fail']}  "
+                  f"({c.get('halal_detail', '')})")
         if c["PASS"]:
             passed.append(c["symbol"])
     print(f"\nPassed all rules: {passed or 'none'}")
