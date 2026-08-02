@@ -81,6 +81,11 @@ trail-the-runner remains the clear winner.
 
 ## Halal Gate Added (2026-08-02)
 
+UPDATE (later same day): gate order changed to put HALAL immediately
+after the free rules (price band + 10% + rvol, all from one call) and
+BEFORE float/sector/news -- per user: don't waste any data collection on
+non-halal stocks. Order is now: free rules -> halal -> float+sector -> news.
+
 Wired halal compliance into the penny screener as a lazy rule, ordered
 cheap rules -> HALAL -> news (news only runs for halal stocks). Same
 criteria as plan/full_screen.py + /halal-check skill: loans/mcap <=10%,
