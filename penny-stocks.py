@@ -517,8 +517,8 @@ def news_within_18h(symbol: str, t=None,
             for it in items:
                 dt = datetime.fromtimestamp(it.get("datetime", 0), ET)
                 if dt >= cutoff:
-                    return True, (it.get("headline") or "")[:60]
-            return False, ""
+                    return True, "FH: " + (it.get("headline") or "")[:56]
+            # no Finnhub hit -> ALSO check Yahoo (both sources consulted)
         except Exception:
             pass   # fall through to yfinance
 
@@ -535,7 +535,7 @@ def news_within_18h(symbol: str, t=None,
             else:
                 dt = pd.Timestamp(ts).tz_convert(ET).to_pydatetime()
             if dt >= cutoff:
-                return True, (content.get("title") or "")[:60]
+                return True, "YF: " + (content.get("title") or "")[:56]
     except Exception:
         pass
     return False, ""

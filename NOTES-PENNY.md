@@ -6,6 +6,30 @@ Normal (large-cap wave/value) trading notes live in `NOTES.md`.
 
 ---
 
+## Robinhood Backfill Results (2026-08-02)
+
+Backfilled the 60-day backtest's missing days with Robinhood 5-min
+extended-hours bars (real premarket volume) via MCP -> data/rh_bars CSVs +
+plan/penny_backfill_rh.py. Findings per day: MANY "missing" days were dead
+in the 7-10 AM window -- LINK/MCRP/SLBT/FIEE/SCYX had near-zero window
+volume (their +10-285% daily moves happened AFTER 10 AM), MBAI/QUCY traded
+sub-$2 all window, TGHL's +613% run happened from $0.32 BELOW the $2 band
+(in-band part was chop, B config -$50). The 6 genuinely tradeable days:
+PIII B +$577 (one trailing trade caught the 9:35 explosion $5.23->$7.80),
+QTTB B +$476, BIYA B +$63, CPSH +$10, AMST B -$100, TGHL -$50.
+Backfill totals: A +$15, B +$977. COMBINED 60-DAY RESULT: A calibrated
+default +$308 (+30.8% on $1000); B trail20 all-pattern +$1,810 (+181.0% on
+$1000). 7 small-gain days (+16-40%: CPSH 5-18, ARQQ, CHRN, SVCO, CLRO,
+INLX, APLM) left unfetched, treated ~$0 -- justified by base rate: 5/5
+fetched days in that gain class had dead windows. Lessons: (1) the missing
+days DID hold the big money -- B nearly tripled from +83% to +181%; (2) the
+7-10 AM window forfeits moves that happen later in the day (FIEE +285%
+after 10 AM = $0 for us) -- window discipline costs real upside but is the
+rule; (3) sub-$2 launches (TGHL, QUCY) are structurally untradeable under
+the band rule -- the band forfeits sub-$2 rockets by design. News rule now
+checks BOTH sources: Finnhub first, then Yahoo on no-hit (headline tagged
+FH:/YF: to show which source fired).
+
 ## Sixty Day Backtest (2026-08-02)
 
 plan/penny_backtest_60d.py: market-wide 60-day backtest of the FULL
