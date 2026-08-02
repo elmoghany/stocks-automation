@@ -6,6 +6,29 @@ Normal (large-cap wave/value) trading notes live in `NOTES.md`.
 
 ---
 
+## ORB Entry Added (2026-08-02)
+
+Diagnosed all 15 zero-trade days (plan/penny_orb_test.py) and added an
+Opening-Range-Breakout entry. Zero-trade root causes: (a) 3 days NEVER in
+the $2-16 band during the window (CPHI +2009% ranged $0.81-1.20, TOPP,
+BIYA Jun30 -- structurally untradeable, moves happened after 10 AM or
+sub-$2); (b) 5 days never printed +10% vs prev close during the window
+(INDP, PN, NTHI, WYY, TTRX -- often marginal, e.g. 9.75 vs 10.68 needed);
+(c) 7 days had the move but dip-reversal pattern sequencing missed it (HQ,
+RTB, NDRA, YDES, EGG, FIEE, YAAS). ORB fixes class (c): OR = first 3
+volume-printing 5-min bars, stop-buy on break of OR high (ratcheted after
+gated/failed breaks), same gates (band + 10% at entry) and exits (trail
+20% / stop 5% / window flatten). RESULTS on the 34 YTD simulated days
+(fixed $1000): A dip-reversal only +$1,594 (37t); B ORB only +$1,581
+(19t); C COMBINED +$2,224 (42t) = +39% over default. Recovered from $0:
+RTB +$288, EGG +$301, NDRA +$36; ATPC Jun18 +$246 vs +$3. ADOPTED:
+simulate_trades(orb=True, orb_bars=3) integrated (ORB fires from any flat
+state, dip-machine still runs) and is now part of the penny backtest
+default; verified integrated == standalone (EGG +$301, RTB +$288). YAAS
++590% still uncaptured (no valid trigger) -- some days stay unplayable.
+Classes (a)/(b) are rule-structural, not fixable without changing band/
+window/10% rules.
+
 ## Upward Sector Expansion (2026-08-02)
 
 Sector trend check via ETFs (1y return > 0 AND price > 200-SMA): UP =

@@ -761,7 +761,9 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     target_pct: float | None = None,
                     stop_pct: float | None = None,
                     prev_close: float | None = None,
-                    trail_pct: float | None = None) -> list[dict]:
+                    trail_pct: float | None = None,
+                    orb: bool = False,
+                    orb_bars: int = 3) -> list[dict]:
     """Run the entry/exit state machine over 1-min bars of a single day.
 
     State machine:
@@ -779,8 +781,47 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
     entry_i = -1
     budget_cur = budget if budget is not None else POSITION_DOLLARS
 
+    # Opening-Range Breakout (second entry trigger, complements dip-reversal):
+    # OR = first orb_bars bars that printed volume; stop-buy on a break of
+    # the OR high (ratcheted up after each failed/gated break)
+    or_high = None
+    or_end = -1
+    if orb:
+        vol_bars = [i for i in range(cd.n) if cd.v[i] > 0][:orb_bars]
+        if len(vol_bars) == orb_bars:
+            or_high = max(cd.h[i] for i in vol_bars)
+            or_end = vol_bars[-1]
+
+    def _entry_ok(px):
+        if not (PRICE_MIN <= px <= PRICE_MAX):
+            return False
+        if (prev_close is not None
+                and px < prev_close * (1 + MIN_DAY_GAIN_PCT / 100)):
+            return False
+        return True
+
     for i in range(1, cd.n):
         price = cd.c[i]
+
+        # ORB entry: allowed from any flat state
+        if (state in ("SCAN", "DIPPING", "ARMED") and or_high is not None
+                and i > or_end and cd.h[i] > or_high
+                and (max_trades is None or len(trades) < max_trades)):
+            fill = max(or_high, cd.o[i])
+            or_high = cd.h[i]          # ratchet for the next break
+            if _entry_ok(fill):
+                sh = int(budget_cur // fill)
+                if sh >= 1:
+                    shares = sh
+                    entry = fill
+                    entry_i = i
+                    peak = entry
+                    state = "LONG"
+                    if verbose:
+                        ts = cd.index[i].strftime("%m-%d %H:%M")
+                        print(f"  BUY  {ts}  @{entry:.2f}  ({shares} sh = "
+                              f"${shares * entry:,.0f})  pattern=ORB")
+                    continue
 
         if state == "SCAN":
             j = max(0, i - SURGE_WINDOW_MIN)
@@ -933,12 +974,13 @@ def cmd_backtest(symbol: str, days: int) -> None:
         print(f"\n{symbol.upper()}  {day}  7-10 AM  "
               f"(open {day_df['Open'].iloc[0]:.2f}, "
               f"window close {day_df['Close'].iloc[-1]:.2f})")
-        # PENNY DEFAULT (60d backtest winner): all bullish patterns,
-        # no volume gate, trail 20% from peak, hard stop -5%
+        # PENNY DEFAULT (60d backtest winner + ORB, +39% in testing):
+        # all bullish patterns + opening-range breakout, no volume gate,
+        # trail 20% from peak, hard stop -5%
         trades = simulate_trades(day_df, prev_close=prev_map.get(day),
                                  buy_set=None, vol_confirm=False,
                                  trail_pct=DEFAULT_TRAIL_PCT,
-                                 stop_pct=DEFAULT_STOP_PCT)
+                                 stop_pct=DEFAULT_STOP_PCT, orb=True)
         if not trades:
             print("  no setups triggered (or not up 10%+)")
         all_trades.extend(trades)
