@@ -587,48 +587,61 @@ def screen_symbol(symbol: str, now_et: datetime | None = None,
     checks["rel_volume"] = round(rel_vol, 1)
     checks["rule5_relvol_5x"] = rel_vol >= MIN_REL_VOLUME
 
-    # rule 4 + 8: sector and float -- Robinhood cache first, yfinance fallback
-    sector = ""
-    flt = None
-    rh = load_rh_fundamentals().get(symbol.upper())
-    if rh:
-        sector = f"{rh.get('sector', '')} / {rh.get('industry', '')}"
-        flt = rh.get("float")
-    if not sector.strip(" /") or flt is None:
-        try:
-            info = t.info or {}
-            if not sector.strip(" /"):
-                sector = f"{info.get('sector', '')} / {info.get('industry', '')}"
-            if flt is None:
-                flt = info.get("floatShares")
-        except Exception:
-            pass
-    checks["sector"] = sector
-    checks["rule4_hot_sector"] = any(
-        s in sector.lower() for s in HOT_SECTORS)
-    checks["float_m"] = round(flt / 1e6, 1) if flt else None
-    checks["rule8_float_under_16m"] = (flt is not None and flt <= MAX_FLOAT)
-
-    # LAZY gates, in cost order, each run only if everything before passed:
-    # halal (yfinance quarterly statements) BEFORE news (Finnhub API)
-    pre_rules = [k for k in checks if k.startswith("rule")]
+    # LAZY gate order (each stage runs only if everything before passed):
+    #   free rules (price band, +10%, rvol -- one data source)
+    #   -> HALAL (debt/deposits/haram revenue + industry, quarterlies)
+    #   -> float + hot sector (t.info / RH cache)
+    #   -> news (Finnhub + Yahoo)
+    # Halal runs FIRST among the expensive gates so no time or API calls
+    # are wasted collecting full data on stocks that are not halal.
     checks["news"] = ""
     checks["halal_fail"] = ""
-    if all(checks[k] for k in pre_rules):
+    checks["sector"] = ""
+    checks["float_m"] = None
+    checks["rule9_halal"] = None
+    checks["rule4_hot_sector"] = None
+    checks["rule8_float_under_16m"] = None
+    checks["rule2_news_18h"] = None
+
+    free_ok = (checks["rule1_price_2_to_16"] and checks["rule3_up_10pct"]
+               and checks["rule5_relvol_5x"])
+    if free_ok:
         h = halal_check(symbol, t)
         checks["rule9_halal"] = h["halal"]
         checks["halal_fail"] = h["fail_reason"]
         checks["halal_detail"] = (f"loans {h['loan_pct']}% dep {h['cash_pct']}% "
                                   f"comb {h['combined']}% haram {h['haram_pct']}%")
-        if h["halal"]:
-            hit, title = news_within_18h(symbol, t, now_et)
-            checks["rule2_news_18h"] = hit
-            checks["news"] = title
-        else:
-            checks["rule2_news_18h"] = None   # not checked -- not halal
-    else:
-        checks["rule9_halal"] = None      # not checked -- pre-rules failed
-        checks["rule2_news_18h"] = None
+
+    if checks["rule9_halal"]:
+        # float + sector -- Robinhood cache first, yfinance info fallback
+        sector = ""
+        flt = None
+        rh = load_rh_fundamentals().get(symbol.upper())
+        if rh:
+            sector = f"{rh.get('sector', '')} / {rh.get('industry', '')}"
+            flt = rh.get("float")
+        if not sector.strip(" /") or flt is None:
+            try:
+                info = t.info or {}
+                if not sector.strip(" /"):
+                    sector = (f"{info.get('sector', '')} / "
+                              f"{info.get('industry', '')}")
+                if flt is None:
+                    flt = info.get("floatShares")
+            except Exception:
+                pass
+        checks["sector"] = sector
+        checks["rule4_hot_sector"] = any(
+            s in sector.lower() for s in HOT_SECTORS)
+        checks["float_m"] = round(flt / 1e6, 1) if flt else None
+        checks["rule8_float_under_16m"] = (flt is not None
+                                           and flt <= MAX_FLOAT)
+
+    if (checks["rule9_halal"] and checks["rule4_hot_sector"]
+            and checks["rule8_float_under_16m"]):
+        hit, title = news_within_18h(symbol, t, now_et)
+        checks["rule2_news_18h"] = hit
+        checks["news"] = title
 
     rules = [k for k in checks if k.startswith("rule")]
     checks["PASS"] = all(bool(checks[k]) for k in rules)
