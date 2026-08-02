@@ -6,6 +6,28 @@ Penny-stock day-trading notes live in `NOTES-PENNY.md`.
 
 ---
 
+## Chart Endpoint Hunt (2026-08-02)
+
+Investigated whether E*TRADE can serve HISTORICAL intraday bars. The local
+API documentation (all 5 files, all 31 endpoint URLs enumerated) contains
+no candles/chart/history endpoint -- market API is quote, lookup,
+optionchains, optionexpiredate only; detailFlag=INTRADAY is a current-quote
+snapshot, not bars. BUT live probing found /v1/market/chart/{symbol} (and
+/charts/) EXISTS on the gateway: returns 401 "Unauthorized request" while
+fake paths return 404 "Resource not found" -- an undocumented,
+entitlement-gated endpoint. Tested with BOTH sandbox and PROD keys
+(prod token obtained via manual two-phase exchange; note
+test_extended_order.py --verifier path auto-runs an order preview and has
+a bug: ETradeSession.__new__ skips __init__ so self.sandbox is unset ->
+_save_token crashes; exchanged manually instead): still 401 on prod.
+Conclusion: endpoint exists but is not granted to developer keys --
+likely internal to E*TRADE's own apps or needs a special entitlement; ask
+E*TRADE API support (developer@etrade.com) to enable "chart" for the key.
+Until then: historical bars stay yfinance; LIVE bars via quote polling
+(penny livebars). PROD validation same session: real AMD quote OK, and
+penny livescreen --prod returned REAL data (SCYX +26%, TCX +56% 6.9x rvol
+-> passed live rules, FCUV +807% correctly out of band at $17.05).
+
 ## Sandbox Order Test (2026-08-01)
 
 Full E*TRADE sandbox chain verified end-to-end: two-phase OAuth via
