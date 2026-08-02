@@ -6,6 +6,31 @@ Normal (large-cap wave/value) trading notes live in `NOTES.md`.
 
 ---
 
+## Upward Sector Expansion (2026-08-02)
+
+Sector trend check via ETFs (1y return > 0 AND price > 200-SMA): UP =
+Technology +37%, Energy +44%, Healthcare +26%, Industrials +22%, Basic
+Materials +18%, Real Estate +13%, Consumer Defensive +9%; EXCLUDED (below
+200SMA) = Consumer Cyclical, Communication, Utilities. plan/
+penny_backtest_ytd.py reran discovery Jan 1 -> Aug 2 with the expanded
+7-sector keyword list: 2,903 gapper stock-days (1,200 symbols) -> 320
+stock-days / 111 symbols after float+halal+upward-sector -> 130
+one-gapper-per-day days YTD (~3x the tech+health-only funnel). SIMULATED
+(real intraday, compounding, May 15 -> Jul 30, 34 day-sims of which 19
+traded): $1,000 -> $3,564.01 (+256.4% in ~2.5 months). New-sector
+contributions real: QTTB +$749, ADVB +$887 day, ATPC +$161; new losses
+CLRO -$231, AMST -$154. 96 qualifying days (Jan-Apr + thin days) have NO
+intraday data anywhere (RH 5-min reaches ~May 5) -- the script's naive
+extrapolation ($7.2M) is GARBAGE (uses traded-day-only avg +8.26%/day,
+ignores zero-trade days and liquidity) and must not be quoted. Defensible
+estimates for Jan 1 -> today: fixed-$1000 sizing ~ +$46/qualifying-day x
+130 days ~ +$6,000 (+600%); frictionless compounding math says ~$130k but
+is physically impossible -- 0.5-16M float stocks cannot absorb positions
+much beyond $10-30k without moving the price, so compounding saturates in
+the low tens of thousands. Honest headline: +256% real simulated 2.5
+months; YTD-from-Jan estimate several hundred %, capital-capped by
+micro-cap liquidity.
+
 ## Trail Default Sensitivity (2026-08-02)
 
 Made trail20+all-patterns the penny DEFAULT (DEFAULT_TRAIL_PCT=20,
