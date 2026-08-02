@@ -6,6 +6,31 @@ Normal (large-cap wave/value) trading notes live in `NOTES.md`.
 
 ---
 
+## Etrade Realtime Data (2026-08-02)
+
+Replaced yfinance with E*TRADE real-time data wherever the API allows.
+(1) Rules 1/3/5 (price band, up>=10%, rvol>=5x) now compute LIVE from one
+batched E*TRADE quote: lastTrade/ExtendedHourQuoteDetail price,
+previousClose, totalVolume, averageVolume -- etrade_live_metrics() feeds
+screen_symbol(live=...); `screen`/`scan` auto-use it when a token exists
+(PROD first, sandbox fallback), yfinance per-symbol fallback otherwise.
+Sandbox returns CANNED 2012 data for fixed symbols (ask AMD -> get GOOG),
+so sandbox never poisons results (symbols don't match -> fallback).
+(2) `livescreen SYMS [--prod]`: full real-time rule table via E*TRADE +
+lazy sector/float/news for pre-passers. (3) `livebars SYM [--prod]`: polls
+quotes every 10s, assembles LIVE 1-min OHLCV candles (EtradeVolumeFeed.bars),
+runs the candlestick engine after each completed minute -- live pattern
+detection with true extended-hours volume (fixes yfinance premarket vol=0).
+(4) News now Finnhub-first (news_within_18h; FINNHUB_KEY in Credential
+Manager; tested live -- caught SCYX's 8:04 AM GSK catalyst headline) with
+yfinance fallback, and news is checked LAZILY only after all cheap rules
+pass. Float rule <=16M enforced in all commands; E*TRADE quote also returns
+sharesOutstanding (float <= sharesOutstanding, usable as sufficient check).
+NOT replaceable with E*TRADE: historical intraday bars (no history API --
+backtests stay yfinance) and market-wide screening (no screener endpoint --
+`scan` stays Yahoo, then livescreen re-verifies real-time). Morning workflow:
+scan -> livescreen --prod -> livebars --prod -> place order.
+
 ## Two-X Day Hunt (2026-08-02)
 
 Goal: 2x profit in same-day penny trading. Rules consolidated into the sim:

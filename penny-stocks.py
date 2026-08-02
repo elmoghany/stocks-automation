@@ -311,39 +311,96 @@ class Candles:
 # Screener (rules 1-5, 8)
 # ---------------------------------------------------------------------------
 
-def screen_symbol(symbol: str, now_et: datetime | None = None) -> dict:
-    """Run all screening rules on one symbol. Returns dict of checks."""
-    now_et = now_et or datetime.now(ET)
-    t = yf.Ticker(symbol)
-    checks = {"symbol": symbol}
-
+def _etrade_session():
+    """Load an authenticated E*TRADE session: PROD token first (real data),
+    sandbox second. Returns None if no valid token exists."""
     try:
-        daily = t.history(period="3mo")
-    except Exception as e:
-        checks["error"] = str(e)
-        return checks
-    if daily is None or len(daily) < 2:
-        checks["error"] = "no daily data"
-        return checks
+        from trading.api_wrapper import ETradeSession
+    except Exception:
+        return None
+    for sandbox in (False, True):
+        try:
+            sess = ETradeSession(sandbox=sandbox)
+            if sess._load_saved_token():
+                return sess
+        except Exception:
+            continue
+    return None
 
-    price = float(daily["Close"].iloc[-1])
-    prev_close = float(daily["Close"].iloc[-2])
-    day_gain = (price / prev_close - 1) * 100
-    today_vol = float(daily["Volume"].iloc[-1])
-    avg_vol = float(daily["Volume"].iloc[-(REL_VOLUME_LOOKBACK + 1):-1].mean())
-    rel_vol = today_vol / avg_vol if avg_vol > 0 else 0.0
 
-    checks["price"] = round(price, 2)
-    checks["rule1_price_2_to_16"] = PRICE_MIN <= price <= PRICE_MAX
-    checks["day_gain_pct"] = round(day_gain, 1)
-    checks["rule3_up_10pct"] = day_gain >= MIN_DAY_GAIN_PCT
-    checks["rel_volume"] = round(rel_vol, 1)
-    checks["rule5_relvol_5x"] = rel_vol >= MIN_REL_VOLUME
+def etrade_live_metrics(symbols: list[str]) -> dict:
+    """Real-time price/gain/rvol per symbol from ONE batched E*TRADE quote
+    call (replaces delayed yfinance daily data for rules 1, 3, 5).
 
-    # rule 2: news within the last NEWS_LOOKBACK_HOURS (18h) -- best effort
+    Works in extended hours via ExtendedHourQuoteDetail. Symbols missing
+    from the response (e.g. sandbox canned data) are simply absent -- the
+    caller falls back to yfinance for those.
+    """
+    sess = _etrade_session()
+    if sess is None:
+        return {}
+    out = {}
+    try:
+        quotes = sess.get_quotes([s.upper() for s in symbols])
+        for sym, qd in quotes.items():
+            all_q = qd.get("All", {})
+            ext = all_q.get("ExtendedHourQuoteDetail", {})
+            last = ext.get("lastPrice") or all_q.get("lastTrade")
+            prev = all_q.get("previousClose")
+            tv = ext.get("volume") or all_q.get("totalVolume")
+            av = all_q.get("averageVolume")
+            if not last or not prev:
+                continue
+            out[sym] = {
+                "price": float(last),
+                "day_gain": (float(last) / float(prev) - 1) * 100,
+                "rel_volume": (float(tv) / float(av)) if tv and av else 0.0,
+                "quote_status": qd.get("quoteStatus", "?"),
+                "shares_outstanding": all_q.get("sharesOutstanding"),
+            }
+    except Exception:
+        return {}
+    return out
+
+
+def _finnhub_key() -> str | None:
+    try:
+        from trading.win_cred import get_secret
+        return get_secret("FINNHUB_KEY")
+    except Exception:
+        return None
+
+
+def news_within_18h(symbol: str, t=None,
+                    now_et: datetime | None = None) -> tuple[bool, str]:
+    """Rule 2: any news in the last NEWS_LOOKBACK_HOURS?
+
+    Primary: Finnhub /company-news (dated, reliable timestamps, free tier).
+    Fallback: yfinance Ticker.news. Returns (hit, headline).
+    """
+    now_et = now_et or datetime.now(ET)
     cutoff = now_et - timedelta(hours=NEWS_LOOKBACK_HOURS)
-    news_hit = False
-    news_title = ""
+
+    key = _finnhub_key()
+    if key:
+        try:
+            import urllib.request
+            frm = (now_et - timedelta(days=2)).date().isoformat()
+            to = now_et.date().isoformat()
+            url = (f"https://finnhub.io/api/v1/company-news?symbol="
+                   f"{symbol.upper()}&from={frm}&to={to}&token={key}")
+            import json as _json
+            with urllib.request.urlopen(url, timeout=15) as r:
+                items = _json.load(r)
+            for it in items:
+                dt = datetime.fromtimestamp(it.get("datetime", 0), ET)
+                if dt >= cutoff:
+                    return True, (it.get("headline") or "")[:60]
+            return False, ""
+        except Exception:
+            pass   # fall through to yfinance
+
+    t = t or yf.Ticker(symbol)
     try:
         for item in (t.news or []):
             content = item.get("content", item)
@@ -356,13 +413,52 @@ def screen_symbol(symbol: str, now_et: datetime | None = None) -> dict:
             else:
                 dt = pd.Timestamp(ts).tz_convert(ET).to_pydatetime()
             if dt >= cutoff:
-                news_hit = True
-                news_title = (content.get("title") or "")[:60]
-                break
+                return True, (content.get("title") or "")[:60]
     except Exception:
         pass
-    checks["rule2_news_18h"] = news_hit
-    checks["news"] = news_title
+    return False, ""
+
+
+def screen_symbol(symbol: str, now_et: datetime | None = None,
+                  live: dict | None = None) -> dict:
+    """Run all screening rules on one symbol. Returns dict of checks.
+
+    `live` (from etrade_live_metrics) supplies REAL-TIME price/gain/rvol;
+    without it, delayed yfinance daily data is used.
+    """
+    now_et = now_et or datetime.now(ET)
+    t = yf.Ticker(symbol)
+    checks = {"symbol": symbol}
+
+    if live:
+        price = live["price"]
+        day_gain = live["day_gain"]
+        rel_vol = live["rel_volume"]
+        checks["source"] = "etrade-live"
+    else:
+        try:
+            daily = t.history(period="3mo")
+        except Exception as e:
+            checks["error"] = str(e)
+            return checks
+        if daily is None or len(daily) < 2:
+            checks["error"] = "no daily data"
+            return checks
+        price = float(daily["Close"].iloc[-1])
+        prev_close = float(daily["Close"].iloc[-2])
+        day_gain = (price / prev_close - 1) * 100
+        today_vol = float(daily["Volume"].iloc[-1])
+        avg_vol = float(
+            daily["Volume"].iloc[-(REL_VOLUME_LOOKBACK + 1):-1].mean())
+        rel_vol = today_vol / avg_vol if avg_vol > 0 else 0.0
+        checks["source"] = "yfinance"
+
+    checks["price"] = round(price, 2)
+    checks["rule1_price_2_to_16"] = PRICE_MIN <= price <= PRICE_MAX
+    checks["day_gain_pct"] = round(day_gain, 1)
+    checks["rule3_up_10pct"] = day_gain >= MIN_DAY_GAIN_PCT
+    checks["rel_volume"] = round(rel_vol, 1)
+    checks["rule5_relvol_5x"] = rel_vol >= MIN_REL_VOLUME
 
     # rule 4 + 8: sector and float from ticker info
     sector = ""
@@ -379,22 +475,37 @@ def screen_symbol(symbol: str, now_et: datetime | None = None) -> dict:
     checks["float_m"] = round(flt / 1e6, 1) if flt else None
     checks["rule8_float_under_16m"] = (flt is not None and flt <= MAX_FLOAT)
 
+    # rule 2 LAST and LAZY: only call the news API when every other rule
+    # already passed -- keeps news calls rare (rate limits, cost)
+    pre_rules = [k for k in checks if k.startswith("rule")]
+    checks["news"] = ""
+    if all(checks[k] for k in pre_rules):
+        hit, title = news_within_18h(symbol, t, now_et)
+        checks["rule2_news_18h"] = hit
+        checks["news"] = title
+    else:
+        checks["rule2_news_18h"] = None   # not checked -- pre-rules failed
+
     rules = [k for k in checks if k.startswith("rule")]
-    checks["PASS"] = all(checks[k] for k in rules)
+    checks["PASS"] = all(bool(checks[k]) for k in rules)
     return checks
 
 
 def cmd_screen(symbols: list[str]) -> None:
+    live = etrade_live_metrics(symbols)
+    if live:
+        print(f"(real-time price/gain/rvol via E*TRADE for: "
+              f"{sorted(live)}; yfinance fallback for the rest)")
     print(f"{'SYM':<6} {'PASS':<5} {'$':>6} {'1<16':>5} {'gain%':>6} {'r3':>3} "
           f"{'rvol':>5} {'r5':>3} {'news':>5} {'sector':>7} {'floatM':>7} {'r8':>3}")
     print("-" * 78)
     passed = []
     for sym in symbols:
-        c = screen_symbol(sym.upper())
+        c = screen_symbol(sym.upper(), live=live.get(sym.upper()))
         if "error" in c:
             print(f"{sym.upper():<6} ERROR {c['error']}")
             continue
-        b = lambda v: "Y" if v else "."
+        b = lambda v: "-" if v is None else ("Y" if v else ".")
         print(f"{c['symbol']:<6} {('PASS' if c['PASS'] else '-'):<5} "
               f"{c['price']:>6.2f} {b(c['rule1_price_2_to_16']):>5} "
               f"{c['day_gain_pct']:>6.1f} {b(c['rule3_up_10pct']):>3} "
@@ -872,6 +983,36 @@ class EtradeVolumeFeed:
             out[minute] = out.get(minute, 0) + max(0, v1 - v0)
         return out
 
+    def bars(self, symbol: str) -> pd.DataFrame:
+        """Build LIVE 1-min OHLCV candles from the polled quote samples.
+
+        This replaces yfinance intraday bars for LIVE operation: real-time
+        prices and true extended-hours volume. (Historical bars still come
+        from yfinance -- E*TRADE keeps no history.) Feed the result straight
+        into Candles for live pattern detection.
+        """
+        pts = self.samples.get(symbol.upper(), [])
+        rows = {}
+        prev_vol = None
+        for ts, tv, last in pts:
+            if last <= 0:
+                continue
+            minute = ts.replace(second=0, microsecond=0)
+            r = rows.setdefault(minute, {"Open": last, "High": last,
+                                         "Low": last, "Close": last,
+                                         "Volume": 0})
+            r["High"] = max(r["High"], last)
+            r["Low"] = min(r["Low"], last)
+            r["Close"] = last
+            if prev_vol is not None:
+                r["Volume"] += max(0, tv - prev_vol)
+            prev_vol = tv
+        if not rows:
+            return pd.DataFrame(
+                columns=["Open", "High", "Low", "Close", "Volume"])
+        df = pd.DataFrame.from_dict(rows, orient="index").sort_index()
+        return df
+
     def volume_confirmed_live(self, symbol: str,
                               mult: float = ENTRY_VOL_MULT,
                               avg_bars: int = VOL_AVG_BARS) -> bool:
@@ -885,6 +1026,129 @@ class EtradeVolumeFeed:
         if avg <= 0:
             return True
         return last_vol >= mult * avg
+
+
+def cmd_livebars(symbol: str, minutes: int, sandbox: bool,
+                 poll_seconds: int = 10) -> None:
+    """LIVE 1-min candles + pattern detection via E*TRADE polling.
+
+    Polls quotes every few seconds, assembles 1-min OHLCV bars, and after
+    each completed minute runs the candlestick engine on the live bars --
+    printing any bullish/bearish patterns as they form. This is item #1
+    (intraday bars) replaced with E*TRADE for live operation.
+    """
+    import time as _time
+    try:
+        feed = EtradeVolumeFeed(sandbox=sandbox)
+    except Exception as e:
+        print(f"E*TRADE feed unavailable: {e}")
+        return
+    sym = symbol.upper()
+    env = "SANDBOX" if sandbox else "PROD"
+    print(f"LIVE bars for {sym} ({env}), polling every {poll_seconds}s for "
+          f"{minutes} min... Ctrl+C to stop")
+    end = datetime.now(ET) + timedelta(minutes=minutes)
+    last_reported = None
+    try:
+        while datetime.now(ET) < end:
+            feed.sample([sym])
+            bars = feed.bars(sym)
+            # report on the last COMPLETED minute (current one still forming)
+            if len(bars) >= 2:
+                done = bars.index[-2]
+                if done != last_reported:
+                    last_reported = done
+                    cd = Candles(bars.iloc[:-1])
+                    i = cd.n - 1
+                    bulls = cd.bullish_patterns(i) + cd.indicator_bullish(i)
+                    bears = cd.bearish_patterns(i) + cd.indicator_bearish(i)
+                    vol_ok = cd.volume_confirmed(i)
+                    b = bars.iloc[-2]
+                    tags = ([f"+{p}" for p in bulls] + [f"-{p}" for p in bears]
+                            or ["(no pattern)"])
+                    print(f"  {done.strftime('%H:%M')}  "
+                          f"O {b['Open']:.2f} H {b['High']:.2f} "
+                          f"L {b['Low']:.2f} C {b['Close']:.2f} "
+                          f"V {int(b['Volume']):,}  volOK={'Y' if vol_ok else 'n'}"
+                          f"  {' '.join(tags)}")
+            _time.sleep(poll_seconds)
+    except KeyboardInterrupt:
+        pass
+    bars = feed.bars(sym)
+    print(f"\nCollected {len(bars)} live 1-min bars for {sym}")
+    if len(bars):
+        print(bars.tail(10).to_string())
+
+
+def cmd_livescreen(symbols: list[str], sandbox: bool) -> None:
+    """REAL-TIME screen via E*TRADE quotes (works in extended hours).
+
+    One batched quote call gives lastTrade (or ExtendedHourQuoteDetail
+    price), previousClose, totalVolume and averageVolume -- so the price
+    band, up>=10% and rvol>=5x rules are evaluated live, not on delayed
+    Yahoo data. Sector/float (yfinance) and news (Finnhub) are only fetched
+    for symbols that pass the live rules.
+    """
+    try:
+        from trading.api_wrapper import ETradeSession
+        sess = ETradeSession(sandbox=sandbox)
+        if not sess._load_saved_token():
+            print("No valid E*TRADE token. Run: python plan/sandbox_auth.py "
+                  "--auth (then --verifier CODE)")
+            return
+    except Exception as e:
+        print(f"E*TRADE unavailable: {e}")
+        return
+
+    env = "SANDBOX" if sandbox else "PROD"
+    quotes = sess.get_quotes([s.upper() for s in symbols])
+    print(f"\nLIVE E*TRADE screen ({env}, "
+          f"{datetime.now(ET).strftime('%H:%M:%S ET')})")
+    print(f"{'SYM':<6} {'status':<15} {'last':>7} {'prev':>7} {'gain%':>7} "
+          f"{'r3':>3} {'rvol':>5} {'r5':>3} {'band':>5}")
+    print("-" * 66)
+    requested = [s.upper() for s in symbols]
+    extra = [k for k in quotes if k not in requested]
+    if extra:
+        print(f"(note: sandbox returns canned symbols -- got {extra} "
+              f"instead of some requested; use --prod for real data)")
+    prepass = []
+    for sym in requested + extra:
+        qd = quotes.get(sym)
+        if not qd:
+            print(f"{sym:<6} NO QUOTE")
+            continue
+        all_q = qd.get("All", {})
+        ext = all_q.get("ExtendedHourQuoteDetail", {})
+        status = qd.get("quoteStatus", "?")
+        last = ext.get("lastPrice") or all_q.get("lastTrade")
+        prev = all_q.get("previousClose")
+        tv = ext.get("volume") or all_q.get("totalVolume")
+        av = all_q.get("averageVolume")
+        if not last or not prev:
+            print(f"{sym:<6} {status:<15} (no price data)")
+            continue
+        gain = (float(last) / float(prev) - 1) * 100
+        rvol = (float(tv) / float(av)) if tv and av else 0.0
+        r1 = PRICE_MIN <= float(last) <= PRICE_MAX
+        r3 = gain >= MIN_DAY_GAIN_PCT
+        r5 = rvol >= MIN_REL_VOLUME
+        b = lambda v: "Y" if v else "."
+        print(f"{sym:<6} {status:<15} {float(last):>7.2f} {float(prev):>7.2f} "
+              f"{gain:>+6.1f}% {b(r3):>3} {rvol:>5.1f} {b(r5):>3} {b(r1):>5}")
+        if r1 and r3 and r5:
+            prepass.append(sym)
+
+    if not prepass:
+        print("\nNo symbol passes the live price/gain/rvol rules right now.")
+        return
+    print(f"\nLive pre-pass: {prepass} -- checking sector/float/news lazily...")
+    for sym in prepass:
+        c = screen_symbol(sym)
+        ok = "PASS" if c.get("PASS") else "fail"
+        print(f"  {sym}: sector={c.get('rule4_hot_sector')} "
+              f"float={c.get('float_m')}M ok={c.get('rule8_float_under_16m')} "
+              f"news18h={c.get('rule2_news_18h')} -> {ok} {c.get('news', '')}")
 
 
 def cmd_volume(symbols: list[str], minutes: int, sandbox: bool) -> None:
@@ -1155,6 +1419,17 @@ def main() -> None:
     vo.add_argument("--prod", action="store_true",
                     help="use PROD keys/token instead of sandbox")
 
+    ls = sub.add_parser("livescreen",
+                        help="real-time rule screen via E*TRADE quotes")
+    ls.add_argument("symbols", nargs="+")
+    ls.add_argument("--prod", action="store_true")
+
+    lb = sub.add_parser("livebars",
+                        help="live 1-min candles + pattern detection via E*TRADE")
+    lb.add_argument("symbol")
+    lb.add_argument("--minutes", type=int, default=10)
+    lb.add_argument("--prod", action="store_true")
+
     args = p.parse_args()
     if args.cmd == "scan":
         cmd_scan(args.size)
@@ -1174,6 +1449,10 @@ def main() -> None:
         cmd_optimize(args.symbols, args.days, args.capital, args.min_price)
     elif args.cmd == "volume":
         cmd_volume(args.symbols, args.minutes, sandbox=not args.prod)
+    elif args.cmd == "livescreen":
+        cmd_livescreen(args.symbols, sandbox=not args.prod)
+    elif args.cmd == "livebars":
+        cmd_livebars(args.symbol, args.minutes, sandbox=not args.prod)
 
 
 if __name__ == "__main__":
