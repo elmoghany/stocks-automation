@@ -20,11 +20,19 @@ entitlement-gated endpoint. Tested with BOTH sandbox and PROD keys
 test_extended_order.py --verifier path auto-runs an order preview and has
 a bug: ETradeSession.__new__ skips __init__ so self.sandbox is unset ->
 _save_token crashes; exchanged manually instead): still 401 on prod.
+Also ruled out market-closed/Sunday as the cause: historical date params
+(MMDDYYYY + ISO ranges for Fri Jul 31), interval params, and the
+consumerkey header all return the same 401 on the working prod token --
+an entitlement rejection happens before any date/market-hours logic.
 Conclusion: endpoint exists but is not granted to developer keys --
 likely internal to E*TRADE's own apps or needs a special entitlement; ask
 E*TRADE API support (developer@etrade.com) to enable "chart" for the key.
-Until then: historical bars stay yfinance; LIVE bars via quote polling
-(penny livebars). PROD validation same session: real AMD quote OK, and
+Online research confirms: the maintained community wrapper (etrader R
+package, exploringfinance) exposes only etrd_market_quote() and
+etrd_option_chain() for market data -- no history/candles function exists
+in any public E*TRADE wrapper; developer.etrade.com blocks scraping (403)
+but its documented API list matches our local docs. Until then: historical
+bars stay yfinance; LIVE bars via quote polling (penny livebars). PROD validation same session: real AMD quote OK, and
 penny livescreen --prod returned REAL data (SCYX +26%, TCX +56% 6.9x rvol
 -> passed live rules, FCUV +807% correctly out of band at $17.05).
 
