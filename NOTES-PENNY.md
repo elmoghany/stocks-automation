@@ -9,6 +9,29 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## Granularity Bug Fixed (2026-08-03)
+
+User challenged the year's low per-day avg ("we trade hot gappers, should
+be ~$1.5k/day") -- and was RIGHT. Diagnostic on identical days (Jun-Jul):
+1-min as-run +$930/day, resampled 5-min +$1,968/day, corrected 1-min
++$1,409/day. THREE parameters silently change meaning with bar size; the
+year ran 1-min while calibration ran 5-min: (1) liquidity cap 10% of a
+1-MIN bar = ~5x smaller positions (the dominant effect); (2) trail-20 on
+1-min stops out on noise 5-min smooths (5-min numbers were OPTIMISTIC --
+coarse bars flatter trailing exits; live truth is nearer the 1-min path);
+(3) ORB 3 bars = 3 min vs 15. FIX: participation cap now measured over a
+trailing window (vol_frac_window param; 10% of trailing 5-MIN volume) and
+granularity-equivalent ORB/surge (orb_bars=15, SURGE_WINDOW_MIN=50 on
+1-min data). CORRECTED FULL YEAR (Aug25-Aug26, $15k, 1-min realism):
+C1nocap +$259,341 (+$1,104/day, worst -$11,543); B2cap14 +$174,535
+(+$847/day, worst -$5,689); A2cap14 (default) +$163,989 (+$770/day);
+CAP14t1 +$141,978; V2a_t1 +$141,207. Top-2 again beats top-1 at noon
+(that flip was also a sizing artifact). RECONCILIATION: ~$1.5k/day is the
+HOT-month rate (hot window corrected: +$1,409/day); full-year averages
+$770-1,104/day because Aug-Mar is genuinely colder -- regime, not bug.
+Year-2 cross-validation still running with old settings; will re-sim from
+cache with corrected params on completion.
+
 ## Full Year Results (2026-08-03)
 
 FULL YEAR Aug 2025 -> Aug 2026 on Massive 1-min bars (5,211 gapper
