@@ -6,6 +6,25 @@ Normal (large-cap wave/value) trading notes live in `NOTES.md`.
 
 ---
 
+## Nine Variant Sweep (2026-08-03)
+
+Three one-change variants each of V2/V3/V6 (plan/penny_v_variants.py; added
+entry_cutoff param to simulate_trades: no NEW entries after a time, exits
+continue). RESULTS (days/total/avg/worst): CHAMPION = V2a (noon + NO FLOAT
+LIMIT + keep $16 ceiling): 31d +$47,571 +$1,535/day worst -$2,142 -- beats
+every prior config on BOTH total and per-day avg at V2-level risk.
+V2b (1PM cutoff) +$37,799 (+$1,350) but worst -$2,892; V3a==V6a (band,
+no-float, full day) +$44,607 (+$1,174); V6b (no-ceil no-float noon)
++$41,236 (+$1,213); V3c (entries stop at noon, exits to close) +$33,812 ~=
+V3 base (afternoon ENTRIES are ~neutral; afternoon is only good for
+letting winners run, slightly). Trail 25% hurt in ALL THREE bases (-$11k
+to -$12k each) -- third independent confirmation that trail 20% is
+optimal. Float-limit removal is the single most valuable relaxation
+(+$15k over V2) BUT it drops user rule 8 (float<=16M): bigger-float names
+absorb $15k without the vol-cap binding and their halal pass-rate is
+higher. Annualized V2a ~ $285k hot-tape at $15k fixed. AWAITING user
+sign-off to drop rule 8 and adopt V2a as default.
+
 ## Noon Window Default (2026-08-03)
 
 Made 7AM-NOON the default penny trading window per V2 results (user

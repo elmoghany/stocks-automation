@@ -766,7 +766,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     trail_pct: float | None = None,
                     orb: bool = False,
                     orb_bars: int = 3,
-                    max_vol_frac: float | None = None) -> list[dict]:
+                    max_vol_frac: float | None = None,
+                    entry_cutoff=None) -> list[dict]:
     """Run the entry/exit state machine over 1-min bars of a single day.
 
     State machine:
@@ -806,8 +807,13 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
     for i in range(1, cd.n):
         price = cd.c[i]
 
+        # entry cutoff: after this time no NEW positions (exits continue)
+        entries_open = (entry_cutoff is None
+                        or cd.index[i].time() < entry_cutoff)
+
         # ORB entry: allowed from any flat state
-        if (state in ("SCAN", "DIPPING", "ARMED") and or_high is not None
+        if (entries_open
+                and state in ("SCAN", "DIPPING", "ARMED") and or_high is not None
                 and i > or_end and cd.h[i] > or_high
                 and (max_trades is None or len(trades) < max_trades)):
             fill = max(or_high, cd.o[i])
@@ -865,6 +871,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                 pats = [p for p in pats if p in BUY_SETS[DEFAULT_BUY_SET]]
             elif buy_set is not None:
                 pats = [p for p in pats if p in buy_set]
+            if pats and not entries_open:
+                pats = []                      # past entry cutoff
             if pats:                           # dip inverts upward -> BUY
                 entry = price
                 entry_i = i
