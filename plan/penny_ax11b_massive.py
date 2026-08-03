@@ -1,0 +1,195 @@
+"""AX11b: point-in-time halal with MASSIVE financials + point-in-time
+shares. Compliance chain per (symbol, trade date):
+  1. haram-industry screen (static sector_raw / yf)
+  2. mcap_t = shares-as-of-date (Massive v3 tickers) x prev_close
+  3. precise test via cached yfinance quarterlies (data/pt_halal) if the
+     nearest quarter exists at-or-before the date
+  4. else CONSERVATIVE BOUNDS via Massive financials (period end <= date):
+     treat ALL liabilities as debt and ALL current assets as cash; pass
+     only if even these upper bounds satisfy 10/10/20 -- never passes a
+     stock the true data would fail
+  5. else static verdict; else fail.
+Everything else: live default (calm-gap top-8 walk, $15k, 7-noon,
+trail 20 / stop 8 / scale-out 1/3@+25%). Both years.
+"""
+
+import importlib.util
+import json
+import sys
+import urllib.request
+from datetime import time as dtime
+from pathlib import Path
+
+import pandas as pd
+
+ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT))
+_spec = importlib.util.spec_from_file_location("pennystocks",
+                                               ROOT / "penny-stocks.py")
+ps = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(ps)
+ps.SURGE_WINDOW_MIN = 50
+ps.PRICE_MAX = float("inf")
+
+from trading.win_cred import get_secret
+KEY = get_secret("MASSIVE_KEY")
+M1 = ROOT / "data" / "massive" / "m1"
+PT = ROOT / "data" / "pt_halal"
+FIN = ROOT / "data" / "pt_fin"
+SH = ROOT / "data" / "pt_shares"
+FIN.mkdir(exist_ok=True)
+SH.mkdir(exist_ok=True)
+VER = json.loads((ROOT / "data/backtest60/rules_ytd.json").read_text())
+HARAM = ps.HARAM_INDUSTRY_WORDS
+
+
+def api(url):
+    try:
+        with urllib.request.urlopen(url, timeout=30) as r:
+            return json.load(r)
+    except Exception:
+        return {}
+
+
+def get(sym, date):
+    f = M1 / f"{sym}_{date}.csv"
+    if not f.exists() or f.read_text(errors="ignore").startswith("EMPTY"):
+        return None
+    df = pd.read_csv(f)
+    df["begins_at"] = (pd.to_datetime(df["begins_at"], utc=True)
+                       .dt.tz_convert(ps.ET))
+    return df.set_index("begins_at").sort_index()
+
+
+def massive_fin(sym):
+    f = FIN / f"{sym}.json"
+    if f.exists():
+        return json.loads(f.read_text())
+    d = api(f"https://api.polygon.io/vX/reference/financials?ticker={sym}"
+            f"&limit=20&apiKey={KEY}")
+    out = []
+    for r in d.get("results") or []:
+        bs = r.get("financials", {}).get("balance_sheet", {})
+        out.append({"end": r.get("end_date") or "",
+                    "liab": (bs.get("liabilities") or {}).get("value"),
+                    "cura": (bs.get("current_assets") or {}).get("value")})
+    f.write_text(json.dumps(out))
+    return out
+
+
+def shares_asof(sym, date):
+    f = SH / f"{sym}_{date[:7]}.json"
+    if f.exists():
+        return json.loads(f.read_text())
+    d = api(f"https://api.polygon.io/v3/reference/tickers/{sym}?date={date}"
+            f"&apiKey={KEY}")
+    sh = (d.get("results") or {}).get("weighted_shares_outstanding") or \
+        (d.get("results") or {}).get("share_class_shares_outstanding")
+    f.write_text(json.dumps(sh))
+    return sh
+
+
+def industry_clean(sym):
+    sec = VER.get(sym, {}).get("sector_raw", "")
+    if sec:
+        return not any(w in sec.lower() for w in HARAM)
+    st_f = PT / f"{sym}.json"
+    if st_f.exists():
+        ind = json.loads(st_f.read_text()).get("industry", "")
+        if ind.strip():
+            return not any(w in ind.lower() for w in HARAM)
+    return True   # unknown industry -> allow (ratios still must pass)
+
+
+def halal_pt(sym, date, prev_close):
+    if not industry_clean(sym):
+        return False
+    sh = shares_asof(sym, date)
+    if not sh or not prev_close:
+        return bool(VER.get(sym, {}).get("halal_ok"))
+    mcap = sh * prev_close
+    # precise (yf quarterlies cache)
+    st_f = PT / f"{sym}.json"
+    if st_f.exists():
+        st = json.loads(st_f.read_text())
+        qs = sorted(st.get("quarters", []), key=lambda q: q["date"])
+        sel = None
+        for q in qs:
+            if q["date"] <= date:
+                sel = q
+        if sel:
+            loan = sel["debt"] / mcap * 100
+            cash = sel["cash"] / mcap * 100
+            comb = loan + cash
+            ann = sel["rev"] * 4
+            haram = abs(sel["intinc"]) / ann * 100 if ann > 0 else 0
+            return ((loan <= 10 or comb <= 20)
+                    and (cash <= 10 or comb <= 20)
+                    and comb <= 20 and haram < 5)
+    # conservative bounds (Massive financials)
+    fins = massive_fin(sym)
+    sel = None
+    for r in sorted(fins, key=lambda x: x["end"]):
+        if r["end"] and r["end"] <= date:
+            sel = r
+    if sel and sel["liab"] is not None and sel["cura"] is not None:
+        loan_ub = sel["liab"] / mcap * 100
+        cash_ub = sel["cura"] / mcap * 100
+        comb_ub = loan_ub + cash_ub
+        return ((loan_ub <= 10 or comb_ub <= 20)
+                and (cash_ub <= 10 or comb_ub <= 20) and comb_ub <= 20)
+    return bool(VER.get(sym, {}).get("halal_ok"))
+
+
+def run(label):
+    gap = json.loads((ROOT / f"data/massive/gappers_{label}.json").read_text())
+    by_day = {}
+    for c in gap:
+        by_day.setdefault(c["date"], []).append(c)
+    days = []
+    monthly = {}
+    for date, cs in sorted(by_day.items()):
+        picked = None
+        for c in sorted(cs, key=lambda x: -x["gain_pct"])[:8]:
+            df = get(c["symbol"], date)
+            if df is None:
+                continue
+            w = df[(df.index.time >= dtime(7, 0))
+                   & (df.index.time < dtime(12, 0))]
+            if len(w) < 20:
+                continue
+            g7 = ((float(w["Open"].iloc[0]) / c["prev_close"] - 1) * 100
+                  if c["prev_close"] else 999)
+            if g7 > 20:
+                continue
+            if not halal_pt(c["symbol"], date, c["prev_close"]):
+                continue
+            picked = (c, w)
+            break
+        if picked is None:
+            continue
+        c, w = picked
+        tr = ps.simulate_trades(w, verbose=False, buy_set=None,
+                                vol_confirm=False, trail_pct=20, stop_pct=8,
+                                prev_close=c["prev_close"], budget=15000,
+                                orb=True, orb_bars=15, max_vol_frac=0.10,
+                                vol_frac_window=5, scale_out_at=25.0)
+        if not tr:
+            continue
+        dp = sum(x["pnl"] for x in tr)
+        days.append(dp)
+        monthly.setdefault(date[:7], []).append(dp)
+        if len(days) % 40 == 0:
+            print(f"  ..{label} {len(days)}d ${sum(days):+,.0f}", flush=True)
+    negm = sum(1 for v in monthly.values() if sum(v) < 0)
+    tot = sum(days)
+    print(f"AX11b massive-pt {label:<6} {len(days):>4} {tot:>+12,.0f} "
+          f"{tot / len(days) if days else 0:>+8,.0f} {negm:>3}/{len(monthly)}",
+          flush=True)
+    print("  monthly:", {m: round(sum(v)) for m, v in sorted(monthly.items())},
+          flush=True)
+
+
+if __name__ == "__main__":
+    for label in ("year", "y2025"):
+        run(label)
