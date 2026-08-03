@@ -9,6 +9,23 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## Recycling Tested Dead (2026-08-03)
+
+User approved: $15k = max at risk at any MOMENT (recycling allowed),
+any price >= $2 (no $75 cap), window stays 7AM-noon. AX21 campaign on
+the recycling half (plan/penny_ax21_recycle.py, honest event-ordered
+engine; commit-to-top-pick then earliest-next causal event; verified
+exact reproduction of AX11b +$211,585/+$105,474 in --pick walk mode).
+Results, old universe: earliest-entry picker k=1 collapses to
++$81k/+$57k (pick QUALITY >> entry speed); commit-then-recycle k=0
+(unbounded) = Y1 +$210,579 / Y2 +$103,922 -- SLIGHTLY BELOW baseline
+both years. Cause: cross-symbol fills occupy capital when the committed
+pick's own (profitable) re-entries fire -> displacement. The top pick's
+re-entry stream already saturates the morning window. RECYCLING IS A
+DEAD LEVER at this window/universe. Remaining lever: AX20 widened
+universe (no $75 cap, mid/large-cap earnings gappers; discovery
+running, gd responses now cached under data/massive/gd/).
+
 ## Target Campaign Verdict (2026-08-03)
 
 Goal: +$200k BOTH years at $15k/day, halal fixed, all else flexible.
