@@ -109,7 +109,10 @@ GAIN_PER_SHARE = REWARD_RISK * LOSS_PER_SHARE          # 0.30
 GAIN_PER_SHARE_MAX = GAIN_PER_SHARE + 0.02             # sell zone 0.30-0.32
 POSITION_DOLLARS = 1000          # rule 7 (changed from 1150 shares to $1000
                                  # per trade; shares = $1000 // entry price)
-MAX_FLOAT = 16_000_000           # rule 8
+MAX_FLOAT = None                 # rule 8 DROPPED 2026-08-03 (V2a adoption):
+                                 # no-float-limit tested +$15k over V2 at
+                                 # equal risk; float still displayed as info.
+                                 # Set to e.g. 16_000_000 to re-enable.
 
 # surge/dip detection for the entry setup (rule 9 summary)
 SURGE_PCT = 2.0                  # "strong surge": +2% within the window
@@ -636,8 +639,9 @@ def screen_symbol(symbol: str, now_et: datetime | None = None,
         checks["rule4_hot_sector"] = any(
             s in sector.lower() for s in HOT_SECTORS)
         checks["float_m"] = round(flt / 1e6, 1) if flt else None
-        checks["rule8_float_under_16m"] = (flt is not None
-                                           and flt <= MAX_FLOAT)
+        checks["rule8_float_under_16m"] = (
+            True if MAX_FLOAT is None
+            else (flt is not None and flt <= MAX_FLOAT))
 
     if (checks["rule9_halal"] and checks["rule4_hot_sector"]
             and checks["rule8_float_under_16m"]):
@@ -1072,7 +1076,7 @@ def _window_data(symbols: list[str], days: int,
                 flt = (t.info or {}).get("floatShares")
             except Exception:
                 flt = None
-        if flt is not None and flt > MAX_FLOAT:
+        if MAX_FLOAT is not None and flt is not None and flt > MAX_FLOAT:
             print(f"{sym.upper()}: float {flt / 1e6:.1f}M > "
                   f"{MAX_FLOAT / 1e6:.0f}M limit, symbol excluded")
             continue

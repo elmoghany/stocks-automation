@@ -6,6 +6,24 @@ Normal (large-cap wave/value) trading notes live in `NOTES.md`.
 
 ---
 
+## V2a Adopted Plus (2026-08-03)
+
+DROPPED rule 8 (float<=16M) per user sign-off and made V2a the live
+default: MAX_FLOAT=None in penny-stocks.py (float displayed as info,
+rule8 always passes; set a number to re-enable), Robinhood saved scan
+updated to 3 filters (float filter removed server-side), skill updated.
+Second-generation sweep from the new base (plan/penny_v2a_variants.py),
+one change each: A2 top-2 gappers/day = BEST TOTAL +$55,373 (+$1,678/day,
+20 days >=+$1k, worst unchanged -$2,142 -- deploys up to $30k);
+CAP10 ($2-10 price cap) = BEST EFFICIENCY +$1,748/day (+$47,197 total on
+27 days, same worst) -- cheaper gappers move more in %; CAP14 marginally
+above base both metrics; CAP12 dip = sample noise (nonmonotonic).
+B2 (no-float 7-2PM) +$53,606 but worst -$3,750; B1 (full day, entries
+stop at noon) ~= V2a (afternoon confirmed worthless a second time);
+A1 (7-11AM), A3 (stop 8%), C3 (11AM entry cutoff) all worse.
+Candidate next default: A2 (if capital allows 2x) or CAP10/CAP14 tweak;
+combo A2+CAP10 untested (would be 2 changes). Awaiting user pick.
+
 ## Nine Variant Sweep (2026-08-03)
 
 Three one-change variants each of V2/V3/V6 (plan/penny_v_variants.py; added
