@@ -172,6 +172,16 @@ NEUTRAL: AX13 no-sector filter -- IDENTICAL both years (sector rule
 inert at top-of-book; monster-blocker is halal timing -> AX11).
 QUEUED: AX10 news-tier, AX11 point-in-time halal (biggest lever).
 
+## 14. TARGET CAMPAIGN (2026-08-03, pt-halal era, both years, $15k/day)
+Scripts: penny_ax11_pt_halal.py, penny_ax11b_massive.py (+inline AX19).
+- AX11  pt-halal yf-coverage:   Y1 +$164,855 (88d) / Y2 +$89,832 (75d)
+- AX11b pt-halal Massive:       Y1 +$211,585 (135d,0negm) / Y2 +$105,474 (111d)
+- AX19  +cond-trail walk-12:    Y1 +$191,952 / Y2 +$124,548 (1 negm)
+- AX19b +cond-trail walk-8:     Y1 +$198,542 / Y2 +$121,195
+- AX19c thresh 1.0 (ADOPTED):   Y1 +$199,999 / Y2 +$120,648
+Note: pt-halal is the honest compliance basis; earlier sections used
+today's-snapshot halal and OVERSTATE the compliant opportunity set.
+
 ## Untested candidates (queue)
 - A2 + cap $10 (two changes: top-2 AND $2-10) — best-avg x best-total mix
 - surge 3% on the current default (was +$47 at $1k sizing)

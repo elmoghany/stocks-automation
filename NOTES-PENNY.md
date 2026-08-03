@@ -9,6 +9,33 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## Target Campaign Verdict (2026-08-03)
+
+Goal: +$200k BOTH years at $15k/day, halal fixed, all else flexible.
+AX11 (point-in-time halal, yf coverage): Y1 +$164,855 (88d, +$1,873/d, 0
+negm) / Y2 +$89,832 (75d, +$1,198/d) -- HONESTY BOMBSHELL: prior
+backtests included picks NOT halal on their trade dates (ratios are
+mcap-denominated and prices moved); pt-halal is the correct compliance
+AND live screening is already point-in-time-correct (uses today's data).
+AX11b (Massive financials conservative-bounds + pt shares, walk-8):
+Y1 +$211,585 (135d, +$1,567/d, 0 negm) = Y1 TARGET MET honestly;
+Y2 +$105,474 (111d, +$950/d). AX19 family (supply-conditioned trail 30%
+when trailing-10-session calm supply thin): walk-12 Y2 +$124,548 (1 negm!)
+but Y1 $192k; walk-8 thresh 1.0: Y1 +$199,999 / Y2 +$120,648.
+FRONTIER: max-Y1 = AX11b ($211.6k/$105.5k); balanced = AX19c-1.0
+($200.0k/$120.6k, two-year best $320.6k). ADOPTED SPEC: AX19c-1.0
+(pt-halal, no sector filter, calm-gap<=20 walk-8, top-1 x $15k, 7-noon,
+ORB15+patterns, trail 20 (30 when thin supply), stop 8, scale-out
+1/3@+25%). HONEST CEILING: Y2 $200k NOT reachable -- the remaining
+~$80k gap lives in Jan-May 2025 where morning-gapper alpha was ~zero at
+ANY pick quality; closing it at $15k/day long-only same-day would
+require curve-fitting noise (the exact overfit the Y1 calibration
+episode punished). Recommendations: (1) paper-trade the adopted spec;
+(2) productionize Massive-financials halal for backtest parity (live is
+already correct); (3) for thin months, a SECOND uncorrelated same-day
+strategy (e.g. large-cap halal momentum) is the legitimate path to
+smoothing income, not more knobs on this one.
+
 ## Round Two Verdict (2026-08-03)
 
 AX round 2 complete: 44 runs, registry section 13. ADOPTED AX18 (stop
