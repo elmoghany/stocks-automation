@@ -9,6 +9,27 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## Full Year Results (2026-08-03)
+
+FULL YEAR Aug 2025 -> Aug 2026 on Massive 1-min bars (5,211 gapper
+stock-days discovered, 1,815 symbols, 232 qualifying days after filters,
+$15k/pos). RANKING FLIPS the calibration-window conclusions:
+C1nocap (NO ceiling, no float, noon, top-2): +$174,134 (+$735/day, worst
+-$8,809) -- nearly DOUBLE the reigning champion. B2cap14 (7-2PM top-1):
++$129,759 with the SHALLOWEST tail (-$5,353). CAP14t1/V2a_t1 (top-1 noon):
++$108-112k BEAT the top-2 versions (+$94-96k): the second gapper LOST
+money across the full year (cold months). Current default A2cap14 ranked
+8th/10 at +$95,925. A2cap10 last (+$60k). Monthly shape (A2cap14): Apr-Jul
+2026 made +$111k while Aug 2025-Mar 2026 netted -$15k (5 negative months,
+worst day -$8,809 vs -$2,142 seen in calibration) -- the Jun-Jul
+calibration window was the hottest stretch of the year and overfit BOTH
+the ceiling and top-2 conclusions. LESSONS: (1) 8-week windows are regime
+samples, not truth -- every config decision now needs full-year evidence;
+(2) the $16 ceiling helped ONLY in the hot window; over a full year the
+big-priced gappers carried the cold months; (3) top-2 doubles exposure in
+bad regimes. DEFAULT DECISION PENDING year-2 (2024-25) cross-validation
+running now -- do not re-default on one year alone.
+
 ## Massive Data Integrated (2026-08-03)
 
 User subscribed to Massive (Polygon.io rebrand); key stored in Credential
