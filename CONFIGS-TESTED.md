@@ -114,6 +114,23 @@ Script: `plan/penny_cap_matrix.py`.
   | $10: +$42,950
 The $12 dip is real everywhere: it chops $10-12 entries (BIYA/QTTB class).
 
+## 11. FULL YEAR Aug 2025-Aug 2026 (2026-08-03, Massive 1-MIN bars, $15k)
+Script: `plan/penny_year_backtest.py` (label "year"). 232 qualifying days.
+- C1nocap  noceil noon top-2: 237d  +$174,134  +$735/d  worst -$8,809
+- B2cap14  $2-14 7-2PM top-1: 207d  +$129,759  +$627/d  worst -$5,353
+- B2cap16  $2-16 7-2PM top-1: 214d  +$129,709  +$606/d  worst -$5,353
+- CAP14t1  $2-14 noon top-1:  194d  +$111,813  +$576/d  worst -$4,985
+- V2a_t1   $2-16 noon top-1:  200d  +$108,939  +$545/d  worst -$4,985
+- B3cap16  full-day top-2:    231d   +$98,906  +$428/d  worst -$9,518
+- B3cap14  full-day top-2:    227d   +$96,148  +$424/d  worst -$9,518
+- A2cap14  noon top-2 (dflt): 216d   +$95,925  +$444/d  worst -$8,809
+- A2cap16  noon top-2:        220d   +$93,822  +$426/d  worst -$8,809
+- A2cap10  noon top-2:        194d   +$60,296  +$311/d  worst -$7,007
+Monthly (A2cap14): Apr-Jul26 +$111k; Aug25-Mar26 net -$15k (5 neg months).
+CAUTION: ran on 1-MIN bars vs 5-MIN calibration -- granularity changes
+vol-cap sizing, ORB range, surge window; see next section before comparing
+per-day numbers to the 8-week results.
+
 ## Untested candidates (queue)
 - A2 + cap $10 (two changes: top-2 AND $2-10) — best-avg x best-total mix
 - surge 3% on the current default (was +$47 at $1k sizing)
