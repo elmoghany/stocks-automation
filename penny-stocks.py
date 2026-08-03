@@ -95,8 +95,9 @@ PRICE_MAX = float("inf")         # CEILING REMOVED 2026-08-03 (C1 adoption):
                                  # negative months vs 3 -- in cold months the
                                  # capped menu is junk while pricier gappers
                                  # still trend. Set 14.0/16.0 to re-cap.
-TOP_GAPPERS_PER_DAY = 2          # trade the top TWO qualifying gappers/day
-                                 # ($15k each, up to $30k deployed)
+TOP_GAPPERS_PER_DAY = 1          # $15k/day TOTAL (user constraint): top-1
+                                 # x $15k beat top-2 x $7.5k (+$194k vs
+                                 # +$143k/yr; worst -$5.1k vs -$5.7k)
 NEWS_START = dtime(7, 0)         # trading window, ET (buy AND sell inside it)
 NEWS_END = dtime(12, 0)          # extended 10:00 -> NOON 2026-08-03: V2 test
                                  # showed +54% total, best $/day (+$1,202);

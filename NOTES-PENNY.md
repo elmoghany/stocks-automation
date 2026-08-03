@@ -9,6 +9,15 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## Fifteen K Constraint (2026-08-03)
+
+User: total deployment is $15k/DAY (not top-2 x $15k). Tested C1 under the
+constraint: top-1 x $15k = +$193,783/yr (+$897/day, median +$35, worst
+-$5,127, 2 neg months) vs top-2 x $7.5k = +$142,863 (+$608/day, smoother:
+0 neg months, worst -$5,669). ADOPTED top-1 x $15k (36% more profit,
+shallower worst day than the $30k top-2 version's -$11.5k).
+TOP_GAPPERS_PER_DAY=1. The earlier +$259k figure required $30k/day.
+
 ## C1 Default Adopted (2026-08-03)
 
 Made C1 the live default per user sign-off: PRICE_MAX = inf (ceiling
