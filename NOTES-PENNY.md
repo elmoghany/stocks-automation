@@ -9,6 +9,22 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## Four Feature Test (2026-08-03)
+
+Tested the pattern-study features as PROSPECTIVE filters vs both
+baselines (full year, $15k/day, monthly avg-daily tables in chat/registry).
+BASE1 C1 plain: +$193,783 (+$897/d, 2 neg months). BASE2 C1+calm-gap
+(current default): +$206,466 (+$1,007/d, 0 neg months). F1 calm+premarket
+$vol>=200k: avg rises to +$1,147/d BUT total falls to +$160,578 with 3
+negative months -- the volume minimum cuts quiet-open intraday developers,
+i.e. exactly the golden pattern. F2 calm+entry gate 15%: +$164,612,
+worse everywhere. F3 all combined: +$122,097, 4 neg months, worst.
+VERDICT: high day-gain and high rvol are OUTCOMES of winner days, not
+7AM-predictors -- filtering on their real-time proxies removes winners
+before they reveal themselves. Only the calm-gap feature is genuinely
+predictive. Current default (BASE2) stands: the study's value was the
+calm-gap rule + knowing the other features are descriptive only.
+
 ## Calm Gap Rule (2026-08-03)
 
 Pattern study of the $2k+ days (52 days summing +$294k vs year total
