@@ -141,7 +141,10 @@ DIP_MIN_CENTS = 0.05             # a real dip: >= 5c retrace from surge high
 # stop / 5% hard stop. The old hammer calibration remains available to the
 # experiment commands via BUY_SETS/SELL_MODES.
 DEFAULT_TRAIL_PCT = 20.0         # trailing exit: sell on 20% retrace from peak
-DEFAULT_STOP_PCT = 5.0           # hard stop below entry (trailing mode)
+DEFAULT_STOP_PCT = 8.0           # 5->8 (2026-08-03 AX16/AX18: +$4.7k Y1,
+                                 # +$9k Y2 -- survives weak-year shakeouts)
+DEFAULT_SCALE_OUT_AT = 25.0      # AX06/AX18: bank 1/3 at +25%, trail rest
+DEFAULT_SCALE_OUT_FRAC = 0.33
 DEFAULT_BUY_SET = "hammer_family"     # used only by legacy experiment paths
 DEFAULT_SELL_MODE = "strong_if_profit"
 ENTRY_VOL_MULT = 1.5             # reversal candle volume must be >= 1.5x ...
@@ -1050,7 +1053,9 @@ def cmd_backtest(symbol: str, days: int) -> None:
         trades = simulate_trades(day_df, prev_close=prev_map.get(day),
                                  buy_set=None, vol_confirm=False,
                                  trail_pct=DEFAULT_TRAIL_PCT,
-                                 stop_pct=DEFAULT_STOP_PCT, orb=True)
+                                 stop_pct=DEFAULT_STOP_PCT, orb=True,
+                                 scale_out_at=DEFAULT_SCALE_OUT_AT,
+                                 scale_out_frac=DEFAULT_SCALE_OUT_FRAC)
         if not trades:
             print("  no setups triggered (or not up 10%+)")
         all_trades.extend(trades)

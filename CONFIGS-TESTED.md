@@ -152,6 +152,26 @@ QUEUED (not yet run): AX02 gapper-supply throttle, AX04 premarket
 structure scoring, AX06 scale-out ladder, AX08 adaptive trail widening,
 AX10 Finnhub news-tier gate.
 
+## 13. AX ROUND 2 (2026-08-03, both years, $15k/day, 44 runs)
+Script: `plan/penny_ax_round2.py`. (Y1 total / Y2 total vs AX00
+$205,291 / $94,852; harness scans top-8 calm so AX00 differs slightly
+from section 12.)
+ADOPTED -> AX18 stop8+scaleout combo: Y1 +$209,935, Y2 +$104,174
+(2 neg months -- best Y2 consistency). Components: AX16-stop8 (+$210.0k/
++$103.9k, improves BOTH years) and AX06 scale-out 1/3@+25% (+$204.9k/
++$100.2k, free Y1 + better Y2).
+REJECTED: AX02 throttle (-$28k/-$11k rel), AX04 structure-scoring
+(-$8k/-$27k), AX08 trail-widen (-$6k/0 -- never triggers Y2), AX12
+cluster-sectors (+$6k/-$18k), AX14 top-N ALL N>1 dilute (N=1 optimal
+both years; calm supply caps ~4/day), AX15 afternoon 2-8PM (Y1 +$619,
+Y2 -$13,175 -- conclusively dead), AX16 trail 15/25/30 (20% peak both
+years two-year-net; NOTE trail 25-30 BEATS 20 in Y2 alone: +$108k/
++$114k -- regime-conditional trail = future idea), AX16 stop3
+(-$4k/-$35k), AX17a VWAP entry (-$131k/-$50k), AX17b EMA entry (worst).
+NEUTRAL: AX13 no-sector filter -- IDENTICAL both years (sector rule
+inert at top-of-book; monster-blocker is halal timing -> AX11).
+QUEUED: AX10 news-tier, AX11 point-in-time halal (biggest lever).
+
 ## Untested candidates (queue)
 - A2 + cap $10 (two changes: top-2 AND $2-10) — best-avg x best-total mix
 - surge 3% on the current default (was +$47 at $1k sizing)

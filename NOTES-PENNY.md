@@ -9,6 +9,22 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## Round Two Verdict (2026-08-03)
+
+AX round 2 complete: 44 runs, registry section 13. ADOPTED AX18 (stop
+5->8% + bank 1/3 at +25%): Y1 +$209,935 / Y2 +$104,174 with the best Y2
+consistency yet (2 neg months); both components improved both years
+independently. DEFAULT_STOP_PCT=8, DEFAULT_SCALE_OUT_AT=25 now live.
+Structural findings: top-N concentration N=1 optimal both years (calm
+supply caps ~4/day); afternoon 2-8PM conclusively dead (Y2 -$13k);
+indicator entries (VWAP/EMA) rejected 3rd time; sector filter INERT at
+top-of-book both years (drop-it and keep-it identical) -- the monster
+autopsy's 87% blockage is almost all halal-timing, making AX11
+(point-in-time halal) the biggest remaining lever; trail 25-30% beats 20%
+in the weak year only (+$108-114k vs $95k) -- regime-conditional trail
+width is the second remaining idea. Two-year default now: Y1 +$210k,
+Y2 +$104k = +$314k across regimes at $15k/day.
+
 ## Adaptation Series Launched (2026-08-03)
 
 User thesis: no such thing as a cold year -- news + hot sectors always
