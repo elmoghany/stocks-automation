@@ -1,10 +1,10 @@
 ---
-description: Penny-stock morning workflow — Robinhood scan, cache refresh, screen, live watch, order (7-10 AM ET)
+description: Penny-stock morning workflow — Robinhood scan, cache refresh, screen, live watch, order (7AM-noon ET)
 ---
 
 The full Cameron Ross morning workflow. Data sources: Robinhood MCP
 (scanner, 1-min bars with real premarket volume, float/sector), Finnhub
-(news 18h), E*TRADE (live quotes/volume + orders). Run during 7-10 AM ET.
+(news 18h), E*TRADE (live quotes/volume + orders). Run during 7AM-noon ET.
 
 ## Step 1 — Run the saved Robinhood scan (all rules server-side)
 
@@ -20,7 +20,7 @@ For each scan hit (top 3 max):
    `data/rh_fundamentals.json`: keys float, shares_outstanding, market_cap,
    sector, industry, avg_volume_30d, avg_volume_2wk, fetched, source.
 2. `get_equity_historicals` symbols=[SYM], interval=minute, bounds=extended,
-   start_time=TODAY 11:00Z, end_time=now (7 AM ET = 11:00 UTC in summer,
+   start_time=TODAY 11:00Z, end_time=now (window 7AM-NOON ET; 7AM = 11:00 UTC summer,
    12:00 UTC in winter) → write `data/rh_bars/{SYM}_{YYYY-MM-DD}.csv` with
    header `begins_at,open,high,low,close,volume` — SKIP bars where
    interpolated=true. penny-stocks.py merges these over yfinance
@@ -42,12 +42,13 @@ Trade only symbols passing ALL rules including news-within-18h.
 python penny-stocks.py livebars PICK --prod   # live 1-min candles + patterns
 ```
 
-Entry per backtest calibration (NOTES-PENNY.md): on normal gappers
-(+10-60%) use hammer-family + volume confirm, sell strong_if_profit,
-target 2:1, stop -$0.15, max 3 trades/day, ~$1000/trade. On explosive
-low-float days (+100%+, float < 2M) hammer candles rarely form — use any
-bullish reversal and RIDE with a 20-25% trailing stop (this is where the
-2x days come from). ALWAYS flat by 10:00 AM.
+Entry per current calibration (NOTES-PENNY.md, 2026-08-03): DEFAULT =
+any bullish reversal pattern OR opening-range breakout (break of the
+first-3-volume-bars high), no volume gate, RIDE with a 20% trailing stop
+and a -5% hard stop. Position ~$15k (capped at 10% of bar volume; PDT
+needs $25k+ equity). Expect roughly: half of qualifying days trade, ~60%
+of traded days win, losses capped ~-$1,500, profit concentrated in a few
+big trailing winners. ALWAYS flat by NOON.
 
 Orders go through E*TRADE (LIMIT only):
 ```bash
@@ -73,7 +74,7 @@ Gate ORDER (lazy -- each stage only runs if the prior passed):
    gate so no time is wasted on non-halal stocks
 3. float <=16M (RH cache) + hot sector
 4. news within 18h (Finnhub first, Yahoo second -- FH:/YF: tags)
-Trading: buy AND sell inside the same day's 7-10 AM window, force-flat
+Trading: buy AND sell inside the same day's 7AM-noon window, force-flat
 at window close; band and +10% re-checked AT ENTRY per bar.
 WARNING from live testing: low-mcap gappers frequently fail halal on the
 cash or debt ratio (small mcap denominator) -- expect the halal gate to

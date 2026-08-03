@@ -91,7 +91,9 @@ def load_rh_bars(symbol: str) -> pd.DataFrame | None:
 PRICE_MIN = 2.00                 # rule 1
 PRICE_MAX = 16.00
 NEWS_START = dtime(7, 0)         # trading window, ET (buy AND sell inside it)
-NEWS_END = dtime(10, 0)
+NEWS_END = dtime(12, 0)          # extended 10:00 -> NOON 2026-08-03: V2 test
+                                 # showed +54% total, best $/day (+$1,202);
+                                 # the 10-12 stretch carries the second leg
 NEWS_LOOKBACK_HOURS = 18         # rule 2: news within the last 18 hours
 MIN_DAY_GAIN_PCT = 10.0          # rule 3
 HOT_SECTORS = [                  # rule 4: substrings matched against
@@ -715,7 +717,7 @@ def cmd_scan(size: int) -> None:
     if not candidates:
         print("No stocks in the market currently match price band + 10% gain."
               "\n(Normal outside weekday market hours -- gappers appear "
-              "7-10 AM ET on news days.)")
+              "7AM-noon ET on news days.)")
         return
 
     print("Stage 2: full rule check on each candidate:")
@@ -932,7 +934,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
 
     # HARD RULE: whatever was bought in this session's bars is sold before
     # the session ends -- any open position is flattened at the last bar.
-    # (For 7-10 AM window data that means sold by 10:00 AM the same day.)
+    # (For 7AM-noon window data that means sold by NOON the same day.)
     if state == "LONG":
         exit_px = cd.c[cd.n - 1]
         pnl = (exit_px - entry) * shares
@@ -962,13 +964,13 @@ def _enforce_price_band(symbol: str, df: pd.DataFrame) -> bool:
 
 
 def cmd_backtest(symbol: str, days: int) -> None:
-    # penny stocks are DAY-TRADED in the 7-10 AM ET window ONLY: shares
+    # penny stocks are DAY-TRADED in the 7AM-noon ET window ONLY: shares
     # bought in the window are ALWAYS sold within the same day's window
-    # (flattened by 10:00 AM at the latest -- never held past the window)
+    # (flattened by NOON at the latest -- never held past the window)
     window_data = _window_data([symbol], days)
     entry = window_data.get(symbol.upper())
     if not entry or entry["bars"].empty:
-        print(f"No usable 7-10 AM window data for {symbol}")
+        print(f"No usable 7AM-noon window data for {symbol}")
         return
     w, prev_map = entry["bars"], entry["prev"]
 
@@ -976,7 +978,7 @@ def cmd_backtest(symbol: str, days: int) -> None:
     for day, day_df in w.groupby(w.index.date):
         if len(day_df) < 20:
             continue
-        print(f"\n{symbol.upper()}  {day}  7-10 AM  "
+        print(f"\n{symbol.upper()}  {day}  7AM-noon  "
               f"(open {day_df['Open'].iloc[0]:.2f}, "
               f"window close {day_df['Close'].iloc[-1]:.2f})")
         # PENNY DEFAULT (60d backtest winner + ORB, +39% in testing):
@@ -999,14 +1001,14 @@ def cmd_backtest(symbol: str, days: int) -> None:
 
 
 def cmd_candletest(symbols: list[str], days: int) -> None:
-    """Grid-test buy-pattern sets x sell modes in the 7-10 AM ET window."""
+    """Grid-test buy-pattern sets x sell modes in the 7AM-noon ET window."""
     window_data = _window_data(symbols, days)
     if not window_data:
         print("No usable data.")
         return
 
     print(f"\nGrid: {len(BUY_SETS)} buy sets x {len(SELL_MODES)} sell modes, "
-          f"7-10 AM ET only, ${POSITION_DOLLARS}/trade, "
+          f"7AM-noon ET only, ${POSITION_DOLLARS}/trade, "
           f"target +${GAIN_PER_SHARE:.2f} / stop -${LOSS_PER_SHARE:.2f}\n")
 
     rows = []
@@ -1043,7 +1045,7 @@ def cmd_candletest(symbols: list[str], days: int) -> None:
 
 def _window_data(symbols: list[str], days: int,
                  min_price: float | None = None) -> dict:
-    """Fetch 1-min bars (incl. premarket) restricted to 7-10 AM ET.
+    """Fetch 1-min bars (incl. premarket) restricted to 7AM-noon ET.
 
     The $2-$16 band is checked PER DAY at that day's first window price --
     a stock that later ran to $20 still counts on the days it was in band
@@ -1097,7 +1099,7 @@ def _window_data(symbols: list[str], days: int,
                       f"${day_hi:.2f} never inside ${lo:.0f}-{PRICE_MAX:.0f} "
                       f"band, day skipped")
         w = pd.concat(keep) if keep else w.iloc[0:0]
-        print(f"{sym.upper()}: {len(w)} one-min bars 7-10 AM ET across "
+        print(f"{sym.upper()}: {len(w)} one-min bars 7AM-noon ET across "
               f"{len({d for d in w.index.date})} in-band days")
         if len(w):
             # per window day, from daily bars: previous close (up->10% rule)
@@ -1121,7 +1123,7 @@ def _window_data(symbols: list[str], days: int,
 
 
 def cmd_gridtest(symbols: list[str], days: int) -> None:
-    """Grid: buy-pattern set x trades-per-day cap, 7-10 AM ET window.
+    """Grid: buy-pattern set x trades-per-day cap, 7AM-noon ET window.
 
     '1 trade buy & 1 trade sell' = cap 1; 'n trades' = cap 2, 3, unlimited.
     Sell mode fixed at the calibrated default. $POSITION_DOLLARS per trade.
@@ -1133,7 +1135,7 @@ def cmd_gridtest(symbols: list[str], days: int) -> None:
 
     caps = [1, 2, 3, None]
     print(f"\nGrid: {len(BUY_SETS)} buy sets x trades/day caps {caps}, "
-          f"7-10 AM ET, ${POSITION_DOLLARS}/trade, "
+          f"7AM-noon ET, ${POSITION_DOLLARS}/trade, "
           f"sell={DEFAULT_SELL_MODE}, vol confirm on\n")
 
     rows = []
@@ -1181,7 +1183,7 @@ class EtradeVolumeFeed:
     the volume-confirmation filter before 9:30. E*TRADE's quote API returns
     cumulative totalVolume in real time (and an ExtendedHourQuoteDetail block
     in pre/post market), so polling it and diffing consecutive samples gives
-    true per-minute volume during 7-10 AM.
+    true per-minute volume during 7AM-noon.
 
     Backtests still use yfinance: E*TRADE has NO historical intraday data.
     """
@@ -1448,7 +1450,7 @@ def cmd_pairtest(symbols: list[str], days: int) -> None:
 
     print(f"\n{len(BULLISH_PATTERNS)} entry x {len(BEARISH_PATTERNS)} exit = "
           f"{len(BULLISH_PATTERNS) * len(BEARISH_PATTERNS)} combos | "
-          f"7-10 AM ET | ${POSITION_DOLLARS}/trade | "
+          f"7AM-noon ET | ${POSITION_DOLLARS}/trade | "
           f"target +${GAIN_PER_SHARE:.2f} / stop -${LOSS_PER_SHARE:.2f} | "
           f"vol confirm on")
 
@@ -1494,7 +1496,7 @@ def cmd_pairtest(symbols: list[str], days: int) -> None:
 def cmd_optimize(symbols: list[str], days: int, start_cap: float,
                  min_price: float | None = None) -> None:
     """Hunt for 2x: percent target/stop grid, all-in compounding, one gapper
-    per day (the provided symbol with the highest 7-10 AM volume that day)."""
+    per day (the provided symbol with the highest 7AM-noon volume that day)."""
     window_data = _window_data(symbols, days, min_price=min_price)
     if not window_data:
         print("No usable data.")
@@ -1526,7 +1528,7 @@ def cmd_optimize(symbols: list[str], days: int, start_cap: float,
         f"{d} {day_pick[d][0]}(+{day_pick[d][1]:.0f}%)" for d in days_sorted))
     print(f"All-in compounding from ${start_cap:,.0f}, entries="
           f"{DEFAULT_BUY_SET}+vol confirm, sell={DEFAULT_SELL_MODE}, "
-          f"7-10 AM ET, same-day exits\n")
+          f"7AM-noon ET, same-day exits\n")
 
     targets = [2, 3, 5, 8, 10, 15, 20, 30]
     stops = [1, 1.5, 2, 3, 5, 8]
@@ -1627,12 +1629,12 @@ def main() -> None:
     pt.add_argument("symbol")
 
     ct = sub.add_parser("candletest",
-                        help="grid-test candle buy/sell configs 7-10 AM ET")
+                        help="grid-test candle buy/sell configs 7AM-noon ET")
     ct.add_argument("symbols", nargs="+")
     ct.add_argument("--days", type=int, default=5)
 
     gt = sub.add_parser("gridtest",
-                        help="grid buy sets x trades/day cap, 7-10 AM ET")
+                        help="grid buy sets x trades/day cap, 7AM-noon ET")
     gt.add_argument("symbols", nargs="+")
     gt.add_argument("--days", type=int, default=5)
 

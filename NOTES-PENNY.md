@@ -6,6 +6,19 @@ Normal (large-cap wave/value) trading notes live in `NOTES.md`.
 
 ---
 
+## Noon Window Default (2026-08-03)
+
+Made 7AM-NOON the default penny trading window per V2 results (user
+sign-off): NEWS_END 10:00 -> 12:00 in penny-stocks.py (the constant defines
+the trading window everywhere -- _window_data, backtest, all experiment
+commands). All docs/skill updated: buy AND sell inside 7AM-noon, force-flat
+at NOON. Skill's entry section also refreshed to the current default
+(all-patterns + ORB, trail 20%/stop 5%, ~$15k capped at 10% bar volume).
+Measured basis: V2 +$32,453 over 8 weeks (+$1,202/traded day, 14/27 days
+>= +$1k) vs 10AM cutoff +$21,084 -- the 10:00-12:00 stretch carries the
+morning gappers' second leg. Annualized ~$190k at fixed $15k sizing (hot-
+tape assumption; cold-tape floor ~half).
+
 ## Expansion Variants Tested (2026-08-03)
 
 Seven rule-relaxation variants + Ross Cameron comparison, all real intraday
