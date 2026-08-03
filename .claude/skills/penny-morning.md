@@ -9,8 +9,8 @@ The full Cameron Ross morning workflow. Data sources: Robinhood MCP
 ## Step 1 — Run the saved Robinhood scan (all rules server-side)
 
 Call MCP tool `run_scan` with scan_id `5f132877-7730-4a18-9e72-b3f0d2c9df83`
-(filters: Last $2-14, %Change>=10% 1d, RelVolume>=5x 30d, sorted
-%Change desc; float filter removed, band tightened to $14 2026-08-03). Results are live. If empty: no A+ gapper today — DO
+(filters: Last >$2 NO CEILING, %Change>=10% 1d, RelVolume>=5x 30d,
+sorted %Change desc; C1 adopted 2026-08-03: ceiling+float removed). Results are live. If empty: no A+ gapper today — DO
 NOT force a trade; the edge comes from patience (see NOTES-PENNY.md).
 
 ## Step 2 — Refresh the Robinhood caches for the candidates
@@ -69,15 +69,15 @@ write the CSV first — Robinhood 1-min history reaches ~2+ weeks back,
 ## Rules recap (all enforced in penny-stocks.py)
 
 Gate ORDER (lazy -- each stage only runs if the prior passed):
-1. FREE: price $2-14 + up >=10% + rvol >=5x (one quote/history call)
+1. FREE: price $2+ (no ceiling) + up >=10% + rvol >=5x (one quote/history call)
 2. HALAL: loans/mcap <=10%, deposits/mcap <=10%, combined <=20%, haram
    revenue <5%, no haram industry (see /halal-check) -- FIRST expensive
    gate so no time is wasted on non-halal stocks
 3. hot sector (float rule DROPPED 2026-08-03 -- float shown as info only)
 4. news within 18h (Finnhub first, Yahoo second -- FH:/YF: tags)
 Trading: buy AND sell inside the same day's 7AM-noon window, force-flat
-at window close; band ($2-14) and +10% re-checked AT ENTRY per bar; trade top-2
-qualifying gappers/day.
+at window close; $2 floor and +10% re-checked AT ENTRY per bar (NO price ceiling);
+trade top-2 qualifying gappers/day.
 WARNING from live testing: low-mcap gappers frequently fail halal on the
 cash or debt ratio (small mcap denominator) -- expect the halal gate to
 eliminate many scanner hits; that is by design.

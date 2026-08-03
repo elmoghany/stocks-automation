@@ -88,11 +88,15 @@ def load_rh_bars(symbol: str) -> pd.DataFrame | None:
 # ---------------------------------------------------------------------------
 # Strategy configuration (rules 1-8)
 # ---------------------------------------------------------------------------
-PRICE_MIN = 2.00                 # rule 1
-PRICE_MAX = 14.00                # $16 -> $14 (2026-08-03 cap matrix: keeps
-                                 # the $12-14 winners, sheds the laggy top)
+PRICE_MIN = 2.00                 # rule 1: $2 floor stays (sub-$2 = untradeable junk)
+PRICE_MAX = float("inf")         # CEILING REMOVED 2026-08-03 (C1 adoption):
+                                 # full-year 1-min backtest: no-ceiling
+                                 # +$259,341 vs $14-cap +$163,989, ZERO
+                                 # negative months vs 3 -- in cold months the
+                                 # capped menu is junk while pricier gappers
+                                 # still trend. Set 14.0/16.0 to re-cap.
 TOP_GAPPERS_PER_DAY = 2          # trade the top TWO qualifying gappers/day
-                                 # ($15k each; champion config +$55,495)
+                                 # ($15k each, up to $30k deployed)
 NEWS_START = dtime(7, 0)         # trading window, ET (buy AND sell inside it)
 NEWS_END = dtime(12, 0)          # extended 10:00 -> NOON 2026-08-03: V2 test
                                  # showed +54% total, best $/day (+$1,202);
@@ -699,14 +703,15 @@ def cmd_scan(size: int) -> None:
     candidates = []
     try:
         q = yf.EquityQuery("and", [
-            yf.EquityQuery("btwn", ["intradayprice", PRICE_MIN, PRICE_MAX]),
+            yf.EquityQuery("btwn", ["intradayprice", PRICE_MIN,
+                            min(PRICE_MAX, 10000.0)]),
             yf.EquityQuery("gt", ["percentchange", MIN_DAY_GAIN_PCT]),
             yf.EquityQuery("is-in", ["exchange", "NMS", "NYQ", "ASE", "NGM", "NCM"]),
         ])
         resp = yf.screen(q, sortField="dayvolume", sortAsc=False, size=size)
         candidates = [r["symbol"] for r in resp.get("quotes", [])]
         print(f"Stage 1: Yahoo screener found {len(candidates)} stocks "
-              f"${PRICE_MIN:.0f}-${PRICE_MAX:.0f} up >={MIN_DAY_GAIN_PCT:.0f}%: "
+              f"${PRICE_MIN:.0f}+{'' if PRICE_MAX == float('inf') else f'-{PRICE_MAX:.0f}'} up >={MIN_DAY_GAIN_PCT:.0f}%: "
               f"{', '.join(candidates) or 'none'}\n")
     except Exception as e:
         print(f"Custom screener query failed ({e}); falling back to "
@@ -976,7 +981,7 @@ def _enforce_price_band(symbol: str, df: pd.DataFrame) -> bool:
     price = float(df["Close"].iloc[-1])
     if not (PRICE_MIN <= price <= PRICE_MAX):
         print(f"{symbol.upper()} is ${price:.2f} -- outside the ${PRICE_MIN:.0f}-"
-              f"${PRICE_MAX:.0f} penny-stock band. This strategy does not apply:"
+              f"{'no-cap' if PRICE_MAX == float('inf') else f'${PRICE_MAX:.0f}'} penny-stock band. This strategy does not apply:"
               f" the $0.18/-$0.15 per-share targets only make sense at penny"
               f" prices. Pick an in-band stock (see: python penny-stocks.py screen).")
         return False
@@ -1116,7 +1121,7 @@ def _window_data(symbols: list[str], days: int,
                 keep.append(day_df)
             else:
                 print(f"  {sym.upper()} {day}: window range ${day_lo:.2f}-"
-                      f"${day_hi:.2f} never inside ${lo:.0f}-{PRICE_MAX:.0f} "
+                      f"${day_hi:.2f} never inside ${lo:.0f}+ band "
                       f"band, day skipped")
         w = pd.concat(keep) if keep else w.iloc[0:0]
         print(f"{sym.upper()}: {len(w)} one-min bars 7AM-noon ET across "

@@ -9,6 +9,21 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## C1 Default Adopted (2026-08-03)
+
+Made C1 the live default per user sign-off: PRICE_MAX = inf (ceiling
+REMOVED; $2 floor stays), TOP_GAPPERS_PER_DAY=2 and noon window unchanged,
+Robinhood saved scan now Last > $2 (no ceiling), skill updated. Evidence:
+full-year corrected backtest C1 +$259,341 (+$1,104/day, 56% win days,
+ZERO negative months, worst -$11,543) vs $14-cap +$163,989 (3 negative
+months, median day NEGATIVE). Identical buy/sell mechanics -- only the
+pick universe changed. Full default now: $2+ any price, no float limit,
+upward sectors, halal-first, dual news, 7AM-noon, top-2 x $15k, ORB(15min)
++ all-bullish 1-min patterns, trail 20%/stop 5%, participation cap 10% of
+trailing 5-min volume, flat by noon. NOTE: adopted on ONE year of
+evidence at user direction; year-2 cross-validation still running and
+will be reported against this default.
+
 ## C1 Deep Comparison (2026-08-03)
 
 C1 vs A2cap14 vs A2cap16, corrected params, full year, top-2 x $15k.
