@@ -6,6 +6,32 @@ Normal (large-cap wave/value) trading notes live in `NOTES.md`.
 
 ---
 
+## Expansion Variants Tested (2026-08-03)
+
+Seven rule-relaxation variants + Ross Cameron comparison, all real intraday
+data (Jun 4-Jul 30 full-session set; May RH-cache days excluded since the
+full-day fetcher can't reach them), $15k/position, 10% vol cap, one top
+gapper/day, halal always on (plan/penny_expand_test.py, penny_expand2.py,
+ross_cameron_test.py). RESULTS (days/total/avg-per-day/worst):
+V0 baseline $2-16 7-10AM: 18d +$21,084 +$1,171 -$1,500
+V1 no $16 ceiling 7-10AM: 21d +$19,660 +$936 (WORSE -- pricier gappers
+displace better penny picks and move less in %)
+V2 $2-16 7-NOON: 27d +$32,453 +$1,202 -$2,142  <-- BEST avg AND +54% total
+V3 $2-16 full day: 32d +$35,184 +$1,100 -$2,963 (afternoon chop dilutes)
+V4 no-ceil full day: 35d +$31,073 +$888
+V5 NO FLOAT $2-16 7-10AM: 22d +$24,313 +$1,105 (more days, diluted avg)
+V6 ALL relaxed: 38d +$39,739 +$1,046 -$3,750 (highest total, worst risk)
+ROSS-HALAL (documented Warrior playbook: micro-pullback break of prior
+candle high after 1-3 bar flag, stop at pullback low, half out at 2R,
+breakeven+trail, 7-11:30, $2-20): 19d -$14,988, 5/19 win days, worst
+-$4,286 -- LOST badly AS MECHANIZED ON 5-MIN BARS. Fair caveat: his style
+is built for 1-min bars + discretionary tape reading; this shows his
+mechanics don't transfer to 5-min automation, not that Ross loses.
+RECOMMENDATIONS: keep $16 ceiling, keep float<=16M for best $/day (relax
+only to scale total $ at more risk), EXTEND window to noon (single best
+change: +$1,202/day avg, 14 of 27 days >= +$1k). Awaiting user sign-off to
+make 7-12 the default (changes the 'flat by 10AM' rule to 'flat by noon').
+
 ## Position Size Scaling (2026-08-03)
 
 User goal: +$1,000/day. Added max_vol_frac liquidity cap to simulate_trades
