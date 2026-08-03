@@ -9,6 +9,25 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## Year Two Verdict (2026-08-03)
+
+Year-2 backtest complete (Oct 22 2024 - Aug 1 2025; Massive's 2-year
+rolling history forced the late start; 3,992 gapper days -> 664 after
+filters). RAW table (old uncorrected sizing) looked barren: best config
++$26k, B3 full-day configs NEGATIVE, worst days -$8.3k..-$10.1k -- 2024-25
+was a genuinely cold gapper year. CORRECTED re-sim, $15k/day:
+C1 top-1 +$32,015 (+$198/d) but C1+CALM-GAP = +$94,852 (+$597/d) -- the
+calm-gap rule TRIPLED the cold year despite being derived 100% from
+year-1 data: a clean out-of-sample validation. CAP14+calm-gap +$76,912 <
+C1+calm-gap: the no-ceiling choice cross-validates too. TWO-YEAR RECORD
+of the live default (C1 top-1 x $15k + calm-gap): Y1 +$206,466
+(+$1,007/d, 0 neg months), Y2 +$94,852 (+$597/d, 4 neg months of 10,
+worst month -$10,114). ~ +$300k over ~23 months on $15k/day deployed.
+Honest caveats: year-2 has survivorship bias (delisted 2024 gappers
+absent from universe/verdicts) and current-snapshot halal/sector; worst
+months -$10-15k are real -- size for them. The strategy is now validated
+across a hot year AND a cold year with every rule earning its place.
+
 ## Four Feature Test (2026-08-03)
 
 Tested the pattern-study features as PROSPECTIVE filters vs both
