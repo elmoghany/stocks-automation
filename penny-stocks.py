@@ -789,7 +789,11 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     orb_bars: int = 3,
                     max_vol_frac: float | None = None,
                     vol_frac_window: int = 1,
-                    entry_cutoff=None) -> list[dict]:
+                    entry_cutoff=None,
+                    scale_out_at: float | None = None,
+                    scale_out_frac: float = 0.33,
+                    trail_widen_at: float | None = None,
+                    trail_wide: float = 30.0) -> list[dict]:
     """Run the entry/exit state machine over 1-min bars of a single day.
 
     State machine:
@@ -806,6 +810,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
     entry = 0.0
     entry_i = -1
     budget_cur = budget if budget is not None else POSITION_DOLLARS
+    scaled = False
 
     # Opening-Range Breakout (second entry trigger, complements dip-reversal):
     # OR = first orb_bars bars that printed volume; stop-buy on a break of
@@ -851,6 +856,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     entry = fill
                     entry_i = i
                     peak = entry
+                    scaled = False
                     state = "LONG"
                     if verbose:
                         ts = cd.index[i].strftime("%m-%d %H:%M")
@@ -909,6 +915,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     continue
                 state = "LONG"
                 peak = entry
+                scaled = False
                 if verbose:
                     ts = cd.index[i].strftime("%m-%d %H:%M")
                     print(f"  BUY  {ts}  @{entry:.2f}  ({shares} sh = "
@@ -926,8 +933,30 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                 # trailing exit: ride the runner, sell on trail% retrace
                 # from the highest price since entry (no fixed target)
                 peak = max(peak, cd.h[i])
+                # AX06 scale-out ladder: bank a fraction at +scale_out_at%
+                if (scale_out_at is not None and not scaled
+                        and cd.h[i] >= entry * (1 + scale_out_at / 100)):
+                    px = entry * (1 + scale_out_at / 100)
+                    part = int(shares * scale_out_frac)
+                    if part >= 1:
+                        pnl_part = (px - entry) * part
+                        trades.append({"entry_time": cd.index[entry_i],
+                                       "entry": round(entry, 2),
+                                       "exit_time": cd.index[i],
+                                       "exit": round(px, 2),
+                                       "reason": f"scale-out +{scale_out_at}%",
+                                       "pnl": round(pnl_part, 2)})
+                        shares -= part
+                        if compound:
+                            budget_cur += pnl_part
+                    scaled = True
+                # AX08 adaptive trail: widen once the runner proves itself
+                eff_trail = trail_pct
+                if (trail_widen_at is not None
+                        and peak >= entry * (1 + trail_widen_at / 100)):
+                    eff_trail = trail_wide
                 target_lo = target_hi = float("inf")
-                trail_px = peak * (1 - trail_pct / 100)
+                trail_px = peak * (1 - eff_trail / 100)
                 stop = max(entry * (1 - (stop_pct or 5) / 100), trail_px)
             elif target_pct is not None:
                 target_lo = target_hi = entry * (1 + target_pct / 100)
