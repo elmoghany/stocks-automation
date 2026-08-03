@@ -9,6 +9,23 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## Massive Data Integrated (2026-08-03)
+
+User subscribed to Massive (Polygon.io rebrand); key stored in Credential
+Manager as MASSIVE_KEY. Probed capabilities: BOTH api.polygon.io and
+api.massive.com work; 1-MIN bars confirmed >= 1 year deep (Aug 2025
+verified); REAL premarket volume (FCUV Jul 31: 690 bars, 17.8M premarket
+shares vs yfinance's zeros); grouped-daily endpoint returns the ENTIRE
+market (12,408 tickers) in one call; no rate-limit pushback (paid tier).
+New module trading/massive.py (grouped_daily, minute_bars; 429 retry).
+This REPLACES the data ceiling that forced 5-min bars and 60-day windows:
+full-year 1-min backtests now possible, and the news-era estimates
+("Jan-Apr not backtestable") are obsolete. plan/penny_year_backtest.py:
+full year Aug 2025 -> Aug 2026, whole-market discovery (~315 grouped-daily
+calls incl. 50d warmup), sector+halal filters, top-10 configs from
+CONFIGS-TESTED.md simulated on 1-min bars at $15k. Running -- results in
+the next note.
+
 ## Champion Default Adopted (2026-08-03)
 
 Made top-2 gappers + $14 cap the live default per user sign-off:
