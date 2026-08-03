@@ -6,6 +6,22 @@ Normal (large-cap wave/value) trading notes live in `NOTES.md`.
 
 ---
 
+## Position Size Scaling (2026-08-03)
+
+User goal: +$1,000/day. Added max_vol_frac liquidity cap to simulate_trades
+(shares <= frac of entry-bar volume; used 10%) and plan/penny_scale_test.py:
+sizes $1k-$30k x top-1/top-2 gappers over the YTD simulated days with the
+ORB-combined default. RESULTS: $15k/trade -> avg +$1,156/TRADED day (12/24
+days >= +$1k, worst -$1,500); $30k/trade top-2 -> +$2,088/traded day =
+~+$1,044/EVERY trading day incl. no-trade days ($56,379 over ~54 days).
+Liquidity cap bites at size: $30k yields 18.8x the $1k profit (not 30x) --
+the curve flattens beyond ~$30k, confirming the micro-cap ceiling. Losses
+scale identically (worst day -$3,033 at $30k). PDT rule requires $25k
+equity for daily trading anyway, matching the sizing floor. Slippage not
+modeled -- treat as upper-bound-realistic.
+
+---
+
 ## ORB Entry Added (2026-08-02)
 
 Diagnosed all 15 zero-trade days (plan/penny_orb_test.py) and added an

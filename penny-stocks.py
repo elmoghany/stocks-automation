@@ -763,7 +763,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     prev_close: float | None = None,
                     trail_pct: float | None = None,
                     orb: bool = False,
-                    orb_bars: int = 3) -> list[dict]:
+                    orb_bars: int = 3,
+                    max_vol_frac: float | None = None) -> list[dict]:
     """Run the entry/exit state machine over 1-min bars of a single day.
 
     State machine:
@@ -811,6 +812,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
             or_high = cd.h[i]          # ratchet for the next break
             if _entry_ok(fill):
                 sh = int(budget_cur // fill)
+                if max_vol_frac and cd.v[i] > 0:
+                    sh = min(sh, int(cd.v[i] * max_vol_frac))
                 if sh >= 1:
                     shares = sh
                     entry = fill
@@ -864,6 +867,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                 entry = price
                 entry_i = i
                 shares = int(budget_cur // entry)
+                if max_vol_frac and cd.v[i] > 0:
+                    shares = min(shares, int(cd.v[i] * max_vol_frac))
                 if shares < 1:
                     continue
                 state = "LONG"
