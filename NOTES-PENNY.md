@@ -9,6 +9,24 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## C1 Deep Comparison (2026-08-03)
+
+C1 vs A2cap14 vs A2cap16, corrected params, full year, top-2 x $15k.
+Mechanics are IDENTICAL (ORB-15min + any bullish pattern, trail 20/stop 5,
+7-noon, same gates) -- the ONLY difference is the price universe: C1 has
+no ceiling ($2+), A2 restricts to <=$14/<=$16. RESULTS: C1 +$259,341,
+cap14 +$163,989, cap16 +$161,392 (cap level $14 vs $16 is nearly
+irrelevant, +-$2.6k; the CEILING ITSELF costs ~$95k/yr). Idle days: C1 16
+(8 no-candidate + 8 no-trigger) vs cap14 38 (19+19) -- the ceiling
+excludes whole days. Loss days: C1 104/235 (44%) vs cap14 109/213 (51%),
+cap16 113/216 (52%). Monthly avg-daily: C1 never negative (worst month
+Feb +$123/day; best Jul +$2,589/day); cap14 3 negative months (Sep
+-$597/day, Dec -$236, Feb -$420); cap16 4 negative months. WHY: in cold
+small-cap months the cheap qualifying gappers are junk while pricier
+($16-75) movers still trend -- the cap forces trading junk or sitting
+out; C1 upgrades to the genuinely strongest movers. Awaiting year-2 to
+adopt C1 as default.
+
 ## Granularity Bug Fixed (2026-08-03)
 
 User challenged the year's low per-day avg ("we trade hot gappers, should
