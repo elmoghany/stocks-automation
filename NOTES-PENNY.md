@@ -6,6 +6,21 @@ Normal (large-cap wave/value) trading notes live in `NOTES.md`.
 
 ---
 
+## Price Cap Matrix (2026-08-03)
+
+Tested caps $16/$14/$12/$10 on the top-3 performers (plan/
+penny_cap_matrix.py). CHAMPION OVERALL: A2 + cap $14 (noon, no-float,
+top-2 gappers, $2-14): +$55,495 total, +$1,734/day, worst -$2,142 --
+best total ever tested, near-best avg. A2+cap10: best avg (+$1,780) but
+-$4k total. The $12 dip recurs in all three configs (real, not noise:
+$10-12 stocks like BIYA/QTTB entries get chopped by a $12 cap while
+$12-14 names stay profitable -- cap $14 keeps them, cap $10 trades
+cheaper faster movers). Full-day B3 prefers cap $16 (afternoon needs the
+pricier names); B2 (7-2PM) also peaks at $14. Pattern: tighter caps help
+morning-only configs (cheap gappers move most in the morning), hurt
+longer windows. Annualized A2+cap14 ~ $333k hot-tape at $15k/pos x
+top-2 (up to $30k deployed). Awaiting user pick for default adoption.
+
 ## V2a Adopted Plus (2026-08-03)
 
 DROPPED rule 8 (float<=16M) per user sign-off and made V2a the live
