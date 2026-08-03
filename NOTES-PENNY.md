@@ -6,6 +6,21 @@ Normal (large-cap wave/value) trading notes live in `NOTES.md`.
 
 ---
 
+## Champion Default Adopted (2026-08-03)
+
+Made top-2 gappers + $14 cap the live default per user sign-off:
+PRICE_MAX 16 -> 14, new TOP_GAPPERS_PER_DAY=2 constant, Robinhood saved
+scan band updated to $2-14 server-side, skill updated (trade the top TWO
+qualifying gappers, $15k each, up to $30k deployed). Full default now:
+$2-14 band AT ENTRY, no float limit, upward sectors, halal-first gates,
+dual news, 7AM-NOON, ORB + all-bullish entries, trail 20%/stop 5%, 10%
+bar-volume cap, flat by noon. Measured +$55,495 over the Jun-Jul window
+(+$1,734/traded day, worst -$2,142), annualized ~$333k hot-tape.
+ALSO: created CONFIGS-TESTED.md -- registry of ALL ~240 tested
+configurations (grids, sweeps, matrices) with results + reproducing
+script, so any config can be re-tested; untested queue at the bottom
+(A2+cap10 combo, surge 3%, multi-year Polygon validation).
+
 ## Price Cap Matrix (2026-08-03)
 
 Tested caps $16/$14/$12/$10 on the top-3 performers (plan/

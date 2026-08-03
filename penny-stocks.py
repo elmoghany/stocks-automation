@@ -8,7 +8,7 @@ trailing average volume), sell at 2x the risk (+$0.30 vs -$0.15 stop) or on a
 strong bearish pattern while profitable. Defaults calibrated via candletest.
 
 Screening rules (all must pass):
-  1. Price between $2 and $16
+  1. Price between $2 and $14 (was $16; cap matrix 2026-08-03)
   2. Breaking news TODAY between 7:00-10:00 AM ET
   3. Up at least +10% on the day
   4. Hot / high-demand sector (AI, biotech, ... configurable)
@@ -57,7 +57,7 @@ ET = ZoneInfo("America/New_York")
 RH_BARS_DIR = Path("data/rh_bars")       # {SYM}_{YYYY-MM-DD}.csv 1-min bars
 RH_FUND_FILE = Path("data/rh_fundamentals.json")  # {SYM: {...}} fundamentals
 RH_SCAN_ID = "5f132877-7730-4a18-9e72-b3f0d2c9df83"  # saved Robinhood scan:
-# Last $2-16, %Change>=10 (1d), RelVolume>=5x (30d), Float<=16M, %Chg desc
+# Last $2-14, %Change>=10 (1d), RelVolume>=5x (30d), %Chg desc (no float filter)
 
 
 def load_rh_fundamentals() -> dict:
@@ -89,7 +89,10 @@ def load_rh_bars(symbol: str) -> pd.DataFrame | None:
 # Strategy configuration (rules 1-8)
 # ---------------------------------------------------------------------------
 PRICE_MIN = 2.00                 # rule 1
-PRICE_MAX = 16.00
+PRICE_MAX = 14.00                # $16 -> $14 (2026-08-03 cap matrix: keeps
+                                 # the $12-14 winners, sheds the laggy top)
+TOP_GAPPERS_PER_DAY = 2          # trade the top TWO qualifying gappers/day
+                                 # ($15k each; champion config +$55,495)
 NEWS_START = dtime(7, 0)         # trading window, ET (buy AND sell inside it)
 NEWS_END = dtime(12, 0)          # extended 10:00 -> NOON 2026-08-03: V2 test
                                  # showed +54% total, best $/day (+$1,202);
@@ -689,7 +692,7 @@ def cmd_screen(symbols: list[str]) -> None:
 def cmd_scan(size: int) -> None:
     """Discover candidates market-wide, then run the full 6-rule screen.
 
-    Stage 1 (coarse, Yahoo screener API): US stocks $2-$16 up >=10% today,
+    Stage 1 (coarse, Yahoo screener API): US stocks in the $2-PRICE_MAX band up >=10% today,
     sorted by day volume. Stage 2: full rule check (news window, sector,
     float, 5x rvol) on each candidate.
     """
@@ -853,7 +856,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
         elif state == "ARMED":
             if max_trades is not None and len(trades) >= max_trades:
                 break                          # daily trade budget used up
-            # rule 1 at ENTRY time: price must be inside the $2-16 band at
+            # rule 1 at ENTRY time: price must be inside the $2-PRICE_MAX band at
             # the moment we buy (a $1.93 open that runs through $2+ is
             # tradeable once it is in band)
             if not (PRICE_MIN <= price <= PRICE_MAX):
@@ -964,13 +967,13 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
 
 
 def _enforce_price_band(symbol: str, df: pd.DataFrame) -> bool:
-    """This strategy is ONLY for $2-$16 stocks (rule 1). Refuse others."""
+    """This strategy is ONLY for PRICE_MIN-PRICE_MAX stocks (rule 1)."""
     price = float(df["Close"].iloc[-1])
     if not (PRICE_MIN <= price <= PRICE_MAX):
         print(f"{symbol.upper()} is ${price:.2f} -- outside the ${PRICE_MIN:.0f}-"
               f"${PRICE_MAX:.0f} penny-stock band. This strategy does not apply:"
               f" the $0.18/-$0.15 per-share targets only make sense at penny"
-              f" prices. Pick a $2-$16 stock (see: python penny-stocks.py screen).")
+              f" prices. Pick an in-band stock (see: python penny-stocks.py screen).")
         return False
     return True
 
@@ -1059,7 +1062,7 @@ def _window_data(symbols: list[str], days: int,
                  min_price: float | None = None) -> dict:
     """Fetch 1-min bars (incl. premarket) restricted to 7AM-noon ET.
 
-    The $2-$16 band is checked PER DAY at that day's first window price --
+    The price band is checked PER DAY at that day's first window price --
     a stock that later ran to $20 still counts on the days it was in band
     (that is exactly when the strategy would have traded it).
     """
