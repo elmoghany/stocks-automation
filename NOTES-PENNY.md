@@ -9,6 +9,20 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## Adaptation Series Launched (2026-08-03)
+
+User thesis: no such thing as a cold year -- news + hot sectors always
+exist; the strategy must adapt. Launched the AX experiment series
+(unique permanent IDs AX00-AX10, registry section 12) on BOTH years.
+First five runs: AX01 dynamic monthly sector rotation improves Y1
+(+$214,849) and Y2 efficiency (+$681/day) but trades fewer Y2 days;
+AX03 adaptive-gap, AX05 equity-throttle worse; AX07 day-2 tiny help;
+AX09 two-shot never triggers. NONE broke the Jan-May 2025 desert (4
+negative months in all). Remaining queued: AX02 supply throttle, AX04
+premarket structure scoring, AX06 scale-out ladder, AX08 adaptive trail,
+AX10 news-tier gate -- these target the desert via trade quality and
+profit-locking rather than day selection.
+
 ## Year Two Verdict (2026-08-03)
 
 Year-2 backtest complete (Oct 22 2024 - Aug 1 2025; Massive's 2-year

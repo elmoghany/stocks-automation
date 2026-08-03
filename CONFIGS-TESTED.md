@@ -131,6 +131,27 @@ CAUTION: ran on 1-MIN bars vs 5-MIN calibration -- granularity changes
 vol-cap sizing, ORB range, surge window; see next section before comparing
 per-day numbers to the 8-week results.
 
+## 12. ADAPTATION SERIES "AX" (2026-08-03, both years, $15k/day, corrected)
+Script: `plan/penny_adapt_experiments.py`. Baseline = live default
+(C1 top-1 + calm-gap). One change each. IDs are unique and permanent.
+              Y1 total  Y1 avg/d  Y2 total  Y2 avg/d  negm Y1/Y2
+- AX00 baseline (live default) +$206,466  +$1,007  +$94,852  +$597  0 / 4
+- AX01 dynamic sectors (monthly as-of ETF trends)
+                               +$214,849  +$1,113  +$87,219  +$681  0 / 4
+- AX03 adaptive calm-gap (trailing-median threshold)
+                               +$182,890    +$963  +$88,582  +$615  0 / 4
+- AX05 equity throttle (5d P&L<-$3k -> half size)
+                               +$199,496    +$973  +$93,742  +$590  0 / 4
+- AX07 day-2 continuation (fallback)
+                               +$206,466  +$1,007  +$95,616  +$598  0 / 4
+- AX09 two-shot morning        +$206,466  +$1,007  +$94,852  +$597  0 / 4 (never triggered)
+Verdict: AX01 improves Y1 (+$8.4k) and Y2 avg/day (+$84/d) but trades 31
+fewer Y2 days (total -$7.6k); others neutral-to-worse; none broke the
+Y2 Jan-May desert (4 neg months everywhere).
+QUEUED (not yet run): AX02 gapper-supply throttle, AX04 premarket
+structure scoring, AX06 scale-out ladder, AX08 adaptive trail widening,
+AX10 Finnhub news-tier gate.
+
 ## Untested candidates (queue)
 - A2 + cap $10 (two changes: top-2 AND $2-10) — best-avg x best-total mix
 - surge 3% on the current default (was +$47 at $1k sizing)
