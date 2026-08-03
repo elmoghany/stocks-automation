@@ -9,6 +9,28 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## Calm Gap Rule (2026-08-03)
+
+Pattern study of the $2k+ days (52 days summing +$294k vs year total
++$194k -- the other 164 days NET LOSE ~$100k; day records saved to
+data/massive/c1_top1_day_records.csv). DISCRIMINATORS: $2k+ days ride
+picks whose full-day gain reaches +100-300% (that bucket alone +$124k/65d;
++300% bucket +$64k/8d, median +$8,440/day; while +10-25% gainers NET
+NEGATIVE); rvol 28x vs 16x; sector irrelevant. THE tradeable signal:
+7AM GAP INVERTS -- winners open CALM (median +3.4% gap) then explode
+intraday; days opening +35-60% at 7AM are exhausted overnight moves
+(median -$2,111/day, bucket -$12.5k/yr). Real-time-knowable filters
+tested: skip gap7>20% -> +$200,116 (+$1,299/day, 0 neg months);
+premarket-$vol cap HURTS; raising the 10% entry gate to 20/30% DESTROYS
+profit (10% gate is right). ADOPTED: SUBSTITUTE variant (walk top-4 to
+the first pick with 7AM gap <= 20%): +$206,466/yr, +$1,007/day, 205
+traded days, ZERO negative months (worst Nov +$815; Feb flips -$7k ->
++$18k; Jul +$48k). MAX_GAP_AT_7AM=20 constant + skill day-pick updated.
+LESSON FOR $2k/day GOAL: profits come from catching intraday developers
+early and riding; avoiding exhausted gaps is worth ~+$100k/yr of
+avoided bleed. Threshold is a plateau (20-30% both work), not knife-edge.
+Caveat: derived+tested on year-1 only; validate on year-2 when done.
+
 ## Fifteen K Constraint (2026-08-03)
 
 User: total deployment is $15k/DAY (not top-2 x $15k). Tested C1 under the

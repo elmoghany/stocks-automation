@@ -98,6 +98,14 @@ PRICE_MAX = float("inf")         # CEILING REMOVED 2026-08-03 (C1 adoption):
 TOP_GAPPERS_PER_DAY = 1          # $15k/day TOTAL (user constraint): top-1
                                  # x $15k beat top-2 x $7.5k (+$194k vs
                                  # +$143k/yr; worst -$5.1k vs -$5.7k)
+MAX_GAP_AT_7AM = 20.0            # CALM-GAP RULE (2026-08-03 pattern study):
+                                 # pick the highest-gain qualifying gapper
+                                 # whose 7AM price is <= prev_close*1.20;
+                                 # walk down the list (top-4) if the leader
+                                 # opened hotter. Exhausted overnight gaps
+                                 # (>20% at 7AM) bled -$100k/yr; the $2k+
+                                 # days are INTRADAY developers. Full-year:
+                                 # +$206,466, ZERO negative months.
 NEWS_START = dtime(7, 0)         # trading window, ET (buy AND sell inside it)
 NEWS_END = dtime(12, 0)          # extended 10:00 -> NOON 2026-08-03: V2 test
                                  # showed +54% total, best $/day (+$1,202);

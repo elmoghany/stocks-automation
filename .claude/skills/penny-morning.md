@@ -15,8 +15,12 @@ NOT force a trade; the edge comes from patience (see NOTES-PENNY.md).
 
 ## Step 2 — Refresh the Robinhood caches for the candidates
 
-Trade the TOP TWO qualifying gappers each day ($15k each, up to $30k
-deployed). For each scan hit (top 3 max for cache refresh):
+DAY PICK (calm-gap rule, $15k/day total): among qualifying gappers,
+trade the HIGHEST-GAIN one whose 7AM price is <= prev_close x 1.20 --
+if the leader gapped hotter than +20% at 7AM it is an exhausted
+overnight move (they bleed); walk down to the next calm one (check top
+4), else skip the day. The $2k+ days are intraday developers: modest
+7AM gap, then a +100-300% session run our trail rides. For each scan hit (top 3 max for cache refresh):
 1. `get_equity_fundamentals` (bounds=extended) → update
    `data/rh_fundamentals.json`: keys float, shares_outstanding, market_cap,
    sector, industry, avg_volume_30d, avg_volume_2wk, fetched, source.
