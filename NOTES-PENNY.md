@@ -27,6 +27,13 @@ Honest caveats: year-2 has survivorship bias (delisted 2024 gappers
 absent from universe/verdicts) and current-snapshot halal/sector; worst
 months -$10-15k are real -- size for them. The strategy is now validated
 across a hot year AND a cold year with every rule earning its place.
+Y2 MONTHLY DETAIL (C1+calm-gap): Oct24 +$31,105 in just 6 traded days
+(incl. the year's best day +$29,881 -- ONE day = 31% of the annual
+profit); Nov +$17.1k; Dec +$20.1k; then a FIVE-MONTH DESERT Jan-May 2025
+netting -$22k (worst Apr -$10.1k); Jun +$13.8k; Jul +$34.7k. Median day
+-$0.73, 50% win days, 22 days >=+$2k carry the year. Cold-year trading
+is: three good quarters of patience, one brutal stretch, and a handful
+of monster days you must be present for.
 
 ## Four Feature Test (2026-08-03)
 
