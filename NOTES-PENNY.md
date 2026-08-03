@@ -3,6 +3,9 @@
 Convention: new notes go at the TOP of this file. Each note = a **3-word title**,
 then a detailed explanation of what was done and why.
 Normal (large-cap wave/value) trading notes live in `NOTES.md`.
+**Every configuration ever backtested** (grids, sweeps, cap matrices — ~240
+configs with results + the script that reproduces each) is registered in
+[`CONFIGS-TESTED.md`](CONFIGS-TESTED.md); re-test any of them from there.
 
 ---
 
