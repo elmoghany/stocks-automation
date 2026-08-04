@@ -49,10 +49,13 @@ python penny-stocks.py livebars PICK --prod   # live 1-min candles + patterns
 
 Entry per current calibration (NOTES-PENNY.md, 2026-08-03): DEFAULT =
 any bullish reversal pattern OR opening-range breakout (break of the
-first-3-volume-bars high), no volume gate, RIDE with a 20% trailing stop (widen to 30% when the trailing-10-
-session calm-candidate supply is thin, <1/day), -8% hard stop, bank 1/3
-at +25% (AX19c spec). Live halal via current data IS point-in-time
-correct; walk up to 8 calm candidates for the first compliant one. Position ~$15k (capped at 10% of bar volume; PDT
+first-3-volume-bars high), no volume gate, RIDE with a 20% trailing stop, -8% hard stop, bank 1/3 at +25%
+(AX20 spec -- fixed trail; the thin-supply conditional is obsolete).
+UNIVERSE: any clean ticker >= $2 -- NO price ceiling (the $75 cap
+silently deleted the mid/large-cap earnings gappers that carried
+Jan-Mar 2025; scanner must not cap price). Live halal via current
+data IS point-in-time correct; walk up to 8 calm candidates for the
+first compliant one. Position ~$15k (capped at 10% of bar volume; PDT
 needs $25k+ equity). Expect roughly: half of qualifying days trade, ~60%
 of traded days win, losses capped ~-$1,500, profit concentrated in a few
 big trailing winners. ALWAYS flat by NOON.

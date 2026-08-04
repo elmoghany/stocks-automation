@@ -55,16 +55,20 @@ def wanted(label):
 
 
 def main():
+    from concurrent.futures import ThreadPoolExecutor
     for label in ("year", "y2025"):
         cands = wanted(label)
         print(f"{label}: {len(cands)} candidate-days to ensure", flush=True)
         fetched = 0
-        for n, c in enumerate(cands):
-            if fetch_m1(c["symbol"], c["date"]):
-                fetched += 1
-            if n % 200 == 0:
-                print(f"  {label} m1 {n}/{len(cands)} "
-                      f"({fetched} new)", flush=True)
+        with ThreadPoolExecutor(max_workers=8) as ex:
+            futs = [ex.submit(fetch_m1, c["symbol"], c["date"])
+                    for c in cands]
+            for n, fu in enumerate(futs):
+                if fu.result():
+                    fetched += 1
+                if n % 200 == 0:
+                    print(f"  {label} m1 {n}/{len(cands)} "
+                          f"({fetched} new)", flush=True)
         print(f"{label}: m1 done, {fetched} new fetches", flush=True)
         ok = bad = 0
         for n, c in enumerate(cands):

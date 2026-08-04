@@ -44,9 +44,12 @@ HARAM = ps.HARAM_INDUSTRY_WORDS
 
 
 def api(url):
+    """Throttled + retried via trading.massive._get. A raw urllib call
+    here once bypassed the rate limiter, and a 429 could be cached
+    permanently as empty (halal cache poisoning). Never bypass it."""
+    from trading import massive
     try:
-        with urllib.request.urlopen(url, timeout=30) as r:
-            return json.load(r)
+        return massive._get(url)
     except Exception:
         return {}
 

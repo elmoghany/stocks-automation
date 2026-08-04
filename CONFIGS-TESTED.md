@@ -182,6 +182,16 @@ Scripts: penny_ax11_pt_halal.py, penny_ax11b_massive.py (+inline AX19).
 Note: pt-halal is the honest compliance basis; earlier sections used
 today's-snapshot halal and OVERSTATE the compliant opportunity set.
 
+## 15. AX20/AX21 WIDENED UNIVERSE + RECYCLING (2026-08-03/04)
+Scripts: penny_ax20_discover.py, penny_ax20_backfill.py,
+penny_ax21_recycle.py. Data: gappers2_{label}.json (no $75 cap, no
+universe.json, hist_n recorded, gd/ raw cache), lazy m1 fetch.
+- AX21  earliest-entry picker k=1 (old univ):  Y1 +$81k / Y2 +$57k (pick quality >> speed)
+- AX21c commit+recycle k=0 (old univ):         Y1 +$210,579 / Y2 +$103,922 (BELOW baseline -> recycling DEAD)
+- AX20  widened universe, walk-8, trail 20 (ADOPTED DEFAULT):
+        Y1 +$244,899 (125d, 0 negm) / Y2 +$314,057 (142d, 1 negm)
+        Both +$200k targets MET. Same machine as AX11b; only universe changed.
+
 ## Untested candidates (queue)
 - A2 + cap $10 (two changes: top-2 AND $2-10) — best-avg x best-total mix
 - surge 3% on the current default (was +$47 at $1k sizing)

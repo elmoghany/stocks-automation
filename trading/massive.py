@@ -25,14 +25,30 @@ def _key() -> str:
     return _KEY
 
 
-def _get(url: str, tries: int = 5) -> dict:
+_TH_LOCK = __import__("threading").Lock()
+_TH_NEXT = [0.0]
+_TH_INTERVAL = 12.5    # free tier: 5 req/min hard limit (confirmed)
+
+
+def _throttle():
+    """Global pacing: space request starts so we never trip 429s."""
+    with _TH_LOCK:
+        now = time.monotonic()
+        wait = _TH_NEXT[0] - now
+        _TH_NEXT[0] = max(now, _TH_NEXT[0]) + _TH_INTERVAL
+    if wait > 0:
+        time.sleep(wait)
+
+
+def _get(url: str, tries: int = 8) -> dict:
     for attempt in range(tries):
+        _throttle()
         try:
             with urllib.request.urlopen(url, timeout=30) as r:
                 return json.load(r)
         except urllib.error.HTTPError as e:
             if e.code == 429:
-                time.sleep(15 * (attempt + 1))
+                time.sleep(2 * (attempt + 1))
                 continue
             raise
         except Exception:

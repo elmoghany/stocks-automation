@@ -9,6 +9,30 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## BOTH TARGETS MET -- AX20 Widened Universe (2026-08-04)
+
+AX20 (plan/penny_ax21_recycle.py --pick walk --gapfile gappers2
+--trail 20): identical machine to AX11b (pt-halal, calm-gap<=20 walk-8,
+top-1 x $15k, 7-noon, ORB15+patterns, trail 20/stop 8/scale-out
+1/3@+25%) with ONE change -- the universe. Discovery (penny_ax20_
+discover.py) dropped the hidden $75 close cap and the stale
+universe.json list: any clean ticker >= $2, day-high >= prev_close
+x1.10, rvol >= 5x/50-session. RESULTS:
+  Y1 +$244,899  125d  +$1,959/d  0/12 neg months  (target +$200k MET)
+  Y2 +$314,057  142d  +$2,212/d  1/10 neg months  (target +$200k MET)
+Y2 monthly: Oct +39.3k Nov +43.8k Dec +26.0k Jan +32.9k Feb +28.5k
+Mar +21.8k Apr -4.0k May +60.0k Jun +35.3k Jul +30.5k. The Jan-Mar
+2025 "desert" (-$2.4k/-$0.3k/+$4.7k in every capped config) became
++$83.2k: mid/large-cap earnings gappers were there all along -- the
+$75 discovery cap was silently deleting them. User thesis vindicated:
+there was no cold year, only a filtered-out universe. ADOPTED as the
+new default spec (AX20): trail fixed at 20% (no thin-supply conditional
+needed -- 142/194 sessions traded). Fixed along the way: axb.api()
+throttle bypass (halal-cache 429 poisoning risk; audited clean).
+Recycling (AX21) confirmed dead and stays out. Next candidates, not
+run: AX22 cond-trail or recycling on gappers2 (marginal, both years
+already over target).
+
 ## Recycling Tested Dead (2026-08-03)
 
 User approved: $15k = max at risk at any MOMENT (recycling allowed),
