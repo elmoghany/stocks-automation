@@ -9,6 +9,22 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## Paper Day 1: No Trade, Two Real Bugs Fixed (2026-08-04)
+
+First live paper session (C02, 7AM-noon). Result: COMPLIANT NO-TRADE
+DAY -- 10 candidates, all rejected for cause (halal 3 incl AMIX which
+ran +163% on a $2M mcap with 221% cash ratio; exhausted-gap 1; rvol 3;
+leveraged ETN/ETF 3). $0 P&L by rule. LESSONS THAT PAID: (1) the
+Robinhood scanner %change filter takes RATIO units -- the saved scan
+("10" = +1000%) had NEVER fired; fixed to 0.10. Sanity-check scanners
+against a known-gainers source before trusting empty results. (2) rvol
+source-of-truth: RH 30-day rvol reads high vs our backtested 50-day
+measure (ATPC: 204x vs 1.1x) -- our engine governs. (3) The halal gate
+eliminating the day's biggest movers is by design and already priced
+into the two-year backtests. Infra added: plan/paper_watch.py (1-min
+position checks with C02 exits, run under a Monitor on entry) and
+5-min scan cadence. Full log: data/paper/2026-08-04.md.
+
 ## C02 Adopted As Live Default (2026-08-04)
 
 C02 = AX20 + three changes: (1) 5-min opening range (orb_bars 5, was
