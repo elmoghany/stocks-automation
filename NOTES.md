@@ -2,7 +2,7 @@
 
 Convention: new notes go at the TOP of this file. Each note = a **3-word title**,
 then a detailed explanation of what was done and why.
-Penny-stock day-trading notes live in `NOTES-PENNY.md`.
+Penny-stock day-trading notes live in `NOTES-DAYTRADING.md`.
 
 ---
 

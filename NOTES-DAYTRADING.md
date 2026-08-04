@@ -9,6 +9,20 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## Renamed + AX20 Made Live Default (2026-08-04)
+
+penny-stocks.py -> day-trading.py and NOTES-PENNY.md ->
+NOTES-DAYTRADING.md (universe is no longer penny-capped; the system
+trades any stock >= $2). All 22 referencing files updated; backtests
+reproduce byte-identically post-rename. AX20 spec is now the module
+default: SURGE_WINDOW_MIN 10->50 (1-min-bar granularity, was a
+5-min-era relic); price ceiling off, trail 20 / stop 8 / scale-out
+1/3@+25%, calm-gap 20, top-1 x $15k, 7-noon. simulate_trades gained 9
+default-off kwargs for the X100 campaign (breakeven_at, time_stop_min,
+atr_trail, atr_stop, add_at, extra_break_high, slippage_bps,
+orb_fill_mode, scale_out_2) -- verified no-op when unset (AX20
+reproduces exactly).
+
 ## BOTH TARGETS MET -- AX20 Widened Universe (2026-08-04)
 
 AX20 (plan/penny_ax21_recycle.py --pick walk --gapfile gappers2
@@ -307,7 +321,7 @@ top-2 (up to $30k deployed). Awaiting user pick for default adoption.
 ## V2a Adopted Plus (2026-08-03)
 
 DROPPED rule 8 (float<=16M) per user sign-off and made V2a the live
-default: MAX_FLOAT=None in penny-stocks.py (float displayed as info,
+default: MAX_FLOAT=None in day-trading.py (float displayed as info,
 rule8 always passes; set a number to re-enable), Robinhood saved scan
 updated to 3 filters (float filter removed server-side), skill updated.
 Second-generation sweep from the new base (plan/penny_v2a_variants.py),
@@ -344,7 +358,7 @@ sign-off to drop rule 8 and adopt V2a as default.
 ## Noon Window Default (2026-08-03)
 
 Made 7AM-NOON the default penny trading window per V2 results (user
-sign-off): NEWS_END 10:00 -> 12:00 in penny-stocks.py (the constant defines
+sign-off): NEWS_END 10:00 -> 12:00 in day-trading.py (the constant defines
 the trading window everywhere -- _window_data, backtest, all experiment
 commands). All docs/skill updated: buy AND sell inside 7AM-noon, force-flat
 at NOON. Skill's entry section also refreshed to the current default
@@ -559,7 +573,7 @@ ultra-low and rvol is extreme.
 
 ## Robinhood Integration Implemented (2026-08-02)
 
-Wired the Robinhood data into penny-stocks.py + a repeatable workflow:
+Wired the Robinhood data into day-trading.py + a repeatable workflow:
 (1) `data/rh_bars/{SYM}_{DATE}.csv` cache (1-min bars, real premarket
 volume, interpolated bars excluded) — _window_data merges them over
 yfinance, Robinhood wins on overlapping minutes; (2)
@@ -608,7 +622,7 @@ Replaces yfinance items #1 (intraday history, better depth + real premarket
 vol), #3 (float+sector), #4 (market-wide scan), and most of #2/#6. Morning
 workflow upgrade: run_scan (Robinhood, all rules server-side) -> news check
 (Finnhub) -> livebars/livescreen (E*TRADE) -> order (E*TRADE). Note: MCP
-tools are session-level (Claude calls them); penny-stocks.py python code
+tools are session-level (Claude calls them); day-trading.py python code
 still uses yfinance -- for in-script access the robin_stocks python lib with
 the same account is the path if needed.
 
@@ -707,7 +721,7 @@ tighter-spread stock list to survive costs.
 
 ## Candle Window Test (2026-08-01)
 
-Added `candletest` command to penny-stocks.py: grid-tests 5 buy-pattern sets x
+Added `candletest` command to day-trading.py: grid-tests 5 buy-pattern sets x
 4 sell modes on 1-min bars restricted to the 7-10 AM ET window (premarket +
 open, prepost=True), and made simulate_trades() configurable (buy_set,
 sell_mode). Also switched rule 6 to risk-ratio form: REWARD_RISK=2.0 -> target
@@ -735,7 +749,7 @@ this is strictly a 7-10 AM morning strategy, matching the news-window rule.
 
 ## Penny Stock Strategy (2026-08-01)
 
-Implemented the Cameron Ross momentum day-trading strategy in `penny-stocks.py`
+Implemented the Cameron Ross momentum day-trading strategy in `day-trading.py`
 (original prompt saved verbatim in `penny-stock.md`). Screener rules: price
 $2-$16, breaking news 7-10 AM ET today, up >=10%, hot sector (AI/biotech/
 semis via HOT_SECTORS list), relative volume >=5x the 50-day average, float

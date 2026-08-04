@@ -18,7 +18,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 _spec = importlib.util.spec_from_file_location("pennystocks",
-                                               ROOT / "penny-stocks.py")
+                                               ROOT / "day-trading.py")
 ps = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(ps)
 

@@ -30,7 +30,7 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 _spec = importlib.util.spec_from_file_location("pennystocks",
-                                               ROOT / "penny-stocks.py")
+                                               ROOT / "day-trading.py")
 ps = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(ps)
 
@@ -42,9 +42,12 @@ MCACHE.mkdir(parents=True, exist_ok=True)
 M1DIR.mkdir(exist_ok=True)
 RULES_F = ROOT / "data" / "backtest60" / "rules_ytd.json"
 
-WARMUP_START = "2025-05-15"
-YEAR_START = "2025-08-01"
-YEAR_END = "2026-08-01"
+# CLI: python penny_year_backtest.py [label] [year_start] [year_end]
+LABEL = sys.argv[1] if len(sys.argv) > 1 else "year"
+YEAR_START = sys.argv[2] if len(sys.argv) > 2 else "2025-08-01"
+YEAR_END = sys.argv[3] if len(sys.argv) > 3 else "2026-08-01"
+WARMUP_START = (ddate.fromisoformat(YEAR_START)
+                - timedelta(days=78)).isoformat()
 MIN_GAIN = 10.0
 MIN_RVOL = 5.0
 BUDGET = 15_000.0
@@ -76,7 +79,7 @@ CONFIGS = [
 
 
 def stage1_discover():
-    cache_f = MCACHE / "gappers_year.json"
+    cache_f = MCACHE / f"gappers_{LABEL}.json"
     if cache_f.exists():
         return json.loads(cache_f.read_text())
     universe = set(json.loads(
@@ -257,7 +260,7 @@ def main():
         print(f"{name:<10} {n:>5} {tot:>+13.2f} "
               f"{tot / n if n else 0:>+10.2f} {w:>4}/{n:<4} {big:>5} "
               f"{worst:>+10.2f}")
-    (MCACHE / "year_results.json").write_text(json.dumps(results))
+    (MCACHE / f"year_results_{LABEL}.json").write_text(json.dumps(results))
 
 
 if __name__ == "__main__":

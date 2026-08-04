@@ -27,9 +27,9 @@ Trading rules:
                 three black crows, evening star, falling three
 
 Usage:
-  python penny-stocks.py screen SYM1 SYM2 ...     # run the 6-rule screener
-  python penny-stocks.py patterns SYM             # label 1-min candles today
-  python penny-stocks.py backtest SYM [--days N]  # sim surge-dip-reversal trades
+  python day-trading.py screen SYM1 SYM2 ...     # run the 6-rule screener
+  python day-trading.py patterns SYM             # label 1-min candles today
+  python day-trading.py backtest SYM [--days N]  # sim surge-dip-reversal trades
                                                   # on recent 1-min data (max ~7d)
 
 Data source: yfinance. Honest limitations: news timestamps are approximate and
@@ -132,7 +132,10 @@ MAX_FLOAT = None                 # rule 8 DROPPED 2026-08-03 (V2a adoption):
 
 # surge/dip detection for the entry setup (rule 9 summary)
 SURGE_PCT = 2.0                  # "strong surge": +2% within the window
-SURGE_WINDOW_MIN = 10            # ...over at most 10 one-minute candles
+SURGE_WINDOW_MIN = 50            # 10->50 (2026-08-04 AX20 adoption): the
+                                 # validated two-year backtests run 1-min
+                                 # bars with a 50-bar surge window; 10 was
+                                 # a 5-min-bar-era relic
 DIP_MIN_CENTS = 0.05             # a real dip: >= 5c retrace from surge high
 
 # DEFAULTS (recalibrated 2026-08-02 via the 60-day market-wide backtest:
@@ -796,7 +799,16 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     scale_out_at: float | None = None,
                     scale_out_frac: float = 0.33,
                     trail_widen_at: float | None = None,
-                    trail_wide: float = 30.0) -> list[dict]:
+                    trail_wide: float = 30.0,
+                    breakeven_at: float | None = None,
+                    time_stop_min: int | None = None,
+                    atr_trail: tuple | None = None,
+                    atr_stop: tuple | None = None,
+                    add_at: float | None = None,
+                    extra_break_high: float | None = None,
+                    slippage_bps: float | None = None,
+                    orb_fill_mode: str | None = None,
+                    scale_out_2: tuple | None = None) -> list[dict]:
     """Run the entry/exit state machine over 1-min bars of a single day.
 
     State machine:
@@ -814,6 +826,20 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
     entry_i = -1
     budget_cur = budget if budget is not None else POSITION_DOLLARS
     scaled = False
+    scaled2 = False
+    added = False
+    dyn_trail = None
+    dyn_stop = None
+    slip = (slippage_bps or 0) / 10_000.0
+
+    def _atr_pct(i, k, lo, hi):
+        """k x ATR14 as % of price at bar i, clipped to [lo, hi]."""
+        j0 = max(1, i - 13)
+        trs = [max(cd.h[j] - cd.l[j], abs(cd.h[j] - cd.c[j - 1]),
+                   abs(cd.l[j] - cd.c[j - 1])) for j in range(j0, i + 1)]
+        atr = sum(trs) / len(trs) if trs else 0.0
+        px = cd.c[i] or 1.0
+        return min(hi, max(lo, k * atr / px * 100))
 
     # Opening-Range Breakout (second entry trigger, complements dip-reversal):
     # OR = first orb_bars bars that printed volume; stop-buy on a break of
@@ -841,30 +867,43 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
         entries_open = (entry_cutoff is None
                         or cd.index[i].time() < entry_cutoff)
 
-        # ORB entry: allowed from any flat state
-        if (entries_open
-                and state in ("SCAN", "DIPPING", "ARMED") and or_high is not None
-                and i > or_end and cd.h[i] > or_high
+        # ORB entry: allowed from any flat state (extra_break_high adds a
+        # second one-shot stop-buy level, e.g. the premarket high)
+        brk = None
+        if (entries_open and state in ("SCAN", "DIPPING", "ARMED")
                 and (max_trades is None or len(trades) < max_trades)):
-            fill = max(or_high, cd.o[i])
-            or_high = cd.h[i]          # ratchet for the next break
+            if or_high is not None and i > or_end and cd.h[i] > or_high:
+                brk = ("ORB", max(or_high, cd.o[i]))
+                or_high = cd.h[i]      # ratchet for the next break
+            elif extra_break_high is not None and cd.h[i] > extra_break_high:
+                brk = ("PMH-break", max(extra_break_high, cd.o[i]))
+                extra_break_high = None   # one-shot
+        if brk is not None:
+            pat, fill = brk
+            if orb_fill_mode == "close":
+                fill = cd.c[i]         # pessimistic fill (X097)
             if _entry_ok(fill):
-                sh = int(budget_cur // fill)
+                buy_budget = budget_cur * (0.5 if add_at is not None else 1.0)
+                sh = int(buy_budget // fill)
                 if max_vol_frac:
                     vbase = sum(cd.v[max(0, i - vol_frac_window + 1):i + 1])
                     if vbase > 0:
                         sh = min(sh, int(vbase * max_vol_frac))
                 if sh >= 1:
                     shares = sh
-                    entry = fill
+                    entry = fill * (1 + slip)
                     entry_i = i
                     peak = entry
-                    scaled = False
+                    scaled = scaled2 = added = False
+                    if atr_trail:
+                        dyn_trail = _atr_pct(i, *atr_trail)
+                    if atr_stop:
+                        dyn_stop = _atr_pct(i, *atr_stop)
                     state = "LONG"
                     if verbose:
                         ts = cd.index[i].strftime("%m-%d %H:%M")
                         print(f"  BUY  {ts}  @{entry:.2f}  ({shares} sh = "
-                              f"${shares * entry:,.0f})  pattern=ORB")
+                              f"${shares * entry:,.0f})  pattern={pat}")
                     continue
 
         if state == "SCAN":
@@ -907,9 +946,10 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
             if pats and not entries_open:
                 pats = []                      # past entry cutoff
             if pats:                           # dip inverts upward -> BUY
-                entry = price
+                entry = price * (1 + slip)
                 entry_i = i
-                shares = int(budget_cur // entry)
+                buy_budget = budget_cur * (0.5 if add_at is not None else 1.0)
+                shares = int(buy_budget // entry)
                 if max_vol_frac:
                     vbase = sum(cd.v[max(0, i - vol_frac_window + 1):i + 1])
                     if vbase > 0:
@@ -918,7 +958,11 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     continue
                 state = "LONG"
                 peak = entry
-                scaled = False
+                scaled = scaled2 = added = False
+                if atr_trail:
+                    dyn_trail = _atr_pct(i, *atr_trail)
+                if atr_stop:
+                    dyn_stop = _atr_pct(i, *atr_stop)
                 if verbose:
                     ts = cd.index[i].strftime("%m-%d %H:%M")
                     print(f"  BUY  {ts}  @{entry:.2f}  ({shares} sh = "
@@ -932,14 +976,27 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
             if (not same_day_exit
                     and cd.index[i].date() == cd.index[entry_i].date()):
                 continue
-            if trail_pct is not None:
+            if trail_pct is not None or dyn_trail is not None:
                 # trailing exit: ride the runner, sell on trail% retrace
                 # from the highest price since entry (no fixed target)
                 peak = max(peak, cd.h[i])
+                # half-then-add: second half deployed once price confirms
+                if (add_at is not None and not added
+                        and cd.h[i] >= entry * (1 + add_at / 100)):
+                    px_add = entry * (1 + add_at / 100) * (1 + slip)
+                    sh2 = int((budget_cur * 0.5) // px_add)
+                    if max_vol_frac:
+                        vbase = sum(cd.v[max(0, i - vol_frac_window + 1):i + 1])
+                        if vbase > 0:
+                            sh2 = min(sh2, int(vbase * max_vol_frac))
+                    if sh2 >= 1:
+                        entry = (entry * shares + px_add * sh2) / (shares + sh2)
+                        shares += sh2
+                    added = True
                 # AX06 scale-out ladder: bank a fraction at +scale_out_at%
                 if (scale_out_at is not None and not scaled
                         and cd.h[i] >= entry * (1 + scale_out_at / 100)):
-                    px = entry * (1 + scale_out_at / 100)
+                    px = entry * (1 + scale_out_at / 100) * (1 - slip)
                     part = int(shares * scale_out_frac)
                     if part >= 1:
                         pnl_part = (px - entry) * part
@@ -953,14 +1010,36 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                         if compound:
                             budget_cur += pnl_part
                     scaled = True
+                # optional second tier (X062)
+                if (scale_out_2 is not None and not scaled2
+                        and cd.h[i] >= entry * (1 + scale_out_2[0] / 100)):
+                    px = entry * (1 + scale_out_2[0] / 100) * (1 - slip)
+                    part = int(shares * scale_out_2[1])
+                    if part >= 1:
+                        pnl_part = (px - entry) * part
+                        trades.append({"entry_time": cd.index[entry_i],
+                                       "entry": round(entry, 2),
+                                       "exit_time": cd.index[i],
+                                       "exit": round(px, 2),
+                                       "reason": f"scale-out2 +{scale_out_2[0]}%",
+                                       "pnl": round(pnl_part, 2)})
+                        shares -= part
+                        if compound:
+                            budget_cur += pnl_part
+                    scaled2 = True
                 # AX08 adaptive trail: widen once the runner proves itself
-                eff_trail = trail_pct
+                eff_trail = dyn_trail if dyn_trail is not None else trail_pct
                 if (trail_widen_at is not None
                         and peak >= entry * (1 + trail_widen_at / 100)):
                     eff_trail = trail_wide
                 target_lo = target_hi = float("inf")
                 trail_px = peak * (1 - eff_trail / 100)
-                stop = max(entry * (1 - (stop_pct or 5) / 100), trail_px)
+                eff_stop_pct = dyn_stop if dyn_stop is not None else (stop_pct or 5)
+                stop = max(entry * (1 - eff_stop_pct / 100), trail_px)
+                # breakeven floor once the runner has proven itself
+                if (breakeven_at is not None
+                        and peak >= entry * (1 + breakeven_at / 100)):
+                    stop = max(stop, entry)
             elif target_pct is not None:
                 target_lo = target_hi = entry * (1 + target_pct / 100)
                 stop = entry * (1 - (stop_pct or 1.5) / 100)
@@ -970,9 +1049,15 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                 stop = entry - LOSS_PER_SHARE
             exit_px = None
             reason = ""
-            if cd.l[i] <= stop:
+            # time-stop: cut a position still flat/red after N minutes
+            if (time_stop_min is not None and exit_px is None
+                    and (cd.index[i] - cd.index[entry_i]).total_seconds()
+                    >= time_stop_min * 60
+                    and price <= entry):
+                exit_px, reason = price, f"time-stop {time_stop_min}m"
+            if exit_px is None and cd.l[i] <= stop:
                 exit_px, reason = stop, f"stop {stop - entry:+.2f}"
-            elif cd.h[i] >= target_lo:
+            elif exit_px is None and cd.h[i] >= target_lo:
                 exit_px = min(target_hi, cd.h[i])
                 reason = f"target +{exit_px - entry:.2f}"
             elif sell_mode != "target_stop_only":
@@ -984,7 +1069,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                 if bears and (price > entry or sell_mode == "bearish_always"):
                     exit_px, reason = price, f"bearish {bears[0]}"
             if exit_px is not None:
-                pnl = (exit_px - entry) * shares
+                pnl = (exit_px * (1 - slip) - entry) * shares
                 trades.append({
                     "entry_time": cd.index[entry_i], "entry": round(entry, 2),
                     "exit_time": cd.index[i], "exit": round(exit_px, 2),
@@ -1003,7 +1088,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
     # (For 7AM-noon window data that means sold by NOON the same day.)
     if state == "LONG":
         exit_px = cd.c[cd.n - 1]
-        pnl = (exit_px - entry) * shares
+        pnl = (exit_px * (1 - slip) - entry) * shares
         trades.append({
             "entry_time": cd.index[entry_i], "entry": round(entry, 2),
             "exit_time": cd.index[cd.n - 1], "exit": round(exit_px, 2),
@@ -1024,7 +1109,7 @@ def _enforce_price_band(symbol: str, df: pd.DataFrame) -> bool:
         print(f"{symbol.upper()} is ${price:.2f} -- outside the ${PRICE_MIN:.0f}-"
               f"{'no-cap' if PRICE_MAX == float('inf') else f'${PRICE_MAX:.0f}'} penny-stock band. This strategy does not apply:"
               f" the $0.18/-$0.15 per-share targets only make sense at penny"
-              f" prices. Pick an in-band stock (see: python penny-stocks.py screen).")
+              f" prices. Pick an in-band stock (see: python day-trading.py screen).")
         return False
     return True
 

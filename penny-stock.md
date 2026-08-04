@@ -1,10 +1,10 @@
 # Penny Stock Strategy (Cameron Ross) — Original Prompt
 
-Saved 2026-08-01. Implemented in `penny-stocks.py`.
+Saved 2026-08-01. Implemented in `day-trading.py`.
 
 ## Prompt (verbatim)
 
-add another python file for trading pennystock, call it penny-stocks.py and in
+add another python file for trading pennystock, call it day-trading.py and in
 it add the following cameron ross strategy.
 
 1) screen stocks to trade only penny stocks between $2 and $16.
@@ -30,7 +30,7 @@ it add the following cameron ross strategy.
 
 ## How it maps to code
 
-| Rule | Where in `penny-stocks.py` |
+| Rule | Where in `day-trading.py` |
 |---|---|
 | 1. Price $2–$16 | `PRICE_MIN` / `PRICE_MAX`, `screen_symbol()` |
 | 2. News 7–10 AM ET today | `NEWS_START` / `NEWS_END`, yfinance news timestamps |
@@ -45,9 +45,9 @@ it add the following cameron ross strategy.
 ## Commands
 
 ```bash
-python penny-stocks.py screen SYM1 SYM2 ...     # 6-rule screener table
-python penny-stocks.py patterns SYM             # label today's 1-min candles
-python penny-stocks.py backtest SYM --days 5    # sim trades on recent 1-min data
+python day-trading.py screen SYM1 SYM2 ...     # 6-rule screener table
+python day-trading.py patterns SYM             # label today's 1-min candles
+python day-trading.py backtest SYM --days 5    # sim trades on recent 1-min data
 ```
 
 ## Known data limitations (yfinance)

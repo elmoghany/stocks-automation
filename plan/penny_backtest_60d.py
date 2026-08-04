@@ -35,9 +35,9 @@ import pandas as pd
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT))
 
-# import penny-stocks.py (hyphenated filename)
+# import day-trading.py (hyphenated filename)
 _spec = importlib.util.spec_from_file_location("pennystocks",
-                                               ROOT / "penny-stocks.py")
+                                               ROOT / "day-trading.py")
 ps = importlib.util.module_from_spec(_spec)
 _spec.loader.exec_module(ps)
 

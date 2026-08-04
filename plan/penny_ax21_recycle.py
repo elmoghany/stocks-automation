@@ -36,6 +36,27 @@ _spec.loader.exec_module(axb)
 ps = axb.ps
 
 W_START, W_END = dtime(7, 0), dtime(12, 0)
+FETCH = "--fetch" in sys.argv
+
+
+def get_lazy(sym, date):
+    """axb.get with fetch-on-miss (5/min free-tier friendly: the walk
+    only pulls bars for candidates it actually inspects)."""
+    f = axb.M1 / f"{sym}_{date}.csv"
+    if FETCH and not f.exists():
+        from trading import massive
+        try:
+            df = massive.minute_bars(sym, date)
+        except Exception as e:
+            print(f"  !! m1 {sym} {date}: {e}", flush=True)
+            return None
+        if df is None or df.empty:
+            f.write_text("EMPTY")
+        else:
+            out = df.reset_index()
+            out["begins_at"] = out["begins_at"].dt.tz_convert("UTC")
+            out.to_csv(f, index=False)
+    return axb.get(sym, date)
 
 
 def load_by_day(gapfile, label, min_hist):
@@ -50,7 +71,7 @@ def load_by_day(gapfile, label, min_hist):
 
 
 def calm_window(c, date):
-    df = axb.get(c["symbol"], date)
+    df = get_lazy(c["symbol"], date)
     if df is None:
         return None
     w = df[(df.index.time >= W_START) & (df.index.time < W_END)]
@@ -125,8 +146,32 @@ def run(label, gapfile, pick, k, walk, min_hist, trail_mode, runid,
         prio="rank"):
     by_day = load_by_day(gapfile, label, min_hist)
     days, monthly, recent, deploys = [], {}, [], 0
-    for date, cs in sorted(by_day.items()):
+    lazy_walk = (pick == "walk" and trail_mode != "cond")
+    for i, (date, cs) in enumerate(sorted(by_day.items())):
+        if i % 25 == 0:
+            print(f"  ..{label} scan {i}/{len(by_day)} "
+                  f"({len(days)}d ${sum(days):+,.0f})", flush=True)
         ranked = sorted(cs, key=lambda x: -x["gain_pct"])[:walk]
+        if lazy_walk:
+            # early-stop walk: inspect (and fetch) candidates only until
+            # the first calm halal one -- AX11b-identical selection
+            trail = int(trail_mode)
+            dp = None
+            for c in ranked:
+                w = calm_window(c, date)
+                if w is None:
+                    continue
+                if not axb.halal_pt(c["symbol"], date, c["prev_close"]):
+                    continue
+                tr = sim(w, c, trail)
+                if tr:
+                    dp = sum(x["pnl"] for x in tr)
+                    deploys += 1
+                break
+            if dp is not None:
+                days.append(dp)
+                monthly.setdefault(date[:7], []).append(dp)
+            continue
         calm = []
         for c in ranked:
             w = calm_window(c, date)

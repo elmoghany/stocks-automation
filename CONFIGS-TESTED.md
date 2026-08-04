@@ -13,7 +13,7 @@ Measured +$55,495 over the Jun-Jul window (+$1,734/traded day).
 ---
 
 ## 1. Entry/exit pattern grids (2026-08-01, 1-min bars, 7-10AM, $1k/trade)
-Script: `penny-stocks.py candletest / gridtest / pairtest` on SCYX/TCX/REPL.
+Script: `day-trading.py candletest / gridtest / pairtest` on SCYX/TCX/REPL.
 
 - candletest (5 buy sets x 4 sell modes, 20 configs): hammer_family won all
   4 sell modes (+$437..+$908); best = hammer_family+strong_if_profit +$908.
