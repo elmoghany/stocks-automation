@@ -9,6 +9,17 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## 1PM Window WITHDRAWN -- C10 Is Champion (2026-08-04)
+
+User reverted the exit window to STRICT NOON. C11 (1PM exits,
++$927k/2yr) is archived as reference; the live champion is C10 = C02 +
+pressure-trail(10, 0.30, 0.30, 12, 30) inside 7AM-noon: Y1 +$378,765 /
+Y2 +$481,805, ZERO negative months both years, avg +21.2%/day of the
+$15k. Defaults, skill, and paper watcher reverted. X300 campaign runs
+anatomy-driven refinements on the C10 base (pressure-trail sweep,
+monster amplification, PMH re-arm, pattern surgery, pick hypotheses,
+wick-hygiene guard).
+
 ## AX20 Win Anatomy (2026-08-04) -- cross-config comparison
 
 Same instrumentation on AX20 (2,235 positions, 267 days). The SKELETON

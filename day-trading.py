@@ -154,10 +154,10 @@ DEFAULT_PRESSURE_TRAIL = (10, 0.30, 0.30, 12, 30)
                                  # modulated trail -- tighten to 12% when
                                  # rolling 10-min sell pressure <= -0.3,
                                  # widen to 30% when buy pressure >= +0.3
-DEFAULT_ENTRY_END = dtime(12, 0)   # C11: no NEW entries after noon...
-DEFAULT_EXIT_END = dtime(13, 0)    # ...but winners may be held to 1PM
-                                 # (user signed off 2026-08-04); always
-                                 # flat same day
+DEFAULT_ENTRY_END = dtime(12, 0)   # strict window: entries end noon
+DEFAULT_EXIT_END = dtime(12, 0)    # 1PM extension tested (C11 +$66k/2yr)
+                                 # but WITHDRAWN by user 2026-08-04 --
+                                 # everything flat by NOON, same day
 DEFAULT_TRAIL_PCT = 20.0         # trailing exit: sell on 20% retrace from peak
 DEFAULT_STOP_PCT = 8.0           # 5->8 (2026-08-03 AX16/AX18: +$4.7k Y1,
                                  # +$9k Y2 -- survives weak-year shakeouts)
@@ -977,6 +977,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     entry = fill * (1 + slip)
                     entry_i = i
                     peak = entry
+                    entry_trig = pat
+                    entry_pressure = cd.pressure(i - 1, 10, 0)
                     scaled = scaled2 = added = False
                     if atr_trail:
                         dyn_trail = _atr_pct(i, *atr_trail)
@@ -1043,6 +1045,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     continue
                 state = "LONG"
                 peak = entry
+                entry_trig = pats[0]
+                entry_pressure = cd.pressure(i - 1, 10, 0)
                 scaled = scaled2 = added = False
                 if atr_trail:
                     dyn_trail = _atr_pct(i, *atr_trail)
@@ -1090,7 +1094,10 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                                        "exit_time": cd.index[i],
                                        "exit": round(px, 2),
                                        "reason": f"scale-out +{scale_out_at}%",
-                                       "pnl": round(pnl_part, 2)})
+                                       "pnl": round(pnl_part, 2),
+                                       "trig": entry_trig,
+                                       "p_entry": entry_pressure,
+                                       "peak_pct": round((peak / entry - 1) * 100, 1)})
                         shares -= part
                         if compound:
                             budget_cur += pnl_part
@@ -1178,6 +1185,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     "entry_time": cd.index[entry_i], "entry": round(entry, 2),
                     "exit_time": cd.index[i], "exit": round(exit_px, 2),
                     "reason": reason, "pnl": round(pnl, 2),
+                    "trig": entry_trig, "p_entry": entry_pressure,
+                    "peak_pct": round((peak / entry - 1) * 100, 1),
                 })
                 if verbose:
                     ts = cd.index[i].strftime("%m-%d %H:%M")
@@ -1198,6 +1207,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
             "entry_time": cd.index[entry_i], "entry": round(entry, 2),
             "exit_time": cd.index[cd.n - 1], "exit": round(exit_px, 2),
             "reason": "window-close flatten", "pnl": round(pnl, 2),
+            "trig": entry_trig, "p_entry": entry_pressure,
+            "peak_pct": round((peak / entry - 1) * 100, 1),
         })
         if verbose:
             ts = cd.index[cd.n - 1].strftime("%m-%d %H:%M")

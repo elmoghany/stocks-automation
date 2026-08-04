@@ -1,10 +1,10 @@
 ---
-description: Penny-stock morning workflow — Robinhood scan, cache refresh, screen, live watch, order (7AM-1PM ET)
+description: Penny-stock morning workflow — Robinhood scan, cache refresh, screen, live watch, order (7AM-noon ET)
 ---
 
 The full Cameron Ross morning workflow. Data sources: Robinhood MCP
 (scanner, 1-min bars with real premarket volume, float/sector), Finnhub
-(news 18h), E*TRADE (live quotes/volume + orders). Run during 7AM-1PM ET (entries end noon).
+(news 18h), E*TRADE (live quotes/volume + orders). Run during 7AM-noon ET.
 
 ## Step 1 — Run the saved Robinhood scan (all rules server-side)
 
@@ -55,10 +55,10 @@ of the premarket high, one-shot), no volume gate, entry only while price
 10%/5min). RIDE with a PRESSURE-MODULATED trail (C11): base 20% from peak, TIGHTEN
 to 12% when rolling 10-min sell pressure <= -0.3, WIDEN to 30% when buy
 pressure >= +0.3 (pressure = volume-weighted close position in bar
-range, 20k-share floor); -8% hard stop; bank 1/3 at +25%. Entries end
-at NOON; winners may be HELD UNTIL 1PM (signed off 2026-08-04), always
-flat same day. (C11: Y1 +$390,687 / Y2 +$536,350, 1 negative month in
-22; avg +22.1% of capital per trading day.)
+range, 20k-share floor); -8% hard stop; bank 1/3 at +25%. EVERYTHING flat
+by NOON same day (1PM extension tested and withdrawn by user).
+(C10: Y1 +$378,765 / Y2 +$481,805, ZERO negative months both years;
+avg +21.2% of capital per trading day.)
 UNIVERSE: any clean ticker >= $2 -- NO price ceiling (the $75 cap
 silently deleted the mid/large-cap earnings gappers that carried
 Jan-Mar 2025; scanner must not cap price). Live halal via current
@@ -66,7 +66,7 @@ data IS point-in-time correct; walk up to 8 calm candidates for the
 first compliant one. Position ~$15k (capped at 20% of trailing 10-min volume; PDT needs
 $25k+ equity). Expect roughly: half of qualifying days trade, ~3 of 4
 traded days win, losses capped ~-$1,500, profit concentrated in a few
-big trailing winners. Entries end NOON; ALWAYS flat by 1PM.
+big trailing winners. ALWAYS flat by NOON.
 
 Orders go through E*TRADE (LIMIT only):
 ```bash
@@ -92,7 +92,7 @@ Gate ORDER (lazy -- each stage only runs if the prior passed):
    gate so no time is wasted on non-halal stocks
 3. hot sector (float rule DROPPED 2026-08-03 -- float shown as info only)
 4. news within 18h (Finnhub first, Yahoo second -- FH:/YF: tags)
-Trading: buy 7AM-noon, sell by 1PM same day (C11), force-flat at 1PM; $2 floor and +10% re-checked AT ENTRY per bar (NO price ceiling);
+Trading: buy AND sell inside 7AM-noon, force-flat at noon; $2 floor and +10% re-checked AT ENTRY per bar (NO price ceiling);
 trade top-2 qualifying gappers/day.
 WARNING from live testing: low-mcap gappers frequently fail halal on the
 cash or debt ratio (small mcap denominator) -- expect the halal gate to
