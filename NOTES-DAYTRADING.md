@@ -34,7 +34,8 @@ turns POSITIVE in C01/C02. The whole gain = enter faster (5-min opening
 range), size bigger within liquidity (20% of trailing 10-min volume),
 buy premarket-high breaks. Path to 5x now runs through the deferred
 fetch experiments (deeper walk, fallback re-picks, splits) + possibly
-C06's extra hour. C02 slippage stress = C07 (pending).
+C06's extra hour. C07 = C02 + 10bps slippage: Y1 +$330,650 / Y2 +$428,802,
+still 0 negm both years -- champion is robust to costs.
 
 ## Renamed + AX20 Made Live Default (2026-08-04)
 
