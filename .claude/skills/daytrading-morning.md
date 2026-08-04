@@ -1,10 +1,10 @@
 ---
-description: Penny-stock morning workflow — Robinhood scan, cache refresh, screen, live watch, order (7AM-noon ET)
+description: Penny-stock morning workflow — Robinhood scan, cache refresh, screen, live watch, order (7AM-1PM ET)
 ---
 
 The full Cameron Ross morning workflow. Data sources: Robinhood MCP
 (scanner, 1-min bars with real premarket volume, float/sector), Finnhub
-(news 18h), E*TRADE (live quotes/volume + orders). Run during 7AM-noon ET.
+(news 18h), E*TRADE (live quotes/volume + orders). Run during 7AM-1PM ET (entries end noon).
 
 ## Step 1 — Run the saved Robinhood scan (all rules server-side)
 
@@ -63,10 +63,10 @@ UNIVERSE: any clean ticker >= $2 -- NO price ceiling (the $75 cap
 silently deleted the mid/large-cap earnings gappers that carried
 Jan-Mar 2025; scanner must not cap price). Live halal via current
 data IS point-in-time correct; walk up to 8 calm candidates for the
-first compliant one. Position ~$15k (capped at 10% of bar volume; PDT
-needs $25k+ equity). Expect roughly: half of qualifying days trade, ~60%
-of traded days win, losses capped ~-$1,500, profit concentrated in a few
-big trailing winners. ALWAYS flat by NOON.
+first compliant one. Position ~$15k (capped at 20% of trailing 10-min volume; PDT needs
+$25k+ equity). Expect roughly: half of qualifying days trade, ~3 of 4
+traded days win, losses capped ~-$1,500, profit concentrated in a few
+big trailing winners. Entries end NOON; ALWAYS flat by 1PM.
 
 Orders go through E*TRADE (LIMIT only):
 ```bash
@@ -92,8 +92,7 @@ Gate ORDER (lazy -- each stage only runs if the prior passed):
    gate so no time is wasted on non-halal stocks
 3. hot sector (float rule DROPPED 2026-08-03 -- float shown as info only)
 4. news within 18h (Finnhub first, Yahoo second -- FH:/YF: tags)
-Trading: buy AND sell inside the same day's 7AM-noon window, force-flat
-at window close; $2 floor and +10% re-checked AT ENTRY per bar (NO price ceiling);
+Trading: buy 7AM-noon, sell by 1PM same day (C11), force-flat at 1PM; $2 floor and +10% re-checked AT ENTRY per bar (NO price ceiling);
 trade top-2 qualifying gappers/day.
 WARNING from live testing: low-mcap gappers frequently fail halal on the
 cash or debt ratio (small mcap denominator) -- expect the halal gate to
