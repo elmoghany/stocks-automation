@@ -143,6 +143,12 @@ DIP_MIN_CENTS = 0.05             # a real dip: >= 5c retrace from surge high
 # ALL bullish patterns for entry, no volume gate, ride with a 20% trailing
 # stop / 5% hard stop. The old hammer calibration remains available to the
 # experiment commands via BUY_SETS/SELL_MODES.
+DEFAULT_ORB_BARS = 5             # C02 (2026-08-04): 5-min opening range
+                                 # (15 was AX20; faster entry = +$79.6k/2yr)
+DEFAULT_MAX_VOL_FRAC = 0.20      # C02: size up to 20% of trailing volume
+DEFAULT_VOL_FRAC_WINDOW = 10     # ...measured over trailing 10 minutes
+# C02 also adds a premarket-high stop-buy as an extra entry trigger
+# (break of the premarket high, one-shot) -- pass extra_break_high.
 DEFAULT_TRAIL_PCT = 20.0         # trailing exit: sell on 20% retrace from peak
 DEFAULT_STOP_PCT = 8.0           # 5->8 (2026-08-03 AX16/AX18: +$4.7k Y1,
                                  # +$9k Y2 -- survives weak-year shakeouts)

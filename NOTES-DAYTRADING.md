@@ -9,6 +9,25 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## C02 Adopted As Live Default (2026-08-04)
+
+C02 = AX20 + three changes: (1) 5-min opening range (orb_bars 5, was
+15), (2) size up to 20% of trailing 10-MINUTE volume (was 10%/5min),
+(3) premarket-high stop-buy as an extra one-shot entry trigger.
+Y1 +$357,311 / Y2 +$455,297, 0 negative months both years, win rate
+80%/76%, profit factor 11.2/6.4, max DD -$7.8k/-$13.1k, survives 10bps
+slippage (C07 +$330.7k/+$428.8k). Defaults + skill updated.
+WHY NOT THE BIGGER NUMBERS: C04 "uncapped" (+$877.8k/2yr) assumes
+instant full-size fills at printed prices on thin tape -- its extra
+edge comes exactly from the days the liquidity cap used to bind, i.e.
+where the zero-market-impact assumption is most false. It is recorded
+as a THEORETICAL CEILING, never a plan. C06 "exits to 1PM"
+(+$840.0k/2yr, +$482k Y2) is real money but relaxes the user's 7-noon
+window rule (entries still <=noon; holds runners to 1PM) and carries
+slightly worse risk (1 negm Y2, deeper DDs). It stays on the shelf
+PENDING USER SIGN-OFF; if approved, next test = C02+1PM ("C08").
+Paper trading with C02 begins live 2026-08-04.
+
 ## X100 Campaign: 79 Experiments, New Champion C02 (2026-08-04)
 
 Goal 5x/yr (~$1.25M) at fixed $15k, same-day, halal, 7-noon. Ran 79 of

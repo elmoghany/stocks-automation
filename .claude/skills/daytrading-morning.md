@@ -47,10 +47,13 @@ Trade only symbols passing ALL rules including news-within-18h.
 python day-trading.py livebars PICK --prod   # live 1-min candles + patterns
 ```
 
-Entry per current calibration (NOTES-DAYTRADING.md, 2026-08-03): DEFAULT =
-any bullish reversal pattern OR opening-range breakout (break of the
-first-3-volume-bars high), no volume gate, RIDE with a 20% trailing stop, -8% hard stop, bank 1/3 at +25%
-(AX20 spec -- fixed trail; the thin-supply conditional is obsolete).
+Entry per current calibration (NOTES-DAYTRADING.md, 2026-08-04, C02 spec):
+DEFAULT = any bullish reversal pattern OR 5-minute opening-range breakout
+(break of the first-5-volume-bars high) OR premarket-high stop-buy (break
+of the premarket high, one-shot), no volume gate, entry only while price
+>= prev_close x1.10. Size up to 20% of trailing 10-MINUTE volume (was
+10%/5min). RIDE with a 20% trailing stop, -8% hard stop, bank 1/3 at +25%
+(C02: Y1 +$357k / Y2 +$455k, zero negative months both years).
 UNIVERSE: any clean ticker >= $2 -- NO price ceiling (the $75 cap
 silently deleted the mid/large-cap earnings gappers that carried
 Jan-Mar 2025; scanner must not cap price). Live halal via current
