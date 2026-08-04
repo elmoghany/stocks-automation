@@ -192,6 +192,22 @@ universe.json, hist_n recorded, gd/ raw cache), lazy m1 fetch.
         Y1 +$244,899 (125d, 0 negm) / Y2 +$314,057 (142d, 1 negm)
         Both +$200k targets MET. Same machine as AX11b; only universe changed.
 
+## 16. X100 CAMPAIGN (2026-08-04, 79/100 experiments + stacking)
+Scripts: penny_x100.py (table-driven, X-RESULTS.md has full sorted
+table), penny_x100_stack.py (composites). Anchor X091 = AX20 exact.
+- PASS singles: X086 +$197.5k (uncapped size; fill caveat), X031
+  +$79.6k (orb5), X085 +$66.9k (vf 0.20), X064 +$53.1k (1PM exits,
+  sign-off), X087 +$52.8k (window 10min), X084, X032.
+- Killed: X026 calm-gate-off (Y2 -$53k), all gain-band restrictions,
+  entry cutoffs, max_trades caps, tight stops/trails.
+- CHAMPION C02 (orb_bars=5, max_vol_frac=0.20, vol_frac_window=10,
+  premarket-high stop-buy extra trigger, rest = AX20):
+  Y1 +$357,311 (127d, 0 negm) / Y2 +$455,297 (143d, 0 negm).
+- Ceiling C04 uncapped: +$394,761/+$482,998. Stress C05 (10bps):
+  +$321,761/+$400,719. C06 (+1PM exits): +$357,991/+$482,047.
+Deferred to next run: 21 fetch experiments (X009 news, X015-30
+coverage, X075-82 splits, X095 control).
+
 ## Untested candidates (queue)
 - A2 + cap $10 (two changes: top-2 AND $2-10) — best-avg x best-total mix
 - surge 3% on the current default (was +$47 at $1k sizing)

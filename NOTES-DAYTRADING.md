@@ -9,6 +9,33 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## X100 Campaign: 79 Experiments, New Champion C02 (2026-08-04)
+
+Goal 5x/yr (~$1.25M) at fixed $15k, same-day, halal, 7-noon. Ran 79 of
+100 planned single-change experiments (21 fetch-hungry ones deferred);
+anchor X091 reproduced AX20 exactly. Guardrails: both-year positive,
+combined >= +$30k, beat |X094 random-rank control| (=$36k noise floor).
+PASS: X086 uncapped size (+$197.5k, fill-realism caveat), X031 orb5
+(+$79.6k), X085 vol_frac 0.20 (+$66.9k), X064 exits-1PM (+$53.1k,
+needs sign-off), X087 vol window 10min (+$52.8k), X084 vf 0.15, X032
+orb10. KILLED BY Y2: X026 calm-gate removal (Y1 +$201k but Y2 -$53k --
+the calm-gap rule is real risk control, not regime luck). Honesty tax
+of day-rank vs causal premarket rank: small and Y2-POSITIVE (X001/X092
++$16.9k combined) -- causal ranking is fine to adopt live.
+STACKING (all zero negative months both years):
+  C01 orb5+vf0.20/10min:      Y1 +$346,496 / Y2 +$427,295
+  C02 = C01 + pm-high buy:    Y1 +$357,311 / Y2 +$455,297  <- CHAMPION
+  C03 = C01 + pm$vol rank:    Y1 +$344,856 / Y2 +$454,682
+  C04 uncapped ceiling:       Y1 +$394,761 / Y2 +$482,998 (fills!)
+  C05 C01+10bps slip:         Y1 +$321,761 / Y2 +$400,719 (robust)
+  C06 C01+exits-1PM:          Y1 +$357,991 / Y2 +$482,047 (sign-off)
+C02 vs AX20: +$112k/+$141k per year; Apr-2025 (only losing month ever)
+turns POSITIVE in C01/C02. The whole gain = enter faster (5-min opening
+range), size bigger within liquidity (20% of trailing 10-min volume),
+buy premarket-high breaks. Path to 5x now runs through the deferred
+fetch experiments (deeper walk, fallback re-picks, splits) + possibly
+C06's extra hour. C02 slippage stress = C07 (pending).
+
 ## Renamed + AX20 Made Live Default (2026-08-04)
 
 penny-stocks.py -> day-trading.py and NOTES-PENNY.md ->
