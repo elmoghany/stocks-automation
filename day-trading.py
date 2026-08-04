@@ -856,7 +856,13 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     pressure_exit: tuple | None = None,
                     pressure_trail: tuple | None = None,
                     pressure_reentry: tuple | None = None,
-                    pressure_min_vol: float = 20_000) -> list[dict]:
+                    pressure_min_vol: float = 20_000,
+                    scale_out_pressure_skip: float | None = None,
+                    scale_out_frac_pressure: tuple | None = None,
+                    pmh_rearm: bool = False,
+                    entry_cutoff_patterns=None,
+                    wick_guard: float | None = None,
+                    pressure_shuffle: bool = False) -> list[dict]:
     """Run the entry/exit state machine over 1-min bars of a single day.
 
     State machine:
@@ -881,6 +887,10 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
     reentry_used = 0
     last_exit_reason = ""
     slip = (slippage_bps or 0) / 10_000.0
+    _shuffle_rng = None
+    if pressure_shuffle:
+        import random as _rnd
+        _shuffle_rng = _rnd.Random(str(cd.index[0]) if cd.n else "x")
 
     def _atr_pct(i, k, lo, hi):
         """k x ATR14 as % of price at bar i, clipped to [lo, hi]."""
@@ -909,6 +919,17 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                 and px < prev_close * (1 + MIN_DAY_GAIN_PCT / 100)):
             return False
         return True
+
+    def _hi(i):
+        """High of bar i, wick-guarded (X319): a lone spike whose high
+        exceeds wick_guard x the neighboring closes is ignored for
+        peak/scale-out/trail tracking (CIIT one-bar 50x lesson)."""
+        h = cd.h[i]
+        if wick_guard is None:
+            return h
+        ref = max(cd.c[i], cd.c[i - 1] if i > 0 else cd.c[i],
+                  cd.c[i + 1] if i + 1 < cd.n else cd.c[i])
+        return min(h, ref * wick_guard)
 
     def _pressure_gates_ok(i, px, patterns_entry=False):
         """Entry-side pressure gates; use bars <= i-1 only (fills are
@@ -947,7 +968,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                 or_high = cd.h[i]      # ratchet for the next break
             elif extra_break_high is not None and cd.h[i] > extra_break_high:
                 brk = ("PMH-break", max(extra_break_high, cd.o[i]))
-                extra_break_high = None   # one-shot
+                extra_break_high = cd.h[i] if pmh_rearm else None
+                                          # X312 re-arm vs one-shot
             elif (pressure_reentry is not None and trades
                   and reentry_used < (pressure_reentry[2]
                                       if len(pressure_reentry) > 2 else 1)
@@ -1030,6 +1052,9 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                 pats = [p for p in pats if p in buy_set]
             if pats and not entries_open:
                 pats = []                      # past entry cutoff
+            if (pats and entry_cutoff_patterns is not None
+                    and cd.index[i].time() >= entry_cutoff_patterns):
+                pats = []                      # patterns-only cutoff (X313)
             if pats and not _pressure_gates_ok(i, price, patterns_entry=True):
                 pats = []                      # pressure gate not met
             if pats:                           # dip inverts upward -> BUY
@@ -1068,7 +1093,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
             if trail_pct is not None or dyn_trail is not None:
                 # trailing exit: ride the runner, sell on trail% retrace
                 # from the highest price since entry (no fixed target)
-                peak = max(peak, cd.h[i])
+                peak = max(peak, _hi(i))
                 # half-then-add: second half deployed once price confirms
                 if (add_at is not None and not added
                         and cd.h[i] >= entry * (1 + add_at / 100)):
@@ -1084,9 +1109,25 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     added = True
                 # AX06 scale-out ladder: bank a fraction at +scale_out_at%
                 if (scale_out_at is not None and not scaled
-                        and cd.h[i] >= entry * (1 + scale_out_at / 100)):
-                    px = entry * (1 + scale_out_at / 100) * (1 - slip)
-                    part = int(shares * scale_out_frac)
+                        and _hi(i) >= entry * (1 + scale_out_at / 100)):
+                    # X310/X311: pressure-conditioned banking -- when
+                    # buyers dominate, skip or soften the scale-out
+                    _pp = None
+                    if (scale_out_pressure_skip is not None
+                            or scale_out_frac_pressure is not None):
+                        _pp = cd.pressure(i, 10, pressure_min_vol)
+                    if (scale_out_pressure_skip is not None and _pp is not None
+                            and _pp >= scale_out_pressure_skip):
+                        part = 0           # skip banking entirely (X310);
+                        px = 0.0           # trail/stop still checked below
+                    else:
+                        eff_frac = scale_out_frac
+                        if (scale_out_frac_pressure is not None
+                                and _pp is not None
+                                and _pp >= scale_out_frac_pressure[0]):
+                            eff_frac = scale_out_frac_pressure[1]
+                        px = entry * (1 + scale_out_at / 100) * (1 - slip)
+                        part = int(shares * eff_frac)
                     if part >= 1:
                         pnl_part = (px - entry) * part
                         trades.append({"entry_time": cd.index[entry_i],
@@ -1128,6 +1169,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                 if pressure_trail is not None:
                     pn, t_lo, t_hi, tight, wide = pressure_trail
                     pp = cd.pressure(i, pn, pressure_min_vol)
+                    if _shuffle_rng is not None and pp is not None:
+                        pp = _shuffle_rng.uniform(-1, 1)   # X318 control
                     if pp is not None:
                         if t_lo is not None and pp <= -t_lo:
                             eff_trail = tight

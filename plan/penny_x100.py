@@ -190,6 +190,11 @@ def rank_pool(cs, spec, date, dfs):
         pool = pool[:walk]
         pool.sort(key=lambda c: -c["rvol"])
         return pool
+    if spec.get("rank") == "rvol_boost":
+        # X315: extreme-rvol monsters first, then by gain
+        pool = pool[:walk]
+        pool.sort(key=lambda c: -((c["rvol"] >= 100) * 1e6 + c["gain_pct"]))
+        return pool
     if spec.get("rank") == "gainrvol":
         pool = pool[:walk]
         gr = {c["symbol"]: i for i, c in
@@ -289,6 +294,9 @@ def run_experiment(spec, label):
                     continue
                 g7 = ((float(w["Open"].iloc[0]) / c["prev_close"] - 1) * 100
                       if c["prev_close"] else 999)
+                gbd = spec.get("gap_band_drop")
+                if gbd is not None and gbd[0] <= g7 < gbd[1]:
+                    continue          # X316: skip the worst gap band
                 gap_lim = calm_gap
                 if (calm_gap is not None and spec.get("rescue35")
                         and idx == 0):
@@ -727,6 +735,62 @@ for _name, _base in _BASES.items():
                              f"{_name} with calm-gap {_gap}%",
                              calm_gap=float(_gap), **spec))
 
+
+
+
+# ---- X300 campaign (strict-noon C10 base) ----------------------------
+from datetime import time as _dt
+C10TRAIL = (10, 0.30, 0.30, 12, 30)
+PATTERNS_ONLY = {"hammer", "inverted_hammer", "bullish_engulfing",
+                 "piercing", "morning_star", "three_white_soldiers",
+                 "tweezer_bottom", "bullish_spinning_top",
+                 "dragonfly_doji"}
+
+
+def C10(xid, desc, **kw):
+    sim = dict(C02SIM, pressure_trail=C10TRAIL)
+    sim.update(kw.pop("sim", {}))
+    return T(xid, desc, pm_break=True, sim=sim, **kw)
+
+
+EXPERIMENTS += [
+    C10("X301", "C10 anchor re-run"),
+    # A. pressure-trail neighborhood
+    C10("X302", "trail thresh 0.20, N=5",
+        sim=dict(pressure_trail=(5, 0.20, 0.20, 12, 30))),
+    C10("X303", "trail thresh 0.40, N=5",
+        sim=dict(pressure_trail=(5, 0.40, 0.40, 12, 30))),
+    C10("X304", "trail thresh 0.20, N=20",
+        sim=dict(pressure_trail=(20, 0.20, 0.20, 12, 30))),
+    C10("X305", "trail thresh 0.40, N=20",
+        sim=dict(pressure_trail=(20, 0.40, 0.40, 12, 30))),
+    C10("X306", "widths 10/30", sim=dict(pressure_trail=(10, 0.30, 0.30, 10, 30))),
+    C10("X307", "widths 12/40", sim=dict(pressure_trail=(10, 0.30, 0.30, 12, 40))),
+    C10("X308", "widths 15/25", sim=dict(pressure_trail=(10, 0.30, 0.30, 15, 25))),
+    C10("X309", "wide 40 only at P>=+0.5",
+        sim=dict(pressure_trail=(10, 0.30, 0.50, 12, 40))),
+    # B. monster amplification
+    C10("X310", "skip scale-out when P>=+0.3",
+        sim=dict(scale_out_pressure_skip=0.30)),
+    C10("X311", "scale frac 0.25 when P>=+0.3",
+        sim=dict(scale_out_frac_pressure=(0.30, 0.25))),
+    # C. trigger refinement
+    C10("X312", "PMH re-arm on new highs", sim=dict(pmh_rearm=True)),
+    C10("X313", "pattern entries end 11:00",
+        sim=dict(entry_cutoff_patterns=_dt(11, 0))),
+    C10("X314", "no RSI/MACD pseudo-pattern entries",
+        sim=dict(buy_set=PATTERNS_ONLY)),
+    # D. pick hypotheses (post-hoc -- extra skepticism)
+    C10("X315", "rvol>=100 candidates rank first", rank="rvol_boost"),
+    C10("X316", "drop -5..0% gap band", gap_band_drop=(-5.0, 0.0)),
+    C10("X317", "walk depth 3 (expected negative)", walk=3),
+    # E. controls / hygiene / stress
+    C10("X318", "CONTROL shuffled-pressure trail",
+        sim=dict(pressure_trail=(10, 0.30, 0.30, 12, 30),
+                 pressure_shuffle=True)),
+    C10("X319", "wick guard 3x", sim=dict(wick_guard=3.0)),
+    C10("X320", "C10 + 10bps slippage", sim=dict(slippage_bps=10.0)),
+]
 BYID = {e["id"]: e for e in EXPERIMENTS}
 
 
