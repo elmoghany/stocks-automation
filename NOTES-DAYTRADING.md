@@ -585,7 +585,7 @@ per bar (like rule 3) instead of at day open — a $1.93 open that runs
 through $2+ is tradeable once in band; day filter only requires the band to
 be reachable in the window; (5) seeded caches with FCUV Jul 31 premarket
 (73 real bars incl. the 8:18-8:30 explosion) + fundamentals for
-FCUV/SCYX/TCX/REPL; (6) `.claude/skills/daytrade-morning.md` = full morning
+FCUV/SCYX/TCX/REPL; (6) `.claude/skills/daytrading-morning.md` = full morning
 workflow: run_scan -> refresh caches via MCP -> screen (Finnhub news last)
 -> livescreen/livebars (E*TRADE) -> LIMIT order. End-to-end test on merged
 real-volume data: optimizer full-ruleset best = trail 20-25% + all-pattern
