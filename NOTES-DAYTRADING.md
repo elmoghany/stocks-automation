@@ -9,6 +9,18 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## C11 Adopted As Live Default (2026-08-04)
+
+C11 = C02 + pressure-modulated trail (12%/30% at -/+0.3 rolling 10-min
+volume pressure, 20k-share floor) + exits extended to 1PM (entries
+still end at noon; same-day always; user signed off). Y1 +$390,687 /
+Y2 +$536,350 (avg year +$463,519 = +22.1% of the $15k per trading
+day); slippage-stressed C12 keeps 92%. Defaults + daytrading-morning
+skill + paper_watch.py (1-min watcher now flattens 1PM and applies the
+pressure trail guidance) updated. Strict-noon fallback = C10
+(+$378,765/+$481,805, 0 negm both years) if the 1PM hour is ever
+walked back.
+
 ## X200 Campaign: Pressure Trail Wins, Gap Sweep Debunked, C11 Champion (2026-08-04)
 
 97 experiments (8-config x 8-level calm-gap sweep, 30-experiment volume

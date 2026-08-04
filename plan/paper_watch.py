@@ -4,8 +4,10 @@ notification). Scans stay on their own 5-min cadence elsewhere.
 
 Usage:  python plan/paper_watch.py SYM ENTRY_PX SHARES [PREV_CLOSE]
 State:  data/paper/position.json (peak / scaled survive restarts)
-Exits per C02: bank 1/3 at +25%, trail 20% from peak, hard stop -8%,
-forced flatten at NOON ET. Prints one line per event:
+Exits per C11: bank 1/3 at +25%, trail 20% from peak (12% when
+sellers dominate / 30% when buyers do -- monitor prints pressure),
+hard stop -8%,
+forced flatten at 1PM ET (C11). Prints one line per event:
   TICK / SCALE-OUT / EXIT-STOP / EXIT-FLATTEN  (P&L included)
 Data: yfinance 1-min bars + fast_info last price (paper-grade feed).
 """
@@ -68,11 +70,11 @@ def main():
           f"(peak {peak:.2f}, scaled {scaled})", flush=True)
     while True:
         t = now_et()
-        if t.hour >= 12:
+        if t.hour >= 13:   # C11: exits may run to 1PM
             px, _ = latest(sym, tkr)
             px = px or entry
             pnl = banked + (px - entry) * shares
-            print(f"EXIT-FLATTEN {sym} @ {px:.2f}  noon close  "
+            print(f"EXIT-FLATTEN {sym} @ {px:.2f}  1PM close  "
                   f"P&L ${pnl:+,.0f}", flush=True)
             POS_F.unlink(missing_ok=True)
             return

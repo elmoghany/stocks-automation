@@ -149,6 +149,15 @@ DEFAULT_MAX_VOL_FRAC = 0.20      # C02: size up to 20% of trailing volume
 DEFAULT_VOL_FRAC_WINDOW = 10     # ...measured over trailing 10 minutes
 # C02 also adds a premarket-high stop-buy as an extra entry trigger
 # (break of the premarket high, one-shot) -- pass extra_break_high.
+DEFAULT_PRESSURE_TRAIL = (10, 0.30, 0.30, 12, 30)
+                                 # C11 (2026-08-04): volume-pressure
+                                 # modulated trail -- tighten to 12% when
+                                 # rolling 10-min sell pressure <= -0.3,
+                                 # widen to 30% when buy pressure >= +0.3
+DEFAULT_ENTRY_END = dtime(12, 0)   # C11: no NEW entries after noon...
+DEFAULT_EXIT_END = dtime(13, 0)    # ...but winners may be held to 1PM
+                                 # (user signed off 2026-08-04); always
+                                 # flat same day
 DEFAULT_TRAIL_PCT = 20.0         # trailing exit: sell on 20% retrace from peak
 DEFAULT_STOP_PCT = 8.0           # 5->8 (2026-08-03 AX16/AX18: +$4.7k Y1,
                                  # +$9k Y2 -- survives weak-year shakeouts)
