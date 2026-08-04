@@ -83,10 +83,29 @@ def premkt_metrics(df, prev_close):
     hi = float(pre["High"].max())
     last = float(pre["Close"].iloc[-1])
     dvol = float((pre["Close"] * pre["Volume"]).sum())
+    pm_p = None
+    if len(pre) >= 5:
+        cd = ps.Candles(pre)
+        pm_p = cd.pressure(cd.n - 1, 30, 20_000)
     return {"pm_gain": (last / prev_close - 1) * 100,
             "pm_high_gain": (hi / prev_close - 1) * 100,
             "pm_dvol": dvol,
+            "pm_pressure": pm_p,
             "coil": last / hi if hi > 0 else 0}
+
+
+def pm_pressure_for(spec, df, prev_close, sym, date):
+    """pm_pressure with control variants (X229 shuffle / X230 lag)."""
+    mode = spec.get("gap_pressure_control")
+    if mode == "shuffle":
+        return random.Random(f"x229-{sym}-{date}").uniform(-1, 1)
+    pre = df[df.index.time < W_START]
+    if mode == "lag":
+        pre = pre.iloc[:-30] if len(pre) > 35 else pre.iloc[:5]
+    if len(pre) < 5 or not prev_close:
+        return None
+    cd = ps.Candles(pre)
+    return cd.pressure(cd.n - 1, 30, 20_000)
 
 
 def load_by_day(label, min_hist):
@@ -275,7 +294,15 @@ def run_experiment(spec, label):
                         and idx == 0):
                     gap_lim = 35.0
                 if calm_gap is not None and g7 > gap_lim:
-                    continue
+                    gp = spec.get("gap_pressure")
+                    if gp is None:
+                        continue
+                    # pressure-conditioned admission (X201+): hot-gap
+                    # candidates allowed when premarket buyers dominate
+                    pmp = pm_pressure_for(spec, df, c["prev_close"],
+                                          c["symbol"], date)
+                    if pmp is None or pmp < gp[1]:
+                        continue
                 calm_count += 1
                 if not axb.halal_pt(c["symbol"], date, c["prev_close"]):
                     continue
@@ -592,6 +619,114 @@ EXPERIMENTS = [
     T("X099", "entry gate 15%", globals={"MIN_DAY_GAIN_PCT": 15.0}),
     T("X100", "surge window 30", globals={"SURGE_WINDOW_MIN": 30}),
 ]
+
+# ---- X200 campaign ----------------------------------------------------
+C02SIM = dict(orb_bars=5, max_vol_frac=0.20, vol_frac_window=10)
+
+
+def C2(xid, desc, **kw):
+    """C02-based experiment: C02 sim + pm-high trigger + one change."""
+    sim = dict(C02SIM)
+    sim.update(kw.pop("sim", {}))
+    return T(xid, desc, pm_break=True, sim=sim, **kw)
+
+
+EXPERIMENTS += [
+    # F1-A pressure-conditioned gap gate (premarket pressure admits >20%)
+    C2("X201", "gap>20 ok if pm_pressure>=0.10", gap_pressure=(30, 0.10)),
+    C2("X202", "gap>20 ok if pm_pressure>=0.20", gap_pressure=(30, 0.20)),
+    C2("X203", "gap>20 ok if pm_pressure>=0.30", gap_pressure=(30, 0.30)),
+    C2("X204", "gap>20 ok if pm_pressure>=0.40", gap_pressure=(30, 0.40)),
+    C2("X205", "no calm gate; entry-time P gate T=0.2", calm_gap=None,
+       sim=dict(gap_gate_pressure=(10, 0.20, 20.0))),
+    C2("X206", "no calm gate; entry-time P gate T=0.3", calm_gap=None,
+       sim=dict(gap_gate_pressure=(10, 0.30, 20.0))),
+    # F1-B entry confirmation
+    C2("X207", "all entries need P>=0.0", sim=dict(pressure_entry=(10, 0.0))),
+    C2("X208", "all entries need P>=0.1", sim=dict(pressure_entry=(10, 0.1))),
+    C2("X209", "all entries need P>=0.2", sim=dict(pressure_entry=(10, 0.2))),
+    C2("X210", "patterns need P>=0.1 (ORB/PMH exempt)",
+       sim=dict(pressure_entry_patterns=(10, 0.1))),
+    # F1-C pressure exits
+    C2("X211", "exit-in-profit when P<=-0.2",
+       sim=dict(pressure_exit=(10, 0.2, "profit"))),
+    C2("X212", "exit-in-profit when P<=-0.3",
+       sim=dict(pressure_exit=(10, 0.3, "profit"))),
+    C2("X213", "exit-in-profit when P<=-0.4",
+       sim=dict(pressure_exit=(10, 0.4, "profit"))),
+    C2("X214", "pressure exit REPLACES bearish patterns",
+       sim=dict(sell_mode="target_stop_only",
+                pressure_exit=(10, 0.3, "profit"))),
+    C2("X215", "pressure exit even at a loss",
+       sim=dict(pressure_exit=(10, 0.3, "always"))),
+    C2("X216", "pressure exit window N=5",
+       sim=dict(pressure_exit=(5, 0.3, "profit"))),
+    C2("X217", "pressure exit window N=20",
+       sim=dict(pressure_exit=(20, 0.3, "profit"))),
+    # F1-D pressure-modulated trail
+    C2("X218", "trail tightens to 12% when P<=-0.2",
+       sim=dict(pressure_trail=(10, 0.20, None, 12, None))),
+    C2("X219", "trail 12%/30% two-sided on P -/+0.3",
+       sim=dict(pressure_trail=(10, 0.30, 0.30, 12, 30))),
+    C2("X220", "trail widens to 30% when P>=+0.3",
+       sim=dict(pressure_trail=(10, None, 0.30, None, 30))),
+    # F1-E pressure re-entry
+    C2("X221", "1 re-entry on P cross-up +0.2",
+       sim=dict(pressure_reentry=(10, 0.20, 1, "any"))),
+    C2("X222", "2 re-entries after stop/trail only",
+       sim=dict(pressure_reentry=(10, 0.20, 2, "stoptrail"))),
+    # F1-G controls (must FAIL)
+    C2("X229", "CONTROL shuffled pm_pressure", gap_pressure=(30, 0.20),
+       gap_pressure_control="shuffle"),
+    C2("X230", "CONTROL lagged pm_pressure", gap_pressure=(30, 0.20),
+       gap_pressure_control="lag"),
+    # F2 neighborhood sweeps + combos
+    C2("X231", "orb_bars 3", sim=dict(orb_bars=3)),
+    C2("X232", "orb_bars 4", sim=dict(orb_bars=4)),
+    C2("X233", "orb_bars 6", sim=dict(orb_bars=6)),
+    C2("X234", "orb_bars 8", sim=dict(orb_bars=8)),
+    C2("X235", "vol_frac 0.25", sim=dict(max_vol_frac=0.25)),
+    C2("X236", "vol_frac 0.30", sim=dict(max_vol_frac=0.30)),
+    C2("X237", "scale-out at +30%", sim=dict(scale_out_at=30.0)),
+    C2("X238", "scale-out at +35%", sim=dict(scale_out_at=35.0)),
+    C2("X239", "scale-out frac 0.25", sim=dict(scale_out_frac=0.25)),
+    C2("X240", "C03 rank + C02 trigger", rank="pm_dvol"),
+    C2("C08", "C02 + exits to 1PM (signed off)", exit_1pm=True),
+]
+
+# F1-F interaction matrix: gate width x pressure threshold
+_i = 223
+for _gl in (30.0, 50.0, None):
+    for _t in (0.20, 0.30):
+        if _gl is None:
+            EXPERIMENTS.append(C2(f"X{_i}",
+                f"no gate; entry-time P>={_t}", calm_gap=None,
+                sim=dict(gap_gate_pressure=(10, _t, 20.0))))
+        else:
+            EXPERIMENTS.append(C2(f"X{_i}",
+                f"gate {_gl:.0f}% + pm_pressure>={_t}", calm_gap=_gl,
+                gap_pressure=(30, _t)))
+        _i += 1
+
+# F0 gap-gate sweep: 8 base configs x 8 gates
+_BASES = {
+    "AX20": dict(),
+    "C01": dict(sim=dict(C02SIM)),
+    "C02": dict(pm_break=True, sim=dict(C02SIM)),
+    "C03": dict(rank="pm_dvol", sim=dict(C02SIM)),
+    "C04": dict(sim=dict(orb_bars=5, max_vol_frac=None)),
+    "C06": dict(exit_1pm=True, sim=dict(C02SIM)),
+    "C07": dict(pm_break=True, sim=dict(C02SIM, slippage_bps=10.0)),
+    "X086": dict(sim=dict(max_vol_frac=None)),
+}
+for _name, _base in _BASES.items():
+    for _gap in (30, 40, 50, 60, 70, 80, 90, 100):
+        spec = dict(_base)
+        spec["sim"] = dict(_base.get("sim", {}))
+        EXPERIMENTS.append(T(f"{_name}G{_gap}",
+                             f"{_name} with calm-gap {_gap}%",
+                             calm_gap=float(_gap), **spec))
+
 BYID = {e["id"]: e for e in EXPERIMENTS}
 
 

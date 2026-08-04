@@ -237,6 +237,32 @@ class Candles:
         self.macd = macd.values
         self.macd_sig = sig.values
 
+        # buy/sell volume-pressure proxy (X200): per-bar signed volume by
+        # intrabar close position; halted/one-price bars contribute 0
+        # signed volume but full volume (dampen toward neutral)
+        rng = self.h - self.l
+        with np.errstate(divide="ignore", invalid="ignore"):
+            pos = np.where(rng > 0,
+                           (2 * (self.c - self.l) - rng) / rng, 0.0)
+        self.sv = self.v * pos
+        self.csv = np.concatenate(([0.0], np.cumsum(self.sv)))
+        self.cv = np.concatenate(([0.0], np.cumsum(self.v)))
+
+    def pressure(self, i, n, min_vol=20_000):
+        """Rolling buy/sell pressure over bars [i-n+1, i], in [-1, 1].
+
+        Returns None when the window's volume is below min_vol -- callers
+        treat None as 'signal untrusted' (entry gates fail conservatively,
+        exit/trail conditions no-op).
+        """
+        if i < 0:
+            return None
+        j = max(0, i - n + 1)
+        vol = self.cv[i + 1] - self.cv[j]
+        if vol < min_vol or vol <= 0:
+            return None
+        return (self.csv[i + 1] - self.csv[j]) / vol
+
     def indicator_bullish(self, i):
         """RSI/MACD entry signals as pseudo-patterns."""
         out = []
@@ -814,7 +840,14 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     extra_break_high: float | None = None,
                     slippage_bps: float | None = None,
                     orb_fill_mode: str | None = None,
-                    scale_out_2: tuple | None = None) -> list[dict]:
+                    scale_out_2: tuple | None = None,
+                    pressure_entry: tuple | None = None,
+                    pressure_entry_patterns: tuple | None = None,
+                    gap_gate_pressure: tuple | None = None,
+                    pressure_exit: tuple | None = None,
+                    pressure_trail: tuple | None = None,
+                    pressure_reentry: tuple | None = None,
+                    pressure_min_vol: float = 20_000) -> list[dict]:
     """Run the entry/exit state machine over 1-min bars of a single day.
 
     State machine:
@@ -836,6 +869,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
     added = False
     dyn_trail = None
     dyn_stop = None
+    reentry_used = 0
+    last_exit_reason = ""
     slip = (slippage_bps or 0) / 10_000.0
 
     def _atr_pct(i, k, lo, hi):
@@ -866,6 +901,26 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
             return False
         return True
 
+    def _pressure_gates_ok(i, px, patterns_entry=False):
+        """Entry-side pressure gates; use bars <= i-1 only (fills are
+        intrabar, bar i's close is future info). None pressure = fail."""
+        if pressure_entry is not None:
+            p = cd.pressure(i - 1, pressure_entry[0], pressure_min_vol)
+            if p is None or p < pressure_entry[1]:
+                return False
+        if patterns_entry and pressure_entry_patterns is not None:
+            p = cd.pressure(i - 1, pressure_entry_patterns[0],
+                            pressure_min_vol)
+            if p is None or p < pressure_entry_patterns[1]:
+                return False
+        if gap_gate_pressure is not None and prev_close:
+            n, t, gap_pct = gap_gate_pressure
+            if px > prev_close * (1 + gap_pct / 100):
+                p = cd.pressure(i - 1, n, pressure_min_vol)
+                if p is None or p < t:
+                    return False
+        return True
+
     for i in range(1, cd.n):
         price = cd.c[i]
 
@@ -884,11 +939,24 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
             elif extra_break_high is not None and cd.h[i] > extra_break_high:
                 brk = ("PMH-break", max(extra_break_high, cd.o[i]))
                 extra_break_high = None   # one-shot
+            elif (pressure_reentry is not None and trades
+                  and reentry_used < (pressure_reentry[2]
+                                      if len(pressure_reentry) > 2 else 1)
+                  and (len(pressure_reentry) < 4
+                       or pressure_reentry[3] == "any"
+                       or last_exit_reason.startswith("stop"))):
+                pn, pt = pressure_reentry[0], pressure_reentry[1]
+                p_prev = cd.pressure(i - 2, pn, pressure_min_vol)
+                p_now = cd.pressure(i - 1, pn, pressure_min_vol)
+                if (p_prev is not None and p_now is not None
+                        and p_prev < pt <= p_now):
+                    brk = ("P-reentry", cd.o[i])
+                    reentry_used += 1
         if brk is not None:
             pat, fill = brk
             if orb_fill_mode == "close":
                 fill = cd.c[i]         # pessimistic fill (X097)
-            if _entry_ok(fill):
+            if _entry_ok(fill) and _pressure_gates_ok(i, fill):
                 buy_budget = budget_cur * (0.5 if add_at is not None else 1.0)
                 sh = int(buy_budget // fill)
                 if max_vol_frac:
@@ -951,6 +1019,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                 pats = [p for p in pats if p in buy_set]
             if pats and not entries_open:
                 pats = []                      # past entry cutoff
+            if pats and not _pressure_gates_ok(i, price, patterns_entry=True):
+                pats = []                      # pressure gate not met
             if pats:                           # dip inverts upward -> BUY
                 entry = price * (1 + slip)
                 entry_i = i
@@ -1038,6 +1108,15 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                 if (trail_widen_at is not None
                         and peak >= entry * (1 + trail_widen_at / 100)):
                     eff_trail = trail_wide
+                # X200 pressure-modulated trail (wins over trail_widen_at)
+                if pressure_trail is not None:
+                    pn, t_lo, t_hi, tight, wide = pressure_trail
+                    pp = cd.pressure(i, pn, pressure_min_vol)
+                    if pp is not None:
+                        if t_lo is not None and pp <= -t_lo:
+                            eff_trail = tight
+                        elif t_hi is not None and pp >= t_hi:
+                            eff_trail = wide
                 target_lo = target_hi = float("inf")
                 trail_px = peak * (1 - eff_trail / 100)
                 eff_stop_pct = dyn_stop if dyn_stop is not None else (stop_pct or 5)
@@ -1074,6 +1153,16 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     bears = [b for b in bears if b in STRONG_BEARISH]
                 if bears and (price > entry or sell_mode == "bearish_always"):
                     exit_px, reason = price, f"bearish {bears[0]}"
+            # X200 pressure exit: sellers took over (bar-close fill,
+            # so pressure at bar i itself is legitimate)
+            if exit_px is None and pressure_exit is not None:
+                pn, pt = pressure_exit[0], pressure_exit[1]
+                pmode = pressure_exit[2] if len(pressure_exit) > 2 \
+                    else "profit"
+                pp = cd.pressure(i, pn, pressure_min_vol)
+                if (pp is not None and pp <= -pt
+                        and (pmode == "always" or price > entry)):
+                    exit_px, reason = price, f"pressure-flip {pp:+.2f}"
             if exit_px is not None:
                 pnl = (exit_px * (1 - slip) - entry) * shares
                 trades.append({
@@ -1087,6 +1176,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                           f"P&L ${pnl:+,.2f}")
                 if compound:
                     budget_cur += pnl
+                last_exit_reason = reason
                 state = "SCAN"
 
     # HARD RULE: whatever was bought in this session's bars is sold before
