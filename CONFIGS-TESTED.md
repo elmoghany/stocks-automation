@@ -222,6 +222,16 @@ Scripts: penny_x100.py (X201-X240, C08, 8x8 G-sweep), penny_x100_stack.py
   +$355,894/+$501,571.
 Deferred: fetch queue (X009-X095 F-flagged), wick-hygiene guard.
 
+## 18. X300 CAMPAIGN (2026-08-04, anatomy-driven, strict noon)
+Scripts: penny_x100.py X301-X320, penny_x100_stack.py C20-C22.
+- Controls: X318 shuffle -$114k FAIL(good); X317 walk-3 -$165k
+  (walk-8 tail confirmed); X316/X315 post-hoc picks died.
+- X319 wick-guard: $0.00 delta -> adopted (phantom-wick insurance).
+- CHAMPION C21 (strict noon) = C02 + pressure-trail(10,.3,.3,10,40)
+  + scale-out skip at P>=+0.3 + wick-guard 3x:
+  Y1 +$395,243 / Y2 +$519,641, 0 negm both, holdout +$89.8k/+$100.5k,
+  C22@10bps +$367,562/+$486,523.
+
 ## Untested candidates (queue)
 - A2 + cap $10 (two changes: top-2 AND $2-10) — best-avg x best-total mix
 - surge 3% on the current default (was +$47 at $1k sizing)

@@ -9,6 +9,23 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## X300 Verdict: C21 Champion Inside Strict Noon (2026-08-04)
+
+20 anatomy-driven experiments on the C10 base. Controls behaved:
+shuffled-pressure trail -$114k (the pressure signal is real), walk-3
+-$165k (walk-8 tail confirmed). Post-hoc pick hypotheses correctly
+died (drop-gap-band -$121k, rvol-boost -$47k) -- description != rule.
+Wick-guard costs $0.00 exactly -> adopted as free insurance. The trail
+neighborhood pointed tighter-tighten/wider-widen; stacked with the
+pressure-conditioned scale-out skip:
+C21 = C02 + pressure-trail(10, 0.30, 0.30, 10, 40) + skip 1/3-bank
+when P>=+0.3 + wick-guard 3x, ALL INSIDE 7AM-NOON:
+  Y1 +$395,243 / Y2 +$519,641 (+$914,884/2yr), 0 negm BOTH years,
+  holdouts +$89.8k/+$100.5k, C22@10bps keeps 93%.
+C21 recovers ~98% of the withdrawn 1PM premium without the extra hour.
+ADOPTED as champion; defaults + skill updated. Avg year +$457,442 =
+37% of the 5x target.
+
 ## 1PM Window WITHDRAWN -- C10 Is Champion (2026-08-04)
 
 User reverted the exit window to STRICT NOON. C11 (1PM exits,

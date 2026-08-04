@@ -52,13 +52,15 @@ DEFAULT = any bullish reversal pattern OR 5-minute opening-range breakout
 (break of the first-5-volume-bars high) OR premarket-high stop-buy (break
 of the premarket high, one-shot), no volume gate, entry only while price
 >= prev_close x1.10. Size up to 20% of trailing 10-MINUTE volume (was
-10%/5min). RIDE with a PRESSURE-MODULATED trail (C11): base 20% from peak, TIGHTEN
-to 12% when rolling 10-min sell pressure <= -0.3, WIDEN to 30% when buy
+10%/5min). RIDE with a PRESSURE-MODULATED trail (C21): base 20% from peak, TIGHTEN
+to 10% when rolling 10-min sell pressure <= -0.3, WIDEN to 40% when buy
 pressure >= +0.3 (pressure = volume-weighted close position in bar
-range, 20k-share floor); -8% hard stop; bank 1/3 at +25%. EVERYTHING flat
+range, 20k-share floor); -8% hard stop; bank 1/3 at +25% UNLESS buyers
+still dominate (P >= +0.3) -- then keep the full position riding.
+Ignore lone 1-bar wicks >3x surrounding closes when tracking peaks. EVERYTHING flat
 by NOON same day (1PM extension tested and withdrawn by user).
-(C10: Y1 +$378,765 / Y2 +$481,805, ZERO negative months both years;
-avg +21.2% of capital per trading day.)
+(C21: Y1 +$395,243 / Y2 +$519,641, ZERO negative months both years;
+avg +22.6% of capital per trading day; 93% survives 10bps slippage.)
 UNIVERSE: any clean ticker >= $2 -- NO price ceiling (the $75 cap
 silently deleted the mid/large-cap earnings gappers that carried
 Jan-Mar 2025; scanner must not cap price). Live halal via current

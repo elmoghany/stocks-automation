@@ -59,6 +59,20 @@ COMPOSITES = [
          sim=dict(orb_bars=5, max_vol_frac=0.20, vol_frac_window=10,
                   pressure_trail=(10, 0.30, 0.30, 12, 30),
                   slippage_bps=10.0)),
+    # X300 stacking probes (strict noon)
+    dict(id="C20", desc="C10 with trail widths 10/40", pm_break=True,
+         sim=dict(orb_bars=5, max_vol_frac=0.20, vol_frac_window=10,
+                  pressure_trail=(10, 0.30, 0.30, 10, 40),
+                  wick_guard=3.0)),
+    dict(id="C21", desc="C20 + skip scale-out on P>=+0.3", pm_break=True,
+         sim=dict(orb_bars=5, max_vol_frac=0.20, vol_frac_window=10,
+                  pressure_trail=(10, 0.30, 0.30, 10, 40),
+                  scale_out_pressure_skip=0.30, wick_guard=3.0)),
+    dict(id="C22", desc="C21 under 10bps slippage", pm_break=True,
+         sim=dict(orb_bars=5, max_vol_frac=0.20, vol_frac_window=10,
+                  pressure_trail=(10, 0.30, 0.30, 10, 40),
+                  scale_out_pressure_skip=0.30, wick_guard=3.0,
+                  slippage_bps=10.0)),
 ]
 
 
