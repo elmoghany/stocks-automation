@@ -9,6 +9,31 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## X200 Campaign: Pressure Trail Wins, Gap Sweep Debunked, C11 Champion (2026-08-04)
+
+97 experiments (8-config x 8-level calm-gap sweep, 30-experiment volume
+-pressure family, neighborhoods, C08). HEADLINE MIRAGE CAUGHT: every
+gap-gate >=40% row jumped ~+$350k -- forensics traced it to ONE day
+(CIIT 2026-03-09: a $1,592.50 one-minute wick vs $31.50 open, 50x for
+one bar -- data glitch, untradeable). Excluding it, gate widening is
+~neutral: THE 20% CALM-GAP STANDS. TODO hardening: one-bar-wick hygiene
+guard in simulate_trades peak/scale-out logic. Controls behaved:
+X229 shuffled-pressure showed the same Y1-mirage/Y2-negative signature
+(validates the both-years rule); X230 lag = noise. Pressure family:
+entry-confirmation gates are CATASTROPHIC (-$450k+; breakouts happen
+before pressure turns); pressure EXITS weak; pressure-modulated TRAIL
+is the real winner -- X219 (trail 12% when P<=-0.3, 30% when P>=+0.3,
+N=10min, 20k-share floor) +$48k/2yr, X218 tighten-only +$31k, both
+0 negm. C08 (1PM exits, user signed off) +$62.5k/2yr.
+STACKING: C10 = C02+pressure-trail: Y1 +$378,765 / Y2 +$481,805
+(0 negm both). C11 = C08+pressure-trail (1PM exits): Y1 +$390,687 /
+Y2 +$536,350 (+$927k/2yr, 1 negm Y2); C12 = C11@10bps: +$355,894/
++$501,571 (92% retained). C11 ADOPTED as champion (1PM signed off);
+C10 is the strict-noon fallback. Sizing note: vol_frac 0.30 (X236)
++$36k more but realism thins beyond 20% -- not adopted. Avg C11 year
+= +$463,519 = 37% of the 5x target ($1.25M/yr); next levers = the
+deferred fetch queue (coverage/days) + wick-hygiene + C03-rank combo.
+
 ## Paper Day 1: No Trade, Two Real Bugs Fixed (2026-08-04)
 
 First live paper session (C02, 7AM-noon). Result: COMPLIANT NO-TRADE

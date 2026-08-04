@@ -45,6 +45,20 @@ COMPOSITES = [
     dict(id="C07", desc="C02 + slippage 10bps stress", pm_break=True,
          sim=dict(orb_bars=5, max_vol_frac=0.20, vol_frac_window=10,
                   slippage_bps=10.0)),
+    # X200 stacking round 2
+    dict(id="C10", desc="C02 + pressure-trail 12/30 two-sided",
+         pm_break=True,
+         sim=dict(orb_bars=5, max_vol_frac=0.20, vol_frac_window=10,
+                  pressure_trail=(10, 0.30, 0.30, 12, 30))),
+    dict(id="C11", desc="C08 (1PM exits) + pressure-trail 12/30",
+         pm_break=True, exit_1pm=True,
+         sim=dict(orb_bars=5, max_vol_frac=0.20, vol_frac_window=10,
+                  pressure_trail=(10, 0.30, 0.30, 12, 30))),
+    dict(id="C12", desc="C11 under 10bps slippage stress",
+         pm_break=True, exit_1pm=True,
+         sim=dict(orb_bars=5, max_vol_frac=0.20, vol_frac_window=10,
+                  pressure_trail=(10, 0.30, 0.30, 12, 30),
+                  slippage_bps=10.0)),
 ]
 
 

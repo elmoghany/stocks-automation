@@ -208,6 +208,20 @@ table), penny_x100_stack.py (composites). Anchor X091 = AX20 exact.
 Deferred to next run: 21 fetch experiments (X009 news, X015-30
 coverage, X075-82 splits, X095 control).
 
+## 17. X200 CAMPAIGN (2026-08-04, gap sweep + volume pressure + C08)
+Scripts: penny_x100.py (X201-X240, C08, 8x8 G-sweep), penny_x100_stack.py
+(C10-C12). Baselines: X2xx/C08 vs C02; {cfg}G{n} vs own 20% gate.
+- GAP SWEEP DEBUNKED: G>=40 rows +~$350k = ONE bad-data day (CIIT
+  2026-03-09, 50x one-bar wick). Clean verdict: 20% gate stands.
+- Pressure family: entry gates catastrophic; exits weak; TRAIL
+  modulation wins (X219 +$48k, X218 +$31k, both 0 negm).
+- C08 1PM exits +$62.5k (signed off). Controls X229/X230 failed (good).
+- CHAMPION C11 = C02 + pressure-trail(10,0.3,0.3,12,30) + exits-1PM:
+  Y1 +$390,687 (133d, 0 negm) / Y2 +$536,350 (147d, 1 negm).
+  C10 (strict noon) +$378,765/+$481,805 0 negm both. C12 = C11@10bps:
+  +$355,894/+$501,571.
+Deferred: fetch queue (X009-X095 F-flagged), wick-hygiene guard.
+
 ## Untested candidates (queue)
 - A2 + cap $10 (two changes: top-2 AND $2-10) — best-avg x best-total mix
 - surge 3% on the current default (was +$47 at $1k sizing)
