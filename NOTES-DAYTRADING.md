@@ -9,6 +9,48 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## C11 Win Anatomy Study (2026-08-04) -- what the rules can't show
+
+Instrumented every trade (trigger, entry pressure, peak-before-giveback)
+across all 280 C11 days / 2,839 positions. FINDINGS:
+1. MONSTERS ARE THE BUSINESS: 29 days (10%) = 47% of ALL profit
+   ($434k). 74 days >=$5k = 82%. The other 206 days net roughly zero.
+   The system is a monster-catching machine with cheap idle running.
+2. DISCREPANCY FOUND: the C11 SIM allows entries 12:00-13:00 (the
+   harness widened the window without an entry cutoff) -- 551 such
+   positions earned only +$23k total (+$42 avg, pure churn). The
+   stated rule says entries end at noon. Action: enforce
+   entry_cutoff=noon and re-verify (expect ~flat P&L, cleaner rule).
+3. GOLDEN HOUR IS THE OPEN, NOT PREMARKET: 9:00-10:00 entries avg
+   +$567/position (best of any hour); 7AM entries +$444; after-noon
+   +$42. The 9:30 RTH open is where the real money enters.
+4. THE GAP SWEET SPOT CONTRADICTS INTUITION: 10-20% gaps are the
+   RICHEST band (+$5,325/day avg, 81% win) -- hot-but-calm beats flat.
+   Worst band: -5..0%. Deep red gaps (<-5%) win 84% (washed-out
+   openings that reverse). The calm-gap CEILING at 20% is right, but
+   'calmer is better' below it is FALSE.
+5. RANK CARRIES IT: ranks 0-2 = $762k of $927k (avg +$8.1k/+$4.6k/
+   +$3.6k); ranks 3-7 avg just +$1.2k. The walk depth mostly adds
+   small change -- pick quality remains king.
+6. RE-ENTRY GRINDER: per-position edge decays (1st +$1,141, 2nd +$751,
+   3rd +$425, 4th+ +$137) BUT the 4th+ tail = 2,101 positions = $287k
+   (31% of profit). Monster days are re-entry LADDERS (12-25 positions
+   riding one runner). Never cap re-entries (confirms X069-71).
+7. 73% OF WINNERS ARE STILL HOLDING AT THE 1PM FLATTEN (155/212) --
+   the biggest open question: the edge does not die at 1PM. Testing
+   2PM/RTH-close exits is the highest-value follow-up (needs sign-off).
+8. PMH-break trigger: rare (83 positions) but highest avg (+$633) --
+   currently ONE-SHOT; re-arming it on each new session high is a
+   candidate experiment.
+9. Entry pressure is NOT predictive (selling-pressure entries win 80%
+   -- dip-buys work because the pressure TRAIL protects them). Pressure
+   belongs in exits, not entries -- consistent with X207-9 failing.
+10. Price level is irrelevant ($1.4 to $1,649 monsters); extreme rvol
+    (100x+) is a monster tell.
+Candidate X300 experiments: noon entry-cutoff alignment; 2PM/close
+exits; PMH re-arm; 12:00-hour pattern-entry suppression. All stats are
+in-sample descriptions -- hypotheses, not adopted rules.
+
 ## C11 Adopted As Live Default (2026-08-04)
 
 C11 = C02 + pressure-modulated trail (12%/30% at -/+0.3 rolling 10-min
