@@ -9,6 +9,28 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## AX20 Win Anatomy (2026-08-04) -- cross-config comparison
+
+Same instrumentation on AX20 (2,235 positions, 267 days). The SKELETON
+IS STRUCTURAL (holds in both configs): monsters = 45% of profit from 20
+days; 10-20% gap band richest (+$3,214/day); ranks 0-2 dominate (rank0
++$6,053 vs rank3-7 ~$500); ordinal decay with a fat re-entry tail; ORB
+~3x pattern entries per position (+$390 vs +$140); 9AM = best entry
+hour in BOTH configs. DIFFERENCES THAT TEACH:
+1. 79% of AX20 winners were still holding at the NOON flatten (C11:
+   73% at 1PM) -- the forced close truncates winners at EVERY window
+   length tried so far. Each extension has been worth real money
+   (noon->1PM = +$62.5k). The signal persists -> test 2PM/close (X300).
+2. 7AM entries: AX20 avg +$70/position vs C11 +$444 -- early entries
+   only became profitable when the triggers got FAST (5-bar ORB +
+   premarket-high stop-buy). Slow triggers waste the premarket.
+3. Winner peaks: AX20 avg +42% vs C11 +60% -- bigger size + pressure
+   trail + extra hour let the same winners stretch further.
+Conclusion: C11's gains came from amplifying the structural skeleton
+(faster in, bigger, longer, smarter trail), not from changing what
+wins. The skeleton's remaining unmonetized signal: the close-time
+truncation and the noon-entry churn.
+
 ## C11 Win Anatomy Study (2026-08-04) -- what the rules can't show
 
 Instrumented every trade (trigger, entry pressure, peak-before-giveback)
