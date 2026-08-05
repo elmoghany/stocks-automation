@@ -1,0 +1,89 @@
+{
+ "date": "2026-08-04",
+ "config": "C21",
+ "mode": "paper",
+ "trades": [],
+ "pnl": 0,
+ "verdict": "no-trade day: all 10 scan hits rejected for cause",
+ "coverage_gaps": [],
+ "candidates": [
+  {
+   "sym": "AMIX",
+   "peak_pct": 163,
+   "gates": {
+    "rvol": "pass 109",
+    "calm_gap": "pass (7AM -3.6%)",
+    "halal": "FAIL cash/mcap 221%"
+   },
+   "outcome": "blocked; day's monster"
+  },
+  {
+   "sym": "NUWE",
+   "peak_pct": 31,
+   "gates": {
+    "halal": "FAIL loans 133% cash 1046%"
+   },
+   "outcome": "blocked"
+  },
+  {
+   "sym": "XGN",
+   "peak_pct": 34,
+   "gates": {
+    "rvol": "FAIL 4.9 max (needs >5)",
+    "halal": "not reached"
+   },
+   "outcome": "on watch all day, never crossed"
+  },
+  {
+   "sym": "ATPC",
+   "peak_pct": 10.8,
+   "gates": {
+    "rvol": "FAIL 1.1"
+   },
+   "outcome": "rejected"
+  },
+  {
+   "sym": "ACCL",
+   "peak_pct": 19,
+   "gates": {
+    "rvol": "FAIL 0.6"
+   },
+   "outcome": "rejected"
+  },
+  {
+   "sym": "RACC",
+   "peak_pct": 13,
+   "gates": {
+    "type": "SPAC",
+    "rvol": "FAIL 1.0"
+   },
+   "outcome": "rejected"
+  },
+  {
+   "sym": "AIQU",
+   "gates": {
+    "type": "3x ETN"
+   },
+   "outcome": "auto-reject"
+  },
+  {
+   "sym": "FNG",
+   "gates": {
+    "type": "2x ETF"
+   },
+   "outcome": "auto-reject"
+  },
+  {
+   "sym": "KEYG",
+   "gates": {
+    "type": "2x ETF"
+   },
+   "outcome": "auto-reject"
+  }
+ ],
+ "news_dir": "data/paper/news/2026-08-04/",
+ "lessons": [
+  "scanner ratio-units bug found+fixed (had never fired)",
+  "rvol source-of-truth = our 50d over RH 30d"
+ ]
+}

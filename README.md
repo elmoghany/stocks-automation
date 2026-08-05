@@ -1,88 +1,30 @@
-# E*TRADE API Python Sample Application
+# stocks-automation
 
-This sample Python application provides examples on using the ETRADE API endpoints.
+Halal trading research monorepo -- three strategy books plus shared
+utilities. Hard rules everywhere: halal screen (loans/mcap <=10%,
+deposits <=10%, combined <=20%, haram revenue <5%, no haram industry),
+no shorting, max $15k at risk.
 
-## Table of Contents
+## Layout
 
-* [Requirements](#requirements)
-* [Setup](#setup)
-* [Running Code](#running-code)
+- `day-trading/` -- penny-gapper same-day momentum book (champion
+  config C21; 7AM-noon ET; backtests Y1 +$395k / Y2 +$520k on $15k).
+  `day-trading.py` engine + `plan/` experiment harness (X001-X343,
+  C01-C22) + `data/paper/` daily paper-session records with per-gate
+  decisions and same-day news snapshots.
+- `earnings-trading/` -- earnings-reaction book (ET01-ET31): dip-buys
+  after the report, pre-earnings timing sweeps, gated variants (beat +
+  5y-strong + profitable + volume-pressure). Verdict so far: the edge,
+  if any, is AFTER the news; buying before earnings loses at every
+  entry hour.
+- `bollinger-trading/` -- the original buy-low / sell-high wave+value
+  system (E*TRADE API client, sector rotation, wave indicators).
+  Predates the other two books.
+- `shared/` -- cross-book utilities: Windows Credential Manager access
+  (`win_cred.py`), throttled Massive/Polygon fetcher (`massive.py`).
 
-## Requirements
-
-In order to run this sample application you need the following three items:
-
-1. Python 3 - this sample application is written in Python and requires Python 3. If you do not
-already have Python 3 installed, download it from
-
-   [`https://www.python.org/downloads/`](https://www.python.org/downloads/).
-
-2. An [E*TRADE](https://us.etrade.com) account
-
-3. E*TRADE consumer key and consumer secret.
-
-
-## Setup
-
-1. Unzip python zip file
-
-2. Edit [`config.ini`](EtradePythonClient/etrade_python_client/config.ini)
-with your consumer key and consumer secret; copy these from your application's keys' section
-
-3. Create the virtual environment by running the Python's venv command; see the command syntax below
-
-```
-$ python3 -m venv venv
-```
-
-4. Activate the Python virtual environment
-
-On Windows, run:
-
-```
-$ venv\Scripts\activate.bat
-```
-
-On Unix or Mac OS, run:
-
-```
-$ source venv/bin/activate
-```
-
-5. Use pip to install dependencies for the sample application
-
-```
-$ pip install -r requirements.txt
-```
-
-6. Run the sample application
-
-```
-$ cd etrade_python_client
-$ python3 etrade_python_client.py
-```
-
-## Running Code
-
-Complete these steps to run the code for the sample application:
-
-1. Activate the Python virtual environment
-
-On Windows, run:
-
-```
-$ venv\Scripts\activate.bat
-```
-
-On Unix or Mac OS, run:
-
-```
-$ source venv/bin/activate
-```
-
-2. Run the application
-
-```
-$ cd etrade_python_client
-$ python3 etrade_python_client.py
-```
+Run day-trading tools as `python day-trading/day-trading.py <cmd>`
+(data paths are anchored to the script). Experiment registries:
+`day-trading/CONFIGS-TESTED.md`, notes in
+`day-trading/NOTES-DAYTRADING.md` and `earnings-trading` sections
+therein.

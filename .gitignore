@@ -27,10 +27,15 @@ wheels/
 .ipynb_checkpoints
 *.ipynb_checkpoints
 
-# Data
-data/
-data/videos/
-data/processed/
+# Data (bulk caches ignored; paper-session records + small result
+# tables ARE tracked -- user directive 2026-08-05: keep each day's
+# trading + its news in the repo for later analysis)
+day-trading/data/*
+!day-trading/data/paper/
+earnings-trading/data/*
+!earnings-trading/data/earnings_trading_results.json
+!earnings-trading/data/earnings_x2_results.json
+bollinger-trading/data/
 *.bag
 *.mp4
 *.avi
@@ -64,4 +69,5 @@ temp/
 config.ini
 
 # Generated backtest results
-plan/*.json
+day-trading/plan/*.json
+earnings-trading/plan/*.json

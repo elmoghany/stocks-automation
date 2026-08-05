@@ -1,0 +1,124 @@
+{
+ "date": "2026-08-05",
+ "config": "C21",
+ "mode": "paper",
+ "trades": [],
+ "pnl": 0,
+ "verdict": "no-trade day: all 13 scan hits rejected for cause",
+ "coverage_gaps": [
+  "10:34-11:42 ET (agent timer stall; ZYBT/SAIH appeared in gap, both rejected on catch-up)",
+  "11:48-12:00 ET (second stall; noon close-out performed by coordinator)"
+ ],
+ "candidates": [
+  {
+   "sym": "GTE",
+   "peak_pct": 65.2,
+   "gates": {
+    "rvol": "pass 24.1",
+    "halal": "FAIL loans 166.8% comb 200.2%"
+   },
+   "outcome": "blocked"
+  },
+  {
+   "sym": "INLF",
+   "peak_pct": 123.6,
+   "gates": {
+    "rvol": "pass 8.4",
+    "halal": "FAIL loans 62.8% dep 89.9% comb 152.7%"
+   },
+   "outcome": "blocked"
+  },
+  {
+   "sym": "JDZG",
+   "peak_pct": 21.4,
+   "gates": {
+    "rvol": "pass 22.8",
+    "halal": "FAIL loans 80.6% comb 173.0%"
+   },
+   "outcome": "blocked"
+  },
+  {
+   "sym": "ZYBT",
+   "peak_pct": 176.6,
+   "gates": {
+    "rvol": "pass 6.3",
+    "calm_gap": "pass (open flat)",
+    "halal": "FAIL loans 44.6% comb 75.4%"
+   },
+   "outcome": "blocked; only fully-technical qualifier of both days; ZERO news"
+  },
+  {
+   "sym": "OESX",
+   "peak_pct": 67.3,
+   "gates": {
+    "rvol": "pass 5.1",
+    "halal": "pass",
+    "calm_gap": "FAIL open +31.4% (13.67 vs pc 10.40)"
+   },
+   "outcome": "exhausted-gap reject"
+  },
+  {
+   "sym": "JLHL",
+   "peak_pct": 128.4,
+   "gates": {
+    "rvol": "FAIL 4.6 max",
+    "calm_gap": "FAIL open +29.1% (7.00 vs pc 5.42)"
+   },
+   "outcome": "rejected; 3 headlines only"
+  },
+  {
+   "sym": "DBGI",
+   "peak_pct": 34.7,
+   "gates": {
+    "rvol": "FAIL 0.3 (RH said 16.8)"
+   },
+   "outcome": "rejected"
+  },
+  {
+   "sym": "SHPH",
+   "peak_pct": 20,
+   "gates": {
+    "rvol": "FAIL 0.4"
+   },
+   "outcome": "rejected"
+  },
+  {
+   "sym": "BEEP",
+   "peak_pct": 11.6,
+   "gates": {
+    "rvol": "FAIL 1.7"
+   },
+   "outcome": "rejected"
+  },
+  {
+   "sym": "PCLA",
+   "peak_pct": 17,
+   "gates": {
+    "rvol": "FAIL 0.2"
+   },
+   "outcome": "rejected"
+  },
+  {
+   "sym": "SAIH",
+   "peak_pct": 16.3,
+   "gates": {
+    "rvol": "FAIL 4.2"
+   },
+   "outcome": "rejected (caught in gap catch-up)"
+  },
+  {
+   "sym": "UPSC",
+   "gates": {
+    "type": "2x ETF, vol 2003sh"
+   },
+   "outcome": "auto-reject"
+  }
+ ],
+ "news_dir": "data/paper/news/2026-08-05/",
+ "lessons": [
+  "5 haram monsters blocked in 2 days (AMIX GTE INLF JDZG ZYBT)",
+  "halal-compliant candidate flow much thinner than raw tape",
+  "ZYBT +177% on zero news = pump profile; halal gate saved us from it",
+  "agent timer needs hardening (dual timers + watchdog)"
+ ]
+}

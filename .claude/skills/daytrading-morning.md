@@ -34,9 +34,9 @@ overnight move (they bleed); walk down to the next calm one (check top
 ## Step 3 — Verify rules + news (python, uses the caches)
 
 ```bash
-python day-trading.py screen SYM1 SYM2 ...   # 6-rule table; news via
+python day-trading/day-trading.py screen SYM1 SYM2 ...   # 6-rule table; news via
                                               # Finnhub (lazy, last gate)
-python day-trading.py livescreen SYMS --prod # E*TRADE real-time cross-check
+python day-trading/day-trading.py livescreen SYMS --prod # E*TRADE real-time cross-check
 ```
 
 Trade only symbols passing ALL rules including news-within-18h.
@@ -44,7 +44,7 @@ Trade only symbols passing ALL rules including news-within-18h.
 ## Step 4 — Watch for the entry, then order
 
 ```bash
-python day-trading.py livebars PICK --prod   # live 1-min candles + patterns
+python day-trading/day-trading.py livebars PICK --prod   # live 1-min candles + patterns
 ```
 
 Entry per current calibration (NOTES-DAYTRADING.md, 2026-08-04, C02 spec):
@@ -94,14 +94,14 @@ UNFILLED-SELL RULES (asymmetric: sells are NEVER abandoned):
 
 Orders go through E*TRADE (LIMIT only):
 ```bash
-python test_extended_order.py --session EXTENDED --account 0   # preview
+python bollinger-trading/test_extended_order.py --session EXTENDED --account 0   # preview
 # add --confirm to place; needs daily prod token (--auth / --verifier)
 ```
 
 ## Backtesting note
 
 Backtests run offline against merged Robinhood-CSV + yfinance data:
-`python day-trading.py backtest SYM --days 7` (also candletest / gridtest /
+`python day-trading/day-trading.py backtest SYM --days 7` (also candletest / gridtest /
 pairtest / optimize). To backtest a past gapper day properly, fetch its
 1-min bars via `get_equity_historicals` for that date (bounds=extended) and
 write the CSV first — Robinhood 1-min history reaches ~2+ weeks back,
@@ -133,19 +133,19 @@ future paper session:
    last-cycle timestamp: if the cycle already ran, the backup exits
    quietly; if not, it runs the cycle. Never rely on a single timer.
 2. MAIN-SESSION WATCHDOG: the coordinating session keeps a ~25-min
-   ScheduleWakeup loop that checks data/paper/{date}.md mtime; if
+   ScheduleWakeup loop that checks day-trading/data/paper/{date}.md mtime; if
    stale >10 min during session hours, SendMessage-nudge the agent
    (it died once already: "no active task" on nudge = it was dead).
 3. STRUCTURED DAY FILES (user directive): every session produces, in
    the repo, alongside the markdown log:
-   - data/paper/{date}.md      -- narrative log (existing format)
-   - data/paper/{date}.json    -- machine-readable: config, trades
+   - day-trading/data/paper/{date}.md      -- narrative log (existing format)
+   - day-trading/data/paper/{date}.json    -- machine-readable: config, trades
      (entry/exit px, times, sizes, P&L), every candidate with per-gate
      decisions (rvol ours-vs-RH, halal ratios, calm-gap open vs
      prev_close, instrument-type), coverage_gaps, lessons
-   - data/paper/news/{date}/{SYM}.json -- Finnhub headlines for EVERY
+   - day-trading/data/paper/news/{date}/{SYM}.json -- Finnhub headlines for EVERY
      symbol that appeared on the scan that day (script:
-     python plan/paper_news.py DATE SYM SYM ...), fetched same day
+     python day-trading/plan/paper_news.py DATE SYM SYM ...), fetched same day
      (free tier only reaches back ~1 year; same-day capture is cheap
      and permanent)
    All three are committed+pushed at close-out with the day's verdict.

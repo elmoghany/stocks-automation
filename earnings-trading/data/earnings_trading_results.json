@@ -1,0 +1,110 @@
+[
+ {
+  "id": "ET01",
+  "desc": "gap >= +3%: buy post-news open, sell close",
+  "overnight": false,
+  "n": 108,
+  "win": 49.1,
+  "avg": -0.111,
+  "tot": -1804,
+  "best": "SNOW",
+  "worst": "SHOP",
+  "pass": false
+ },
+ {
+  "id": "ET02",
+  "desc": "gap >= +5%: buy open, sell close",
+  "overnight": false,
+  "n": 73,
+  "win": 53.4,
+  "avg": 0.116,
+  "tot": 1268,
+  "best": "SNOW",
+  "worst": "SHOP",
+  "pass": true
+ },
+ {
+  "id": "ET03",
+  "desc": "gap <= -3% dip-buy: buy open, sell close",
+  "overnight": false,
+  "n": 111,
+  "win": 51.4,
+  "avg": 0.167,
+  "tot": 2787,
+  "best": "AMAT",
+  "worst": "NET",
+  "pass": true
+ },
+ {
+  "id": "ET04",
+  "desc": "gap <= -5% dip-buy: buy open, sell close",
+  "overnight": false,
+  "n": 81,
+  "win": 51.9,
+  "avg": -0.064,
+  "tot": -782,
+  "best": "AMAT",
+  "worst": "NET",
+  "pass": false
+ },
+ {
+  "id": "ET05",
+  "desc": "gap >= +3% AND 5y-strong: buy open, sell close",
+  "overnight": false,
+  "n": 35,
+  "win": 42.9,
+  "avg": -0.354,
+  "tot": -1860,
+  "best": "NET",
+  "worst": "NVDA",
+  "pass": false
+ },
+ {
+  "id": "ET06",
+  "desc": "gap <= -3% dip-buy AND 5y-strong",
+  "overnight": false,
+  "n": 48,
+  "win": 52.1,
+  "avg": 0.019,
+  "tot": 138,
+  "best": "AMAT",
+  "worst": "NET",
+  "pass": true
+ },
+ {
+  "id": "ET07",
+  "desc": "|gap| < 3% (control -- no-surprise events)",
+  "overnight": false,
+  "n": 139,
+  "win": 53.2,
+  "avg": 0.498,
+  "tot": 10377,
+  "best": "DXCM",
+  "worst": "PANW",
+  "pass": true
+ },
+ {
+  "id": "ET08",
+  "desc": "OVERNIGHT gap >= +3%: hold post day close -> next close",
+  "overnight": true,
+  "n": 108,
+  "win": 49.1,
+  "avg": 0.105,
+  "tot": 1704,
+  "best": "DELL",
+  "worst": "PLTR",
+  "pass": false
+ },
+ {
+  "id": "ET09",
+  "desc": "OVERNIGHT gap <= -3% dip: post close -> next close",
+  "overnight": true,
+  "n": 111,
+  "win": 40.5,
+  "avg": -0.31,
+  "tot": -5169,
+  "best": "SNPS",
+  "worst": "AVGO",
+  "pass": false
+ }
+]
