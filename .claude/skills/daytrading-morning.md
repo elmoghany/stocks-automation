@@ -70,6 +70,14 @@ $25k+ equity). Expect roughly: half of qualifying days trade, ~3 of 4
 traded days win, losses capped ~-$1,500, profit concentrated in a few
 big trailing winners. ALWAYS flat by NOON.
 
+UNFILLED-BUY RULE (1 minute): place LIMIT at trigger +0.5%; if not
+filled in 60s, CANCEL. If price ran <= +2% above trigger, re-place at
+market price once; beyond +2% DO NOT CHASE -- the ORB ratchet re-arms
+at each new high and will produce the next trigger. If price fell back
+below the trigger, cancel and wait (pullback often gives a pattern
+entry). In paper sessions log both the assumed trigger fill AND the
+price 60s later -- that spread is the live slippage measurement.
+
 Orders go through E*TRADE (LIMIT only):
 ```bash
 python test_extended_order.py --session EXTENDED --account 0   # preview
