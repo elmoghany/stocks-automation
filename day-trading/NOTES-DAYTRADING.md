@@ -1237,3 +1237,31 @@ PLAYBOOK ADOPTED: morning-after dip-buy on halal BEATS gapping <=-3%
 (quality gates optional), sell at same-day close. No pre-earnings
 buying, no after-hours entries, no profit targets. Live tool:
 python earnings-trading/plan/earnings_upcoming.py each evening.
+
+## Earnings-X3 verdicts (2026-08-05, $50k/slot, four improvement strategies)
+
+S1 MINUTE-LEVEL MECHANICS (ET40-45, 246 reaction days, 1-min Massive):
+- ET40 anchor open->close +0.772%/ev = daily ET12 (+0.776%) -- data OK.
+- Penny-book mechanics DO NOT transfer to large-cap earnings dips:
+  bounce-confirm entry +0.52% (worse -- you pay up for confirmation),
+  2%/4% pressure trail +0.16% (shaken out), both combined -0.04%,
+  -3% hard stop +0.58% (stops out days that recover). Large-cap dip
+  bounces are grinding mean-reversion, not momentum surges. REJECT:
+  blind buy-the-open / sell-the-close IS the optimal simple form.
+S2 SMALL CAPS (ET50-53, S&P600, 184/603 halal, 702 events):
+- ET50 dip<=-3%+beat: +0.57%/ev (+$26.4k). ET51 dip<=-5%: 58.5% win,
+  +1.28%/ev (+$41.6k) -- deeper small-cap dips bounce harder.
+- ET52 combined-universe one-slot deepest: +$117,164 (n=111) vs
+  big-only +$117,755 (n=99): more active days, SAME total. Small caps
+  broaden selection but do not lift the one-slot ceiling.
+S3 SYMPATHY (ET60-62, 13,700 peer-days): ALL NEGATIVE (-0.03..-0.09%/
+  ev, ~49% win). No tradable daily-granularity sympathy edge. REJECT.
+S4 COMPOUNDING (ET70): the real lever. One slot/day deepest dip at
+  flat $50k: +$117,755/yr. COMPOUNDING full equity: $50k -> $433,593
+  (+767%/yr), max drawdown -21.9%, worst trade -10.7% (IESC).
+  Caveats: single bull year, no slippage, position = full equity.
+FINAL EARNINGS PLAYBOOK: one $50k slot/day, deepest halal dip <=-3%
+on a confirmed BEAT (combined S&P900+600 universe), buy 9:30 open,
+sell at close, compound if drawdown tolerance allows. Deepest-dip
+slot rule + compounding are post-hoc choices -- confirm next earnings
+season before treating as settled.

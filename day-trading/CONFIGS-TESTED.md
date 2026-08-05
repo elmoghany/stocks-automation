@@ -283,3 +283,13 @@ B: ET22-26 ladder raw +$21k..+$146k BUT ET32 SPY-adjust halves it and
    ET33 placebo (mid-quarter same-hold) reproduces ~73% of ET28's
    excess -> momentum beta, NOT an earnings edge. REJECTED for
    adoption (also exceeds 1-2-day hold cap).
+
+## 22. EARNINGS-X3 ET40-ET70 ($50k slots, 2026-08-05)
+- ET40 minute anchor +0.772%/ev (validates daily) | ET41 bounce-entry
+  +0.52% worse | ET42 trail +0.16% | ET43 both -0.04% | ET44 stop-3%
+  +0.58% -- penny mechanics REJECTED on large-cap earnings dips
+- ET50 sc dip3 +$26.4k | ET51 sc dip5 +$41.6k (58.5% win) | ET53 thin
+- ET52 combined 1-slot +$117,164 ~= big-only (no ceiling lift)
+- ET60-62 sympathy: ALL negative, REJECT
+- ET70a flat $50k 1-slot deepest: +$117,755/yr | ET70b compounding:
+  $50k -> $433,593 (+767%), dd -21.9% -- ADOPTED PLAYBOOK basis
