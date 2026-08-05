@@ -9,6 +9,31 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## Code Review of day-trading.py (2026-08-05)
+
+Full review of Candles + simulate_trades after the X100-X300 additions.
+FIXED: pressure_reentry consumed its re-entry budget at TRIGGER even
+when the fill was rejected by entry/pressure gates -- now consumed only
+on a successful fill (affects only the non-adopted X221/X222 configs;
+champion identity verified unchanged: AX20 Y1 +$244,899 and C21 Y1
++$395,243 reproduce exactly post-fix). DOCUMENTED (deliberate
+trade-offs, now in code comments):
+1. wick_guard references the NEXT bar's close (1 bar of hindsight);
+   it only ever CAPS peaks so cannot add phantom profit; live
+   equivalent = trust spikes with a 1-bar delay. Adopted at $0.00
+   delta with this definition.
+2. LOWS are not wick-guarded: a phantom low can hit the stop, but
+   fills at the stop level, so damage is bounded to a normal stop-out.
+3. Scale-out skip is PERMANENT per position: the +25% touch is a
+   one-time decision -- if buyers dominate at the touch, the position
+   never banks later (C21 semantics as backtested).
+4. monster_mode tell uses realized pnl only (causal); kept for
+   research completeness though verdict was neutral.
+Reviewed clean: pressure prefix sums, entry-gate causality (i-1),
+exit-fill causality (i), slippage on all fill paths, ATR windows,
+dyn trail/stop reset per entry, ORB/PMH trigger precedence, shuffle
+control seeding, flag resets across positions.
+
 ## Coverage Family Complete: The Last Axis Closes (2026-08-05)
 
 The deferred fetch-queue experiments (20 runs on the AX20 base) are

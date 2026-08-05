@@ -929,7 +929,17 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
     def _hi(i):
         """High of bar i, wick-guarded (X319): a lone spike whose high
         exceeds wick_guard x the neighboring closes is ignored for
-        peak/scale-out/trail tracking (CIIT one-bar 50x lesson)."""
+        peak/scale-out/trail tracking (CIIT one-bar 50x lesson).
+
+        KNOWN TRADE-OFFS (accepted, C21 adopted with this definition
+        at exactly $0.00 backtest delta):
+        - uses the NEXT bar's close as one of the references (1 bar of
+          hindsight); live equivalent = confirm spikes with a 1-bar
+          delay before trusting them. Only ever CAPS peaks, never
+          raises them, so it cannot add phantom profit.
+        - LOWS are not guarded: a phantom one-bar low can still hit
+          the stop, but the fill is at the stop level (not the wick),
+          so damage is bounded to a normal stop-out."""
         h = cd.h[i]
         if wick_guard is None:
             return h
@@ -961,7 +971,10 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
         price = cd.c[i]
 
         # X335+ monster mode: once >= thresh banked by the tell time,
-        # stop banking (and optionally floor the trail wide) all day
+        # stop banking (and optionally floor the trail wide) all day.
+        # Causal: uses only REALIZED pnl of already-closed trades.
+        # (Experiment verdict: neutral -- the pressure trail already
+        # implements this per-bar; kept for research completeness.)
         if (monster_mode is not None and not mm_engaged
                 and cd.index[i].time() <= monster_mode[1]
                 and sum(t["pnl"] for t in trades) >= monster_mode[0]):
@@ -995,7 +1008,9 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                 if (p_prev is not None and p_now is not None
                         and p_prev < pt <= p_now):
                     brk = ("P-reentry", cd.o[i])
-                    reentry_used += 1
+                    # NOTE: budget consumed on FILL, not trigger (see
+                    # entry block) -- a gate-rejected trigger costs
+                    # nothing
         if brk is not None:
             pat, fill = brk
             if orb_fill_mode == "close":
@@ -1020,6 +1035,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     if atr_stop:
                         dyn_stop = _atr_pct(i, *atr_stop)
                     state = "LONG"
+                    if pat == "P-reentry":
+                        reentry_used += 1
                     if verbose:
                         ts = cd.index[i].strftime("%m-%d %H:%M")
                         print(f"  BUY  {ts}  @{entry:.2f}  ({shares} sh = "
@@ -1132,7 +1149,11 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     if mm_engaged or (scale_out_pressure_skip is not None
                                       and _pp is not None
                                       and _pp >= scale_out_pressure_skip):
-                        part = 0           # skip banking (X310 / monster)
+                        # INTENTIONAL: skipping marks the position as
+                        # 'scaled', so it never banks later even if
+                        # pressure fades -- the +25% touch is a one-time
+                        # decision point (C21 semantics as backtested)
+                        part = 0
                         px = 0.0           # trail/stop still checked below
                     else:
                         eff_frac = scale_out_frac
