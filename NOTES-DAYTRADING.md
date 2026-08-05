@@ -9,6 +9,29 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## Coverage Family Complete: The Last Axis Closes (2026-08-05)
+
+The deferred fetch-queue experiments (20 runs on the AX20 base) are
+done. VERDICTS:
+- FALLBACK RE-PICKS: catastrophic (-$60k to -$243k). Abandoning a
+  committed candidate that hasn't entered by 8:30/9:00 quits right
+  before the 9-10AM golden hour -- the 'stalled' pick is usually
+  warming up. Patience with the commitment IS the edge.
+- SECOND-PICK REDEPLOY: zero effect -- 87% of days still hold at the
+  flatten, so 'fully exited early' almost never happens.
+- CONDITIONAL SPLITS: all negative (-$41k to -$154k) even when gated
+  on candidate supply/quality. Halving the eventual monster's position
+  can't be rescued by conditioning. Concentration is structurally
+  correct.
+- MIN-HIST RELAXATIONS: negative. WALK 12/16: the lone positive
+  (+$12.1k/+$12.6k both-year) but far below the $30k floor -- ranks
+  9-16 add 40-80 trading days of pocket change; shelf item.
+- X095 lag-rank control: fails as designed.
+RESEARCH PROGRAM STATUS after ~210 experiments: every family is now
+adopted, empty, or shelf-marginal. C21 stands as a tight machine; the
+next information gain is live paper data (Day 2 today) and eventually
+a third backtest year when data ages in.
+
 ## News-Tier Experiment: Nothing There (2026-08-04)
 
 X340/X341 on Finnhub company-news (Y1-ONLY evidence -- free tier has

@@ -232,6 +232,18 @@ Scripts: penny_x100.py X301-X320, penny_x100_stack.py C20-C22.
   Y1 +$395,243 / Y2 +$519,641, 0 negm both, holdout +$89.8k/+$100.5k,
   C22@10bps +$367,562/+$486,523.
 
+## 19. COVERAGE FAMILY / MISC PROBES (2026-08-04/05)
+- Fallback re-picks 8:30/9:00/9:30: -$60k..-$243k (abandons picks
+  before the golden hour). Second-pick redeploy: zero (condition never
+  fires). Conditional splits X075-X082: -$41k..-$154k all variants.
+  min_hist 10/25: negative. Walk 12/16: +$12k both-year (below floor,
+  shelf). X095 lag control: fails (good).
+- X340/X341 news-tier (Y1-only): rank +$2.6k noise; required -$68k.
+- X342/X343 day-2 continuation: identical to C21 (already captured).
+- X335-X338 monster mode: neutral (pressure trail already does it).
+- Earnings-drift (overnight, separate book): REJECTED -- reactions are
+  zero-mean; historical hit-rates not sticky (plan/earnings_probe.py).
+
 ## Untested candidates (queue)
 - A2 + cap $10 (two changes: top-2 AND $2-10) — best-avg x best-total mix
 - surge 3% on the current default (was +$47 at $1k sizing)
