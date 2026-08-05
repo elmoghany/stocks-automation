@@ -1,0 +1,8 @@
+{
+ "policy": "slot = base + 0.5 * max(0, cum_pnl)  (re-invest half of profits; base never shrinks)",
+ "adopted": "2026-08-05 (user directive)",
+ "base": 15000,
+ "cum_pnl": 0.0,
+ "slot": 15000,
+ "history": []
+}

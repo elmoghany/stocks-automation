@@ -359,3 +359,18 @@ to literal C11 = trail (12,30) + scale_out_pressure_skip None.
 day-trading.py defaults + paper_watch (1PM flatten) + skill updated;
 Paper Day 3 (2026-08-06) runs C23; E01 papers in parallel, separate
 reporting.
+
+## Half-profit reinvestment sizing (R50 policy, 2026-08-05)
+
+USER DIRECTIVE: both books re-invest HALF of profits. slot = base +
+0.5 x max(0, cumulative P&L); base never shrinks (losses only eat the
+profit buffer). State: {book}/data/paper/slot_state.json, updated at
+every close-out. Bases: C23 $15k, E01 $50k.
+- E01 backtest under R50: +$208,787/yr vs +$117,755 flat (final slot
+  $154k -- trivially fillable on S&P names). ADOPTED.
+- C23 under R50: naive math explodes (avg +23.6%/day compounds to
+  absurdity) -- NOT REAL: rule 13 (<= 20% of trailing 10-min volume)
+  caps fills on penny gappers. Budget-scaling runs (15k/30k/60k/120k,
+  plan/c23_budget_scaling.py) quantify the saturation; results to be
+  registered when complete. Paper sessions apply R50 with rule 13
+  intact, so live slots grow only as far as liquidity allows.
