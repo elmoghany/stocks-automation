@@ -9,6 +9,30 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## Earnings-Drift Hypothesis: REJECTED (2026-08-04)
+
+User idea: buy before earnings when the stock is 5y-strong/uptrending
+AND its own history shows positive post-earnings reactions. Probe:
+161 liquid names, 3,844 earnings events back to ~2014, point-in-time
+gates, $15k/event, window Oct24-Jul26 (plan/earnings_probe.py).
+RESULT: the edge does not exist in this universe.
+- Baseline (no gates, 1,214 events): avg -0.02%/event, 50% win --
+  post-earnings reactions are zero-mean coin flips in liquid names.
+- User gates (>=60% historical hit + 5y>=100% + >200SMA): n=58,
+  -0.27% avg (close exit, -$2,308 total); tighter gates get worse
+  (70%: -0.93%; 75%: -3.91%). Historical reaction hit-rate is NOT
+  sticky -- expectations are priced, and strong-momentum names carry
+  the highest expectations, so even beats get sold.
+- Structural problems regardless of stats: holding THROUGH a release
+  is uncapped overnight gap risk (worst event -15.6% = no stop can
+  save you), and it breaks the same-day rule.
+CONTRAST: the day system trades AFTER the catalyst is public, riding
+realized momentum WITH stops -- structurally and empirically superior
+(~+22.6%/day on deployed capital vs -0.02%/event here). Verdict:
+earnings anticipation rejected; earnings REACTIONS are already our
+bread and butter (the widened universe catches earnings gappers the
+morning after).
+
 ## Monster Mode Redundant; Edge Is Market-Neutral (2026-08-04)
 
 X335-X338 tested the '$2k-banked-by-9:30' monster tell as an explicit
