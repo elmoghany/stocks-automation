@@ -293,3 +293,19 @@ B: ET22-26 ladder raw +$21k..+$146k BUT ET32 SPY-adjust halves it and
 - ET60-62 sympathy: ALL negative, REJECT
 - ET70a flat $50k 1-slot deepest: +$117,755/yr | ET70b compounding:
   $50k -> $433,593 (+767%), dd -21.9% -- ADOPTED PLAYBOOK basis
+
+## E01 -- EARNINGS CHAMPION (registered 2026-08-05)
+
+Permanent ID: **E01** (earnings book champion; cf. C21 in the day book).
+Spec: each morning, among HALAL names (S&P900+600 universe, price >$2)
+that BEAT EPS estimates and open <=-3% below prior close: buy the
+DEEPEST dip at the 9:30 open with the full slot, sell at that day's
+close. One slot/day. No pre-earnings buying, no after-hours entries,
+no targets/stops/trails (all tested worse). Sizing: $50k flat
+(+$117,755/yr backtested Aug25-Jul26, 99 trades, 62.6% win) or
+compounded (E01c: $50k -> $433,593, +767%, max dd -21.9%).
+Status: backtested one bull year; needs a paper season. Deepest-dip
+slot rule + compounding chosen post-hoc -- revalidate next season.
+Receipts: ET12/13 (edge + beat gate), ET31 (miss control ~0),
+ET40-45 (mechanics reject), ET50-53 (small caps), ET60-62 (sympathy
+reject), ET70 (sizing), ET32/33 (B-family beta controls).

@@ -1265,3 +1265,19 @@ on a confirmed BEAT (combined S&P900+600 universe), buy 9:30 open,
 sell at close, compound if drawdown tolerance allows. Deepest-dip
 slot rule + compounding are post-hoc choices -- confirm next earnings
 season before treating as settled.
+
+## E01 -- EARNINGS CHAMPION (registered 2026-08-05)
+
+Permanent ID: **E01** (earnings book champion; cf. C21 in the day book).
+Spec: each morning, among HALAL names (S&P900+600 universe, price >$2)
+that BEAT EPS estimates and open <=-3% below prior close: buy the
+DEEPEST dip at the 9:30 open with the full slot, sell at that day's
+close. One slot/day. No pre-earnings buying, no after-hours entries,
+no targets/stops/trails (all tested worse). Sizing: $50k flat
+(+$117,755/yr backtested Aug25-Jul26, 99 trades, 62.6% win) or
+compounded (E01c: $50k -> $433,593, +767%, max dd -21.9%).
+Status: backtested one bull year; needs a paper season. Deepest-dip
+slot rule + compounding chosen post-hoc -- revalidate next season.
+Receipts: ET12/13 (edge + beat gate), ET31 (miss control ~0),
+ET40-45 (mechanics reject), ET50-53 (small caps), ET60-62 (sympathy
+reject), ET70 (sizing), ET32/33 (B-family beta controls).
