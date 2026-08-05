@@ -74,6 +74,22 @@ COMPOSITES = [
                   pressure_trail=(10, 0.30, 0.30, 10, 40),
                   scale_out_pressure_skip=0.30, wick_guard=3.0,
                   slippage_bps=10.0)),
+    # 1PM window re-adopted by user 2026-08-05 ("make c11 the default").
+    # C23 = the X300 improvements (10/40 trail, scale-out skip, wick
+    # guard) inside the 1PM window -- never measured during X300
+    # because that campaign ran strict-noon only. C11 vs C23 decides
+    # the 1PM-era default.
+    dict(id="C23", desc="C21 improvements + exits to 1PM", pm_break=True,
+         exit_1pm=True,
+         sim=dict(orb_bars=5, max_vol_frac=0.20, vol_frac_window=10,
+                  pressure_trail=(10, 0.30, 0.30, 10, 40),
+                  scale_out_pressure_skip=0.30, wick_guard=3.0)),
+    dict(id="C24", desc="C23 under 10bps slippage", pm_break=True,
+         exit_1pm=True,
+         sim=dict(orb_bars=5, max_vol_frac=0.20, vol_frac_window=10,
+                  pressure_trail=(10, 0.30, 0.30, 10, 40),
+                  scale_out_pressure_skip=0.30, wick_guard=3.0,
+                  slippage_bps=10.0)),
 ]
 
 

@@ -150,17 +150,17 @@ DEFAULT_MAX_VOL_FRAC = 0.20      # C02: size up to 20% of trailing volume
 DEFAULT_VOL_FRAC_WINDOW = 10     # ...measured over trailing 10 minutes
 # C02 also adds a premarket-high stop-buy as an extra entry trigger
 # (break of the premarket high, one-shot) -- pass extra_break_high.
-DEFAULT_PRESSURE_TRAIL = (10, 0.30, 0.30, 10, 40)
+DEFAULT_PRESSURE_TRAIL = (10, 0.30, 0.30, 10, 40)   # C23 trail (10/40)
                                  # C21 (2026-08-04): tighten to 10% when
                                  # rolling 10-min sell pressure <= -0.3,
                                  # widen to 40% when buy pressure >= +0.3
-DEFAULT_SCALE_OUT_PRESSURE_SKIP = 0.30
+DEFAULT_SCALE_OUT_PRESSURE_SKIP = 0.30  # C23: skip banking while buyers dominate
                                  # C21: skip the 1/3 bank at +25% while
                                  # buyers still dominate (P >= +0.3)
 DEFAULT_WICK_GUARD = 3.0         # C21: ignore one-bar wicks >3x closes
                                  # in peak/scale/trail tracking
 DEFAULT_ENTRY_END = dtime(12, 0)   # strict window: entries end noon
-DEFAULT_EXIT_END = dtime(12, 0)    # 1PM extension tested (C11 +$66k/2yr)
+DEFAULT_EXIT_END = dtime(13, 0)    # C23 default: 1PM re-adopted 2026-08-05
                                  # but WITHDRAWN by user 2026-08-04 --
                                  # everything flat by NOON, same day
 DEFAULT_TRAIL_PCT = 20.0         # trailing exit: sell on 20% retrace from peak

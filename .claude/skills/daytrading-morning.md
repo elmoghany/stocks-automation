@@ -116,7 +116,7 @@ Gate ORDER (lazy -- each stage only runs if the prior passed):
    gate so no time is wasted on non-halal stocks
 3. hot sector (float rule DROPPED 2026-08-03 -- float shown as info only)
 4. news within 18h (Finnhub first, Yahoo second -- FH:/YF: tags)
-Trading: buy AND sell inside 7AM-noon, force-flat at noon; $2 floor and +10% re-checked AT ENTRY per bar (NO price ceiling);
+Trading: buy inside 7AM-noon, exits until 1PM, force-flat at 1PM (C23, re-adopted 2026-08-05); $2 floor and +10% re-checked AT ENTRY per bar (NO price ceiling);
 trade top-2 qualifying gappers/day.
 WARNING from live testing: low-mcap gappers frequently fail halal on the
 cash or debt ratio (small mcap denominator) -- expect the halal gate to

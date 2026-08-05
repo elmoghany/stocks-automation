@@ -332,3 +332,30 @@ E01 +$117,755). Generic dips lack the catalyst; E01's edge needs the
 earnings-beat information, not just "a strong stock dipped". No
 rank-mining for a better BL06 picker -- 251 days would overfit.
 BL book stays research-only; E01 remains the champion.
+
+## C11 notes + 1PM re-adoption -> C23 DEFAULT (2026-08-05)
+
+USER DECISION: "make c11 the default" -- the 1PM exit window (withdrawn
+during X300 planning) is RE-ADOPTED.
+
+What C11 is: C02 (orb5 + 20%/10-min sizing + PMH trigger) + two-sided
+pressure trail (10, 0.30, 0.30, 12, 30) + exits extended to 1PM
+(entries still end at noon). Born from the X219 trail family + C08's
+signed-off 1PM window. Record: Y1 +$390,687 (133d, 0 negm), Y2
++$536,350 (147d, 1 negm). History: champion 2026-08-04, archived same
+week when the user chose strict noon ("keep noon"), re-adopted
+2026-08-05. Its 2,839 positions were the win-anatomy dataset (monsters
+= 10% of days = ~47% of profit; golden hour 9-10AM; re-entry tail 31%).
+
+C23 test (user: "ok test it"): the X300 improvements (trail widths
+10/40, scale-out pressure-skip 0.30, wick guard) had never been
+measured inside the 1PM window (X300 ran strict-noon). Result:
+- C23 Y1 +$412,879 (0 negm) / Y2 +$579,988 (0 negm)
+- vs C11: +$22,192 / +$43,638, dComb +$65,830 (>= $30k floor), negm
+  improves (C11's one Y2 negative month disappears). C24 = C23@10bps:
+  +$377,509 / +$539,670 (~91-93% kept).
+ADOPTED DEFAULT: **C23** -- C11's window, X300's machinery. Reverting
+to literal C11 = trail (12,30) + scale_out_pressure_skip None.
+day-trading.py defaults + paper_watch (1PM flatten) + skill updated;
+Paper Day 3 (2026-08-06) runs C23; E01 papers in parallel, separate
+reporting.
