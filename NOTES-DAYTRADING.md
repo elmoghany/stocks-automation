@@ -9,6 +9,22 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## News-Tier Experiment: Nothing There (2026-08-04)
+
+X340/X341 on Finnhub company-news (Y1-ONLY evidence -- free tier has
+no Y2 history; could not be adopted under the both-year rule
+regardless). Cache: 2,008 candidate-days, 69% had headlines in the 18h
+pre-7AM window. RESULTS vs C21:
+- X340 news-priority rank: Y1 +$2,608 (noise). Gain ranking already
+  surfaces the news-driven movers -- a +50% gapper on 5x volume has a
+  catalyst almost by definition.
+- X341 news REQUIRED: Y1 -$68,388 (drops 26 trading days) -- the
+  no-headline 31% still contains real winners (unindexed catalysts,
+  social momentum). Requiring news destroys value.
+VERDICT: do NOT buy deeper news history; the signal isn't there even
+in-sample. News stays where it belongs in the live flow: as a
+confirmation input for the human, not a ranking rule.
+
 ## Earnings-Drift Hypothesis: REJECTED (2026-08-04)
 
 User idea: buy before earnings when the stock is 5y-strong/uptrending

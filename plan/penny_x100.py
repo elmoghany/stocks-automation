@@ -190,6 +190,30 @@ def rank_pool(cs, spec, date, dfs):
         pool = pool[:walk]
         pool.sort(key=lambda c: -c["rvol"])
         return pool
+    if spec.get("rank") == "day2":
+        # X342/X343: yesterday's strong pick, if in today's pool, first
+        pool = pool[:walk]
+        d2 = spec.get("_day2map", {}).get(date)
+        if d2:
+            pool.sort(key=lambda c: -((c["symbol"] == d2) * 1000
+                                      + c["gain_pct"]))
+        return pool
+    if spec.get("rank") == "news":
+        # X340: fresh-news candidates first (18h pre-7AM), then by gain;
+        # missing cache = no news. X341 adds news_required.
+        pool = pool[:walk]
+        def n18(c):
+            f = ROOT / "data" / "news_cache" / f"{c['symbol']}_{date}.json"
+            if not f.exists():
+                return 0
+            try:
+                return json.loads(f.read_text()).get("n18", 0)
+            except Exception:
+                return 0
+        if spec.get("news_required"):
+            pool = [c for c in pool if n18(c) > 0]
+        pool.sort(key=lambda c: -((n18(c) > 0) * 1000 + c["gain_pct"]))
+        return pool
     if spec.get("rank") == "rvol_boost":
         # X315: extreme-rvol monsters first, then by gain
         pool = pool[:walk]
@@ -267,6 +291,24 @@ def run_experiment(spec, label):
     calm_gap = spec.get("calm_gap", 20.0)
     recs = []
     monthly = {}
+    if spec.get("rank") == "day2":
+        # map: date -> yesterday's traded symbol if its day-P&L >= thresh
+        # (built from the C21 champion day records -- causal, prior days)
+        base = {}
+        for lb in ("year", "y2025"):
+            try:
+                for r in json.loads((ROOT / f"data/massive/c21_trades_{lb}.json").read_text()):
+                    base[r["date"]] = r
+            except Exception:
+                pass
+        dates_sorted = sorted(by_day)
+        d2map = {}
+        th = spec.get("day2_thresh", 2000)
+        for k in range(1, len(dates_sorted)):
+            prev = base.get(dates_sorted[k - 1])
+            if prev and prev["pnl"] >= th:
+                d2map[dates_sorted[k]] = prev["symbol"]
+        spec["_day2map"] = d2map
     try:
         for i, (date, cs) in enumerate(sorted(by_day.items())):
             if i % 50 == 0:
@@ -835,6 +877,25 @@ EXPERIMENTS += [
 BYID = {e["id"]: e for e in EXPERIMENTS}
 
 
+
+EXPERIMENTS += [
+    C21("X340", "news-priority rank (Y1 evidence only)", rank="news"),
+    C21("X341", "news REQUIRED (Y1 evidence only)", rank="news",
+        news_required=True),
+]
+BYID = {e["id"]: e for e in EXPERIMENTS}
+
+
+
+EXPERIMENTS += [
+    C21("X342", "day-2 continuation: yesterday pick >$2k ranks first",
+        rank="day2", day2_thresh=2000),
+    C21("X343", "day-2 continuation: yesterday MONSTER >$10k first",
+        rank="day2", day2_thresh=10000),
+]
+BYID = {e["id"]: e for e in EXPERIMENTS}
+
+
 # --------------------------------------------------------------- driver
 def load_results():
     """Merged view across all shard files (workers write disjoint ids)."""
@@ -901,7 +962,8 @@ def main():
             if (ids is None or e["id"] in ids)
             and not (cache_only and e.get("F"))]
     for e in todo:
-        if e.get("rank") == "news":
+        if (e.get("rank") == "news"
+                and not any((ROOT / "data" / "news_cache").glob("*.json"))):
             print(f"{e['id']}: SKIP (news cache not built)", flush=True)
             continue
         for label in ("year", "y2025"):
