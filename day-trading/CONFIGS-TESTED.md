@@ -393,3 +393,23 @@ that size" -- with growing fill-realism strain: the backtest assumes
 clean fills inside the volume cap; at $120k slots that assumption is
 doing heavy lifting. Slippage stress at scale untested (next: C24-style
 10bps at $120k). Paper sessions enforce R50 + rule 13 naturally.
+
+### C23 dynamic R50 backtest (true per-day compounding, 2026-08-05)
+
+User: slot = $15k + half of cumulative profits, every day simulated AT
+its actual slot (plan/c23_r50_dynamic.py; curve in
+data/massive/c23_r50_curve.json).
+RAW RESULT: +$37,443,510 over 2 years; slot $15k -> $19.4M (>=$120k in
+5 weeks, >=$1M by month 3). NOT CREDIBLE AT SIZE:
+- negative days 55% (vs ~21% at $15k); max DD -$11.9M; worst day
+  -$2.1M -- the zero-negm character is destroyed;
+- beyond ~$120k the fill model (trigger-price fills, zero market
+  impact, 20% of 10-min volume) becomes fiction -- at $15M slots the
+  strategy IS the market in these names.
+RECOMMENDATION (pending user sign-off): adopt R50 WITH A SLOT CAP at
+the measured-credible tier: slot = min($120k, $15k + 0.5 x cum). At
+that cap the defensible 2-year figure is ~+$4.96M (tier-validated),
+reached-cap in ~5 weeks, accepting 1 negative month in Y2 and the
+$120k-tier fill caveats. Paper R50 runs uncapped for now ($15k base;
+months away from the cap) -- decision needed only when cum profits
+approach +$210k.
