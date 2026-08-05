@@ -78,6 +78,20 @@ below the trigger, cancel and wait (pullback often gives a pattern
 entry). In paper sessions log both the assumed trigger fill AND the
 price 60s later -- that spread is the live slippage measurement.
 
+UNFILLED-SELL RULES (asymmetric: sells are NEVER abandoned):
+- Stop/trail exits: limit at stop level -1% (marketable); unfilled in
+  60s -> escalate to bid -2%, repeat every 60s until flat. Position
+  size <= 20% of 10-min volume guarantees exit liquidity exists.
+- Scale-out +25%: NOT a resting limit (the C21 skip decides at the
+  touch using pressure) -- the 1-min watcher sells with a marketable
+  limit when banking is chosen.
+- Pressure-flip/bearish exits: marketable limit -0.5%, same 60s
+  escalation.
+- NOON FLATTEN: start 11:57 at bid -1%, escalate 11:59 to bid -2%;
+  flat by 12:00 without exception.
+- Known residual: halt/gap-throughs fill at the reopen, not the stop
+  (sim behaves the same; the backtest's worst day was exactly this).
+
 Orders go through E*TRADE (LIMIT only):
 ```bash
 python test_extended_order.py --session EXTENDED --account 0   # preview
