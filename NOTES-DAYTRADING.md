@@ -1127,3 +1127,41 @@ the yfinance news check. Backtests on those three: FCUV +$442 (38 trades),
 SCYX +$277 (12 trades, 67% win), TCX +$374 (16 trades) — profitable on real
 gappers. yfinance limits: news timestamps approximate/incomplete, float
 patchy, 1-min history ~7 days — production needs a real-time scanner feed.
+
+## Earnings-Trading Book (2026-08-05)
+
+New separate book: trade the earnings REACTION on halal large/mid caps
+(user: "amd news yesterday... some companys fall during earnings").
+Scripts: plan/earnings_trading.py (backtest ET01-ET09),
+plan/earnings_timing.py (entry-hour sweep ET10/ET11),
+plan/earnings_upcoming.py (live watchlist: halal names reporting in the
+next N days + historical reaction stats). Universe: 164 large/mid caps
+-> 88 halal (halal_check, cached data/earnings_halal.json; current
+fundamentals = point-in-time approximation). Window: LAST YEAR ONLY
+(Aug 2025-Jul 2026) per user directive. $15k/event. No shorting (not
+halal) -- fallers are played as next-morning dip-buys.
+
+Results (data/earnings_trading_results.json):
+- ET03 dip-buy gap<=-3% (buy post-news open, sell close): n=46,
+  54.3% win, +0.75%/event, +$5,182. PASS (also +$7,358 prior year).
+- ET04 dip-buy gap<=-5%: n=24, 62.5%, +$1,917 PASS.
+- ET06 dip-buy + 5y-strong: n=18, 66.7%, +1.18%/event, +$3,177 PASS
+  (best avg; small n).
+- ET02 gap-up>=+5% continuation: +$1,782 (was -$156 prior year --
+  regime-shaky, not adopted). ET01 gap>=+3%: -$696 fail.
+- ET07 control |gap|<3%: -$6,108 (filter matters -- good).
+- ET08 OVERNIGHT gap-up drift (post close -> next close): +$9,900
+  (+$10,302 prior year, both positive) -- flagged, overnight book needs
+  separate sign-off. ET09 overnight dip: -$6,202 fail.
+- ET10/ET11 entry-timing sweep ("best time to buy BEFORE earnings"):
+  NONE. Every entry hour 09:30-15:30 loses, both exits: sell-at-close-
+  before-release -0.4..-0.9%/event (win% degrades toward the close:
+  38%->25% pm, 32%->14% am -- de-risking drift into the report);
+  hold-through-release -0.4..-0.85% at every hour. Confirms the
+  earnings_probe rejection with hour resolution.
+- VERDICT: the edge is AFTER the news, not before. Adopted watchlist
+  play: morning dip-buy on halal names gapping <=-3% on results
+  (ET03/ET04/ET06). AMD 2026-08-05 (beat, -9% open on outlook) is the
+  live archetype. News readability verified: Finnhub company-news (180
+  AMD headlines/3d) + Robinhood get_earnings_results (EPS est/actual,
+  report date, am/pm timing).

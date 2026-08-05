@@ -248,3 +248,19 @@ Scripts: penny_x100.py X301-X320, penny_x100_stack.py C20-C22.
 - A2 + cap $10 (two changes: top-2 AND $2-10) — best-avg x best-total mix
 - surge 3% on the current default (was +$47 at $1k sizing)
 - multi-year validation on purchased data (Polygon) — cold-tape regime
+
+## 20. EARNINGS-TRADING BOOK ET01-ET11 (2026-08-05, last-year window)
+- ET01 gap>=+3% buy open sell close: -$696 fail
+- ET02 gap>=+5%: +$1,782 (prior year -$156: shaky, not adopted)
+- ET03 gap<=-3% dip-buy open->close: +$5,182 PASS (prior yr +$7,358)
+- ET04 gap<=-5% dip-buy: +$1,917 PASS
+- ET05 gap>=+3% + 5y-strong: -$354 fail
+- ET06 gap<=-3% dip-buy + 5y-strong: +$3,177 PASS (66.7% win, small n)
+- ET07 control |gap|<3%: -$6,108 (control behaves)
+- ET08 OVERNIGHT gap-up close->next close: +$9,900 (both yrs +) OVN shelf
+- ET09 OVERNIGHT dip close->next close: -$6,202 fail
+- ET10 pre-release entry sweep, sell close before release: ALL hours
+  negative (-0.4..-0.9%/event; later = worse)
+- ET11 pre-release entry sweep, hold through release: ALL hours negative
+- Adopted: ET03/ET04/ET06 morning dip-buy watchlist (halal, gap<=-3%).
+  Buy-before-earnings: dead at every hour (matches earnings_probe).

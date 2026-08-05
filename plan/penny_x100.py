@@ -389,8 +389,9 @@ def run_experiment(spec, label):
                 if switch:
                     tr = []
                     for c2 in pool[com_idx + 1:]:
-                        df2 = dfs.get(c2["symbol"]) or get_lazy(c2["symbol"],
-                                                                date)
+                        df2 = dfs.get(c2["symbol"])
+                        if df2 is None:
+                            df2 = get_lazy(c2["symbol"], date)
                         dfs[c2["symbol"]] = df2
                         if df2 is None:
                             continue
@@ -416,8 +417,9 @@ def run_experiment(spec, label):
                 dp0 = sum(t["pnl"] for t in tr)
                 if last_exit.time() < cutoff and (gate == "any" or dp0 > 0):
                     for c2 in pool[com_idx + 1:]:
-                        df2 = dfs.get(c2["symbol"]) or get_lazy(c2["symbol"],
-                                                                date)
+                        df2 = dfs.get(c2["symbol"])
+                        if df2 is None:
+                            df2 = get_lazy(c2["symbol"], date)
                         dfs[c2["symbol"]] = df2
                         if df2 is None:
                             continue
@@ -479,7 +481,9 @@ def run_split(sp2, pool, dfs, date, calm_gap, spec, tr_main, committed, ci):
     for c2 in pool:
         if c2["symbol"] == c1["symbol"]:
             continue
-        df2 = dfs.get(c2["symbol"]) or get_lazy(c2["symbol"], date)
+        df2 = dfs.get(c2["symbol"])
+        if df2 is None:
+            df2 = get_lazy(c2["symbol"], date)
         dfs[c2["symbol"]] = df2
         if df2 is None:
             continue
