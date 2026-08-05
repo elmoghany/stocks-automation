@@ -9,6 +9,33 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## Concentration Study: You Cannot Skip the Quiet 90% (2026-08-04)
+
+C21 concentration: 28 monster days (10%) = 43% of profit; 80 mid days
+($3-10k) = 52%; the quiet 162 days (60% of days) = only 5% ($45k).
+STRATEGIC ANSWER to 'trade less, mimic the 10%': the quiet days cannot
+be skipped EX-ANTE -- every filter that tried (gap bands, rvol boost,
+walk-3, entry gates) lost money, because every monster begins the
+morning looking exactly like an ordinary qualifying day. But the quiet
+days also cost almost nothing (+$45k net, tiny drawdowns) -- they are
+the price of the lottery tickets. The edge is IN-FLIGHT amplification,
+not ex-ante selection; C21's scale-skip and pressure-widened trail
+already are that engine. NEW ANSWERS:
+- Q(first trade): a losing FIRST position does NOT spoil the day --
+  rest-of-day averages +$2,851 after an opening loss and 62% of those
+  days still end green. NEVER stand down after an early stop (kills
+  circuit-breakers again).
+- Q(monster tell): '+$2k banked by 9:30' is real -- 3x the monster
+  base rate (30% vs 10%), those 44 days avg +$7,150 and hold 34% of
+  profit. Actionable causally: X-candidate 'monster mode' = once the
+  tell fires, disable further scale-outs / force widest trail for the
+  rest of the day.
+- Q(flatten quality): noon-flatten give-back from peak is small
+  (median 3.6pp) -- truncation costs future upside, not bad fills.
+- Q(hangover): day-after-monster is ~normal (+$2,786 vs +$3,388 avg).
+Still open: market-tape correlation (needs SPY series); live slippage
+(paper days).
+
 ## Pressure-Threshold Sweeps: 0.30 Validated (2026-08-04)
 
 User-requested sweep of the +-0.30 pressure threshold at the champion's
