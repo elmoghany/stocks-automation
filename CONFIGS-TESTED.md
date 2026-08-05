@@ -264,3 +264,12 @@ Scripts: penny_x100.py X301-X320, penny_x100_stack.py C20-C22.
 - ET11 pre-release entry sweep, hold through release: ALL hours negative
 - Adopted: ET03/ET04/ET06 morning dip-buy watchlist (halal, gap<=-3%).
   Buy-before-earnings: dead at every hour (matches earnings_probe).
+
+### 20b. ET01-ET09 CORRECTED (reaction-day convention fix, same day)
+pm reporters now score the NEXT session (was: report day -- wrong).
+- ET01 -$1,804 fail | ET02 +$1,268 thin | ET03 +$2,787 thin PASS
+- ET04 -$782 fail (was +$1.9k) | ET05 -$1,860 fail | ET06 +$138 ~zero
+- ET07 control +$10,377 (bull-tape beta warning) | ET08 OVN +$1,704
+- ET09 OVN -$5,169 fail
+Prior 20. numbers are ARTIFACTS of the wrong convention where marked.
+ET12-ET31 (earnings_x2.py, big universe, gated variants) supersede.

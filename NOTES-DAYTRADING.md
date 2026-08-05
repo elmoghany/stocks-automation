@@ -1165,3 +1165,27 @@ Results (data/earnings_trading_results.json):
   live archetype. News readability verified: Finnhub company-news (180
   AMD headlines/3d) + Robinhood get_earnings_results (EPS est/actual,
   report date, am/pm timing).
+
+### CORRECTION (2026-08-05, later same day)
+
+The ET01-ET09 results above were computed with a WRONG reaction-day
+convention: yfinance report timestamps were normalized to midnight, so
+pm (after-close) reporters had their "reaction" measured on the report
+day itself instead of the NEXT session (e.g. AMD reported 8/4 pm; the
+-9% reaction was 8/5, but the old code scored 8/4). Fixed in
+plan/earnings_trading.py using the announcement hour (pm -> next
+session, am -> same day, mid-day stamps skipped). Corrected last-year
+numbers (n roughly doubles because real reaction days move more):
+- ET03 dip<=-3%: +$2,787 (n=111, 51.4% win, +0.17%/ev) -- thin, not
+  the +$5.2k previously reported.
+- ET04 dip<=-5%: -$782 FAIL (was +$1.9k). ET06 dip+strong: +$138 ~zero.
+- ET02 gap>=+5%: +$1,268 thin. ET01: -$1,804 fail.
+- ET07 |gap|<3% "control": +$10,377 -- the LARGEST positive, i.e. last
+  year's bull tape drifted quiet reaction days up. Market beta, not an
+  earnings edge. Treat all raw ET numbers with that lens.
+- ET08 overnight drift: +$1,704 (was +$9.9k -- artifact).
+LESSON: the naive post-earnings dip-buy has at best a thin edge; the
+gated variants are being tested properly in plan/earnings_x2.py
+(ET12-ET31: beat + 5y-strong + profitable-quarter + volume-pressure,
+S&P500+400 halal universe, after-hours entries, +8/10/15% targets,
+pre-earnings run-up ladder). Results to follow.

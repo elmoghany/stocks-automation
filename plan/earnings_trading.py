@@ -87,7 +87,17 @@ def halal_universe():
 
 def build_events(syms):
     """Per event: gap % (post open vs pre close), same-day open->close
-    return, next-day close->close drift, and point-in-time strength."""
+    return, next-day close->close drift, and point-in-time strength.
+
+    Reaction-day convention (FIXED 2026-08-05 -- the first version
+    normalized the yfinance timestamp to midnight, which put pm
+    reporters' "reaction" on the report day itself instead of the next
+    session): using the announcement HOUR,
+      pm (>=15h, after the close): pre = the report-day session,
+          post = the NEXT session (that's where the reaction gap is);
+      am (<=9h, before the open): pre = last session before the report
+          date, post = the report-date session.
+    Mid-day timestamps (ambiguous) are skipped."""
     out = {}
     for n, sym in enumerate(syms):
         try:
@@ -99,13 +109,21 @@ def build_events(syms):
             ed = t.get_earnings_dates(limit=40)
             if ed is None or len(ed) == 0:
                 continue
-            dates = sorted({d.tz_localize(None).normalize()
-                            for d in ed.index})
+            stamps = {}
+            for ts in ed.index:
+                d = ts.tz_localize(None)
+                stamps.setdefault(d.normalize(), d)
             closes, opens, idx = h["Close"], h["Open"], h.index
             evs = []
-            for d in dates:
-                pre_c = idx[idx < d]
-                post_c = idx[idx >= d]
+            for d, ts in sorted(stamps.items()):
+                if ts.hour >= 15:              # pm: reaction is next day
+                    pre_c = idx[idx <= d]
+                    post_c = idx[idx > d]
+                elif ts.hour <= 9:             # am: reaction is that day
+                    pre_c = idx[idx < d]
+                    post_c = idx[idx >= d]
+                else:                          # ambiguous mid-day stamp
+                    continue
                 if len(pre_c) == 0 or len(post_c) == 0:
                     continue
                 pre, post = pre_c[-1], post_c[0]
