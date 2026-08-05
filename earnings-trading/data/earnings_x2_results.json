@@ -1,0 +1,162 @@
+[
+ {
+  "id": "ET12",
+  "desc": "A dip<=-3% + beat: morning open -> close",
+  "n": 246,
+  "win": 52.0,
+  "avg": 0.776,
+  "tot": 28642
+ },
+ {
+  "id": "ET13",
+  "desc": "A dip<=-3% + beat + strong + fin: open -> close",
+  "n": 89,
+  "win": 55.1,
+  "avg": 0.947,
+  "tot": 12637
+ },
+ {
+  "id": "ET14",
+  "desc": "A = ET13 with +8% target (1d)",
+  "n": 89,
+  "win": 55.1,
+  "avg": 0.682,
+  "tot": 9107
+ },
+ {
+  "id": "ET15",
+  "desc": "A = ET13 with +10% target (1d)",
+  "n": 89,
+  "win": 55.1,
+  "avg": 0.782,
+  "tot": 10435
+ },
+ {
+  "id": "ET16",
+  "desc": "A = ET13 with +15% target (1d)",
+  "n": 89,
+  "win": 55.1,
+  "avg": 0.858,
+  "tot": 11456
+ },
+ {
+  "id": "ET17",
+  "desc": "A = ET13 with +10% target, 2-day cap",
+  "n": 89,
+  "win": 56.2,
+  "avg": 0.759,
+  "tot": 10136
+ },
+ {
+  "id": "ET18",
+  "desc": "A after-hours entry (pm, AH<=-3% vs close) + beat + strong + fin -> next close",
+  "n": 30,
+  "win": 36.7,
+  "avg": -1.65,
+  "tot": -7423
+ },
+ {
+  "id": "ET19",
+  "desc": "A = ET18 with +10% target next day",
+  "n": 30,
+  "win": 36.7,
+  "avg": -1.585,
+  "tot": -7131
+ },
+ {
+  "id": "ET20",
+  "desc": "A dip + beat + first-hour pressure>=+0.2: enter h2 open -> close",
+  "n": 2,
+  "win": 100.0,
+  "avg": 1.126,
+  "tot": 338
+ },
+ {
+  "id": "ET21",
+  "desc": "A deep dip<=-7% + beat + strong + fin, +10% tgt, 2d",
+  "n": 39,
+  "win": 51.3,
+  "avg": 0.343,
+  "tot": 2005
+ },
+ {
+  "id": "ET22",
+  "desc": "B buy 7 sessions before -> sell last close pre-release",
+  "n": 1227,
+  "win": 54.0,
+  "avg": 0.795,
+  "tot": 146280
+ },
+ {
+  "id": "ET23",
+  "desc": "B buy 5 before -> pre-release close",
+  "n": 1227,
+  "win": 52.6,
+  "avg": 0.551,
+  "tot": 101330
+ },
+ {
+  "id": "ET24",
+  "desc": "B buy 3 before -> pre-release close",
+  "n": 1227,
+  "win": 52.2,
+  "avg": 0.283,
+  "tot": 52010
+ },
+ {
+  "id": "ET25",
+  "desc": "B buy 2 before -> pre-release close",
+  "n": 1227,
+  "win": 50.3,
+  "avg": 0.149,
+  "tot": 27473
+ },
+ {
+  "id": "ET26",
+  "desc": "B buy 1 before -> pre-release close",
+  "n": 1227,
+  "win": 50.3,
+  "avg": 0.114,
+  "tot": 20961
+ },
+ {
+  "id": "ET27",
+  "desc": "B lag5, only if dipping (5d decline at entry)",
+  "n": 552,
+  "win": 55.8,
+  "avg": 0.803,
+  "tot": 66463
+ },
+ {
+  "id": "ET28",
+  "desc": "B lag5 + strong + fin",
+  "n": 344,
+  "win": 63.7,
+  "avg": 2.12,
+  "tot": 109397
+ },
+ {
+  "id": "ET29",
+  "desc": "B lag2 + strong + fin + dipping",
+  "n": 114,
+  "win": 59.6,
+  "avg": 0.598,
+  "tot": 10229
+ },
+ {
+  "id": "ET30",
+  "desc": "B lag5 + entry-day pressure >= 0",
+  "n": 635,
+  "win": 54.2,
+  "avg": 0.623,
+  "tot": 59346
+ },
+ {
+  "id": "ET31",
+  "desc": "CONTROL: dip-buy morning on MISSES (surprise<0)",
+  "n": 73,
+  "win": 42.5,
+  "avg": 0.041,
+  "tot": 453
+ }
+]

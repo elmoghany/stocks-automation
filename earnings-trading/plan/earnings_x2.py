@@ -103,7 +103,12 @@ def day_pressure(bars):
 
 def build_events(syms, fin):
     lo, hi = WINDOW
-    out = []
+    out = (json.loads(EV_C.read_text()) if EV_C.exists() else [])
+    done = {e["sym"] for e in out}
+    syms = [s for s in syms if s not in done]
+    if done:
+        print(f"  resuming: {len(done)} syms cached, {len(syms)} to go",
+              flush=True)
     for n, sym in enumerate(syms):
         try:
             t = yf.Ticker(sym)
@@ -351,10 +356,13 @@ def report(rows):
 def main():
     syms = load_universe()
     ok, fin = screen_universe(syms)
-    if EV_C.exists() and "--refetch" not in sys.argv:
+    if "--refetch" in sys.argv:
+        EV_C.unlink(missing_ok=True)
+    if EV_C.exists() and "--resume" not in sys.argv \
+            and "--refetch" not in sys.argv:
         events = json.loads(EV_C.read_text())
     else:
-        events = build_events(ok, fin)
+        events = build_events(ok, fin)   # resumes from partial cache
     report(run(events))
 
 

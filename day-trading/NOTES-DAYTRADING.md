@@ -1203,3 +1203,37 @@ day-trading.py, plan/, data/, notes), earnings-trading/ (ET book:
 plan/, data/), bollinger-trading/ (old buy-low-sell-high wave/value
 system: trading/ pkg, E*TRADE client+docs, sandbox scripts), shared/
 (win_cred, massive). All scripts path-fixed and smoke-tested.
+
+## Earnings-X2 verdicts (2026-08-05, full 305-name halal universe, 1,227 events)
+
+STRATEGY A -- post-earnings dip-buy on BEATS (same-day, fits all rules):
+- ET12 dip<=-3% + beat, buy next-morning open, sell close: +$28,642
+  (n=246, 52.0% win, +0.78%/ev). ET31 control (same trade on MISSES):
+  +$453 ~zero -> the beat gate is REAL. ADOPTED as the earnings play.
+- ET13 + 5y-strong + profitable qtr: +0.95%/ev, 55.1% win (n=89) --
+  quality gates raise the average; use when candidates are plentiful.
+- Profit targets DO NOT help: +8/+10/+15% targets all return less than
+  simply selling at the close (ET14-16 vs ET13). 2-day cap: no gain.
+- After-hours same-evening entries are HARMFUL: ET18/19 -1.6%/ev, 37%
+  win. The evening dip keeps falling into the morning; buy the OPEN.
+- First-hour pressure gate: n=2, no evidence (hourly pressure >=0.2 is
+  too rare on large caps; retest intraday when live).
+STRATEGY B -- pre-earnings run-up: KILLED BY CONTROLS.
+- Raw ladder looked huge (lag7 +$146k, lag5 +$101k, ET28 lag5+strong+
+  fin +$109k at +2.12%/ev, 63.7% win). But: SPY-adjustment removes
+  ~half the all-names return (+0.551 -> +0.288%/ev); and the PLACEBO
+  (same names, same 5-session hold, mid-quarter, no earnings): +1.73%
+  raw / +1.26% SPY-excess vs ET28's +2.12% raw / +1.73% excess. The
+  placebo reproduces ~73% of the excess return -> ET28 is mostly
+  "strong halal momentum names drift up in a bull year", not an
+  earnings effect. Earnings-specific increment ~+0.47%/ev (~1.5 SE,
+  not significant). Also violates the 1-2-day hold cap (edge only in
+  5-7-day holds; 1-2-day versions ET25/26/29 are thin).
+- Consistent with ET10/11: the report DAY itself drifts down; the
+  week-before drift is momentum beta, not anticipation.
+(controls script label note: 'ET22' rows in earnings_x2_controls
+output use the lag-5 window, i.e. ET23's numbers.)
+PLAYBOOK ADOPTED: morning-after dip-buy on halal BEATS gapping <=-3%
+(quality gates optional), sell at same-day close. No pre-earnings
+buying, no after-hours entries, no profit targets. Live tool:
+python earnings-trading/plan/earnings_upcoming.py each evening.

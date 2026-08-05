@@ -273,3 +273,13 @@ pm reporters now score the NEXT session (was: report day -- wrong).
 - ET09 OVN -$5,169 fail
 Prior 20. numbers are ARTIFACTS of the wrong convention where marked.
 ET12-ET31 (earnings_x2.py, big universe, gated variants) supersede.
+
+## 21. EARNINGS-X2 ET12-ET33 (2026-08-05, 305 halal names, 1,227 events)
+A: ET12 dip+beat open->close +$28,642 ADOPTED (ET31 miss-control ~0)
+   ET13 +strong+fin +0.95%/ev | ET14-16 targets: all worse than close
+   ET17 2-day: no gain | ET18/19 after-hours: -1.6%/ev HARMFUL
+   ET20 pressure n=2 no-data | ET21 deep-dip +$2k weak
+B: ET22-26 ladder raw +$21k..+$146k BUT ET32 SPY-adjust halves it and
+   ET33 placebo (mid-quarter same-hold) reproduces ~73% of ET28's
+   excess -> momentum beta, NOT an earnings edge. REJECTED for
+   adoption (also exceeds 1-2-day hold cap).
