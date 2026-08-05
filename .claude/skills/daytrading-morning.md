@@ -121,3 +121,31 @@ trade top-2 qualifying gappers/day.
 WARNING from live testing: low-mcap gappers frequently fail halal on the
 cash or debt ratio (small mcap denominator) -- expect the halal gate to
 eliminate many scanner hits; that is by design.
+
+## Paper-session ops hardening (2026-08-05, after the Day-2 timer stall)
+
+The Day-2 background agent's single 5-min background timer silently
+died 10:34-11:42 ET (78-min coverage gap). Mandatory pattern for every
+future paper session:
+
+1. DUAL TIMERS: every cycle the agent arms TWO staggered background
+   timers (300s scan timer + 600s backup). On wake it checks the log's
+   last-cycle timestamp: if the cycle already ran, the backup exits
+   quietly; if not, it runs the cycle. Never rely on a single timer.
+2. MAIN-SESSION WATCHDOG: the coordinating session keeps a ~25-min
+   ScheduleWakeup loop that checks data/paper/{date}.md mtime; if
+   stale >10 min during session hours, SendMessage-nudge the agent
+   (it died once already: "no active task" on nudge = it was dead).
+3. STRUCTURED DAY FILES (user directive): every session produces, in
+   the repo, alongside the markdown log:
+   - data/paper/{date}.md      -- narrative log (existing format)
+   - data/paper/{date}.json    -- machine-readable: config, trades
+     (entry/exit px, times, sizes, P&L), every candidate with per-gate
+     decisions (rvol ours-vs-RH, halal ratios, calm-gap open vs
+     prev_close, instrument-type), coverage_gaps, lessons
+   - data/paper/news/{date}/{SYM}.json -- Finnhub headlines for EVERY
+     symbol that appeared on the scan that day (script:
+     python plan/paper_news.py DATE SYM SYM ...), fetched same day
+     (free tier only reaches back ~1 year; same-day capture is cheap
+     and permanent)
+   All three are committed+pushed at close-out with the day's verdict.
