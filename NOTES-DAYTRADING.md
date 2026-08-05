@@ -9,6 +9,21 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## Pressure-Threshold Sweeps: 0.30 Validated (2026-08-04)
+
+User-requested sweep of the +-0.30 pressure threshold at the champion's
+N=10 window, separately for the trail modulation and the scale-out
+skip (X321-X334; anchor exact). TRAIL threshold: curve peaks at
+0.25-0.30 (0.25 = +$5.2k, noise); DEGRADES HARD above 0.30 (0.35
+-$14.3k, 0.40 -$35.0k, 0.45 -$51.9k) -- the trail must react to
+moderate seller pressure; waiting for extreme pressure gives back
+runners. Do NOT raise it. SCALE-SKIP threshold: essentially FLAT
+0.15-0.45 (total spread ~$6k, best 0.45 +$6.8k, all noise) -- the
+skip-banking mechanism is robust to its threshold. VERDICT: C21's
+0.30/0.30 confirmed; no change (all deltas below the $36k noise
+floor). The sweep buys confidence, not profit -- exactly what a
+parameter sweep should do when the champion is well-placed.
+
 ## Paper Day 2 Scheduled: C21 Live Test (2026-08-05)
 
 Session armed for tomorrow 6:58 AM ET (session-local cron): full C21
