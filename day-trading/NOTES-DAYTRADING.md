@@ -1346,3 +1346,22 @@ every close-out. Bases: C23 $15k, E01 $50k.
   plan/c23_budget_scaling.py) quantify the saturation; results to be
   registered when complete. Paper sessions apply R50 with rule 13
   intact, so live slots grow only as far as liquidity allows.
+
+### C23 budget scaling + R50 trajectory (2026-08-05, follow-up)
+
+Measured (plan/c23_budget_scaling.py; capture = share of linear scaling
+retained under the 20%-of-10-min-volume cap):
+- $30k: +$718k Y1 / +$1,078k Y2 (87% / 93% capture)
+- $60k: +$1,198k / +$1,936k (73% / 83%)
+- $120k: +$1,873k / +$3,328k (57% / 72%)
+Sublinear but no hard wall through $120k. Note: Y2 gains 1 negative
+month at every scaled budget (0 at $15k) -- size costs smoothness.
+R50 simulation (day P&L interpolated across measured tiers, slot
+FROZEN at the $120k measurement ceiling -- no extrapolation): the slot
+reaches $120k within ~5 weeks, then rides there; 2-year total
++$4,964,801 vs +$992,866 flat-$15k. Practical reading: R50 on C23 =
+"grow to max fillable size in ~a month, then earn ~$1.9-3.3M/yr at
+that size" -- with growing fill-realism strain: the backtest assumes
+clean fills inside the volume cap; at $120k slots that assumption is
+doing heavy lifting. Slippage stress at scale untested (next: C24-style
+10bps at $120k). Paper sessions enforce R50 + rule 13 naturally.
