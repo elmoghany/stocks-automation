@@ -309,3 +309,26 @@ slot rule + compounding chosen post-hoc -- revalidate next season.
 Receipts: ET12/13 (edge + beat gate), ET31 (miss control ~0),
 ET40-45 (mechanics reject), ET50-53 (small caps), ET60-62 (sympathy
 reject), ET70 (sizing), ET32/33 (B-family beta controls).
+
+## BL-family: buy-low/sell-high day trading vs E01 (2026-08-05, $50k/event)
+
+bollinger-trading/plan/blsh_intraday.py -- limit-buy 2-3% below the
+open on 5y-uptrend halal names (S&P900+600, 489 names), sell same-day
+close; volume gates from prior-day pressure/rvol. Window Aug25-Jul26.
+- BL01 dip2 strong: n=12,855 fills, 54.5% win, +0.116%/ev (+$745k
+  ONLY if you fund every fill -- routinely 50+ concurrent $50k slots,
+  $5M+ deployed; per-event edge is inside slippage noise).
+- BL02 dip3: +0.163%/ev. BL04 +pressure>=0: +0.161%/ev (mild help).
+- BL03 "recovery to open" exit: INVALID -- High >= Open is true by
+  definition (the open is inside the day's range), so the target
+  always "fills"; textbook OHLC look-ahead artifact. Discarded.
+- BL05 NOT-strong control: +0.111%/ev ~= BL01's +0.116% -> the 5-year
+  uptrend gate adds ~NOTHING to intraday dip-buying. (It was also
+  beta, not edge, in ET28/ET33.)
+- BL06 one $50k slot/day (rank by prior-day rvol): -$33,153. BL07
+  (same, excluding earnings reaction days): -$11,334.
+VERDICT vs E01: at equal capital (one slot/day) BL LOSES (-$33k vs
+E01 +$117,755). Generic dips lack the catalyst; E01's edge needs the
+earnings-beat information, not just "a strong stock dipped". No
+rank-mining for a better BL06 picker -- 251 days would overfit.
+BL book stays research-only; E01 remains the champion.
