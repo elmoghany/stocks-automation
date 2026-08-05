@@ -9,6 +9,17 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## Paper Day 2 Scheduled: C21 Live Test (2026-08-05)
+
+Session armed for tomorrow 6:58 AM ET (session-local cron): full C21
+spec inside 7AM-noon, fixed scanner (ratio units), 5-min scan cadence,
+1-min position watcher on entry, push notifications on every paper
+entry/exit, log at data/paper/2026-08-05.md. Day-1 lessons applied:
+sanity-check empty scans against the gainers preset; our 50-day rvol
+governs over RH's 30-day; expect halal to kill micro-mcap movers.
+NOTE: the trigger only fires if this Claude session stays open
+overnight.
+
 ## X300 Verdict: C21 Champion Inside Strict Noon (2026-08-04)
 
 20 anatomy-driven experiments on the C10 base. Controls behaved:
