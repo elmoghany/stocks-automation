@@ -866,7 +866,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     pmh_rearm: bool = False,
                     entry_cutoff_patterns=None,
                     wick_guard: float | None = None,
-                    pressure_shuffle: bool = False) -> list[dict]:
+                    pressure_shuffle: bool = False,
+                    monster_mode: tuple | None = None) -> list[dict]:
     """Run the entry/exit state machine over 1-min bars of a single day.
 
     State machine:
@@ -890,6 +891,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
     dyn_stop = None
     reentry_used = 0
     last_exit_reason = ""
+    mm_engaged = False
     slip = (slippage_bps or 0) / 10_000.0
     _shuffle_rng = None
     if pressure_shuffle:
@@ -957,6 +959,13 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
 
     for i in range(1, cd.n):
         price = cd.c[i]
+
+        # X335+ monster mode: once >= thresh banked by the tell time,
+        # stop banking (and optionally floor the trail wide) all day
+        if (monster_mode is not None and not mm_engaged
+                and cd.index[i].time() <= monster_mode[1]
+                and sum(t["pnl"] for t in trades) >= monster_mode[0]):
+            mm_engaged = True
 
         # entry cutoff: after this time no NEW positions (exits continue)
         entries_open = (entry_cutoff is None
@@ -1120,9 +1129,10 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     if (scale_out_pressure_skip is not None
                             or scale_out_frac_pressure is not None):
                         _pp = cd.pressure(i, 10, pressure_min_vol)
-                    if (scale_out_pressure_skip is not None and _pp is not None
-                            and _pp >= scale_out_pressure_skip):
-                        part = 0           # skip banking entirely (X310);
+                    if mm_engaged or (scale_out_pressure_skip is not None
+                                      and _pp is not None
+                                      and _pp >= scale_out_pressure_skip):
+                        part = 0           # skip banking (X310 / monster)
                         px = 0.0           # trail/stop still checked below
                     else:
                         eff_frac = scale_out_frac
@@ -1169,6 +1179,9 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                 if (trail_widen_at is not None
                         and peak >= entry * (1 + trail_widen_at / 100)):
                     eff_trail = trail_wide
+                if (monster_mode is not None and mm_engaged
+                        and len(monster_mode) > 2 and monster_mode[2]):
+                    eff_trail = max(eff_trail, monster_mode[2])
                 # X200 pressure-modulated trail (wins over trail_widen_at)
                 if pressure_trail is not None:
                     pn, t_lo, t_hi, tight, wide = pressure_trail

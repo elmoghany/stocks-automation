@@ -9,6 +9,25 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## Monster Mode Redundant; Edge Is Market-Neutral (2026-08-04)
+
+X335-X338 tested the '$2k-banked-by-9:30' monster tell as an explicit
+rule (stop banking / floor trail 40% for the rest of the day; tells at
+$1k/$2k/$3k). ALL NEUTRAL (-$2.6k to +$3.2k, X336 Y1-negative): C21's
+PRESSURE mechanics already implement monster mode better -- when a
+monster runs, buy pressure is high, so the scale-out is already
+skipped and the trail is already 40%, per-bar rather than per-day. The
+tell DESCRIBES monsters; the pressure trail already MONETIZES them.
+No rule change. Remaining open questions answered:
+- MARKET-NEUTRAL: corr(day P&L, SPY daily return) = -0.006 over 270
+  days; SPY-up days avg +$3,428 vs SPY-down +$3,336. The edge needs
+  individual-stock news catalysts, not a hot tape. (Good: no hidden
+  beta; bad markets don't starve it.)
+- DAY-OF-WEEK: flat-ish (Mon +$4,355 best, Thu +$2,761 worst, all
+  win% 75-84) -- spread is within noise; no weekday rule warranted.
+- STILL OPEN (needs live data): real fill slippage vs sim -- the
+  purpose of the paper sessions.
+
 ## Concentration Study: You Cannot Skip the Quiet 90% (2026-08-04)
 
 C21 concentration: 28 monster days (10%) = 43% of profit; 80 mid days

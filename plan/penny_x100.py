@@ -794,6 +794,47 @@ EXPERIMENTS += [
 BYID = {e["id"]: e for e in EXPERIMENTS}
 
 
+
+
+# ---- X321+ pressure-threshold sweeps on C21 base ---------------------
+C21SIM = dict(C02SIM, pressure_trail=(10, 0.30, 0.30, 10, 40),
+              scale_out_pressure_skip=0.30, wick_guard=3.0)
+
+
+def C21(xid, desc, **kw):
+    sim = dict(C21SIM)
+    sim.update(kw.pop("sim", {}))
+    return T(xid, desc, pm_break=True, sim=sim, **kw)
+
+
+EXPERIMENTS += [C21("X321", "C21 anchor re-run")]
+_i = 322
+for _t in (0.15, 0.20, 0.25, 0.35, 0.40, 0.45):
+    EXPERIMENTS.append(C21(f"X{_i}", f"trail threshold {_t}",
+        sim=dict(pressure_trail=(10, _t, _t, 10, 40))))
+    _i += 1
+for _sk in (0.15, 0.20, 0.25, 0.35, 0.40, 0.45):
+    EXPERIMENTS.append(C21(f"X{_i}", f"scale-skip threshold {_sk}",
+        sim=dict(scale_out_pressure_skip=_sk)))
+    _i += 1
+BYID = {e["id"]: e for e in EXPERIMENTS}
+
+
+
+from datetime import time as _dt2
+EXPERIMENTS += [
+    C21("X335", "monster mode: $2k by 9:30 -> no more banking",
+        sim=dict(monster_mode=(2000, _dt2(9, 30)))),
+    C21("X336", "monster mode + trail floor 40%",
+        sim=dict(monster_mode=(2000, _dt2(9, 30), 40))),
+    C21("X337", "monster mode $3k tell",
+        sim=dict(monster_mode=(3000, _dt2(9, 30)))),
+    C21("X338", "monster mode $1k tell",
+        sim=dict(monster_mode=(1000, _dt2(9, 30)))),
+]
+BYID = {e["id"]: e for e in EXPERIMENTS}
+
+
 # --------------------------------------------------------------- driver
 def load_results():
     """Merged view across all shard files (workers write disjoint ids)."""
