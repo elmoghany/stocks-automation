@@ -168,6 +168,17 @@
     "instrument": "2x lev ETF"
    },
    "outcome": "PERMANENT reject"
+  },
+  {
+   "sym": "PN",
+   "first_seen": "10:53",
+   "peak_pct": 42.7,
+   "prev_close": 6.89,
+   "gates": {
+    "calm_gap_7am": "pass -2.7%",
+    "rvol": "FAIL ~0.9 RH recompute"
+   },
+   "outcome": "rejected (rvol), re-screen eligible"
   }
  ],
  "trades": [],

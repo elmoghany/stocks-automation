@@ -1561,3 +1561,15 @@ E*TRADE has no history API (entitlement-locked chart endpoint; see
 bollinger NOTES). Standard: RH 5-minute bars for all historical
 lookups (~3mo reach; volume checks don't need 1-min); 1-minute bars
 ONLY for Massive backtests and live moment-of-decision checks.
+
+## Regression check after the 2026-08-06 fixes: FULL PASS
+
+Fresh replays after the scanner fix, 7AM calm-gap alignment, bar-
+granularity policy, and all default flips (C21->C11->C23):
+- C23: Y1 +$412,879 (133d, 1,262 trades), Y2 +$579,988 (147d, 1,902
+  trades) -- EXACT to the dollar vs the registered champion numbers.
+- E01: +$117,755 (n=99) -- exact; ET12/13/31 rows identical.
+The live-protocol bugs never touched the backtest path; code churn
+introduced no drift. Paper Day 3 confirmed running the fixed protocol
+(feed-only scan, local gates, 7AM calm-gap, loud-error policy) with
+prior rejects re-evaluated under the corrected rule.
