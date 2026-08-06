@@ -1601,3 +1601,28 @@ fill was ~1.7% better than the price 60s later, so the real-world
 version of this trade loses LESS (~-2.2%) if entered a minute late --
 the open-fill assumption flatters entries on gapped names. Backtest
 expects a loss ~37% of the time; judge the sequence, not day 1.
+
+## C30 replay of the 3 paper days (2026-08-06, user: "backtest the 3 days")
+
+day-trading/plan/replay_paper_days.py -- rebuilds the backtest's own
+candidate pool from Massive grouped-daily and runs the UNMODIFIED
+sim_window (C23 spec, $15k) over the live paper dates.
+
+- 2026-08-04: pool 20. AMIX rejected halal (as live). MOVE COMMITTED
+  (gain +75.6%, rvol 156, 7AM gap only +6.9%) -> 11 trades, day P&L
+  **-$2,252.13**. The trade the scanner hid was a LOSER: first entry
+  8:09 @ 18.30 banked +$2,903 on the morning pop, then MOVE faded all
+  session and the re-entry ladder gave it all back (six stops).
+  => The scanner bug SAVED $2,252 that day. It was still a real bug
+  (blind is blind), but the "missed monster" narrative is wrong.
+- 2026-08-05: pool 21, walk-8 all rejected -- 4 calm-gap (INLF +24.0%,
+  JLHL +36.7%, GTE +46.9%, OESX +34.6% at 7AM), 4 halal (JDZG, SHPU,
+  DBGI, BLMN) -> NO-TRADE DAY. **Exactly matches the live session**,
+  including the two names the live scanner never showed (SHPU, BLMN
+  would have died on halal anyway). Strong protocol validation.
+- 2026-08-06: Massive grouped-daily 403 on same-day data (free-tier
+  delay) -- ERROR logged, replay pending tomorrow.
+2-day verified total: -$2,252.13 vs live paper $0. Live is AHEAD by
+$2,252 -- by luck, not by rule. The honest read: 2 of 2 auditable
+days reproduce the live decisions once the feed is corrected, and the
+one divergence was a losing trade.
