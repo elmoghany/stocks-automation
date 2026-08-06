@@ -514,3 +514,41 @@ the validated -15%-dip trigger, vs the TD06 benchmark (dip only,
 VERDICT: bands rejected as entry timing too (matches BB-family). The
 book's validated recipe stays: halal big tech + 5y-strong + 15% dip +
 60-session hold. Nothing else earns its complexity.
+
+## MC-family: $400B+ halal mega caps (2026-08-06)
+
+bollinger-trading/plan/megacap.py + megacap2.py. Universe: 18 halal
+names >= $400B (AAPL ABBV AMAT AMZN AVGO COST CSCO GOOG GOOGL INTC
+JNJ MA META MSFT NVDA TSLA V WMT; mcaps as-of-today, cached).
+ARM A -- earnings variants (last yr, $50k/event): E01 DOES NOT
+TRANSFER. MC01 (beat dip<=-3% open->close): +0.46%/ev, 36.4% win,
+slot +$592. Any-red/-2% variants similar; gap-up continuation
+-1.06%/ev; 5-session drift -1.18%/ev; miss-control n=6 inconclusive.
+Mega-cap reactions are efficient -- the E01 edge lives in mid/small
+caps. REJECT earnings arm on megas.
+ARM B -- dip-from-top (any cause incl. crashes), uptrend 5y>=+50%,
+60-session holds, entries Aug21-Jun26 vs CTRL +6.29%/hold (60.6% win):
+- Depth sweep: 8% +5.91%/ev (62%) | 10% +6.91% (72.5%) | 12.5%
+  +10.14% (74.2%) | 15% +11.80% (75.0%) | 20% +11.42% (n=11).
+  Alpha starts at ~12%; below that it's control-level.
+- Band sweep (user "12 to 20%... test different numbers"): 12-20%
+  band +8.98%/ev n=33; 15-20% +11.79% n=23; upper 25 ~identical
+  (few >20% dips in megas). Adjacent bands consistent (no BB-style
+  scatter) -- the signal is robust to the exact numbers.
+- FLEXIBLE-CAUSE decomposition:
+  MC15 market-trigger only (QQQ >=10% off): +18.06%/hold, 78.6% win
+  (n=14) -- buying ALL uptrend megas in a correction works with NO
+  stock-level signal. QQQ>=8%: +15.0%. QQQ>=12%: never fired.
+  MC16 CRASH OVERLAP (stock>=12% AND QQQ>=10%): +23.37%/hold, 87.5%
+  win (n=8) -- the best per-event stats in the entire research
+  program. Panic dips in quality megas are the premium buy.
+  MC17 idiosyncratic (stock>=12%, QQQ near high): +9.96%/ev, 74.2%
+  (n=31) -- single-name dips work too, about half as hard.
+- Slot R50 (one-at-a-time): $15-47k per ~5yr -- like TD, slot-starved;
+  the play is opportunistic deployment when the signal fires, not an
+  always-on book.
+VERDICT: adopt as the bollinger book's watchlist play alongside TD:
+halal mega cap + 5y>=+50% + >=12% off the 60d high -> buy, hold 60
+sessions; deploy hardest when the MARKET is also >=10% off its high
+(crash overlap: 87.5% win, +23%/hold historically). Small n on the
+crash rows (2022 + Apr'25 episodes) -- sizing judgment required.

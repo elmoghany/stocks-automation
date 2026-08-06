@@ -1,0 +1,91 @@
+{
+ "date": "2026-08-06",
+ "config": "C30",
+ "mode": "paper",
+ "slot_used": 15000,
+ "candidates": [
+  {
+   "sym": "WYHG",
+   "first_seen": "09:31",
+   "peak_pct": 246.6,
+   "prev_close": 3.34,
+   "gates": {
+    "rvol": "pass ~182 (RH-daily recompute; E*TRADE screen feed stale, showed 0.1)",
+    "calm_gap": "FAIL open 8.27 vs pc 3.34 = +147.6%"
+   },
+   "outcome": "exhausted-gap PERMANENT reject"
+  },
+  {
+   "sym": "PAVS",
+   "first_seen": "09:31",
+   "peak_pct": 88.4,
+   "prev_close": 4.91,
+   "gates": {
+    "rvol": "pass ~30 (RH-daily recompute; E*TRADE screen feed stale, showed 4.2)",
+    "calm_gap": "FAIL open 9.25 vs pc 4.91 = +88.4%"
+   },
+   "outcome": "exhausted-gap PERMANENT reject"
+  },
+  {
+   "sym": "MSIX",
+   "first_seen": "09:46",
+   "peak_pct": 20.0,
+   "gates": {
+    "instrument": "2x leveraged ETF, vol 416sh"
+   },
+   "outcome": "permanent reject"
+  },
+  {
+   "sym": "CLRO",
+   "first_seen": "09:58",
+   "peak_pct": 192.4,
+   "prev_close": 3.68,
+   "gates": {
+    "rvol": "pass 11.1 (our screen, live for this sym)",
+    "halal": "pass",
+    "calm_gap": "FAIL open 11.75 vs pc 3.68 = +219%"
+   },
+   "outcome": "exhausted-gap PERMANENT reject; 0 news = pump profile"
+  },
+  {
+   "sym": "AZI",
+   "first_seen": "10:08",
+   "peak_pct": 101.0,
+   "prev_close": 1.01,
+   "gates": {
+    "rvol": "FAIL 2.5",
+    "calm_gap": "FAIL open 1.23 vs pc 1.01 = +21.8%"
+   },
+   "outcome": "PERMANENT reject (calm-gap)"
+  },
+  {
+   "sym": "HNST",
+   "first_seen": "10:08",
+   "peak_pct": 37.3,
+   "prev_close": 3.85,
+   "gates": {
+    "rvol": "pass 5.9",
+    "halal": "pass",
+    "calm_gap": "FAIL open 4.89 vs pc 3.85 = +27.0%"
+   },
+   "outcome": "PERMANENT reject (calm-gap); earnings gapper, most-legit name of the day"
+  },
+  {
+   "sym": "SPHL",
+   "first_seen": "10:13",
+   "peak_pct": 17.7,
+   "prev_close": 2.65,
+   "gates": {
+    "calm_gap": "pass +4.2%",
+    "price": "pass",
+    "rvol": "FAIL 0.1 screen / 0.15 RH recompute (both agree)"
+   },
+   "outcome": "rejected (rvol); re-screen eligible but volume tiny"
+  }
+ ],
+ "trades": [],
+ "coverage_gaps": [],
+ "lessons": [
+  "E*TRADE feed in day-trading.py screen was stale all morning (frozen rvol, wrong gain); RH daily-bar recompute used as fallback for the same our-50d metric"
+ ]
+}
