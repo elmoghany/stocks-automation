@@ -413,3 +413,16 @@ reached-cap in ~5 weeks, accepting 1 negative month in Y2 and the
 $120k-tier fill caveats. Paper R50 runs uncapped for now ($15k base;
 months away from the cap) -- decision needed only when cum profits
 approach +$210k.
+
+## C30 -- ADOPTED (2026-08-05): C23 strategy under capped half-reinvest sizing
+
+Permanent ID: **C30** = C23 rules unchanged + R50-capped sizing:
+  slot = min($120,000, $15,000 + 0.5 x max(0, cumulative P&L))
+Base never shrinks; losses only eat the profit buffer; cap sits at the
+highest liquidity-measured tier. Backtest (2yr, dynamic-at-tier):
+~+$4,964,801 vs +$992,866 flat; cap reached in ~5 weeks; accepts 1
+negative month in Y2 at scale; $120k-tier fill realism is THE thing
+paper trading must validate (60s-later price recordings). C30 is the
+live paper config from 2026-08-06 (slot state:
+day-trading/data/paper/slot_state.json). E01 keeps uncapped R50
+(large caps; no liquidity issue at these sizes).

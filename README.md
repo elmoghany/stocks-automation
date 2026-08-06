@@ -8,8 +8,9 @@ no shorting, max $15k at risk.
 ## Layout
 
 - `day-trading/` -- penny-gapper same-day momentum book (champion
-  config C23: entries 7AM-noon, exits to 1PM ET; backtests Y1 +$413k /
-  Y2 +$580k on $15k, zero negative months).
+  config C30 = C23 rules + capped half-reinvest sizing, slot =
+  min($120k, $15k + half of cumulative profits); flat-$15k backtests
+  Y1 +$413k / Y2 +$580k, zero negative months; capped-R50 ~+$4.96M/2yr).
   `day-trading.py` engine + `plan/` experiment harness (X001-X343,
   C01-C22) + `data/paper/` daily paper-session records with per-gate
   decisions and same-day news snapshots.
