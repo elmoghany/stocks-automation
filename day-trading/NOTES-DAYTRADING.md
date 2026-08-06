@@ -1433,3 +1433,37 @@ STATUS: shelf/opportunistic -- strongest per-event stats in the
 bollinger book; adoption needs a slot-count decision (capital beyond
 the day/earnings books) and clustering tolerance (worst trade -46%,
 2022-style periods tie up all slots at once).
+
+## BB-family: Bollinger-Band mean-reversion + single-slot R50 (2026-08-05)
+
+bollinger-trading/plan/bollinger_bands.py -- 12 variants on 479 halal
+names (Aug 2021-Jun 2026): entry %B <= 0/0.20/0.30, exits %B >=
+0.50/0.80/0.90/1.00, MA200/MA50 gates, 5-day volume-pressure reversal
+confirm (buy side) and pressure-flip exit accel (sell side). $50k;
+user portfolio rule: ONE slot at a time, R50 compounding, deepest %B
+wins same-day ties.
+- Per-event: all variants +1.3..+2.9%/trade, 64-71% win, ~13-38d
+  holds. CONTROL (no-signal monthly 30-session holds): +2.79%/hold,
+  55.6% win. Per-DAY efficiency: BB ~0.085%/day vs control 0.093%/day
+  -> NO per-event alpha; the higher win% is just shorter holds. Unlike
+  TD (3x control), band-touch timing adds nothing on this universe.
+- Single-slot R50 outcomes SCATTER WILDLY across adjacent variants:
+  BB01 (sell 0.80) +$1,053,172 but BB02 (sell 0.90) +$96,952 and BB03
+  (sell 1.00) +$38,930; BB04 +$5k; BB12 (mid-band) -$32k. A result
+  that flips 10x on a 0.1 threshold change is sequence luck, not
+  edge (deepest-%B picking grabs falling knives: DAVE -88%, CVNA -79%
+  events sit in every variant's tail). FAILS the adjacency guardrail.
+- MA gates raise win% (BB08 83% slot win) but shrink totals; volume
+  confirm (BB09/10) similar. Nothing beats its own neighbors robustly.
+VERDICT: REJECT for adoption. Bands describe volatility, they do not
+predict reversal here; the TD 15%-dip trigger (3x control) remains the
+only validated buy-low signal in this book.
+
+### TD-family under the user's single-slot R50 rule (same date)
+One $50k slot, no new buy until exit, half-profit compounding,
+~5-year window: TD06 +$59,886 (4 trades, 100% win), TD02 +$52,188
+(8 trades, 88%), TD09 +$49,393, TD01 +$44,341 (13 trades, 85%),
+others +$14k..+$39k. Reading: the single-slot constraint throttles TD
+hard (4-13 trades in 5 years vs 123-231 signals) -- TD's value needs
+multiple slots; at one slot it's ~$9-12k/yr, comparable to E01's base
+year but far below C30. Slot scaling for TD = the open decision.
