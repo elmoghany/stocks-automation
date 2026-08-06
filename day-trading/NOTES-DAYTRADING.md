@@ -1573,3 +1573,19 @@ The live-protocol bugs never touched the backtest path; code churn
 introduced no drift. Paper Day 3 confirmed running the fixed protocol
 (feed-only scan, local gates, 7AM calm-gap, loud-error policy) with
 prior rejects re-evaluated under the corrected rule.
+
+## Paper Day 3 (2026-08-06, C30): no-trade, first armed trigger
+
+0 trades, $0, slot unchanged at $15k. 13 candidates: HNST passed EVERY
+gate (halal, our-rvol 9.7-10.1x, 7AM calm-gap, price) -> stop-buy
+armed at 5.84, peaked 5.695 (missed by 2.5%). All others rejected:
+3 exhausted 7AM gaps (WYHG +83%, PAVS +126%, CLRO +99% by 7AM), 1
+leveraged ETF, 9 rvol fails, 1 untradeable float (LBGJ 16k shares).
+MID-SESSION FIX: the scanner audit (see prior entry) went live at
+10:30 — feed widened 7 -> ~140 rows; HNST only became visible/armable
+under the corrected protocol. Ops: session agent died 11:17 on a model
+limit (14-min gap, logged as ERROR); replacement agent on Opus 5
+finished the session; dual-timer dedup worked all day.
+Three-day tally: 0 trades, 0 violations, 1 armed trigger, 1 real bug
+found and fixed. The strategy has still not been given a fill to
+validate — fill-realism data remains the open item.

@@ -2,7 +2,7 @@
  "date": "2026-08-06",
  "config": "C30",
  "mode": "paper",
- "slot_used": 15000,
+ "slot_used": 0,
  "candidates": [
   {
    "sym": "WYHG",
@@ -179,21 +179,47 @@
     "rvol": "FAIL ~0.9 RH recompute"
    },
    "outcome": "rejected (rvol), re-screen eligible"
+  },
+  {
+   "symbol": "KRO",
+   "first_seen": "11:56",
+   "prev_close": 6.21,
+   "last": 8.35,
+   "pct_chg": 0.345,
+   "volume": 797851,
+   "float": 21509849,
+   "gates": {
+    "rvol_50d_rh": 2.47,
+    "rvol_pass": false,
+    "price_gate": true,
+    "calm_gap": "not evaluated (rvol fail)",
+    "halal": "not evaluated"
+   },
+   "decision": "REJECT (rvol 2.47 < 5), re-screen eligible"
   }
  ],
  "trades": [],
- "coverage_gaps": [],
+ "coverage_gaps": [
+  "11:17-11:31 ET agent death (Fable 5 model limit); catch-up cycle run from main session"
+ ],
  "lessons": [
-  "E*TRADE feed in day-trading.py screen was stale all morning (frozen rvol, wrong gain); RH daily-bar recompute used as fallback for the same our-50d metric",
-  "Scanner rvol filter was hiding valid candidates; widened feed + local gates adopted mid-session 10:30",
-  "Calm-gap measured at 7AM (not 9:30 open) resurrected HNST after earlier wrong rejection"
+  "scanner audit fix went live 10:30: feed 7 rows -> ~140 rows",
+  "HNST qualified only under the corrected feed+gates",
+  "3 exhausted gaps were >+80% before 7AM (correct rejects)"
  ],
  "watch": {
   "HNST": {
    "trigger": 5.84,
    "armed_at": "10:35",
    "prev_close": 3.85,
-   "state": "stop-buy armed"
+   "state": "stop-buy armed",
+   "last_seen": {
+    "time": "11:33",
+    "price": 5.4389
+   }
   }
- }
+ },
+ "slot_available": 15000,
+ "pnl": 0.0,
+ "verdict": "no-trade day; HNST first armed trigger of the program (5.84), peaked 5.695"
 }

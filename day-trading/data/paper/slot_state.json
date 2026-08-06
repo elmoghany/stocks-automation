@@ -4,7 +4,14 @@
  "base": 15000,
  "cum_pnl": 0.0,
  "slot": 15000,
- "history": [],
+ "history": [
+  {
+   "date": "2026-08-06",
+   "pnl": 0.0,
+   "slot": 15000,
+   "note": "no-trade day; HNST armed, trigger missed by 2.5%"
+  }
+ ],
  "config": "C30",
  "cap": 120000
 }
