@@ -1626,3 +1626,26 @@ sim_window (C23 spec, $15k) over the live paper dates.
 $2,252 -- by luck, not by rule. The honest read: 2 of 2 auditable
 days reproduce the live decisions once the feed is corrected, and the
 one divergence was a losing trade.
+
+## Paper-trading schedule: weekdays only, holiday-guarded (2026-08-06)
+
+User: "plan to run paper trader except weekends and holidays."
+Guard: day-trading/plan/market_calendar.py -- prints
+TRADING/NO-TRADE/ERROR and exits 0/1. NYSE holidays + half days
+through 2027; an uncovered year prints ERROR rather than assuming the
+market is open (no-silent-fallbacks). EVERY scheduled paper job calls
+it FIRST and aborts silently on a non-trading day.
+Recurring weekday jobs (cron day-of-week 1-5):
+  06:56  C30 day-trading session launch (background agent + watchdog)
+  09:24  E01 earnings entry check
+  16:06  E01 close-out (official close works on half days too)
+Half days (13:00 close): C30's flatten is already 13:00 so nothing
+changes; E01 sells at the official close either way.
+LIMITATION (stated to the user): these are SESSION-LOCAL crons -- they
+die when the Claude session ends and auto-expire after 7 days, so they
+must be re-armed. They cannot move to cloud schedules because the
+session needs the local repo, Windows Credential Manager keys, and the
+interactively-authenticated Robinhood MCP, none of which exist in a
+headless cloud run.
+Close-out now also runs scanner_audit.py (feed hygiene) and
+replay_paper_days.py (live-vs-simulator diff) every day.

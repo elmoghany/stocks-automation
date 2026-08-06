@@ -175,3 +175,11 @@ close to verify the day's feed missed nothing (top-8 diff = NONE).
       (entry-trigger crosses, the paper_watch exit loop).
 Everything else that requests 1-min data outside those two cases is a
 protocol violation -- log an ERROR line, use 5-min.
+
+## Trading-day guard (2026-08-06)
+
+Run `python day-trading/plan/market_calendar.py` before ANY scheduled
+paper session. TRADING -> proceed; NO-TRADE (weekend/holiday) -> abort
+silently; ERROR (year outside the calendar) -> abort LOUDLY and extend
+HOLIDAYS in that file. Half days close at 13:00 -- C30's flatten
+already matches; E01 uses the official close regardless.
