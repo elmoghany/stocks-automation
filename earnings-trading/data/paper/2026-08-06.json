@@ -1,0 +1,42 @@
+{
+ "date": "2026-08-06",
+ "config": "E01",
+ "mode": "paper",
+ "slot": 50000,
+ "reporters_halal": 60,
+ "beats": 48,
+ "qualifying_dips": {
+  "LZ": -27.3,
+  "DDOG": -19.2,
+  "APP": -18.9,
+  "WDC": -17.2,
+  "BROS": -13.2,
+  "SNDK": -12.8,
+  "DAVE": -9.6,
+  "EXEL": -8.0,
+  "CRUS": -6.2,
+  "BSY": -5.5,
+  "ACIW": -4.7
+ },
+ "near_misses": {
+  "VIAV": -2.8,
+  "STE": -2.1
+ },
+ "trade": {
+  "sym": "LZ",
+  "entry_time": "09:30",
+  "entry_px": 5.89,
+  "px_60s": 5.79,
+  "shares": 8488,
+  "notional": 49994,
+  "prev_close": 8.1,
+  "gap_pct": -27.3,
+  "eps_est": 0.12,
+  "eps_act": 0.16,
+  "exit": "pending 16:00 close"
+ },
+ "notes": [
+  "opening auction printed ~1 min late (gapped name)",
+  "60s slippage proxy -1.7% on thin open -- fill realism flag"
+ ]
+}
