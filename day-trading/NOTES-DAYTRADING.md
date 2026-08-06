@@ -1589,3 +1589,15 @@ finished the session; dual-timer dedup worked all day.
 Three-day tally: 0 trades, 0 violations, 1 armed trigger, 1 real bug
 found and fixed. The strategy has still not been given a fill to
 validate — fill-realism data remains the open item.
+
+## E01 Paper Day 1 (2026-08-06): LZ -3.82% = $-1,909.80
+
+First live paper trade of the earnings book. 60 halal reporters in the
+window, 48 beats, 11 opened <= -3%; LZ was the deepest (-27.3% on a
+0.16 vs 0.12 beat) -> bought 8,488 sh @ 5.89 (9:30 open), sold 5.665
+at the official close. Loss of $1,909.80 on the $50k slot; slot
+stays $50,000 (R50 base never shrinks). Fill-realism: the assumed open
+fill was ~1.7% better than the price 60s later, so the real-world
+version of this trade loses LESS (~-2.2%) if entered a minute late --
+the open-fill assumption flatters entries on gapped names. Backtest
+expects a loss ~37% of the time; judge the sequence, not day 1.

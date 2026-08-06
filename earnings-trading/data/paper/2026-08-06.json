@@ -33,10 +33,15 @@
   "gap_pct": -27.3,
   "eps_est": 0.12,
   "eps_act": 0.16,
-  "exit": "pending 16:00 close"
+  "exit": "sold at official close",
+  "exit_time": "16:00",
+  "exit_px": 5.665,
+  "pnl": -1909.8,
+  "ret_pct": -3.82
  },
  "notes": [
   "opening auction printed ~1 min late (gapped name)",
   "60s slippage proxy -1.7% on thin open -- fill realism flag"
- ]
+ ],
+ "verdict": "LZ -3.82% = $-1,909.80 (first E01 paper trade, a loss)"
 }

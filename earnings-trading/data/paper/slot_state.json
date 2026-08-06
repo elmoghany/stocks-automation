@@ -2,7 +2,15 @@
  "policy": "slot = base + 0.5 * max(0, cum_pnl)  (re-invest half of profits; base never shrinks)",
  "adopted": "2026-08-05 (user directive)",
  "base": 50000,
- "cum_pnl": 0.0,
- "slot": 50000,
- "history": []
+ "cum_pnl": -1909.8,
+ "slot": 50000.0,
+ "history": [
+  {
+   "date": "2026-08-06",
+   "sym": "LZ",
+   "pnl": -1909.8,
+   "cum_pnl": -1909.8,
+   "slot_next": 50000.0
+  }
+ ]
 }
