@@ -426,3 +426,38 @@ paper trading must validate (60s-later price recordings). C30 is the
 live paper config from 2026-08-06 (slot state:
 day-trading/data/paper/slot_state.json). E01 keeps uncapped R50
 (large caps; no liquidity issue at these sizes).
+
+## TD-family: halal big-tech 15%-dip buying, multi-day holds (2026-08-05)
+
+bollinger-trading/plan/tech_dip.py -- user directive: buy 15% dips on
+top-trend halal big tech, $50k/position, multi-day holds ALLOWED
+(explicit same-day waiver for this book). Universe: 111 halal
+Tech/Comm-Services names (S&P900 halal x sector map). Trigger: close
+>= 15% below trailing 60-session high AND 5y return >= +100%
+point-in-time; entry next open; one position per symbol. Entries
+Aug 2021-Jun 2026 (includes the 2022 bear).
+Results ($50k/position, ALL signals funded):
+- TD01 +10% tgt/60s cap: n=207, 87.0% win, +6.58%/tr, 17d holds, +$681k
+- TD02 +15% tgt: 80.6%, +8.56%, 24d, +$749k
+- TD03 +20% tgt: 78.3%, +11.16%, 29d, +$876k
+- TD04 recover-to-high/90s: 78.0%, +12.52%, 36d, +$882k
+- TD05 20-session time exit: 65.2%, +7.97%, +$745k
+- TD06 60-session time exit: 70.7%, +29.33%/trade, 55d, +$1,803,571 (best)
+- TD07 20%-dip entry: 84.8%, +10.31%, +$474k (rarer, cleaner)
+- TD08 +15%/-10% stop: 64.1%, +5.67%, +$654k (stop hurts -- dips wobble)
+- TD09 +200SMA gate: 81.3%, +8.83%, +$614k (filters little)
+- TD10 capitulation-volume gate: 71.9%, +$267k (over-filters)
+CONTROL (no-dip monthly 60s holds, same names/window): +10.21%/hold,
+61.3% win -> TD06's +29.33% is ~3x beta. REAL ALPHA -- unlike the BL
+and pre-earnings families, the 15%-dip signal genuinely times these
+names (deep dips on strong big tech mean-revert hard).
+CAPITAL REALITY: signals cluster in crashes -- funding ALL signals
+needs ~37-42 concurrent slots (~$2M). Constrained greedy sims:
+- TD02: 1 slot +$44k / 4 slots +$145k / 8 slots +$255k (per ~5yr)
+- TD06: 1 slot +$51k / 4 slots +$207k / 8 slots +$255k
+i.e. ~$10-13k/yr per $50k slot at practical scale. Stop-losses hurt
+(TD08); no exit variant beats simply holding 60 sessions.
+STATUS: shelf/opportunistic -- strongest per-event stats in the
+bollinger book; adoption needs a slot-count decision (capital beyond
+the day/earnings books) and clustering tolerance (worst trade -46%,
+2022-style periods tie up all slots at once).
