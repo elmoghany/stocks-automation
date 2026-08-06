@@ -67,7 +67,7 @@ def yr_cells(y):
         f'<td>{pct(y["tot"]/y["months_n"]/CAP*100)}</td>')
 
 c23_row = (
-    '<tr class="champ"><td class="l">C23 CHAMPION (1PM window)<br>'
+    '<tr class="champ"><td class="l">C23 CHAMPION rules (1PM window) — sized live as C30<br>'
     '<span style="font-weight:400;font-size:.72rem;color:var(--muted)">'
     '= C21 machinery + exits until 1PM (entries still end noon) \u2014 re-adopted 2026-08-05</span></td>'
     f'<td>{money(avg_day, False)}</td><td>{aTr:.0f}</td>'
@@ -158,6 +158,57 @@ DIFFS = """<section>
   </tbody></table></div>
 </section>"""
 
+
+C30 = """<section>
+  <h2>C30 — the adopted sizing policy: capped half-reinvest on C23</h2>
+  <div class="stats" style="margin:.2rem 0 .9rem">
+    <div class="chip"><div class="l">Rule</div><div class="v" style="font-size:.95rem">slot = min($120k, $15k + ½·profits)</div></div>
+    <div class="chip"><div class="l">2-yr backtest (capped)</div><div class="v">~+$4,964,801</div></div>
+    <div class="chip"><div class="l">Cap reached in</div><div class="v">≈ 5 weeks</div></div>
+    <div class="chip"><div class="l">Flat-$15k comparison</div><div class="v">+$992,866</div></div>
+  </div>
+  <div class="scroll"><table>
+    <thead><tr><th>Slot</th><th>Y1</th><th>Y2</th><th class="l">Capture vs linear scaling</th></tr></thead>
+    <tbody>
+    <tr><td>$15k</td><td class="pos">+$412,879</td><td class="pos">+$579,988</td><td class="rl">100% — the validated baseline, 0 negative months</td></tr>
+    <tr><td>$30k</td><td class="pos">+$718,026</td><td class="pos">+$1,077,701</td><td class="rl">87% / 93%</td></tr>
+    <tr><td>$60k</td><td class="pos">+$1,198,007</td><td class="pos">+$1,935,844</td><td class="rl">73% / 83%</td></tr>
+    <tr><td>$120k (cap)</td><td class="pos">+$1,873,247</td><td class="pos">+$3,328,199</td><td class="rl">57% / 72% — Y2 picks up 1 negative month at scale</td></tr>
+    </tbody></table></div>
+  <p class="note">Why the cap: the 20%-of-10-minute-volume rule makes P&amp;L sublinear in slot size, and an
+  UNCAPPED half-reinvest run compounds to a $19M slot (+$37.4M raw) — rejected as fiction: at that size
+  the fill model breaks (negative days jump to 55%, drawdown −$11.9M, the strategy IS the market in these
+  names). $120k is the largest liquidity-measured tier. Base never shrinks — losses only eat the profit
+  buffer. Fill realism at the cap is exactly what the live paper record (entry price vs price 60s later)
+  must validate. E01 runs the same half-reinvest policy uncapped — large-cap liquidity makes its slot
+  growth ($50k → $154k backtested, +$208,787/yr vs +$117,755 flat) unproblematic.</p>
+</section>"""
+
+C30 = """<section>
+  <h2>C30 \u2014 the adopted sizing policy: capped half-reinvest on C23</h2>
+  <div class="stats" style="margin:.2rem 0 .9rem">
+    <div class="chip"><div class="l">Rule</div><div class="v" style="font-size:.95rem">slot = min($120k, $15k + \u00bd\u00b7profits)</div></div>
+    <div class="chip"><div class="l">2-yr backtest (capped)</div><div class="v">~+$4,964,801</div></div>
+    <div class="chip"><div class="l">Cap reached in</div><div class="v">\u2248 5 weeks</div></div>
+    <div class="chip"><div class="l">Flat-$15k comparison</div><div class="v">+$992,866</div></div>
+  </div>
+  <div class="scroll"><table>
+    <thead><tr><th>Slot</th><th>Y1</th><th>Y2</th><th class="l">Capture vs linear scaling</th></tr></thead>
+    <tbody>
+    <tr><td>$15k</td><td class="pos">+$412,879</td><td class="pos">+$579,988</td><td class="rl">100% \u2014 the validated baseline, 0 negative months</td></tr>
+    <tr><td>$30k</td><td class="pos">+$718,026</td><td class="pos">+$1,077,701</td><td class="rl">87% / 93%</td></tr>
+    <tr><td>$60k</td><td class="pos">+$1,198,007</td><td class="pos">+$1,935,844</td><td class="rl">73% / 83%</td></tr>
+    <tr><td>$120k (cap)</td><td class="pos">+$1,873,247</td><td class="pos">+$3,328,199</td><td class="rl">57% / 72% \u2014 Y2 picks up 1 negative month at scale</td></tr>
+    </tbody></table></div>
+  <p class="note">Why the cap: the 20%-of-10-minute-volume rule makes P&amp;L sublinear in slot size, and an
+  UNCAPPED half-reinvest run compounds to a $19M slot (+$37.4M raw) \u2014 rejected as fiction: at that size
+  the fill model breaks (negative days jump to 55%, drawdown \u2212$11.9M \u2014 the strategy IS the market in
+  these names). $120k is the largest liquidity-measured tier. The base never shrinks \u2014 losses only eat
+  the profit buffer. Fill realism at the cap is exactly what the live paper record (entry price vs price
+  60s later) must validate. E01 runs the same half-reinvest policy uncapped \u2014 large-cap liquidity makes
+  its slot growth ($50k \u2192 $154k backtested, +$208,787/yr vs +$117,755 flat) unproblematic.</p>
+</section>"""
+
 E01 = """<section>
   <h2>E01 \u2014 the earnings-book champion (separate book, separate capital)</h2>
   <div class="stats" style="margin:.2rem 0 .9rem">
@@ -209,16 +260,16 @@ THEAD = src.split("THEAD = (")[1].split(")\n")[0]
 THEAD = eval("(" + THEAD + ")")
 
 html = (STYLE + '\n<div class="wrap">\n<header>\n'
-  '  <h1>Three Books, Two Champions \u2014 C23 (day trading) &amp; E01 (earnings)</h1>\n'
+  '  <h1>Three Books, Two Champions \u2014 C30 (day trading) &amp; E01 (earnings)</h1>\n'
   '  <p>230+ experiments. Every one changes exactly one thing, runs on both backtest years where data\n'
   '     allows, and must beat shuffled / placebo / miss-gate controls to count. Constraints never\n'
   '     touched: halal (point-in-time), same-day close, capped capital per slot.</p>\n'
   '  <div class="stats">\n'
-  '    <div class="chip"><div class="l">C23 \u2014 Y1</div><div class="v">+$412,879</div></div>\n'
-  '    <div class="chip"><div class="l">C23 \u2014 Y2</div><div class="v">+$579,988</div></div>\n'
+  '    <div class="chip"><div class="l">C23 rules \u2014 Y1 (flat $15k)</div><div class="v">+$412,879</div></div>\n'
+  '    <div class="chip"><div class="l">C23 rules \u2014 Y2 (flat $15k)</div><div class="v">+$579,988</div></div>\n'
   '    <div class="chip"><div class="l">Negative months (22)</div><div class="v">0</div></div>\n'
-  '    <div class="chip"><div class="l">C23 avg / trading day</div><div class="v">+23.6% of $15k</div></div>\n'
-  '    <div class="chip"><div class="l">E01 earnings book / yr</div><div class="v">+$117,755</div></div>\n'
+  '    <div class="chip"><div class="l">C30 capped-R50 \u00b7 2yr</div><div class="v">~+$4.96M</div></div>\n'
+  '    <div class="chip"><div class="l">E01 R50 earnings / yr</div><div class="v">+$208,787</div></div>\n'
   '  </div>\n</header>\n\n<section>\n'
   '  <h2>Full P&amp;L breakdown \u2014 sorted by Tot Avg/day = (Prof \u2212 Loss) / Trades</h2>\n'
   '  <div class="scroll">\n  <table>\n    <thead>\n' + THEAD + '\n    </thead>\n    <tbody>\n'
@@ -229,7 +280,7 @@ html = (STYLE + '\n<div class="wrap">\n<header>\n'
   '  <h2>Monthly P&amp;L \u2014 every config, every month</h2>\n'
   + g1 + '\n' + g2 + '\n'
   '  <p class="note">Red cells are losing months. C23 has none in either year.</p>\n</section>\n\n'
-  + RULES + '\n\n' + DIFFS + '\n\n' + E01 + '\n\n' + ANATOMY + '\n\n' + DEAD + '\n</div>\n')
+  + RULES + '\n\n' + DIFFS + '\n\n' + C30 + '\n\n' + E01 + '\n\n' + ANATOMY + '\n\n' + DEAD + '\n</div>\n')
 
 out = Path(__file__).parent / "x100-results.html"
 out.write_text(html, encoding="utf-8")
