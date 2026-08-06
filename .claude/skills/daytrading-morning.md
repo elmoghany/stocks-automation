@@ -162,3 +162,16 @@ source disagreement, or unmet intent must produce a loud "ERROR:"
 line in the session log and the day JSON -- never a quiet workaround.
 Nightly hygiene: rerun day-trading/plan/scanner_audit.py after the
 close to verify the day's feed missed nothing (top-8 diff = NONE).
+
+## Bar-granularity policy (user directive 2026-08-06)
+
+- DEFAULT for any historical lookup (rvol recompute from RH daily/
+  intraday, 7AM calm-gap checks, day-shape reviews, post-hoc
+  analysis): Robinhood 5-MINUTE bars (~3 months reach). Volume
+  comparisons never need finer granularity.
+- 1-MINUTE bars are reserved for exactly two uses:
+  (a) BACKTESTS via Massive/Polygon (the simulator's native feed);
+  (b) LIVE same-day decisions -- "do we buy or sell at this moment"
+      (entry-trigger crosses, the paper_watch exit loop).
+Everything else that requests 1-min data outside those two cases is a
+protocol violation -- log an ERROR line, use 5-min.

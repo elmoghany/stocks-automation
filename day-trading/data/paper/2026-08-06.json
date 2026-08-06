@@ -53,10 +53,11 @@
    "peak_pct": 101.0,
    "prev_close": 1.01,
    "gates": {
-    "rvol": "FAIL 2.5",
-    "calm_gap": "FAIL open 1.23 vs pc 1.01 = +21.8%"
+    "calm_gap_7am": "pass +13.9% (corrected rule)",
+    "rvol": "pass 5.42 RH recompute",
+    "halal": "FAIL loans 277.2% comb 279.9%"
    },
-   "outcome": "PERMANENT reject (calm-gap)"
+   "outcome": "NOT HALAL -> PERMANENT reject (6th haram block)"
   },
   {
    "sym": "HNST",
@@ -64,11 +65,12 @@
    "peak_pct": 37.3,
    "prev_close": 3.85,
    "gates": {
-    "rvol": "pass 5.9",
-    "halal": "pass",
-    "calm_gap": "FAIL open 4.89 vs pc 3.85 = +27.0%"
+    "calm_gap_7am": "pass +13.5% (supersedes 9:30-open reject)",
+    "rvol": "pass 6.42 RH recompute",
+    "halal": "pass loans 2.0% comb 17.7%",
+    "price": "pass 5.23>=4.24"
    },
-   "outcome": "PERMANENT reject (calm-gap); earnings gapper, most-legit name of the day"
+   "outcome": "QUALIFIED 10:35; stop-buy armed at session high 5.84"
   },
   {
    "sym": "SPHL",
@@ -81,11 +83,106 @@
     "rvol": "FAIL 0.1 screen / 0.15 RH recompute (both agree)"
    },
    "outcome": "rejected (rvol); re-screen eligible but volume tiny"
+  },
+  {
+   "sym": "ASPN",
+   "first_seen": "10:30 widened feed",
+   "peak_pct": 58.1,
+   "gates": {
+    "calm_gap_7am": "pass +18.6%",
+    "rvol": "FAIL 4.20"
+   },
+   "outcome": "rejected (rvol), re-screen eligible"
+  },
+  {
+   "sym": "AEVA",
+   "first_seen": "10:30 widened feed",
+   "peak_pct": 40.5,
+   "gates": {
+    "calm_gap_7am": "FAIL +24.1%",
+    "rvol": "FAIL 1.51"
+   },
+   "outcome": "PERMANENT reject (gap)"
+  },
+  {
+   "sym": "IOVA",
+   "first_seen": "10:30 widened feed",
+   "peak_pct": 40.1,
+   "gates": {
+    "calm_gap_7am": "pass +1.4%",
+    "rvol": "FAIL 1.88"
+   },
+   "outcome": "rejected (rvol), re-screen eligible"
+  },
+  {
+   "sym": "INSM",
+   "first_seen": "10:30 widened feed",
+   "peak_pct": 31.6,
+   "gates": {
+    "calm_gap_7am": "pass +1.5%",
+    "rvol": "FAIL 1.36"
+   },
+   "outcome": "rejected (rvol), re-screen eligible"
+  },
+  {
+   "sym": "PAYS",
+   "first_seen": "10:30 widened feed",
+   "peak_pct": 30.8,
+   "gates": {
+    "calm_gap_7am": "pass +3.6%",
+    "rvol": "FAIL 2.09"
+   },
+   "outcome": "rejected (rvol), re-screen eligible"
+  },
+  {
+   "sym": "PFAI",
+   "first_seen": "10:30 widened feed",
+   "peak_pct": 29.7,
+   "gates": {
+    "calm_gap_7am": "pass +3.7%",
+    "rvol": "FAIL 3.03"
+   },
+   "outcome": "rejected (rvol; 21k sh untradeable)"
+  },
+  {
+   "sym": "FVN",
+   "first_seen": "10:30 widened feed",
+   "peak_pct": 39.0,
+   "gates": {
+    "instrument": "SPAC"
+   },
+   "outcome": "PERMANENT reject"
+  },
+  {
+   "sym": "RDWU",
+   "first_seen": "10:30 widened feed",
+   "gates": {
+    "instrument": "2x lev ETF"
+   },
+   "outcome": "PERMANENT reject"
+  },
+  {
+   "sym": "MTSG",
+   "first_seen": "10:30 widened feed",
+   "gates": {
+    "instrument": "2x lev ETF"
+   },
+   "outcome": "PERMANENT reject"
   }
  ],
  "trades": [],
  "coverage_gaps": [],
  "lessons": [
-  "E*TRADE feed in day-trading.py screen was stale all morning (frozen rvol, wrong gain); RH daily-bar recompute used as fallback for the same our-50d metric"
- ]
+  "E*TRADE feed in day-trading.py screen was stale all morning (frozen rvol, wrong gain); RH daily-bar recompute used as fallback for the same our-50d metric",
+  "Scanner rvol filter was hiding valid candidates; widened feed + local gates adopted mid-session 10:30",
+  "Calm-gap measured at 7AM (not 9:30 open) resurrected HNST after earlier wrong rejection"
+ ],
+ "watch": {
+  "HNST": {
+   "trigger": 5.84,
+   "armed_at": "10:35",
+   "prev_close": 3.85,
+   "state": "stop-buy armed"
+  }
+ }
 }

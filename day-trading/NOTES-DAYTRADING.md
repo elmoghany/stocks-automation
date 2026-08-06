@@ -1554,3 +1554,10 @@ FIXES (all live as of 10:30 ET):
 Verdict on "is something wrong": the STRATEGY was fine; the FEED was
 blind. 3-day no-trade streak was part tape (5 haram, 8 exhausted),
 part scanner blindness (MOVE should have been traded Aug 4).
+
+## Bar-granularity policy (2026-08-06)
+
+E*TRADE has no history API (entitlement-locked chart endpoint; see
+bollinger NOTES). Standard: RH 5-minute bars for all historical
+lookups (~3mo reach; volume checks don't need 1-min); 1-minute bars
+ONLY for Massive backtests and live moment-of-decision checks.
