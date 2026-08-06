@@ -1524,3 +1524,33 @@ halal mega cap + 5y>=+50% + >=12% off the 60d high -> buy, hold 60
 sessions; deploy hardest when the MARKET is also >=10% off its high
 (crash overlap: 87.5% win, +23%/hold historically). Small n on the
 crash rows (2022 + Apr'25 episodes) -- sizing judgment required.
+
+## SCANNER AUDIT + FIX (2026-08-06, intraday)
+
+User: "did the day trading buy anything? if not, check the code" -->
+audit (day-trading/plan/scanner_audit.py) rebuilt the BACKTEST's
+full-market discovery (Massive grouped-daily + our 50d rvol >= 5 +
+high >= +10%, clean tickers, prev_close >= $2) for the paper days and
+diffed it against every symbol the live RH scanner surfaced:
+- Aug 4: backtest pool 20; scanner missed 6 OF THE TOP 8, including
+  MOVE: +75.6% high, our-rvol 156, $7.4M volume, HALAL (comb 13.1%),
+  CALM at 7AM (+6.9%) -- a full C23 qualifier, the backtest's #1 pick
+  after halal-blocked AMIX, ~+69% from its 7AM price. A missed monster.
+- Aug 5: scanner missed 2 of top 8 (SHPU +49%, BLMN +42%).
+- ROOT CAUSE: the scan's RH 30-DAY rvol>5 filter disagrees with our
+  50-day source-of-truth in both directions (showed DBGI noise, hid
+  MOVE). Secondary: live protocol measured calm-gap at the 9:30 open
+  instead of the backtest's 7AM (no missed trades from this in 3 days
+  -- all rejects were pre-7AM-exhausted -- but corrected).
+FIXES (all live as of 10:30 ET):
+1. Scan 5f132877 filters reduced to Last>$2 + %change>+10% ONLY (139
+   rows vs 7): the scanner is a FEED; every gate (our-50d rvol, 7AM
+   calm-gap, halal, +10% at entry) is computed locally.
+2. NO-SILENT-FALLBACKS policy (user directive): any stale/errored
+   source or unmet intent => loud "ERROR:" line in the day log +
+   day-JSON note; silent workarounds forbidden. Stale E*TRADE quote
+   path: RH-bars recompute is now the authoritative rvol method.
+3. Calm-gap measured at 7:00 AM ET everywhere (skill updated earlier).
+Verdict on "is something wrong": the STRATEGY was fine; the FEED was
+blind. 3-day no-trade streak was part tape (5 haram, 8 exhausted),
+part scanner blindness (MOVE should have been traded Aug 4).

@@ -149,3 +149,16 @@ future paper session:
      (free tier only reaches back ~1 year; same-day capture is cheap
      and permanent)
    All three are committed+pushed at close-out with the day's verdict.
+
+## Scanner = FEED ONLY + no-silent-fallbacks (2026-08-06 audit)
+
+The RH scan (5f132877...) now filters ONLY Last>$2 and %change>+10%
+(the 30d-rvol filter HID valid candidates: MOVE +75.6%/halal/calm/
+rvol-156 on Aug 4 -- 6 of the backtest's top 8 that day). Protocol:
+take the top 8 rows by %change each cycle and apply ALL gates locally
+-- our-50d rvol (RH daily bars are the authoritative source), 7AM
+calm-gap, halal, +10%-at-entry. NO SILENT FALLBACKS: any stale feed,
+source disagreement, or unmet intent must produce a loud "ERROR:"
+line in the session log and the day JSON -- never a quiet workaround.
+Nightly hygiene: rerun day-trading/plan/scanner_audit.py after the
+close to verify the day's feed missed nothing (top-8 diff = NONE).
