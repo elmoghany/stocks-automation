@@ -1467,3 +1467,22 @@ others +$14k..+$39k. Reading: the single-slot constraint throttles TD
 hard (4-13 trades in 5 years vs 123-231 signals) -- TD's value needs
 multiple slots; at one slot it's ~$9-12k/yr, comparable to E01's base
 year but far below C30. Slot scaling for TD = the open decision.
+
+## BD-family: band-gated dip entries (2026-08-05)
+
+bollinger-trading/plan/dip_band.py -- %B entry thresholds ON TOP of
+the validated -15%-dip trigger, vs the TD06 benchmark (dip only,
+60-session hold: +29.33%/trade, n=123).
+- BD01 %B<=0.20: +28.95%, n=102 | BD02 %B<=0: +28.70%, n=66 |
+  BD03 %B<=0.30: +30.62%, n=108 -- all within ~1pp of TD06 with FEWER
+  events. Band geometry adds NOTHING to the dip trigger (noise).
+- BD04/05 band exits (%B>=0.80/0.90): +8.5-9.2%/trade -- exits way too
+  early; nothing beats the plain 60-session hold (3rd confirmation).
+- BD06 + volume confirm: +30.31% but n=24 -- over-filtered.
+- BD07 all-halal universe: +16.94% (n=324) -- tech bounces ~2x harder.
+- BD08 NO 5y-strong gate: +8.53%, 57.6% win -- THE ISOLATION RESULT:
+  the 5-year-strength gate is the alpha (29% vs 8.5%); the edge is
+  "quality name knocked down 15%", not "price touched a band".
+VERDICT: bands rejected as entry timing too (matches BB-family). The
+book's validated recipe stays: halal big tech + 5y-strong + 15% dip +
+60-session hold. Nothing else earns its complexity.
