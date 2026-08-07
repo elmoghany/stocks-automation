@@ -317,9 +317,9 @@
     "halal": "pass loans 0.71% dep 5.08%",
     "price_gate": "pass 3.56>=3.399",
     "rvol_tod": "PASS 20.62 (cum 186,704 vs same-time-avg 9,055 over 20 sessions); naive_fullday=0.32",
-    "l2": "FAIL thin book - 0 shares within limit 3.6518; whole ask side 303 sh"
+    "l2": "FAIL x3 (08:37, 08:50, 08:58): 0 sh within trigger x1.005; inside ask 3.73 vs limit 3.7286; spread 4.6% > 0.5% limit cap"
    },
-   "outcome": "ALL GATES PASS but NOT ARMED - ERROR: thin book; re-check at 09:30 open"
+   "outcome": "ALL GATES PASS, trigger crossed twice, NO FILL - stop-limit unfillable on a 4.6% spread"
   }
  ],
  "trades": [
@@ -340,7 +340,8 @@
    "vol_cap_$": 258358,
    "l2_depth_at_arm_sh": 552,
    "exits": [],
-   "spurious_exit_rejected": "paper_watch reported EXIT-RESTING-STOP @210.44 on launch from stale prior-session bars; rejected as a bug, position remained open"
+   "spurious_exit_rejected": "paper_watch reported EXIT-RESTING-STOP @210.44 on launch from stale prior-session bars; rejected as a bug, position remained open",
+   "verified_open": "RH bars: lowest low since entry 230.75 vs stop 210.44 - never touched; position open"
   }
  ],
  "l2_check": {
@@ -358,7 +359,9 @@
   "L2 price book returns real ladders pre-market from at least 07:28 ET; the 03:07 empty probe was a dead-hours artifact.",
   "07:52 rvol gate corrected to time-of-day-adjusted (coordinator directive). Old rule divided partial-day cum volume by full-day 50d average -> systematic morning under-report (yesterday's PN: 0.9 reported vs 16.1 actual).",
   "rvol_tod.py built+validated: INDI 07:55 rvol_tod=4.93 vs naive_fullday=0.01 (490x). Quantifies the broken gate.",
-  "paper_watch.py bug: yfinance history() without prepost returned PRIOR-session bars pre-market -> spurious EXIT-RESTING-STOP on TWLO at 210.44 (-$1,995) while the stock was at 232. Rejected, root-caused, fixed with prepost=True + a today-only date guard. First live exercise of this code path in the program."
+  "paper_watch.py bug: yfinance history() without prepost returned PRIOR-session bars pre-market -> spurious EXIT-RESTING-STOP on TWLO at 210.44 (-$1,995) while the stock was at 232. Rejected, root-caused, fixed with prepost=True + a today-only date guard. First live exercise of this code path in the program.",
+  "yfinance removed from the live path by directive after the phantom TWLO stop; paper_watch now consumes agent-supplied RH bars only.",
+  "L2 veto on NRXP is structural, not incidental: NRXP's spread (3.56x3.73 = 4.6%) exceeds the stop-limit's 0.5% cap, so the order can trigger but never fill. This is the 'failed fill' case S100-S104 left unmeasured, and it blocked the day's best-gated name 3x while 137,776 sh traded."
  ],
  "pnl": 0.0,
  "rvol_rule": "time-of-day-adjusted: today cum vol to clock T / mean cum vol to same T over last ~20 sessions; log naive full-day too; never permanently reject on an uncomputable ratio"

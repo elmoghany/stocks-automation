@@ -308,3 +308,19 @@ ask side within 0.5% holds 800 shares and we want 5,000 -- shrink or
 skip). The REAL protection remains the 20%-of-10-min-VOLUME rule,
 which sizes to what actually traded rather than what is advertised.
 L2 is the secondary check; volume is the primary one.
+
+## PREMARKET ACTIVITY GATE (replaces the live rvol check, 2026-08-07)
+
+Do NOT compute rvol as partial-day volume over a full-day average --
+that is the bug that rejected PN (+$1,333). Do NOT project the full day
+from an intraday profile either -- that costs 42% of the edge.
+
+USE: premarket volume / the stock's 50-day average DAILY volume.
+  python day-trading/plan/premkt_gate.py PM_VOLUME AVG50_DAILY
+  exit 0 = PASS, 1 = FAIL; ERROR lines mean "cannot evaluate" -> WATCH,
+  never a permanent reject.
+Floor 0.02, deliberately permissive: it exists to exclude names with no
+premarket footprint, NOT to select. Backtest keeps 84% of P&L at that
+floor and LESS as the floor rises. Real filtering = +10% gain, 7AM
+calm-gap <= +20%, halal, price >= prev_close x1.10, 20%-of-10-min-volume
+size cap. Log both raw numbers with every decision.

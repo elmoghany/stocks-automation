@@ -1291,3 +1291,49 @@ help when you cannot trade before 09:32.
 CAVEAT: the earlier bracket rows (baseline / 08:00 / 09:45) were lost
 from the captured output; only the 10:30 and causal rows survived.
 Re-run for the full curve before publishing these numbers anywhere.
+
+## PREMARKET ACTIVITY GATE ADOPTED (2026-08-07) -- the rvol problem solved
+
+THREE ATTEMPTS, for the record:
+1. naive: cumulative-so-far / full-day average -> scored PN at 0.9 when
+   its real rvol was 16.1. Rejected a +$1,333 winner. BUG.
+2. projected: cumulative / market-wide intraday profile fraction. The
+   premarket share of a day has mean 5.1% but MEDIAN 0.1%, so dividing
+   by it amplifies noise; gating on it cost 42% of C35's edge
+   ($1,163,538 -> $674,473). REJECTED.
+3. ADOPTED: premarket volume / the stock's normal FULL-DAY volume. No
+   projection, no profile. Fully causal from 04:00.
+
+LIVE VALIDATION 2026-08-07 09:15 (before the open), premarket volume as
+a multiple of a NORMAL DAY:
+  NAMI 39.68x  DOCS 6.45x  DSY 2.31x  TWLO 2.00x  FRD 1.78x
+  TEAM 1.68x   PUBM 1.45x  RCEL 1.38x STLN 1.08x  QNST 0.93x
+Nine of ten candidates had already traded MORE THAN a full normal day's
+volume before the opening bell. The signal was there all along; the
+earlier methods just measured it against the wrong yardstick.
+
+BACKTEST CALIBRATION (plan/premkt_signals.py; 282 traded days,
+$939,232 of C35 P&L on days with premarket bars):
+  floor 0.02 -> 83% of days, 84% of P&L kept   <- ADOPTED
+  floor 0.05 -> 76% / 72%
+  floor 0.10 -> 68% / 59%
+  floor 0.50 -> 54% / 44%
+  floor 1.00 -> 48% / 40%
+Retention FALLS as the floor rises, so this is a PERMISSIVE FLOOR, not
+a selector -- it only excludes names with no premarket footprint. Real
+filtering stays with gain>=10%, 7AM calm-gap, halal, price, and the
+20%-of-volume size cap.
+84% retained here vs 58% for the projection approach: the causal-gate
+penalty largely EVAPORATES under the correct measure. The honest live
+expectation for C35 moves back up from ~$674k toward ~$977k over two
+years (84% of $1,163,538) -- still below the raw backtest, but the 42%
+haircut was mostly my measurement error, not a real cost.
+
+IMPLEMENTATION: plan/premkt_gate.py (pure function + CLI; the agent
+supplies the two numbers because only it can call Robinhood). Fails
+LOUDLY on zero/missing/non-numeric input rather than admitting. Live
+paper session switched to it mid-session 2026-08-07.
+HONEST LIMIT: calibrated on candidates that already passed the
+backtest's full-day rvol gate, so it measures how many GOOD days the
+floor keeps -- not how much junk it admits. False-positive rate
+UNMEASURED; that needs minute bars for names that failed the gate.
