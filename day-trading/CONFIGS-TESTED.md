@@ -1194,3 +1194,56 @@ Running scorecard, live vs simulator: Aug 4 sim -$2,252 (live $0);
 Aug 5 sim $0 = live $0; Aug 6 sim +$1,333 (live $0). Net the simulator
 is -$919 over the three days, so live is still AHEAD -- but for the
 wrong reason, and the Aug-6 miss was a winner.
+
+## CAUSAL VOLUME MEASURES (2026-08-07) -- can the rvol gate be computed live?
+
+plan/rvol_causal.py. Method: build the intraday volume profile
+empirically from 5,168 cached symbol-days, then PROJECT the full day
+from what has printed so far:
+  projected_full = cumulative_by_T / profile_fraction(T)
+  projected_rvol = projected_full / 50-day average     (fully causal)
+Scored against the real gate (full-day rvol >= 5) on 5,004
+candidate-days that have minute bars.
+
+INTRADAY VOLUME PROFILE (mean / median share of the day's volume):
+  by 07:00   5.1% / 0.1%     <- note the enormous skew
+  by 08:00   9.6% / 0.7%
+  by 09:45  25.5% / 18.7%
+  by 10:30  41.1% / 43.1%
+The 7AM mean-vs-median gap (5.1% vs 0.1%) says MOST candidates have
+essentially NO premarket volume while a few have a lot -- so a single
+market-wide profile is a poor projector that early.
+
+RECALL of the real gate (share of qualifying names identified):
+  measure        naive   projected
+  @07:00          16%       32%
+  @08:00          25%       40%
+  @09:45          44%       63%
+  @10:30          57%       74%
+Spearman rank-correlation with true full-day rvol: 0.19 (07:00),
+0.33 (08:00), 0.58 (09:45), 0.69 (10:30).
+
+FINDINGS
+1. The projection roughly DOUBLES recall over the naive ratio at every
+   checkpoint -- so it is a genuine fix for the bug the audit found,
+   and should replace the naive computation live.
+2. But it does NOT reproduce the gate. At 07:00 only ~32% of
+   qualifying names are identifiable; the information does not exist
+   yet. Full-day rvol is only ~69% rank-correlated with anything
+   observable even by 10:30.
+3. THEREFORE the backtest's candidate SELECTION is partly non-causal,
+   and live cannot match it early in the session. This is a real
+   realism gap, not a coding error.
+MEASUREMENT FLAW TO FIX (stated, not hidden): precision came out 100%
+at every checkpoint because the scored set is the gappers2 pool, which
+is ALREADY filtered to rvol >= 5 -- there are no true negatives in it,
+so false positives cannot be counted. Precision here is meaningless.
+Measuring it needs minute bars for names that FAILED the gate, which
+are not in the m1 cache. Until that is done we know the projection's
+recall but NOT its false-positive rate.
+NEXT EXPERIMENT (the decisive one): re-run C35 allowing entries only
+AFTER the projected-rvol gate would have passed, and compare to the
+$1,163,538 baseline. Since entry #1 is the most profitable slot
+(mean +$1,204) and the 9AM hour is the best hour, a gate that only
+qualifies names by 09:45-10:30 may forfeit a large share of the edge.
+That number is the honest live expectation and is not yet measured.
