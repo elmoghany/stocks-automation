@@ -860,3 +860,46 @@ S071: Y1 +$2,064,938 (138d) / Y2 +$3,274,903 (158d). Negative months
 1/10 in Y2 at $100k for BOTH configs -- a size artifact (present in
 the 1PM budget-scaling run too), not caused by the later exit.
 The exit-window gain is stable at ~+16-17% across every slot size.
+
+## EXACT cash-account model + the 4 requested re-backtests (2026-08-07)
+
+New kwarg `daily_deploy_cap` (day-trading.py): tracks actual cost basis
+deployed per DAY and sizes the final ticket with whatever remains, then
+blocks further entries until the next session -- the true T+1 cash-
+account rule the user described ("100k is the max amount available to
+trade... ok if we use 10k for the last trade"). So 6 x $15k + 1 x $10k
+= $100k exactly. MIN_TICKET $1,000 prevents unrealistically tiny final
+orders. Identity re-verified after the change: C23 unset reproduces
++$412,879 / +$579,988 with 1,262 / 1,902 trades.
+
+RESULTS ($15k slot, FLAT, no compounding, 2-year totals):
+  config                                        Y1        Y2       2yr
+  C23 1PM  uncapped (margin)               412,879   579,988   992,866
+  S091 C23 1PM  + $100k/day cap            382,792   489,421   872,213
+  S094 C23 1PM  + cap + drop 2 patterns    383,303   505,385   888,688
+  S071 15:00 uncapped (margin)             505,982   655,731 1,161,713
+  S092 S071 15:00 + $100k/day cap          449,078   556,094 1,005,172
+  S093 S071 15:00 + cap + drop 2 patterns  446,298   573,668 1,019,966
+All six have ZERO negative months in both years.
+
+READINGS
+1. The cash cap costs 12.1% (C23: 992,866 -> 872,213) and 13.5%
+   (S071: 1,161,713 -> 1,005,172). Margin would be worth ~$133-157k
+   over two years; that is the price tag on T+1, not a recommendation.
+2. The 15:00 exit still wins UNDER the cap: +$132,959 over C23-capped
+   (872,213 -> 1,005,172, +15.2%). The later exit matters MORE when
+   shots per day are rationed -- each of the ~6.5 tickets runs longer.
+3. Pattern removal under the cap: C23 +$16,475 (Y1 +511, Y2 +15,964);
+   S071 +$14,794 (Y1 -2,780, Y2 +17,574). BOTH still fail the both-year
+   rule on one leg and sit far below the $30k floor -- consistent with
+   the |t| = 0.41 measurement. Third independent rejection. KEEP ALL
+   PATTERNS.
+4. C30 is not a separate row: C30 = C23 + capped R50 sizing, and a hard
+   $100k/day cash ceiling truncates exactly the slot growth R50 exists
+   to produce, so under this constraint C30 collapses onto C23.
+BEST CONFIGURATION FOR THE USER'S ACTUAL ACCOUNT:
+  S092 = C23 rules + 15:00 exit + $100k/day cash cap
+  = +$1,005,172 over two years ($449,078 / $556,094), 0/22 negative
+  months, ~$3,254-3,588 per traded day on a $15k ticket.
+STILL REQUIRES: user sign-off on the 15:00 window (a trading-window
+change is the user's call), and it has never been paper-traded.

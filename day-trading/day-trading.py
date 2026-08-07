@@ -871,7 +871,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     monster_mode: tuple | None = None,
                     pressure_size: tuple | None = None,
                     seq_size: tuple | None = None,
-                    day_state_size: tuple | None = None) -> list[dict]:
+                    day_state_size: tuple | None = None,
+                    daily_deploy_cap: float | None = None) -> list[dict]:
     """Run the entry/exit state machine over 1-min bars of a single day.
 
     State machine:
@@ -883,6 +884,24 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
     """
     cd = Candles(df1m)
     trades = []
+    # CASH-ACCOUNT MODEL (user 2026-08-07): with no margin, T+1 settlement
+    # means every dollar spent today is unavailable until tomorrow, so the
+    # day has a fixed dollar budget across ALL entries -- not a per-trade
+    # limit. `deployed` accumulates actual cost basis; the last trade of
+    # the day is sized with whatever remains (e.g. $10k against a $100k
+    # cap after six $15k tickets), and entries stop once the remainder is
+    # below MIN_TICKET rather than firing an unrealistically tiny order.
+    deployed = 0.0
+    MIN_TICKET = 1_000.0
+
+    def _cap_budget(bb: float) -> float | None:
+        """Trim a ticket to the day's remaining cash; None = no cash left."""
+        if daily_deploy_cap is None:
+            return bb
+        rem = daily_deploy_cap - deployed
+        if rem < MIN_TICKET:
+            return None
+        return min(bb, rem)
 
     def _size_mult(i: int) -> float:
         """S-campaign sizing multipliers (all default OFF -> 1.0, so the
@@ -1066,6 +1085,9 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
             if _entry_ok(fill) and _pressure_gates_ok(i, fill):
                 buy_budget = (budget_cur * (0.5 if add_at is not None
                                             else 1.0) * _size_mult(i))
+                buy_budget = _cap_budget(buy_budget)
+                if buy_budget is None:
+                    continue               # day's cash exhausted (T+1)
                 sh = int(buy_budget // fill)
                 if max_vol_frac:
                     vbase = sum(cd.v[max(0, i - vol_frac_window + 1):i + 1])
@@ -1074,6 +1096,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                 if sh >= 1:
                     shares = sh
                     entry = fill * (1 + slip)
+                    deployed += shares * entry      # cash-account budget
                     entry_i = i
                     peak = entry
                     entry_trig = pat
@@ -1141,6 +1164,9 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                 entry_i = i
                 buy_budget = (budget_cur * (0.5 if add_at is not None
                                             else 1.0) * _size_mult(i))
+                buy_budget = _cap_budget(buy_budget)
+                if buy_budget is None:
+                    continue               # day's cash exhausted (T+1)
                 shares = int(buy_budget // entry)
                 if max_vol_frac:
                     vbase = sum(cd.v[max(0, i - vol_frac_window + 1):i + 1])
@@ -1148,6 +1174,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                         shares = min(shares, int(vbase * max_vol_frac))
                 if shares < 1:
                     continue
+                deployed += shares * entry          # cash-account budget
                 state = "LONG"
                 peak = entry
                 entry_trig = pats[0]

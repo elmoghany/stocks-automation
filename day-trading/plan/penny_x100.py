@@ -1029,6 +1029,33 @@ EXPERIMENTS.append(C23("S079", "C23 1PM exit at $100k slot, FLAT",
     sim=dict(budget=100_000.0)))
 EXPERIMENTS.append(C23("S080", "S071 15:00 exit at $100k slot, FLAT",
     sim=dict(budget=100_000.0), **_S71))
+# CASH-ACCOUNT REALITY (user 2026-08-07): no margin, so T+1 settlement
+# locks each $15k tranche after its round-trip. With $100k that is ~6
+# round-trips per day, NOT the 10.5 the champion averages. max_trades
+# caps positions per day -- sweep it for both exit windows.
+for _n, _mt in zip(range(81, 86), (4, 5, 6, 7, 8)):
+    EXPERIMENTS.append(C23(f"S{_n:03d}",
+        f"C23 1PM, max {_mt} trades/day (cash-account cap)",
+        sim=dict(max_trades=_mt)))
+for _n, _mt in zip(range(86, 91), (4, 5, 6, 7, 8)):
+    EXPERIMENTS.append(C23(f"S{_n:03d}",
+        f"S071 15:00, max {_mt} trades/day (cash-account cap)",
+        sim=dict(max_trades=_mt), **_S71))
+
+# --- EXACT cash-account model: $100k of settled cash deployable per day,
+# last ticket sized with whatever remains (user: "ok if we use 10k for the
+# last trade"). daily_deploy_cap counts actual cost basis, so 6 x $15k +
+# 1 x $10k = $100k exactly, then entries stop until tomorrow.
+_NOPAT = set(_ALLP) - {"dragonfly_doji", "inverted_hammer"}
+EXPERIMENTS.append(C23("S091", "C23 1PM + $100k/day cash cap",
+    sim=dict(daily_deploy_cap=100_000.0)))
+EXPERIMENTS.append(C23("S092", "S071 15:00 + $100k/day cash cap",
+    sim=dict(daily_deploy_cap=100_000.0), **_S71))
+EXPERIMENTS.append(C23("S093",
+    "S071 15:00 + $100k/day cap + drop 2 losing patterns",
+    sim=dict(daily_deploy_cap=100_000.0, buy_set=_NOPAT), **_S71))
+EXPERIMENTS.append(C23("S094", "C23 1PM + $100k/day cap + drop 2 patterns",
+    sim=dict(daily_deploy_cap=100_000.0, buy_set=_NOPAT)))
 
 BYID = {e["id"]: e for e in EXPERIMENTS}
 
