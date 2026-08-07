@@ -242,3 +242,45 @@ the assumed fill AND the price 60 seconds later. First live data point
 60s later -- i.e. on gapped names the open print can favour us, the
 opposite of the usual assumption. One observation is not a finding;
 keep collecting.
+
+## RESTING-ORDER ARCHITECTURE (2026-08-07) -- supersedes the earlier
+## "unfilled buy/sell" section for anything time-critical
+
+USER CONSTRAINT: "every second or minute matters." A Claude loop cannot
+be the execution layer -- scan cycles are minutes apart and each tool
+call costs seconds. So the work splits by SPEED REQUIREMENT, not by
+convenience:
+
+BROKER LAYER -- resting orders, fill in microseconds, nothing awake:
+  1. ENTRY TRIGGERS. Place the ORB-high and premarket-high triggers as
+     resting STOP-LIMIT buys (limit = trigger x 1.005 to bound
+     slippage). They fill the instant price touches them, whether or
+     not the agent is mid-cycle. As the ORB ratchet moves to each new
+     session high, CANCEL/REPLACE the resting order -- that re-arming
+     is a slow-layer job, but the order itself always rests.
+  2. PROTECTIVE STOP. The moment an entry fills, place a resting
+     stop-limit at max(entry x0.92, peak x0.60). This is the -8%
+     disaster backstop and it is NEVER absent while a position is open.
+     Re-place it upward as the peak rises.
+Everything above is what genuinely needs sub-second reaction, and all
+of it CAN be pre-placed. That is the whole point.
+
+LOOP LAYER -- once per minute, judgment not speed:
+  * pressure-modulated trail tightening (10% when sellers dominate)
+  * the 1/3 scale-out at +25% and its pressure-skip decision
+  * bearish-pattern exits while profitable
+  * the 14:57 / 14:59 flatten ladder into the 15:00 close
+These are all evaluated on 1-MINUTE CLOSES in the backtest, so a
+once-a-minute loop is the CORRECT granularity for them, not a
+compromise.
+
+CRITICAL PAPER-SIM SEMANTIC (implemented in paper_watch.py): a resting
+stop fills INTRABAR, so it must be tested against each 1-minute bar's
+LOW -- not against whatever price the poll happens to see. Testing on
+the polled price would silently skip a fast spike down that recovers
+before the next poll, making the paper record better than reality.
+Loop-layer exits are tested on the bar CLOSE, matching the backtest.
+
+WHAT THIS FIXES: previously the -8% stop was a POLLED condition, so a
+fast drop could be seen a minute late. Now it is a resting order with
+intrabar semantics in the sim and a real broker order when live.
