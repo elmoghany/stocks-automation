@@ -24,7 +24,11 @@ the next poll would be silently missed, and the paper record would be
 better than reality. Loop-layer exits are tested on the bar CLOSE,
 because that is how the backtest evaluates them.
 
-Usage:  python plan/paper_watch.py SYM ENTRY_PX SHARES [PREV_CLOSE]
+Usage:  python plan/paper_watch.py SYM ENTRY_PX SHARES PREV_CLOSE BARS_JSON
+        BARS_JSON is written each cycle by the session agent from
+        Robinhood get_equity_historicals (interval minute, bounds
+        extended). One evaluation per invocation -- the agent drives the
+        cadence, because only the agent can call Robinhood.
 State:  data/paper/position.json (peak/scaled/banked survive restarts)
 Prints one line per event: WATCHING / TICK / REST-STOP-MOVED /
 SCALE-OUT / EXIT-RESTING-STOP / EXIT-TRAIL / EXIT-PATTERN /
@@ -37,8 +41,6 @@ import time
 from datetime import datetime, time as dtime
 from pathlib import Path
 from zoneinfo import ZoneInfo
-
-import yfinance as yf
 
 ET = ZoneInfo("America/New_York")
 ROOT = Path(__file__).resolve().parent.parent
@@ -60,24 +62,44 @@ def now_et():
     return datetime.now(ET)
 
 
-def bars(tkr):
-    """Recent 1-minute bars (paper-grade feed)."""
+def bars_from_json(path):
+    """Load 1-minute bars supplied by the SESSION AGENT from Robinhood.
+
+    WHY NOT yfinance (user directive 2026-08-07, after it cost us a fake
+    exit): yfinance returns regular-session bars only unless prepost is
+    set, and silently serves the PREVIOUS session before 09:30 -- on the
+    TWLO fill at 08:48 that produced a phantom EXIT-RESTING-STOP at
+    210.44 against a 228.74 entry, reporting -$1,995 on a winning
+    position. A standalone script cannot call the Robinhood MCP tools,
+    so the agent fetches bars with get_equity_historicals (interval
+    minute, bounds extended) and writes them here; this file only
+    decides. Wrong data can no longer come from an unattended source.
+
+    Expected JSON: {"date": "YYYY-MM-DD",
+                    "bars": [{"t": ISO8601_ET, "o":, "h":, "l":, "c":,
+                              "v":}, ...]}
+    Bars whose date is not TODAY are dropped -- a stale file must never
+    be able to close a position.
+    """
     try:
-        h = tkr.history(period="1d", interval="1m")
-        return h if len(h) else None
+        d = json.loads(Path(path).read_text())
     except Exception:
         return None
+    today = now_et().date().isoformat()
+    rows = [b for b in d.get("bars", [])
+            if str(b.get("t", ""))[:10] == today]
+    return rows or None
 
 
 def pressure(h, win=10):
     """Volume-pressure over the last `win` bars, in [-1, 1]."""
-    if h is None or len(h) < 2:
+    if not h or len(h) < 2:
         return None
-    d = h.tail(win)
+    d = h[-win:]
     sv = v = 0.0
-    for _, b in d.iterrows():
-        hi, lo, c, vol = (float(b["High"]), float(b["Low"]),
-                          float(b["Close"]), float(b["Volume"]))
+    for b in d:
+        hi, lo, c, vol = (float(b["h"]), float(b["l"]),
+                          float(b["c"]), float(b["v"]))
         if hi > lo and vol > 0:
             sv += vol * (2 * (c - lo) - (hi - lo)) / (hi - lo)
             v += vol
@@ -91,6 +113,11 @@ def main():
     entry = float(sys.argv[2])
     shares = int(sys.argv[3])
     prev_close = float(sys.argv[4]) if len(sys.argv) > 4 else None
+    bars_json = sys.argv[5] if len(sys.argv) > 5 else None
+    if not bars_json:
+        print("ERROR: BARS_JSON path required -- the agent must supply "
+              "Robinhood bars; yfinance is no longer used", flush=True)
+        return
 
     peak, scaled, banked = entry, False, 0.0
     if POS_F.exists():
@@ -100,7 +127,6 @@ def main():
             peak, scaled = st["peak"], st["scaled"]
             banked = st.get("banked", 0.0)
 
-    tkr = yf.Ticker(sym)
     resting = max(entry * HARD_STOP, peak * (1 - WIDE_TRAIL))
     last_bar = None
     print(f"WATCHING {sym}: entry {entry:.2f} x{shares} | RESTING STOP "
@@ -114,15 +140,16 @@ def main():
 
     while True:
         t = now_et()
-        h = bars(tkr)
-        if h is None or not len(h):
-            print("TICK no-data", flush=True)
+        h = bars_from_json(bars_json)
+        if not h:
+            print("TICK no-data (stale or empty RH bars -- NOT acting; "
+                  "a bad read must never close a position)", flush=True)
             time.sleep(30)
             continue
-        bar = h.iloc[-1]
-        stamp = str(h.index[-1])
-        px = float(bar["Close"])
-        bar_low, bar_high = float(bar["Low"]), float(bar["High"])
+        bar = h[-1]
+        stamp = str(bar.get("t"))
+        px = float(bar["c"])
+        bar_low, bar_high = float(bar["l"]), float(bar["h"])
 
         # 1) RESTING STOP -- fills intrabar, so test the bar's LOW.
         #    Only evaluate a bar once (avoid re-firing on a repeat poll).

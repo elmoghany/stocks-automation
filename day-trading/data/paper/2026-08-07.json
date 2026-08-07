@@ -9,7 +9,7 @@
   "max_deployed": 100000,
   "ticket_cap": "20% of trailing 10-min dollar volume"
  },
- "cumulative_deployed": 0,
+ "cumulative_deployed": 24932.66,
  "candidates": [
   {
    "sym": "MB",
@@ -322,7 +322,27 @@
    "outcome": "ALL GATES PASS but NOT ARMED - ERROR: thin book; re-check at 09:30 open"
   }
  ],
- "trades": [],
+ "trades": [
+  {
+   "sym": "TWLO",
+   "side": "long",
+   "entry_time": "08:45 ET (12:45Z bar)",
+   "entry_px": 228.74,
+   "fill_basis": "resting stop level; bar low 228.10 < 228.74 < high 229.88 = traded up through",
+   "pessimistic_alt_fill": 229.88,
+   "px_60s": 232.0,
+   "fill_vs_60s": "+1.43% better",
+   "shares": 109,
+   "ticket_$": 24932.66,
+   "cumulative_deployed": 24932.66,
+   "resting_stop": 210.44,
+   "stop_basis": "max(entry*0.92=210.44, peak*0.60=139.20)",
+   "vol_cap_$": 258358,
+   "l2_depth_at_arm_sh": 552,
+   "exits": [],
+   "spurious_exit_rejected": "paper_watch reported EXIT-RESTING-STOP @210.44 on launch from stale prior-session bars; rejected as a bug, position remained open"
+  }
+ ],
  "l2_check": {
   "premarket_0728ET": "REAL DATA - populated bid/ask ladders for DOCS/TEAM/MB/NAMI; 03:07 empty probe was a dead-hours artifact",
   "rth_check": "pending",
@@ -330,13 +350,15 @@
   "nrxp_0837": "ask side only 303 sh total, 0 within trigger x1.005 -> skip per protocol"
  },
  "coverage_gaps": [
-  "self-inflicted: cycle labels 07:37-08:18 run up to ~14 min ahead of true clock; corrected at 08:05, decisions unaffected"
+  "self-inflicted: cycle labels 07:37-08:18 run up to ~14 min ahead of true clock; corrected at 08:05, decisions unaffected",
+  "ERROR: PushNotification tool unavailable in this session; entry/exit pushes could not be sent"
  ],
  "lessons": [
   "SCANNER Volume column = PRIOR SESSION volume (proven exact vs RH daily bars for FRD/INDI). Never use it as an rvol numerator; Paper Day 3's KRO rvol 2.47 was yesterday's rvol.",
   "L2 price book returns real ladders pre-market from at least 07:28 ET; the 03:07 empty probe was a dead-hours artifact.",
   "07:52 rvol gate corrected to time-of-day-adjusted (coordinator directive). Old rule divided partial-day cum volume by full-day 50d average -> systematic morning under-report (yesterday's PN: 0.9 reported vs 16.1 actual).",
-  "rvol_tod.py built+validated: INDI 07:55 rvol_tod=4.93 vs naive_fullday=0.01 (490x). Quantifies the broken gate."
+  "rvol_tod.py built+validated: INDI 07:55 rvol_tod=4.93 vs naive_fullday=0.01 (490x). Quantifies the broken gate.",
+  "paper_watch.py bug: yfinance history() without prepost returned PRIOR-session bars pre-market -> spurious EXIT-RESTING-STOP on TWLO at 210.44 (-$1,995) while the stock was at 232. Rejected, root-caused, fixed with prepost=True + a today-only date guard. First live exercise of this code path in the program."
  ],
  "pnl": 0.0,
  "rvol_rule": "time-of-day-adjusted: today cum vol to clock T / mean cum vol to same T over last ~20 sessions; log naive full-day too; never permanently reject on an uncomputable ratio"

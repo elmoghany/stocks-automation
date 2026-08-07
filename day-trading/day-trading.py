@@ -864,6 +864,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     max_vol_frac: float | None = None,
                     vol_frac_window: int = 1,
                     entry_cutoff=None,
+                    entry_start=None,
                     scale_out_at: float | None = None,
                     scale_out_frac: float = 0.33,
                     trail_widen_at: float | None = None,
@@ -1081,8 +1082,14 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
             mm_engaged = True
 
         # entry cutoff: after this time no NEW positions (exits continue)
-        entries_open = (entry_cutoff is None
-                        or cd.index[i].time() < entry_cutoff)
+        # entry_start (2026-08-07): block entries before a time while
+        # keeping the FULL window for indicator/ORB computation -- used to
+        # measure the cost of a causal rvol gate that only qualifies a name
+        # partway through the session. Mirror of entry_cutoff.
+        entries_open = ((entry_cutoff is None
+                         or cd.index[i].time() < entry_cutoff)
+                        and (entry_start is None
+                             or cd.index[i].time() >= entry_start))
 
         # ORB entry: allowed from any flat state (extra_break_high adds a
         # second one-shot stop-buy level, e.g. the premarket high)
