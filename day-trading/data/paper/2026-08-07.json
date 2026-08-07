@@ -88,9 +88,10 @@
    "px_7am": 5.65,
    "gates": {
     "calm_gap_7am": "pass 0.0%",
-    "rvol_50d": "FAIL 0.0 (no trades today)"
+    "rvol_50d": "FAIL 0.0 (no trades today)",
+    "halal": "FAIL HARAM INDUSTRY"
    },
-   "outcome": "reject (rvol); ERROR scan row stale (showed Last 9.30 / vol 26520)"
+   "outcome": "NOT HALAL -> PERMANENT reject"
   },
   {
    "sym": "STLN",
@@ -150,9 +151,10 @@
    "px_7am": 16.7,
    "gates": {
     "calm_gap_7am": "pass 0.0%",
-    "liquidity": "FAIL - no trades today, 2,764 sh prior session, book 14.18/22.00 (55% spread)"
+    "liquidity": "FAIL - no trades today, 2,764 sh prior session, book 14.18/22.00 (55% spread)",
+    "halal": "pass loans 4.92% dep 0.71%"
    },
-   "outcome": "reject (untradeable)"
+   "outcome": "WATCH (calm-gap+halal pass; liquidity marginal, rvol deferred)"
   },
   {
    "sym": "INDI",
@@ -165,17 +167,177 @@
     "halal": "FAIL loans 59.46% deposits 24.07%"
    },
    "outcome": "NOT HALAL -> PERMANENT reject"
+  },
+  {
+   "sym": "QNST",
+   "first_seen": "08:11",
+   "prev_close": 15.22,
+   "px_7am": 19.06,
+   "gates": {
+    "calm_gap_7am": "FAIL +25.2%"
+   },
+   "outcome": "PERMANENT reject (gap)"
+  },
+  {
+   "sym": "CRSR",
+   "first_seen": "08:11",
+   "prev_close": 10.61,
+   "px_7am": 12.4411,
+   "gates": {
+    "calm_gap_7am": "pass +17.3%",
+    "halal": "FAIL loans 16.57% dep 10.42%"
+   },
+   "outcome": "NOT HALAL -> PERMANENT reject"
+  },
+  {
+   "sym": "MTW",
+   "first_seen": "08:11",
+   "prev_close": 14.21,
+   "px_7am": 15.92,
+   "gates": {
+    "calm_gap_7am": "pass +12.0%",
+    "halal": "FAIL loans 97.85% dep 15.36%"
+   },
+   "outcome": "NOT HALAL -> PERMANENT reject"
+  },
+  {
+   "sym": "PSIX",
+   "first_seen": "08:11",
+   "prev_close": 33.02,
+   "px_7am": 38.5,
+   "gates": {
+    "calm_gap_7am": "pass +16.6%",
+    "halal": "FAIL loans 21.96% dep 5.92%"
+   },
+   "outcome": "NOT HALAL -> PERMANENT reject"
+  },
+  {
+   "sym": "LSE",
+   "first_seen": "08:11",
+   "prev_close": 4.55,
+   "px_7am": 4.55,
+   "gates": {
+    "calm_gap_7am": "pass +0.0%",
+    "halal": "FAIL loans 4.88% dep 38.50%"
+   },
+   "outcome": "NOT HALAL -> PERMANENT reject"
+  },
+  {
+   "sym": "FROG",
+   "first_seen": "08:11",
+   "prev_close": 83.04,
+   "px_7am": 98.53,
+   "gates": {
+    "calm_gap_7am": "pass +18.7%",
+    "halal": "pass loans 0.16% dep 7.37%",
+    "price_gate": "pass 97.00 >= 91.34",
+    "rvol_tod": "PASS 22.94 (cum 13827 vs same-time-avg 603 over 16 sessions to 08:15); naive_fullday=0.01-0.02"
+   },
+   "outcome": "ARMED stop-limit 99.82/100.32",
+   "armed": {
+    "trigger": 99.82,
+    "limit": 100.32,
+    "l2_ask_depth_sh": 1303,
+    "vol_cap_$": 216275,
+    "armed_at": "08:18"
+   }
+  },
+  {
+   "sym": "TWLO",
+   "first_seen": "08:11",
+   "prev_close": 193.2,
+   "px_7am": 226.0,
+   "gates": {
+    "calm_gap_7am": "pass +17.0%",
+    "halal": "pass loans 3.64% dep 8.00%",
+    "price_gate": "pass 225.65 >= 212.52",
+    "rvol_tod": "PASS 27.49 (cum 12801 vs same-time-avg 466 over 12 sessions to 08:15); naive_fullday=0.01-0.02"
+   },
+   "outcome": "ARMED stop-limit 228.74/229.88",
+   "armed": {
+    "trigger": 228.74,
+    "limit": 229.88,
+    "l2_ask_depth_sh": 552,
+    "vol_cap_$": 203186,
+    "armed_at": "08:18"
+   }
+  },
+  {
+   "sym": "NET",
+   "first_seen": "08:11",
+   "prev_close": 284.43,
+   "px_7am": 329.1,
+   "gates": {
+    "calm_gap_7am": "pass +15.7%",
+    "halal": "pass loans 3.49% dep 4.12%",
+    "price_gate": "pass 329.75 >= 312.87",
+    "rvol_tod": "PASS 9.62 (cum 19203 vs same-time-avg 1996 over 20 sessions to 08:15); naive_fullday=0.01-0.02"
+   },
+   "outcome": "ARMED stop-limit 331.80/333.46",
+   "armed": {
+    "trigger": 331.8,
+    "limit": 333.46,
+    "l2_ask_depth_sh": 1218,
+    "vol_cap_$": 107970,
+    "armed_at": "08:18"
+   }
+  },
+  {
+   "sym": "FNKO",
+   "first_seen": "08:30",
+   "prev_close": 5.28,
+   "px_7am": 5.95,
+   "gates": {
+    "calm_gap_7am": "pass +12.7%",
+    "price_gate": "pass",
+    "halal": "FAIL loans 94.74% dep 11.63%"
+   },
+   "outcome": "NOT HALAL -> PERMANENT reject"
+  },
+  {
+   "sym": "NTRA",
+   "first_seen": "08:30",
+   "prev_close": 265.38,
+   "px_7am": 306.2,
+   "gates": {
+    "calm_gap_7am": "pass +15.4%",
+    "price_gate": "pass 308.00>=291.92",
+    "halal": "pass loans 0.63% dep 2.86%",
+    "rvol_tod": "4.56 INDETERMINATE (cum 1,402 vs same-time-avg 307 over only 6 sessions); naive_fullday=0.00"
+   },
+   "outcome": "WATCH - not armed, not rejected; re-evaluate rvol after 09:30"
+  },
+  {
+   "sym": "NRXP",
+   "first_seen": "08:37",
+   "prev_close": 3.09,
+   "px_7am": 3.2,
+   "gates": {
+    "calm_gap_7am": "pass +3.6%",
+    "halal": "pass loans 0.71% dep 5.08%",
+    "price_gate": "pass 3.56>=3.399",
+    "rvol_tod": "PASS 20.62 (cum 186,704 vs same-time-avg 9,055 over 20 sessions); naive_fullday=0.32",
+    "l2": "FAIL thin book - 0 shares within limit 3.6518; whole ask side 303 sh"
+   },
+   "outcome": "ALL GATES PASS but NOT ARMED - ERROR: thin book; re-check at 09:30 open"
   }
  ],
  "trades": [],
  "l2_check": {
   "premarket_0728ET": "REAL DATA - populated bid/ask ladders for DOCS/TEAM/MB/NAMI; 03:07 empty probe was a dead-hours artifact",
-  "rth_check": "pending"
+  "rth_check": "pending",
+  "premarket": "LIVE - books populated and fresh (updated_at 08:04:14 read at 08:04:51 = 4s old). Earlier 'stale snapshot' error withdrawn; it was my clock drift, not the feed.",
+  "nrxp_0837": "ask side only 303 sh total, 0 within trigger x1.005 -> skip per protocol"
  },
- "coverage_gaps": [],
+ "coverage_gaps": [
+  "self-inflicted: cycle labels 07:37-08:18 run up to ~14 min ahead of true clock; corrected at 08:05, decisions unaffected"
+ ],
  "lessons": [
   "SCANNER Volume column = PRIOR SESSION volume (proven exact vs RH daily bars for FRD/INDI). Never use it as an rvol numerator; Paper Day 3's KRO rvol 2.47 was yesterday's rvol.",
-  "L2 price book returns real ladders pre-market from at least 07:28 ET; the 03:07 empty probe was a dead-hours artifact."
+  "L2 price book returns real ladders pre-market from at least 07:28 ET; the 03:07 empty probe was a dead-hours artifact.",
+  "07:52 rvol gate corrected to time-of-day-adjusted (coordinator directive). Old rule divided partial-day cum volume by full-day 50d average -> systematic morning under-report (yesterday's PN: 0.9 reported vs 16.1 actual).",
+  "rvol_tod.py built+validated: INDI 07:55 rvol_tod=4.93 vs naive_fullday=0.01 (490x). Quantifies the broken gate."
  ],
- "pnl": 0.0
+ "pnl": 0.0,
+ "rvol_rule": "time-of-day-adjusted: today cum vol to clock T / mean cum vol to same T over last ~20 sessions; log naive full-day too; never permanently reject on an uncomputable ratio"
 }

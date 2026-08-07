@@ -2280,3 +2280,21 @@ Running scorecard, live vs simulator: Aug 4 sim -$2,252 (live $0);
 Aug 5 sim $0 = live $0; Aug 6 sim +$1,333 (live $0). Net the simulator
 is -$919 over the three days, so live is still AHEAD -- but for the
 wrong reason, and the Aug-6 miss was a winner.
+
+## E01 paper testing SUSPENDED (2026-08-07, user decision)
+
+User: "stop the earnings paper testing. let's focus only on day
+trading paper testing." Both E01 crons cancelled (9:24 entry check,
+16:06 close-out). The earnings BOOK and its research stay intact and
+committed -- only the daily live paper sessions stop.
+E01 paper record at suspension: 1 trade, 1 loss.
+  2026-08-06  LZ  bought 8,488 @ $5.89 (9:30 open, -27.3% gap on a
+  confirmed beat), sold $5.665 at the close = -3.82% = -$1,909.80.
+  Slot stays $50,000 (R50 base never shrinks).
+Fill-realism data point retained: the assumed open fill was ~1.7%
+BETTER than the price 60s later, i.e. on gapped names the open print
+can favour us. One observation, not a finding.
+E01 remains the validated earnings champion on backtest
+(+$117,755/yr flat, +$208,787 with R50) and can be resumed at any time
+by re-arming the two crons; nothing about the strategy is withdrawn.
+Day-trading paper (C35) continues on its 6:56 launch + 7:12 audit.
