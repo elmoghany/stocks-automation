@@ -2185,3 +2185,58 @@ exits (never a resting stop), and the 14:57/14:59 flatten ladder for
 the C35 15:00 window.
 Fill-realism so far: 1 live data point (LZ, E01) where the open fill
 was 1.7% BETTER than +60s. Not yet a finding.
+
+## C35 FILL-REALISM STRESS (2026-08-07) -- "are the buy/exit prices realistic?"
+
+C35 baseline (S095): $513,965 / $649,573 = $1,163,538, 0/22 neg months.
+The backtest fills breakouts AT the trigger price. A real resting
+stop-limit fills somewhere between trigger and limit, or not at all on
+a gap-through, and every round trip pays a spread. Stress results:
+  variant                              Y1        Y2        2yr    keeps
+  S095 C35 baseline                 513,965   649,573  1,163,538  100%
+  S101 10bps/side slippage          490,700   616,449  1,107,149   95%
+  S102 25bps/side slippage          464,712   575,879  1,040,591   89%
+  S100 pessimistic ORB fill (close) 469,870   548,232  1,018,102   88%
+  S103 50bps/side slippage          402,112   499,832    901,944   78%
+  S104 WORST: close fills + 25bps   406,592   482,452    889,044   76%
+Negative months stay 0/12 and 0/10 everywhere EXCEPT S104, which picks
+up one (0/12, 1/10).
+READING: the strategy keeps 76-95% of its edge across the whole
+plausible fill-quality range, and stays profitable in every year of
+every variant. Even the deliberately punitive case -- every breakout
+filled at the WORST price inside its minute AND 25bps paid on both
+sides -- still returns $889,044 over two years. There is no fill
+assumption in this range that breaks C35.
+CALIBRATION: "pessimistic ORB fill" costs 12%, which is a larger hit
+than 25bps of slippage (11%) -- i.e. WHERE inside the breakout minute
+we fill matters more than the spread we pay. That is the right thing
+to optimise in live trading: a stop-LIMIT capped at trigger x1.005
+buys back most of that 12% by refusing the worst prints, at the cost
+of occasional no-fills.
+CAVEAT: none of this models a FAILED fill (order never executes) or a
+partial. Those are opportunity cost, not loss, and the ORB ratchet
+re-arms at the next session high -- but they are unmeasured here.
+
+## L2 assessment -- what it can and cannot do (2026-08-07)
+
+Robinhood's get_equity_price_book is real Level 2 (ladder + resting
+size). It will NOT make fills precise, and the protocol must not imply
+that it does. Limits, stated plainly:
+1. DISPLAYED SIZE ONLY. Hidden/iceberg orders and dark pools are
+   invisible, so the book UNDERSTATES real liquidity -- a book that
+   looks thin may fill fine.
+2. STALE ON ARRIVAL. Fetch + parse + act costs hundreds of ms; on a
+   name moving 20% in a session the ladder read is not the ladder the
+   order meets.
+3. SPOOFING IS COMMON in exactly this class of stock -- displayed
+   "walls" get pulled as price approaches.
+4. VENUE COVERAGE UNVERIFIED. Retail feeds are often partial views; we
+   have not confirmed what RH aggregates. Compare against real fills
+   before trusting it.
+5. IT CANNOT SEE THE TRIGGER MOMENT. A resting stop fires later, on a
+   book unlike the one inspected at arming time.
+CORRECT USE: a coarse veto for the obviously untradeable (if the whole
+ask side within 0.5% holds 800 shares and we want 5,000 -- shrink or
+skip). The REAL protection remains the 20%-of-10-min-VOLUME rule,
+which sizes to what actually traded rather than what is advertised.
+L2 is the secondary check; volume is the primary one.

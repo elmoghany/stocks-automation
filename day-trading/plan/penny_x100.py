@@ -1076,6 +1076,24 @@ EXPERIMENTS.append(C23("S098", "C35b: 1st entry $35k, rest $15k",
 EXPERIMENTS.append(C23("S099", "C35c: 1st entry $20k, rest $15k",
     sim=dict(_C34, entry_ticket_schedule=(1, 20_000.0)), **_S71))
 
+# --- FILL REALISM on C35 (user 2026-08-07: "check the buy and exit if
+# they are realistic"). The backtest fills breakouts AT the trigger; a
+# real resting stop-limit fills somewhere between the trigger and its
+# limit, or not at all on a gap-through. orb_fill_mode="close" is the
+# pessimistic bound (fill at the breakout bar's CLOSE, i.e. the worst
+# price inside that minute). slippage_bps charges both sides.
+_C35 = dict(_C34, entry_ticket_schedule=(1, 25_000.0))
+EXPERIMENTS.append(C23("S100", "C35 + pessimistic ORB fill (bar close)",
+    sim=dict(_C35, orb_fill_mode="close"), **_S71))
+EXPERIMENTS.append(C23("S101", "C35 + 10bps slippage per side",
+    sim=dict(_C35, slippage_bps=10.0), **_S71))
+EXPERIMENTS.append(C23("S102", "C35 + 25bps slippage per side",
+    sim=dict(_C35, slippage_bps=25.0), **_S71))
+EXPERIMENTS.append(C23("S103", "C35 + 50bps slippage (penny-spread worst case)",
+    sim=dict(_C35, slippage_bps=50.0), **_S71))
+EXPERIMENTS.append(C23("S104", "C35 WORST CASE: close fills + 25bps",
+    sim=dict(_C35, orb_fill_mode="close", slippage_bps=25.0), **_S71))
+
 BYID = {e["id"]: e for e in EXPERIMENTS}
 
 

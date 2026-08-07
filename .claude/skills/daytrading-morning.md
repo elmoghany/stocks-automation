@@ -284,3 +284,27 @@ Loop-layer exits are tested on the bar CLOSE, matching the backtest.
 WHAT THIS FIXES: previously the -8% stop was a POLLED condition, so a
 fast drop could be seen a minute late. Now it is a resting order with
 intrabar semantics in the sim and a real broker order when live.
+
+## L2 assessment -- what it can and cannot do (2026-08-07)
+
+Robinhood's get_equity_price_book is real Level 2 (ladder + resting
+size). It will NOT make fills precise, and the protocol must not imply
+that it does. Limits, stated plainly:
+1. DISPLAYED SIZE ONLY. Hidden/iceberg orders and dark pools are
+   invisible, so the book UNDERSTATES real liquidity -- a book that
+   looks thin may fill fine.
+2. STALE ON ARRIVAL. Fetch + parse + act costs hundreds of ms; on a
+   name moving 20% in a session the ladder read is not the ladder the
+   order meets.
+3. SPOOFING IS COMMON in exactly this class of stock -- displayed
+   "walls" get pulled as price approaches.
+4. VENUE COVERAGE UNVERIFIED. Retail feeds are often partial views; we
+   have not confirmed what RH aggregates. Compare against real fills
+   before trusting it.
+5. IT CANNOT SEE THE TRIGGER MOMENT. A resting stop fires later, on a
+   book unlike the one inspected at arming time.
+CORRECT USE: a coarse veto for the obviously untradeable (if the whole
+ask side within 0.5% holds 800 shares and we want 5,000 -- shrink or
+skip). The REAL protection remains the 20%-of-10-min-VOLUME rule,
+which sizes to what actually traded rather than what is advertised.
+L2 is the secondary check; volume is the primary one.

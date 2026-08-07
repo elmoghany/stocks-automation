@@ -1123,3 +1123,34 @@ days, only +$13.9k) is inside normal behaviour and is NOT evidence the
 strategy has stopped working. The failure signal to watch for would be
 a losing MONTH, which never occurred in 22 months of backtest -- if
 one happens live, that is genuinely new information.
+
+## C35 FILL-REALISM STRESS (2026-08-07) -- "are the buy/exit prices realistic?"
+
+C35 baseline (S095): $513,965 / $649,573 = $1,163,538, 0/22 neg months.
+The backtest fills breakouts AT the trigger price. A real resting
+stop-limit fills somewhere between trigger and limit, or not at all on
+a gap-through, and every round trip pays a spread. Stress results:
+  variant                              Y1        Y2        2yr    keeps
+  S095 C35 baseline                 513,965   649,573  1,163,538  100%
+  S101 10bps/side slippage          490,700   616,449  1,107,149   95%
+  S102 25bps/side slippage          464,712   575,879  1,040,591   89%
+  S100 pessimistic ORB fill (close) 469,870   548,232  1,018,102   88%
+  S103 50bps/side slippage          402,112   499,832    901,944   78%
+  S104 WORST: close fills + 25bps   406,592   482,452    889,044   76%
+Negative months stay 0/12 and 0/10 everywhere EXCEPT S104, which picks
+up one (0/12, 1/10).
+READING: the strategy keeps 76-95% of its edge across the whole
+plausible fill-quality range, and stays profitable in every year of
+every variant. Even the deliberately punitive case -- every breakout
+filled at the WORST price inside its minute AND 25bps paid on both
+sides -- still returns $889,044 over two years. There is no fill
+assumption in this range that breaks C35.
+CALIBRATION: "pessimistic ORB fill" costs 12%, which is a larger hit
+than 25bps of slippage (11%) -- i.e. WHERE inside the breakout minute
+we fill matters more than the spread we pay. That is the right thing
+to optimise in live trading: a stop-LIMIT capped at trigger x1.005
+buys back most of that 12% by refusing the worst prints, at the cost
+of occasional no-fills.
+CAVEAT: none of this models a FAILED fill (order never executes) or a
+partial. Those are opportunity cost, not loss, and the ORB ratchet
+re-arms at the next session high -- but they are unmeasured here.
