@@ -2723,3 +2723,30 @@ dropped entirely; keep it until the W-sweep decides the pool question.
 Open question -> W-series: does the DISCOVERY-time volume filter
 (full-day rvol>=5, non-causal) earn its keep, or is it also dead
 weight? W000 (no volume anywhere) vs W010 (old filter re-imposed).
+
+## LOOK-AHEAD AUDIT: SIX FIXES, BOTH SIDES (2026-08-07 evening)
+User: "the backtest knows info that exist in the future. cheats." Then:
+"fix all of that in both backtesting and paper trading."
+
+| # | leak/gap                              | backtest fix (spec key)      | live fix (skill)            |
+|---|---------------------------------------|------------------------------|-----------------------------|
+| 1 | pool volume filter (full-day rvol>=5) | V-series / W-series pools    | gate demoted to data-sanity |
+| 2 | pool admission by day's HIGH >= +10%  | gain_causal (first crossing) | (live never could peek)     |
+| 3 | walk ranked by full-day gain          | rank="pm_gain" (W103)        | rank by gain at scan time   |
+| 4 | sizing counts entry bar's own volume  | vol_frac_causal              | completed minutes only      |
+| 5 | continuous scanning assumed           | rescan_min=30                | re-scan every 30 min        |
+| 6 | halal quarter used at period END      | halal_filing (45d lag)       | automatic (filed-only)      |
+| 7 | halts invisible (stops fill in gaps)  | halt_aware (reopen fills)    | tradability check, no chase |
+| 8 | Massive/RH feeds disagree ~4x         | (documented)                 | RH-calibrated thresholds    |
+| 9 | premarket spreads free                | pm_spread_bps                | thin-book veto (exists)     |
+
+Experiments: V100 (crossing), V101 (sizing), V102 (halal lag), V103
+(halts), V104-106 (spread 25/50/100bps) isolate each on the old pool;
+W101-W105 compose them on the no-volume pool; W106 = ALL fixes at once,
+the honest-live estimate of C35's true expectancy. Identity check after
+every engine edit: S095 reproduces +$513,965/+$649,573 EXACT (defaults
+inert; verified twice today).
+
+V-SWEEP VERDICT (36 variants, done): every causal volume floor loses
+money monotonically; volume-at-decision-time has no positive signal on
+the rvol-discovered pool. See table in this file above.

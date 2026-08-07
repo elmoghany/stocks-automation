@@ -352,3 +352,52 @@ A missing market cap now produces "NO FUNDAMENTALS DATA -- cannot
 verify, refusing", which is a REFUSAL TO EVALUATE, not a compliance
 failure. Do not treat it as a permanent reject -- fetch the cap and
 re-screen.
+
+
+## LOOK-AHEAD PARITY FIXES (2026-08-07 evening) -- the live session must
+## behave like the honest backtest, and vice versa. Six fixes, both sides.
+
+1. SCAN CADENCE (leak #5): the backtest sees a name the minute after it
+   crosses +10%; a single 7:00 scan does not. RE-SCAN EVERY 30 MINUTES:
+   7:00, 7:30, ..., 11:30. A name first crossing +10% mid-morning joins
+   the watchlist at the NEXT half-hour scan -- it is a legitimate
+   candidate (backtest W-series models exactly this cadence). Never
+   backfill it into earlier decisions.
+
+2. VOLUME GATE VERDICT (V-sweep, 36 variants): every causal volume floor
+   at every decision time LOSES money, monotonically with strictness
+   (best gated variant 96% of control, worst 31%). Volume-at-the-moment
+   carries no positive selection signal. The premkt_gate call is now a
+   DATA-SANITY check only (bars exist, numbers are sane) -- floor 0.0025
+   RH-ratio, expected to pass essentially always. Selection is price
+   action: +10% crossing, calm-gap, halal, patterns. Pending the W-sweep
+   verdict on whether discovery-time volume mattered at all.
+
+3. FEED CALIBRATION (fix #8): NEVER apply a threshold calibrated on
+   Massive/Polygon data to Robinhood numbers or vice versa -- same
+   symbol-day premarket volume differs ~4x (WDFC 2026-07-10: 25,889 vs
+   6,393). Any live threshold must be derived from RH-measured
+   distributions. Bar policy unchanged: RH bars for live decisions.
+
+4. SIZING (leak #4): size on COMPLETED minutes only -- 20% of the
+   trailing 10 fully-printed 1-min bars' volume. Never count the
+   in-progress minute (its volume does not exist yet). Backtest
+   equivalent: vol_frac_causal=True.
+
+5. HALTS (fix #7): before any order, get_equity_tradability. If a name
+   is halted: leave resting SELL stop-limits in place but EXPECT no fill
+   until reopen, and accept that a reopen below the stop fills at the
+   reopen print, not the stop (backtest now models this: halt_aware).
+   NEVER enter on the reopen bar -- no chasing price discovery. A halt
+   while flat = drop the candidate for 30 minutes.
+
+6. PREMARKET SPREADS (fix #9): entries 7:00-9:30 pay the ask on thin
+   books. The thin-book veto stays: skip any entry whose L2 spread
+   exceeds the 0.5% stop-limit cap. Prefer exits after 9:30 when
+   discretionary. Backtest now charges pm_spread_bps on pre-9:30 fills
+   (50bps default in the honest stack).
+
+7. HALAL (leak #6): the screen uses the most recent FILED quarterly
+   report -- live this is automatic (you can only fetch what is filed);
+   the backtest now applies a 45-day filing lag (halal_filing). The
+   RH-market-cap requirement above is unchanged.

@@ -313,6 +313,11 @@ def run_experiment(spec, label):
     if spec.get("halal_strict"):
         real_ver = axb.VER
         axb.VER = {}
+    if spec.get("halal_filing"):
+        # leak #6 fix (user: "halal screen should come from last quarter
+        # reports"): a quarter is usable only ~45 days after period end,
+        # when its 10-Q is actually filed.
+        axb.FILING_LAG_DAYS = 45
     by_day = load_by_day(label, spec.get("min_hist", 50), spec.get("pool"))
     calm_gap = spec.get("calm_gap", 20.0)
     recs = []
@@ -408,6 +413,18 @@ def run_experiment(spec, label):
                     if cross is None:
                         continue
                     nxt = cross + __import__("pandas").Timedelta(minutes=1)
+                    # leak #5 (scan cadence): the sim notices a crossing
+                    # the next minute; a live session only re-scans every
+                    # N minutes. rescan_min=30 -> visible at the next
+                    # :00/:30 boundary AFTER the crossing.
+                    rs = spec.get("rescan_min")
+                    if rs:
+                        mins = nxt.hour * 60 + nxt.minute
+                        mins = ((mins + rs - 1) // rs) * rs
+                        if mins >= 12 * 60:
+                            continue      # never seen inside entry window
+                        nxt = nxt.replace(hour=mins // 60,
+                                          minute=mins % 60)
                     c["_gc_start"] = max(dtime(7, 0), nxt.time())
                 # W010: old-style FULL-DAY filter on the novol pool.
                 # NON-CAUSAL (peeks at the day's final volume) -- kept
@@ -532,6 +549,8 @@ def run_experiment(spec, label):
                             "SURGE_WINDOW_MIN": 50}[k])
         if spec.get("halal_strict"):
             axb.VER = real_ver
+        if spec.get("halal_filing"):
+            axb.FILING_LAG_DAYS = 0
     tot = sum(r["pnl"] for r in recs)
     negm = sum(1 for v in monthly.values() if sum(v) < 0)
     mkeys = sorted(monthly)
@@ -1216,6 +1235,28 @@ EXPERIMENTS.append(C23("W102", "novol + first-crossing + 07:30>=0.005",
     causal_rvol=("0730", 0.005), **_S71))
 EXPERIMENTS.append(C23("W103", "novol + first-crossing + pm_gain rank",
     sim=dict(_W35), pool="novol", gain_causal=True, rank="pm_gain",
+    **_S71))
+# leaks #4 (entry-bar volume in sizing) and #5 (scan cadence)
+EXPERIMENTS.append(C23("V101", "C35 + causal sizing volume (leak #4)",
+    sim=dict(_W35, vol_frac_causal=True), **_S71))
+EXPERIMENTS.append(C23("W104", "W101 + 30-min scan cadence (leak #5)",
+    sim=dict(_W35), pool="novol", gain_causal=True, rescan_min=30,
+    **_S71))
+EXPERIMENTS.append(C23("W105", "honest-live: crossing+cadence+sizing",
+    sim=dict(_W35, vol_frac_causal=True), pool="novol", gain_causal=True,
+    rescan_min=30, **_S71))
+# leaks #6-#9, each isolated on the old pool, then the full stack
+EXPERIMENTS.append(C23("V102", "C35 + halal from last FILED quarter",
+    sim=dict(_W35), halal_filing=True, **_S71))
+EXPERIMENTS.append(C23("V103", "C35 + halt-aware stops/entries",
+    sim=dict(_W35, halt_aware=True), **_S71))
+for _pn, _bp in zip(range(4, 7), (25, 50, 100)):
+    EXPERIMENTS.append(C23(f"V10{_pn}", f"C35 + premarket spread {_bp}bps",
+        sim=dict(_W35, pm_spread_bps=float(_bp)), **_S71))
+EXPERIMENTS.append(C23("W106", "HONEST STACK: all six fixes at once",
+    sim=dict(_W35, vol_frac_causal=True, halt_aware=True,
+             pm_spread_bps=50.0),
+    pool="novol", gain_causal=True, rescan_min=30, halal_filing=True,
     **_S71))
 
 # --- FILL REALISM on C35 (user 2026-08-07: "check the buy and exit if

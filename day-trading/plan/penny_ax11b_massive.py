@@ -105,6 +105,27 @@ def industry_clean(sym):
     return True   # unknown industry -> allow (ratios still must pass)
 
 
+# Filing lag (user 2026-08-07: "halal screen should come from last
+# quarter reports"): a quarter ending Mar 31 is not PUBLIC until its
+# 10-Q is filed, ~40-45 days later. 0 = legacy behaviour (select by
+# period end -- peeks ~45 days into unfiled statements). 45 = the
+# SEC 10-Q deadline for non-accelerated filers, our conservative
+# stand-in since the caches don't store true filing dates.
+FILING_LAG_DAYS = 0
+
+
+def _avail(period_end):
+    """Date a report becomes usable: period end + filing lag."""
+    if not FILING_LAG_DAYS:
+        return period_end
+    from datetime import date as _d, timedelta as _td
+    try:
+        return (_d.fromisoformat(period_end[:10])
+                + _td(days=FILING_LAG_DAYS)).isoformat()
+    except ValueError:
+        return "9999-12-31"      # unparseable date -> never usable
+
+
 def halal_pt(sym, date, prev_close):
     if not industry_clean(sym):
         return False
@@ -119,7 +140,7 @@ def halal_pt(sym, date, prev_close):
         qs = sorted(st.get("quarters", []), key=lambda q: q["date"])
         sel = None
         for q in qs:
-            if q["date"] <= date:
+            if _avail(q["date"]) <= date:      # filed, not just ended
                 sel = q
         if sel:
             loan = sel["debt"] / mcap * 100
@@ -134,7 +155,7 @@ def halal_pt(sym, date, prev_close):
     fins = massive_fin(sym)
     sel = None
     for r in sorted(fins, key=lambda x: x["end"]):
-        if r["end"] and r["end"] <= date:
+        if r["end"] and _avail(r["end"]) <= date:
             sel = r
     if sel and sel["liab"] is not None and sel["cura"] is not None:
         loan_ub = sel["liab"] / mcap * 100

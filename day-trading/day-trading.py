@@ -915,6 +915,9 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     orb_bars: int = 3,
                     max_vol_frac: float | None = None,
                     vol_frac_window: int = 1,
+                    vol_frac_causal: bool = False,
+                    halt_aware: bool = False,
+                    pm_spread_bps: float = 0.0,
                     entry_cutoff=None,
                     entry_start=None,
                     scale_out_at: float | None = None,
@@ -959,6 +962,44 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                  or bearish candlestick while profitable
     """
     cd = Candles(df1m)
+
+    def _vol_base(i):
+        """Trailing volume the liquidity cap sizes against.
+
+        Default window ENDS ON the entry bar i -- a micro-leak: mid-bar,
+        live, bar i's final volume is unknown (leak #4 of the 2026-08-07
+        look-ahead audit). vol_frac_causal=True ends the window on bar
+        i-1, using only fully-printed bars, matching what the live
+        watcher can actually observe."""
+        if vol_frac_causal:
+            return sum(cd.v[max(0, i - vol_frac_window):i])
+        return sum(cd.v[max(0, i - vol_frac_window + 1):i + 1])
+
+    def _halt_gap(i):
+        """Minutes of missing tape before bar i -- LULD-halt proxy
+        (fix #7, 2026-08-07 look-ahead audit). Massive m1 omits
+        zero-volume minutes, so premarket gaps are routine and NOT
+        halts; only a gap with BOTH edges in the regular session
+        counts, which is where LULD pauses actually happen."""
+        if not halt_aware or i < 1:
+            return 0.0
+        a, b = cd.index[i - 1], cd.index[i]
+        if a.time() < dtime(9, 30) or b.time() < dtime(9, 30):
+            return 0.0
+        return (b - a).total_seconds() / 60.0
+
+    def _fill_buy(px, i):
+        """Buy fill incl. premarket spread cost (fix #9): 7:00-9:30
+        books on gappers are thin, live pays the ask side."""
+        if pm_spread_bps and cd.index[i].time() < dtime(9, 30):
+            px *= 1 + pm_spread_bps / 1e4
+        return px
+
+    def _fill_sell(px, i):
+        if pm_spread_bps and cd.index[i].time() < dtime(9, 30):
+            px *= 1 - pm_spread_bps / 1e4
+        return px
+
     trades = []
     # CASH-ACCOUNT MODEL (user 2026-08-07): with no margin, T+1 settlement
     # means every dollar spent today is unavailable until tomorrow, so the
@@ -1174,7 +1215,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
             pat, fill = brk
             if orb_fill_mode == "close":
                 fill = cd.c[i]         # pessimistic fill (X097)
-            if _entry_ok(fill) and _pressure_gates_ok(i, fill):
+            if (_entry_ok(fill) and _pressure_gates_ok(i, fill)
+                    and _halt_gap(i) < 5):     # no fills on a halt reopen
                 buy_budget = (budget_cur * (0.5 if add_at is not None
                                             else 1.0) * _size_mult(i))
                 buy_budget = _cap_budget(buy_budget)
@@ -1182,12 +1224,12 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     continue               # day's cash exhausted (T+1)
                 sh = int(buy_budget // fill)
                 if max_vol_frac:
-                    vbase = sum(cd.v[max(0, i - vol_frac_window + 1):i + 1])
+                    vbase = _vol_base(i)
                     if vbase > 0:
                         sh = min(sh, int(vbase * max_vol_frac))
                 if sh >= 1:
                     shares = sh
-                    entry = fill * (1 + slip)
+                    entry = _fill_buy(fill, i) * (1 + slip)
                     deployed += shares * entry      # cash-account budget
                     entries_done[0] += 1
                     entry_i = i
@@ -1252,8 +1294,10 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                 pats = []                      # patterns-only cutoff (X313)
             if pats and not _pressure_gates_ok(i, price, patterns_entry=True):
                 pats = []                      # pressure gate not met
+            if pats and _halt_gap(i) >= 5:
+                pats = []                      # no entries on a halt reopen
             if pats:                           # dip inverts upward -> BUY
-                entry = price * (1 + slip)
+                entry = _fill_buy(price, i) * (1 + slip)
                 entry_i = i
                 buy_budget = (budget_cur * (0.5 if add_at is not None
                                             else 1.0) * _size_mult(i))
@@ -1262,7 +1306,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     continue               # day's cash exhausted (T+1)
                 shares = int(buy_budget // entry)
                 if max_vol_frac:
-                    vbase = sum(cd.v[max(0, i - vol_frac_window + 1):i + 1])
+                    vbase = _vol_base(i)
                     if vbase > 0:
                         shares = min(shares, int(vbase * max_vol_frac))
                 if shares < 1:
@@ -1301,7 +1345,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     px_add = entry * (1 + add_at / 100) * (1 + slip)
                     sh2 = int((budget_cur * 0.5) // px_add)
                     if max_vol_frac:
-                        vbase = sum(cd.v[max(0, i - vol_frac_window + 1):i + 1])
+                        vbase = _vol_base(i)
                         if vbase > 0:
                             sh2 = min(sh2, int(vbase * max_vol_frac))
                     if sh2 >= 1:
@@ -1332,7 +1376,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                                 and _pp is not None
                                 and _pp >= scale_out_frac_pressure[0]):
                             eff_frac = scale_out_frac_pressure[1]
-                        px = entry * (1 + scale_out_at / 100) * (1 - slip)
+                        px = _fill_sell(
+                            entry * (1 + scale_out_at / 100), i) * (1 - slip)
                         part = int(shares * eff_frac)
                     if part >= 1:
                         pnl_part = (px - entry) * part
@@ -1352,7 +1397,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                 # optional second tier (X062)
                 if (scale_out_2 is not None and not scaled2
                         and cd.h[i] >= entry * (1 + scale_out_2[0] / 100)):
-                    px = entry * (1 + scale_out_2[0] / 100) * (1 - slip)
+                    px = _fill_sell(
+                        entry * (1 + scale_out_2[0] / 100), i) * (1 - slip)
                     part = int(shares * scale_out_2[1])
                     if part >= 1:
                         pnl_part = (px - entry) * part
@@ -1408,6 +1454,13 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     >= time_stop_min * 60
                     and price <= entry):
                 exit_px, reason = price, f"time-stop {time_stop_min}m"
+            if (exit_px is None and _halt_gap(i) >= 5
+                    and cd.o[i] < stop):
+                # halt reopened below the stop: nothing fills inside the
+                # gap, so the honest fill is the REOPEN print, not the
+                # stop price the sim used to assume (fix #7)
+                exit_px = cd.o[i]
+                reason = f"stop halt-reopen {cd.o[i] - entry:+.2f}"
             if exit_px is None and cd.l[i] <= stop:
                 exit_px, reason = stop, f"stop {stop - entry:+.2f}"
             elif exit_px is None and cd.h[i] >= target_lo:
@@ -1432,6 +1485,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                         and (pmode == "always" or price > entry)):
                     exit_px, reason = price, f"pressure-flip {pp:+.2f}"
             if exit_px is not None:
+                exit_px = _fill_sell(exit_px, i)   # premarket exits pay too
                 pnl = (exit_px * (1 - slip) - entry) * shares
                 trades.append({
                     "entry_time": cd.index[entry_i], "entry": round(entry, 2),
