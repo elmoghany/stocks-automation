@@ -884,7 +884,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     pressure_size: tuple | None = None,
                     seq_size: tuple | None = None,
                     day_state_size: tuple | None = None,
-                    daily_deploy_cap: float | None = None) -> list[dict]:
+                    daily_deploy_cap: float | None = None,
+                    entry_ticket_schedule: tuple | None = None) -> list[dict]:
     """Run the entry/exit state machine over 1-min bars of a single day.
 
     State machine:
@@ -905,6 +906,12 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
     # below MIN_TICKET rather than firing an unrealistically tiny order.
     deployed = 0.0
     MIN_TICKET = 1_000.0
+    # C35 test: front-load the day's cash. entry_ticket_schedule =
+    # (nth, ticket) gives the Nth ENTRY of the day (1-indexed) a
+    # different budget -- e.g. (1, 25000) with budget=15000 and a $100k
+    # cap = 1x$25k + 5x$15k = $100k exactly. Counted by ENTRIES, not
+    # trade rows, because a scale-out splits one entry into two rows.
+    entries_done = [0]
 
     def _cap_budget(bb: float) -> float | None:
         """Trim a ticket to the day's remaining cash; None = no cash left."""
@@ -937,6 +944,10 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
         Multipliers compose multiplicatively when several are set.
         """
         m = 1.0
+        if entry_ticket_schedule:
+            _nth, _tick = entry_ticket_schedule
+            if entries_done[0] + 1 == int(_nth) and budget_cur:
+                m *= _tick / budget_cur     # override this entry's ticket
         if pressure_size:
             win, thr_hi, mult_hi, thr_lo, mult_lo = pressure_size
             p = cd.pressure(i - 1, int(win), pressure_min_vol)
@@ -1109,6 +1120,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     shares = sh
                     entry = fill * (1 + slip)
                     deployed += shares * entry      # cash-account budget
+                    entries_done[0] += 1
                     entry_i = i
                     peak = entry
                     entry_trig = pat
@@ -1187,6 +1199,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                 if shares < 1:
                     continue
                 deployed += shares * entry          # cash-account budget
+                entries_done[0] += 1
                 state = "LONG"
                 peak = entry
                 entry_trig = pats[0]

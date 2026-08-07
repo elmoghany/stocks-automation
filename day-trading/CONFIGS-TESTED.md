@@ -976,3 +976,44 @@ REVISED FINDINGS (these supersede the row-based table above):
    pnl/(exit-entry) rather than recorded, so this may be inference
    error rather than a real overshoot -- to settle it, the trade dump
    should record `shares` directly. Flagged, not assumed away.
+
+## C35 CANDIDATE: front-load the day's cash into entry #1 (2026-08-07)
+
+New kwarg `entry_ticket_schedule=(nth, ticket)` -- gives the Nth ENTRY
+of the day a different budget (counted by entries, not trade rows).
+CAPITAL-NEUTRAL by construction: the $100k/day cap binds in every
+variant, so all of these deploy the same daily cash. The Wave 1
+leverage confound therefore does NOT apply -- differences are pure
+allocation.
+
+Baseline C34 (S093): $446,298 / $573,668 = $1,019,966
+  S099  1st entry $20k : $482,095 / $615,794 = $1,097,889  (+$77,923)
+  S095  1st entry $25k : $513,965 / $649,573 = $1,163,538  (+$143,572)
+  S098  1st entry $35k : $576,382 / $690,074 = $1,266,456  (+$246,490)
+CONTROLS (same $25k ticket, different placement):
+  S096  2nd entry $25k : $492,658 / $642,813 = $1,135,471  (+$115,505)
+  S097  3rd entry $25k : $483,029 / $595,006 = $1,078,035  (+$58,069)
+ALL variants: 0/12 and 0/10 negative months. Both years positive in
+every case. Monotone in ticket size (20k < 25k < 35k) and monotone in
+placement (1st > 2nd > 3rd) -- clean adjacency on BOTH axes.
+
+READING
+- The placement gradient is real but modest: at the same $25k ticket,
+  1st beats 2nd by $28,067 and 3rd by $85,503 over two years. So
+  "earlier entries deserve more capital" is supported -- consistent
+  with the per-entry table (entry #1 mean +$1,204 vs #3 +$479).
+- BUT most of the gain is NOT placement: even the WORST placement
+  (3rd entry, S097) gains +$58,069 over C34. Concentrating cash into
+  ANY single early ticket helps, because the daily cap means the
+  alternative is spending that cash on late low-value entries (#5-#7,
+  means +$127-297). The mechanism is "spend the cap on good entries
+  instead of mediocre ones", of which "first" is simply the best
+  instance.
+- The $35k variant is the strongest tested (+$246,490, +24% over C34)
+  and the sweep has not turned over yet -- untested beyond $35k.
+CAUTION before adopting: concentration raises single-trade risk. Entry
+#1 wins only 71% of the time, so a $35k ticket means a bad first entry
+costs ~2.3x what it does today. Monthly records stay clean in-sample,
+but this is the variance the backtest cannot fully price, and none of
+it has met a live fill. Recommend adopting the $25k version (the one
+the user specified) and treating $35k as a separate decision.

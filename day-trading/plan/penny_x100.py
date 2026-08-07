@@ -1057,6 +1057,25 @@ EXPERIMENTS.append(C23("S093",
 EXPERIMENTS.append(C23("S094", "C23 1PM + $100k/day cap + drop 2 patterns",
     sim=dict(daily_deploy_cap=100_000.0, buy_set=_NOPAT)))
 
+# --- C35 candidate: front-load the day's cash into the FIRST entry -----------
+# Motivation: on C34, entry #1 has the best mean (+$1,204, 71% win) and
+# value decays with entry number. 1x$25k + 5x$15k = $100k exactly, so this
+# is CAPITAL-NEUTRAL vs C34 (both deploy up to the same daily cap) -- the
+# Wave 1 leverage trap does not apply. S096/S097 are the controls: give the
+# same $25k ticket to the 2nd or 3rd entry instead. If those gain equally,
+# the effect is "one big ticket" rather than "the FIRST entry deserves it".
+_C34 = dict(daily_deploy_cap=100_000.0, buy_set=_NOPAT)
+EXPERIMENTS.append(C23("S095", "C35: 1st entry $25k, rest $15k, $100k cap",
+    sim=dict(_C34, entry_ticket_schedule=(1, 25_000.0)), **_S71))
+EXPERIMENTS.append(C23("S096", "CONTROL $25k on the 2nd entry instead",
+    sim=dict(_C34, entry_ticket_schedule=(2, 25_000.0)), **_S71))
+EXPERIMENTS.append(C23("S097", "CONTROL $25k on the 3rd entry instead",
+    sim=dict(_C34, entry_ticket_schedule=(3, 25_000.0)), **_S71))
+EXPERIMENTS.append(C23("S098", "C35b: 1st entry $35k, rest $15k",
+    sim=dict(_C34, entry_ticket_schedule=(1, 35_000.0)), **_S71))
+EXPERIMENTS.append(C23("S099", "C35c: 1st entry $20k, rest $15k",
+    sim=dict(_C34, entry_ticket_schedule=(1, 20_000.0)), **_S71))
+
 BYID = {e["id"]: e for e in EXPERIMENTS}
 
 
