@@ -34,6 +34,27 @@ _spec.loader.exec_module(axb)
 ps = axb.ps
 
 M1 = ROOT / "data" / "massive" / "m1"
+
+_CAUSAL_RVOL = [None]
+
+
+def causal_rvol_table():
+    """Lazy-load the causal 30-day rvol table (plan/causal_rvol_build.py).
+
+    Keyed "SYM|YYYY-MM-DD" -> {"0730": ratio, ..., "avg30": shares}.
+    Loud failure if a spec asks for the gate and the table is absent --
+    silently trading everything would look like a passing experiment."""
+    if _CAUSAL_RVOL[0] is None:
+        f = ROOT / "data" / "massive" / "causal_rvol.json"
+        if not f.exists():
+            raise RuntimeError(
+                "ERROR: causal_rvol.json missing -- a spec requested "
+                "causal_rvol but the table was never built. Run "
+                "plan/causal_rvol_build.py. Refusing to run ungated.")
+        _CAUSAL_RVOL[0] = json.loads(f.read_text())
+    return _CAUSAL_RVOL[0]
+
+
 RES_F = ROOT / "data" / "massive" / "x100_results.json"
 MD_F = ROOT / "X-RESULTS.md"
 FETCH = "--fetch" in sys.argv
@@ -362,6 +383,19 @@ def run_experiment(spec, label):
                 if spec.get("rvol_admit") and c.get("hist_n", 99) < 50 \
                         and c["rvol"] < spec["rvol_admit"]:
                     continue
+                # V-series: CAUSAL 30-day rvol measured at a decision
+                # time, e.g. ("0730", 0.002). Volume printed by T over
+                # the prior 30 sessions' average full day. Unlike the
+                # pool's full-day rvol>=5, this is knowable when we act.
+                cr = spec.get("causal_rvol")
+                if cr is not None:
+                    tkey, thr = cr
+                    rec = causal_rvol_table().get(f"{c['symbol']}|{date}")
+                    if rec is None:
+                        # no 30-session baseline -> cannot verify, refuse.
+                        continue
+                    if rec.get(tkey, 0.0) < thr:
+                        continue
                 committed = (c, w, df)
                 com_idx = idx
                 break
@@ -1075,6 +1109,35 @@ EXPERIMENTS.append(C23("S098", "C35b: 1st entry $35k, rest $15k",
     sim=dict(_C34, entry_ticket_schedule=(1, 35_000.0)), **_S71))
 EXPERIMENTS.append(C23("S099", "C35c: 1st entry $20k, rest $15k",
     sim=dict(_C34, entry_ticket_schedule=(1, 20_000.0)), **_S71))
+
+# --- V. CAUSAL 30-DAY rvol GATE (user 2026-08-07: "change the backtest
+# to be 30d ... use volume at the time we checking for instead of using
+# the whole day volume i.e. volume at 7:30 AM instead of volume at whole
+# day. and backtest the 2 years")
+#
+# Everything is C35. The ONLY change is candidate admission: instead of
+# inheriting the pool's non-causal full-day rvol>=5, each candidate must
+# clear a floor on (volume printed by time T) / (30-session average full
+# day). Volume is measured on 5-minute buckets; entries and exits still
+# run on 1-minute bars, untouched.
+#
+# V000 is the coverage control: threshold 0.0 still drops candidate-days
+# that lack a full 30-session baseline, so the gap between V000 and C35
+# is DATA LOSS, not gate loss. Read every other V against V000, not
+# against C35, or the two effects get conflated.
+_VT = ["0700", "0730", "0800", "0900", "0930"]
+_VF = [0.0005, 0.001, 0.002, 0.005, 0.01, 0.02, 0.05]
+EXPERIMENTS.append(C23("V000", "causal-rvol COVERAGE CONTROL (floor 0)",
+    sim=dict(_C34, entry_ticket_schedule=(1, 25_000.0)),
+    causal_rvol=("0730", 0.0), **_S71))
+_vn = 1
+for _t in _VT:
+    for _f in _VF:
+        EXPERIMENTS.append(C23(
+            f"V{_vn:03d}", f"causal 30d rvol at {_t[:2]}:{_t[2:]} >= {_f}",
+            sim=dict(_C34, entry_ticket_schedule=(1, 25_000.0)),
+            causal_rvol=(_t, _f), **_S71))
+        _vn += 1
 
 # --- FILL REALISM on C35 (user 2026-08-07: "check the buy and exit if
 # they are realistic"). The backtest fills breakouts AT the trigger; a
