@@ -130,9 +130,13 @@ def pm_pressure_for(spec, df, prev_close, sym, date):
     return cd.pressure(cd.n - 1, 30, 20_000)
 
 
-def load_by_day(label, min_hist):
-    gap = json.loads(
-        (ROOT / f"data/massive/gappers2_{label}.json").read_text())
+def load_by_day(label, min_hist, pool=None):
+    """pool=None -> gappers2 (rvol>=5 discovery, the historical default).
+    pool="novol" -> gappers_novol (same rules, NO volume filter) -- the
+    universe as live paper trading actually sees it, where full-day
+    volume is unknowable at decision time."""
+    name = f"gappers_{pool}_{label}.json" if pool else f"gappers2_{label}.json"
+    gap = json.loads((ROOT / f"data/massive/{name}").read_text())
     by_day = {}
     for c in gap:
         if c.get("hist_n", 99) < min_hist:
@@ -309,7 +313,7 @@ def run_experiment(spec, label):
     if spec.get("halal_strict"):
         real_ver = axb.VER
         axb.VER = {}
-    by_day = load_by_day(label, spec.get("min_hist", 50))
+    by_day = load_by_day(label, spec.get("min_hist", 50), spec.get("pool"))
     calm_gap = spec.get("calm_gap", 20.0)
     recs = []
     monthly = {}
@@ -382,6 +386,12 @@ def run_experiment(spec, label):
                     continue
                 if spec.get("rvol_admit") and c.get("hist_n", 99) < 50 \
                         and c["rvol"] < spec["rvol_admit"]:
+                    continue
+                # W010: old-style FULL-DAY filter on the novol pool.
+                # NON-CAUSAL (peeks at the day's final volume) -- kept
+                # only as a reference point, never adoptable live.
+                if spec.get("rvol30_min") \
+                        and c.get("rvol30", 0) < spec["rvol30_min"]:
                     continue
                 # V-series: CAUSAL 30-day rvol measured at a decision
                 # time, e.g. ("0730", 0.002). Volume printed by T over
@@ -1138,6 +1148,32 @@ for _t in _VT:
             sim=dict(_C34, entry_ticket_schedule=(1, 25_000.0)),
             causal_rvol=(_t, _f), **_S71))
         _vn += 1
+
+# --- W. NO-VOLUME-FILTER POOL (user 2026-08-07: "test multiple
+# strategies, to see if ignoring the volume somehow increase the profit.
+# or when checking the volume in a specific way different than 5x")
+#
+# Pool = gappers_novol: identical discovery to gappers2 with the rvol
+# filter DROPPED -- 116,814 candidate-days vs 15,482 (the old scanner
+# hid 87% of +10% gappers). Everything else is C35.
+#   W000  volume fully ignored (the pure question)
+#   W001+ causal 30d floors at 07:30 on the wide pool ("different eye")
+#   W010  full-day rvol30>=5 re-imposed on the wide pool -- reproduces
+#         the OLD style of filter on the new universe; non-causal, so a
+#         reference point, not adoptable
+_W35 = dict(_C34, entry_ticket_schedule=(1, 25_000.0))
+EXPERIMENTS.append(C23("W000", "novol pool, volume IGNORED",
+    sim=dict(_W35), pool="novol", **_S71))
+for _wn, _wf in zip(range(1, 6), (0.001, 0.005, 0.01, 0.05, 0.10)):
+    EXPERIMENTS.append(C23(
+        f"W{_wn:03d}", f"novol pool + causal 07:30 rvol >= {_wf}",
+        sim=dict(_W35), pool="novol", causal_rvol=("0730", _wf), **_S71))
+EXPERIMENTS.append(C23("W006", "novol pool + causal 09:30 rvol >= 0.005",
+    sim=dict(_W35), pool="novol", causal_rvol=("0930", 0.005), **_S71))
+EXPERIMENTS.append(C23("W007", "novol pool + causal 09:30 rvol >= 0.05",
+    sim=dict(_W35), pool="novol", causal_rvol=("0930", 0.05), **_S71))
+EXPERIMENTS.append(C23("W010", "novol pool + NON-CAUSAL rvol30>=5 (ref)",
+    sim=dict(_W35), pool="novol", rvol30_min=5.0, **_S71))
 
 # --- FILL REALISM on C35 (user 2026-08-07: "check the buy and exit if
 # they are realistic"). The backtest fills breakouts AT the trigger; a

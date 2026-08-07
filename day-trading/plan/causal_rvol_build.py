@@ -4,8 +4,13 @@
                 / (average FULL-DAY volume over the prior 30 sessions)
 
 Numerator  : build_vol_at_t.py, from the local 1-minute cache. Exact.
-Denominator: fetch_daily_volume.py, Polygon grouped_daily. 30 sessions
-             strictly BEFORE the candidate date -- never including it.
+Denominator: data/massive/gd/ -- the raw grouped-daily cache the AX20
+             discovery pass saved "so every future filter change costs
+             zero API calls" (524 dates, 2024-08-05..2026-08-06, whole
+             market). 30 sessions strictly BEFORE the candidate date.
+             NOTE 2026-08-07: a fetch_daily_volume.py script spent an
+             hour re-downloading a subset of this at 5 req/min before
+             the existing cache was found. Deleted. CHECK data/ FIRST.
 
 WHY 30 AND NOT 50: the live Robinhood scanner uses a 30-day RelVolume,
 the backtest used 50. That mismatch is how TWLO reached the live session
@@ -29,13 +34,14 @@ causal gate would admit -- that needs a fresh 2-year discovery pass plus
 req/min) cannot deliver. The false-positive rate remains unmeasured.
 """
 
+import gzip
 import json
 from collections import defaultdict
 from datetime import date as ddate
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-DV = ROOT / "data/massive/dailyvol"
+DV = ROOT / "data/massive/gd"
 VAT = ROOT / "data/massive/vol_at_t.json"
 OUT = ROOT / "data/massive/causal_rvol.json"
 LOOKBACK = 30
@@ -45,20 +51,21 @@ TIMES = ["0700", "0730", "0800", "0830", "0900", "0930", "1000", "1030"]
 
 def load_daily():
     """symbol -> [(date, volume)] sorted by date."""
-    files = sorted(DV.glob("*.json"))
+    files = sorted(DV.glob("*.json.gz"))
     if not files:
-        raise RuntimeError("ERROR: no daily volume cache -- run "
-                           "plan/fetch_daily_volume.py first")
+        raise RuntimeError("ERROR: data/massive/gd cache missing")
     per = defaultdict(list)
     for f in files:
-        d = f.stem
+        d = f.name[:10]
         try:
-            row = json.loads(f.read_text())
+            with gzip.open(f, "rt", encoding="utf-8") as fh:
+                rows = json.load(fh)
         except Exception:
-            print(f"ERROR: unreadable daily cache {f.name} -- skipping")
+            print(f"ERROR: unreadable gd cache {f.name} -- skipping")
             continue
-        for sym, v in row.items():
-            per[sym].append((d, float(v)))
+        for r in rows:
+            if r.get("T") and r.get("v"):
+                per[r["T"]].append((d, float(r["v"])))
     for sym in per:
         per[sym].sort()
     return per, len(files)
