@@ -31,6 +31,7 @@ req/min) cannot deliver. The false-positive rate remains unmeasured.
 
 import json
 from collections import defaultdict
+from datetime import date as ddate
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -38,6 +39,7 @@ DV = ROOT / "data/massive/dailyvol"
 VAT = ROOT / "data/massive/vol_at_t.json"
 OUT = ROOT / "data/massive/causal_rvol.json"
 LOOKBACK = 30
+MAX_GAP_DAYS = 10   # newest prior session must be this recent
 TIMES = ["0700", "0730", "0800", "0830", "0900", "0930", "1000", "1030"]
 
 
@@ -68,18 +70,29 @@ def main():
     print(f"daily cache: {ndates:,} dates, {len(daily):,} symbols")
     print(f"volume-at-T: {len(vat):,} candidate-days\n")
 
-    out, no_base = {}, 0
+    out, no_base, stale = {}, 0, 0
     for key, rec in vat.items():
         sym, date = key.split("|")
         hist = daily.get(sym)
         if not hist:
             no_base += 1
             continue
-        prior = [v for d, v in hist if d < date][-LOOKBACK:]
-        if len(prior) < LOOKBACK or sum(prior) <= 0:
+        prior = [(d, v) for d, v in hist if d < date][-LOOKBACK:]
+        if len(prior) < LOOKBACK or sum(v for _, v in prior) <= 0:
             no_base += 1
             continue
-        avg30 = sum(prior) / len(prior)
+        # STALENESS GUARD. With an incomplete daily cache the "prior 30
+        # sessions" silently resolve to the last 30 dates that happen to
+        # be cached -- which can be months stale -- producing a baseline
+        # that looks fine and is worthless. Caught in smoke-testing on a
+        # 43-date cache, where it reported a median full-day rvol of 310.
+        # Refuse rather than approximate.
+        gap = (ddate.fromisoformat(date)
+               - ddate.fromisoformat(prior[-1][0])).days
+        if gap > MAX_GAP_DAYS:
+            stale += 1
+            continue
+        avg30 = sum(v for _, v in prior) / len(prior)
         r = {t: rec[t] / avg30 for t in TIMES}
         r["full"] = rec["full"] / avg30
         r["avg30"] = avg30
@@ -87,7 +100,12 @@ def main():
         out[key] = r
     OUT.write_text(json.dumps(out))
     print(f"built {len(out):,} symbol-days with a full {LOOKBACK}-session "
-          f"baseline ({no_base:,} lacked one)\n")
+          f"baseline ({no_base:,} lacked one, {stale:,} rejected as STALE)")
+    if stale > len(out):
+        print("ERROR: more symbol-days rejected as stale than accepted -- "
+              "the daily cache is INCOMPLETE. Any table below is not "
+              "trustworthy. Finish plan/fetch_daily_volume.py first.")
+    print()
 
     # ---- P&L join -----------------------------------------------------
     pnl = {}
