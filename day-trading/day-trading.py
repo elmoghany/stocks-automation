@@ -524,11 +524,27 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
                     return float(v)
         return 0
 
+    # FALLBACK CHAIN (2026-08-07). The source here is yfinance, not
+    # E*TRADE -- E*TRADE has no fundamentals endpoint we use. The live
+    # session found SSP/RMCO/GTN with EMPTY quarterly statements, which
+    # made every ratio 0.0 and silently "passed" them. Rather than refuse
+    # immediately, try progressively coarser yfinance sources first and
+    # only refuse when all of them are empty. `src` records which one
+    # answered so the log shows the evidence grade.
+    bs = inc = None
+    src = "quarterly"
     try:
         bs = t.quarterly_balance_sheet
         inc = t.quarterly_income_stmt
     except Exception:
         bs = inc = None
+    if (bs is None or getattr(bs, "empty", True)) and             (inc is None or getattr(inc, "empty", True)):
+        src = "annual"
+        try:
+            bs = t.balance_sheet          # annual statements
+            inc = t.income_stmt
+        except Exception:
+            bs = inc = None
     if mcap is None:
         rh = load_rh_fundamentals().get(symbol.upper())
         mcap = (rh or {}).get("market_cap")
@@ -552,6 +568,25 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
     combined = loan_pct + cash_pct
     haram_pct = (abs(interest_inc) / annual_rev * 100) if annual_rev > 0 else 0
 
+    if total_debt == 0 and cash_total == 0 and total_rev == 0:
+        # last resort: yfinance's summary `info` dict often carries these
+        # even when neither statement table is published
+        try:
+            info = t.info or {}
+        except Exception:
+            info = {}
+        total_debt = float(info.get("totalDebt") or 0)
+        cash_total = float(info.get("totalCash") or 0)
+        total_rev = float(info.get("totalRevenue") or 0)
+        annual_rev = total_rev            # info revenue is already annual
+        if total_debt or cash_total or total_rev:
+            src = "info"
+            loan_pct = (total_debt / mcap * 100) if mcap > 0 else 0
+            cash_pct = (cash_total / mcap * 100) if mcap > 0 else 0
+            combined = loan_pct + cash_pct
+            haram_pct = ((abs(interest_inc) / annual_rev * 100)
+                         if annual_rev > 0 else 0)
+
     # DATA-PRESENCE CHECK (added 2026-08-07 after the live session found
     # SSP, RMCO and GTN returning PASS on ALL-ZERO fundamentals). With no
     # balance sheet every ratio computes to 0.0 and every test passes, so
@@ -565,6 +600,7 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
             "haram_pct": None, "halal": False,
             "fail_reason": "NO FUNDAMENTALS DATA -- cannot verify, "
                            "refusing (not a compliance failure)",
+            "source": "none",
         }
 
     loan_ok = loan_pct <= 10 or combined <= 20
@@ -590,6 +626,7 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
         "combined": round(combined, 2),
         "haram_pct": round(haram_pct, 2),
         "halal": halal,
+        "source": src,
         "fail_reason": "" if halal else (
             "HARAM INDUSTRY" if not industry_ok else
             "LOAN>10+COMBINED>20" if not loan_ok else

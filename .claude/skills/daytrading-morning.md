@@ -338,3 +338,17 @@ PREMARKET GATE = DOLLAR VOLUME, not a share ratio:
 HALAL: halal_check now returns halal=False with "NO FUNDAMENTALS DATA"
 when mcap<=0 or debt/cash/revenue are all zero. Treat that as
 "cannot verify -> do not trade", distinct from a compliance failure.
+
+## MARKET CAP IS REQUIRED FOR THE HALAL GATE (2026-08-07)
+
+halal_check divides by market cap. yfinance returns marketCap=None for
+some small caps (SSP, GTN, RMCO), which made every ratio 0.0 and
+silently PASSED two names with ~900% loans/mcap.
+BEFORE screening any name not already in data/rh_fundamentals.json:
+  1. get_equity_fundamentals(symbols=[SYM]) -> market_cap, sector, industry
+  2. python day-trading/plan/update_rh_fundamentals.py SYM MARKET_CAP SECTOR INDUSTRY
+  3. then python day-trading/day-trading.py screen SYM
+A missing market cap now produces "NO FUNDAMENTALS DATA -- cannot
+verify, refusing", which is a REFUSAL TO EVALUATE, not a compliance
+failure. Do not treat it as a permanent reject -- fetch the cap and
+re-screen.

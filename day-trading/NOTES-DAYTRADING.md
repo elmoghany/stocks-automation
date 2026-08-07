@@ -2570,3 +2570,53 @@ STILL OPEN for Monday: the false-positive rate of the dollar floor is
 unmeasured (it is calibrated only on names that already passed the
 backtest's full-day rvol gate), and the backtest's own selection
 remains partly non-causal.
+
+## HALAL ROOT CAUSE FOUND + FIXED (2026-08-07 post-close)
+
+The live session flagged SSP/RMCO/GTN "passing" halal on all-zero
+ratios. My first fix refused on no-data. Both the diagnosis and the fix
+were incomplete. Actual root cause:
+  * halal_check's source is YFINANCE, not E*TRADE (E*TRADE has no
+    fundamentals endpoint we use) -- so "fall back to yfinance" was
+    already the state of the world.
+  * The STATEMENTS WERE NOT EMPTY. yfinance has SSP totalDebt $2.68B,
+    cash $83.7M, revenue $2.14B; GTN and RMCO likewise.
+  * The missing value was MARKET CAP. yfinance returns marketCap=None
+    AND sharesOutstanding=None for these names, so mcap fell to 0, and
+    every ratio divide-guards to 0.0 -> everything trivially passed.
+FIX: Robinhood HAS the number (scan "Market cap" column and
+get_equity_fundamentals). plan/update_rh_fundamentals.py lets the agent
+write it into data/rh_fundamentals.json, which load_rh_fundamentals()
+already feeds to halal_check. It REFUSES a non-positive market cap
+rather than storing a value that recreates the bug.
+RESULT with real market caps:
+  SSP  loans 837.4% cash 26.3% comb 863.8%  -> NOT HALAL
+  GTN  loans 988.2% cash 44.0% comb 1032.2% -> NOT HALAL
+  RMCO loans  0.69% cash  0.75% comb   1.44% -> HALAL (legitimately)
+So the original bug would have ADMITTED the two most debt-loaded names
+on the screen, and my no-data guard was REFUSING a name that genuinely
+qualifies. Both errors are now gone. Statement fallback chain
+(quarterly -> annual -> info) added as well, and the result now carries
+a `source` field so the log shows the evidence grade.
+OPERATIONAL REQUIREMENT: the agent must write the market cap via
+update_rh_fundamentals.py BEFORE screening any name that is not already
+in the cache. A missing market cap now yields a loud NO FUNDAMENTALS
+DATA refusal rather than a silent pass.
+
+## WHY WE WERE USING PRIOR-DAY VOLUME (answer, and it was not a choice)
+
+It was a defect, not a design. Three separate things were conflated:
+1. The BACKTEST gate is that DAY'S FULL volume / 50-day average >= 5.
+   It comes from penny_ax20_discover, which reads Massive GROUPED-DAILY
+   bars -- end-of-day summaries. Fine for research, impossible live,
+   because the day's volume is unknown until the close.
+2. The LIVE scanner's "Volume" column turns out to be the PRIOR
+   SESSION'S full-day volume (proved exactly: FRD scan 151,628.03 vs RH
+   2026-08-06 bar 151,628; TWLO 4,539,755 vs 4,539,744).
+3. I read (2) at 09:15 and asserted it was today's premarket cumulative.
+   That is the error. It made "TWLO 2.0x premarket" -- which was really
+   just TWLO's rvol for YESTERDAY.
+There was never a reason to prefer prior-day volume; nobody chose it.
+CORRECTED: premarket volume is now computed by summing Robinhood
+extended-hours bars before 09:30 ET, and the gate is premarket DOLLAR
+volume >= $50k (size-neutral). Prior-day volume is not used anywhere.
