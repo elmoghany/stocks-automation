@@ -924,6 +924,22 @@ for _n, _so in zip(range(37, 41), (15.0, 20.0, 30.0, 35.0)):
     EXPERIMENTS.append(C23(f"S{_n:03d}", f"scale-out at +{_so}%",
         sim=dict(scale_out_at=_so)))
 
+# --- A-decisive: CAPITAL-NEUTRALITY controls -------------------------------
+# Wave 1 showed BOTH the pressure-sizing variant (S002, +$64k) and its
+# INVERTED control (S018, +$67k) beating C23 -- so the gain may be pure
+# leverage (more average capital deployed), not pressure signal. These two
+# deploy the same average capital as S002/S018 with NO pressure input at
+# all: if they match, Family A is leverage and must be rejected.
+EXPERIMENTS.append(C23("S041", "flat budget $16,126 (= S002 avg capital)",
+    sim=dict(budget=16126.0)))
+EXPERIMENTS.append(C23("S042", "flat budget $17,425 (= S018 avg capital)",
+    sim=dict(budget=17425.0)))
+# extended scale-out sweep: S037-S040 trended monotonically better with a
+# LATER scale-out (+30%/+35% both-year positive but under the $30k floor)
+for _n, _so in zip(range(43, 47), (40.0, 45.0, 50.0, 60.0)):
+    EXPERIMENTS.append(C23(f"S{_n:03d}", f"scale-out at +{_so}%",
+        sim=dict(scale_out_at=_so)))
+
 BYID = {e["id"]: e for e in EXPERIMENTS}
 
 

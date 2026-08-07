@@ -689,3 +689,54 @@ re-dump with those fields before relying on sections 10/11.
    (below cost). Expected small but free.
 4. ENTRY CUTOFF at 11:30-12:00: noon entries are slippage-sized;
    under the 10bps stress they likely go negative. Keep 1PM EXITS.
+
+## S-CAMPAIGN WAVE 1 (S000-S046, 2026-08-07): both families REJECTED
+
+Anchor S000 reproduced C23 exactly (+$412,879 / +$579,988).
+
+### A. Pressure-scaled sizing -- REJECTED as LEVERAGE, not signal
+The headline looked strong: sizing 1.5x when p_entry >= 0.30 gave
++$16.9k / +$47.2k (dComb +$64.1k), and the whole threshold sweep
+(0.20/0.30/0.40/0.50) agreed -- textbook adjacency, clean negm.
+But the INVERTED control (S018: 0.5x on high pressure, 1.5x on LOW)
+also gained (+$66.5k). Both directions winning = the effect is not
+pressure. The decisive capital-neutrality controls settled it:
+  S002 pressure-directed, avg capital 1.075x -> dComb +$64.1k
+  S041 FLAT budget $16,126  (same 1.075x)    -> dComb +$60.1k
+  S018 inverted, avg capital 1.162x          -> dComb +$66.5k
+  S042 FLAT budget $17,425  (same 1.162x)    -> dComb +$133.4k
+Flat capital MATCHES the pressure version at 1.075x (+4k = 6%, noise)
+and DOUBLES the inverted one at 1.162x. Every "gain" in Family A is
+the known capital-scaling curve (7.5% more capital -> +6.1% profit;
+16.2% -> +13.4%, both slightly sublinear, consistent with the earlier
+budget-scaling study). Pressure direction contributes nothing.
+Supporting evidence: downsizing alone always loses (S009-S012, -$24k
+to -$86k) and capital-neutral both-direction variants are flat to
+negative (S013-S015). Shuffled control S017 failed correctly
+(-$57k/-$172k) but was NOT sufficient -- only the inverted + flat-
+budget controls exposed this. LESSON: any sizing experiment must be
+compared against an equal-average-capital flat baseline, or leverage
+masquerades as alpha. Adding that rule to the guardrails.
+
+### B. Trail capture -- the leak is NOT patchable
+- Breakeven stops (S019-S027, +2% to +8%): CATASTROPHIC and perfectly
+  monotonic. +2% keeps 23% of baseline ($132,618 / $95,118 vs
+  $412,879 / $579,988); +8% still far below (-$88k/-$217k).
+- Time stops (S033-S036, 10/15/20/30 min): all worse, monotonic in the
+  same direction.
+=> The 0.29 capture ratio and the negative small-peak positions CANNOT
+be fixed by exiting earlier: the same rule that rescues a small loser
+ejects us from the monsters carrying 47% of profit. The give-back is
+the PREMIUM PAID for the fat tail, not a bug. This closes the biggest
+"improvement" lead from the statistical study.
+- Tiered trail (S028-S032): Y2 +$32k..+$55k but Y1 -$4k..-$15k on all
+  five variants -- consistent but year-split, fails the both-year rule.
+- Scale-out timing (S037-S040, S043-S045): later banking trends better
+  and peaks around +30-50%: +30% dComb +$11.1k, +35% +$19.5k, +45%
+  +$23.3k, +50% +$30.5k -- the only survivors, all both-year positive
+  with clean negm, but hovering at/below the +$30k floor. Marginal;
+  candidate for the final stack test, not a standalone adoption.
+
+NET: Wave 1 produced no adopted change. That is a success, not a
+failure -- two evidence-backed leads that looked strong in-sample were
+killed by controls before they reached live capital.
