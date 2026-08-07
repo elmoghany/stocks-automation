@@ -9,7 +9,7 @@
   "max_deployed": 100000,
   "ticket_cap": "20% of trailing 10-min dollar volume"
  },
- "cumulative_deployed": 24932.66,
+ "cumulative_deployed": 39932.19,
  "candidates": [
   {
    "sym": "MB",
@@ -152,9 +152,10 @@
    "gates": {
     "calm_gap_7am": "pass 0.0%",
     "liquidity": "FAIL - no trades today, 2,764 sh prior session, book 14.18/22.00 (55% spread)",
-    "halal": "pass loans 4.92% dep 0.71%"
+    "halal": "pass loans 4.92% dep 0.71%",
+    "premkt_gate": "FAIL ratio=0.0000 (zero premarket volume)"
    },
-   "outcome": "WATCH (calm-gap+halal pass; liquidity marginal, rvol deferred)"
+   "outcome": "reject (no premarket footprint + untradeable spread)"
   },
   {
    "sym": "INDI",
@@ -231,9 +232,10 @@
     "calm_gap_7am": "pass +18.7%",
     "halal": "pass loans 0.16% dep 7.37%",
     "price_gate": "pass 97.00 >= 91.34",
-    "rvol_tod": "PASS 22.94 (cum 13827 vs same-time-avg 603 over 16 sessions to 08:15); naive_fullday=0.01-0.02"
+    "rvol_tod": "PASS 22.94 (cum 13827 vs same-time-avg 603 over 16 sessions to 08:15); naive_fullday=0.01-0.02",
+    "premkt_gate": "FAIL (true premkt) ratio=0.0054"
    },
-   "outcome": "ARMED stop-limit 99.82/100.32",
+   "outcome": "DISARMED on premkt floor; WATCH (gate disputed), not permanent",
    "armed": {
     "trigger": 99.82,
     "limit": 100.32,
@@ -271,9 +273,10 @@
     "calm_gap_7am": "pass +15.7%",
     "halal": "pass loans 3.49% dep 4.12%",
     "price_gate": "pass 329.75 >= 312.87",
-    "rvol_tod": "PASS 9.62 (cum 19203 vs same-time-avg 1996 over 20 sessions to 08:15); naive_fullday=0.01-0.02"
+    "rvol_tod": "PASS 9.62 (cum 19203 vs same-time-avg 1996 over 20 sessions to 08:15); naive_fullday=0.01-0.02",
+    "premkt_gate": "FAIL (true premkt) ratio=0.0155"
    },
-   "outcome": "ARMED stop-limit 331.80/333.46",
+   "outcome": "DISARMED on premkt floor; WATCH (gate disputed), not permanent",
    "armed": {
     "trigger": 331.8,
     "limit": 333.46,
@@ -303,9 +306,10 @@
     "calm_gap_7am": "pass +15.4%",
     "price_gate": "pass 308.00>=291.92",
     "halal": "pass loans 0.63% dep 2.86%",
-    "rvol_tod": "4.56 INDETERMINATE (cum 1,402 vs same-time-avg 307 over only 6 sessions); naive_fullday=0.00"
+    "rvol_tod": "4.56 INDETERMINATE (cum 1,402 vs same-time-avg 307 over only 6 sessions); naive_fullday=0.00",
+    "premkt_gate": "FAIL ratio=0.0022"
    },
-   "outcome": "WATCH - not armed, not rejected; re-evaluate rvol after 09:30"
+   "outcome": "WATCH, unarmed"
   },
   {
    "sym": "NRXP",
@@ -317,9 +321,125 @@
     "halal": "pass loans 0.71% dep 5.08%",
     "price_gate": "pass 3.56>=3.399",
     "rvol_tod": "PASS 20.62 (cum 186,704 vs same-time-avg 9,055 over 20 sessions); naive_fullday=0.32",
-    "l2": "FAIL x3 (08:37, 08:50, 08:58): 0 sh within trigger x1.005; inside ask 3.73 vs limit 3.7286; spread 4.6% > 0.5% limit cap"
+    "l2": "PASS at 09:33 open - spread 4.6%->0.9%, 12,470 sh within limit 3.7286 vs 4,043 intended",
+    "premkt_gate": "PASS ratio=0.3388 (pm 381,154 vs avg50 1,125,024)"
    },
-   "outcome": "ALL GATES PASS, trigger crossed twice, NO FILL - stop-limit unfillable on a 4.6% spread"
+   "outcome": "ARMED 3.7100/3.7286, ticket $15,000 = 4,043 sh",
+   "armed": {
+    "trigger": 3.71,
+    "limit": 3.7286,
+    "shares": 4043,
+    "ticket_$": 15000,
+    "armed_at": "09:35"
+   }
+  },
+  {
+   "sym": "EXFY",
+   "first_seen": "09:34",
+   "gates": {
+    "halal": "FAIL loans 2.46% dep 29.48%"
+   },
+   "outcome": "NOT HALAL -> PERMANENT reject"
+  },
+  {
+   "sym": "CTEV",
+   "first_seen": "09:42",
+   "gates": {
+    "halal": "FAIL loans 784.64% dep 3.53%"
+   },
+   "outcome": "NOT HALAL -> PERMANENT reject"
+  },
+  {
+   "sym": "EMBC",
+   "first_seen": "09:48",
+   "gates": {
+    "halal": "FAIL loans 517.75% dep 70.51%"
+   },
+   "outcome": "NOT HALAL -> PERMANENT reject"
+  },
+  {
+   "sym": "YJ",
+   "first_seen": "09:58",
+   "prev_close": 1.37,
+   "gates": {
+    "calm_gap_7am": "pass +1.2%",
+    "premkt_gate": "PASS 0.5450 (pm 9,035 vs avg50 16,578)",
+    "halal": "FAIL loans 419.44% dep 1878.32%"
+   },
+   "outcome": "NOT HALAL -> PERMANENT reject"
+  },
+  {
+   "sym": "SENS",
+   "first_seen": "09:58",
+   "prev_close": 5.15,
+   "gates": {
+    "calm_gap_7am": "pass +6.0%",
+    "premkt_gate": "FAIL 0.0136",
+    "halal": "FAIL loans 12.41% dep 18.5%"
+   },
+   "outcome": "NOT HALAL -> PERMANENT reject"
+  },
+  {
+   "sym": "PCLA",
+   "first_seen": "10:23",
+   "gates": {
+    "halal": "FAIL loans 332.24% dep 631.17%"
+   },
+   "outcome": "NOT HALAL -> PERMANENT reject"
+  },
+  {
+   "sym": "SSP",
+   "first_seen": "10:31",
+   "prev_close": 2.949,
+   "px_7am": 2.881,
+   "gates": {
+    "calm_gap_7am": "pass -2.3%",
+    "halal": "ERROR - returned PASS on loans 0.00%/dep 0.00%, a missing-fundamentals signature; not a verified pass"
+   },
+   "outcome": "NOT ENTERED - halal unevaluable"
+  },
+  {
+   "sym": "OABI",
+   "first_seen": "10:49",
+   "prev_close": 2.24,
+   "px_7am": 2.32,
+   "gates": {
+    "calm_gap_7am": "pass +3.6%",
+    "halal": "pass loans 4.90% dep 12.22%",
+    "price_gate": "pass 2.77>=2.464",
+    "premkt_gate": "FAIL ratio=0.0036 (pm 1,911 vs avg50 525,103)"
+   },
+   "outcome": "NOT ARMED (premkt floor); WATCH"
+  },
+  {
+   "sym": "ATGL",
+   "first_seen": "11:01",
+   "prev_close": 7.49,
+   "px_7am": 7.49,
+   "gates": {
+    "calm_gap_7am": "pass 0.0%",
+    "halal": "pass loans 2.77% dep 17.09%",
+    "price_gate": "pass",
+    "premkt_gate": "FAIL ratio=0.0000 (zero premarket volume)",
+    "liquidity": "avg50 4,310 sh/day; trail10m $46,854 -> cap $9,371 < $15k ticket"
+   },
+   "outcome": "NOT ARMED (zero premarket footprint + untradeable size)"
+  },
+  {
+   "sym": "RMCO",
+   "first_seen": "11:30",
+   "gates": {
+    "halal": "ERROR - PASS returned on loans 0.00%/dep 0.00% (missing-fundamentals signature)"
+   },
+   "outcome": "NOT ENTERED - halal unevaluable"
+  },
+  {
+   "sym": "GTN",
+   "first_seen": "11:30",
+   "gates": {
+    "halal": "ERROR - PASS returned on loans 0.00%/dep 0.00% (missing-fundamentals signature)"
+   },
+   "outcome": "NOT ENTERED - halal unevaluable"
   }
  ],
  "trades": [
@@ -339,20 +459,61 @@
    "stop_basis": "max(entry*0.92=210.44, peak*0.60=139.20)",
    "vol_cap_$": 258358,
    "l2_depth_at_arm_sh": 552,
-   "exits": [],
+   "exits": [
+    {
+     "type": "EXIT-FLATTEN",
+     "time": "15:00 ET",
+     "px": 240.36,
+     "shares": 109,
+     "pnl": 1266.58,
+     "basis": "C35 hard flatten at 15:00; trail 203.60/229.05 never hit; peak 254.50"
+    }
+   ],
    "spurious_exit_rejected": "paper_watch reported EXIT-RESTING-STOP @210.44 on launch from stale prior-session bars; rejected as a bug, position remained open",
-   "verified_open": "RH bars: lowest low since entry 230.75 vs stop 210.44 - never touched; position open"
+   "verified_open": "RH bars: lowest low since entry 230.75 vs stop 210.44 - never touched; position open",
+   "premkt_gate_retro": "TWLO scores 0.0119 (FAIL) under the new floor; entry gate NOT retro-applied to an open position",
+   "realized_pnl": 1266.58
+  },
+  {
+   "sym": "NRXP",
+   "side": "long",
+   "entry_time": "10:06 ET (14:06Z bar)",
+   "entry_px": 3.71,
+   "fill_basis": "resting stop level; bar low 3.670 < 3.710 < high 3.720, no gap through limit 3.7286",
+   "pessimistic_alt_fill": 3.7286,
+   "px_60s": 3.73,
+   "fill_vs_60s": "+0.54% better",
+   "shares": 4043,
+   "ticket_$": 14999.53,
+   "cumulative_deployed": 39932.19,
+   "resting_stop": 3.4132,
+   "stop_basis": "max(entry*0.92=3.4132, peak*0.60=2.3520)",
+   "l2_depth_at_arm_sh": 12470,
+   "exits": [
+    {
+     "type": "EXIT-TRAIL",
+     "time": "10:30 ET",
+     "px": 3.72,
+     "shares": 4043,
+     "pnl": 40.43,
+     "basis": "close 3.7200 <= trail 3.7347 (10% tight trail, peak 4.1497, pressure -0.35 at that bar)",
+     "detected_at": "11:50 ET - 80 min late, due to the newest-bar-only evaluation bug"
+    }
+   ],
+   "realized_pnl": 40.43
   }
  ],
  "l2_check": {
   "premarket_0728ET": "REAL DATA - populated bid/ask ladders for DOCS/TEAM/MB/NAMI; 03:07 empty probe was a dead-hours artifact",
-  "rth_check": "pending",
+  "rth_check": "CONFIRMED LIVE at 09:33:13 - NRXP spread compressed 4.6%->0.9%, ask depth 12,470 sh in band (was 0 premarket). Pre-market thin books were real, not a tool fault.",
   "premarket": "LIVE - books populated and fresh (updated_at 08:04:14 read at 08:04:51 = 4s old). Earlier 'stale snapshot' error withdrawn; it was my clock drift, not the feed.",
   "nrxp_0837": "ask side only 303 sh total, 0 within trigger x1.005 -> skip per protocol"
  },
  "coverage_gaps": [
   "self-inflicted: cycle labels 07:37-08:18 run up to ~14 min ahead of true clock; corrected at 08:05, decisions unaffected",
-  "ERROR: PushNotification tool unavailable in this session; entry/exit pushes could not be sent"
+  "ERROR: PushNotification tool unavailable in this session; entry/exit pushes could not be sent",
+  "paper_watch background task killed by harness ~09:57; relaunched immediately, no exit condition missed",
+  "watcher daemons reaped by harness ~11:18; switched to single-evaluation-per-cycle invocation. No exit events missed (verified from final output)."
  ],
  "lessons": [
   "SCANNER Volume column = PRIOR SESSION volume (proven exact vs RH daily bars for FRD/INDI). Never use it as an rvol numerator; Paper Day 3's KRO rvol 2.47 was yesterday's rvol.",
@@ -361,8 +522,44 @@
   "rvol_tod.py built+validated: INDI 07:55 rvol_tod=4.93 vs naive_fullday=0.01 (490x). Quantifies the broken gate.",
   "paper_watch.py bug: yfinance history() without prepost returned PRIOR-session bars pre-market -> spurious EXIT-RESTING-STOP on TWLO at 210.44 (-$1,995) while the stock was at 232. Rejected, root-caused, fixed with prepost=True + a today-only date guard. First live exercise of this code path in the program.",
   "yfinance removed from the live path by directive after the phantom TWLO stop; paper_watch now consumes agent-supplied RH bars only.",
-  "L2 veto on NRXP is structural, not incidental: NRXP's spread (3.56x3.73 = 4.6%) exceeds the stop-limit's 0.5% cap, so the order can trigger but never fill. This is the 'failed fill' case S100-S104 left unmeasured, and it blocked the day's best-gated name 3x while 137,776 sh traded."
+  "L2 veto on NRXP is structural, not incidental: NRXP's spread (3.56x3.73 = 4.6%) exceeds the stop-limit's 0.5% cap, so the order can trigger but never fill. This is the 'failed fill' case S100-S104 left unmeasured, and it blocked the day's best-gated name 3x while 137,776 sh traded.",
+  "paper_watch.py bug #2: single shared position.json corrupts state with 2+ concurrent positions (losing `scaled` would double-bank a scale-out). Fixed to per-symbol position_{SYM}.json. Surfaced the moment the book first held two names.",
+  "halal_check can return PASS from all-zero fundamentals (SSP). A pass built on absent data must be treated as unevaluable, not permissible.",
+  "paper_watch.py bug #3: peak tracked only the newest bar, so highs in bars that appeared between ticks were never counted (NRXP hit 4.1497, stored peak 3.98). Understated peak weakens the trailing stop. Fixed to max over all bars in the file.",
+  "Three names today (SSP, RMCO, GTN) returned halal PASS from all-zero fundamentals. halal_check cannot currently distinguish 'verified permissible' from 'no data' - a real tooling gap.",
+  "paper_watch.py bug #4: resting-stop and trail exits were evaluated only against the newest bar, so batched bars skipped the checks entirely - a dip-and-recover would be missed and the paper record flattered. Fixed to replay every unseen bar. NRXP's lowest close 3.7350 vs trail 3.73473 - survived by 0.0003.",
+  "NRXP's real trail exit fired 10:30 ET but was detected at 11:50 - the newest-bar-only bug hid it for 80 minutes, during which the log wrongly reported the position as open.",
+  "A naive per-bar replay that uses CURRENT pressure on PAST bars invents exits (booked a phantom -$101 on NRXP). Pressure and peak must both be reconstructed as of each bar."
  ],
- "pnl": 0.0,
- "rvol_rule": "time-of-day-adjusted: today cum vol to clock T / mean cum vol to same T over last ~20 sessions; log naive full-day too; never permanently reject on an uncomputable ratio"
+ "pnl": 1307.01,
+ "rvol_rule": "time-of-day-adjusted: today cum vol to clock T / mean cum vol to same T over last ~20 sessions; log naive full-day too; never permanently reject on an uncomputable ratio",
+ "premkt_gate": {
+  "rule": "premkt_vol/avg50_daily >= 0.02 (plan/premkt_gate.py), adopted 09:12 ET",
+  "numerator_used": "TRUE premarket volume from RH extended 5-min bars (NOT the scanner Volume column, which is prior-session volume)",
+  "CONFLICT": "directive states the scan Volume column is premarket volume; proven false at 07:37. Directive's 'TWLO 2.0x' reproduces exactly as prior-day 4,539,755/2,265,418=2.004x.",
+  "results_true_premkt": {
+   "FROG": 0.0054,
+   "TWLO": 0.0119,
+   "NET": 0.0155,
+   "NTRA": 0.0022,
+   "NRXP": 0.3388,
+   "EUDA": 0.0
+  },
+  "results_priorday": {
+   "FROG": 1.094,
+   "TWLO": 2.004,
+   "NET": 1.557,
+   "NTRA": 1.131
+  }
+ },
+ "realized_pnl": 1307.01,
+ "return_on_deployed_pct": 3.27,
+ "flat_at_close": true,
+ "verdict": "2 trades, both winners, +$1307.01 on $39,932.19 deployed (+3.27%). First profitable and first multi-trade day of the program. Four paper_watch.py defects found and fixed on first live exercise. 12 halal blocks + 3 unevaluable halal results explain the under-deployment vs C35's expected 6-7 entries.",
+ "fill_realism": {
+  "TWLO": "+1.43% better than +60s",
+  "NRXP": "+0.54% better than +60s",
+  "prior_LZ_E01": "+1.7% better than +60s",
+  "note": "3 live fills, all better than +60s price"
+ }
 }

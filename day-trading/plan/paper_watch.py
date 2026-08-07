@@ -44,7 +44,16 @@ from zoneinfo import ZoneInfo
 
 ET = ZoneInfo("America/New_York")
 ROOT = Path(__file__).resolve().parent.parent
-POS_F = ROOT / "data" / "paper" / "position.json"
+
+# STATE IS PER SYMBOL (fixed 2026-08-07, when the book first held two names
+# at once). A single shared position.json meant two concurrent watchers
+# overwrote each other: whichever ticked last owned the file, and the other
+# symbol silently lost its peak / scaled / banked state on the next restart.
+# With C35 expecting ~6-7 entries in a day that is not an edge case, it is
+# the normal case, and losing `scaled` would let the same third be banked
+# twice. Each symbol now gets its own file.
+def pos_file(sym):
+    return ROOT / "data" / "paper" / f"position_{sym.upper()}.json"
 
 HARD_STOP = 0.92          # -8% from entry, never violated
 BASE_TRAIL = 0.20         # 20% from peak, normal tape
@@ -119,6 +128,7 @@ def main():
               "Robinhood bars; yfinance is no longer used", flush=True)
         return
 
+    POS_F = pos_file(sym)
     peak, scaled, banked = entry, False, 0.0
     if POS_F.exists():
         st = json.loads(POS_F.read_text())
@@ -151,11 +161,27 @@ def main():
         px = float(bar["c"])
         bar_low, bar_high = float(bar["l"]), float(bar["h"])
 
-        # 1) RESTING STOP -- fills intrabar, so test the bar's LOW.
-        #    Only evaluate a bar once (avoid re-firing on a repeat poll).
-        if stamp != last_bar and bar_low <= resting:
-            close_out(resting, "EXIT-RESTING-STOP")
-            return
+        # 1) RESTING STOP -- fills intrabar, so test EVERY unseen bar's LOW,
+        #    not just the newest one (fixed 2026-08-07).
+        #    The agent refreshes this file every few minutes, so bars arrive
+        #    in BATCHES. Testing only h[-1] meant a bar that dipped through
+        #    the stop and recovered before the next refresh was never
+        #    examined -- the exact "fast spike down that recovers" the module
+        #    docstring says this design exists to catch. The paper record
+        #    would then be better than reality, which is the one failure mode
+        #    this whole exercise cannot tolerate.
+        #    Bars are replayed in order and each is evaluated once.
+        new_bars = h
+        if last_bar is not None:
+            seen = [i for i, b in enumerate(h) if str(b.get("t")) == last_bar]
+            if seen:
+                new_bars = h[seen[-1] + 1:]
+        for b in new_bars:
+            if float(b["l"]) <= resting:
+                print(f"REST-STOP HIT on bar {b.get('t')} "
+                      f"(low {float(b['l']):.4f} <= {resting:.4f})", flush=True)
+                close_out(resting, "EXIT-RESTING-STOP")
+                return
         last_bar = stamp
 
         # 2) hard flatten / ladder (C35 window ends 15:00)
@@ -168,7 +194,17 @@ def main():
             print(f"TICK {sym} {px:.2f}  {tag} working out before 15:00",
                   flush=True)
 
-        peak = max(peak, bar_high, px)
+        # PEAK IS THE MAX OVER EVERY BAR IN THE FILE, not just the newest
+        # one (fixed 2026-08-07). The old form, max(peak, bar_high, px),
+        # only ever looked at h[-1]. That is correct when the loop sees
+        # every minute, but the agent refreshes the bars file every few
+        # minutes, so whole bars would appear and be superseded between
+        # ticks and their highs were never counted. NRXP printed 4.1497
+        # while the watcher's peak sat at 3.98. An understated peak drags
+        # the trail down with it, which quietly disables the exit the
+        # trail exists to provide.
+        peak_carried_in = peak
+        peak = max([peak, px] + [float(b["h"]) for b in h])
         p = pressure(h)
 
         # 3) scale-out at +25%, skipped while buyers dominate
@@ -191,9 +227,41 @@ def main():
                  else WIDE_TRAIL if (p is not None and p >= P_HI)
                  else BASE_TRAIL)
         trail = peak * (1 - width)
-        if px <= trail and trail > resting:
-            close_out(px, "EXIT-TRAIL")
-            return
+        # Evaluated on the CLOSE of every unseen bar -- but with the peak AND
+        # the pressure that prevailed AT THAT BAR, never today's.
+        #
+        # WHY THIS CARE (2026-08-07): the first version of this replay applied
+        # the CURRENT trail width to historical bars, and immediately booked a
+        # phantom EXIT-TRAIL on NRXP. It flagged the 11:00 bar (close 3.6850)
+        # against a 10% trail of 3.7347 -- but the 10% width comes from
+        # pressure <= -0.30, and at 11:18 the measured pressure was -0.20, so
+        # the live trail then was the 20% one at 3.3198 and 3.6850 was nowhere
+        # near it. Sellers only took over later. Judging a past bar with a
+        # later reading invents an exit that never happened, which corrupts
+        # the record just as badly as missing a real one -- in the opposite
+        # direction. So each bar is judged on a rolling 10-bar pressure window
+        # ending at that bar, and on the peak as it stood at that bar.
+        start = len(h) - len(new_bars)
+        # peak as it stood BEFORE the unseen bars: carried-in state plus the
+        # highs of bars already evaluated on earlier passes.
+        run_peak = max([peak_carried_in, entry]
+                       + [float(b["h"]) for b in h[:start]])
+        for i, b in enumerate(new_bars):
+            idx = start + i
+            run_peak = max(run_peak, float(b["h"]))
+            p_i = pressure(h[max(0, idx - 9):idx + 1])
+            w_i = (TIGHT_TRAIL if (p_i is not None and p_i <= P_LO)
+                   else WIDE_TRAIL if (p_i is not None and p_i >= P_HI)
+                   else BASE_TRAIL)
+            t_i = run_peak * (1 - w_i)
+            if t_i > resting and float(b["c"]) <= t_i:
+                print(f"TRAIL HIT on bar {b.get('t')} "
+                      f"(close {float(b['c']):.4f} <= {t_i:.4f}, "
+                      f"{int(w_i * 100)}% from peak {run_peak:.4f}, "
+                      f"pressure {p_i if p_i is None else round(p_i, 2)})",
+                      flush=True)
+                close_out(float(b["c"]), "EXIT-TRAIL")
+                return
 
         # 5) re-place the resting stop as peak rises (cancel/replace)
         new_rest = max(entry * HARD_STOP, peak * (1 - WIDE_TRAIL))

@@ -2441,3 +2441,87 @@ HONEST LIMIT: calibrated on candidates that already passed the
 backtest's full-day rvol gate, so it measures how many GOOD days the
 floor keeps -- not how much junk it admits. False-positive rate
 UNMEASURED; that needs minute bars for names that failed the gate.
+
+
+## Paper Day 4 (2026-08-07, C35, resting orders) -- FIRST PROFITABLE DAY
+
+**2 trades, both winners, +$1,307.01 on $39,932.19 deployed (+3.27%).**
+  TWLO 109 sh @ 228.74 -> 240.36  +$1,266.58  (entry 08:45 premarket, exit
+       15:00 flatten; peak 254.50 = +11.3%)
+  NRXP 4,043 sh @ 3.71 -> 3.72     +$40.43     (entry 10:06, exit 10:30 on the
+       pressure-tightened 10% trail; peak 4.1497 = +11.8%)
+Flat by 15:00. No real order placed. Account 100,000 -> 100,653.51 under the
+C35 half-profit rule; deployable stays 100,000.
+
+### The headline is not the P&L, it is that the code had never been tested
+Three prior sessions produced zero fills, so everything downstream of an entry
+ran for the first time today. FOUR distinct defects surfaced in
+plan/paper_watch.py within hours:
+1. **Phantom exit.** yfinance history() without prepost returns the PREVIOUS
+   session pre-09:30. Launched at 08:47 on the TWLO fill it tested today's
+   210.44 stop against yesterday's ~190 tape and instantly "filled" it,
+   reporting **-$1,995 on a position that was up $409**. Rejected, root-caused,
+   fixed. yfinance has since been removed from the live path entirely (user
+   directive): the agent now supplies RH bars and the script only decides.
+2. **Shared position state.** A single position.json meant two concurrent
+   watchers overwrote each other; losing `scaled` would double-bank a
+   scale-out. Now per-symbol position_{SYM}.json. Surfaced the moment the book
+   first held two names -- which with C35's 6-7 expected entries is the normal
+   case, not an edge case.
+3. **Peak tracking.** peak used only the newest bar, so highs in bars that
+   appeared between refreshes were never counted (NRXP hit 4.1497 while stored
+   peak sat at 3.98). An understated peak drags the trail down with it.
+4. **Per-bar evaluation.** Both exits were tested only against h[-1]. Bars
+   arrive in batches, so a dip-and-recover was invisible -- exactly the case
+   the module docstring says the intrabar design exists to catch. **This hid
+   NRXP's real 10:30 trail exit for eighty minutes**, during which the session
+   log wrongly reported the position as open.
+A fifth trap was avoided: the first per-bar replay applied CURRENT pressure to
+PAST bars and booked a phantom -$101 exit. Pressure and peak must both be
+reconstructed as of each bar. Fixed and verified.
+
+### rvol gate: two replacements in one session
+The live gate divided partial-day volume by a FULL-day average -- systematically
+under-reporting all morning (yesterday's PN: 0.9 reported vs 16.1 actual).
+Replaced first with a time-of-day-adjusted measure (plan/rvol_tod.py, built and
+validated live: INDI 4.93 vs naive 0.01, a 490x difference), then superseded by
+a premarket-activity floor (plan/premkt_gate.py, premkt_vol/avg50 >= 0.02).
+**UNRESOLVED CONFLICT, needs settling before the next session:** the floor's
+spec says the scanner's Volume column is premarket volume. It is not -- it is
+the PRIOR SESSION'S volume, proven by exact match against RH daily bars
+(FRD scan 151,628.03 vs RH 2026-08-06 daily 151,628). The spec's own
+calibration figure "TWLO 2.0x" reproduces exactly as prior-day
+4,539,755/2,265,418 = 2.004x. With TRUE premarket volume TWLO scores 0.012x and
+fails the floor it was entered under. I used the honest numerator and flagged
+it. Either the 0.02 threshold is calibrated for prior-day volume (in which case
+it is far too low) or for true premarket volume (in which case large-cap
+earnings gappers with 15k-56k premarket shares genuinely fail). Both cannot hold.
+
+### L2: the open question is answered
+get_equity_price_book returns real, live ladders from at least 07:28 ET (the
+03:07 empty probe was a dead-hours artifact). The pre-market thin books that
+blocked NRXP three times were neither a broken feed nor spoofing: **NRXP's
+spread was 4.6% against a stop-limit capped at 0.5%**, so the order could
+trigger and never fill. At 09:33 the spread compressed to 0.9%, 12,470 shares
+appeared inside the limit band, and NRXP armed and filled cleanly at 10:06.
+The veto held for the right reason and released for the right reason.
+This is also a live instance of the FAILED-FILL case S100-S104 left explicitly
+unmeasured: on a wide-spread small cap the trigger x1.005 limit is structurally
+unfillable, and the backtest -- which fills at the trigger -- would have taken a
+trade the live protocol could not.
+
+### Fill realism: 3 live points, all in the same direction
+LZ (E01) +1.7%, TWLO +1.43%, NRXP +0.54% -- every live fill has been BETTER
+than the price 60 seconds later, the opposite of the S100 pessimistic
+assumption. Three points is not a finding, but it is now worth tracking.
+
+### Gates
+Twelve names cleared price/gap and were blocked by HALAL (INDI, DUKR, CRSR, MTW,
+PSIX, LSE, FNKO, EXFY, CTEV, EMBC, YJ, SENS, PCLA). Three more (SSP, RMCO, GTN)
+returned halal PASS from **all-zero fundamentals** and were refused as
+unevaluable -- halal_check cannot currently distinguish "verified permissible"
+from "no data", which is a real tooling gap. That is why only 40% of the budget
+was deployed against C35's expected 6-7 entries: the gates worked.
+Scanner note: the feed's "Relative volume" column is the literal string "1" on
+every row, and its "Volume" column is the prior session's. Only Last and
+% Change are live.

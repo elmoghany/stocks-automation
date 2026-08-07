@@ -1,8 +1,8 @@
 {
- "policy": "C30: slot = min(120000, base + 0.5 * max(0, cum_pnl)); base never shrinks",
+ "policy": "C35: account = 100000 + 0.5*max(0,cum_pnl) if cum_pnl>0 else 100000+cum_pnl; deployable = min(100000, account)",
  "adopted": "2026-08-05 (user directive)",
  "base": 15000,
- "cum_pnl": 0.0,
+ "cum_pnl": 1307.01,
  "slot": 15000,
  "history": [
   {
@@ -10,8 +10,19 @@
    "pnl": 0.0,
    "slot": 15000,
    "note": "no-trade day; HNST armed, trigger missed by 2.5%"
+  },
+  {
+   "date": "2026-08-07",
+   "pnl": 1307.01,
+   "account": 100653.51,
+   "deployable": 100000.0,
+   "trades": 2,
+   "deployed": 39932.19,
+   "note": "TWLO +1266.58 (flatten), NRXP +40.43 (10% trail). First profitable day."
   }
  ],
- "config": "C30",
- "cap": 120000
+ "config": "C35",
+ "cap": 120000,
+ "account": 100653.51,
+ "deployable": 100000.0
 }
