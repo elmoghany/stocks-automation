@@ -2169,3 +2169,19 @@ days, only +$13.9k) is inside normal behaviour and is NOT evidence the
 strategy has stopped working. The failure signal to watch for would be
 a losing MONTH, which never occurred in 22 months of backtest -- if
 one happens live, that is genuinely new information.
+
+## Real-time execution & L2 availability (2026-08-07)
+
+TESTED: Robinhood `get_equity_price_book` = REAL Level 2 (full ladder,
+resting size per level, <=4 symbols/call). Returned empty at 03:07 ET
+because the book is closed; must be re-verified in RTH.
+E*TRADE = L1 ONLY (bidSize/askSize top-of-book). Its docs mention
+"Level 2" only for options approval levels. E*TRADE also has no bars
+endpoint. => Robinhood for data/depth, E*TRADE for execution.
+Added to the skill: a pre-entry depth check (sum ask size up to
+trigger x1.005; shrink or skip the ticket if the book cannot absorb
+it), stop-LIMIT entries capped at trigger +0.5%, marketable escalating
+exits (never a resting stop), and the 14:57/14:59 flatten ladder for
+the C35 15:00 window.
+Fill-realism so far: 1 live data point (LZ, E01) where the open fill
+was 1.7% BETTER than +60s. Not yet a finding.

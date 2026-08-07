@@ -183,3 +183,62 @@ paper session. TRADING -> proceed; NO-TRADE (weekend/holiday) -> abort
 silently; ERROR (year outside the calendar) -> abort LOUDLY and extend
 HOLIDAYS in that file. Half days close at 13:00 -- C30's flatten
 already matches; E01 uses the official close regardless.
+
+## Real-time execution: L2 depth + fill protocol (2026-08-07)
+
+DATA AVAILABILITY (tested directly, not assumed):
+- ROBINHOOD **DOES** provide Level 2. `get_equity_price_book` returns a
+  full bid/ask ladder with resting share size per level (max 4 symbols
+  per call). Probed at 03:07 ET it returned empty arrays -- that is the
+  book being closed, not a missing feature; the tool guide states
+  unavailable-because-closed explicitly. MUST be re-verified during RTH
+  on the next paper session before relying on it.
+- E*TRADE does **NOT** provide Level 2. Its market API exposes only
+  bidSize/askSize -- top of book (L1). The only "Level 2" strings in the
+  docs refer to OPTIONS APPROVAL LEVELS, which are unrelated. E*TRADE
+  also has no historical-bars endpoint (see bollinger NOTES).
+  => ARCHITECTURE: Robinhood for market data and depth, E*TRADE for
+  execution (or Robinhood for both). Never source depth from E*TRADE.
+
+WHY FILLS ARE THE REAL RISK: the backtest assumes we transact at the
+trigger price. Live, three things break that -- slippage on thin
+gappers, partial fills, and no fill at all. The 20%-of-10-min-volume
+rule is the primary defence (it sizes us to a fraction of what is
+actually trading), and L2 is the secondary one.
+
+PRE-ENTRY DEPTH CHECK (new, uses L2):
+Before arming any trigger, pull the price book and sum ask-side size
+from the inside ask up to trigger x 1.005. If that cumulative size is
+< the shares we intend to buy, REDUCE the ticket to what the book can
+absorb; if it is < 25% of intended, SKIP the entry and log
+"ERROR: thin book". A wall on the ask just above the trigger is a
+reason to expect a failed breakout, not a reason to size up.
+
+ENTRY ORDERS:
+- ORB / premarket-high triggers are stop-BUY by nature. Use a
+  STOP-LIMIT with the limit at trigger + 0.5% so slippage is bounded;
+  accept the occasional no-fill instead of an unbounded market fill.
+- Pattern entries fire on a 1-minute close, so send a marketable limit
+  at ask + 0.3% immediately on that close.
+- If unfilled after 60s: CANCEL. Re-place ONCE, and only while price is
+  still within 2% of the trigger. NEVER chase beyond that -- the ORB
+  ratchet will re-arm at the next session high anyway.
+
+EXIT ORDERS (asymmetric on purpose -- an unfilled exit is dangerous, an
+unfilled entry is merely a missed opportunity):
+- NEVER rest a plain limit for a stop. Use marketable limits and
+  escalate: bid -1%, then bid -2% after 60s, repeat until filled.
+- Scale-out at +25% is decided at the touch (pressure decides), so it
+  is not a resting order either.
+- 15:00 FLATTEN LADDER (C35): begin 14:57 at bid -1%; 14:59 drop to
+  bid -2%; must be flat by 15:00.
+- Known residual: halts and gap-throughs fill at the reopen, not at the
+  stop. The simulator behaves the same way, so this is modelled, not
+  hidden.
+
+FILL-REALISM MEASUREMENT (already running): every paper entry records
+the assumed fill AND the price 60 seconds later. First live data point
+(E01, LZ 2026-08-06): the 9:30 open fill was 1.7% BETTER than the price
+60s later -- i.e. on gapped names the open print can favour us, the
+opposite of the usual assumption. One observation is not a finding;
+keep collecting.
