@@ -2351,3 +2351,47 @@ $1,163,538 baseline. Since entry #1 is the most profitable slot
 (mean +$1,204) and the 9AM hour is the best hour, a gate that only
 qualifies names by 09:45-10:30 may forfeit a large share of the edge.
 That number is the honest live expectation and is not yet measured.
+
+## THE CAUSAL-GATE COST (2026-08-07) -- the honest live expectation for C35
+
+plan/c35_causal_gate.py. Each committed candidate is replayed with
+`entry_start` (new kwarg) set to the FIRST MINUTE its own PROJECTED
+rvol crosses 5, computed causally from its own bars plus a market-wide
+per-minute volume profile. Everything else is C35 unchanged.
+
+  C35 baseline (backtest selection)      $1,163,538
+  entries barred before 10:30              $666,074   57% of baseline
+  CAUSAL per-day projected gate            $674,473   58% of baseline
+  (283 traded days; 1 day never qualified; MEDIAN GATE TIME 09:32)
+
+*** THE CAUSAL GATE COSTS 42% OF THE EDGE -- roughly $489,000 over two
+years. This is the single most important number produced so far. ***
+
+WHY: the median candidate does not accumulate enough volume to prove
+rvol >= 5 until 09:32 -- i.e. just after the regular open. Every
+entry between 07:00 and ~09:32 is therefore unavailable live, and
+those are the most valuable ones (entry #1 mean +$1,204; the 09:00
+hour is the single best hour in the whole record).
+The near-identical result for "barred before 10:30" (57%) vs the
+per-day causal gate (58%) says the loss is driven by TIMING, not by
+which names qualify -- the gate mostly just delays us.
+
+WHAT THIS MEANS
+- Every C35 figure quoted before today ($1,163,538 flat, $1,263,538
+  compounded, +$143k for the first-ticket change) assumes candidate
+  selection that live cannot reproduce. The realistic figure for a
+  live cash account is ~$674,000 over two years, ~$337k/yr, on
+  $100k/day deployed. Still a strong result, but 42% below the number
+  the campaign has been optimising against.
+- Everything ranked or adopted using the non-causal baseline should be
+  RE-RANKED under the causal gate before being trusted. The exit-window
+  extension, the first-ticket sizing, and the pattern exclusion were
+  all measured in a world with pre-open entries that live will not get.
+- This does NOT invalidate the strategy; it re-prices it.
+NEXT: re-run the S-campaign's adopted changes (15:00 exit, $25k first
+ticket) under `entry_start`-gated selection, and re-check whether they
+still pass. A change that helps when you can trade from 07:00 may not
+help when you cannot trade before 09:32.
+CAVEAT: the earlier bracket rows (baseline / 08:00 / 09:45) were lost
+from the captured output; only the 10:30 and causal rows survived.
+Re-run for the full curve before publishing these numbers anywhere.
