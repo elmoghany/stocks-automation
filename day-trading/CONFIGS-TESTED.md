@@ -941,3 +941,38 @@ FINDINGS
 4. Corollary for live trading: if a day is going badly, the value is
    already banked by trade ~7; there is no need to force late entries
    to "make it back" -- trade 9 has a negative expectation.
+
+### CORRECTION to the position-number analysis (same day)
+
+User flagged that the first table showed trades past #7 when the $100k
+cap allows ~6.5. They were right and the first table was WRONG: it
+counted trade ROWS, and a scale-out splits ONE entry into TWO rows
+(2,180 rows vs 1,988 actual entries, 1.10 rows/entry).
+Recounted by ENTRY on the C34 dump: entries per day median 7, MEAN 6.5,
+max 13 -- the cash cap is behaving exactly as specified.
+  entry#   n     total      mean   win%   cum
+    1    293  +352,841   +1,204    71%    35%   <- BEST
+    2    289  +261,271     +904    64%    60%
+    3    283  +135,452     +479    61%    73%
+    4    276   +79,979     +290    54%    81%
+    5    261   +74,796     +287    56%    89%
+    6    253   +32,121     +127    57%    92%
+    7    241   +71,471     +297    59%    99%
+    8+    92   +12,035               ~     100%
+REVISED FINDINGS (these supersede the row-based table above):
+1. The FIRST entry is the best slot ($1,204 mean, 71% win), not the
+   second -- the earlier "trade #2 wins" claim was an artifact of
+   scale-out legs being counted as separate trades. Value decays
+   monotonically with entry number (except a #7 bump).
+2. Entries 1-3 = 73% of profit; 1-7 = 99%. Entry 8+ is ~$12k total.
+3. Why >7 entries occurs on some days despite a $100k/$15k budget: the
+   20%-of-10-min-volume rule shrinks many tickets well below $15k
+   (median ticket $12,497; on 12-14 entry days the average ticket is
+   only $7,182-8,381), so more of them fit inside $100k. The cap is on
+   DOLLARS, not trade count.
+4. Median day deploys $99,890 against the $100k cap -- working as
+   intended. OPEN ITEM: 15 of 293 days show reconstructed deployment
+   slightly over ($101k-$114.5k). Share counts here are INFERRED from
+   pnl/(exit-entry) rather than recorded, so this may be inference
+   error rather than a real overshoot -- to settle it, the trade dump
+   should record `shares` directly. Flagged, not assumed away.
