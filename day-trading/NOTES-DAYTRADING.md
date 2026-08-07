@@ -1839,3 +1839,42 @@ afternoon, which is a different liquidity/attention regime than the
 morning the strategy was designed around, and the 15:00 variant holds
 through the lunchtime lull. The backtest says it works; it has never
 been paper-traded.
+
+## S071 STANDALONE + C30 SIZING + pattern pruning under 15:00 (2026-08-07)
+
+### S071 alone (C23 rules, exits to 15:00, entries still end at noon)
+  Y1 +$505,982 (138d, $3,667/d, 0/12 negm)
+  Y2 +$655,731 (155d, $4,231/d, 0/10 negm)
+  2yr +$1,161,713 vs C23 +$992,866 = +$168,847 (+17.0%)
+Daily return on the $15k slot rises 23.6%->24.4% (Y1) and
+26.8%->28.2% (Y2). Days traded rise 133->138 and 147->155 because a
+later flatten lets marginal days qualify.
+
+### S071 under C30 sizing (the regime the live book actually uses)
+  $60k slot:  Y1 +$1,460,034 / Y2 +$2,180,847  (vs 1PM $1,198,007 /
+              $1,935,844) = +$507,030 over two years, +16.2%
+  $120k cap:  Y1 +$2,318,597 / Y2 +$3,722,529  (vs 1PM $1,873,247 /
+              $3,328,199) = +$839,680 over two years, +16.1%
+KEY: the +17% edge is SIZE-STABLE -- ~+16% at both the mid tier and the
+$120k liquidity cap, so the exit-window gain is NOT eaten by the
+20%-of-volume constraint. The 1/10 negative month that appears at $60k
+and $120k is a SIZE artifact, not a window artifact: the earlier 1PM
+budget-scaling run showed the same 1/10 at those tiers.
+
+### Pattern pruning under the 15:00 window -- REJECTED AGAIN
+Re-measured on the S071 dump (4,102 positions) the two suspects ARE
+negative here: dragonfly_doji -$5,074 (mean -$53, t=-0.41),
+inverted_hammer -$6,152 (mean -$24, t=-0.41). Removing them anyway:
+  S072 drop dragonfly_doji : +$9.3k / -$3.8k   mixed -> FAIL
+  S073 drop inverted_hammer: -$7.0k / +$13.3k  mixed -> FAIL
+  S074 drop BOTH           : -$0.7k / +$7.9k   mixed -> FAIL (dComb +$7.2k)
+  S075 drop both + rsi     : -$7.3k / +$5.4k   mixed -> FAIL
+  S076 CONTROL drop two GOOD patterns: +$7.2k Y1 -- i.e. dropping GOOD
+       patterns helps Y1 as much as dropping bad ones. Noise confirmed.
+WHY bucket attribution keeps failing here: the system is SEQUENTIAL,
+not additive. Removing a losing entry does not just add its loss back
+-- it changes every subsequent entry that day (the re-entry ladder
+shifts), so a -$11,226 measured bucket is not $11,226 of recoverable
+profit. Combined with |t| = 0.41, there is nothing to harvest.
+CONCLUSION: keep all patterns. Prune only on |t| >= 2 AND a passing
+both-year test -- neither condition is met by any pattern.

@@ -993,6 +993,36 @@ for _n, _hm in zip(range(68, 72),
     EXPERIMENTS.append(C23(f"S{_n:03d}",
         f"exit window to {_hm[0]}:{_hm[1]:02d}", exit_end=_hm))
 
+# --- WAVE 2b: prune the losing patterns UNDER the 15:00 exit window --------
+# Re-measured on the S071 dump (4,102 positions): dragonfly_doji now
+# -$5,074 total (mean -$53, t=-0.41) and inverted_hammer -$6,152 (mean
+# -$24, t=-0.41) -- both NEGATIVE here, vs ~zero under the 1PM window.
+# t-stats are still weak, so these must clear the both-year guardrail on
+# their own; S076 is the paired control (drop two GOOD patterns instead --
+# if that also "helps", the ranking is noise again, as in Wave 2).
+_S71 = dict(exit_end=(15, 0))
+EXPERIMENTS.append(C23("S072", "S071 + drop dragonfly_doji",
+    sim=dict(buy_set=set(_ALLP) - {"dragonfly_doji"}), **_S71))
+EXPERIMENTS.append(C23("S073", "S071 + drop inverted_hammer",
+    sim=dict(buy_set=set(_ALLP) - {"inverted_hammer"}), **_S71))
+EXPERIMENTS.append(C23("S074", "S071 + drop BOTH losing patterns",
+    sim=dict(buy_set=set(_ALLP) - {"dragonfly_doji", "inverted_hammer"}),
+    **_S71))
+EXPERIMENTS.append(C23("S075", "S071 + drop both + rsi_cross_up",
+    sim=dict(buy_set=set(_ALLP) - {"dragonfly_doji", "inverted_hammer",
+                                   "rsi_cross_up"}), **_S71))
+EXPERIMENTS.append(C23("S076",
+    "CONTROL S071 + drop two GOOD patterns (spinning_top, morning_star)",
+    sim=dict(buy_set=set(_ALLP) - {"bullish_spinning_top",
+                                   "morning_star"}), **_S71))
+# S077/S078: S071 under the C30 sizing regime the live book actually uses
+# (capped R50). Flat-budget proxies at the measured liquidity tiers --
+# the true dynamic R50 replay runs separately in c23_r50_dynamic-style.
+EXPERIMENTS.append(C23("S077", "S071 at $60k slot (C30 mid-tier)",
+    sim=dict(budget=60_000.0), **_S71))
+EXPERIMENTS.append(C23("S078", "S071 at $120k slot (C30 cap)",
+    sim=dict(budget=120_000.0), **_S71))
+
 BYID = {e["id"]: e for e in EXPERIMENTS}
 
 
