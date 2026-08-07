@@ -1154,3 +1154,43 @@ of occasional no-fills.
 CAVEAT: none of this models a FAILED fill (order never executes) or a
 partial. Those are opportunity cost, not loss, and the ORB ratchet
 re-arms at the next session high -- but they are unmeasured here.
+
+## PRIOR-SESSION AUDIT 2026-08-07 -- REAL FINDING: the live rvol gate is broken
+
+The Aug-6 replay (Massive data now available) shows the simulator
+COMMITTED to a name the live session REJECTED:
+  2026-08-06 pool 24. WYHG (7AM +82.6%) and CLRO (7AM +99.2%) rejected
+  on calm-gap -- live agreed. Then #2 PN: gain +123.5%, rvol 16.1,
+  7AM gap +1.0% -> ** COMMITTED **, 15 trades, day P&L +$1,333.49.
+  LIVE REJECTED PN at 10:53 with "rvol FAIL ~0.9".
+ROOT CAUSE (quantified):
+  PN full-day volume        12,672,415
+  PN 50-day average volume     787,381
+  FULL-DAY rvol = 16.1   <- what the backtest's gate measures
+  cumulative volume at 10:53 ~703,000 -> 0.9  <- what live divided
+The live check divides PARTIAL-day cumulative volume by a FULL-day
+average. That is apples-to-oranges: early in a session cumulative
+volume is naturally a fraction of a full day, so live rvol is
+systematically UNDER-reported all morning and the gate rejects valid
+candidates. This is very likely a contributor to four paper sessions
+with zero completed trades.
+DEEPER ISSUE (must not be papered over): the BACKTEST's rvol>=5 gate
+uses the COMPLETE day's volume, which is unknowable at 7AM. The
+candidate universe is therefore partly HINDSIGHT-SELECTED. Live cannot
+reproduce that gate exactly, only approximate it. Options:
+  (a) time-of-day-adjusted rvol -- compare cumulative volume to the
+      average cumulative volume at the SAME time of day (causal,
+      standard practice);
+  (b) project full-day volume from current pace;
+  (c) use a short-window relative volume (e.g. last 30 min vs its own
+      norm).
+(a) is the correct fix and should be implemented and BACKTESTED before
+adoption -- swapping the gate changes the candidate pool, so the whole
+edge must be re-measured under it, not assumed to survive.
+INTERIM (today): live sessions must NOT reject on the current broken
+ratio alone. Where partial-day rvol fails but the name is otherwise
+clean, log it as a WATCH rather than a permanent reject.
+Running scorecard, live vs simulator: Aug 4 sim -$2,252 (live $0);
+Aug 5 sim $0 = live $0; Aug 6 sim +$1,333 (live $0). Net the simulator
+is -$919 over the three days, so live is still AHEAD -- but for the
+wrong reason, and the Aug-6 miss was a winner.

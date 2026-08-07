@@ -1,0 +1,181 @@
+{
+ "date": "2026-08-07",
+ "config": "C35",
+ "mode": "paper",
+ "protocol": "resting-order",
+ "sizing": {
+  "first_entry": 25000,
+  "later_entry": 15000,
+  "max_deployed": 100000,
+  "ticket_cap": "20% of trailing 10-min dollar volume"
+ },
+ "cumulative_deployed": 0,
+ "candidates": [
+  {
+   "sym": "MB",
+   "first_seen": "07:30",
+   "prev_close": 3.8,
+   "px_7am": 14.43,
+   "gates": {
+    "calm_gap_7am": "FAIL +280.0% (>+20%)"
+   },
+   "outcome": "PERMANENT reject (exhausted gap)"
+  },
+  {
+   "sym": "DOCS",
+   "first_seen": "07:30",
+   "prev_close": 20.66,
+   "px_7am": 44.12,
+   "gates": {
+    "calm_gap_7am": "FAIL +113.5% (>+20%)"
+   },
+   "outcome": "PERMANENT reject (exhausted gap)"
+  },
+  {
+   "sym": "NAMI",
+   "first_seen": "07:30",
+   "prev_close": 2.88,
+   "px_7am": 7.09,
+   "gates": {
+    "calm_gap_7am": "FAIL +146.2% (>+20%)"
+   },
+   "outcome": "PERMANENT reject (exhausted gap)"
+  },
+  {
+   "sym": "DSY",
+   "first_seen": "07:30",
+   "prev_close": 3.45,
+   "px_7am": 6.09,
+   "gates": {
+    "calm_gap_7am": "FAIL +76.5% (>+20%)"
+   },
+   "outcome": "PERMANENT reject (exhausted gap)"
+  },
+  {
+   "sym": "VATE",
+   "first_seen": "07:30",
+   "prev_close": 7.41,
+   "px_7am": 10.47,
+   "gates": {
+    "calm_gap_7am": "FAIL +41.3% (>+20%)"
+   },
+   "outcome": "PERMANENT reject (exhausted gap)"
+  },
+  {
+   "sym": "PUBM",
+   "first_seen": "07:30",
+   "prev_close": 13.48,
+   "px_7am": 18.34,
+   "gates": {
+    "calm_gap_7am": "FAIL +36.1% (>+20%)"
+   },
+   "outcome": "PERMANENT reject (exhausted gap)"
+  },
+  {
+   "sym": "TEAM",
+   "first_seen": "07:30",
+   "prev_close": 110.17,
+   "px_7am": 145.0,
+   "gates": {
+    "calm_gap_7am": "FAIL +31.6% (>+20%)"
+   },
+   "outcome": "PERMANENT reject (exhausted gap)"
+  },
+  {
+   "sym": "DUKR",
+   "first_seen": "07:30",
+   "prev_close": 5.65,
+   "px_7am": 5.65,
+   "gates": {
+    "calm_gap_7am": "pass 0.0%",
+    "rvol_50d": "FAIL 0.0 (no trades today)"
+   },
+   "outcome": "reject (rvol); ERROR scan row stale (showed Last 9.30 / vol 26520)"
+  },
+  {
+   "sym": "STLN",
+   "first_seen": "07:37",
+   "prev_close": 4.99,
+   "px_7am": 6.6,
+   "gates": {
+    "calm_gap_7am": "FAIL +32.3%"
+   },
+   "outcome": "PERMANENT reject (gap)"
+  },
+  {
+   "sym": "FIGS",
+   "first_seen": "07:37",
+   "prev_close": 11.24,
+   "px_7am": 14.25,
+   "gates": {
+    "calm_gap_7am": "FAIL +26.8%"
+   },
+   "outcome": "PERMANENT reject (gap)"
+  },
+  {
+   "sym": "RCEL",
+   "first_seen": "07:37",
+   "prev_close": 4.75,
+   "px_7am": 5.8788,
+   "gates": {
+    "calm_gap_7am": "FAIL +23.8%"
+   },
+   "outcome": "PERMANENT reject (gap)"
+  },
+  {
+   "sym": "HTZ",
+   "first_seen": "07:37",
+   "prev_close": 2.02,
+   "px_7am": 2.43,
+   "gates": {
+    "calm_gap_7am": "FAIL +20.3%"
+   },
+   "outcome": "PERMANENT reject (gap)"
+  },
+  {
+   "sym": "FRD",
+   "first_seen": "07:37",
+   "prev_close": 37.72,
+   "px_7am": 50.01,
+   "gates": {
+    "calm_gap_7am": "FAIL +32.6% (ERROR: source disagreement, 44.51 quote vs 50.01 interpolated bar => +18.0% vs +32.6%)",
+    "liquidity": "85k sh/day, $1.00 premarket spread"
+   },
+   "outcome": "reject (gap, conservative reading) + thin"
+  },
+  {
+   "sym": "EUDA",
+   "first_seen": "07:37",
+   "prev_close": 16.7,
+   "px_7am": 16.7,
+   "gates": {
+    "calm_gap_7am": "pass 0.0%",
+    "liquidity": "FAIL - no trades today, 2,764 sh prior session, book 14.18/22.00 (55% spread)"
+   },
+   "outcome": "reject (untradeable)"
+  },
+  {
+   "sym": "INDI",
+   "first_seen": "07:37",
+   "prev_close": 3.43,
+   "px_7am": 4.04,
+   "gates": {
+    "calm_gap_7am": "pass +17.8%",
+    "rvol_50d": "n/a (50d avg 5,777,679 -> rvol5 needs 28.9M sh)",
+    "halal": "FAIL loans 59.46% deposits 24.07%"
+   },
+   "outcome": "NOT HALAL -> PERMANENT reject"
+  }
+ ],
+ "trades": [],
+ "l2_check": {
+  "premarket_0728ET": "REAL DATA - populated bid/ask ladders for DOCS/TEAM/MB/NAMI; 03:07 empty probe was a dead-hours artifact",
+  "rth_check": "pending"
+ },
+ "coverage_gaps": [],
+ "lessons": [
+  "SCANNER Volume column = PRIOR SESSION volume (proven exact vs RH daily bars for FRD/INDI). Never use it as an rvol numerator; Paper Day 3's KRO rvol 2.47 was yesterday's rvol.",
+  "L2 price book returns real ladders pre-market from at least 07:28 ET; the 03:07 empty probe was a dead-hours artifact."
+ ],
+ "pnl": 0.0
+}

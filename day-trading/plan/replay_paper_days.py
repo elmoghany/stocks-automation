@@ -37,7 +37,7 @@ _spec.loader.exec_module(x)
 from shared import massive  # noqa: E402
 
 GD = ROOT / "data/massive/gd"
-DATES = ["2026-08-04", "2026-08-05", "2026-08-06"]
+DATES = ["2026-08-04", "2026-08-05", "2026-08-06"]  # 08-07 replays Monday
 WARRANT_SUFFIX = ("W", "U", "R")
 
 SPEC = dict(id="C30replay", desc="C23 rules (C30 sizing base)",
