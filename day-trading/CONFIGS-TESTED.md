@@ -903,3 +903,41 @@ BEST CONFIGURATION FOR THE USER'S ACTUAL ACCOUNT:
   months, ~$3,254-3,588 per traded day on a $15k ticket.
 STILL REQUIRES: user sign-off on the 15:00 window (a trading-window
 change is the user's call), and it has never been paper-traded.
+
+## C34 per-position-number analysis (2026-08-07) -- which Nth trade earns
+
+Measured on the adopted config (S093 dump: 304 days, 2,180 positions,
++$1,019,966).
+  trade#   n     total      mean   win%   cumulative share
+    1    293  +201,974     +689    71%    20%
+    2    290  +295,778   +1,020    76%    49%   <- BEST single slot
+    3    286  +165,964     +580    65%    65%
+    4    279  +116,239     +417    61%    76%
+    5    269   +52,882     +197    57%    82%
+    6    258   +62,681     +243    57%    88%
+    7    244   +92,220     +378    62%    97%
+    8    144    +9,564      +66    60%    98%
+    9     67      -432       -6    46%    98%
+   10+    50   +23,097            (n too small to read)
+
+FINDINGS
+1. The SECOND trade of the day is the best slot in the strategy --
+   highest mean ($1,020 vs $689 for the first) AND highest win rate
+   (76% vs 71%). Plausible mechanism: entry #1 is the probe that often
+   gets stopped establishing the move; entry #2 buys the confirmed
+   continuation. Worth a dedicated experiment (size the 2nd ticket up)
+   -- but see the Wave 1 lesson: any such test needs an equal-capital
+   flat control before it can be believed.
+2. Trades 1-4 = 76% of profit; trades 1-7 = 97%. Trade 8 adds 1%,
+   trade 9 is net NEGATIVE (-$432, 46% win).
+3. THE CASH CAP IS ALMOST FREE. It binds on 80% of days and roughly
+   halves position count (4,102 uncapped -> 2,180, 13.5/day -> 7.2/day)
+   yet costs only ~12% of profit, because it truncates exactly the
+   low-value tail (trades 8+ = 3% of profit). Under a $100k/day ceiling
+   the strategy loses its worst trades first.
+   => Margin would buy back the 4,102-2,180 = 1,922 discarded positions
+   for ~$142k over two years, i.e. ~$74/position -- far below the
+   average of the trades you already get. Low priority.
+4. Corollary for live trading: if a day is going badly, the value is
+   already banked by trade ~7; there is no need to force late entries
+   to "make it back" -- trade 9 has a negative expectation.
