@@ -1432,3 +1432,64 @@ There was never a reason to prefer prior-day volume; nobody chose it.
 CORRECTED: premarket volume is now computed by summing Robinhood
 extended-hours bars before 09:30 ET, and the gate is premarket DOLLAR
 volume >= $50k (size-neutral). Prior-day volume is not used anywhere.
+
+## PREMARKET GATE BY STOCK CLASS -- BACKTESTED (2026-08-07 post-close)
+## This CORRECTS two claims I made earlier today.
+
+plan/premkt_by_class.py, 4,837 candidate-days with premarket bars,
+282 traded by C35 ($939,232).
+
+MEDIAN PREMARKET FOOTPRINT BY PRICE BAND (traded days)
+  band       n    med ratio       med $        P&L
+  $2-5      85       0.500       926,305   +322,119
+  $5-20     94       0.469       425,863   +326,965
+  $20-100   51       0.805     1,942,593   +155,254
+  $100+     52       5.067    31,334,921   +134,894
+
+P&L RETAINED, one GLOBAL floor, by band:
+  ratio floor   overall   $2-5  $5-20  $20-100  $100+
+     0.01x        90%      96%    91%     79%     87%
+     0.02x        84%      84%    86%     77%     87%
+     0.05x        72%      72%    79%     65%     64%
+     1.00x        40%      31%    47%     40%     45%
+  dollar floor
+     $10,000      87%      85%    91%     80%     87%
+     $50,000      72%      77%    74%     73%     58%
+     $250,000     59%      54%    64%     65%     53%
+
+### CORRECTION 1: "one share ratio cannot serve both classes" -- WRONG.
+A LOW ratio floor (0.01x) retains 90% overall and 79-96% across ALL
+four price bands. It serves every class fine. Note the $100+ band has
+the HIGHEST median ratio (5.07x), the opposite of what I claimed -- the
+backtest's high-priced names are low-float runners, not mega-caps.
+
+### CORRECTION 2: switching to a dollar floor was not an improvement.
+At the floors I adopted, ratio 0.01x keeps 90% while dollars $50k keeps
+only 72%. I switched metrics on bad reasoning. Both work at LOW floors
+and both degrade the same way as floors rise; neither is inherently
+size-neutral in the way I asserted.
+
+### THE REAL PROBLEM: THE TWO DATA SOURCES DISAGREE
+Same symbol-day, WDFC 2026-07-10 premarket volume:
+  Massive (backtest m1 cache): 25,889 shares across 45 bars
+  Robinhood (extended bars)  :  6,393 shares across 17 bars
+  -> Massive reports ~4x MORE premarket volume than Robinhood.
+So my "TWLO 0.016x vs backtest median 1.75x" comparison was never a
+stock-class effect -- it compared a ROBINHOOD numerator against a
+MASSIVE-calibrated threshold. Cross-source, not cross-class.
+CONSEQUENCE: any floor calibrated on Massive must be scaled DOWN by
+roughly 4x before being applied to Robinhood numbers, or calibrated on
+Robinhood data directly. On one sample the scaling is ~4x; treat that
+as indicative, not established.
+
+### ADOPTED
+Live gate on ROBINHOOD numbers: premarket volume / 50-day average daily
+volume >= 0.0025 (the Massive-calibrated 0.01x scaled by ~4x), used as
+a PERMISSIVE SANITY FLOOR only. TWLO's 0.0162x clears it comfortably --
+as it must, since that trade made +$1,266.58. Dollar floor retained in
+premkt_gate.py as a secondary/reference measure at $10k-equivalent, not
+the primary. The real filtering remains gain>=10%, 7AM calm-gap, halal,
+price, and the 20%-of-10-min-volume size cap.
+STILL UNMEASURED: the false-positive rate of any of these floors --
+they are calibrated only on names that already passed the backtest's
+full-day rvol gate.

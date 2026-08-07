@@ -58,7 +58,18 @@ import sys
 #   $250k      -> 60% / 59%
 # Today's names in dollars: TWLO ~$8.4M, NRXP ~$1.4M, PUBM ~$0.5M pass;
 # FRD ~$37k fails.
-DEFAULT_DOLLAR_FLOOR = 50_000.0
+# REVISED after the by-class backtest (plan/premkt_by_class.py):
+#  * a LOW ratio floor serves EVERY price band (0.01x keeps 90% overall,
+#    79-96% per band) -- the earlier "one ratio cannot serve both
+#    classes" claim was wrong;
+#  * $50k dollars keeps only 72%, so switching metrics was not a gain;
+#  * the actual problem is CROSS-SOURCE: Massive reports ~4x more
+#    premarket volume than Robinhood on the same symbol-day (WDFC
+#    2026-07-10: 25,889 vs 6,393 shares). A Massive-calibrated floor
+#    must be scaled ~4x DOWN for live Robinhood numbers.
+# PRIMARY live gate is therefore the RATIO at 0.0025 on RH data.
+DEFAULT_RH_RATIO_FLOOR = 0.0025
+DEFAULT_DOLLAR_FLOOR = 10_000.0
 DEFAULT_FLOOR = 0.02      # legacy share-ratio, kept for reference only
 
 
