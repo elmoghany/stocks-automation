@@ -1649,3 +1649,19 @@ interactively-authenticated Robinhood MCP, none of which exist in a
 headless cloud run.
 Close-out now also runs scanner_audit.py (feed hygiene) and
 replay_paper_days.py (live-vs-simulator diff) every day.
+
+### Scanner-audit follow-up (2026-08-06 20:33 ET): Aug 6 blocked
+
+Retried after the close. Massive/Polygon free tier serves grouped-daily
+for PRIOR sessions (2026-08-05 fetched fine tonight: 12,406 rows) but
+returns HTTP 403 for the SAME day (2026-08-06) even hours after the
+close -- a plan restriction, not a timing lag we can wait out within
+the day. Consequence for the audit protocol: the day's feed-hygiene
+check and the live-vs-simulator replay CANNOT run same-day; they must
+run on the NEXT trading morning for the prior session. The daily
+close-out will still invoke them (they log the 403 as a loud ERROR
+rather than passing silently), and the next morning's run covers it.
+Aug 6's replay is therefore pending until 2026-08-07.
+Note the audit's exposure window that day is narrow anyway: the live
+feed was widened at 10:30 (7 -> ~140 rows), so only the 07:00-10:30
+stretch ran on the old narrow scan.
