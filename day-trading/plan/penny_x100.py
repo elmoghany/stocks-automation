@@ -864,6 +864,66 @@ for _sk in (0.15, 0.20, 0.25, 0.35, 0.40, 0.45):
     EXPERIMENTS.append(C21(f"X{_i}", f"scale-skip threshold {_sk}",
         sim=dict(scale_out_pressure_skip=_sk)))
     _i += 1
+
+# ---------------------------------------------------------------- S-campaign
+# 100 experiments derived from the C30 statistical deep-dive
+# (day-trading/plan/c30_stats.py). Baseline is C23 = C21 machinery inside
+# the 1PM exit window -- the live champion (C30 = C23 + capped R50 sizing).
+# Anchor S000 must reproduce +$412,879 / +$579,988 exactly.
+def C23(xid, desc, **kw):
+    sim = dict(C21SIM)
+    sim.update(kw.pop("sim", {}))
+    return T(xid, desc, pm_break=True, exit_1pm=True, sim=sim, **kw)
+
+
+EXPERIMENTS += [C23("S000", "C23 anchor (identity check)")]
+
+# --- A. Pressure-scaled sizing (finding: p_entry>=0.3 averaged 3x) ---
+# pressure_size=(win, thr_hi, mult_hi, thr_lo, mult_lo)
+for _n, _t in zip(range(1, 5), (0.20, 0.30, 0.40, 0.50)):
+    EXPERIMENTS.append(C23(f"S{_n:03d}", f"size 1.5x when p>={_t}",
+        sim=dict(pressure_size=(10, _t, 1.5, -9.9, 1.0))))
+for _n, _m in zip(range(5, 9), (1.25, 1.5, 2.0, 2.5)):
+    EXPERIMENTS.append(C23(f"S{_n:03d}", f"size {_m}x when p>=0.30",
+        sim=dict(pressure_size=(10, 0.30, _m, -9.9, 1.0))))
+for _n, (_lt, _lm) in zip(range(9, 13),
+                          ((0.0, 0.75), (0.0, 0.50),
+                           (-0.30, 0.75), (-0.30, 0.50))):
+    EXPERIMENTS.append(C23(f"S{_n:03d}", f"size {_lm}x when p<{_lt}",
+        sim=dict(pressure_size=(10, 9.9, 1.0, _lt, _lm))))
+for _n, (_hm, _lm) in zip(range(13, 16),
+                          ((1.5, 0.75), (1.5, 0.50), (2.0, 0.50))):
+    EXPERIMENTS.append(C23(f"S{_n:03d}",
+        f"both: {_hm}x p>=0.3 / {_lm}x p<0",
+        sim=dict(pressure_size=(10, 0.30, _hm, 0.0, _lm))))
+EXPERIMENTS.append(C23("S016", "pressure window 20 bars, 1.5x/0.5x",
+    sim=dict(pressure_size=(20, 0.30, 1.5, 0.0, 0.50))))
+EXPERIMENTS.append(C23("S017", "CONTROL shuffled pressure + sizing",
+    sim=dict(pressure_size=(10, 0.30, 1.5, 0.0, 0.50),
+             pressure_shuffle=True)))
+EXPERIMENTS.append(C23("S018", "CONTROL inverted sizing (p>=0.3 -> 0.5x)",
+    sim=dict(pressure_size=(10, 0.30, 0.50, 0.0, 1.5))))
+
+# --- B. Trail capture / small-peak rescue (capture ratio 0.29) ---
+for _n, _b in zip(range(19, 24), (2.0, 3.0, 4.0, 5.0, 8.0)):
+    EXPERIMENTS.append(C23(f"S{_n:03d}", f"breakeven stop at +{_b}%",
+        sim=dict(breakeven_at=_b)))
+for _n, _b in zip(range(24, 28), (2.5, 3.5, 4.5, 6.0)):
+    EXPERIMENTS.append(C23(f"S{_n:03d}", f"breakeven at +{_b}% (fine grid)",
+        sim=dict(breakeven_at=_b)))
+for _n, (_wa, _ww) in zip(range(28, 33),
+                          ((10.0, 30.0), (15.0, 40.0), (20.0, 40.0),
+                           (25.0, 50.0), (15.0, 50.0))):
+    EXPERIMENTS.append(C23(f"S{_n:03d}",
+        f"tiered trail widen@{_wa}% -> {_ww}%",
+        sim=dict(trail_widen_at=_wa, trail_wide=_ww)))
+for _n, _ts in zip(range(33, 37), (10, 15, 20, 30)):
+    EXPERIMENTS.append(C23(f"S{_n:03d}", f"time stop {_ts} min",
+        sim=dict(time_stop_min=_ts)))
+for _n, _so in zip(range(37, 41), (15.0, 20.0, 30.0, 35.0)):
+    EXPERIMENTS.append(C23(f"S{_n:03d}", f"scale-out at +{_so}%",
+        sim=dict(scale_out_at=_so)))
+
 BYID = {e["id"]: e for e in EXPERIMENTS}
 
 

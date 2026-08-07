@@ -868,7 +868,10 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     entry_cutoff_patterns=None,
                     wick_guard: float | None = None,
                     pressure_shuffle: bool = False,
-                    monster_mode: tuple | None = None) -> list[dict]:
+                    monster_mode: tuple | None = None,
+                    pressure_size: tuple | None = None,
+                    seq_size: tuple | None = None,
+                    day_state_size: tuple | None = None) -> list[dict]:
     """Run the entry/exit state machine over 1-min bars of a single day.
 
     State machine:
@@ -880,6 +883,50 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
     """
     cd = Candles(df1m)
     trades = []
+
+    def _size_mult(i: int) -> float:
+        """S-campaign sizing multipliers (all default OFF -> 1.0, so the
+        champion is byte-identical when these kwargs are unset).
+
+        Applied to buy_budget BEFORE the max_vol_frac cap, so sizing up
+        can never exceed the 20%-of-volume liquidity rule -- an upsize
+        on a thin name is silently truncated by the cap, which is the
+        realistic behaviour.
+
+        pressure_size=(win, thr_hi, mult_hi, thr_lo, mult_lo): scale by
+          the CAUSAL entry pressure P(i-1, win) -- same convention as
+          pressure_entry, so no look-ahead. Motivation: p_entry >= +0.3
+          positions averaged 3x the rest (c30_stats.py section 9).
+        seq_size=(mode, factor): 'taper' shrinks each successive
+          position (factor**n), 'ramp' grows it; n = positions already
+          closed today.
+        day_state_size=(win_mult, loss_mult, n_losses): intraday state
+          -- win_mult once the day has a winner, loss_mult once
+          n_losses have accumulated (loss branch takes precedence).
+        Multipliers compose multiplicatively when several are set.
+        """
+        m = 1.0
+        if pressure_size:
+            win, thr_hi, mult_hi, thr_lo, mult_lo = pressure_size
+            p = cd.pressure(i - 1, int(win), pressure_min_vol)
+            if p is not None:
+                if p >= thr_hi:
+                    m *= mult_hi
+                elif p < thr_lo:
+                    m *= mult_lo
+        if seq_size:
+            mode, factor = seq_size
+            n = len(trades)
+            m *= (factor ** n) if mode in ("taper", "ramp") else 1.0
+        if day_state_size:
+            win_mult, loss_mult, n_losses = day_state_size
+            losses = sum(1 for t in trades if t["pnl"] < 0)
+            if losses >= n_losses:
+                m *= loss_mult
+            elif any(t["pnl"] > 0 for t in trades):
+                m *= win_mult
+        return m
+
     state = "SCAN"
     surge_high = 0.0
     entry = 0.0
@@ -1017,7 +1064,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
             if orb_fill_mode == "close":
                 fill = cd.c[i]         # pessimistic fill (X097)
             if _entry_ok(fill) and _pressure_gates_ok(i, fill):
-                buy_budget = budget_cur * (0.5 if add_at is not None else 1.0)
+                buy_budget = (budget_cur * (0.5 if add_at is not None
+                                            else 1.0) * _size_mult(i))
                 sh = int(buy_budget // fill)
                 if max_vol_frac:
                     vbase = sum(cd.v[max(0, i - vol_frac_window + 1):i + 1])
@@ -1091,7 +1139,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
             if pats:                           # dip inverts upward -> BUY
                 entry = price * (1 + slip)
                 entry_i = i
-                buy_budget = budget_cur * (0.5 if add_at is not None else 1.0)
+                buy_budget = (budget_cur * (0.5 if add_at is not None
+                                            else 1.0) * _size_mult(i))
                 shares = int(buy_budget // entry)
                 if max_vol_frac:
                     vbase = sum(cd.v[max(0, i - vol_frac_window + 1):i + 1])
