@@ -331,8 +331,10 @@ def run_experiment(spec, label):
                     continue
                 w = df[(df.index.time >= W_START) & (df.index.time < W_END)]
                 if spec.get("exit_1pm"):
+                    # S068-S071 may override the 1PM edge via exit_end=(h,m)
+                    _ee = spec.get("exit_end", (13, 0))
                     w = df[(df.index.time >= W_START)
-                           & (df.index.time < dtime(13, 0))]
+                           & (df.index.time < dtime(*_ee))]
                 if len(w) < 20:
                     continue
                 g7 = ((float(w["Open"].iloc[0]) / c["prev_close"] - 1) * 100
@@ -939,6 +941,57 @@ EXPERIMENTS.append(C23("S042", "flat budget $17,425 (= S018 avg capital)",
 for _n, _so in zip(range(43, 47), (40.0, 45.0, 50.0, 60.0)):
     EXPERIMENTS.append(C23(f"S{_n:03d}", f"scale-out at +{_so}%",
         sim=dict(scale_out_at=_so)))
+
+# --- WAVE 2 -----------------------------------------------------------------
+# C. Pattern pruning (c30_stats: dragonfly_doji net NEGATIVE -$1,186;
+# inverted_hammer +$17/position = below transaction cost; ORB alone is 74%
+# of all profit). buy_set is a whitelist filter over BULLISH_PATTERNS.
+_ALLP = ["hammer", "inverted_hammer", "dragonfly_doji",
+         "bullish_spinning_top", "bullish_engulfing", "tweezer_bottom",
+         "morning_star", "rising_three", "rsi_cross_up", "macd_cross_up"]
+# ranked by measured mean P&L/position (c30_stats section 5)
+_RANKED = ["bullish_engulfing", "macd_cross_up", "morning_star",
+           "bullish_spinning_top", "tweezer_bottom", "hammer",
+           "rsi_cross_up", "inverted_hammer", "dragonfly_doji"]
+EXPERIMENTS.append(C23("S048", "drop dragonfly_doji (net negative)",
+    sim=dict(buy_set=set(_ALLP) - {"dragonfly_doji"})))
+EXPERIMENTS.append(C23("S049", "drop inverted_hammer (below cost)",
+    sim=dict(buy_set=set(_ALLP) - {"inverted_hammer"})))
+EXPERIMENTS.append(C23("S050", "drop both weak patterns",
+    sim=dict(buy_set=set(_ALLP) - {"dragonfly_doji", "inverted_hammer"})))
+EXPERIMENTS.append(C23("S051", "drop bottom-3 (adds rsi_cross_up)",
+    sim=dict(buy_set=set(_ALLP) - {"dragonfly_doji", "inverted_hammer",
+                                   "rsi_cross_up"})))
+EXPERIMENTS.append(C23("S052", "ORB/PMH only (no patterns at all)",
+    sim=dict(buy_set=set())))
+EXPERIMENTS.append(C23("S053", "ORB/PMH + bullish_engulfing only",
+    sim=dict(buy_set={"bullish_engulfing"})))
+for _n, _k in zip(range(54, 57), (3, 5, 7)):
+    EXPERIMENTS.append(C23(f"S{_n:03d}", f"keep top-{_k} patterns by mean",
+        sim=dict(buy_set=set(_RANKED[:_k]))))
+EXPERIMENTS.append(C23("S057", "CONTROL keep only the 3 WORST patterns",
+    sim=dict(buy_set=set(_RANKED[-3:]))))
+EXPERIMENTS.append(C23("S058", "PMH re-arm on (best mean trigger, n=99)",
+    sim=dict(pmh_rearm=True)))
+
+# D. Window optimization (c30_stats: noon ENTRIES = 18% of positions but
+# 3.1% of profit at ~$54/position ~= slippage; positions EXITING after noon
+# carry +$191,196 -- so cut entries, keep the 1PM exit window).
+for _n, _hm in zip(range(59, 64),
+                   ((11, 0), (11, 15), (11, 30), (11, 45), (12, 0))):
+    EXPERIMENTS.append(C23(f"S{_n:03d}",
+        f"entry cutoff {_hm[0]}:{_hm[1]:02d} (exits still 1PM)",
+        sim=dict(entry_cutoff=dtime(*_hm))))
+for _n, _hm in zip(range(64, 68),
+                   ((10, 0), (10, 30), (11, 0), (11, 30))):
+    EXPERIMENTS.append(C23(f"S{_n:03d}",
+        f"pattern-entry cutoff {_hm[0]}:{_hm[1]:02d} (ORB/PMH run on)",
+        sim=dict(entry_cutoff_patterns=dtime(*_hm))))
+# exit-window sweep needs the harness `exit_end` key (see run_experiment)
+for _n, _hm in zip(range(68, 72),
+                   ((12, 30), (13, 30), (14, 0), (15, 0))):
+    EXPERIMENTS.append(C23(f"S{_n:03d}",
+        f"exit window to {_hm[0]}:{_hm[1]:02d}", exit_end=_hm))
 
 BYID = {e["id"]: e for e in EXPERIMENTS}
 

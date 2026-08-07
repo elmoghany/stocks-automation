@@ -1786,3 +1786,56 @@ the PREMIUM PAID for the fat tail, not a bug. This closes the biggest
 NET: Wave 1 produced no adopted change. That is a success, not a
 failure -- two evidence-backed leads that looked strong in-sample were
 killed by controls before they reached live capital.
+
+## S-CAMPAIGN WAVE 2 (S048-S071, 2026-08-07)
+
+### C. Pattern pruning -- REJECTED (per-pattern P&L is statistical noise)
+Nothing passed both years: drop dragonfly_doji +$5.7k/-$4.8k; drop
+inverted_hammer -$6.8k/+$13.5k; drop both -$3.6k/+$7.6k; drop bottom-3
+-$8.7k/+$3.1k; top-3/5/7 keeps all mixed-to-worse.
+WHY -- t-tests on the per-position means that motivated this family:
+  dragonfly_doji  n=60  mean -$20  se $192  t=-0.10
+  inverted_hammer n=183 mean +$17  se  $74  t=+0.22
+  rsi_cross_up    n=32  mean +$51  se $155  t=+0.33
+Those "losing patterns" are indistinguishable from zero. Only ORB
+(t=8.80), PMH-break (t=3.56) and bullish_engulfing (t=2.81) are
+statistically real. The CONTROL nailed it: keeping ONLY the 3 worst
+patterns (S057) scored +$413,412 in Y1 -- BEATING the top-3 keep
+(S054, +$410,871). A ranking whose bottom beats its top is noise.
+LESSON: never prune on unsigned per-bucket means; require |t| >= 2.
+Also learned: patterns as a CLASS do earn their keep -- ORB/PMH only
+(S052) loses $128k over two years and trades fewer days.
+
+### D. Entry cutoffs -- REJECTED (monotonic, and it costs whole days)
+11:00 -$84k/-$134k, 11:15, 11:30, 11:45 all worse, 12:00 still
++$1.5k/-$32.5k. The c30_stats finding (noon entries = 18% of positions
+for 3.1% of profit) was TRUE but not ACTIONABLE: those positions are
+still net positive, and cutting them removes whole trading days
+(133->117 days at an 11:00 cutoff) because some days' only qualifying
+entry arrives late. Same lesson as Wave 1: a low per-position mean
+does not make a bucket removable.
+Pattern-only cutoffs (S064-S067) were flat; 11:00 was the best at
++$14.1k/+$0.4k -- below the floor.
+
+### D2. EXIT WINDOW -- FIRST GENUINE PASS OF THE S-CAMPAIGN
+Extending only the EXIT edge (entries unchanged, still ending at noon)
+is monotonically better out to 15:00:
+  12:30  -$8.9k / -$16.4k     (worse)
+  13:00  BASELINE C23          +$412,879 / +$579,988
+  13:30  +$27.8k / +$9.7k   dComb +$37.5k  negm 0/12, 0/10   PASS
+  14:00  +$38.5k / +$17.0k  dComb +$55.5k  negm 0/12, 1/10   fails negm
+  15:00  +$93.1k / +$75.7k  dComb +$168.8k negm 0/12, 0/10   PASS (!)
+S071 (15:00) is the strongest single result in the campaign: +17% on
+the two-year total with ZERO negative months in either year, and days
+traded rise 133->138 / 147->155 (late exits let more days qualify).
+Adjacency is clean and monotone with a single dip at 12:30.
+STATUS: NOT ADOPTED -- this is a TRADING-WINDOW CHANGE and the window
+is the user's decision, not the optimizer's. History: the user
+withdrew a 1PM extension once ("keep noon"), then re-adopted it
+("make c11 the default"). Extending to 13:30/15:00 requires the same
+explicit sign-off. Flagged for the user with the numbers above.
+CAVEAT to weigh: a later flatten means positions are held into the
+afternoon, which is a different liquidity/attention regime than the
+morning the strategy was designed around, and the 15:00 variant holds
+through the lunchtime lull. The backtest says it works; it has never
+been paper-traded.
