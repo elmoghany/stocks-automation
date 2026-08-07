@@ -552,6 +552,21 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
     combined = loan_pct + cash_pct
     haram_pct = (abs(interest_inc) / annual_rev * 100) if annual_rev > 0 else 0
 
+    # DATA-PRESENCE CHECK (added 2026-08-07 after the live session found
+    # SSP, RMCO and GTN returning PASS on ALL-ZERO fundamentals). With no
+    # balance sheet every ratio computes to 0.0 and every test passes, so
+    # "no data" was silently indistinguishable from "verified permissible"
+    # -- the worst possible failure for a gate whose whole job is to
+    # refuse. Absence of evidence must never read as compliance.
+    if mcap <= 0 or (total_debt == 0 and cash_total == 0
+                     and total_rev == 0):
+        return {
+            "loan_pct": None, "cash_pct": None, "combined": None,
+            "haram_pct": None, "halal": False,
+            "fail_reason": "NO FUNDAMENTALS DATA -- cannot verify, "
+                           "refusing (not a compliance failure)",
+        }
+
     loan_ok = loan_pct <= 10 or combined <= 20
     cash_ok = cash_pct <= 10 or combined <= 20
     combined_ok = combined <= 20

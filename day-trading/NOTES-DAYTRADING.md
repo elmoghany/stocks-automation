@@ -2525,3 +2525,48 @@ was deployed against C35's expected 6-7 entries: the gates worked.
 Scanner note: the feed's "Relative volume" column is the literal string "1" on
 every row, and its "Volume" column is the prior session's. Only Last and
 % Change are live.
+
+## POST-CLOSE FIXES 2026-08-07 (premarket numerator/threshold + halal_check)
+
+### 1. Premarket gate: share-ratio REPLACED by DOLLAR volume
+The agent proved the scanner's Volume column is the PRIOR SESSION's
+volume, not today's premarket (FRD scan 151,628.03 vs RH 2026-08-06 bar
+151,628; TWLO 4,539,755 vs 4,539,744). So this morning's "live
+validation" (NAMI 39.7x, TWLO 2.0x) was yesterday's rvol -- it proved
+nothing about premarket, and I had presented it as proof. My error.
+TRUE premarket volume, pulled after today's close from RH extended
+5-min bars:
+  TWLO  36,614 sh (1.2% of the day)  = 0.0162x avg50   ~$8.4M
+  NRXP 391,018 sh (10.1%)                              ~$1.4M
+  PUBM  27,787 sh (1.8%)             = 0.0499x         ~$0.5M
+  FRD      772 sh (0.6%)             = 0.0091x         ~$37k
+The 0.02 share-ratio floor would have REJECTED TWLO -- today's
++$1,266.58 winner. Root cause: the floor was calibrated on PENNY
+GAPPERS (backtest median 1.75x), which trade huge premarket volume
+relative to their small normal size. Large caps do not. One share ratio
+cannot serve both classes.
+ADOPTED: premarket DOLLAR volume >= $50,000 -- size-neutral, and
+already calibrated in premkt_signals.py ($50k floor keeps 73% of days
+and 72% of P&L; $100k 67%/64%; $250k 60%/59%). On today's real numbers
+it passes TWLO/NRXP/PUBM and rejects FRD. plan/premkt_gate.py now
+exposes verdict_dollars() as the primary gate; the share-ratio version
+is retained behind --ratio for reference only.
+
+### 2. halal_check: "no data" no longer reads as "permissible"
+The live session found SSP, RMCO and GTN returning halal=True on
+ALL-ZERO fundamentals: with no balance sheet every ratio computes to
+0.0 and every test passes. Absence of evidence was silently
+indistinguishable from verified compliance -- the worst failure mode
+for a gate whose job is to refuse. Added a data-presence check: if
+mcap <= 0, or debt/cash/revenue are all zero, return halal=False with
+fail_reason "NO FUNDAMENTALS DATA -- cannot verify, refusing (not a
+compliance failure)". Verified: AAPL still passes (combined 3.21%),
+SSP and GTN now refuse with the explicit reason.
+REGRESSION AFTER THE CHANGE: C23 reproduces EXACTLY (+$412,879 /
++$579,988, 1,262 / 1,902 trades) -- the guard does not disturb the
+backtest, because backtest candidates always have fundamentals.
+
+STILL OPEN for Monday: the false-positive rate of the dollar floor is
+unmeasured (it is calibrated only on names that already passed the
+backtest's full-day rvol gate), and the backtest's own selection
+remains partly non-causal.

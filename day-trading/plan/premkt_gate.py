@@ -44,7 +44,47 @@ Exit code 0 = PASS, 1 = FAIL. Prints the ratio and the verdict.
 
 import sys
 
-DEFAULT_FLOOR = 0.02      # premarket volume as a multiple of a normal DAY
+# SUPERSEDED 2026-08-07 16:xx: the share-ratio floor is NOT size-neutral.
+# Measured on real premarket bars after today's close:
+#   TWLO  36,614 sh = 0.0162x avg50   (today's +$1,267 winner -> WOULD FAIL)
+#   FRD      772 sh = 0.0091x
+#   PUBM  27,787 sh = 0.0499x
+# The backtest's median of 1.75x came from PENNY GAPPERS, which trade
+# enormous premarket volume relative to their small normal size. Large
+# caps do not, so one share-ratio cannot serve both. Premarket DOLLAR
+# volume is size-neutral and was already calibrated:
+#   $50k floor -> 73% of days, 72% of P&L kept   <- ADOPTED
+#   $100k      -> 67% / 64%
+#   $250k      -> 60% / 59%
+# Today's names in dollars: TWLO ~$8.4M, NRXP ~$1.4M, PUBM ~$0.5M pass;
+# FRD ~$37k fails.
+DEFAULT_DOLLAR_FLOOR = 50_000.0
+DEFAULT_FLOOR = 0.02      # legacy share-ratio, kept for reference only
+
+
+def verdict_dollars(pm_volume, pm_vwap, floor=DEFAULT_DOLLAR_FLOOR):
+    """PRIMARY GATE: premarket DOLLAR volume >= floor.
+
+    Size-neutral, so it works on a $3 penny gapper and a $230 large cap
+    alike -- unlike the share ratio, which rejected TWLO at 0.016x on a
+    day it made +$1,267. Fails LOUDLY on unusable input rather than
+    admitting."""
+    try:
+        pm_volume = float(pm_volume)
+        pm_vwap = float(pm_vwap)
+    except (TypeError, ValueError):
+        return False, None, "ERROR: non-numeric input"
+    if pm_vwap <= 0:
+        return False, None, "ERROR: premarket price missing or zero"
+    if pm_volume < 0:
+        return False, None, "ERROR: negative premarket volume"
+    dollars = pm_volume * pm_vwap
+    if dollars >= floor:
+        return True, dollars, (f"PASS premkt-dollars ${dollars:,.0f} "
+                               f"(floor ${floor:,.0f})")
+    return False, dollars, (f"FAIL premkt-dollars ${dollars:,.0f} "
+                            f"(floor ${floor:,.0f}) -- no meaningful "
+                            f"premarket footprint")
 
 
 def verdict(pm_volume, avg50_daily, floor=DEFAULT_FLOOR):
@@ -70,11 +110,19 @@ def verdict(pm_volume, avg50_daily, floor=DEFAULT_FLOOR):
 
 
 def main():
-    if len(sys.argv) < 3:
+    """python premkt_gate.py PM_VOLUME PM_VWAP [FLOOR]      (dollar gate)
+       python premkt_gate.py --ratio PM_VOLUME AVG50 [FLOOR] (legacy)"""
+    args = sys.argv[1:]
+    if len(args) < 2:
         print(__doc__)
         sys.exit(2)
-    floor = float(sys.argv[3]) if len(sys.argv) > 3 else DEFAULT_FLOOR
-    ok, ratio, msg = verdict(sys.argv[1], sys.argv[2], floor)
+    if args[0] == "--ratio":
+        args = args[1:]
+        floor = float(args[2]) if len(args) > 2 else DEFAULT_FLOOR
+        ok, _, msg = verdict(args[0], args[1], floor)
+    else:
+        floor = float(args[2]) if len(args) > 2 else DEFAULT_DOLLAR_FLOOR
+        ok, _, msg = verdict_dollars(args[0], args[1], floor)
     print(msg)
     sys.exit(0 if ok else 1)
 

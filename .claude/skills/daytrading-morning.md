@@ -324,3 +324,17 @@ premarket footprint, NOT to select. Backtest keeps 84% of P&L at that
 floor and LESS as the floor rises. Real filtering = +10% gain, 7AM
 calm-gap <= +20%, halal, price >= prev_close x1.10, 20%-of-10-min-volume
 size cap. Log both raw numbers with every decision.
+
+## GATE CORRECTIONS 2026-08-07 (post-close)
+
+PREMARKET GATE = DOLLAR VOLUME, not a share ratio:
+  python day-trading/plan/premkt_gate.py PM_VOLUME PM_VWAP
+  floor $50,000. Size-neutral -- the share-ratio version rejected TWLO
+  (0.016x) on a day it made +$1,267, because that floor was calibrated
+  on penny gappers whose premarket dwarfs their normal size.
+  NUMERATOR WARNING: the scanner's Volume column is the PRIOR SESSION'S
+  volume, NOT today's premarket. Always compute premarket volume by
+  summing RH extended minute/5-min bars before 09:30 ET.
+HALAL: halal_check now returns halal=False with "NO FUNDAMENTALS DATA"
+when mcap<=0 or debt/cash/revenue are all zero. Treat that as
+"cannot verify -> do not trade", distinct from a compliance failure.
