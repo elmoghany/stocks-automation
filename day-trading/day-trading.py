@@ -158,9 +158,21 @@ DEFAULT_SCALE_OUT_PRESSURE_SKIP = 0.30  # C23: skip banking while buyers dominat
                                  # C21: skip the 1/3 bank at +25% while
                                  # buyers still dominate (P >= +0.3)
 DEFAULT_WICK_GUARD = 3.0         # C21: ignore one-bar wicks >3x closes
+# --- C34 (adopted 2026-08-07, = backtest S093) -----------------------------
+# Cash-account reality: no margin, T+1 settlement, so only this many dollars
+# of cost basis can be deployed per DAY across all entries (last ticket is
+# sized with whatever remains, then entries stop until tomorrow).
+DEFAULT_DAILY_DEPLOY_CAP = 100_000.0
+# Patterns excluded by user decision 2026-08-07. NOTE FOR THE RECORD: their
+# measured edge is statistically indistinguishable from zero (dragonfly_doji
+# t=-0.41, inverted_hammer t=-0.41) and removal FAILED the both-year
+# guardrail in all three tests (Wave 2, Wave 2b, and under the cash cap:
+# Y1 -$2,780 / Y2 +$17,574). Adopted at the user's direction; expect ~0
+# effect, not the +$14.8k the in-sample number suggests.
+DEFAULT_EXCLUDED_PATTERNS = {"dragonfly_doji", "inverted_hammer"}
                                  # in peak/scale/trail tracking
 DEFAULT_ENTRY_END = dtime(12, 0)   # strict window: entries end noon
-DEFAULT_EXIT_END = dtime(13, 0)    # C23 default: 1PM re-adopted 2026-08-05
+DEFAULT_EXIT_END = dtime(15, 0)    # C34 (adopted 2026-08-07): exits to 3PM
                                  # but WITHDRAWN by user 2026-08-04 --
                                  # everything flat by NOON, same day
 DEFAULT_TRAIL_PCT = 20.0         # trailing exit: sell on 20% retrace from peak

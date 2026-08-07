@@ -7,7 +7,7 @@ State:  data/paper/position.json (peak / scaled survive restarts)
 Exits per C10: bank 1/3 at +25%, trail 20% from peak (12% when
 sellers dominate / 30% when buyers do -- monitor prints pressure),
 hard stop -8%,
-forced flatten at 1PM ET (C23 default). Prints one line per event:
+forced flatten at 3PM ET (C34 default). Prints one line per event:
   TICK / SCALE-OUT / EXIT-STOP / EXIT-FLATTEN  (P&L included)
 Data: yfinance 1-min bars + fast_info last price (paper-grade feed).
 """
@@ -70,11 +70,11 @@ def main():
           f"(peak {peak:.2f}, scaled {scaled})", flush=True)
     while True:
         t = now_et()
-        if t.hour >= 13:   # 1PM flatten (C23 default, re-adopted 2026-08-05)
+        if t.hour >= 15:   # 3PM flatten (C34, adopted 2026-08-07)
             px, _ = latest(sym, tkr)
             px = px or entry
             pnl = banked + (px - entry) * shares
-            print(f"EXIT-FLATTEN {sym} @ {px:.2f}  1PM close  "
+            print(f"EXIT-FLATTEN {sym} @ {px:.2f}  3PM close  "
                   f"P&L ${pnl:+,.0f}", flush=True)
             POS_F.unlink(missing_ok=True)
             return
