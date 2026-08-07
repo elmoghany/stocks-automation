@@ -2681,3 +2681,20 @@ price, and the 20%-of-10-min-volume size cap.
 STILL UNMEASURED: the false-positive rate of any of these floors --
 they are calibrated only on names that already passed the backtest's
 full-day rvol gate.
+
+## MASSIVE RATE LIMIT MEASURED, NOT ASSUMED (2026-08-07)
+Probed directly because a stored note claimed 60 req/min while
+shared/massive.py sets _TH_INTERVAL = 12.5 (5 req/min):
+    12 requests at 1s spacing (~35 req/min actual)
+    -> ok=2, HTTP 429=10, other=0
+The code is right; the 60/min note was wrong and has been corrected.
+Consequences for any future fetch plan:
+  * cost every call at 12.5s. 500 calls ~= 105 min. 3,916 calls = 13+ h.
+  * prefer endpoints returning many rows per call. grouped_daily(date)
+    returns EVERY US ticker for one date in ONE call -- that is why the
+    30-day volume baseline is built per-DATE (~500 calls) and not
+    per-SYMBOL (~3,916 calls).
+  * threads do not help; the limit is requests/min, not concurrency.
+  * Robinhood has no such throttle but is agent-mediated only and its
+    5-minute payloads run ~215KB per symbol-week, so it cannot carry
+    bulk history either.
