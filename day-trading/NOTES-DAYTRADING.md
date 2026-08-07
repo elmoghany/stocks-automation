@@ -1665,3 +1665,73 @@ Aug 6's replay is therefore pending until 2026-08-07.
 Note the audit's exposure window that day is narrow anyway: the live
 feed was widened at 10:30 (7 -> ~140 rows), so only the 07:00-10:30
 stretch ran on the old narrow scan.
+
+## C30 statistical deep-dive (2026-08-07) -- day-trading/plan/c30_stats.py
+
+302 traded days, 3,164 positions, +$992,866 on a $15k slot.
+DISTRIBUTION: mean $3,288/day, median $1,910, sd $5,744, skew +2.59,
+kurtosis 17.8 (violently fat-tailed). p25 = $0 -- a quarter of traded
+days make nothing. Top 10% of days = 47.8% of profit (matches the
+earlier anatomy).
+KELLY: day win rate 0.699, payoff 2.72 -> full Kelly 58.8% of
+bankroll, half-Kelly 29.4%. At $15k risked per day that implies a
+~$51k bankroll at half-Kelly -- i.e. the current slot is correctly
+sized for a ~$50k account, and R50 growth to $120k implies a ~$400k
+bankroll to stay at half-Kelly. Daily return on slot +21.9% (sd 38.3%)
+-> annualized Sharpe 9.09. FLAG: a Sharpe of 9 is not a real-world
+number (Medallion is ~2.5-3). It is what a capacity-limited niche
+looks like in-sample, and it is the strongest argument that live fills
+will be worse than the sim.
+INDEPENDENCE: lag-1 autocorrelation +0.025 (lags 2/3/5 all < 0.13).
+Day after a LOSS averages +$3,343 vs +$3,221 after a win; day after a
+monster +$3,915. => Days are effectively INDEPENDENT. No basis for
+tilting size after wins/losses; no hot hand, no hangover. (Confirms
+the earlier monster-hangover null with a cleaner statistic.)
+CALENDAR: Wed weakest (mean $2,418, 63% win) vs Mon $3,945 / Fri
+$3,901; months range $1,344 (Mar) to $6,909 (Aug). n=55-70 per
+weekday -- treat as noise unless it survives a control.
+ENTRY HOUR: 9AM is the engine ($306k, mean $533, 66% win). NOON
+ENTRIES ARE NEARLY WORTHLESS: 577 positions (18% of all) produce
+$30,975 (3.1% of profit), mean $54/position -- roughly slippage-sized.
+But positions EXITING after noon carry $191,196: the 1PM window earns
+its keep on EXITS, not on new entries.
+TRIGGERS: ORB = 1,442 positions and $736,241 (74% of all profit),
+mean $511. PMH-break has the best mean ($550, 67% win) on only 99
+shots. Bottom of the table: dragonfly_doji LOSES (-$1,186, n=60) and
+inverted_hammer is below transaction cost (+$17/position, n=183);
+rsi_cross_up n=32 is noise.
+EXITS: bearish-pattern exits +$1,618,921 (n=1,450) and scale-outs
++$234,364 are the profit engine; STOPS are the entire loss column
+(-$897,536 over 1,301 positions, mean -$690); noon/1PM flatten is
+small (+$37,117, 44% win).
+RE-ENTRY LADDER: positions #0-#3 = $697k of the $993k. #7 and #8 are
+net negative (-$13.8k, -$11.5k) but #9+ is +$151,705 across 1,031
+positions -- the deep tail is where monster days live, so capping
+re-entries would cut the fat tail. Do NOT cap.
+TRAIL EFFICIENCY (the biggest finding): median position peaks +7.80%
+and we keep +1.96% -- a median capture ratio of 0.29. By peak size:
+0-5% peaks capture NEGATIVE (median kept -7.9%); 5-15% keep 0.30;
+15-40% keep 0.62; 40%+ keep 0.60. We give back ~40% of every big move
+and small-peak positions systematically turn into losers.
+ENTRY PRESSURE: corr(p_entry, pnl) = +0.086 overall, but the top
+bucket is dramatic -- p_entry >= +0.30 averages $751/position (65%
+win) vs $213-263 for every other bucket, on n=475. Prior work rejected
+pressure as an entry GATE (it destroys ORB timing); it has never been
+tested as a SIZING input.
+DAY FEATURES: corr(P&L, #positions) = +0.305 (monster days are long
+ladders); corr(P&L, hour of first entry) = -0.115 (earlier start =
+better day).
+DATA GAP (no silent fallback): the c23 trade dump omits g7 and rank,
+so gap-band and pool-rank correlations could not be computed here --
+re-dump with those fields before relying on sections 10/11.
+
+### Ranked improvement hypotheses from the above (untested)
+1. PRESSURE-SCALED SIZING (not gating): size up when p_entry >= +0.30,
+   down otherwise. Strongest signal in the data (3x mean P&L).
+2. BREAKEVEN / EARLY-EXIT for small-peak positions: 0-5% peaks have a
+   negative capture ratio; a breakeven stop after +2-3% may convert a
+   chunk of the -$897k stop column. (breakeven_at kwarg already exists.)
+3. PATTERN PRUNING: drop dragonfly_doji (negative) and inverted_hammer
+   (below cost). Expected small but free.
+4. ENTRY CUTOFF at 11:30-12:00: noon entries are slippage-sized;
+   under the 10bps stress they likely go negative. Keep 1PM EXITS.
