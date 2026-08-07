@@ -1089,3 +1089,37 @@ R50 test) and worst day -$5,717 (vs -$54,812). Capping deployment
 turns the strategy from a compounding machine into a cash-generating
 one: roughly half the wealth arrives as banked cash never at risk
 again.
+
+## C35 LOSING-DAY ANALYSIS (2026-08-07) -- what a bad day actually looks like
+
+From the capped-compounding curve (304 traded days, $100k/day deployed).
+
+HEADLINE: 60 losing days of 304 = 20%. Total lost across all of them
+= -$122,841, which is only 9.5% of gross profit. Average loss -$2,047,
+median -$1,908. Average WIN is +$5,497, so the payoff ratio is 2.69x --
+the strategy loses small and wins big, which is what makes a 20% loss
+rate survivable.
+WORST DAYS (all of them, in context: the worst is -5.7% of the $100k
+deployed -- there is no catastrophic day in the sample):
+  2025-07-22 Tue  -$5,717   2025-02-28 Fri  -$5,418
+  2025-04-25 Fri  -$5,084   2025-01-14 Tue  -$4,805
+  2024-12-09 Mon  -$4,617   2025-11-24 Mon  -$4,474
+  2025-01-06 Mon  -$4,406   2024-12-11 Wed  -$3,716
+  2026-04-22 Wed  -$3,704   2024-12-03 Tue  -$3,487
+LOSING STREAKS: longest is 4 consecutive losing days (once); the rest
+are 2 or shorter. So the psychological worst case in this sample is
+about a week of small bleed, not a month.
+BY WEEKDAY (loss RATE): Wed 24% is the worst, Fri 17% the best, the
+rest 18-20%. With n=55-70 per weekday that spread is noise -- do NOT
+skip Wednesdays on this evidence.
+BY MONTH: every one of the 22 months is POSITIVE. The thinnest are
+2025-11 (+$7,114), 2026-03 (+$13,875 with 8 losing days -- the most
+losing days in any month) and 2025-04 (+$14,950, 6 losing days). The
+best are 2025-05 (+$119,691) and 2024-11 (+$91,813).
+PRACTICAL READING FOR LIVE TRADING: expect roughly one losing day per
+week, typically -$2k, occasionally -$5k, and expect at least one
+stretch of ~4 losing days in a row. A month like 2026-03 (8 losing
+days, only +$13.9k) is inside normal behaviour and is NOT evidence the
+strategy has stopped working. The failure signal to watch for would be
+a losing MONTH, which never occurred in 22 months of backtest -- if
+one happens live, that is genuinely new information.
