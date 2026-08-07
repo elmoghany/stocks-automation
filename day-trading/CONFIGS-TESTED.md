@@ -832,3 +832,31 @@ shifts), so a -$11,226 measured bucket is not $11,226 of recoverable
 profit. Combined with |t| = 0.41, there is nothing to harvest.
 CONCLUSION: keep all patterns. Prune only on |t| >= 2 AND a passing
 both-year test -- neither condition is met by any pattern.
+
+## Capital reality check + $100k flat results (2026-08-07)
+
+USER: "i have 100k in my account... we can not trade more than 6.5 the
+amount of 15k at a specific day."
+VERIFIED IN THE DATA: max CONCURRENT positions across all 302 backtest
+days = 2. The ~10.5 positions/day are SEQUENTIAL (buy, exit ~10 min
+later, re-enter the same name with the same cash). So the slot is PEAK
+EXPOSURE, not a per-day sum -- a $100k account is not limited to "6.5
+slots"; it can run ONE slot up to ~$100k. The binding constraint is
+liquidity (20%-of-10-min-volume), which we measured saturating near
+$120k, not the account.
+PRACTICAL REQUIREMENT (flagged to user): ~10 round-trips/day on the
+same cash needs a MARGIN account -- in a cash account, T+1 settlement
+makes the re-entry ladder impossible. At $100k the PDT minimum ($25k)
+is satisfied, so unlimited day trades are permitted.
+
+FLAT (no compounding) reference table, 2-year totals:
+  slot    1PM exit (C23)     15:00 exit (S071)
+  $15k    $  992,866         $1,161,713   (+17.0%)
+  $60k    $3,133,851         $3,640,881   (+16.2%)
+  $100k   $4,583,305         $5,339,841   (+16.5%)
+  $120k   $5,201,446         $6,041,126   (+16.1%)
+$100k detail -- C23: Y1 +$1,672,966 (133d) / Y2 +$2,910,339 (150d);
+S071: Y1 +$2,064,938 (138d) / Y2 +$3,274,903 (158d). Negative months
+1/10 in Y2 at $100k for BOTH configs -- a size artifact (present in
+the 1PM budget-scaling run too), not caused by the later exit.
+The exit-window gain is stable at ~+16-17% across every slot size.

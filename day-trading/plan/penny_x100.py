@@ -1022,6 +1022,13 @@ EXPERIMENTS.append(C23("S077", "S071 at $60k slot (C30 mid-tier)",
     sim=dict(budget=60_000.0), **_S71))
 EXPERIMENTS.append(C23("S078", "S071 at $120k slot (C30 cap)",
     sim=dict(budget=120_000.0), **_S71))
+# User's real account is $100k. Max CONCURRENT positions in the whole
+# backtest is 2 (verified), so the slot is peak exposure, not a per-day
+# sum -- these are FLAT (no compounding) runs at that size.
+EXPERIMENTS.append(C23("S079", "C23 1PM exit at $100k slot, FLAT",
+    sim=dict(budget=100_000.0)))
+EXPERIMENTS.append(C23("S080", "S071 15:00 exit at $100k slot, FLAT",
+    sim=dict(budget=100_000.0), **_S71))
 
 BYID = {e["id"]: e for e in EXPERIMENTS}
 
