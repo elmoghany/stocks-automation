@@ -1493,3 +1493,28 @@ price, and the 20%-of-10-min-volume size cap.
 STILL UNMEASURED: the false-positive rate of any of these floors --
 they are calibrated only on names that already passed the backtest's
 full-day rvol gate.
+
+## V-SWEEP COMPLETE (2026-08-07): CAUSAL VOLUME FLOORS ONLY SUBTRACT
+36 variants, 2 years, C35 machinery, old (gappers2) pool. V000 attaches
+the causal-rvol table with floor 0 -- its 1.3% gap vs C35 ($1,148,091
+vs $1,163,538) is pure data-existence cost (candidate must have
+premarket m1 bars + a fresh 30-session baseline).
+
+RESULT: ALL 35 floored variants finish BELOW the control, and the
+ordering is strictly monotone in strictness on both axes:
+  * every floor level loses money at every decision time;
+  * the EARLIER the measurement, the worse the same floor performs
+    (0.005 at 09:30 keeps 91%; at 07:00 keeps 55%).
+Best gated variant: V029/V030 (09:30 >= 0.0005/0.001) at 96% -- still
+a loss vs doing nothing. Worst: V007 (07:00 >= 0.05) at 31%.
+
+VERDICT: volume-at-decision-time carries NO positive selection signal
+on this pool. Every dollar a causal volume floor "filters" is a dollar
+of foregone P&L, roughly in proportion to days removed. This matches
+the static join and the premarket-floor findings; it is now confirmed
+in-engine with re-walks. The live premarket gate stays only as a
+sanity floor at 0.0025 (ratio, RH numbers) -- arguably it should be
+dropped entirely; keep it until the W-sweep decides the pool question.
+Open question -> W-series: does the DISCOVERY-time volume filter
+(full-day rvol>=5, non-causal) earn its keep, or is it also dead
+weight? W000 (no volume anywhere) vs W010 (old filter re-imposed).
