@@ -387,6 +387,28 @@ def run_experiment(spec, label):
                 if spec.get("rvol_admit") and c.get("hist_n", 99) < 50 \
                         and c["rvol"] < spec["rvol_admit"]:
                     continue
+                # gain_causal: the pool admits a day because its HIGH
+                # reached +10% -- knowable only in hindsight (the user:
+                # "the backtest knows info that exist in the future.
+                # cheats."). Honest mimic: find the FIRST minute price
+                # touched +10% and bar entries until the NEXT minute;
+                # never crossed by 12:00 -> never a candidate at all.
+                if spec.get("gain_causal"):
+                    pc = c.get("prev_close") or 0
+                    if pc <= 0 or df is None:
+                        continue
+                    thr_px = 1.10 * pc
+                    cross = None
+                    for ts, bh in zip(df.index, df["High"].values):
+                        if ts.time() > dtime(12, 0):
+                            break
+                        if float(bh) >= thr_px:
+                            cross = ts
+                            break
+                    if cross is None:
+                        continue
+                    nxt = cross + __import__("pandas").Timedelta(minutes=1)
+                    c["_gc_start"] = max(dtime(7, 0), nxt.time())
                 # W010: old-style FULL-DAY filter on the novol pool.
                 # NON-CAUSAL (peeks at the day's final volume) -- kept
                 # only as a reference point, never adoptable live.
@@ -412,6 +434,8 @@ def run_experiment(spec, label):
             if committed is None:
                 continue
             c, w, df = committed
+            if spec.get("gain_causal") and c.get("_gc_start"):
+                spec.setdefault("sim", {})["entry_start"] = c["_gc_start"]
             if spec.get("pm_break"):
                 pm = premkt_metrics(df, c["prev_close"])
                 if pm:
@@ -420,6 +444,8 @@ def run_experiment(spec, label):
             tr = sim_window(w, c, spec)
             if spec.get("pm_break"):
                 spec["sim"].pop("extra_break_high", None)
+            if spec.get("gain_causal"):
+                spec.get("sim", {}).pop("entry_start", None)
 
             # --- fallback re-pick overlay (X015-X018)
             fb = spec.get("fallback")
@@ -1174,6 +1200,23 @@ EXPERIMENTS.append(C23("W007", "novol pool + causal 09:30 rvol >= 0.05",
     sim=dict(_W35), pool="novol", causal_rvol=("0930", 0.05), **_S71))
 EXPERIMENTS.append(C23("W010", "novol pool + NON-CAUSAL rvol30>=5 (ref)",
     sim=dict(_W35), pool="novol", rvol30_min=5.0, **_S71))
+
+# --- look-ahead audit (user: "the backtest knows info that exist in
+# the future. cheats. what should we test?"). Three leaks: (1) pool
+# volume -- V/W series above; (2) pool admission by the day's HIGH
+# reaching +10%, unknowable until it happens -> gain_causal bars
+# entries until the minute AFTER the first +10% touch; (3) walk order
+# by full-day gain -> rank="pm_gain" orders by premarket gain instead.
+EXPERIMENTS.append(C23("V100", "C35 + first-crossing entry (old pool)",
+    sim=dict(_W35), gain_causal=True, **_S71))
+EXPERIMENTS.append(C23("W101", "novol + first-crossing entry",
+    sim=dict(_W35), pool="novol", gain_causal=True, **_S71))
+EXPERIMENTS.append(C23("W102", "novol + first-crossing + 07:30>=0.005",
+    sim=dict(_W35), pool="novol", gain_causal=True,
+    causal_rvol=("0730", 0.005), **_S71))
+EXPERIMENTS.append(C23("W103", "novol + first-crossing + pm_gain rank",
+    sim=dict(_W35), pool="novol", gain_causal=True, rank="pm_gain",
+    **_S71))
 
 # --- FILL REALISM on C35 (user 2026-08-07: "check the buy and exit if
 # they are realistic"). The backtest fills breakouts AT the trigger; a
