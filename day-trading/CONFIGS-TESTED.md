@@ -1054,3 +1054,38 @@ The asymmetry is also worth stating plainly: banking half of every
 profit is what produces the -13% max drawdown (vs -21.9% for the
 uncapped R50 experiment) -- taking money off the table is doing real
 risk work here, not just bookkeeping.
+
+## C35 COMPOUNDED, DEPLOYMENT CAPPED AT $100k/day (2026-08-07) -- THE PLANNING FIGURE
+
+User: "cap at 100k". Model: the account compounds (half of each day's
+profit reinvested, losses in FULL) but the amount put to work on any
+single day is min($100,000, account). Profits above the ceiling
+accumulate as idle cash; if losses pulled the account under $100k the
+tickets would shrink until profits rebuilt it. Script:
+plan/c35_compound.py (DEPLOY_CEILING).
+
+RESULT over the two backtest years (304 traded days), from $100,000:
+  final account          $  620,348
+  cash banked            $  643,190   (the half never reinvested)
+  TOTAL WEALTH           $1,263,538
+  max account drawdown        -4.3%
+  losing days            60/304 (20%)
+  worst single day       -$5,717
+  days forced below the ceiling: 0/304 -- the account never dipped
+  under $100k, so the cap bound on EVERY trading day.
+COMPARISON
+  flat C35, no compounding     $1,163,538 profit
+  compounded + $100k ceiling   $1,263,538 total wealth (+$100,000)
+  compounded, NO ceiling       $4,334,310 -- but that run implies
+    $375k tickets, far beyond the measured $120k liquidity
+    saturation, so it is extrapolation rather than a forecast.
+WHY THE CAPPED NUMBER IS THE ONE TO PLAN AGAINST: every ticket stays
+at the $25k/$15k sizes actually measured, so no fill in the run is
+larger than the budget-scaling study validated. It is the only
+compounding figure here containing no size extrapolation.
+RISK PROFILE improves sharply against the uncapped variants: max
+drawdown -4.3% (vs -13.0% uncapped, -21.9% for the old full-reinvest
+R50 test) and worst day -$5,717 (vs -$54,812). Capping deployment
+turns the strategy from a compounding machine into a cash-generating
+one: roughly half the wealth arrives as banked cash never at risk
+again.
