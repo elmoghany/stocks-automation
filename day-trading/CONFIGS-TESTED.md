@@ -1017,3 +1017,40 @@ costs ~2.3x what it does today. Monthly records stay clean in-sample,
 but this is the variance the backtest cannot fully price, and none of
 it has met a live fill. Recommend adopting the $25k version (the one
 the user specified) and treating $35k as a separate decision.
+
+## C35 COMPOUNDED from $100k (2026-08-07) -- with a size-realism caveat
+
+Model (user's rule): the account IS the daily cash cap; profit days
+add HALF the day's P&L to the account (the other half is banked and
+never risked again); loss days subtract the FULL loss. Tickets scale
+with the account (first 25%, later 15%), so $100k reproduces C35's
+$25k/$15k/$100k exactly. Script: plan/c35_compound.py.
+
+RAW RESULT over the two backtest years (304 traded days):
+  final account   $1,500,287
+  cash banked     $2,834,022   (the half never reinvested)
+  TOTAL WEALTH    $4,334,310   from $100,000
+  max account drawdown -13.0%; 96/304 losing days (32%);
+  worst day -$54,812; median day +$8,136
+  milestones: $150k on 2024-11-05, $250k on 2024-12-26, $500k on
+  2025-05-09, $1M on 2025-10-24.
+
+*** CREDIBILITY CAVEAT -- READ BEFORE BELIEVING THE NUMBER ***
+By the end of the run the account implies a FIRST TICKET of $375,072
+and later tickets of $225,043. Our own budget-scaling study measured
+profit capture falling to 57-72% of linear by $120k and still
+declining, and the C35 replay does NOT re-measure liquidity at those
+sizes -- it applies the 20%-of-10-min-volume rule per fill, but a
+$375k order on a $3 penny gapper is not a realistic fill regardless
+of what the rule permits on paper. So the late-period returns here are
+optimistic by an unmeasured margin.
+Defensible reading: the trajectory is credible while tickets stay
+under roughly the $120k measured ceiling -- i.e. up to an account of
+about $480k (25% first ticket), reached around 2025-05. Everything
+after that is extrapolation. A capped version (freeze ticket growth at
+$120k / $72k once the account passes ~$480k) is the honest variant and
+should be run before this figure is used for anything.
+The asymmetry is also worth stating plainly: banking half of every
+profit is what produces the -13% max drawdown (vs -21.9% for the
+uncapped R50 experiment) -- taking money off the table is doing real
+risk work here, not just bookkeeping.

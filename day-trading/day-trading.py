@@ -170,6 +170,16 @@ DEFAULT_DAILY_DEPLOY_CAP = 100_000.0
 # Y1 -$2,780 / Y2 +$17,574). Adopted at the user's direction; expect ~0
 # effect, not the +$14.8k the in-sample number suggests.
 DEFAULT_EXCLUDED_PATTERNS = {"dragonfly_doji", "inverted_hammer"}
+# --- C35 (adopted 2026-08-07, = backtest S095) -----------------------------
+# Front-load the day's cash: the FIRST entry of the day gets a bigger
+# ticket, every later entry gets the normal one, until the daily cash cap
+# is spent (1 x $25k + 5 x $15k = $100k exactly). CAPITAL-NEUTRAL vs C34 --
+# the cap binds either way, so this is pure allocation, not leverage.
+# Backtest: $1,163,538 / 2yr vs C34 $1,019,966 (+$143,572), 0/22 neg months.
+# Controls confirmed placement matters (1st > 2nd > 3rd) but most of the
+# gain comes from spending the cap on EARLY entries rather than late ones.
+DEFAULT_FIRST_TICKET = 25_000.0
+DEFAULT_TICKET = 15_000.0
                                  # in peak/scale/trail tracking
 DEFAULT_ENTRY_END = dtime(12, 0)   # strict window: entries end noon
 DEFAULT_EXIT_END = dtime(15, 0)    # C34 (adopted 2026-08-07): exits to 3PM
