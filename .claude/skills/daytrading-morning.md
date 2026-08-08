@@ -419,8 +419,14 @@ chain). Outputs in day-trading/data/:
   needs_mcap.json     unverifiable names: fetch RH market cap via
                       update_rh_fundamentals.py, then re-run the builder
 MORNING PROTOCOL: the 5-minute scanner FILTERS ITS RESULTS AGAINST
-halal_list.json -- no per-name fundamentals calls at scan time. A name
-not on the list is not traded, full stop. If halal_list.json is older
+halal_list.json -- no per-name fundamentals calls at scan time.
+WHILE THE UNIVERSE IS INCOMPLETE (check halal_universe.json coverage;
+yfinance rate limits stretched the first build over days): a scanner
+hit that is MISSING from halal_universe.json gets the old per-name
+live screen (RH mcap + halal_check) instead of auto-rejection -- absence
+of a verdict is not a verdict. A name with a real FAIL verdict is
+rejected without re-checking. Names passed only by "seed-rules_ytd"
+(backtest-era statements) MAY trade but re-screen them live first. If halal_list.json is older
 than ~35 days, say so loudly and refresh before trading.
 REFRESH: Windows Task Scheduler job \Stocks\HalalUniverseRefresh runs
 plan/refresh_halal_universe.cmd on the 1st of every month, 6:10 AM

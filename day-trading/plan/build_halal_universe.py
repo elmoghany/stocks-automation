@@ -62,6 +62,11 @@ THREADS = 2          # v1 with 6 threads: yfinance rate-limited after ~900
                      # halal of 10,761, 97% "NO FUNDAMENTALS DATA").
                      # Slow and steady is the only way through 10k names.
 PACE_SEC = 0.7       # per-request pause
+# nightly Task Scheduler run sets HALAL_SLOW=1: single-file through the
+# night, gentle enough that the limiter never engages
+import os as _os
+if _os.environ.get("HALAL_SLOW"):
+    THREADS, PACE_SEC = 1, 2.5
 BREAKER = 30         # consecutive no-data results -> assume rate-limited
 BREAKER_SLEEP = 600  # and stand down for 10 minutes
 
