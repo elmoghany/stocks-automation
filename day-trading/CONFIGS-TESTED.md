@@ -1545,3 +1545,26 @@ inert; verified twice today).
 V-SWEEP VERDICT (36 variants, done): every causal volume floor loses
 money monotonically; volume-at-decision-time has no positive signal on
 the rvol-discovered pool. See table in this file above.
+
+## W109 -- THE FIRST FULLY-CAUSAL NUMBER (2026-08-08)
+User asked: "so everything was using future signal except w108?" --
+checking the spec against that question exposed that W108 still ranked
+the top-8 walk by FULL-DAY gain (leak #3, tested in W103 but never
+composed into the stack). W109 closes it: rank by premarket gain.
+
+  W109 = no volume rule + first-crossing entries + 5-min scan cadence
+         + causal sizing + filed-quarter halal + halt-aware stops
+         + 50bps premarket spread + PM-GAIN RANK
+  Year 1 +$349,327   Year 2 +$523,463   TOTAL +$872,790
+  289 traded days, 0/22 negative months.
+  Rank leak cost: $41,114 vs W108 (4.5%) -- matches W103's estimate.
+
+Every input exists at the moment of decision. This is the number live
+paper trading should reproduce, and the honest-expectancy ladder is:
+  C35 headline      $1,163,538  (three hindsight signals)
+  W000 no-volume    $1,222,869  (two)
+  W101 +crossing    $1,215,250  (one)
+  W108 five fixes     $913,904  (rank only)
+  W109 fully clean    $872,790  (none)   <- adopt as reference
+The $291k gap between C35's headline and W109 is the total look-ahead
+subsidy: ~25% of the reported edge was hindsight, 75% is real.

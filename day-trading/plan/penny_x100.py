@@ -1271,6 +1271,14 @@ EXPERIMENTS.append(C23("W108", "HONEST STACK, 5-min cadence",
     pool="novol", gain_causal=True, rescan_min=5, halal_filing=True,
     **_S71))
 
+# W109: the ONLY fully-causal config -- W108 + walk ordered by
+# premarket gain instead of full-day gain (leak #3, the last one).
+EXPERIMENTS.append(C23("W109", "FULLY CAUSAL: W108 + pm_gain rank",
+    sim=dict(_W35, vol_frac_causal=True, halt_aware=True,
+             pm_spread_bps=50.0),
+    pool="novol", gain_causal=True, rescan_min=5, halal_filing=True,
+    rank="pm_gain", **_S71))
+
 # --- FILL REALISM on C35 (user 2026-08-07: "check the buy and exit if
 # they are realistic"). The backtest fills breakouts AT the trigger; a
 # real resting stop-limit fills somewhere between the trigger and its
