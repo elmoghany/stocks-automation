@@ -56,7 +56,14 @@ UNI_F = ROOT / "data/halal_universe.json"
 LIST_F = ROOT / "data/halal_list.json"
 NEED_F = ROOT / "data/needs_mcap.json"
 MIN_PRICE = 2.0
-THREADS = 6          # yfinance tolerates this; be a polite client
+THREADS = 2          # v1 with 6 threads: yfinance rate-limited after ~900
+                     # symbols and returned empty statements for the next
+                     # 9,800 -- the no-data guard refused them all (105
+                     # halal of 10,761, 97% "NO FUNDAMENTALS DATA").
+                     # Slow and steady is the only way through 10k names.
+PACE_SEC = 0.7       # per-request pause
+BREAKER = 30         # consecutive no-data results -> assume rate-limited
+BREAKER_SLEEP = 600  # and stand down for 10 minutes
 
 
 def clean_ticker(sym):
@@ -79,7 +86,15 @@ def universe():
     return syms
 
 
+def _retryable(res):
+    """A verdict that only says 'no data' is a FAILED FETCH, not a
+    verdict -- must be retried on the next pass, never cached as done."""
+    return (res.get("source") in ("none", "error")
+            or "NO FUNDAMENTALS DATA" in (res.get("fail_reason") or ""))
+
+
 def screen_one(sym):
+    time.sleep(PACE_SEC)
     try:
         r = dt.halal_check(sym)
         return sym, {k: r.get(k) for k in
@@ -94,13 +109,28 @@ def main():
     if "--refresh" in sys.argv and UNI_F.exists():
         UNI_F.unlink()
     done = json.loads(UNI_F.read_text()) if UNI_F.exists() else {}
+    # drop failed fetches so they are re-tried, keep real verdicts
+    retry = [s for s, r in done.items() if _retryable(r)]
+    for s_ in retry:
+        del done[s_]
+    if retry:
+        print(f"{len(retry):,} previous no-data results queued for retry",
+              flush=True)
     syms = [s for s in universe() if s not in done]
     print(f"{len(done):,} already screened, {len(syms):,} to do", flush=True)
 
     t0 = time.time()
+    streak = [0]
     with ThreadPoolExecutor(max_workers=THREADS) as ex:
         for n, (sym, res) in enumerate(ex.map(screen_one, syms), 1):
             done[sym] = res
+            streak[0] = streak[0] + 1 if _retryable(res) else 0
+            if streak[0] >= BREAKER:
+                print(f"  RATE-LIMITED ({BREAKER} consecutive no-data) -- "
+                      f"sleeping {BREAKER_SLEEP//60} min", flush=True)
+                UNI_F.write_text(json.dumps(done))
+                time.sleep(BREAKER_SLEEP)
+                streak[0] = 0
             if n % 50 == 0 or n == len(syms):
                 UNI_F.write_text(json.dumps(done))
                 el = time.time() - t0
