@@ -357,12 +357,17 @@ re-screen.
 ## LOOK-AHEAD PARITY FIXES (2026-08-07 evening) -- the live session must
 ## behave like the honest backtest, and vice versa. Six fixes, both sides.
 
-1. SCAN CADENCE (leak #5): the backtest sees a name the minute after it
-   crosses +10%; a single 7:00 scan does not. RE-SCAN EVERY 30 MINUTES:
-   7:00, 7:30, ..., 11:30. A name first crossing +10% mid-morning joins
-   the watchlist at the NEXT half-hour scan -- it is a legitimate
-   candidate (backtest W-series models exactly this cadence). Never
-   backfill it into earlier decisions.
+1. SCAN CADENCE (leak #5; user 2026-08-08: "the scan cadence will be
+   5 min in day trading or backtesting. while if we purchase a stock,
+   we need to look each min to know when to sell."):
+   * SCANNING (no position): re-scan every 5 MINUTES, 7:00-12:00. A
+     name first crossing +10% joins the watchlist at the next 5-min
+     scan. Backtested: 30-min cadence cost 25% of P&L (W104); 5-min
+     recovers to 90% (W107). Never backfill a late crosser into
+     earlier decisions.
+   * IN A POSITION: exits are watched on 1-MINUTE bars (pressure trail,
+     stop, scale-out) -- unchanged, this is what paper_watch does and
+     what the sim does.
 
 2. VOLUME GATE VERDICT (V-sweep, 36 variants): every causal volume floor
    at every decision time LOSES money, monotonically with strictness
@@ -401,3 +406,24 @@ re-screen.
    report -- live this is automatic (you can only fetch what is filed);
    the backtest now applies a 45-day filing lag (halal_filing). The
    RH-market-cap requirement above is unchanged.
+
+
+## HALAL UNIVERSE PRE-SCREEN (2026-08-08) -- scan only halal stocks
+
+The whole listed universe (10,761 clean tickers >= $2) is screened
+OFFLINE by plan/build_halal_universe.py using day-trading.py's
+halal_check verbatim (latest FILED quarterly -> half-year -> annual
+chain). Outputs in day-trading/data/:
+  halal_list.json     symbols the scanner is allowed to surface
+  halal_universe.json full verdicts + ratios (audit trail)
+  needs_mcap.json     unverifiable names: fetch RH market cap via
+                      update_rh_fundamentals.py, then re-run the builder
+MORNING PROTOCOL: the 5-minute scanner FILTERS ITS RESULTS AGAINST
+halal_list.json -- no per-name fundamentals calls at scan time. A name
+not on the list is not traded, full stop. If halal_list.json is older
+than ~35 days, say so loudly and refresh before trading.
+REFRESH: Windows Task Scheduler job \Stocks\HalalUniverseRefresh runs
+plan/refresh_halal_universe.cmd on the 1st of every month, 6:10 AM
+(before the 6:56 paper cron), logging to data/halal_refresh.log. The
+first trading morning each month: check the log, backfill needs_mcap
+names via Robinhood, and COMMIT the refreshed lists.

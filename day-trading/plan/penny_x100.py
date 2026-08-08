@@ -1259,6 +1259,18 @@ EXPERIMENTS.append(C23("W106", "HONEST STACK: all six fixes at once",
     pool="novol", gain_causal=True, rescan_min=30, halal_filing=True,
     **_S71))
 
+# cadence refinement: 30-min visibility cost 25% (W104 vs W101) -- test
+# whether a 5-minute live scan cadence recovers it before adopting any
+# cadence into the honest stack
+EXPERIMENTS.append(C23("W107", "W101 + 5-min scan cadence",
+    sim=dict(_W35), pool="novol", gain_causal=True, rescan_min=5,
+    **_S71))
+EXPERIMENTS.append(C23("W108", "HONEST STACK, 5-min cadence",
+    sim=dict(_W35, vol_frac_causal=True, halt_aware=True,
+             pm_spread_bps=50.0),
+    pool="novol", gain_causal=True, rescan_min=5, halal_filing=True,
+    **_S71))
+
 # --- FILL REALISM on C35 (user 2026-08-07: "check the buy and exit if
 # they are realistic"). The backtest fills breakouts AT the trigger; a
 # real resting stop-limit fills somewhere between the trigger and its
