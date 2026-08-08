@@ -156,8 +156,18 @@ def rank_pool(cs, spec, date, dfs):
         pool = [c for c in pool if band[0] <= c["gain_pct"] < band[1]]
     if spec.get("pm_dvol_min") or spec.get("rank", "gain") in (
             "pm_gain", "pm_dvol", "zblend", "coil", "pm_high_gain",
-            "turnover", "random", "lag"):
-        pool = pool[:walk]
+            "turnover", "random", "lag", "pm_pressure", "cross_time"):
+        if spec.get("causal_cut"):
+            # Z-series (user 2026-08-08: "only using current signal
+            # instead of full day signal"): the top-walk cut itself must
+            # not use full-day gain. Consider EVERY candidate with
+            # cached bars, rank causally, cut top-walk AFTER the sort.
+            # Residual bias disclosed: bar coverage was fetched by
+            # full-day-gain depth (walk-16 backfill widens it).
+            pool = [c for c in pool
+                    if (M1 / f"{c['symbol']}_{date}.csv").exists()]
+        else:
+            pool = pool[:walk]
         mets = {}
         for c in pool:
             df = dfs.get(c["symbol"])
@@ -211,6 +221,29 @@ def rank_pool(cs, spec, date, dfs):
         elif mode == "lag":
             prev = spec["_lagmap"]
             pool.sort(key=lambda c: -prev.get((c["symbol"], date), 0))
+        elif mode == "pm_pressure":
+            # part-day signal: premarket buy-pressure (<=7AM bars)
+            pool.sort(key=lambda c: -((mets.get(c["symbol"]) or {})
+                                      .get("pm_pressure") or -99))
+        elif mode == "cross_time":
+            # part-day signal: the EARLIER a name first touched +10%,
+            # the higher it ranks (never-crossed sinks to the bottom;
+            # the gain_causal gate drops those later anyway)
+            def xt(c):
+                df = dfs.get(c["symbol"])
+                pc = c.get("prev_close") or 0
+                if df is None or pc <= 0:
+                    return 1e9
+                thr = 1.10 * pc
+                for ts, bh in zip(df.index, df["High"].values):
+                    if ts.time() > dtime(12, 0):
+                        break
+                    if float(bh) >= thr:
+                        return ts.hour * 60 + ts.minute
+                return 1e9
+            pool.sort(key=xt)
+        if spec.get("causal_cut"):
+            pool = pool[:walk]
         return pool
     if spec.get("rank") == "rvol":
         pool = pool[:walk]
@@ -426,6 +459,9 @@ def run_experiment(spec, label):
                         nxt = nxt.replace(hour=mins // 60,
                                           minute=mins % 60)
                     c["_gc_start"] = max(dtime(7, 0), nxt.time())
+                    cb = spec.get("cross_before")
+                    if cb is not None and c["_gc_start"] > dtime(*cb):
+                        continue      # crossed too late in the morning
                 # W010: old-style FULL-DAY filter on the novol pool.
                 # NON-CAUSAL (peeks at the day's final volume) -- kept
                 # only as a reference point, never adoptable live.
@@ -1278,6 +1314,57 @@ EXPERIMENTS.append(C23("W109", "FULLY CAUSAL: W108 + pm_gain rank",
              pm_spread_bps=50.0),
     pool="novol", gain_causal=True, rescan_min=5, halal_filing=True,
     rank="pm_gain", **_S71))
+
+# --- Z. PART-DAY SIGNAL CAMPAIGN on the ADOPTED W109 baseline (user
+# 2026-08-08: "adopt W109 ... try to reach similar results to [the
+# hindsight configs] while not using future signals and only using
+# current signal instead of full day signal. also, test other part-day
+# signals that might help.")
+# All fully causal: honest sim stack + first-crossing + 5-min cadence
+# + filed halal. causal_cut removes the LAST residue (the top-8 walk
+# cut was still by full-day gain, even in W109).
+_ZH = dict(_W35, vol_frac_causal=True, halt_aware=True, pm_spread_bps=50.0)
+_ZKW = dict(pool="novol", gain_causal=True, rescan_min=5,
+            halal_filing=True)
+
+
+def Z(zid, desc, **kw):
+    kw2 = dict(_ZKW)
+    kw2.update(kw)
+    return C23(zid, desc, sim=dict(_ZH), **kw2, **_S71)
+
+
+EXPERIMENTS += [
+    Z("Z000", "W109 identity (helper check)", rank="pm_gain"),
+    # rank families, each with the causal cut
+    Z("Z001", "W110 cand: pm_gain rank + causal cut",
+      rank="pm_gain", causal_cut=True),
+    Z("Z002", "pm_high_gain rank + causal cut",
+      rank="pm_high_gain", causal_cut=True),
+    Z("Z003", "pm_dollar_volume rank + causal cut",
+      rank="pm_dvol", causal_cut=True),
+    Z("Z004", "pm_pressure rank + causal cut",
+      rank="pm_pressure", causal_cut=True),
+    Z("Z005", "earliest +10% crossing rank + causal cut",
+      rank="cross_time", causal_cut=True),
+    Z("Z006", "coil (7AM near pm-high) rank + causal cut",
+      rank="coil", causal_cut=True),
+    Z("Z007", "pm turnover (pm$ / mcap) rank + causal cut",
+      rank="turnover", causal_cut=True),
+    Z("ZC00", "CONTROL random rank + causal cut (must not win)",
+      rank="random", causal_cut=True),
+    # part-day gates on the Z001 base (adjacency sweep)
+    Z("Z010", "Z001 + only names crossing before 09:00",
+      rank="pm_gain", causal_cut=True, cross_before=(9, 0)),
+    Z("Z011", "Z001 + only names crossing before 10:00",
+      rank="pm_gain", causal_cut=True, cross_before=(10, 0)),
+    Z("Z012", "Z001 + only names crossing before 11:00",
+      rank="pm_gain", causal_cut=True, cross_before=(11, 0)),
+    Z("Z013", "Z001 + calm-gap tightened to 15",
+      rank="pm_gain", causal_cut=True, calm_gap=15.0),
+    Z("Z014", "Z001 + calm-gap loosened to 25",
+      rank="pm_gain", causal_cut=True, calm_gap=25.0),
+]
 
 # --- FILL REALISM on C35 (user 2026-08-07: "check the buy and exit if
 # they are realistic"). The backtest fills breakouts AT the trigger; a

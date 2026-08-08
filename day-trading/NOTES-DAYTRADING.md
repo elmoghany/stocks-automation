@@ -2773,3 +2773,36 @@ paper trading should reproduce, and the honest-expectancy ladder is:
   W109 fully clean    $872,790  (none)   <- adopt as reference
 The $291k gap between C35's headline and W109 is the total look-ahead
 subsidy: ~25% of the reported edge was hindsight, 75% is real.
+
+## W109 ADOPTED + Z-CAMPAIGN LAUNCHED (2026-08-08)
+User: "adopt W109, however, try to reach similar results to c23, c35,
+v100, v102, w000, w010, w101, w108 while not using future signals and
+only using current signal instead of full day signal. also, test other
+part-day signals that might help." / "find additive strategies that can
+be combined to reach that level."
+
+ADOPTED: W109 is the reference config and live benchmark.
+  +$872,790 / 2yr, 0/22 negative months, ~$1,745/day on $100k cash.
+  Target to close: hindsight configs sit at $1.10-1.22M -- the gap is
+  ~25%, of which the S-campaign-style question is how much is
+  recoverable with causal signals and how much was pure hindsight rent.
+
+ONE MORE RESIDUE FOUND during adoption (the user's "only current
+signals" directive forced the check): every rank mode pre-cuts the
+walk to top-8 BY FULL-DAY GAIN before reordering -- W109 included.
+Fix: causal_cut ranks every bar-covered candidate causally and cuts
+top-8 AFTER the sort. Bar coverage itself was fetched by full-day-gain
+depth (walk-8): walk-16 backfill running to widen it; residual
+coverage bias disclosed in the spec comment.
+
+Z-SERIES phase 1 (running): rank signals with the causal cut --
+pm_gain (Z001 = W110 candidate), pm_high_gain, pm_dollar_volume,
+pm_pressure, earliest-crossing, coil, pm-turnover, random CONTROL --
+plus crossing-before gates (9/10/11am adjacency) and calm-gap retune
+(15/25). All strictly <=7AM or at-decision inputs; premkt_metrics was
+verified to use <=07:00 bars only. Z000 re-derives W109 through the
+new helper and must match exactly.
+Phase 2 (after results): greedy stack of PASSes -> Z100+ composite
+("C36 candidate"), fallback-repick overlay on the winner, random-rank
+control must fail. Guardrails unchanged: both years positive vs
+baseline, >=2 adjacent thresholds agree, controls fail.
