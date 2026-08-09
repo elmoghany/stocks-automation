@@ -1407,6 +1407,18 @@ EXPERIMENTS += [
       calm_gap=25.0),
 ]
 
+# Z2xx: phase-1 winners RE-RUN after the walk-16 backfill (coverage
+# was walk-8 when Z001/Z004/Z006 first ran -- the delta is the pure
+# coverage effect on the causal cut).
+EXPERIMENTS += [
+    Z("Z201", "pm_gain + causal cut (walk-16 coverage)",
+      rank="pm_gain", causal_cut=True),
+    Z("Z204", "pm_pressure + causal cut (walk-16 coverage)",
+      rank="pm_pressure", causal_cut=True),
+    Z("Z206", "coil + causal cut (walk-16 coverage)",
+      rank="coil", causal_cut=True),
+]
+
 # --- FILL REALISM on C35 (user 2026-08-07: "check the buy and exit if
 # they are realistic"). The backtest fills breakouts AT the trigger; a
 # real resting stop-limit fills somewhere between the trigger and its
