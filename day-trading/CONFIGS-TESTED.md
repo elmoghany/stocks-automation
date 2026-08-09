@@ -1733,3 +1733,27 @@ ENV: pandas force-upgraded to 3.0.5 -- S095 identity EXACT under it;
   month of earnings-calendar history (measured); yfinance bulk needs
   gentle pacing + the AAPL canary pattern.
 =====================================================================
+
+## FINAL RE-CROWN: Z104 IS THE FULLY-CAUSAL CHAMPION (2026-08-09 late)
+Z404/Z405 exposed the last leak: rank mode "coil" breaks ties by
+FULL-DAY gain, so Z300's $706,089 contained future info in its
+ordering. All five causal within-group orders tested:
+  pm_PRESSURE  $646,581  (Z104)  <- WINNER, adopted
+  continuous   $566,392  (Z407)
+  liquid (adv) $554,087  (Z405)
+  quiet (pm$)  $510,241  (Z404)
+  pm_gain      $450,554  (Z406)
+Z104 = coil group (price/pm-high >= 0.95) first, PREMARKET PRESSURE
+order within, causal top-12 walk, all honesty fixes. 2yr +$646,581
+(y1 +$225,646 / y2 +$420,935), 2/22 neg months, ~$1,290/traded day.
+HONESTY LADDER (final): C35 $1,163,538 (3 leaks) -> W109 $872,790 (1)
+-> Z300 $706,089 (tiebreak leak) -> Z104 $646,581 (ZERO).
+EARNINGS FAMILY (TWLO case study) -- all rejected in this universe:
+only 34 earnings-day trade days/2yr; shuffled control beat the real
+gate per-day ($2,057 vs $1,087); priority overlay -$46k; non-earnings
+complement $702,359 =~ full Z300. The TWLO lesson that mattered was
+coil + liquidity mechanics, already in the champion. Earnings-gap
+trading belongs to the (suspended) E01 book, not this scanner.
+LIVE: rank rule updated -- coiled names first, premarket PRESSURE
+(30-bar, 20k-share floor) orders within the group; never any full-day
+quantity anywhere.

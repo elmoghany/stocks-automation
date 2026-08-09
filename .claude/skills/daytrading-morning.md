@@ -457,9 +457,13 @@ SCAN LOOP -- every 5 MINUTES, 7:00-12:00 (RH data only):
     >= 50 sessions history. NO volume gate of any kind.
  4. HALAL: name must be on data/halal_list.json, or absent-from-universe
     -> live screen (RH mcap + halal_check); real FAIL verdict -> skip.
- 5. RANK by COIL = current price / premarket high, DESCENDING.
-    Walk up to 12; first name passing calm-gap (7AM gap <= +20%; 35%
-    grace for the top-ranked name only) is THE stock of the day.
+ 5. RANK (Z104, 2026-08-09): COILED names first (current price /
+    premarket high >= 0.95), ordered within the group by PREMARKET
+    BUY-PRESSURE (30-bar signed-volume pressure, 20k-share trust
+    floor); non-coiled after, same pressure order. Walk up to 12;
+    first name passing calm-gap (<= +20%; 35% grace for the
+    top-ranked name only) is THE stock of the day. Never use any
+    full-day quantity in ranking -- that was the last leak.
  6. Late crossers are legitimate: a name first crossing +10% at 10:30
     enters the ranking at the 10:35 scan. Never filter by crossing time.
 
@@ -475,6 +479,6 @@ POSITION (Z300 = C35 mechanics, unchanged):
     protocol (tradability check; never enter on a reopen bar).
 10. All exits by 15:00. Same day, always.
 
-BENCHMARK: Z300 backtest = $706,089/2yr, ~$1,790/traded day, 2/22 neg
-months. Compare each day's paper result against this, not C35/W109.
+BENCHMARK (updated): Z104 = $646,581/2yr, ~$1,290/traded day, 2/22
+neg months. Compare against this, not C35/W109/Z300.
 REPORTING: entries/exits relayed to main as they happen + EOD summary.
