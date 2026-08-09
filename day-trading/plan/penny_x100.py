@@ -1555,6 +1555,31 @@ EXPERIMENTS += [
       rank="atlas7_flip", causal_cut=True, walk=12),
 ]
 
+# R-campaign Phase 3: exit retune on the Z104 base (novol pool trades
+# different names than the C30 pool where the S-campaign rejected
+# these; capture ratio 0.29 is the biggest untouched lever; exits have
+# ZERO causality risk).
+def R4(rid, desc, **simkw):
+    kw2 = dict(_ZKW)
+    return C23(rid, desc, sim=dict(_ZH, **simkw), rank="coil_press",
+               causal_cut=True, walk=12, **kw2, **_S71)
+
+
+EXPERIMENTS += [
+    R4("R040", "Z104 + breakeven floor at +5%", breakeven_at=5.0),
+    R4("R047", "Z104 + breakeven floor at +8%", breakeven_at=8.0),
+    R4("R041", "pressure-trail tight 8 (was 10)",
+       pressure_trail=(10, 0.3, 0.3, 8, 40)),
+    R4("R042", "pressure-trail tight 12",
+       pressure_trail=(10, 0.3, 0.3, 12, 40)),
+    R4("R043", "pressure-trail wide 50 (was 40)",
+       pressure_trail=(10, 0.3, 0.3, 10, 50)),
+    R4("R044", "pressure-trail wide 30",
+       pressure_trail=(10, 0.3, 0.3, 10, 30)),
+    R4("R045", "scale-out at +20% (was 25)", scale_out_at=20.0),
+    R4("R046", "scale-out at +30%", scale_out_at=30.0),
+]
+
 # --- FILL REALISM on C35 (user 2026-08-07: "check the buy and exit if
 # they are realistic"). The backtest fills breakouts AT the trigger; a
 # real resting stop-limit fills somewhere between the trigger and its
