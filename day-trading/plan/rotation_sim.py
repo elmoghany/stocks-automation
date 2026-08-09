@@ -46,6 +46,10 @@ sys.modules["px"] = px
 _spec.loader.exec_module(px)
 dt = px.ps          # day-trading module (loaded by the x100 chain)
 axb = px.axb
+# Leak #6 hygiene: quarters usable only after their ~45-day filing lag
+# (the x100 runs set this per-spec; the wrapper must too). V102 measured
+# the direction as NOT inflating, but the standard is zero leaks.
+axb.FILING_LAG_DAYS = 45
 
 M1 = ROOT / "data/massive/m1"
 RES_F = ROOT / "data/massive/rotation_results.json"
