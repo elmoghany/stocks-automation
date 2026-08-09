@@ -131,11 +131,21 @@ def main():
             done[sym] = res
             streak[0] = streak[0] + 1 if _retryable(res) else 0
             if streak[0] >= BREAKER:
-                print(f"  RATE-LIMITED ({BREAKER} consecutive no-data) -- "
-                      f"sleeping {BREAKER_SLEEP//60} min", flush=True)
-                UNI_F.write_text(json.dumps(done))
-                time.sleep(BREAKER_SLEEP)
-                streak[0] = 0
+                # CANARY CHECK (2026-08-08 supervisor diagnosis): long
+                # no-data runs are usually a legitimate desert of
+                # ETFs/ETNs/preferreds, NOT rate limiting -- the
+                # alphabetical queue is full of them. Only stand down if
+                # a known-good symbol ALSO fails; otherwise keep moving.
+                _, canary = screen_one("AAPL")
+                if not _retryable(canary):
+                    streak[0] = 0      # fundamentals flow fine: no limit
+                else:
+                    print(f"  RATE-LIMITED (canary AAPL failed after "
+                          f"{BREAKER} no-data) -- sleeping "
+                          f"{BREAKER_SLEEP//60} min", flush=True)
+                    UNI_F.write_text(json.dumps(done))
+                    time.sleep(BREAKER_SLEEP)
+                    streak[0] = 0
             if n % 50 == 0 or n == len(syms):
                 UNI_F.write_text(json.dumps(done))
                 el = time.time() - t0
