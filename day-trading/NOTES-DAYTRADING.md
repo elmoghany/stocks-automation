@@ -2893,3 +2893,20 @@ current_price / premarket_high desc, walk up to 12, first name passing
 calm-gap+halal is the day's stock. All else unchanged from W109.
 NOTE: Z300 negm 2/22 vs W109 0/22 -- the causal cut trades more days
 and admits two mildly negative months; accepted as the honest risk.
+
+## HALAL UNIVERSE BUILD COMPLETE (2026-08-09)
+Full universe walked (10,761 clean tickers >= $2 from the latest
+grouped-daily file):
+  HALAL (scanner list)          1,347   -> data/halal_list.json (dated)
+  real FAIL verdicts            ~4,125  (ratios / industry / interest)
+  unverifiable (no fundamentals) 5,956  -> needs_mcap.json; mostly
+    ETFs/ETNs/CEFs/preferreds that have no statements by nature. Real
+    companies caught here fall back to the LIVE per-name screen on
+    first scanner encounter; the monthly refresh retries all.
+  seeds (backtest-era) retained  2,323  (replaced only when a fresh
+    screen succeeds; by design)
+Ops notes: yfinance "rate limiting" on night 1 was largely FALSE
+(ETF deserts tripping the blind breaker; fixed with the AAPL canary);
+one true two-builder race (Task Scheduler double-launch) was killed
+and the nightly task disabled, now DELETED. Monthly refresh remains:
+\Stocks\HalalUniverseRefresh, 1st of month 06:10.
