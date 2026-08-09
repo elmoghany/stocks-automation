@@ -1757,3 +1757,30 @@ trading belongs to the (suspended) E01 book, not this scanner.
 LIVE: rank rule updated -- coiled names first, premarket PRESSURE
 (30-bar, 20k-share floor) orders within the group; never any full-day
 quantity anywhere.
+
+## R-CAMPAIGN PHASE 0: THE CORRELATION ATLAS (2026-08-09)
+7,957 candidate-days, features at 07:00/crossing+1/09:30/10:30 vs four
+targets; per-day Spearman IC, both years; nonsense control alpha_rank
+reads ~0 everywhere (method validated). data/r_atlas.json holds rows.
+
+THE CENTRAL DISCOVERY -- why hindsight ranks paid and causal gain
+ranks failed: full-day gain = gain-so-far + future move. The backtest's
+gain rank secretly ranked by the FUTURE-MOVE term. Its causal cousin
+(gain-so-far) ranks by the SPENT term: IC vs forward return = -0.51,
+stable both years. We were chasing exhaustion. Corollaries, all stable:
+  +0.25  coil            (holding the premarket high -> future)
+  +0.30  cross_min       (LATER crossers carry more future)
+  -0.51  gain_so_far     (extended names are done)
+  -0.43  dvol_so_far     (loud names are done)
+  -0.41  spread_proxy    (wide names are done)
+  ~0.00  pressure_T      (no cross-sectional forward signal; its sim
+                          value must be sequential-dynamics, not rank)
+DEAD ON ARRIVAL (sims saved): post-crossing 15-min confirmation (-0.06),
+prev-day rvol (-0.07), news-as-rank (news IC +0.62 vs FULL-DAY GAIN --
+it finds monsters -- but ~0 vs forward return except at the crossing
+minute; Y1-only coverage).
+
+IMPLIED RANK NEVER TESTED BEFORE: the ANTI-CHASE composite
+  score = +z(coil) - z(gain_so_far) - z(dollar_volume_so_far)
+Registered as R001 (RC01 = sign-flip control = the chase rank, must
+lose). Running. Rotation batch (R020-R029) running in parallel.

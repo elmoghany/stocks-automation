@@ -173,7 +173,7 @@ def rank_pool(cs, spec, date, dfs):
             "pm_gain", "pm_dvol", "zblend", "coil", "pm_high_gain",
             "turnover", "random", "lag", "pm_pressure", "cross_time",
             "coil_press", "zcoilpress", "coil_quiet", "coil_liquid",
-            "coil_pmgain", "coil_cont"):
+            "coil_pmgain", "coil_cont", "atlas7", "atlas7_flip"):
         if spec.get("causal_cut"):
             # Z-series (user 2026-08-08: "only using current signal
             # instead of full day signal"): the top-walk cut itself must
@@ -264,6 +264,26 @@ def rank_pool(cs, spec, date, dfs):
                 + _z(((mets.get(c["symbol"]) or {}).get("pm_pressure") or 0),
                      ps_)) for c in pool}
             pool.sort(key=lambda c: keys[c["symbol"]])
+        elif mode in ("atlas7", "atlas7_flip"):
+            # R-campaign atlas composite (2026-08-09): forward-return
+            # ICs say prefer COILED (+.25), UN-EXTENDED (gain_T -.51),
+            # QUIET (dvol -.43) names. The flip control is literally
+            # the chase-rank and must lose.
+            def _z(vals):
+                v = [x for x in vals if x is not None]
+                mu = sum(v) / len(v) if v else 0
+                sd = (sum((x - mu) ** 2 for x in v) / len(v)) ** .5                     if v else 1
+                return mu, (sd or 1)
+            mm = [mets.get(c["symbol"]) or {} for c in pool]
+            zc = _z([m.get("coil") for m in mm])
+            zg = _z([m.get("pm_gain") for m in mm])
+            zd = _z([m.get("pm_dvol") for m in mm])
+            sgn = -1 if mode == "atlas7_flip" else 1
+            def _score(c):
+                m = mets.get(c["symbol"]) or {}
+                sc = ((m.get("coil") or zc[0]) - zc[0]) / zc[1]                     - ((m.get("pm_gain") or zg[0]) - zg[0]) / zg[1]                     - ((m.get("pm_dvol") or zd[0]) - zd[0]) / zd[1]
+                return -sgn * sc
+            pool.sort(key=_score)
         elif mode == "coil_pmgain":
             # coil group + PREMARKET gain order (causal fix for the
             # gain_pct tiebreak leak found 2026-08-09 via Z404/Z405)
@@ -1525,6 +1545,14 @@ EXPERIMENTS += [
       causal_cut=True, walk=12),
     Z("Z407", "continuous coil, no tiebreak", rank="coil_cont",
       causal_cut=True, walk=12),
+]
+
+# R-campaign Phase 1: the atlas composite (anti-chase rank).
+EXPERIMENTS += [
+    Z("R001", "ATLAS rank: +coil -gain_so_far -dvol", rank="atlas7",
+      causal_cut=True, walk=12),
+    Z("RC01", "CONTROL sign-flipped atlas (chase rank)",
+      rank="atlas7_flip", causal_cut=True, walk=12),
 ]
 
 # --- FILL REALISM on C35 (user 2026-08-07: "check the buy and exit if
