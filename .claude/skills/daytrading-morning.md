@@ -442,3 +442,39 @@ close: rank by COIL = current price / premarket high, DESCENDING
 candidates; the first passing calm-gap (<=20%, 35% grace for the
 top-ranked) + halal-list check is the day's stock. Benchmark: Z300,
 +$706,089/2yr fully causal, ~$1,790/day.
+
+
+## ===== Z300 MORNING PROTOCOL (2026-08-10 onward) -- AUTHORITATIVE =====
+## One checklist; earlier sections give background. On conflict, THIS wins.
+
+PRE-OPEN (from 6:56):
+ 1. Trading-day guard; verify halal_list.json age (<35 days) -- else warn.
+ 2. NO real orders ever. Paper ledger only, one file per day as before.
+
+SCAN LOOP -- every 5 MINUTES, 7:00-12:00 (RH data only):
+ 3. Candidates: price >= $2, currently >= +10% vs yesterday's close
+    (crossing must have HAPPENED -- never anticipate), common stock,
+    >= 50 sessions history. NO volume gate of any kind.
+ 4. HALAL: name must be on data/halal_list.json, or absent-from-universe
+    -> live screen (RH mcap + halal_check); real FAIL verdict -> skip.
+ 5. RANK by COIL = current price / premarket high, DESCENDING.
+    Walk up to 12; first name passing calm-gap (7AM gap <= +20%; 35%
+    grace for the top-ranked name only) is THE stock of the day.
+ 6. Late crossers are legitimate: a name first crossing +10% at 10:30
+    enters the ranking at the 10:35 scan. Never filter by crossing time.
+
+POSITION (Z300 = C35 mechanics, unchanged):
+ 7. Entries 7:00-12:00 via resting orders: 5-min ORB break / premarket-
+    high stop-buy / bullish reversal candle. First ticket $25k, later
+    $15k, $100k/day total, last ticket = remainder if >= $1k.
+ 8. Size <= 20% of trailing 10 COMPLETED minutes' volume. Thin-book
+    veto: skip entry if L2 spread > the 0.5% stop-limit cap.
+ 9. Watch the open position every 1 MINUTE: 20% trail from peak
+    (10% when 10-bar pressure <= -0.3, 40% when >= +0.3), hard stop
+    -8%, bank 1/3 at +25% unless pressure >= +0.3, wick guard, halt
+    protocol (tradability check; never enter on a reopen bar).
+10. All exits by 15:00. Same day, always.
+
+BENCHMARK: Z300 backtest = $706,089/2yr, ~$1,790/traded day, 2/22 neg
+months. Compare each day's paper result against this, not C35/W109.
+REPORTING: entries/exits relayed to main as they happen + EOD summary.
