@@ -156,7 +156,8 @@ def rank_pool(cs, spec, date, dfs):
         pool = [c for c in pool if band[0] <= c["gain_pct"] < band[1]]
     if spec.get("pm_dvol_min") or spec.get("rank", "gain") in (
             "pm_gain", "pm_dvol", "zblend", "coil", "pm_high_gain",
-            "turnover", "random", "lag", "pm_pressure", "cross_time"):
+            "turnover", "random", "lag", "pm_pressure", "cross_time",
+            "coil_press", "zcoilpress"):
         if spec.get("causal_cut"):
             # Z-series (user 2026-08-08: "only using current signal
             # instead of full day signal"): the top-walk cut itself must
@@ -225,6 +226,28 @@ def rank_pool(cs, spec, date, dfs):
             # part-day signal: premarket buy-pressure (<=7AM bars)
             pool.sort(key=lambda c: -((mets.get(c["symbol"]) or {})
                                       .get("pm_pressure") or -99))
+        elif mode == "coil_press":
+            # phase-2 blend: coiled names first (7AM close within 5% of
+            # the premarket high), pm_pressure orders within each group
+            pool.sort(key=lambda c: -(
+                (((mets.get(c["symbol"]) or {}).get("coil") or 0) >= 0.95)
+                * 1000 + (((mets.get(c["symbol"]) or {})
+                           .get("pm_pressure") or -1) + 1) * 100))
+        elif mode == "zcoilpress":
+            # phase-2 blend: z(coil) + z(pm_pressure), continuous
+            cs_ = [((mets.get(c["symbol"]) or {}).get("coil") or 0)
+                   for c in pool] or [1]
+            ps_ = [((mets.get(c["symbol"]) or {}).get("pm_pressure") or 0)
+                   for c in pool] or [1]
+            def _z(v, arr):
+                mu = sum(arr) / len(arr)
+                sd = (sum((x - mu) ** 2 for x in arr) / len(arr)) ** .5 or 1
+                return (v - mu) / sd
+            keys = {c["symbol"]: -(
+                _z(((mets.get(c["symbol"]) or {}).get("coil") or 0), cs_)
+                + _z(((mets.get(c["symbol"]) or {}).get("pm_pressure") or 0),
+                     ps_)) for c in pool}
+            pool.sort(key=lambda c: keys[c["symbol"]])
         elif mode == "cross_time":
             # part-day signal: the EARLIER a name first touched +10%,
             # the higher it ranks (never-crossed sinks to the bottom;
@@ -1364,6 +1387,24 @@ EXPERIMENTS += [
       rank="pm_gain", causal_cut=True, calm_gap=15.0),
     Z("Z014", "Z001 + calm-gap loosened to 25",
       rank="pm_gain", causal_cut=True, calm_gap=25.0),
+]
+
+# Z phase 2 (after walk-16 backfill): compose the phase-1 winners
+# (coil, pm_pressure) + additive levers (deeper walk, fallback re-pick).
+# Phase-1 rejects: crossing-time gates (monotone loss), calm-gap 15.
+from datetime import time as _zt
+EXPERIMENTS += [
+    Z("Z100", "coil rank, walk 12", rank="coil", causal_cut=True, walk=12),
+    Z("Z101", "coil-group + pressure order", rank="coil_press",
+      causal_cut=True),
+    Z("Z102", "z(coil)+z(pressure) blend", rank="zcoilpress",
+      causal_cut=True),
+    Z("Z103", "coil + fallback re-pick at 10:00", rank="coil",
+      causal_cut=True, fallback=(_zt(10, 0), "time")),
+    Z("Z104", "coil-group/pressure, walk 12", rank="coil_press",
+      causal_cut=True, walk=12),
+    Z("Z105", "coil + calm-gap 25", rank="coil", causal_cut=True,
+      calm_gap=25.0),
 ]
 
 # --- FILL REALISM on C35 (user 2026-08-07: "check the buy and exit if
