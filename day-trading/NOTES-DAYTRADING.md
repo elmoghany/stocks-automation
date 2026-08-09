@@ -2873,3 +2873,23 @@ the headline was hindsight rent. $706k (~$1,790/day) is the defensible
 Live protocol needs ONE change to match Z300: scanner ranks candidates
 by COIL (7AM price / premarket high, closest to 1 first), walk depth
 12. Everything else already matches.
+
+## Z-CAMPAIGN FINAL: Z300 ADOPTED AS THE FULLY-CAUSAL CHAMPION (2026-08-09)
+Z300 = coil rank (price/premarket-high at scan), causal top-12 walk,
+first-crossing entries, 5-min cadence, causal sizing, filed-quarter
+halal, halt-aware, 50bps premarket spread. ZERO future signals.
+  2yr +$706,089 (y1 +$293,614 / y2 +$412,475), 2/22 neg months,
+  ~$1,790/traded day on the $100k cash account.
+Confirmed by Z100 (same spec mid-backfill, $701,728) and coverage-
+robust (Z006 $687k walk-8 narrow, Z206 $656k walk-8 full).
+CAMPAIGN VERDICT after 23 configs + 3 controls + 2 coverage depths:
+the causal plateau is ~$650-706k. The $1.2M target is the hindsight
+configs' number; the extra ~$500k WAS the future information (final
+gain, final volume, final shortlist). No 7AM-computable signal
+recovers it. Rejected additives: blends (all), fallback re-pick
+(-$188k), crossing-time gates (monotone), calm-gap != 20.
+LIVE (supersedes W109 rank): at each 5-min scan rank crossed names by
+current_price / premarket_high desc, walk up to 12, first name passing
+calm-gap+halal is the day's stock. All else unchanged from W109.
+NOTE: Z300 negm 2/22 vs W109 0/22 -- the causal cut trades more days
+and admits two mildly negative months; accepted as the honest risk.

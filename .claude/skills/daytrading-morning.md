@@ -433,3 +433,12 @@ plan/refresh_halal_universe.cmd on the 1st of every month, 6:10 AM
 (before the 6:56 paper cron), logging to data/halal_refresh.log. The
 first trading morning each month: check the log, backfill needs_mcap
 names via Robinhood, and COMMIT the refreshed lists.
+
+
+## Z300 RANKING (2026-08-09, supersedes gain-ordering)
+At each 5-minute scan, among names currently >= +10% vs yesterday's
+close: rank by COIL = current price / premarket high, DESCENDING
+(closest to reclaiming its premarket high first). Walk up to 12
+candidates; the first passing calm-gap (<=20%, 35% grace for the
+top-ranked) + halal-list check is the day's stock. Benchmark: Z300,
++$706,089/2yr fully causal, ~$1,790/day.
