@@ -1798,3 +1798,28 @@ Z104's exit machinery is confirmed at a flat optimum; capture ratio
 REMAINING: Phase 2 rotation (running) is the last lever; if it fails
 the guardrails too, ~$650k is this family's honest ceiling and Z104
 stands as final.
+
+## R-CAMPAIGN PHASE 2 COMPLETE: ROTATION WORKS (2026-08-10 early)
+Under the user's cash rules (ONE position at a time, flat $15k tickets,
+$10k last, $100k/day):
+  R028b rotation, last new ticket 14:00   $760,344   0/23 negm  WINNER
+  R028a 13:00 window                      $709,560   0/22
+  R026/R025 stale-pick escapes            $695k/$693k 0/22
+  R020 base rotation (12:00)              $685,345   0/22
+  R024 top-3 focus                        $681,765   0/22
+  R021 rotate-on-loss-only                $591,280   1/22
+  R023 NO-ROTATION baseline (same rules)  $464,923   3/22
+  R029 afternoon-only CONTROL             $210,142   behaves
+ROTATION EFFECT (R028b vs R023, only difference = re-pick): +64%.
+Window sweep monotone 12->13->14h: rotation makes late tickets
+productive (atlas: late crossers IC +0.30). Zero negative months
+across every top-5 config -- sequential diversification smooths risk
+exactly as the variance-reduction math predicted.
+vs old-schedule Z104 ($646,581, 2/22): +$113,763 total; y2 delta is
+-$39k (flag), but Z104's $25k-first schedule is barred by the user's
+rules -- the level-field comparison is R023.
+PHASE 4 RUNNING: R060 stack (+escape), R061 window 14:30 adjacency,
+RC60 random-pick rotation control (isolates the ranking's value),
+R062 10bps slippage stress. Bug fixed on the way: registry sim dicts
+are OVERRIDES over BASE_SIM -- first batch ran cents-mode and the
+R023 baseline caught it (third guardrail catch this weekend).

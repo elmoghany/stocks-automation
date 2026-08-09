@@ -86,6 +86,17 @@ CFGS = {
                   entry_cutoff=dtime(14, 0)),
     "R029": dict(desc="CONTROL afternoon-only rotation 12:00-15:00",
                  entry_open=dtime(12, 0), entry_cutoff=dtime(14, 0)),
+    # ---- Phase 4: the stack and its deciders ----
+    "R060": dict(desc="STACK: rotation + 14:00 window + 10:00 escape",
+                 entry_cutoff=dtime(14, 0), escape=dtime(10, 0)),
+    "R061": dict(desc="stack adjacency: window 14:30",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0)),
+    "RC60": dict(desc="CONTROL random-pick rotation, 14:00 window "
+                      "(isolates the coil/pressure ranking)",
+                 entry_cutoff=dtime(14, 0), rand=True),
+    "R062": dict(desc="STACK under 10bps/side slippage stress",
+                 entry_cutoff=dtime(14, 0), escape=dtime(10, 0),
+                 slip=0.001),
 }
 
 
@@ -181,6 +192,9 @@ def run_day(cands, date, cfg):
             break
         # pick at time t
         pool = rank_at(cands, t, cfg.get("top"))
+        if cfg.get("rand"):
+            import random as _rnd
+            _rnd.Random(f"rc60-{date}-{ticket_i}").shuffle(pool)
         pick = None
         if not rotate and last_sym is not None:
             pick = next((r for r in pool
@@ -205,6 +219,8 @@ def run_day(cands, date, cfg):
             continue
         esc = cfg.get("escape")
         kw = dict(SIMKW)
+        if cfg.get("slip"):
+            kw["slip"] = cfg["slip"]
         if pick.get("pmh"):
             kw["extra_break_high"] = pick["pmh"]   # champion parity:
             # the premarket-high stop-buy travels OUTSIDE the sim dict
