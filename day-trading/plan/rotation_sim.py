@@ -59,10 +59,16 @@ EXIT_END = dtime(15, 0)
 # per-ticket, the daily cap and ticket schedule are enforced by the
 # rotation loop itself, and max_trades=1 hands control back after one
 # entry+exit.
-SIMKW = dict(px.BYID["Z104"]["sim"])
+# NOTE the registry's sim dict holds only OVERRIDES -- the trail/stop/
+# scale-out defaults live in px.BASE_SIM and are merged at run time.
+# Copying only the overrides ran tickets in legacy cents-mode (caught
+# 2026-08-09 by the R023 baseline failing to reproduce the champion).
+SIMKW = dict(px.BASE_SIM)
+SIMKW.update(px.BYID["Z104"]["sim"])
 for _k in ("entry_ticket_schedule", "daily_deploy_cap", "budget"):
     SIMKW.pop(_k, None)
 SIMKW.update(verbose=False, max_trades=1, daily_deploy_cap=None)
+assert SIMKW.get("trail_pct"), "trail machinery missing -- refuse to run"
 
 CFGS = {
     "R020": dict(desc="full rotation, re-pick every freed ticket"),
@@ -121,8 +127,10 @@ def day_candidates(cs, date, dfs):
         w7 = df[df.index.time <= dtime(7, 0)]
         gap7 = (float(w7["Close"].iloc[-1]) / pc - 1) * 100 if len(w7) \
             else None
+        pm = px.premkt_metrics(df, pc)
+        pmh = pc * (1 + pm["pm_high_gain"] / 100) if pm else None
         out.append({"c": c, "df": df, "pc": pc, "cross": cross,
-                    "gap7": gap7, "halal": None})
+                    "gap7": gap7, "halal": None, "pmh": pmh})
     return out
 
 
@@ -196,9 +204,13 @@ def run_day(cands, date, cfg):
             t = _step(t)
             continue
         esc = cfg.get("escape")
+        kw = dict(SIMKW)
+        if pick.get("pmh"):
+            kw["extra_break_high"] = pick["pmh"]   # champion parity:
+            # the premarket-high stop-buy travels OUTSIDE the sim dict
         tr = dt.simulate_trades(
             w, prev_close=pick["pc"], budget=TICKETS[ticket_i],
-            entry_start=max(t, pick["cross"]), **SIMKW)
+            entry_start=max(t, pick["cross"]), **kw)
         tr = [x for x in tr if x.get("entry_time") is not None]
         if not tr:
             # never triggered: stale-pick escape re-ranks at esc, else
