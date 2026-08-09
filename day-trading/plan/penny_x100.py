@@ -55,6 +55,21 @@ def causal_rvol_table():
     return _CAUSAL_RVOL[0]
 
 
+_EFLAGS = [None]
+
+
+def earnings_flags():
+    """Z4xx: {"SYM|DATE": {"streak": n}} -- report in the prior 24h.
+    Loud failure if requested before build_earnings_flags.py ran."""
+    if _EFLAGS[0] is None:
+        f = ROOT / "data" / "earnings_flags.json"
+        if not f.exists():
+            raise RuntimeError("ERROR: earnings_flags.json missing -- run "
+                               "plan/build_earnings_flags.py first.")
+        _EFLAGS[0] = json.loads(f.read_text())
+    return _EFLAGS[0]
+
+
 RES_F = ROOT / "data" / "massive" / "x100_results.json"
 MD_F = ROOT / "X-RESULTS.md"
 FETCH = "--fetch" in sys.argv
@@ -248,6 +263,24 @@ def rank_pool(cs, spec, date, dfs):
                 + _z(((mets.get(c["symbol"]) or {}).get("pm_pressure") or 0),
                      ps_)) for c in pool}
             pool.sort(key=lambda c: keys[c["symbol"]])
+        elif mode == "coil_quiet":
+            # TWLO lesson (Z404): coiled names whose premarket was QUIET
+            # -- price pinned at the high on low dollar volume reads as
+            # buyers waiting, not churn. Coil group first, then
+            # ASCENDING premarket dollar volume.
+            pool.sort(key=lambda c: (
+                -((((mets.get(c["symbol"]) or {}).get("coil") or 0) >= 0.95)
+                  * 1), (mets.get(c["symbol"]) or {}).get("pm_dvol") or 0))
+        elif mode == "coil_liquid":
+            # TWLO lesson (Z405): among coiled names prefer the DEEPEST
+            # books (highest historical avg dollar volume -- causal,
+            # trailing 50d). TWLO's fills beat the model by 1.43%.
+            def _adv(c):
+                av = (c.get("volume") / c["rvol"]) if c.get("rvol") else 0
+                return av * (c.get("prev_close") or 0)
+            pool.sort(key=lambda c: (
+                -((((mets.get(c["symbol"]) or {}).get("coil") or 0) >= 0.95)
+                  * 1), -_adv(c)))
         elif mode == "cross_time":
             # part-day signal: the EARLIER a name first touched +10%,
             # the higher it ranks (never-crossed sinks to the bottom;
@@ -265,6 +298,12 @@ def rank_pool(cs, spec, date, dfs):
                         return ts.hour * 60 + ts.minute
                 return 1e9
             pool.sort(key=xt)
+        if spec.get("earnings_rank"):
+            # Z401: earnings-day names first, prior order within groups
+            ef = earnings_flags()
+            pool.sort(key=lambda c, _p={id(c): i for i, c in
+                                        enumerate(pool)}: (
+                0 if f"{c['symbol']}|{date}" in ef else 1, _p[id(c)]))
         if spec.get("causal_cut"):
             pool = pool[:walk]
         return pool
@@ -485,6 +524,26 @@ def run_experiment(spec, label):
                     cb = spec.get("cross_before")
                     if cb is not None and c["_gc_start"] > dtime(*cb):
                         continue      # crossed too late in the morning
+                # Z4xx earnings gates (TWLO case study 2026-08-09)
+                eg = spec.get("earnings_gate")
+                if eg is not None:
+                    ef = earnings_flags()
+                    key = f"{c['symbol']}|{date}"
+                    if spec.get("earnings_shuffle"):
+                        # ZC40 control: same flag COUNT, wrong days
+                        import hashlib
+                        hit = int(hashlib.md5(
+                            key.encode()).hexdigest(), 16) % 100 < 4
+                    else:
+                        hit = key in ef
+                    if eg and not hit:
+                        continue          # earnings-day names only
+                    if not eg and hit:
+                        continue          # Z402: NON-earnings only
+                    bm = spec.get("beats_min")
+                    if bm and (not hit or ef.get(key, {})
+                               .get("streak", 0) < bm):
+                        continue
                 # W010: old-style FULL-DAY filter on the novol pool.
                 # NON-CAUSAL (peeks at the day's final volume) -- kept
                 # only as a reference point, never adoptable live.
@@ -1424,6 +1483,27 @@ EXPERIMENTS += [
 # still downloading, so the adoption number needs a full-coverage pass.
 EXPERIMENTS.append(Z("Z300", "coil rank walk 12, FULL walk-16 coverage",
                      rank="coil", causal_cut=True, walk=12))
+
+# Z4xx: TWLO case-study family (2026-08-09). The Aug-7 winner was an
+# earnings-gap: Q2 beat AMC Aug-6, 6th straight beat, quiet coiled
+# premarket, deep book. Each trait tested separately on the Z300 base.
+EXPERIMENTS += [
+    Z("Z400", "earnings-day names ONLY", rank="coil", causal_cut=True,
+      walk=12, earnings_gate=True),
+    Z("Z401", "earnings-day priority, coil within", rank="coil",
+      causal_cut=True, walk=12, earnings_rank=True),
+    Z("Z402", "NON-earnings names only (complement)", rank="coil",
+      causal_cut=True, walk=12, earnings_gate=False),
+    Z("Z403", "earnings-day + >=3 straight beats", rank="coil",
+      causal_cut=True, walk=12, earnings_gate=True, beats_min=3),
+    Z("Z404", "quiet-coil rank (asc pm $vol tiebreak)",
+      rank="coil_quiet", causal_cut=True, walk=12),
+    Z("Z405", "liquid-coil rank (desc avg $vol tiebreak)",
+      rank="coil_liquid", causal_cut=True, walk=12),
+    Z("ZC40", "CONTROL hash-shuffled earnings flags", rank="coil",
+      causal_cut=True, walk=12, earnings_gate=True,
+      earnings_shuffle=True),
+]
 
 # --- FILL REALISM on C35 (user 2026-08-07: "check the buy and exit if
 # they are realistic"). The backtest fills breakouts AT the trigger; a
