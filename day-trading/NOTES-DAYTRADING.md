@@ -3006,3 +3006,17 @@ IMPLIED RANK NEVER TESTED BEFORE: the ANTI-CHASE composite
   score = +z(coil) - z(gain_so_far) - z(dollar_volume_so_far)
 Registered as R001 (RC01 = sign-flip control = the chase rank, must
 lose). Running. Rotation batch (R020-R029) running in parallel.
+
+## R-CAMPAIGN PHASES 1+3 CLOSED (2026-08-09 night)
+Phase 1 (estimator ranks): R001 anti-chase composite $571,980 beat its
+sign-flip control ($429,288 -- chase rank = random, atlas confirmed)
+but not Z104. Cross-sectional IC-optimal != walk-commit optimal.
+Coil+pressure stands as the best static rank.
+Phase 3 (exit retune on the novol pool): best variant +$17.6k (trail
+wide 50), below the +$30k bar, sweep non-monotone; breakeven floors
+rejected a THIRD time (-$122k / -$260k -- they amputate the fat tail).
+Z104's exit machinery is confirmed at a flat optimum; capture ratio
+0.29 is the tail's premium, not leakage.
+REMAINING: Phase 2 rotation (running) is the last lever; if it fails
+the guardrails too, ~$650k is this family's honest ceiling and Z104
+stands as final.
