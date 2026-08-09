@@ -172,7 +172,7 @@ def rank_pool(cs, spec, date, dfs):
     if spec.get("pm_dvol_min") or spec.get("rank", "gain") in (
             "pm_gain", "pm_dvol", "zblend", "coil", "pm_high_gain",
             "turnover", "random", "lag", "pm_pressure", "cross_time",
-            "coil_press", "zcoilpress"):
+            "coil_press", "zcoilpress", "coil_quiet", "coil_liquid"):
         if spec.get("causal_cut"):
             # Z-series (user 2026-08-08: "only using current signal
             # instead of full day signal"): the top-walk cut itself must
