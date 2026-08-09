@@ -172,7 +172,8 @@ def rank_pool(cs, spec, date, dfs):
     if spec.get("pm_dvol_min") or spec.get("rank", "gain") in (
             "pm_gain", "pm_dvol", "zblend", "coil", "pm_high_gain",
             "turnover", "random", "lag", "pm_pressure", "cross_time",
-            "coil_press", "zcoilpress", "coil_quiet", "coil_liquid"):
+            "coil_press", "zcoilpress", "coil_quiet", "coil_liquid",
+            "coil_pmgain", "coil_cont"):
         if spec.get("causal_cut"):
             # Z-series (user 2026-08-08: "only using current signal
             # instead of full day signal"): the top-walk cut itself must
@@ -263,6 +264,17 @@ def rank_pool(cs, spec, date, dfs):
                 + _z(((mets.get(c["symbol"]) or {}).get("pm_pressure") or 0),
                      ps_)) for c in pool}
             pool.sort(key=lambda c: keys[c["symbol"]])
+        elif mode == "coil_pmgain":
+            # coil group + PREMARKET gain order (causal fix for the
+            # gain_pct tiebreak leak found 2026-08-09 via Z404/Z405)
+            pool.sort(key=lambda c: (
+                -((((mets.get(c["symbol"]) or {}).get("coil") or 0) >= 0.95)
+                  * 1),
+                -((mets.get(c["symbol"]) or {}).get("pm_gain") or -99)))
+        elif mode == "coil_cont":
+            # continuous coil: no group, no tiebreak -- pure signal
+            pool.sort(key=lambda c: -((mets.get(c["symbol"]) or {})
+                                      .get("coil") or 0))
         elif mode == "coil_quiet":
             # TWLO lesson (Z404): coiled names whose premarket was QUIET
             # -- price pinned at the high on low dollar volume reads as
@@ -1503,6 +1515,16 @@ EXPERIMENTS += [
     Z("ZC40", "CONTROL hash-shuffled earnings flags", rank="coil",
       causal_cut=True, walk=12, earnings_gate=True,
       earnings_shuffle=True),
+]
+
+# Z406/Z407: causal tiebreaks for the coil group -- Z404/Z405 exposed
+# that mode "coil" breaks ties by FULL-DAY gain (a future signal inside
+# Z300 worth ~$150-200k). These test the two remaining causal orders.
+EXPERIMENTS += [
+    Z("Z406", "coil group + PM-gain order (causal)", rank="coil_pmgain",
+      causal_cut=True, walk=12),
+    Z("Z407", "continuous coil, no tiebreak", rank="coil_cont",
+      causal_cut=True, walk=12),
 ]
 
 # --- FILL REALISM on C35 (user 2026-08-07: "check the buy and exit if
