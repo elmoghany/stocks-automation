@@ -482,3 +482,34 @@ POSITION (Z300 = C35 mechanics, unchanged):
 BENCHMARK (updated): Z104 = $646,581/2yr, ~$1,290/traded day, 2/22
 neg months. Compare against this, not C35/W109/Z300.
 REPORTING: entries/exits relayed to main as they happen + EOD summary.
+
+
+## ===== C37 MORNING PROTOCOL (2026-08-10 onward) -- AUTHORITATIVE =====
+## Supersedes the Z300/Z104 section. On conflict, THIS wins.
+
+TICKETS (user cash rules, hard): flat $15,000 each, the 7th/last is
+$10,000, total $100,000/day. ONE position at a time -- never a second
+ticket while one is open. T+1: today's spend returns tomorrow.
+
+SCAN LOOP every 5 MINUTES, 7:00-14:30 (RH data only):
+ 1. Eligible: price >= $2, crossing of +10% vs yesterday's close has
+    ALREADY printed, common stock, >=50 sessions, on halal_list.json
+    (missing verdict -> live screen; real FAIL -> skip). NO volume gate.
+ 2. RANK the eligible: COILED first (current price / premarket high
+    >= 0.95), ordered by 30-bar buy-pressure (20k-share floor);
+    non-coiled after, same order. Calm-gap <=20% (35% grace for the
+    top name) still gates entry.
+ 3. WHEN FLAT and tickets remain: watch the top-ranked name for the
+    standard triggers (5-min ORB break / premarket-high stop-buy /
+    reversal candle). If the pick hasn't ENTERED by 10:00, re-rank and
+    switch (stale-pick escape). New tickets allowed until 14:30.
+ 4. ROTATION: when a ticket exits, the next ticket goes to whatever
+    name ranks best NOW -- same name only if it still ranks first.
+    Late crossers are first-class candidates (a 13:40 crosser is a
+    legitimate 13:45 pick).
+ 5. IN POSITION: watch 1-MINUTE bars -- trail 20%/10%/40% by pressure,
+    hard stop -8%, bank 1/3 at +25% unless pressure >= +0.3, wick
+    guard, halt protocol (no entries on reopen bars). ALL EXITS BY
+    15:00, same day always.
+BENCHMARK: C37 = $774,534/2yr, ~$1,956/traded day, 0/23 neg months.
+Judge weeks, not days.

@@ -101,6 +101,10 @@ CFGS = {
     "R062": dict(desc="STACK under 10bps/side slippage stress",
                  entry_cutoff=dtime(14, 0), escape=dtime(10, 0),
                  slip=0.001),
+    "R063": dict(desc="STACK coverage-robustness: candidates limited "
+                      "to walk-8 depth",
+                 entry_cutoff=dtime(14, 0), escape=dtime(10, 0),
+                 cand_top=8),
 }
 
 
@@ -116,10 +120,10 @@ def bars_for(sym, date):
         return None
 
 
-def day_candidates(cs, date, dfs):
+def day_candidates(cs, date, dfs, top=16):
     """Pre-compute per-candidate causal series needed by the ranker."""
     out = []
-    for c in sorted(cs, key=lambda x: -x["gain_pct"])[:16]:
+    for c in sorted(cs, key=lambda x: -x["gain_pct"])[:top]:
         pc = c.get("prev_close") or 0
         if pc <= 0:
             continue
@@ -224,7 +228,7 @@ def run_day(cands, date, cfg):
         esc = cfg.get("escape")
         kw = dict(SIMKW)
         if cfg.get("slip"):
-            kw["slip"] = cfg["slip"]
+            kw["slippage_bps"] = cfg["slip"] * 1e4   # engine kwarg name
         if pick.get("pmh"):
             kw["extra_break_high"] = pick["pmh"]   # champion parity:
             # the premarket-high stop-buy travels OUTSIDE the sim dict
@@ -270,7 +274,8 @@ def run(cfg_id, max_days=None):
             items = items[:max_days]
         for n, (date, cs) in enumerate(items, 1):
             dfs = {}
-            cands = day_candidates(cs, date, dfs)
+            cands = day_candidates(cs, date, dfs,
+                                   cfg.get("cand_top", 16))
             if not cands:
                 continue
             tr = run_day(cands, date, cfg)

@@ -1823,3 +1823,27 @@ RC60 random-pick rotation control (isolates the ranking's value),
 R062 10bps slippage stress. Bug fixed on the way: registry sim dicts
 are OVERRIDES over BASE_SIM -- first batch ran cents-mode and the
 R023 baseline caught it (third guardrail catch this weekend).
+
+=====================================================================
+## C37 ADOPTED (2026-08-10 pre-open) -- THE ROTATION CHAMPION
+=====================================================================
+C37 = R061: sequential ticket ROTATION under the user's cash rules.
+  One position at a time; flat $15k tickets, last $10k, $100k/day.
+  Each freed ticket re-picks the best CURRENTLY-ranked crossed name
+  (coiled-first: price/premarket-high >= 0.95, live 30-bar pressure
+  order within; 5-min re-rank). Stale-pick escape at 10:00. New
+  tickets allowed until 14:30; all exits by 15:00. Z104's entry
+  triggers and exit machinery per ticket, all honesty fixes + filed
+  halal. ZERO future signals in decisions (coverage tint disclosed
+  and PASSED walk-8 robustness at 99%).
+NUMBERS (leak-free replay):
+  2yr flat +$774,534 over 396 traded days (~$1,956/day)
+  0/23 negative months; slippage 10bps keeps 93.6%; random-pick
+  control -$165k below; no-rotation baseline -$310k below.
+  Half-profit compounding: total wealth $874,534, max DD 1.4%;
+  compounding == flat here (account never dips below the cap) -- its
+  role is downside insurance only.
+LADDER FINAL: C35 $1,163,538 (3 leaks) -> Z104 $646,581 (0 leaks,
+static) -> C37 $774,534 (0 leaks, rotation). Rotation recovered
++$128k of the hindsight gap through STRUCTURE, not prediction --
+information timing, not future information.
