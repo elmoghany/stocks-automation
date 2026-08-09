@@ -1688,3 +1688,48 @@ current_price / premarket_high desc, walk up to 12, first name passing
 calm-gap+halal is the day's stock. All else unchanged from W109.
 NOTE: Z300 negm 2/22 vs W109 0/22 -- the causal cut trades more days
 and admits two mildly negative months; accepted as the honest risk.
+
+=====================================================================
+## WEEKEND WRAP (2026-08-08/09) -- SYSTEM STATE GOING INTO MONDAY
+=====================================================================
+CHAMPION: Z300 (fully causal, zero future signals)
+  coil rank (price/premarket-high) over a 7AM-chosen top-12 walk,
+  first-crossing entries, 5-min scan / 1-min position cadence, causal
+  sizing, filed-quarter halal, halt-aware stops, 50bps premarket
+  spread. 2yr +$706,089 (y1 +$293,614 / y2 +$412,475), 2/22 neg
+  months, ~$1,790/traded day on the $100k cash account.
+  Ladder of honesty: C35 $1,163,538 (3 future signals) -> W109
+  $872,790 (1) -> Z300 $706,089 (0). The rest was hindsight rent --
+  proven unreachable causally by 23 configs + 3 controls + 2 coverage
+  depths (all controls behaved; all gates/blends rejected).
+
+VOLUME: removed everywhere. W000 > C35; W010 (full hindsight volume)
+  < W000; all 35 causal floors monotone-lose; premkt gate is now a
+  data-sanity check only. TWLO (+$1,266.58 live, 2.05x full-day,
+  0.0165x premarket) is the class of trade the old rule blocked.
+
+HALAL: universe pre-screen COMPLETE. 1,347 tradeable names in
+  data/halal_list.json (filed quarterly -> half-year -> annual chain);
+  5,956 unverifiable are mostly ETF-class instruments; live fallback
+  screens any scanner hit missing a verdict. Monthly refresh: Task
+  Scheduler, 1st @ 06:10. Nightly build task deleted.
+
+MONDAY (first Z300 live session): cron 6:56 launches the paper agent
+  on the "Z300 MORNING PROTOCOL" skill section (authoritative
+  checklist). Benchmark $1,790/day; judge the week, not the day
+  (backtest: avg win day +$5.5k, 20% of days lose ~-$2k).
+
+IN FLIGHT (Z4xx, TWLO case-study family): earnings-history fetch ->
+  flags -> Z400 earnings-only / Z401 priority / Z402 complement /
+  Z403 beat-streak / ZC40 shuffled control; Z404 quiet-coil + Z405
+  liquid-coil rerunning after the rank-membership fix (first run
+  fell through to hindsight ordering -- caught by identical results,
+  purged). Accidental datum kept: hindsight cut+order at walk-12 =
+  $963,603 = +$257k of leak, consistent with prior pricing.
+
+ENV: pandas force-upgraded to 3.0.5 -- S095 identity EXACT under it;
+  numpy/pandas binary mismatch fixed by reinstall. Massive key is
+  free-tier 5 req/min (measured); Finnhub free tier serves only ~1
+  month of earnings-calendar history (measured); yfinance bulk needs
+  gentle pacing + the AAPL canary pattern.
+=====================================================================
