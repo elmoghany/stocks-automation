@@ -1419,6 +1419,12 @@ EXPERIMENTS += [
       rank="coil", causal_cut=True),
 ]
 
+# Z300: clean re-run of the phase-2 leader (coil walk-12) -- its first
+# run (Z100, $701,728) started while the last ~10% of walk-16 bars were
+# still downloading, so the adoption number needs a full-coverage pass.
+EXPERIMENTS.append(Z("Z300", "coil rank walk 12, FULL walk-16 coverage",
+                     rank="coil", causal_cut=True, walk=12))
+
 # --- FILL REALISM on C35 (user 2026-08-07: "check the buy and exit if
 # they are realistic"). The backtest fills breakouts AT the trigger; a
 # real resting stop-limit fills somewhere between the trigger and its

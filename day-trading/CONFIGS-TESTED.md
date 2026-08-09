@@ -1636,3 +1636,35 @@ Honest distance to the user's $1.2M target: best fully-causal today is
 $687k. The remaining gap splits into (a) coverage bias the backfill may
 recover, (b) composable signal, (c) hindsight rent that no causal
 config can collect. Phase 2 measures (a)+(b).
+
+## Z-CAMPAIGN COMPLETE -- FINAL VERDICT (2026-08-09 ~05:00)
+All fully-causal (7AM-knowable inputs only), honest costs charged.
+
+  Z300 coil walk-12, full coverage  $706,089  2/22 negm  <- WINNER
+  Z100 (same, 90% coverage)         $701,728  2/22   coverage-stable
+  Z105 coil + calm-gap 25           $657,340  1/22   no add
+  Z206 coil walk-8                  $655,832  1/22   walk-12 worth +$50k
+  Z104 coil/pressure blend w12      $646,581  2/22   blend hurts
+  Z101 coil-group+pressure          $576,604  2/22   blend hurts
+  Z103 coil + fallback re-pick      $498,923  2/22   REJECTED
+  Z204 pm_pressure (full cov)       $493,966  3/22   collapsed -25%
+  Z102 z(coil)+z(pressure)          $477,565  4/22   REJECTED
+  ZC00 random control               $429,437  4/22   correctly last
+  Z201 pm_gain (full cov)           $243,241  3/22   collapsed -52%
+
+ADOPTION CANDIDATE (W110): Z300 = coil rank, causal cut, walk 12 on
+the no-volume universe + all six honesty fixes. $706,089/2yr =
+~$1,790/traded-day avg across 394 traded days. Both years positive,
+beats every alternative, control fails, coil is the ONLY rank stable
+under doubled coverage (-4.6% vs -25%/-52% for pressure/gain).
+
+THE HONEST LADDER, final:
+  C35 headline (3 future signals)             $1,163,538
+  W109 (adopted; 1 residual: hindsight cut)     $872,790
+  Z300 fully causal, all costs                  $706,089
+The $1.2M target is NOT reachable without future signals: ~$457k of
+the headline was hindsight rent. $706k (~$1,790/day) is the defensible
+2-year expectancy of this strategy family on a $100k cash account.
+Live protocol needs ONE change to match Z300: scanner ranks candidates
+by COIL (7AM price / premarket high, closest to 1 first), walk depth
+12. Everything else already matches.
