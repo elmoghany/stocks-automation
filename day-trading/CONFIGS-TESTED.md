@@ -1601,3 +1601,38 @@ Phase 2 (after results): greedy stack of PASSes -> Z100+ composite
 ("C36 candidate"), fallback-repick overlay on the winner, random-rank
 control must fail. Guardrails unchanged: both years positive vs
 baseline, >=2 adjacent thresholds agree, controls fail.
+
+## Z-CAMPAIGN PHASE 1 COMPLETE (2026-08-08 evening)
+Fully-causal selection variants on the W109 machinery. 2-yr totals:
+
+  Z000 identity (=W109)          $872,790   (still has the hindsight
+                                             top-8 pre-cut by full-day
+                                             gain -- see below)
+  -- causal cut (top-8 chosen at 7AM, not by the day's end) --
+  Z006 coil rank                 $687,356  1/22 negm   <- best
+  Z004 pm_pressure rank          $657,455  3/22
+  Z002 pm_high_gain rank         $518,271  3/22
+  Z001 pm_gain rank              $505,581  2/22
+  Z003 pm_dollar_volume rank     $461,589  5/22
+  Z005 earliest-crossing rank    $451,587  5/22
+  ZC00 RANDOM CONTROL            $429,437  4/22   (loses to all: the
+                                                   ordering signal is real)
+  Z007 pm-turnover               y1 $196k, y2025 dropped (rank needs
+                                 per-name Massive fetches -- unadoptable
+                                 live, and worst performer anyway)
+  -- gates on Z001 (all REJECTED) --
+  Z010/Z011/Z012 crossed-before 9/10/11am: $283k/$347k/$363k monotone
+    loss -- late crossers are profit, never filter them
+  Z013 calm-gap 15: $447k (tighter loses)   Z014 calm-gap 25: $437k
+    (looser also loses slightly -- 20 stays)
+
+READING: the hindsight pre-cut was worth ~$185k/2yr (Z000 - Z006).
+Coil (7AM price holding within 5% of the premarket high) is the
+strongest causal ordering signal, pressure second; both are exactly
+what live can compute at 7:00. Phase 2 (queued behind the walk-16
+backfill, ~1,125/2,431 done): blends of coil+pressure, walk 12,
+fallback re-pick at 10:00, coil+calm-gap-25.
+Honest distance to the user's $1.2M target: best fully-causal today is
+$687k. The remaining gap splits into (a) coverage bias the backfill may
+recover, (b) composable signal, (c) hindsight rent that no causal
+config can collect. Phase 2 measures (a)+(b).
