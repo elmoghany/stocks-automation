@@ -1847,3 +1847,25 @@ LADDER FINAL: C35 $1,163,538 (3 leaks) -> Z104 $646,581 (0 leaks,
 static) -> C37 $774,534 (0 leaks, rotation). Rotation recovered
 +$128k of the hindsight gap through STRUCTURE, not prediction --
 information timing, not future information.
+
+## R-CAMPAIGN CLOSED -- FINAL ACCOUNTING (2026-08-09 evening)
+Champion before the plan: Z104  $646,581, 2/22 neg months, 394 days.
+Champion after the plan:  C37   $774,534, 0/23 neg months, 396 days.
+  Improvement: +$127,953 (+19.8%), ~$1,641 -> ~$1,956/traded day,
+  both negative months eliminated, max total-wealth DD 1.4%.
+  Zero future signals in both -- the gain is structural (rotation +
+  14:30 window), not a fitted signal, and survived every control.
+Campaign scorecard (what worked / what did not):
+  WORKED: sequential ticket rotation (+$145k structure), coil/pressure
+    ranking under rotation (+$165k vs random), late-window extension
+    (12:00->14:30 monotone), 10:00 stale-pick escape (+$14k).
+  DID NOT: estimator/composite ranks (all lost to coil+pressure),
+    exit retunes (flat optimum, 3rd confirmation), breakeven floors
+    (3rd rejection), earnings overlays, crossing-time gates, blends.
+  ACCIDENTAL LESSON: half-profit compounding == flat under the $100k
+    deployment cap when the account never dips below it; its value is
+    downside insurance, not growth. (Corrects the earlier "+8.6%"
+    framing of C35 compounding -- that was the starting capital.)
+Hindsight gap status: C35 $1,163,538 headline; $774,534 (67%) now
+earned causally; remaining ~$389k proven unpredictable by controls.
+Monday 2026-08-10, 6:56 AM: first live C37 paper session.
