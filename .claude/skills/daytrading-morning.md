@@ -513,3 +513,26 @@ SCAN LOOP every 5 MINUTES, 7:00-14:30 (RH data only):
     15:00, same day always.
 BENCHMARK: C37 = $774,534/2yr, ~$1,956/traded day, 0/23 neg months.
 Judge weeks, not days.
+
+
+## FILL-ARMING RULE (2026-08-10, from Paper Day 5's -1.6% fill miss)
+
+NEVER arm a stop-buy whose trigger level has ALREADY been met. On
+2026-08-10 LFST's stop 12.045 was armed after price had traded through
+it; a stop with a met trigger is just a market order, and it swept the
+book at a local top (fill 12.0710, -1.6% vs the +60s assumption --
+the first negative fill-realism data point).
+
+Protocol, checked at EVERY arming:
+ 1. Re-quote immediately before arming. If last/bid >= trigger, the
+    stop conversion is live NOW -- do NOT arm it as a stop.
+ 2. Instead place a MARKETABLE LIMIT capped at trigger + 0.5% (the
+    same cap as the thin-book veto), sized against visible ask depth.
+    If the book can't fill inside the cap, treat it as a veto: wait
+    for the next 1-min bar and re-evaluate -- a level already taken
+    out will usually retest within minutes (and if it doesn't, the
+    entry was a chase).
+ 3. If last < trigger, arm the stop-limit normally (stop trigger,
+    limit trigger + 0.5%).
+This preserves the backtest's fill assumptions: the sim fills breaks
+AT the trigger, not at a post-break sweep.
