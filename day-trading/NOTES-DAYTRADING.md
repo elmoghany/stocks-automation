@@ -3100,3 +3100,11 @@ Fourth confirmation: never cap the fat tail. Video's value was
 convergent validation (location=coil, wait-for-proof=first-crossing,
 trap-reversal=Trigger C). C37 stands. Details:
 video-studies/2026-08-09-riley-coleman-futures-reversal.md
+
+## G-SERIES (Jdub break&retest) COMPLETE (2026-08-10)
+All rejected vs Z104 $646,581: control (nonsense level) $575,517 BEAT
+every real-level variant (G002 $538k, G001 $504k, G004 $490k, G003
+$482k); monotone in how hard the retest binds. The level carries no
+signal; the retest is a tax in forfeited runners. Second proof that
+entry microstructure is not the edge. C37 stands. Details:
+video-studies/2026-08-10-jdub-break-and-retest.md

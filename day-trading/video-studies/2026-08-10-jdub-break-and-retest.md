@@ -63,9 +63,26 @@ below level−tol cancels. Applies to ORB and PMH triggers; pattern
 (Trigger C) entries unchanged. Identity gate: S095 + Z104 EXACT with
 the kwarg unset.
 
-## Results
+## Results (G-series complete, 2026-08-10)
 
-(pending — batch G1 running)
+vs the Z104 base ($646,581 / 2yr):
+
+| id | config | 2-yr total | delta |
+|----|--------|-----------|-------|
+| GC01 | CONTROL: nonsense level (+2%) | $575,517 | -$71k — BEST of the family |
+| G002 | tol 1.0% | $538,182 | -$108k |
+| G001 | tol 0.5% | $503,929 | -$143k |
+| G004 | tol 0.5%, wait 40 | $490,300 | -$156k |
+| G003 | tol 0.25% | $482,417 | -$164k |
+
+VERDICT: break-and-retest REJECTED, and the gradient tells the whole
+story -- the LESS the retest requirement binds (nonsense level, wide
+tolerance), the closer to the plain-break baseline; the tighter it
+binds, the worse. The control beating every real-level variant means
+the broken level carries NO entry information on our names; the
+retest is pure tax, paid in forfeited runners that never pull back.
+Second confirmation (after F001/FC01) that entry microstructure is
+not where this system's money lives. C37 unchanged.
 
 ## Prior expectation (stated before results)
 
