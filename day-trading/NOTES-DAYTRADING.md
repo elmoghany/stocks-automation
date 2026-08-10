@@ -3125,3 +3125,33 @@ Batch economics: 10 videos -> 1 novel mechanic -> 0 adoptions after
 full rigor, 6 more independent confirmations of the standing system
 (location/coil, confirmation-wait, trap-reversal, tail economics x2,
 static-gate redundancy). Videos are cheap validation, rare innovation.
+
+## PAPER DAY 5 (2026-08-10, Monday) -- FIRST LIVE C37 SESSION: -$65.78
+One ticket. LFST (LifeStance, $4.7B, mental health): calm +0.1% at 7AM,
+late crosser to +10.8%, 52-wk high, coiled 0.997, pressure +0.402 on 1M
+sh, clean 0.33% book, live quarterly halal re-screen PASS -> entered
+09:47 at 12.0710 (1,242 sh, $14,992), peaked +$415, ground sideways all
+afternoon, flattened 14:57 at 12.0181. -$65.78 vs C37 ~+$1,956/day.
+WHY THE DAY WAS THIN: every monster was haram -- SCKT +617% peak (loans
+255.8% of a $3.2M mcap), PCLA +109%, WYHG +171%; ~45 distinct halal
+FAILs on the scanner. The gate, not the triggers, decided today.
+FOUR FINDINGS:
+1. FILL-REALISM first NEGATIVE point (-1.6% vs +60s): arming a stop-buy
+   whose level is ALREADY exceeded converts to an immediate marketable
+   sweep and buys the micro-top. Protocol candidate fix: require a fresh
+   cross (bar low < trigger since arming) before filling -- matches the
+   backtest's fill-at-the-cross semantics. (Prior 3 points all better.)
+2. Thin-book veto save #2: CLRO crossed its 11.75 trigger on ZERO ask
+   depth in band; breakout failed 11.98 -> 11.36. No fill was correct.
+3. C37's 20% base trail never engages on a +10-14% grinder -- LFST's
+   fade from +$415 to flat was untouchable by design. Expected: the
+   trail is calibrated for the fat tail, not for scratch days.
+4. OPS: one-shot background timers are reaped at ~50 min (07:53-08:43
+   coverage gap, logged); a persistent Monitor emitting CYCLE_TICK/300s
+   is the correct session clock -- ran flawlessly 08:46-15:05. Scanner
+   subagents now self-gate new names vs halal_list/universe.
+Session also late-started 07:38 (scheduler busy); 07:00-07:38 unscanned,
+nothing backfilled. Ledger: data/paper_days/2026-08-10.{md,json}.
+Recent: D4 +$1,307, D5 -$66. Rotation never fired on D5 (no exit before
+close) so the $100k/day capacity went 85% unused -- single-name days
+remain the main gap vs the backtest's 6-7 entries.

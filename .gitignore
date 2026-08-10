@@ -32,6 +32,7 @@ wheels/
 # trading + its news in the repo for later analysis)
 day-trading/data/*
 !day-trading/data/paper/
+!day-trading/data/paper_days/
 earnings-trading/data/*
 !earnings-trading/data/paper/
 !earnings-trading/data/earnings_trading_results.json

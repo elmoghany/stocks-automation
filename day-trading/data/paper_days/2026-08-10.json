@@ -1,0 +1,287 @@
+{
+ "date": "2026-08-10",
+ "config": "C37",
+ "mode": "paper",
+ "protocol": "sequential-rotation resting-order",
+ "sizing": {
+  "ticket": 15000,
+  "last_ticket": 10000,
+  "max_deployed": 100000,
+  "one_position_at_a_time": true
+ },
+ "session_notes": {
+  "late_start": "07:38 ET actual vs 07:00 nominal (scheduler busy); 07:00-07:38 window not scanned, no backfilled picks",
+  "market_calendar": "TRADING 2026-08-10 full",
+  "halal_list": "updated 2026-08-09, n=1347, fresh"
+ },
+ "cumulative_deployed": 14992.2,
+ "candidates": [
+  {
+   "sym": "SLN",
+   "first_seen": "07:40",
+   "prev_close": 11.95,
+   "px_7am": 14.0507,
+   "gates": {
+    "eligible": "pass +69.3% live (pc 11.95 -> 20.23 @07:40 ET), 90+ sessions",
+    "halal": "list pass was seed-rules_ytd -> LIVE RE-SCREEN: halal=True source=quarterly loans 0.02% cash 11.3% combined 11.33 (RH mcap $619,937,485 stored)",
+    "calm_gap_7am": "pass +17.6%",
+    "coil": "0.967 (20.23/20.9297) COILED",
+    "pressure_30bar": "+0.090 on 537,210 sh",
+    "l2_veto": "07:42 spread 18.00x18.30 = 1.67% > 0.5% -> entry vetoed while book is wide"
+   },
+   "outcome": "rank 1 from 08:44 (sole eligible, +27.2%, non-coiled 0.73); no armed order - awaiting ORB/reversal with book veto active"
+  },
+  {
+   "sym": "ALOY",
+   "first_seen": "07:40",
+   "prev_close": 12.27,
+   "px_7am": 13.4,
+   "gates": {
+    "eligible": "pass +12.5% live (pc 12.27 -> 13.80 @07:40 ET), 90+ sessions",
+    "halal": "pass (universe quarterly: loans 0.17% cash 5.08%)",
+    "calm_gap_7am": "pass +9.2%",
+    "coil": "0.989 (13.80/13.95) COILED",
+    "pressure_30bar": "+0.560 on 37,945 sh (above 20k floor)",
+    "l2_veto": "07:42 spread 13.80x14.00 = 1.45% > 0.5% -> NOT ARMED; depth to limit 14.02 only 212 sh vs ~1,075 intended (<25% floor)"
+   },
+   "outcome": "rank 1 until 08:44, never armed (thin-book veto held whole window); fell to +8.8% at 08:44 -> INELIGIBLE, pick rotated to SLN"
+  },
+  {
+   "sym": "TH",
+   "first_seen": "07:40",
+   "prev_close": 16.51,
+   "gates": {
+    "eligible": "FAIL currently +4.2% (last real trade 17.20 @06:48 ET); ERROR: scan row Last 18.52/+12.2% stale vs tape"
+   },
+   "outcome": "not eligible this cycle; re-check each scan"
+  },
+  {
+   "sym": "AIRJ",
+   "first_seen": "07:40",
+   "prev_close": 5.92,
+   "gates": {
+    "eligible": "FAIL currently +9.1% (6.46 @07:40); printed +11.5% highs 07:35 but crossing must hold NOW"
+   },
+   "outcome": "WATCH - closest to re-crossing +10%"
+  },
+  {
+   "sym": "EUDA",
+   "first_seen": "07:40",
+   "gates": {
+    "eligible": "FAIL no trades today (last trade 2026-08-07); ERROR: scan row Last 20.00 stale (repeat of Day 4)"
+   },
+   "outcome": "not eligible"
+  },
+  {
+   "sym": "ALF",
+   "first_seen": "07:40",
+   "gates": {
+    "eligible": "FAIL no trades today; ERROR: scan row Last 12.00 stale"
+   },
+   "outcome": "not eligible"
+  },
+  {
+   "sym": "FORTY",
+   "first_seen": "07:40",
+   "prev_close": 108.75,
+   "gates": {
+    "eligible": "FAIL no trades today; ERROR: scan row Last 144.94 stale",
+    "halal": "MISSING from universe -> live screen required if it becomes eligible"
+   },
+   "outcome": "watch; live screen deferred"
+  },
+  {
+   "sym": "STI",
+   "first_seen": "08:44",
+   "prev_close": 7.21,
+   "gates": {
+    "halal": "LIVE RE-SCREEN pass quarterly loans 4.1% cash 0.06% haram_rev 0.06% (seed-era list pass; RH mcap $63.6M stored)",
+    "eligible": "FAIL currently +9.7% (7.9101 @08:30 print); book 7.89x8.44 = 6.7% spread"
+   },
+   "outcome": "WATCH - just under the +10% line"
+  },
+  {
+   "sym": "ACHR",
+   "first_seen": "08:44",
+   "gates": {
+    "halal": "universe FAIL HARAM INDUSTRY"
+   },
+   "outcome": "PERMANENT reject"
+  },
+  {
+   "sym": "WYHG",
+   "first_seen": "08:44",
+   "gates": {
+    "halal": "universe FAIL LOAN>10+COMBINED>20"
+   },
+   "outcome": "PERMANENT reject"
+  },
+  {
+   "sym": "BWMN/POWW/DOMH/RNA/AQST",
+   "first_seen": "08:44",
+   "gates": {
+    "halal": "universe FAIL (seed-era screens)"
+   },
+   "outcome": "rejected"
+  },
+  {
+   "sym": "NESR",
+   "first_seen": "09:37",
+   "prev_close": 29.02,
+   "px_7am": 31.9,
+   "gates": {
+    "calm_gap_7am": "pass +9.9%",
+    "halal": "LIVE RE-SCREEN pass quarterly loans 8.76% cash 2.61% haram_rev 0.4% (seed-era list pass; mcap $3.56B stored)",
+    "coil": "0.994 at 09:37 COILED; 52-wk high today",
+    "pressure_30bar": "-0.090 then -0.135 (423k-466k sh)"
+   },
+   "outcome": "rank 2 then rank 1 briefly (09:43); never armed (spread 0.57-1.26% > 0.5% cap); de-ranked when LFST appeared"
+  },
+  {
+   "sym": "CLRO",
+   "first_seen": "09:37",
+   "prev_close": 10.17,
+   "px_7am": 10.02,
+   "gates": {
+    "calm_gap_7am": "pass -1.5%",
+    "halal": "LIVE RE-SCREEN pass quarterly loans 0.48% cash 1.07% (mcap $70.4M stored)",
+    "coil": "0.971 -> 0.949 -> 0.966",
+    "pressure_30bar": "+0.261/+0.244",
+    "l2_veto": "trigger 11.75 crossed 09:38-09:39 with ZERO ask depth in band -> NO FILL; price failed back to 11.365 (veto was right)"
+   },
+   "outcome": "pick 09:42-09:43; veto blocked the failed breakout; rank 2 after"
+  },
+  {
+   "sym": "LFST",
+   "first_seen": "09:46",
+   "prev_close": 10.84,
+   "px_7am": 10.85,
+   "gates": {
+    "calm_gap_7am": "pass +0.1%",
+    "eligible": "late crosser +10.8% (first-class per C37)",
+    "halal": "LIVE RE-SCREEN pass quarterly loans 9.74% cash 4.79% combined 14.53% haram_rev 0.15% (mcap $4.72B stored)",
+    "coil": "0.997 COILED, 52-wk high today",
+    "pressure_30bar": "+0.402 on 1,017,023 sh (day's strongest trusted)",
+    "l2_veto": "PASS spread 0.33->0.08%, 2,858 sh in band vs 1,242 needed"
+   },
+   "outcome": "PICK at 09:46 -> ENTERED 09:47 (ticket 1)"
+  },
+  {
+   "sym": "PIII/NEPH",
+   "first_seen": "09:46",
+   "gates": {
+    "halal": "on list (seed) - re-screen owed if picked",
+    "eligible": "PIII 4.7% spread untrusted vol; NEPH bid +8.8% under line"
+   },
+   "outcome": "watch"
+  },
+  {
+   "sym": "UEIC/TNXP/GENC/SEGG/ABTC/STDN/FEAM/MVIS/FCUV/VERU/ZNB/PMTS/OLOX/STFS",
+   "first_seen": "09:36-09:46",
+   "gates": {
+    "halal": "universe FAILs (GENC cash>10, ABTC loans, STDN haram rev, rest seed-era screens)"
+   },
+   "outcome": "rejected"
+  },
+  {
+   "sym": "SCKT",
+   "first_seen": "09:17",
+   "prev_close": 0.3864,
+   "px_7am": 0.362,
+   "gates": {
+    "calm_gap_7am": "pass -6.3%",
+    "eligible": "pass +617% at peak, price>=2 currently, 50+ sessions",
+    "halal": "LIVE SCREEN FAIL loans 255.75% combined 309.5% quarterly (mcap $3.18M stored)"
+   },
+   "outcome": "PERMANENT reject - day's biggest runner unbuyable (1st haram block of day)"
+  }
+ ],
+ "permanent_rejects_from_universe": [
+  "JWEL",
+  "STKH",
+  "ZJYL",
+  "DUKR",
+  "DKI",
+  "VREX",
+  "HZO",
+  "XHLD",
+  "ABCL",
+  "AIFA",
+  "LSE",
+  "INLF",
+  "GTN",
+  "GTN.A",
+  "BRBI",
+  "VRM",
+  "RYM",
+  "NIPG",
+  "CHMI",
+  "SLI",
+  "PRHI",
+  "SHMD",
+  "MDBH",
+  "INHD",
+  "NXTC",
+  "VFF"
+ ],
+ "trades": [
+  {
+   "sym": "LFST",
+   "side": "long",
+   "ticket": 1,
+   "entry_time": "09:47 ET",
+   "entry_px": 12.071,
+   "fill_basis": "stop 12.045 already met at arming -> marketable limit book sweep 700@12.06+300@12.08+200@12.09+42@12.10",
+   "optimistic_alt_fill": 12.045,
+   "pessimistic_alt_fill": 12.1052,
+   "shares": 1242,
+   "ticket_$": 14992.2,
+   "cumulative_deployed": 14992.2,
+   "resting_stop": 11.1053,
+   "stop_basis": "max(entry*0.92, peak*0.60), intrabar vs 1-min lows",
+   "scale_out": "1/3 at 15.0888 unless pressure >= +0.3",
+   "l2_depth_at_arm_sh": 2858,
+   "vol_cap_$": 1100000,
+   "exits": [
+    {
+     "type": "EXIT-FLATTEN",
+     "time": "14:57 ET",
+     "px": 12.0181,
+     "fill_basis": "flatten ladder marketable limit at bid-1% (11.90 floor); bid-side sweep 1000@12.02 + 242@12.01 (quote 18:53:02Z bid 12.02 x ask 12.03)",
+     "optimistic_alt_fill": 12.03,
+     "pessimistic_alt_fill": 11.9097,
+     "shares": 1242,
+     "pnl": -65.78,
+     "peak_unrealized": 415.0,
+     "peak_px": 12.42,
+     "max_drawdown_unrealized": -361.42
+    }
+   ],
+   "realized_pnl": -65.78,
+   "fill_vs_60s": "-1.6% WORSE (fill 12.0710 vs ~11.88 at +60s) - first negative fill-realism point of the program; cause: stop already met at arming -> marketable sweep at a local top"
+  }
+ ],
+ "coverage_gaps": [
+  "07:00-07:38 ET not scanned (late start, scheduler busy)",
+  "07:53-08:43 ET (50 min): one-shot timer wake + scanner resume lost to harness task lifecycle; replaced with persistent Monitor CYCLE_TICK stream (UTC-based, ends 19:05Z); no backfilled picks",
+  "scan window 07:00-14:30 covered by 72 cycles after the 08:43 fix; post-14:30 exit-only management every ~2.5 min to the 14:57 flatten"
+ ],
+ "errors": [
+  "scan rows stale vs quotes for TH (18.52 vs 17.20), EUDA (20.00, no trades), ALF (12.00, no trades), FORTY (144.94, no trades) - quotes/bars authoritative",
+  "first Monitor attempt: shell ignored TZ, cutoff would have ended clock at 11:05 ET; caught on first tick, re-armed UTC-based"
+ ],
+ "lessons": [
+  "Arming a stop-buy whose trigger is ALREADY exceeded converts to an immediate marketable sweep and buys the micro-top (LFST fill -1.6% vs +60s). Require a fresh cross after arming to match backtest fill-at-the-cross semantics.",
+  "C37's 20% base trail never engages on a +10-14% grinder; LFST faded from +$415 unrealized to ~flat untouched. The trail is calibrated for +100-300% runners; today offered none that were halal.",
+  "Halal universe file (refreshed 2026-08-09) turned ~45 scanner FAILs into one-line rejects; only ~6 live re-screens needed all day (SLN, STI, SCKT, NESR, CLRO, LFST) - all resolved on current quarterly data.",
+  "Every monster of the day was haram: SCKT +617% peak (loans 255.8% of $3.2M mcap), PCLA +109%, WYHG +171%. The gate is the single largest P&L determinant on days like this, by design.",
+  "Thin-book veto save #2: CLRO trigger 11.75 crossed with ZERO ask depth in band; breakout failed 11.98 -> 11.36. No fill was the right outcome.",
+  "One-shot background sleep timers are reaped at the harness lifecycle boundary (~50 min); a persistent Monitor emitting CYCLE_TICK every 300s is the correct session clock and ran flawlessly 08:46-15:05.",
+  "Scanner subagents self-gating new names against halal_list/universe (from cycle 23) cut coordinator overhead sharply; ~15-line reports were sufficient."
+ ],
+ "pnl": -65.78,
+ "flat_at_close": true,
+ "verdict": "1 trade, -$65.78 on $14,992.20 deployed (-0.44%). LFST: the only eligible name with a clean book all morning; entered 09:47 on a book sweep, peaked +$415, faded, flattened 14:57. Rotation never fired (no exit before close). vs C37 ~+$1,956/day: a below-benchmark but controlled day; the halal gate excluded all of the day's big runners. Late start 07:38 + one 50-min ops outage logged honestly; clock made resilient.",
+ "realized_pnl": -65.78,
+ "return_on_deployed_pct": -0.44
+}
