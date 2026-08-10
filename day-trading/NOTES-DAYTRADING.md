@@ -3091,3 +3091,12 @@ Campaign scorecard (what worked / what did not):
 Hindsight gap status: C35 $1,163,538 headline; $774,534 (67%) now
 earned causally; remaining ~$389k proven unpredictable by controls.
 Monday 2026-08-10, 6:56 AM: first live C37 paper session.
+
+## F-SERIES (video study) COMPLETE (2026-08-09 night)
+All four transplanted mechanics rejected or null vs Z104 $646,581:
+confirm-break $632k == its control $638k (no signal); tighten-at-3R
+$503k; structure stop $446k; 3R bracket $343k; 2R bracket $196k.
+Fourth confirmation: never cap the fat tail. Video's value was
+convergent validation (location=coil, wait-for-proof=first-crossing,
+trap-reversal=Trigger C). C37 stands. Details:
+video-studies/2026-08-09-riley-coleman-futures-reversal.md

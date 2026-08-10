@@ -86,9 +86,28 @@ of half of it (convergent evidence is worth noting):
 Guardrails as always: both years vs the champion, adjacency, controls
 must fail, identity gates after every engine edit.
 
-## Results
+## Results (F-series complete, 2026-08-09 night)
 
-(to be filled when the F-series completes)
+vs the Z104 base ($646,581 / 2yr):
+
+| id | mechanic | 2-yr total | delta | verdict |
+|----|----------|-----------|-------|---------|
+| F001 | stop-buy above pattern high | $632,023 | -$15k | wash |
+| FC01 | CONTROL: buy weakness | $638,426 | -$8k | == F001 -> no signal |
+| F007 | tighten trail at 3R | $502,921 | -$144k | REJECTED |
+| F002 | structure stop (3-bar low) | $445,992 | -$201k | REJECTED |
+| F004 | 3R bracket | $342,830 | -$304k | REJECTED |
+| F003 | 2R bracket | $195,865 | -$451k | REJECTED |
+
+READING: (1) confirmation-break entries are indistinguishable from
+their nonsense control -- entry microstructure does not matter in
+fast gappers; selection does. (2) Every tail-capping exit lost, in
+strict order of aggressiveness -- the FOURTH independent confirmation
+that the fat tail funds this strategy (capture ratio 0.29 is its
+price). Fixed-R management suits mean-reverting index scalps, not
++10% momentum gappers. C37 unchanged.
+Wave-2 ideas (snapback trigger, accel candle-trail, macro-news gate)
+deprioritized accordingly -- same tail-capping family.
 
 ## Honest fit assessment
 
