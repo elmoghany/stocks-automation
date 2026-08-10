@@ -923,6 +923,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     struct_stop_bars: int | None = None,
                     target_r: float | None = None,
                     tighten_at_r: tuple | None = None,
+                    orb_retest: tuple | None = None,
                     entry_cutoff=None,
                     entry_start=None,
                     scale_out_at: float | None = None,
@@ -1010,6 +1011,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
     # above the pattern high (confirm_break); structure stops; R-based
     # brackets; tighten-at-R trailing.
     cb_pending = None        # (trigger_px, pattern, bar_set)
+    rt_pending = None        # break&retest: (level, armed_i, pat,
+                             #                touched, prev_hi)
     risk0 = None             # entry - initial stop floor, per position
     floor_px = None          # structure/pct stop floor, fixed at entry
     # CASH-ACCOUNT MODEL (user 2026-08-07): with no margin, T+1 settlement
@@ -1200,12 +1203,44 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
         brk = None
         if (entries_open and state in ("SCAN", "DIPPING", "ARMED")
                 and (max_trades is None or len(trades) < max_trades)):
-            if or_high is not None and i > or_end and cd.h[i] > or_high:
-                brk = ("ORB", max(or_high, cd.o[i]))
+            # G-series (video study 2026-08-10, Jdub break&retest): a
+            # break does not fill -- it arms a RETEST. Fill only when
+            # price pulls back to the broken level and then resumes
+            # through the pullback bar's high. Failed retest (close
+            # back below the level) cancels.
+            if orb_retest is not None and rt_pending is not None:
+                tol, max_wait = orb_retest[0], orb_retest[1]
+                off = orb_retest[2] if len(orb_retest) > 2 else 0.0
+                lvl, ai, rpat, touched, prev_hi = rt_pending
+                elvl = lvl * (1 + off / 100)
+                if i - ai > max_wait:
+                    rt_pending = None
+                elif not touched:
+                    if cd.l[i] <= elvl * (1 + tol / 100):
+                        rt_pending = (lvl, ai, rpat, True, cd.h[i])
+                elif cd.c[i] < elvl * (1 - tol / 100):
+                    rt_pending = None          # failed retest
+                elif cd.h[i] > prev_hi:
+                    brk = (rpat + "-RT", max(prev_hi, cd.o[i]))
+                    rt_pending = None
+                else:
+                    rt_pending = (lvl, ai, rpat, True, cd.h[i])
+            if brk is None and or_high is not None and i > or_end                     and cd.h[i] > or_high:
+                if orb_retest is not None:
+                    if rt_pending is None:
+                        rt_pending = (or_high, i, "ORB", False, None)
+                else:
+                    brk = ("ORB", max(or_high, cd.o[i]))
                 or_high = cd.h[i]      # ratchet for the next break
-            elif extra_break_high is not None and cd.h[i] > extra_break_high:
-                brk = ("PMH-break", max(extra_break_high, cd.o[i]))
-                extra_break_high = cd.h[i] if pmh_rearm else None
+            elif brk is None and extra_break_high is not None                     and cd.h[i] > extra_break_high:
+                if orb_retest is not None:
+                    if rt_pending is None:
+                        rt_pending = (extra_break_high, i, "PMH-break",
+                                      False, None)
+                    extra_break_high = cd.h[i] if pmh_rearm else None
+                else:
+                    brk = ("PMH-break", max(extra_break_high, cd.o[i]))
+                    extra_break_high = cd.h[i] if pmh_rearm else None
                                           # X312 re-arm vs one-shot
             elif (pressure_reentry is not None and trades
                   and reentry_used < (pressure_reentry[2]

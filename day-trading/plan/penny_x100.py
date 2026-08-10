@@ -1600,6 +1600,20 @@ EXPERIMENTS += [
        tighten_at_r=(3.0, 10.0)),
 ]
 
+# G-series (video study 2026-08-10, Jdub "break & retest"): breaks
+# arm a retest instead of filling; entry only when price pulls back to
+# the broken level and resumes through the pullback high. Tol sweep
+# for adjacency; GC01 retests a level offset +2% (nonsense) and must
+# not win.
+EXPERIMENTS += [
+    R4("G001", "break&retest tol 0.5%, wait 20", orb_retest=(0.5, 20)),
+    R4("G002", "break&retest tol 1.0%, wait 20", orb_retest=(1.0, 20)),
+    R4("G003", "break&retest tol 0.25%, wait 20", orb_retest=(0.25, 20)),
+    R4("G004", "break&retest tol 0.5%, wait 40", orb_retest=(0.5, 40)),
+    R4("GC01", "CONTROL retest of level+2% (nonsense)",
+       orb_retest=(0.5, 20, 2.0)),
+]
+
 # --- FILL REALISM on C35 (user 2026-08-07: "check the buy and exit if
 # they are realistic"). The backtest fills breakouts AT the trigger; a
 # real resting stop-limit fills somewhere between the trigger and its
