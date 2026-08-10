@@ -105,6 +105,9 @@ CFGS = {
                       "to walk-8 depth",
                  entry_cutoff=dtime(14, 0), escape=dtime(10, 0),
                  cand_top=8),
+    "R070": dict(desc="C38 candidate: C37 rotation + EMA 9>21 gate",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 sim_extra={"ema_gate": (9, 21)}),
 }
 
 
@@ -227,6 +230,7 @@ def run_day(cands, date, cfg):
             continue
         esc = cfg.get("escape")
         kw = dict(SIMKW)
+        kw.update(cfg.get("sim_extra") or {})
         if cfg.get("slip"):
             kw["slippage_bps"] = cfg["slip"] * 1e4   # engine kwarg name
         if pick.get("pmh"):

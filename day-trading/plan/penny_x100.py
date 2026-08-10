@@ -1639,6 +1639,11 @@ EXPERIMENTS += [
     R4("H006", "EMA 13>34 gate (wider pair)", ema_gate=(13, 34)),
 ]
 
+# H007: gate robustness on the narrow walk (compare vs Z101 $576,604)
+EXPERIMENTS += [
+    R4("H007", "EMA 9>21 gate at walk 8", ema_gate=(9, 21), walk=8),
+]
+
 # --- FILL REALISM on C35 (user 2026-08-07: "check the buy and exit if
 # they are realistic"). The backtest fills breakouts AT the trigger; a
 # real resting stop-limit fills somewhere between the trigger and its

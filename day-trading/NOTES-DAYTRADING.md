@@ -3108,3 +3108,20 @@ $482k); monotone in how hard the retest binds. The level carries no
 signal; the retest is a tax in forfeited runners. Second proof that
 entry microstructure is not the edge. C37 stands. Details:
 video-studies/2026-08-10-jdub-break-and-retest.md
+
+## VIDEO BATCH CLOSED: H-SERIES FINAL + C38 REJECTED (2026-08-10)
+10 videos watched, studied (video-studies/), and distilled. Outcomes:
+  open-fade limit entry: == its green-candle control -> no signal.
+  EMA 9>21 gate: FIRST gate ever to pass guardrails on the STATIC base
+    (+$33.9k, adjacency 8/21 +$29k & 9/26 +$27k coherent, inverted
+    control collapses to $73k, negm 1/22) -- BUT on the ROTATION
+    champion it SUBTRACTS $77.8k (R070 $696,719 vs C37 $774,534,
+    negative both years). Rotation self-corrects; the gate's filter is
+    redundant there and blocks fresh late crossers (rotation's profit
+    engine). C38 REJECTED -- C37 STANDS.
+  Reserve finding: anyone running the STATIC config should carry the
+    EMA gate; the rotation champion must not.
+Batch economics: 10 videos -> 1 novel mechanic -> 0 adoptions after
+full rigor, 6 more independent confirmations of the standing system
+(location/coil, confirmation-wait, trap-reversal, tail economics x2,
+static-gate redundancy). Videos are cheap validation, rare innovation.
