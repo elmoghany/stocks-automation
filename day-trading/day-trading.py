@@ -918,6 +918,11 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     vol_frac_causal: bool = False,
                     halt_aware: bool = False,
                     pm_spread_bps: float = 0.0,
+                    confirm_break: bool = False,
+                    confirm_break_control: bool = False,
+                    struct_stop_bars: int | None = None,
+                    target_r: float | None = None,
+                    tighten_at_r: tuple | None = None,
                     entry_cutoff=None,
                     entry_start=None,
                     scale_out_at: float | None = None,
@@ -1001,6 +1006,12 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
         return px
 
     trades = []
+    # F-series (video study 2026-08-09): pattern entries as stop-buys
+    # above the pattern high (confirm_break); structure stops; R-based
+    # brackets; tighten-at-R trailing.
+    cb_pending = None        # (trigger_px, pattern, bar_set)
+    risk0 = None             # entry - initial stop floor, per position
+    floor_px = None          # structure/pct stop floor, fixed at entry
     # CASH-ACCOUNT MODEL (user 2026-08-07): with no margin, T+1 settlement
     # means every dollar spent today is unavailable until tomorrow, so the
     # day has a fixed dollar budget across ALL entries -- not a per-trade
@@ -1230,6 +1241,11 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                 if sh >= 1:
                     shares = sh
                     entry = _fill_buy(fill, i) * (1 + slip)
+                    _lo3 = min(cd.l[max(0, i - ((struct_stop_bars or 1)
+                               - 1)):i + 1])
+                    floor_px = max(_lo3, entry * (1 - (stop_pct or 5)
+                                   / 100)) if struct_stop_bars                         else entry * (1 - (stop_pct or 5) / 100)
+                    risk0 = max(entry - floor_px, entry * 0.001)
                     deployed += shares * entry      # cash-account budget
                     entries_done[0] += 1
                     entry_i = i
@@ -1296,8 +1312,29 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                 pats = []                      # pressure gate not met
             if pats and _halt_gap(i) >= 5:
                 pats = []                      # no entries on a halt reopen
+            _cb_fill = None
+            if confirm_break:
+                # F001: a fresh pattern only ARMS a stop-buy above the
+                # pattern candle's high; the fill happens on a later bar
+                # only if price breaks it (FC01 control: below the low,
+                # buying weakness -- must lose).
+                if cb_pending is not None:
+                    trig, ppat, iset = cb_pending
+                    if i - iset > 10:
+                        cb_pending = None      # confirmation expired
+                    else:
+                        hit = (cd.l[i] <= trig) if confirm_break_control                             else (cd.h[i] >= trig)
+                        if hit:
+                            _cb_fill = min(trig, cd.o[i])                                 if confirm_break_control                                 else max(trig, cd.o[i])
+                            pats = [ppat]
+                            cb_pending = None
+                if _cb_fill is None and pats:
+                    cb_pending = (cd.l[i] if confirm_break_control
+                                  else cd.h[i], pats[0], i)
+                    pats = []
             if pats:                           # dip inverts upward -> BUY
-                entry = _fill_buy(price, i) * (1 + slip)
+                entry = _fill_buy(_cb_fill if _cb_fill is not None
+                                  else price, i) * (1 + slip)
                 entry_i = i
                 buy_budget = (budget_cur * (0.5 if add_at is not None
                                             else 1.0) * _size_mult(i))
@@ -1313,6 +1350,11 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     continue
                 deployed += shares * entry          # cash-account budget
                 entries_done[0] += 1
+                _lo3 = min(cd.l[max(0, i - ((struct_stop_bars or 1)
+                           - 1)):i + 1])
+                floor_px = max(_lo3, entry * (1 - (stop_pct or 5)
+                               / 100)) if struct_stop_bars                     else entry * (1 - (stop_pct or 5) / 100)
+                risk0 = max(entry - floor_px, entry * 0.001)
                 state = "LONG"
                 peak = entry
                 entry_trig = pats[0]
@@ -1431,14 +1473,25 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                             eff_trail = tight
                         elif t_hi is not None and pp >= t_hi:
                             eff_trail = wide
+                if (tighten_at_r is not None and risk0
+                        and peak >= entry + tighten_at_r[0] * risk0):
+                    # F007: at N-x-risk unrealized, protect the win
+                    eff_trail = min(eff_trail, tighten_at_r[1])
                 target_lo = target_hi = float("inf")
                 trail_px = peak * (1 - eff_trail / 100)
                 eff_stop_pct = dyn_stop if dyn_stop is not None else (stop_pct or 5)
-                stop = max(entry * (1 - eff_stop_pct / 100), trail_px)
+                _base_floor = floor_px if (struct_stop_bars and floor_px)                     else entry * (1 - eff_stop_pct / 100)
+                stop = max(_base_floor, trail_px)
                 # breakeven floor once the runner has proven itself
                 if (breakeven_at is not None
                         and peak >= entry * (1 + breakeven_at / 100)):
                     stop = max(stop, entry)
+            elif target_r is not None:
+                # F003/F004: fixed R-multiple bracket off the structure
+                # risk -- no trail, no scale-out, one target, one stop
+                target_lo = target_hi = entry + target_r * (risk0 or
+                                                            entry * 0.05)
+                stop = floor_px if floor_px else                     entry * (1 - (stop_pct or 5) / 100)
             elif target_pct is not None:
                 target_lo = target_hi = entry * (1 + target_pct / 100)
                 stop = entry * (1 - (stop_pct or 1.5) / 100)

@@ -1580,6 +1580,26 @@ EXPERIMENTS += [
     R4("R046", "scale-out at +30%", scale_out_at=30.0),
 ]
 
+# F-series (video study 2026-08-09, Riley Coleman futures reversal):
+# entry-confirmation stop-buys, structure stops, R-brackets, 3R
+# tighten. All on the Z104 base (rank coil_press, causal walk 12).
+EXPERIMENTS += [
+    R4("F001", "pattern entries = stop-buy above pattern high",
+       confirm_break=True),
+    R4("FC01", "CONTROL: stop-buy below pattern LOW (buys weakness)",
+       confirm_break=True, confirm_break_control=True),
+    R4("F002", "structure stop: min of last 3 lows (cap -8%)",
+       struct_stop_bars=3),
+    R4("F003", "2R bracket off structure risk (no trail/scale)",
+       struct_stop_bars=3, target_r=2.0, trail_pct=None,
+       scale_out_at=None, pressure_trail=None),
+    R4("F004", "3R bracket off structure risk",
+       struct_stop_bars=3, target_r=3.0, trail_pct=None,
+       scale_out_at=None, pressure_trail=None),
+    R4("F007", "tighten trail to 10% once up 3x risk",
+       tighten_at_r=(3.0, 10.0)),
+]
+
 # --- FILL REALISM on C35 (user 2026-08-07: "check the buy and exit if
 # they are realistic"). The backtest fills breakouts AT the trigger; a
 # real resting stop-limit fills somewhere between the trigger and its
