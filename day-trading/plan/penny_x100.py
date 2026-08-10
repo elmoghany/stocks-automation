@@ -1632,6 +1632,13 @@ EXPERIMENTS += [
        ema_gate=(9, 21), ema_gate_inv=True),
 ]
 
+# H002 adjacency (the first-ever passing gate needs neighbors):
+EXPERIMENTS += [
+    R4("H004", "EMA 8>21 gate (adjacent fast)", ema_gate=(8, 21)),
+    R4("H005", "EMA 9>26 gate (adjacent slow)", ema_gate=(9, 26)),
+    R4("H006", "EMA 13>34 gate (wider pair)", ema_gate=(13, 34)),
+]
+
 # --- FILL REALISM on C35 (user 2026-08-07: "check the buy and exit if
 # they are realistic"). The backtest fills breakouts AT the trigger; a
 # real resting stop-limit fills somewhere between the trigger and its
