@@ -1614,6 +1614,24 @@ EXPERIMENTS += [
        orb_retest=(0.5, 20, 2.0)),
 ]
 
+# H-series (video batch 2026-08-10, consolidated dedupe): the only
+# genuinely new mechanics across 10 videos. H001 open-fade limit long
+# (touch&turn video) is the sole new ENTRY FAMILY; HC01 fades the
+# GREEN first candle (thesis control). H002 EMA trend gate; HC02 its
+# inverse (gate family is 0-for-all -- included for completeness).
+EXPERIMENTS += [
+    R4("H001", "open-fade: limit at red 9:30 candle low, 10min",
+       open_fade=(10, "red")),
+    R4("HC01", "CONTROL open-fade off GREEN 9:30 candle",
+       open_fade=(10, "green")),
+    R4("H003", "open-fade wait 20 (adjacency)",
+       open_fade=(20, "red")),
+    R4("H002", "EMA 9>21 trend gate on all entries",
+       ema_gate=(9, 21)),
+    R4("HC02", "CONTROL inverted EMA gate (9<21)",
+       ema_gate=(9, 21), ema_gate_inv=True),
+]
+
 # --- FILL REALISM on C35 (user 2026-08-07: "check the buy and exit if
 # they are realistic"). The backtest fills breakouts AT the trigger; a
 # real resting stop-limit fills somewhere between the trigger and its

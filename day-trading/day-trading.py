@@ -924,6 +924,9 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     target_r: float | None = None,
                     tighten_at_r: tuple | None = None,
                     orb_retest: tuple | None = None,
+                    open_fade: tuple | None = None,
+                    ema_gate: tuple | None = None,
+                    ema_gate_inv: bool = False,
                     entry_cutoff=None,
                     entry_start=None,
                     scale_out_at: float | None = None,
@@ -1013,6 +1016,18 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
     cb_pending = None        # (trigger_px, pattern, bar_set)
     rt_pending = None        # break&retest: (level, armed_i, pat,
                              #                touched, prev_hi)
+    # H-series (video batch 2026-08-10):
+    # open_fade=(wait_bars, mode): after the FIRST 9:30 candle closes
+    # in `mode` color ('red' thesis / 'green' control), rest a LIMIT
+    # BUY at its low for wait_bars. One-shot.
+    fade_arm = None          # (level, set_i, expire_i)
+    fade_done = False
+    ema_ok = None
+    if ema_gate is not None:
+        import pandas as _pd
+        _f = _pd.Series(cd.c).ewm(span=ema_gate[0]).mean().values
+        _s = _pd.Series(cd.c).ewm(span=ema_gate[1]).mean().values
+        ema_ok = (_f > _s) if not ema_gate_inv else (_f < _s)
     risk0 = None             # entry - initial stop floor, per position
     floor_px = None          # structure/pct stop floor, fixed at entry
     # CASH-ACCOUNT MODEL (user 2026-08-07): with no margin, T+1 settlement
@@ -1203,6 +1218,22 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
         brk = None
         if (entries_open and state in ("SCAN", "DIPPING", "ARMED")
                 and (max_trades is None or len(trades) < max_trades)):
+            if open_fade is not None and not fade_done:
+                t_i = cd.index[i].time()
+                if fade_arm is None and t_i >= dtime(9, 30):
+                    is_red = cd.c[i] < cd.o[i]
+                    want = open_fade[1] if len(open_fade) > 1 else "red"
+                    if (want == "red") == is_red:
+                        fade_arm = (cd.l[i], i, i + open_fade[0])
+                    else:
+                        fade_done = True     # first 9:30 candle decides
+                elif fade_arm is not None:
+                    lvl, si, ei = fade_arm
+                    if i > ei:
+                        fade_arm, fade_done = None, True
+                    elif i > si and cd.l[i] <= lvl:
+                        brk = ("open-fade", lvl)   # limit fill AT level
+                        fade_arm, fade_done = None, True
             # G-series (video study 2026-08-10, Jdub break&retest): a
             # break does not fill -- it arms a RETEST. Fill only when
             # price pulls back to the broken level and then resumes
@@ -1262,7 +1293,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
             if orb_fill_mode == "close":
                 fill = cd.c[i]         # pessimistic fill (X097)
             if (_entry_ok(fill) and _pressure_gates_ok(i, fill)
-                    and _halt_gap(i) < 5):     # no fills on a halt reopen
+                    and _halt_gap(i) < 5
+                    and (ema_ok is None or (i > 0 and ema_ok[i - 1]))):
                 buy_budget = (budget_cur * (0.5 if add_at is not None
                                             else 1.0) * _size_mult(i))
                 buy_budget = _cap_budget(buy_budget)
@@ -1347,6 +1379,9 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                 pats = []                      # pressure gate not met
             if pats and _halt_gap(i) >= 5:
                 pats = []                      # no entries on a halt reopen
+            if pats and ema_ok is not None and not (i > 0 and
+                                                    ema_ok[i - 1]):
+                pats = []                      # EMA trend gate (H002)
             _cb_fill = None
             if confirm_break:
                 # F001: a fresh pattern only ARMS a stop-buy above the
