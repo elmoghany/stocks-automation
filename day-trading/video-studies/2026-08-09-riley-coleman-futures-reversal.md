@@ -119,3 +119,25 @@ accordingly: F001/F002 are the serious candidates (they refine
 mechanics we know work), the brackets likely fight our fat-tail
 economics (scale-out/trail already beat fixed targets in the
 S-campaign — but never R-structure-based ones, hence the test).
+
+
+## HALAL VERDICT (2026-08-10, frames + transcript verified)
+
+**The method AS TAUGHT is NOT halal**, on three independent grounds:
+1. Instrument: cash-settled S&P index futures (MES/ES) -- deferred
+   exchange, no possession, and the underlying basket contains banks/
+   insurers/entertainment that fail the industry screen. No halal
+   subset exists at the contract level.
+2. Leverage: the strategy's selling point ("leverage of options") is
+   margin financing -- excluded by the cash-account rule.
+3. Short selling: the showcase trade IS a short (Sell STP/LMT visible
+   on the NinjaTrader frames).
+
+The neutral timing ideas were already given their halal-compatible
+test (F-series on individual halal stocks) and rejected on merit.
+STANDALONE BACKTEST ABORTED accordingly: SPY is a mixed-index ETF our
+own universe classifies as unscreenable -- the backtest could only be
+curiosity, never a book. fetch_spy_m1.py / rc_reversal_backtest.py
+remain in plan/ as archived research tooling, unused.
+FINAL: nothing from this video is adoptable. Its residual value is
+the convergent validation of coil / first-crossing / Trigger C.
