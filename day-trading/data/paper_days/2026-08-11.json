@@ -141,7 +141,29 @@
    "outcome": "rejected"
   }
  ],
- "trades": [],
+ "trades": [
+  {
+   "sym": "FRMI",
+   "side": "long",
+   "ticket": 1,
+   "entry_time": "08:51 ET (12:51Z bar)",
+   "entry_px": 7.27,
+   "fill_basis": "resting stop-buy 7.27 (PM high), FRESH cross (armed 08:24 at last 6.91): 12:51Z bar 7.185->7.28 high, fill AT trigger per backtest semantics; limit cap 7.306 not needed",
+   "optimistic_alt_fill": 7.27,
+   "pessimistic_alt_fill": 7.306,
+   "shares": 2063,
+   "ticket_$": 14998.01,
+   "cumulative_deployed": 14998.01,
+   "resting_stop": 6.6884,
+   "stop_basis": "max(entry*0.92, peak*0.60), intrabar vs 1-min lows",
+   "scale_out": "1/3 at 9.0875 unless pressure >= +0.3",
+   "trail": "20% base from peak (10% if 10-bar pressure <= -0.3, 40% if >= +0.3), close-tested",
+   "peak_px": 7.28,
+   "l2_depth_at_arm_sh": 14970,
+   "fill_vs_60s": "-1.1% WORSE (fill 7.27 vs 7.1901 close +60s) - premarket break faded post-fill; fill-arming rule honored, this is honest break-fade not a sweep",
+   "exits": []
+  }
+ ],
  "coverage_gaps": [
   "07:00-07:20 ET not scanned (queued start; no backfilled picks)"
  ],
