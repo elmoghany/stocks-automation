@@ -1,0 +1,153 @@
+{
+ "date": "2026-08-11",
+ "config": "C37",
+ "mode": "paper",
+ "protocol": "sequential-rotation resting-order",
+ "sizing": {
+  "ticket": 15000,
+  "last_ticket": 10000,
+  "max_deployed": 100000,
+  "one_position_at_a_time": true
+ },
+ "session_notes": {
+  "late_start": "07:20 ET actual vs 07:00 nominal (trigger queued until idle); 07:00-07:20 not scanned, no backfilled picks",
+  "market_calendar": "TRADING 2026-08-11 full",
+  "halal_list": "updated 2026-08-09, fresh (2 days)",
+  "clock": "persistent Monitor CYCLE_TICK every 300s, UTC-based, ends 19:05Z (armed 11:21Z first tick)"
+ },
+ "cumulative_deployed": 0,
+ "candidates": [
+  {
+   "sym": "KOPN",
+   "first_seen": "07:21",
+   "prev_close": 4.21,
+   "px_7am": 4.58,
+   "gates": {
+    "eligible": "pass +11.7% live (4.7005 @11:21Z print), 50+ sessions (founded 1984), common stock",
+    "halal": "list pass was seed-rules_ytd -> LIVE RE-SCREEN: halal=True quarterly loans 0.15% cash 3.84% combined 3.99% haram_rev 0.33% (RH mcap $889,612,141 stored)",
+    "calm_gap_7am": "pass +8.8% (11:00Z open 4.58 vs pc 4.21)",
+    "coil": "0.989 (4.7497/4.80 PM high) COILED",
+    "pressure_30bar": "+0.24 on 33,588 sh (above 20k floor)",
+    "l2_veto": "07:22 book 4.65x4.80 = 3.1% > 0.5% -> NOT ARMED while book wide; PM-high trigger 4.80 not yet met (fill-arming rule: stop OK once book tightens)"
+   },
+   "outcome": "RANK 1 cycle 1; awaiting book tighten to arm PM-high stop-buy 4.80"
+  },
+  {
+   "sym": "FF",
+   "first_seen": "07:21",
+   "prev_close": 5.16,
+   "px_7am": 6.2224,
+   "gates": {
+    "eligible": "pass +22.1% live (6.2985 @11:21Z print), 50+ sessions, common stock",
+    "halal": "list pass was seed-rules_ytd -> LIVE RE-SCREEN: halal=True quarterly loans 0.0% cash 9.49% combined 9.49% haram_rev 0.23% (RH mcap $235,567,625 stored)",
+    "calm_gap_7am": "+20.6% - above 20%, needs the 35% top-rank grace it does NOT have at rank 2",
+    "coil": "0.981 (6.30/6.42 PM high) COILED",
+    "pressure_30bar": "untrusted (8,754 sh < 20k floor)",
+    "l2_veto": "07:22 book 6.22x6.30 = 1.3% > 0.5%"
+   },
+   "outcome": "RANK 2 cycle 1 (untrusted pressure ranks below KOPN's trusted +0.24); calm-gap blocks entry unless it becomes top-ranked"
+  },
+  {
+   "sym": "RIOT",
+   "first_seen": "07:21",
+   "prev_close": 19.4,
+   "px_7am": 23.16,
+   "gates": {
+    "eligible": "pass +17.9% live (22.88 @11:21Z), 50+ sessions",
+    "halal": "universe quarterly PASS loans 11.3%... ERROR? loan_pct 11.3 recorded as pass in universe - accepted per list membership",
+    "calm_gap_7am": "pass +19.4%",
+    "coil": "0.942 (22.88/24.29 PM high) NOT coiled",
+    "pressure_30bar": "negative drift 11:10-11:15Z (fading)"
+   },
+   "outcome": "RANK 3 cycle 1 (non-coiled)"
+  },
+  {
+   "sym": "FRMI",
+   "first_seen": "07:21",
+   "prev_close": 5.88,
+   "px_7am": 6.95,
+   "gates": {
+    "eligible": "pass +15.8% live (6.81 @11:21Z), 50+ sessions",
+    "halal": "universe quarterly pass loans 11.79% cash 5.26%",
+    "calm_gap_7am": "pass +18.2%",
+    "coil": "0.942 (6.85/7.27 PM high) NOT coiled"
+   },
+   "outcome": "RANK 4 cycle 1"
+  },
+  {
+   "sym": "AIHS",
+   "first_seen": "07:21",
+   "prev_close": 1.5,
+   "px_7am": 2.53,
+   "gates": {
+    "eligible": "pass +112% live (3.18 @11:21Z), spike began 10:55Z",
+    "halal": "seed pass -> LIVE RE-SCREEN: halal=True quarterly loans 0.25% cash 15.06% combined 15.31% (RH mcap $23,651,853 stored)",
+    "calm_gap_7am": "FAIL +69% (11:00Z open 2.53 vs pc 1.50) - exceeds 20% and the 35% grace",
+    "coil": "0.776 (3.18/4.10) NOT coiled - faded spike"
+   },
+   "outcome": "SKIP - exhausted overnight-style spike; calm-gap fail is permanent for the 7am reference"
+  },
+  {
+   "sym": "ATHR",
+   "first_seen": "07:21",
+   "prev_close": 3.82,
+   "gates": {
+    "eligible": "+24.3% but last print 11:06Z stale; book 4.10x4.70 = 13.6% spread",
+    "halal": "seed pass -> LIVE RE-SCREEN: halal=True quarterly loans 0.0% cash 1.45% haram_rev 0.48% (RH mcap $55,624,871 stored)",
+    "note": "avg vol 14k/day, float 4.1M - chronically thin"
+   },
+   "outcome": "WATCH - needs fresh prints and a sane book"
+  },
+  {
+   "sym": "NTHI",
+   "first_seen": "07:21",
+   "prev_close": 3.5,
+   "gates": {
+    "eligible": "+11.8% but last print 11:01Z stale; book 3.88x4.45 wide",
+    "halal": "seed pass -> LIVE RE-SCREEN: halal=True quarterly loans 0.38% cash 0.15% (RH mcap $91,548,479 stored)"
+   },
+   "outcome": "WATCH"
+  },
+  {
+   "sym": "DUKR/WYHG/PRHI",
+   "first_seen": "07:21",
+   "gates": {
+    "halal": "universe FAIL (carried permanent rejects)"
+   },
+   "outcome": "rejected"
+  },
+  {
+   "sym": "WXM/BW/WSHP/MGIH/QMCO/BMGL/PLUG",
+   "first_seen": "07:21",
+   "gates": {
+    "halal": "universe FAIL seed-rules_ytd (real FAIL verdicts -> skip per protocol; BW +35% and PLUG +14% both excluded by the gate)"
+   },
+   "outcome": "rejected"
+  },
+  {
+   "sym": "GYRO/APEI/NIQ/NVNO/SE/ARQ",
+   "first_seen": "07:21",
+   "gates": {
+    "halal": "universe FAIL quarterly (GYRO cash 33%, APEI loans 16%, NIQ loans 111%, NVNO cash 303%, SE combined, ARQ loans 43%)"
+   },
+   "outcome": "rejected"
+  },
+  {
+   "sym": "ETF/ETN rows (~45 of 79 scan rows)",
+   "first_seen": "07:21",
+   "gates": {
+    "eligible": "FAIL not common stock (Corgi/Tradr/GraniteShares 2x etc.)"
+   },
+   "outcome": "rejected"
+  }
+ ],
+ "trades": [],
+ "coverage_gaps": [
+  "07:00-07:20 ET not scanned (queued start; no backfilled picks)"
+ ],
+ "errors": [],
+ "lessons": [],
+ "pnl": 0,
+ "flat_at_close": null,
+ "verdict": "IN PROGRESS"
+}
