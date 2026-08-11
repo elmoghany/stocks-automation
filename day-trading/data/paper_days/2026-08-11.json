@@ -161,15 +161,43 @@
    "peak_px": 7.28,
    "l2_depth_at_arm_sh": 14970,
    "fill_vs_60s": "-1.1% WORSE (fill 7.27 vs 7.1901 close +60s) - premarket break faded post-fill; fill-arming rule honored, this is honest break-fade not a sweep",
-   "exits": []
+   "exits": [
+    {
+     "type": "EXIT-FLATTEN (settled post-outage under pre-committed rules)",
+     "time": "14:57 ET (18:57Z bar)",
+     "px": 7.1408,
+     "fill_basis": "monitoring outage 14:35Z-19:01Z; gap replayed bar-by-bar against the armed rules: gap low 7.04 (16:45Z) never touched stop 6.6884, gap high 7.30 (14:45Z) never extended peak 7.3899 (trail 20%=5.91 / tightened 10%=6.65 both below all lows; scale-out 9.0875 never approached) -> NO mechanical exit fired -> 15:00 flatten ladder; 18:57Z bar 7.1408-7.145, settled at bar low (conservative)",
+     "optimistic_alt_fill": 7.145,
+     "pessimistic_alt_fill": 7.115,
+     "shares": 2063,
+     "pnl": -266.54,
+     "peak_unrealized": 247.3,
+     "peak_px": 7.3899,
+     "max_drawdown_unrealized": -1010.87,
+     "drawdown_px": 6.78
+    }
+   ],
+   "realized_pnl": -266.54
   }
  ],
  "coverage_gaps": [
-  "07:00-07:20 ET not scanned (queued start; no backfilled picks)"
+  "07:00-07:20 ET not scanned (queued start; no backfilled picks)",
+  "14:35Z-19:01Z (10:35-15:01 ET) MONITORING OUTAGE: internet connectivity loss (API ENOTFOUND) killed the agent mid-session. Open FRMI position settled after the fact by replaying the ALREADY-ARMED mechanical rules bar-by-bar (settlement, not backfill). NO rotation entries for the gap - picks not made in real time stay unmade; tickets 2-7 ($85,002) were never deployable from 10:35 ET, so day P&L understates what C37 would have done on a full session."
  ],
- "errors": [],
- "lessons": [],
- "pnl": 0,
- "flat_at_close": null,
- "verdict": "IN PROGRESS"
+ "errors": [
+  "internet outage 14:35Z-19:01Z (see coverage_gaps); both Monitor clocks kept ticking but the agent could not reach the API"
+ ],
+ "lessons": [
+  "Fill-arming rule works: FRMI stop armed at 08:24 with last 6.91 < trigger 7.27 filled AT 7.27 on the fresh 12:51Z cross - backtest fill-at-the-cross semantics preserved (vs Day 5's LFST -1.6% sweep). Fill-realism still -1.1% vs +60s because the break itself faded; that is adverse selection of premarket breaks, not order mechanics.",
+  "Thin-book veto saved a chase again: FF's 6.63 break (11:31Z) ran to 6.70 and collapsed to 6.21; the 0.5% spread veto + already-met-trigger rule kept us out. Veto save #1 of Day 6.",
+  "The halal gate removed the day's entire top tier: WXM +153% (EOD), FRTT +117% (loans 34%), BW +35%, PLUG +14%, ACB, RPD, ~35 total rejects. 8 live screens run same-day (FENC PASS, FRTT/ASTC/BHST/BGDE/EXYN/TC FAIL, AIAI unverifiable).",
+  "Sequential rotation's cost surfaces on outage days: one mid-pack position (FRMI +18-24% mover) held the sole ticket while KOPN ran to +29-30% on the bench; the one-position rule is by design, but a real broker's resting orders would also have kept us in FRMI - the sim behaved exactly like the architecture.",
+  "Resting-order architecture is outage-proof by construction: the stop (6.6884) and flatten rules were fully specified at arm time, so a 4.5-hour monitoring blackout could be settled deterministically from the tape with zero discretion. This is the strongest argument yet for broker-resident orders over loop-layer decisions.",
+  "Machine-level single point of failure: both Monitor clocks survived (they run locally) but every API call died with the internet. A future hardening: a broker-side OCO (stop + time-based flatten) would make even the settlement step unnecessary."
+ ],
+ "pnl": -266.54,
+ "realized_pnl": -266.54,
+ "return_on_deployed_pct": -1.78,
+ "flat_at_close": true,
+ "verdict": "1 trade, -$266.54 on $14,998.01 deployed (-1.78%). FRMI: clean fill-at-trigger 7.27 on the armed PM-high stop (fill-arming rule honored), peaked +$247 unrealized at the 09:31 open spike (7.3899), based 6.78-7.39 all day, never hit the -8% stop, settled at the 14:57 flatten 7.1408 after a 10:35-15:01 ET internet outage (mechanical replay: no exit rule fired in the gap). vs C37 ~+$1,956/day: below benchmark; rotation was unavailable from 10:35 ET (outage), so the day is not a full C37 sample. Halal gate excluded every top runner again. Judge weeks, not days."
 }
