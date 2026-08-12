@@ -931,6 +931,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     entry_start=None,
                     scale_out_at: float | None = None,
                     scale_out_frac: float = 0.33,
+                    bank_all_at: float | None = None,
                     trail_widen_at: float | None = None,
                     trail_wide: float = 30.0,
                     breakeven_at: float | None = None,
@@ -1547,7 +1548,14 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                         and peak >= entry + tighten_at_r[0] * risk0):
                     # F007: at N-x-risk unrealized, protect the win
                     eff_trail = min(eff_trail, tighten_at_r[1])
-                target_lo = target_hi = float("inf")
+                # B-series: full profit-bank at +bank_all_at% INSIDE the
+                # trail branch (target_pct is unreachable while trail_pct
+                # is set). Routes through the standard target exit path so
+                # the position actually closes and the rotation ticket is
+                # released at the right time. Default None = inf = no target.
+                target_lo = target_hi = (
+                    entry * (1 + bank_all_at / 100)
+                    if bank_all_at is not None else float("inf"))
                 trail_px = peak * (1 - eff_trail / 100)
                 eff_stop_pct = dyn_stop if dyn_stop is not None else (stop_pct or 5)
                 _base_floor = floor_px if (struct_stop_bars and floor_px)                     else entry * (1 - eff_stop_pct / 100)

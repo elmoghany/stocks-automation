@@ -3231,3 +3231,52 @@ Coverage: 07:00-07:19 unscanned (scheduler queue), nothing backfilled.
 One self-reported protocol slip (a single 5-min bar pull at 16:51Z,
 caught and re-pulled at 1-min, no decision taken from it).
 Ledger: data/paper_days/2026-08-12.{md,json}.
+
+## B-SERIES: PROFIT BANKING UNDER ROTATION -- REJECTED (2026-08-12)
+User question after Paper Day 7 (BE peaked +6.2% / +$921 unrealized and
+was flattened at +0.71%): "backtest banking at 6% for 2 years".
+
+ENGINE: new kwarg `bank_all_at` (default None). target_pct was
+UNREACHABLE under C37 -- it sits in an elif behind the trail branch, so
+setting it would have silently done nothing. bank_all_at sets
+target_lo/hi INSIDE the trail branch and reuses the standard target exit
+path, so the position actually closes and the rotation ticket is
+released at the correct time.
+IDENTITY GATES: S095 +513,965/+649,573 and Z104 +225,646/+420,935 EXACT
+(static path). B000 rotation baseline = $774,534 -- reproduces the
+adopted C37 to the dollar (rotation path). Edit confirmed default-off.
+(Note: the stored R061 row 379,768/401,391 = $781,159 is PRE filing-lag;
+$774,534 is the post-lag champion and is what B000 matches.)
+
+  cfg    bank        Y1        Y2       2yr    d vs C37  %C37  negm
+  B000   none   389,685   384,849   774,534         --   100%  0/23
+  B025   +25%   370,053   312,182   682,235    -92,299    88%  0/23
+  B015   +15%   349,814   272,117   621,931   -152,603    80%  0/23
+  B010   +10%   326,190   218,203   544,393   -230,141    70%  0/23
+  B008    +8%   304,954   189,741   494,695   -279,839    64%  0/23
+  B006    +6%   268,639   139,293   407,932   -366,602    53%  1/23
+  B005    +5%   229,575   113,786   343,361   -431,173    44%  1/23
+  B004    +4%   185,952    92,681   278,633   -495,901    36%  2/23
+  B06P  1/3@6%  368,005   348,374   716,379    -58,155    92%  0/23
+  B06U  1/3@6%u 336,425   311,891   648,316   -126,218    84%  0/23
+
+VERDICT: banking at +6% costs -$366,602 (-47%) over two years and breaks
+the 0/23 negative-month record (1 negative month in Y2). The ladder is
+PERFECTLY MONOTONIC in BOTH years independently (4<5<6<8<10<15<25<none,
+8/8 each year) -- the earlier you bank, the more you lose, with no
+threshold effect anywhere. This is the same signature as the S019-S027
+breakeven stops and makes FIVE independent rejections of early exits.
+
+THE ROTATION HYPOTHESIS IS ANSWERED AND IT FAILED. The open question was
+whether rotation changes the economics: in the STATIC configs where
+early exits were rejected four times, banking early means sitting in
+cash, whereas under rotation it FREES THE TICKET to re-pick. It does
+free the ticket -- and the redeployed tickets do not earn back the
+amputated tail. Freed capital is not worth as much as the tail it paid
+for. Internal control agrees: B06P (banks 1/3 only when pressure is NOT
+dominant, i.e. protects the runner) loses $58k, while B06U (banks
+unconditionally) loses $126k -- banking less often loses less, monotone
+in banking frequency too.
+DAY-7 SPECIFIC: banking at 6% would have turned BE's +$105 into ~+$921
+that single day. The two-year price of that rule is $366,602.
+C37 stands unchanged. Capture ratio 0.29 remains the tail's premium.

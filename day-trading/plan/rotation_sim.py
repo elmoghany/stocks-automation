@@ -52,7 +52,13 @@ axb = px.axb
 axb.FILING_LAG_DAYS = 45
 
 M1 = ROOT / "data/massive/m1"
-RES_F = ROOT / "data/massive/rotation_results.json"
+# Parallel runs must NOT share one results file -- the read-modify-write
+# at the end of run() would clobber siblings. ROTSHARD gives each process
+# its own file; merge afterwards.
+import os as _os
+_SHARD = _os.environ.get("ROTSHARD", "")
+RES_F = ROOT / (f"data/massive/rotation_results_{_SHARD}.json" if _SHARD
+                else "data/massive/rotation_results.json")
 TICKETS = [15_000.0] * 6 + [10_000.0]          # user schedule: 6x15k + 10k
 SCAN_STEP = 5                                   # minutes between re-ranks
 EXIT_END = dtime(15, 0)
@@ -108,6 +114,46 @@ CFGS = {
     "R070": dict(desc="C38 candidate: C37 rotation + EMA 9>21 gate",
                  entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
                  sim_extra={"ema_gate": (9, 21)}),
+    # ---- B-series (2026-08-12): PROFIT BANKING UNDER ROTATION ----
+    # User question after Paper Day 7 (BE peaked +6.2% / +$921 unrealized
+    # and was flattened at +0.71%): "backtest banking at 6%".
+    # Prior art rejected early exits FOUR times (S019-S027 breakeven,
+    # S033-S036 time stops, R-Phase3 breakeven floors, F-series brackets)
+    # -- but ALL of those were measured on STATIC configs where exiting
+    # early means sitting in cash. Under rotation an early bank FREES THE
+    # TICKET to re-pick, which is different economics and untested.
+    # B000 is the rotation-path identity gate (must reproduce R061).
+    "B000": dict(desc="IDENTITY: C37 baseline, no banking (= R061)",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0)),
+    "B006": dict(desc="C37 + FULL bank at +6% (the ask)",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 sim_extra={"bank_all_at": 6.0}),
+    "B004": dict(desc="adjacency: full bank at +4%",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 sim_extra={"bank_all_at": 4.0}),
+    "B005": dict(desc="adjacency: full bank at +5%",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 sim_extra={"bank_all_at": 5.0}),
+    "B008": dict(desc="adjacency: full bank at +8%",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 sim_extra={"bank_all_at": 8.0}),
+    "B010": dict(desc="adjacency: full bank at +10%",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 sim_extra={"bank_all_at": 10.0}),
+    "B015": dict(desc="adjacency: full bank at +15%",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 sim_extra={"bank_all_at": 15.0}),
+    "B025": dict(desc="adjacency far end: full bank at +25%",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 sim_extra={"bank_all_at": 25.0}),
+    # partial banking: keep the runner, bank 1/3 at +6%
+    "B06P": dict(desc="C37 + PARTIAL bank 1/3 at +6% (pressure-skip on)",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 sim_extra={"scale_out_at": 6.0}),
+    "B06U": dict(desc="C37 + PARTIAL bank 1/3 at +6%, unconditional",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 sim_extra={"scale_out_at": 6.0,
+                            "scale_out_pressure_skip": None}),
 }
 
 
