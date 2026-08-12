@@ -536,3 +536,61 @@ Protocol, checked at EVERY arming:
     limit trigger + 0.5%).
 This preserves the backtest's fill assumptions: the sim fills breaks
 AT the trigger, not at a post-break sweep.
+
+
+## OUTAGE / DEAD-MONITOR SETTLEMENT (2026-08-11, from Paper Day 6's
+## 4.5-hour internet loss)
+
+On 2026-08-11 an internet outage killed the session agent at 10:35 ET
+with FRMI open; monitoring did not resume until 15:01 ET. The record
+survived intact because every rule was already specified at arm time.
+Follow this whenever monitoring dies -- connectivity loss, agent crash,
+harness reap, machine sleep -- for ANY part of the session.
+
+THE LINE: rules armed BEFORE the gap may be settled from the tape.
+Decisions not made during the gap stay unmade. Settlement is honest;
+backfilling is not.
+
+ 1. LOG THE GAP FIRST, in coverage_gaps: exact window (UTC and ET) and
+    the cause. Never quietly close a hole in the tick log.
+ 2. OPEN POSITION -> SETTLE, do not guess. Pull the real minute bars
+    for the gap window and replay the ALREADY-ARMED exit rules
+    bar-by-bar in time order: hard stop, trail (at the width the
+    pressure state had set), scale-out level, wick guard. The FIRST
+    rule whose condition is met sets the exit price and time. If none
+    fired by 15:00 ET, exit at the 15:00 flatten. Record the settled
+    fill plus an optimistic/pessimistic bracket from the bar so the
+    P&L's uncertainty is visible.
+ 3. NO ENTRIES FOR THE GAP. Never credit a rotation pick, a trigger,
+    or a re-rank that was not executed live -- with hindsight bars
+    every skipped name looks decidable, which is exactly the leak the
+    honesty ladder spent $517k measuring. Undeployed tickets simply
+    stayed undeployed.
+ 4. STATE THE DIRECTION OF THE BIAS in the EOD summary: with rotation
+    unavailable, the day UNDERSTATES a full C37 session. Say so; do
+    not let a truncated day read as a strategy result.
+ 5. RESUME LIVE if the window is still open: re-rank from current data
+    and continue with the tickets that remain. Do not try to "catch
+    up" on the day's ticket count.
+
+Why this works, and the standing lesson: C37's orders are fully
+specified at arm time (stop, trail law, scale-out, hard 15:00
+flatten), so a blackout is deterministically settleable with zero
+discretion. That is an argument FOR resting orders over loop-layer
+decisions -- and for broker-resident OCO (stop + timed flatten) if
+this ever goes live, which would make the settlement step itself
+unnecessary.
+
+
+## SESSION START TIMING (2026-08-12, after three straight late starts)
+
+The launch cron is set for 6:40 ET, NOT 6:55. The scheduler adds up
+to 15 min of jitter to a daily job and only fires while the REPL is
+idle, so a 6:55 target produced 07:38 / 07:20 / 07:19 actual starts on
+Days 5-7 -- each losing the front of the 07:00-14:30 scan window,
+which is where the opening coil ranking gets established. 6:40 buys
+20 minutes of slack ahead of 07:00.
+
+If the session still opens after 07:00, log the missing minutes as a
+coverage gap and start scanning from the current bar. Do NOT reconstruct
+the ranking for minutes that were never scanned.
