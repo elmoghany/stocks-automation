@@ -3155,3 +3155,79 @@ nothing backfilled. Ledger: data/paper_days/2026-08-10.{md,json}.
 Recent: D4 +$1,307, D5 -$66. Rotation never fired on D5 (no exit before
 close) so the $100k/day capacity went 85% unused -- single-name days
 remain the main gap vs the backtest's 6-7 entries.
+
+## PAPER DAY 7 (2026-08-12, Wednesday) -- FIRST GREEN DAY: +$104.58
+One ticket. BE (Bloom Energy): appeared on the scan at 09:18 ET and took
+rank 1 outright -- coil 0.994, 30-bar pressure +0.43 measured on 216,374
+sh (6x the trust floor, the most credible reading of the session), 7AM
+calm-gap only +2.58%, live quarterly halal re-screen PASS (loans 4.52%,
+cash 4.37%, combined 8.89%, haram 0.49%), book 233.68x234.00 = 0.137%
+with 1,172 sh inside the cap band. Armed the PM-high stop-buy at 09:21,
+CORRECTED it at 09:24 (see finding 1), filled 09:26 at 235.37 on the
+13:26Z bar high of 235.88. Ran to 249.99 five minutes later (+$921
+unrealized), spent the rest of the session in a 231-250 band, flattened
+14:57 at 237.03 on rung 1 of the ladder. +$104.58 (+0.71%) on $14,828.
+Cumulative D5-D7: -$65.78, -$266.54, +$104.58 = -$227.74.
+
+FIVE FINDINGS:
+1. FILL-ARMING RULE, 4th data point, and the first CLEAN one from a stop:
+   +0.06% vs the +60s mark. At 09:24 I pulled BE's raw 1-min bars and
+   found the true ratchet high was 235.37, not the 235.34 the rank
+   snapshot reported (the 13:18 bar had not published when the snapshot
+   was taken). A stop at 235.34 would have been armed at a level already
+   traded through -- the exact Day-5 LFST failure. Re-armed 3c higher.
+   The series is now unambiguous: E01 LZ +1.7%, D5 LFST -1.6%, D6 FRMI
+   -1.1%, D7 BE +0.06%. Both negatives came from arming at an
+   already-printed level; both non-negatives from clean forward
+   triggers. The trigger TYPE is not the variable -- the arming is.
+2. THE PREMARKET SPREAD CAP IS NOW THE STRATEGY'S DOMINANT FILTER, AND
+   IT IS NOT FREE. SMWB held rank 1 for ~15 consecutive premarket cycles
+   with trusted positive pressure (+0.35 to +0.51) and coil 0.95-0.99,
+   and was vetoed EVERY cycle on an 8.4-12.4% book. It made 9.08
+   intraday (+25% over its close) and finished near +19%. That is the
+   second session running the cap has blocked the eventual best halal
+   performer (D6: KOPN, +29%). A 0.5% cap on PREMARKET books behaves
+   very differently from the same cap after 09:30. CANDIDATE STUDY:
+   depth-aware relaxation pre-09:30, or defer wide-book names to the
+   open rather than rejecting them outright.
+3. COIL AND BOOK QUALITY ARE ANTI-CORRELATED PREMARKET. All morning,
+   whichever name had the coil + trusted pressure had the broken book
+   (SMWB), and whichever had the tight book had lost its coil (DFTX at
+   0.933-0.949 with a 0.10-0.35% spread; AXTI at coil 0.997 and 0.30%
+   but never crossing +10% while rankable). Probably structural -- a
+   name being accumulated premarket has a wide book BECAUSE it is being
+   accumulated -- and it means the ranking and the execution filter
+   routinely point at different names.
+4. A SINGLE NON-RESOLVING POSITION IS THE WORST CASE FOR C37, and it has
+   now happened three sessions out of three. BE neither stopped (216.54,
+   never within 14 points of any 1-min low) nor trailed (199.99, below
+   the hard stop, therefore structurally inert for the whole trade) nor
+   scaled (294.21). Only the 15:00 flatten could close it. That locks up
+   all seven ticket slots for one ticket's worth of exposure -- $85,172
+   idle across 47 scan cycles. C37's $774,534/2yr comes from SEQUENTIAL
+   rotation; a day with one non-resolving position cannot reach the
+   ~$1,956/day benchmark by construction. This is the single biggest
+   structural gap between the live sessions and the backtest.
+5. VETO SAVES were real and large today: DFTX 50.92->43.02 (-15.5%,
+   blocked by the coil test), NTHI 5.26->4.36 in nine minutes, AXTI
+   83.88->74.80 (-11%), VELO 17.61->~15.2, ZTG +32.1%->+7.3% in 30
+   minutes. The gate that cost us SMWB also kept us out of five fades.
+HALAL: ~46 distinct FAILs; BOXL +52.5% (the day's top runner) unbuyable
+on a seed FAIL -- THIRD consecutive session where the biggest gapper is
+haram. 11 live PASS re-screens (SMWB, VELO, DFTX, NTHI, BRUN, JFB, AXTI,
+BE, PESI, ZTG, GORO) + 2 live FAILs (TC cash 27.55%, EXYN loans 35.91%),
+both re-confirming their Day-6 verdicts.
+OPS: dual persistent Monitors (300s CYCLE_TICK + 120s POS_TICK) both ran
+clean all session. Scan+rank was DELEGATED to sub-agents to keep the
+coordinating context sustainable across 47 cycles (~15k tokens of raw
+scan payload per cycle). That worked, with one caveat worth carrying
+forward: a sub-agent twice re-listed TC and EXYN as eligible because the
+universe file has no verdict for them, despite both having FAILED a live
+screen earlier the same day -- delegated scanners MUST be handed an
+explicit hard-exclusion list. Also found and fixed a silent coverage
+bug: get_equity_historicals caps at 10 symbols, so at wide breadth 9
+eligible names were dropped from one cycle's ranking; batch the call.
+Coverage: 07:00-07:19 unscanned (scheduler queue), nothing backfilled.
+One self-reported protocol slip (a single 5-min bar pull at 16:51Z,
+caught and re-pulled at 1-min, no decision taken from it).
+Ledger: data/paper_days/2026-08-12.{md,json}.

@@ -1,0 +1,201 @@
+{
+  "date": "2026-08-12",
+  "weekday": "Wednesday",
+  "session": "Paper Day 7",
+  "config": {
+    "strategy": "C37 sequential rotation",
+    "benchmark_per_traded_day_usd": 1956,
+    "benchmark_2yr_usd": 774534,
+    "ticket_size_usd": 15000,
+    "last_ticket_size_usd": 10000,
+    "max_tickets": 7,
+    "daily_cap_usd": 100000,
+    "one_position_at_a_time": true,
+    "settlement": "T+1 cash",
+    "scan_interval_min": 5,
+    "scan_window_et": "07:00-14:30",
+    "new_ticket_cutoff_et": "14:30",
+    "hard_flatten_et": "15:00",
+    "flatten_ladder": "14:57 bid-1%, 14:59 bid-2%",
+    "hard_stop_pct": -8,
+    "trail_pct_base": 20,
+    "trail_pct_tight": 10,
+    "trail_pct_wide": 40,
+    "scale_out_at_pct": 25,
+    "scale_out_skip_if_pressure_gte": 0.3,
+    "coil_threshold": 0.95,
+    "pressure_trust_floor_shares": 20000,
+    "calm_gap_max_pct": 20,
+    "calm_gap_grace_pct_top_rank": 35,
+    "l2_spread_cap_pct": 0.5,
+    "size_cap_pct_of_trailing_10min_volume": 20,
+    "volume_gate": "none",
+    "real_orders": false,
+    "halal_list_updated": "2026-08-09",
+    "halal_list_n": 1347,
+    "scan_id": "5f132877-7730-4a18-9e72-b3f0d2c9df83"
+  },
+  "clock": {
+    "session_start_et": "07:19",
+    "nominal_start_et": "07:00",
+    "session_end_et": "15:00",
+    "cycle_monitor": "persistent, 300s UTC-aligned, task b0rnihylo",
+    "position_monitor": "persistent, 120s UTC-aligned, task bmubnw3i6, armed 09:30 ET, stopped after exit",
+    "scan_cycles_run": 47
+  },
+  "trades": [
+    {
+      "ticket": 1,
+      "symbol": "BE",
+      "name": "Bloom Energy",
+      "side": "long",
+      "shares": 63,
+      "entry_price": 235.37,
+      "entry_time_et": "09:26",
+      "entry_time_utc": "2026-08-12T13:26:00Z",
+      "entry_trigger": "premarket-high stop-buy, ratchet 235.37, stop-limit cap 236.55",
+      "entry_armed_time_et": "09:24",
+      "entry_armed_at_price": 234.99,
+      "fill_arming_rule_honored": true,
+      "deployed_usd": 14828.31,
+      "exit_price": 237.03,
+      "exit_time_et": "14:57",
+      "exit_time_utc": "2026-08-12T18:57:40Z",
+      "exit_reason": "15:00 flatten ladder rung 1 (marketable limit at bid -1%); filled at inside bid",
+      "exit_proceeds_usd": 14932.89,
+      "pnl_usd": 104.58,
+      "pnl_pct": 0.71,
+      "hold_duration": "5h31m",
+      "peak_price": 249.99,
+      "peak_time_utc": "2026-08-12T13:31:00Z",
+      "peak_unrealized_usd": 921.06,
+      "trough_price": 231.18,
+      "trough_time_utc": "2026-08-12T15:00:00Z",
+      "max_drawdown_usd": -263.97,
+      "hard_stop_level": 216.5404,
+      "hard_stop_tested": false,
+      "trail_level_at_peak": 199.992,
+      "trail_engaged": false,
+      "scale_out_level": 294.2125,
+      "scale_out_touched": false,
+      "gates_at_entry": {
+        "price_gte_2": true,
+        "cross_printed_pct": 10.8,
+        "prev_close": 211.21,
+        "coil": 0.994,
+        "premarket_high": 235.37,
+        "pressure_30bar": 0.43,
+        "pressure_30bar_shares": 216374,
+        "pressure_trusted": true,
+        "calm_gap_7am_pct": 2.58,
+        "price_at_7am": 216.6472,
+        "l2_bid": 233.68,
+        "l2_ask": 234.0,
+        "l2_spread_pct": 0.137,
+        "ask_depth_in_cap_band_shares": 1172,
+        "vol_cap_shares": 17192,
+        "tradability_state": "active",
+        "halal": "PASS (live re-screen)"
+      },
+      "fill_realism": {
+        "assumed_fill": 235.37,
+        "price_plus_60s": 235.5,
+        "delta_pct": 0.06,
+        "direction": "fill better than +60s",
+        "note": "genuine forward stop; contrast Day 5 LFST -1.6% and Day 6 FRMI -1.1%, both armed at already-printed levels"
+      }
+    }
+  ],
+  "pnl": {
+    "day_usd": 104.58,
+    "tickets_used": 1,
+    "tickets_available": 7,
+    "capital_deployed_usd": 14828.31,
+    "capital_idle_usd": 85171.69,
+    "vs_benchmark_usd": -1851.42,
+    "vs_benchmark_pct_of_target": 5.3,
+    "cumulative_day5": -65.78,
+    "cumulative_day6": -266.54,
+    "cumulative_day7": 104.58,
+    "cumulative_total": -227.74
+  },
+  "candidates_halal_cleared": [
+    {"sym": "SMWB", "mcap": 642853202, "loan_pct": 6.13, "cash_pct": 10.15, "combined_pct": 16.28, "haram_rev_pct": 0.21, "verdict": "PASS", "source": "live re-screen (seed-era)", "peak_pct_day": 25.2, "note": "rank 1 for ~15 premarket cycles; vetoed every cycle on an 8.4-12.4% book. LARGEST VETO COST OF THE DAY."},
+    {"sym": "VELO", "mcap": 463582346, "loan_pct": 3.85, "cash_pct": 3.89, "combined_pct": 7.74, "haram_rev_pct": 1.33, "verdict": "PASS", "source": "live re-screen (seed-era)", "note": "spiked 17.61 at the open, faded to ~15.2; spread-vetoed premarket"},
+    {"sym": "DFTX", "mcap": 5936015084, "loan_pct": 0.61, "cash_pct": 18.26, "combined_pct": 18.87, "haram_rev_pct": 0.0, "verdict": "PASS", "source": "live re-screen (seed-era)", "note": "VETO SAVE: coil test blocked it at 50.92; fell to 43.02 (-15.5%)"},
+    {"sym": "NTHI", "mcap": 112796121, "loan_pct": 0.31, "cash_pct": 0.12, "combined_pct": 0.43, "haram_rev_pct": 0.0, "verdict": "PASS", "source": "live re-screen (seed-era)", "note": "VETO SAVE: 5.26 spike round-tripped to 4.36 in 9 minutes"},
+    {"sym": "BRUN", "mcap": 1421982675, "loan_pct": 14.47, "cash_pct": 0.93, "combined_pct": 15.4, "haram_rev_pct": 3.19, "verdict": "PASS", "source": "live re-screen (seed-era)", "note": "loans >10% but combined <20%, so the implemented rule passes it"},
+    {"sym": "JFB", "mcap": 98941415, "loan_pct": 1.96, "cash_pct": 3.76, "combined_pct": 5.72, "haram_rev_pct": 0.34, "verdict": "PASS", "source": "live re-screen (seed-era)"},
+    {"sym": "AXTI", "mcap": 5188221303, "loan_pct": 1.36, "cash_pct": 2.07, "combined_pct": 3.43, "haram_rev_pct": 0.0, "verdict": "PASS", "source": "live re-screen (seed-era)", "note": "VETO SAVE: tightest book of the morning but never crossed +10% while rankable; 83.88 -> 74.80"},
+    {"sym": "BE", "loan_pct": 4.52, "cash_pct": 4.37, "combined_pct": 8.89, "haram_rev_pct": 0.49, "verdict": "PASS", "source": "live re-screen (seed-era)", "note": "TRADED"},
+    {"sym": "PESI", "mcap": 458072557, "loan_pct": 0.9, "cash_pct": 1.45, "combined_pct": 2.35, "haram_rev_pct": 0.4, "verdict": "PASS", "source": "live re-screen (seed-era)"},
+    {"sym": "ZTG", "mcap": 124976629, "loan_pct": 0.06, "cash_pct": 0.83, "combined_pct": 0.89, "haram_rev_pct": 0.0, "verdict": "PASS", "source": "live re-screen (seed-era)", "note": "bench leader at +32.1% then faded to +7.3%; L2 book crossed twice (ERROR)"},
+    {"sym": "GORO", "loan_pct": 0.02, "cash_pct": 15.3, "combined_pct": 15.32, "haram_rev_pct": 2.66, "verdict": "PASS", "source": "live screen"}
+  ],
+  "candidates_halal_failed_live_screen": [
+    {"sym": "TC", "mcap": 3542088, "loan_pct": 0.0, "cash_pct": 27.55, "combined_pct": 27.55, "fail_reason": "CASH>10+COMBINED>20", "note": "same verdict as Day 6; had the best pressure reading on the board at cycle 32 (+0.59/53,657)"},
+    {"sym": "EXYN", "mcap": 23234732, "loan_pct": 35.91, "cash_pct": 4.74, "combined_pct": 40.66, "fail_reason": "LOAN>10+COMBINED>20", "note": "same verdict as Day 6; was +19.3% with coil 1.112"}
+  ],
+  "halal_rejects_universe": {
+    "count_distinct": 46,
+    "biggest_runner_rejected": {"sym": "BOXL", "pct": 52.5, "reason": "seed-era FAIL", "note": "third consecutive session where the day's top gapper is unbuyable"},
+    "notable": ["CRWV loans 71.05", "BRBI loans 5705.3", "HRB loans 34.6", "NRGV loans 27.47", "GYRO cash 33.26", "EROC cash 20.48", "AII HARAM INDUSTRY", "IREN LOAN>10+COMBINED>20", "KEEL LOAN>10+COMBINED>20", "CEPL LOAN>10+COMBINED>20", "MRX LOAN>10+COMBINED>20", "DBGI LOAN>10+COMBINED>20", "QNT HARAM>=5%"],
+    "seed_era_fails": ["LSE", "HYLN", "PTLE", "XHLD", "KRNT", "XBP", "PRHI", "RSKD", "WYFI", "ATRO", "CAVA", "GLBE", "NOMA", "TDTH", "OFAL", "TII", "APYX", "RNAZ", "NBIS", "ZNB", "CUPR", "AQMS", "HELP", "SPRC", "GCTS", "SHAZ", "LENZ", "IPWR", "IDAI", "SND", "SMCI", "ANTX", "KTB", "MVIS", "CDIO", "TLF", "BANL", "OWLT", "BIVI", "QTI", "BRCB", "RMCF", "JFU", "EHLD", "QMCO", "CD", "GSIW", "SLE", "PTN", "REPL", "FXHO", "TECX", "WEN", "ZJYL", "INBS", "FRGT", "AIOT", "PLX", "PRLD", "DWTX", "FCEL", "DGXX", "CDLX", "LEDS", "NXTC", "JL", "CCEL", "UPLD", "ITG", "ZEPP", "HTZ", "PYXS", "QNRX", "FGI", "CAMP", "LPA", "ACVA", "SMCI", "ATHE"]
+  },
+  "veto_ledger": {
+    "saves": [
+      {"sym": "DFTX", "veto": "coil test (0.933-0.949 vs 0.95 threshold)", "outcome": "50.92 -> 43.02, -15.5%"},
+      {"sym": "NTHI", "veto": "never coiled / never rank 1", "outcome": "5.26 -> 4.36 in 9 minutes"},
+      {"sym": "ZTG", "veto": "one-position rule", "outcome": "+32.1% -> +7.3% in 30 minutes"},
+      {"sym": "AXTI", "veto": "+10% line not crossed while rankable", "outcome": "83.88 -> 74.80, -11%"},
+      {"sym": "VELO", "veto": "L2 spread cap", "outcome": "17.61 -> ~15.2, -13.7% off high"},
+      {"sym": "BE", "veto": "fill-arming self-correction: trigger raised 235.34 -> 235.37 after finding the real ratchet high", "outcome": "clean forward-stop fill, +0.06% fill realism"}
+    ],
+    "costs": [
+      {"sym": "SMWB", "veto": "L2 spread cap, 8.4-12.4% premarket book, ~15 consecutive cycles at rank 1", "outcome": "ran to 9.08 intraday (+25% over close), closed session near +19%", "severity": "largest cost of the day"},
+      {"item": "BE trail width", "detail": "20% trail from the 249.99 peak sits at 199.99, below the -8% hard stop at 216.54, so the trail was structurally inert for the entire trade", "outcome": "+$921 unrealized became +$105 realized"}
+    ]
+  },
+  "fill_realism_series": [
+    {"day": "E01", "sym": "LZ", "delta_pct": 1.7, "note": "open fill"},
+    {"day": 5, "sym": "LFST", "delta_pct": -1.6, "note": "stop armed at an already-met trigger (swept the book)"},
+    {"day": 6, "sym": "FRMI", "delta_pct": -1.1, "note": "clean arm, but the break itself faded"},
+    {"day": 7, "sym": "BE", "delta_pct": 0.06, "note": "genuine forward stop after the ratchet self-correction"}
+  ],
+  "coverage_gaps": [
+    {"window_et": "07:00-07:19", "cause": "scheduler queue", "backfilled": false, "note": "logged as a gap; no picks made for unscanned time"},
+    {"window_et": "09:26-14:57", "type": "cadence deviation", "detail": "scan cadence ran at roughly 5-12 minutes rather than a strict 5 minutes while the position was held; informational only under the one-position rule, but a real deviation"},
+    {"window_et": "midday", "type": "polling cadence", "detail": "position polling widened from 2 min to 6-10 min; every 1-minute bar was still retrieved and the resting stop has intrabar semantics, so no fill was affected"}
+  ],
+  "errors": [
+    {"time_utc": "11:19", "type": "stale scanner rows", "detail": "EUDA, XTLB, FORTY, OBX, WSO.B all showed >=+10% on the scanner but had no prints today; scanner changeFromCloseAllDayRatio disagrees with the official SIP close", "action": "excluded as ineligible (crossing must have printed)"},
+    {"time_utc": "11:56", "type": "API 502", "detail": "get_equity_fundamentals(BRUN) returned CloudFront 502 Bad Gateway", "action": "immediate retry succeeded; no silent fallback"},
+    {"time_utc": "12:27", "type": "feed disagreement", "detail": "quote endpoint lagged the minute bars by ~11 min on SMWB", "action": "adopted rule: use whichever of quote/bar timestamp is later"},
+    {"time_utc": "12:31", "type": "feed disagreement", "detail": "NTHI quote fresh at 12:30:15Z while bars had nothing since 11:49Z; opposite direction of the SMWB lag", "action": "pulled bars directly to resolve; NTHI spike/reversal confirmed"},
+    {"time_utc": "12:39", "type": "quote vs L2 disagreement", "detail": "NTHI quote ask 4.55 vs L2 inside ask 4.38 (~4%)", "action": "used the L2 book"},
+    {"time_utc": "13:42", "type": "crossed L2 book", "detail": "ZTG bid 14.70 above ask 9.70; recurred at 13:49 with bid 12.00 above ask 9.84", "action": "ZTG depth treated as unusable; flagged for re-pull before any arming"},
+    {"time_utc": "16:51", "type": "protocol slip (self-reported)", "detail": "first BE pull used interval=5minute, which hides the intrabar lows the stop is tested against", "action": "caught immediately, re-pulled at 1-minute; no decision taken from the 5-min data"},
+    {"time_utc": "16:41", "type": "harness", "detail": "a 12-minute pacing sleep exceeded the 10-minute shell cap and was killed", "action": "ledger write had already completed; next pull covered every intervening bar"},
+    {"time_utc": "17:35", "type": "coverage limitation", "detail": "get_equity_historicals caps at 10 symbols; 20 names were eligible so 9 (CRDO, EAT, VIAV, CBRS, AEHR, FN, DOCN, NOK, VELO) were silently dropped from the cycle-44 ranking", "action": "fixed from cycle 45 by instructing multiple batched calls"},
+    {"time_utc": "17:27", "type": "source disagreement", "detail": "LINK close.price $5.02 vs previous_close $5.10", "action": "logged; LINK was outside the top 5 so no decision depended on it"},
+    {"time_utc": "17:50", "type": "stale print", "detail": "LINK quote and last bar both frozen at 17:32Z (18 minutes)", "action": "excluded from the ranking"},
+    {"time_utc": "17:35-18:05", "type": "delegation risk", "detail": "a sub-agent re-listed TC and EXYN as eligible because the universe file carries no verdict for them, despite both having FAILED a live screen earlier in the session", "action": "overridden manually both times; HARD EXCLUSIONS added to the sub-agent prompt"}
+  ],
+  "compliance": {
+    "real_orders_placed": 0,
+    "one_position_rule_violations": 0,
+    "fill_arming_rule_honored": "2 of 2 this week",
+    "flat_by_1500_et": true,
+    "ticket_size_correct": true,
+    "daily_cap_respected": true,
+    "bar_granularity_violations": 1,
+    "bar_granularity_violation_detail": "single 5-minute pull at 16:51Z, caught and corrected, no decision taken from it"
+  },
+  "lessons": [
+    "The premarket L2 spread cap is the dominant filter of this strategy as currently run, and it is not free: across Days 6 and 7 it has blocked the eventual best-performing halal name twice (KOPN +29%, SMWB +25%). A 0.5% cap on premarket books behaves very differently from the same cap after 09:30. Candidate backtest: depth-aware relaxation pre-09:30, or defer wide-book names to the open instead of rejecting them.",
+    "Coil and book quality are anti-correlated in the premarket. All morning the name with the coil and trusted pressure had the broken book, and the name with the tight book had lost its coil. Likely structural, and it means the ranking and the execution filter routinely disagree.",
+    "A single non-resolving position is the worst case for C37's economics: not a loss, a lockout. One trade that neither stops nor trails consumes all seven ticket slots' worth of session time for one ticket's worth of exposure. The edge lives in the rotation.",
+    "The fill-arming rule now has four data points and they are unambiguous: both negative fill-realism observations came from arming at an already-printed level, both non-negatives from clean forward triggers. Today's 3-cent ratchet self-correction is the cheapest possible demonstration.",
+    "Delegated sub-agents must carry hard exclusion lists. A delegated scan re-surfaced two names that had already FAILED a live screen this session because the universe file has no verdict for them. Caught both times; the prompt fix is in place."
+  ]
+}
