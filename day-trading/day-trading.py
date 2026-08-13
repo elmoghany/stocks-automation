@@ -936,6 +936,9 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     trail_wide: float = 30.0,
                     breakeven_at: float | None = None,
                     time_stop_min: int | None = None,
+                    time_stop_progress: float | None = None,
+                    time_stop_pressure: float | None = None,
+                    time_stop_pressure_inv: bool = False,
                     atr_trail: tuple | None = None,
                     atr_stop: tuple | None = None,
                     add_at: float | None = None,
@@ -1583,8 +1586,27 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
             if (time_stop_min is not None and exit_px is None
                     and (cd.index[i] - cd.index[entry_i]).total_seconds()
                     >= time_stop_min * 60
-                    and price <= entry):
-                exit_px, reason = price, f"time-stop {time_stop_min}m"
+                    and price <= entry * (1 + (time_stop_progress or 0)
+                                          / 100)):
+                # T-series STALL RELEASE. Plain time_stop_min cuts a
+                # position still at-or-below entry after N minutes.
+                #   time_stop_progress: raise the bar -- cut unless the
+                #     trade is up at least P% by then ("not working").
+                #   time_stop_pressure: SPARE it while buyers still hold
+                #     the tape (10-bar pressure >= thresh) -- the point
+                #     is to free a DEAD ticket, not to cut a live one.
+                # All default None/0 => byte-identical to the old rule.
+                _cut = True
+                if time_stop_pressure is not None:
+                    _pp = cd.pressure(i, 10, pressure_min_vol)
+                    if _pp is not None:
+                        strong = _pp >= time_stop_pressure
+                        if time_stop_pressure_inv:
+                            strong = not strong      # control: nonsense
+                        if strong:
+                            _cut = False
+                if _cut:
+                    exit_px, reason = price, f"time-stop {time_stop_min}m"
             if (exit_px is None and _halt_gap(i) >= 5
                     and cd.o[i] < stop):
                 # halt reopened below the stop: nothing fills inside the

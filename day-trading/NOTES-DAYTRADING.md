@@ -3451,3 +3451,62 @@ paper Days 5-7 were scored against the inflated figure and their
 STILL DISCLOSED: bars were only ever fetched to full-day-gain depth
 (~17 of ~213 candidates/day), so the universe remains coverage-biased.
 $665,667 is an upper bound; closing it needs a full-breadth bar fetch.
+
+## T-SERIES: STALL RELEASE UNDER ROTATION -- REJECTED (2026-08-13)
+User observation: "our winning trades were 9 minutes between buy and
+sell, so why did paper trading hold for hours?" Measured first (797
+trade legs, 120 days): WINNERS median 15m / p75 34m; LOSERS median 8m;
+78% of all profit lands in the 10-30m band; sub-10m trades LOSE in
+aggregate (-$28,212 over 352 legs); only 8/797 legs ran past 180m --
+yet all three paper sessions held 5-6h. So the 9-minute figure is the
+LOSER median, not the winner median.
+
+HYPOTHESIS (mine, and wrong): the 5 prior rejections all amputated
+WINNERS, whereas a stall release only touches flat/red positions, so
+the fat tail is untouched by construction -- and under rotation the
+freed ticket redeploys instead of sitting in cash, which the static
+tests (S033-S036) could not measure. Engine: time_stop_progress and
+time_stop_pressure added (both default None -> byte-identical; identity
+gate 4/4 EXACT).
+
+  cfg   rule                              2yr     vs C37  negm   maxDD
+  C37H  champion, no time stop        665,667         --  0/23  12,560
+  T010  cut flat/red at 10m           303,997   -361,670  7/23  33,270
+  T015  15m                           386,048   -279,619  4/23  22,224
+  T020  20m                           419,846   -245,821  3/23  18,028
+  T030  30m                           501,129   -164,538  3/23  19,869
+  T045  45m                           558,523   -107,144  2/23  13,650
+  T060  60m                           581,061    -84,606  1/23  14,602
+  TP20  20m, spared if pressure >= 0  422,949   -242,718  3/23  18,809
+  TP21  20m, spared if pressure >=.3  424,514   -241,153  3/23  18,165
+  TP30  30m, spared if pressure >= 0  512,572   -153,095  3/23  23,269
+  TG20  20m unless up >= +2%          390,036   -275,631  4/23  20,659
+  TG21  20m unless up >= +5%          366,644   -299,023  5/23  29,527
+  TC20  CONTROL, pressure INVERTED    471,201   -194,466  4/23  18,353
+
+REJECTED, PERFECTLY MONOTONIC in cut time (10<15<20<30<45<60<never).
+Sixth independent rejection of early exits.
+
+WHY THE HYPOTHESIS FAILED -- and it is in the hold-time data I had
+already measured: winners' p75 is 34 MINUTES. At the 20-minute mark a
+large share of eventual winners are STILL FLAT OR RED. "Dead at 20m"
+and "dead" are not the same thing; the position that looks stalled at
+20m is frequently the one that pays at 35m. That is also exactly why
+the 10-30m band carries 78% of profit -- trades are still developing
+inside it. Freeing the ticket does not compensate, same as the B-series.
+
+THE CONTROL FAILED, AND INFORMATIVELY: TC20 (pressure condition
+INVERTED -- spare the dead, cut the live) scored $471,201, BEATING the
+real TP20 at $422,949 by $48,252. So the trend/volume conditioning is
+not merely useless, it is ANTI-informative in the direction assumed:
+among flat/red positions at 20m, the ones with NEGATIVE pressure are
+the better ones to keep (washed out and basing) while positive pressure
+on a position that has gone nowhere looks like distribution into
+strength. Had this family shown a gain, that control alone would have
+voided it. Do not resurrect pressure-conditioned time exits.
+
+RISK TOO, NOT JUST RETURN: max drawdown RISES under stall release
+($33,270 at 10m vs the champion's $12,560). There is no "but it is
+safer" defence -- the new drawdown column closes that door.
+C37 stands. Exits remain a flat optimum; the give-back is the premium
+paid for the fat tail.

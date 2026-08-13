@@ -278,6 +278,55 @@ CFGS = {
     "VOLD": dict(desc="LEGACY biased pool, reproduces the old $774,534",
                  entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
                  biased_pool=True),
+    # ---- T-series (2026-08-13): STALL RELEASE UNDER ROTATION ----
+    # Hold-time study (797 legs): winners median 15m, LOSERS median 8m,
+    # 78% of all profit lands in the 10-30m band, sub-10m trades LOSE in
+    # aggregate, and only 8/797 legs ran past 180m -- yet all three paper
+    # sessions held 5-6h. A 9-minute exit would cut into the losing
+    # bucket (and time stops already lost 5x); this instead frees a DEAD
+    # ticket so rotation can redeploy it. Untested under rotation: the
+    # static tests parked the freed capital in cash.
+    "T010": dict(desc="stall release: cut flat/red after 10m",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 sim_extra={"time_stop_min": 10}),
+    "T015": dict(desc="stall release 15m",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 sim_extra={"time_stop_min": 15}),
+    "T020": dict(desc="stall release 20m",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 sim_extra={"time_stop_min": 20}),
+    "T030": dict(desc="stall release 30m",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 sim_extra={"time_stop_min": 30}),
+    "T045": dict(desc="stall release 45m",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 sim_extra={"time_stop_min": 45}),
+    "T060": dict(desc="stall release 60m",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 sim_extra={"time_stop_min": 60}),
+    # trend/volume conditioned: spare the ticket while BUYERS hold it
+    "TP20": dict(desc="20m stall release, spared while pressure >= 0",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 sim_extra={"time_stop_min": 20, "time_stop_pressure": 0.0}),
+    "TP21": dict(desc="20m stall release, spared while pressure >= +0.3",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 sim_extra={"time_stop_min": 20, "time_stop_pressure": 0.3}),
+    "TP30": dict(desc="30m stall release, spared while pressure >= 0",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 sim_extra={"time_stop_min": 30, "time_stop_pressure": 0.0}),
+    # "not working" bar raised above breakeven
+    "TG20": dict(desc="20m: cut unless up >= +2%",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 sim_extra={"time_stop_min": 20, "time_stop_progress": 2.0}),
+    "TG21": dict(desc="20m: cut unless up >= +5%",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 sim_extra={"time_stop_min": 20, "time_stop_progress": 5.0}),
+    # CONTROL: inverted pressure condition -- spares the DEAD ones and
+    # cuts the live ones. Must lose badly.
+    "TC20": dict(desc="CONTROL 20m, pressure condition INVERTED",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 sim_extra={"time_stop_min": 20, "time_stop_pressure": 0.0,
+                            "time_stop_pressure_inv": True}),
 }
 
 
