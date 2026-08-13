@@ -77,7 +77,29 @@
     "CRMD",
     "FOSL",
     "IPWR",
-    "AMBP"
+    "AMBP",
+    "LSF",
+    "DWTX",
+    "EQPT",
+    "DFSC",
+    "RRGB",
+    "STEM",
+    "CHCI",
+    "HYLN",
+    "AZ",
+    "TBBB",
+    "AEBI",
+    "DFDV",
+    "XE",
+    "ARMP",
+    "EMPD",
+    "BLSH",
+    "WYFI",
+    "KURA",
+    "AMPY",
+    "CMTV",
+    "COLL",
+    "NCMI"
   ],
   "crossed_set_note": "Latched for the whole session. A name that fades below +10% and drops off the scanner stays eligible (parity item: the cross is a latch in the sim, a snapshot in the scanner).",
   "halal": {
@@ -85,7 +107,8 @@
       "EUDA",
       "HLIT",
       "DAAQ",
-      "IPCX"
+      "IPCX",
+      "AZ"
     ],
     "NEEDS_SCREEN": [
       "FORTY",
@@ -95,12 +118,14 @@
       "CVKD",
       "YXT",
       "KGEI",
-      "DERM",
       "XHG",
       "ELMT",
       "PAVM",
       "FOSL",
-      "IPWR"
+      "IPWR",
+      "LSF",
+      "DWTX",
+      "EQPT"
     ],
     "FAIL": [
       "DUKR",
@@ -123,7 +148,13 @@
       "AVAH",
       "JACK",
       "AMBP",
-      "CRMD"
+      "CRMD",
+      "DERM",
+      "STEM",
+      "HYLN",
+      "WYFI",
+      "DFDV",
+      "BLSH"
     ],
     "fail_note": "Day-scoped and inherited. Must be passed into every delegated scan so a FAIL cannot re-enter the pool (API HYGIENE defect #2).",
     "live_screens": [
@@ -221,7 +252,89 @@
         "halal": false,
         "fail_reason": "LOAN>10+COMBINED>20",
         "note": "CorMedix. Failed on BOTH sides -- 25.99% debt and 31.95% cash. A cash-rich biotech fails the deposits test the same way a levered name fails the loans test; the screen is symmetric."
+      },
+      {
+        "sym": "DERM",
+        "market_cap": 176221107,
+        "source": "quarterly",
+        "loan_pct": 14.45,
+        "cash_pct": 15.45,
+        "combined": 29.9,
+        "haram_pct": 0.25,
+        "halal": false,
+        "fail_reason": "LOAN>10+COMBINED>20",
+        "note": "Journey Medical. Both sides over 10%, combined 29.9%."
+      },
+      {
+        "sym": "AZ",
+        "market_cap": 375276876,
+        "loan_pct": 0.64,
+        "cash_pct": 15.28,
+        "combined": 15.93,
+        "haram_pct": 1.21,
+        "halal": true,
+        "note": "PASS. WARNING: Robinhood labels AZ sector='Finance', industry='Financial Conglomerates', which is WRONG -- the company (A2Z Cust2Mate) makes retail smart shopping carts and precision metal parts. The industry keyword screen did not fire. Accepted on clean ratios, but the mislabel is logged: if that label were accurate it would be a haram-industry reject."
+      },
+      {
+        "sym": "STEM",
+        "loan_pct": 514.0,
+        "cash_pct": 57.15,
+        "combined": 571.14,
+        "haram_pct": 6.34,
+        "halal": false,
+        "fail_reason": "LOAN>10+COMBINED>20"
+      },
+      {
+        "sym": "HYLN",
+        "loan_pct": 0.44,
+        "cash_pct": 8.53,
+        "combined": 8.97,
+        "haram_pct": 13.15,
+        "halal": false,
+        "fail_reason": "HARAM>=5%",
+        "note": "Only name today rejected on the haram-REVENUE test rather than leverage -- 13.15% interest income vs a 5% limit."
+      },
+      {
+        "sym": "WYFI",
+        "loan_pct": 18.78,
+        "cash_pct": 5.66,
+        "combined": 24.43,
+        "haram_pct": 2.27,
+        "halal": false,
+        "fail_reason": "LOAN>10+COMBINED>20"
+      },
+      {
+        "sym": "DFDV",
+        "loan_pct": 121.57,
+        "cash_pct": 6.07,
+        "combined": 127.63,
+        "haram_pct": 25.3,
+        "halal": false,
+        "fail_reason": "LOAN>10+COMBINED>20"
+      },
+      {
+        "sym": "BLSH",
+        "loan_pct": 11.42,
+        "cash_pct": 27.16,
+        "combined": 38.58,
+        "haram_pct": 0.01,
+        "halal": false,
+        "fail_reason": "LOAN>10+COMBINED>20"
+      },
+      {
+        "sym": "RRGB",
+        "market_cap": 190916904,
+        "loan_pct": 0.0,
+        "cash_pct": 12.71,
+        "combined": 12.71,
+        "haram_pct": 0.01,
+        "halal": "REFUSED",
+        "fail_reason": "CANNOT VERIFY -- refusing to evaluate, not a compliance pass",
+        "note": "The screen returned halal=True but BOTH inputs are untrustworthy. (1) loan_pct 0.00 is implausible: Red Robin carries substantial debt and RH reports pb_ratio -1.396, i.e. NEGATIVE book value -- a debt-free reading is a data gap, not a clean balance sheet. (2) haram_pct is computed as interest income / revenue, which is STRUCTURALLY BLIND to alcohol sales; RRGB's own description lists 'signature alcoholic beverages', and casual-dining alcohol mix is typically well above the 5% limit. Treating this as a PASS would be exactly the silent-pass failure mode the market-cap rule was written to prevent."
       }
+    ],
+    "REFUSED_CANNOT_VERIFY": [
+      "RRGB"
     ]
   },
   "excluded_non_common": 37,
@@ -322,6 +435,22 @@
       "size_cap_binding": false,
       "outcome_usd": null,
       "note": "Spread was the binding constraint, not size. 20% of trailing 10 completed minutes was ~a full $15k ticket."
+    },
+    {
+      "n": 2,
+      "time_et": "09:52",
+      "sym": "AZ",
+      "session_phase": "post-open",
+      "trigger": "ORB/session-high stop-buy 7.7800",
+      "reason": "thin book",
+      "inside_bid": 7.61,
+      "inside_ask": 7.68,
+      "spread_pct": 0.92,
+      "spread_cap_pct": 0.5,
+      "size_cap_shares": 14242,
+      "size_cap_binding": false,
+      "outcome_usd": null,
+      "note": "Day's ranked pick after the post-open re-rank (rank 3; TBBB and COLL above it both fail calm-gap). Halal PASS. Blocked purely on a 0.92% spread."
     }
   ],
   "trades": [],
@@ -417,9 +546,103 @@
         "IPWR",
         "AMBP"
       ]
+    },
+    {
+      "cycle": 9,
+      "time_et": "09:12",
+      "state": "FLAT-5m",
+      "action": "delegated scan + bars + rank",
+      "top": "HLIT",
+      "new_crossers": [
+        "LSF",
+        "DWTX",
+        "EQPT"
+      ],
+      "note": "Cadence tightened to true 5-min from 09:12 as entries become live."
+    },
+    {
+      "cycle": 10,
+      "time_et": "09:24",
+      "state": "FLAT-ARM",
+      "action": "book recheck -> spread collapsed to 0.41%, ARMED HLIT",
+      "top": "HLIT"
+    },
+    {
+      "cycle": 11,
+      "time_et": "09:36",
+      "state": "FLAT-ARM",
+      "action": "ORB set, re-armed at 15.06",
+      "top": "HLIT"
+    },
+    {
+      "cycle": 12,
+      "time_et": "09:44",
+      "state": "FLAT-5m",
+      "action": "post-open re-rank; 19 new crossers; pick rotated HLIT -> AZ",
+      "top": "AZ"
     }
   ],
   "lessons": [
     "LATCH DEMONSTRATED LIVE: SFHG printed +11.4% at 06:47, faded to +8.4% by 07:02 and vanished from the scan. It remained a ranked candidate because the +10% cross had already printed. A snapshot-only scanner would have silently shrunk the universe here."
+  ],
+  "armed_orders": [
+    {
+      "n": 1,
+      "time_et": "09:25",
+      "sym": "HLIT",
+      "paper_only": true,
+      "type": "stop-limit BUY (resting)",
+      "trigger": 15.3,
+      "limit": 15.3765,
+      "limit_rule": "trigger x 1.005",
+      "shares": 980,
+      "notional_usd": 14994.0,
+      "ticket": 1,
+      "gates": {
+        "spread_pct": 0.41,
+        "spread_cap_pct": 0.5,
+        "spread_pass": true,
+        "inside_bid": 14.67,
+        "inside_ask": 14.73,
+        "depth_shares_inside_to_trigger_plus_0p5pct": 13489,
+        "depth_pass": true,
+        "fill_arming_rule": "PASS - last 14.7755 < trigger 15.30, stop is legitimate",
+        "size_cap_shares": 3244,
+        "size_pass": true
+      },
+      "note": "7,050-share wall resting AT 15.30. Protocol reads a wall just above the trigger as a reason to EXPECT A FAILED BREAKOUT, not to size up. Armed at standard size, not increased.",
+      "protective_stop_on_fill": "resting stop-limit at max(entry x 0.92, peak x 0.60)",
+      "status": "CANCELLED/REPLACED at 09:36 - superseded by the lower ORB trigger; 15.30 was never touched (session high 15.06)"
+    },
+    {
+      "n": 2,
+      "time_et": "09:36",
+      "sym": "HLIT",
+      "paper_only": true,
+      "type": "stop-limit BUY (resting) - 5-min ORB break",
+      "orb_window": "09:30-09:34",
+      "orb_high": 15.06,
+      "orb_low": 13.69,
+      "trigger": 15.06,
+      "limit": 15.1353,
+      "limit_rule": "trigger x 1.005",
+      "shares": 996,
+      "notional_usd": 14999.76,
+      "ticket": 1,
+      "gates": {
+        "spread_pct": 0.48,
+        "spread_cap_pct": 0.5,
+        "spread_pass": true,
+        "inside_bid": 14.67,
+        "inside_ask": 14.74,
+        "depth_shares_inside_to_trigger_plus_0p5pct": 7127,
+        "depth_pass": true,
+        "fill_arming_rule": "PASS - last 14.75 < trigger 15.06",
+        "size_cap_shares": 114515,
+        "size_pass": true
+      },
+      "note": "Heavy ask walls sit ABOVE the trigger at 15.20 (6,495), 15.25 (3,120), 15.29 (2,700), 15.30 (7,055). Our limit 15.1353 sits below all of them, so a fill would occur before that resistance.",
+      "status": "CANCELLED at 09:53 - HLIT fell out of the top 12 on the post-open re-rank; trigger 15.06 never touched (post-arm high 14.82). Rotation: the pick is now AZ."
+    }
   ]
 }
