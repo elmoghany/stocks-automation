@@ -676,3 +676,40 @@ QUERY REDUCTIONS (all preserve behaviour exactly):
     mostly disappears -- but when both are live, the POSITION WATCH
     WINS. Exits are time-critical and irreversible; a late scan only
     delays a pick that gets re-ranked at deployment anyway.
+
+
+## THE `rank` COMMAND (2026-08-13) -- USE IT INSTEAD OF RANKING BY HAND
+
+Measured on Paper Day 7: 47 cycles, 285 tool calls, 9.9 min per cycle
+against a 5-min target, 98 SECONDS per tool call. The MCP calls
+themselves are ~2s; over 97% of the session's wall clock was the agent
+thinking between six sequential round-trips per cycle. Ranking is a
+pure function of bars -- stop doing it in conversation.
+
+    python day-trading/day-trading.py rank SYM:PREVCLOSE [SYM:PREVCLOSE ...] \
+        [--as-of HH:MM] [--date YYYY-MM-DD] [--top N] [--json]
+
+One call returns the whole cycle: crossed/not, last, gain%, coil,
+30-bar pressure (20k floor, "n/a" = UNTRUSTED), 7AM gap, calm-gap
+verdict with the 35%-top grace applied, halal PASS vs NEEDS-SCREEN, the
+reason every excluded name was excluded, and the armable TOP name.
+
+CYCLE SHAPE (target 2 tool calls, not 6):
+ 1. batched get_equity_historicals (<=10 symbols/call, assert the
+    returned set matches the request) -> write data/rh_bars/{SYM}_{date}.csv
+ 2. `rank` -> read the TOP line, then arm.
+Anything the ranker already computes must NOT be recomputed by hand.
+
+GUARANTEES AND LIMITS:
+ * ORDERING IS THE CHAMPION'S, verified: coil-first (last/high >= 0.95),
+   30-bar pressure within group, untrusted pressure sorts last. Parity-
+   tested against rotation_sim.rank_at on 180 (day, time) rankings --
+   0 mismatches. If you ever rank by hand and disagree with this
+   command, the command is right and you are drifting (that is the
+   Day-6 retest-entry class of error).
+ * CAUSAL: only bars at or before --as-of are read.
+ * FAILS CONSERVATIVE: a missing 7AM gap reads as CALM-GAP FAIL, and an
+   unreadable halal list makes every name NEEDS-SCREEN. NEEDS-SCREEN is
+   NOT a pass -- run the live screen before arming.
+ * It ranks; it does not arm. Book/L2 depth, the fill-arming rule and
+   the thin-book veto are still yours to check at the moment of arming.

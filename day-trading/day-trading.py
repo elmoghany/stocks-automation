@@ -2316,6 +2316,147 @@ def cmd_patterns(symbol: str) -> None:
     print(f"\n{found} pattern bars out of {cd.n} candles")
 
 
+def cmd_rank(pairs, as_of=None, date=None, top=None, as_json=False,
+             bars_dir=None):
+    """ONE-SHOT live ranking -- the whole scan cycle in a single call.
+
+    WHY THIS EXISTS (2026-08-13): the live agent was re-deriving the
+    ranking through ~6 sequential MCP calls plus reasoning every cycle
+    -- 98 s per tool call, 9.9 min per cycle against a 5-min target,
+    with >97% of the wall clock spent thinking rather than fetching.
+    Ranking is a pure function of bars; the backtest treats it as one
+    (rotation_sim.rank_at). This makes live use the SAME computation
+    instead of a natural-language reimplementation, which also closes
+    the protocol-drift class that produced the Day-6 retest slip.
+
+    Ordering is rank_at's exactly: COILED group first (last/high >=
+    0.95), then by 30-bar buy pressure (20k-share floor) within each
+    group. Untrusted pressure (None, thin volume) sorts last, as -1.
+    Strictly causal: only bars at or before --as-of are read.
+
+    Usage:  rank SYM:PREVCLOSE [SYM:PREVCLOSE ...] [--as-of HH:MM]
+    """
+    from datetime import datetime as _dt
+    et_now = _dt.now(ET)
+    date = date or et_now.strftime("%Y-%m-%d")
+    cutoff = None
+    if as_of:
+        hh, mm = (int(x) for x in as_of.split(":"))
+        cutoff = dtime(hh, mm)
+    else:
+        cutoff = et_now.time()
+
+    halal = set()
+    hf = _DIR / "data/halal_list.json"
+    if hf.exists():
+        try:
+            halal = set(json.loads(hf.read_text()).get("symbols", []))
+        except Exception as e:
+            print(f"ERROR: halal_list.json unreadable ({e}) -- every name "
+                  f"will read NEEDS-SCREEN; do NOT treat that as PASS")
+
+    rows = []
+    for spec in pairs:
+        if ":" not in spec:
+            print(f"ERROR: '{spec}' must be SYM:PREVCLOSE -- skipped")
+            continue
+        sym, pc_s = spec.split(":", 1)
+        sym = sym.upper()
+        try:
+            pc = float(pc_s)
+        except ValueError:
+            print(f"ERROR: bad prev_close in '{spec}' -- skipped")
+            continue
+        if pc <= 0:
+            print(f"ERROR: {sym} prev_close {pc} <= 0 -- skipped")
+            continue
+        df = load_rh_bars(sym) if bars_dir is None else _bars_from(bars_dir,
+                                                                  sym)
+        if df is None or df.empty:
+            rows.append(dict(sym=sym, err="NO BARS (fetch first)"))
+            continue
+        df = df[df.index.strftime("%Y-%m-%d") == date]
+        w = df[df.index.time <= cutoff]
+        if len(w) < 3:
+            rows.append(dict(sym=sym, err=f"only {len(w)} bars <= {cutoff}"))
+            continue
+        last = float(w["Close"].iloc[-1])
+        hi = float(w["High"].max())
+        crossed = bool(hi >= 1.10 * pc)
+        coil = (last / hi) if hi > 0 else 0.0
+        prs = None
+        if len(w) >= 5:
+            prs = Candles(w).pressure(len(w) - 1, 30, 20_000)
+        w7 = w[w.index.time <= dtime(7, 0)]
+        gap7 = ((float(w7["Close"].iloc[-1]) / pc - 1) * 100
+                if len(w7) else None)
+        rows.append(dict(sym=sym, pc=pc, last=last, hi=hi, crossed=crossed,
+                         coil=coil, prs=prs, gap7=gap7,
+                         gain=(last / pc - 1) * 100,
+                         halal=("PASS" if sym in halal else "NEEDS-SCREEN"),
+                         err=None))
+
+    ok = [r for r in rows if not r["err"] and r["crossed"]]
+    ok.sort(key=lambda r: (0 if r["coil"] >= 0.95 else 1,
+                           -(r["prs"] if r["prs"] is not None else -1)))
+    # calm-gap: <=20%, 35% grace for the top-ranked name only
+    for i, r in enumerate(ok):
+        lim = 35.0 if i == 0 else 20.0
+        r["calm"] = (r["gap7"] is not None and r["gap7"] <= lim)
+        r["gaplim"] = lim
+    if top:
+        ok = ok[:top]
+
+    if as_json:
+        print(json.dumps({"date": date, "as_of": str(cutoff),
+                          "ranked": ok, "other": [r for r in rows
+                                                  if r not in ok]},
+                         default=str))
+        return
+
+    print(f"RANK  {date} as-of {cutoff}   (coil-first, 30-bar pressure "
+          f"within; causal: bars <= as-of only)")
+    print(f"  {'#':<3}{'sym':<7}{'last':>9}{'gain%':>8}{'coil':>7}"
+          f"{'press':>8}{'gap7%':>8}  {'calm':<5}{'halal':<13}note")
+    for i, r in enumerate(ok, 1):
+        pr = f"{r['prs']:+.2f}" if r["prs"] is not None else "  n/a"
+        g7 = f"{r['gap7']:+.1f}" if r["gap7"] is not None else "  n/a"
+        note = []
+        if r["coil"] >= 0.95:
+            note.append("COILED")
+        if r["prs"] is None:
+            note.append("pressure UNTRUSTED (<20k sh)")
+        if not r["calm"]:
+            note.append(f"CALM-GAP FAIL (>{r['gaplim']:.0f}%)")
+        if r["halal"] != "PASS":
+            note.append("live screen REQUIRED before arming")
+        print(f"  {i:<3}{r['sym']:<7}{r['last']:>9.4f}{r['gain']:>8.1f}"
+              f"{r['coil']:>7.3f}{pr:>8}{g7:>8}  "
+              f"{'yes' if r['calm'] else 'NO':<5}{r['halal']:<13}"
+              f"{'; '.join(note)}")
+    skipped = [r for r in rows if r["err"] or not r.get("crossed")]
+    for r in skipped:
+        why = r["err"] or "+10% cross has NOT printed yet"
+        print(f"  --  {r['sym']:<7} excluded: {why}")
+    actionable = [r for r in ok if r["calm"] and r["halal"] == "PASS"]
+    print(f"\n  {len(ok)} crossed / {len(actionable)} armable now"
+          + (f"   TOP = {actionable[0]['sym']}" if actionable else
+             "   TOP = none (nothing passes every gate)"))
+
+
+def _bars_from(bars_dir, sym):
+    fs = sorted(Path(bars_dir).glob(f"{sym.upper()}_*.csv"))
+    if not fs:
+        return None
+    df = pd.concat([pd.read_csv(f) for f in fs])
+    df["begins_at"] = (pd.to_datetime(df["begins_at"], utc=True)
+                       .dt.tz_convert(ET))
+    df = df.rename(columns={"open": "Open", "high": "High", "low": "Low",
+                            "close": "Close", "volume": "Volume"})
+    return df.set_index("begins_at").sort_index()[
+        ["Open", "High", "Low", "Close", "Volume"]]
+
+
 def main() -> None:
     p = argparse.ArgumentParser(description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -2375,8 +2516,24 @@ def main() -> None:
     lb.add_argument("--minutes", type=int, default=10)
     lb.add_argument("--prod", action="store_true")
 
+    rk = sub.add_parser("rank",
+                        help="ONE-SHOT live ranking (whole scan cycle in "
+                             "one call; same ordering as the backtest)")
+    rk.add_argument("pairs", nargs="+", metavar="SYM:PREVCLOSE")
+    rk.add_argument("--as-of", default=None,
+                    help="ET clock time HH:MM; default now. Only bars at "
+                         "or before this are read (causal).")
+    rk.add_argument("--date", default=None, help="YYYY-MM-DD, default today")
+    rk.add_argument("--top", type=int, default=None)
+    rk.add_argument("--json", action="store_true", dest="as_json")
+    rk.add_argument("--bars-dir", default=None,
+                    help="override the bar cache directory")
+
     args = p.parse_args()
-    if args.cmd == "scan":
+    if args.cmd == "rank":
+        cmd_rank(args.pairs, args.as_of, args.date, args.top,
+                 args.as_json, args.bars_dir)
+    elif args.cmd == "scan":
         cmd_scan(args.size)
     elif args.cmd == "screen":
         cmd_screen(args.symbols)
