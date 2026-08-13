@@ -827,8 +827,103 @@
         "size_pass": true
       },
       "halal": "live PASS - loan 9.94 / cash 6.20 / combined 16.14 / haram 0.12 (both sides under 10%, cleanest of the day)",
-      "note": "The 10:38 chase veto resolved exactly as the protocol predicts: price ran to 4.2650, then retested back to 4.195 within ~10 minutes, restoring a legitimate stop entry above the high.",
-      "protective_stop_on_fill": "resting stop-limit at max(entry x 0.92, peak x 0.60)"
+      "note": "Ratchet re-armed at the new session high 4.2650; waited for last < trigger so the stop is a TRUE FORWARD STOP, not a disguised market order. NOT a retest entry -- retests are a rejected mechanic (G-series: a nonsense-level control beat every real retest level). Only three triggers are valid: 5-min ORB break, premarket/session-high stop-buy, reversal candle from the eight-member set.",
+      "protective_stop_on_fill": "resting stop-limit at max(entry x 0.92, peak x 0.60)",
+      "trigger_type": "Trigger B - session-high stop-buy via the ORB/session-high RATCHET re-arming at the new high 4.2650"
     }
-  ]
+  ],
+  "live_vs_backtest_divergences": [
+    {
+      "id": "L2-depth-ticket-reduction",
+      "first_seen_et": "10:44",
+      "sym": "ANGX",
+      "live_only": true,
+      "rule": "Live reduces the ticket to displayed ask depth from inside ask up to trigger x1.005; skips if depth < 25% of intended.",
+      "backtest_behaviour": "The sim sizes ONLY on 20% of trailing 10-min completed volume and does NOT model book depth at all.",
+      "intended_shares": 3517,
+      "intended_notional_usd": 15000.0,
+      "armed_shares": 3040,
+      "armed_notional_usd": 12965.6,
+      "size_delta_shares": -477,
+      "size_delta_usd": -2034.4,
+      "size_delta_pct": -13.56,
+      "direction_of_bias": "Conservative -- live deploys LESS capital than the champion would, so live P&L understates the strategy on any filled ticket.",
+      "action": "Keep applying it, but price it later the same way the spread veto was priced."
+    }
+  ],
+  "veto_rate": {
+    "arming_decisions": [
+      {
+        "n": 1,
+        "time_et": "06:43",
+        "sym": "HLIT",
+        "trigger": 15.3,
+        "phase": "premarket",
+        "outcome": "VETO",
+        "reason": "spread 3.32%"
+      },
+      {
+        "n": 2,
+        "time_et": "09:36",
+        "sym": "HLIT",
+        "trigger": 15.06,
+        "phase": "post-open",
+        "outcome": "ARMED",
+        "reason": "spread 0.48% OK"
+      },
+      {
+        "n": 3,
+        "time_et": "09:52",
+        "sym": "AZ",
+        "trigger": 7.78,
+        "phase": "post-open",
+        "outcome": "VETO",
+        "reason": "spread 0.92%"
+      },
+      {
+        "n": 4,
+        "time_et": "10:14",
+        "sym": "AZ",
+        "trigger": 7.78,
+        "phase": "post-open",
+        "outcome": "ARMED",
+        "reason": "spread 0.41% OK"
+      },
+      {
+        "n": 5,
+        "time_et": "10:38",
+        "sym": "ANGX",
+        "trigger": 4.145,
+        "phase": "post-open",
+        "outcome": "VETO",
+        "reason": "fill-arming/chase cap (spread was fine at 0.24%)"
+      },
+      {
+        "n": 6,
+        "time_et": "10:44",
+        "sym": "ANGX",
+        "trigger": 4.265,
+        "phase": "post-open",
+        "outcome": "ARMED",
+        "reason": "ratchet re-armed, last < trigger"
+      }
+    ],
+    "total_decisions": 6,
+    "vetoed": 3,
+    "armed": 3,
+    "veto_rate_pct": 50.0,
+    "premarket": {
+      "decisions": 1,
+      "vetoed": 1,
+      "rate_pct": 100.0
+    },
+    "post_open": {
+      "decisions": 5,
+      "vetoed": 2,
+      "rate_pct": 40.0
+    },
+    "modelled_optimum_pct": "50-65",
+    "verdict": "50% overall sits at the LOW EDGE of the modelled 50-65% optimum -- a large improvement on Day 7's 90-100%. Post-open is 40%, i.e. slightly BELOW the optimum band; premarket remains 100% but on a single decision, too small to conclude from.",
+    "note": "Only 2 of the 3 vetoes were spread vetoes. The third (ANGX 10:38) was the fill-arming/chase cap, a different mechanism that should be counted separately when calibrating the spread threshold."
+  }
 }
