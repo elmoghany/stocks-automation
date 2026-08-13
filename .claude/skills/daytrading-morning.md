@@ -594,3 +594,78 @@ which is where the opening coil ranking gets established. 6:40 buys
 If the session still opens after 07:00, log the missing minutes as a
 coverage gap and start scanning from the current bar. Do NOT reconstruct
 the ranking for minutes that were never scanned.
+
+
+## SCAN ECONOMY (2026-08-12) -- SUPERSEDES "5-minute scans, always"
+
+PARITY FINDING (read this first). The champion's own harness
+(plan/rotation_sim.py::run_day) ranks ONLY when a ticket is free:
+
+    while ticket_i < len(TICKETS):
+        pool = rank_at(cands, t)     # rank
+        ... simulate the whole ticket ...
+        t = _step(max(t, exit_t))    # jump straight to the exit
+
+Between entry and exit it performs NO ranking at all. C37's $774,534
+was earned by a process that looks at the market only when it can act.
+Live has been scanning every 5 minutes regardless -- on Day 7 that was
+~40 of 47 cycles spent ranking names we were structurally forbidden to
+buy (one-position rule). That is not extra safety; it is pure API and
+attention cost, and it starved the position watch (cadence drifted to
+5-12 min).
+
+CADENCE RULES:
+ 1. FLAT and tickets remain -> full 5-minute scan+rank. This is the
+    only state where ranking changes what we do.
+ 2. IN POSITION -> NO ranking duty. Refresh a light BENCH every ~20
+    min (names that crossed, price + coil only, no live halal screens)
+    so the post-exit re-rank starts warm. The position watch owns the
+    1-minute cadence and must never be starved by scan work.
+ 3. AT EXIT -> immediately run a FULL fresh rank before deploying the
+    next ticket. The bench is a warm start, never the decision: the
+    champion re-ranks on current data at the moment of deployment.
+ 4. No tickets left, or past the 14:30 entry cutoff -> stop scanning
+    entirely; exit management only.
+ 5. Log the cadence state per cycle (FLAT-5m / HOLD-20m / EXIT-RERANK)
+    so a drift is visible in the ledger instead of inferred later.
+
+QUERY REDUCTIONS (all preserve behaviour exactly):
+ a. The +10% crossing is a LATCH. Once a name's cross has printed it
+    stays eligible all day -- never re-query to re-confirm it. Track
+    the crossed set; only un-crossed names need the threshold check.
+ b. Screen halal LAZILY, at the moment of candidacy (top-3 AND coil
+    >= 0.95 AND calm-gap OK), not for every new name that appears.
+    Day 7 ran 11 live screens for names that were mostly never
+    actionable.
+ c. Prefer ONE server-side scan for the universe sweep over per-symbol
+    quote polling (Step 1 already does this) -- then one batched bars
+    call per ranking cycle, not one call per symbol.
+ d. Bars, not quotes, are the ranking input: a single batched
+    historicals call yields last/high/pressure for up to 10 names at
+    once. Quotes are for arming and fills.
+
+
+## API HYGIENE (2026-08-12, three defects from Paper Day 7)
+
+ 1. SILENT TRUNCATION -- get_equity_historicals accepts at most 10
+    symbols and DROPS the rest with no error. On Day 7 this removed 9
+    eligible names from one cycle's ranking. Batch every call to <= 10
+    symbols AND assert the returned symbol set equals the requested
+    set; on mismatch emit a loud ERROR line and re-request the missing
+    names. Never rank on a partial universe -- a truncated ranking is
+    indistinguishable from a complete one in the output.
+    Treat every batch API as guilty of this until proven otherwise.
+ 2. HALAL VERDICTS ARE DAY-SCOPED AND MUST BE INHERITED. A delegated
+    scanner twice re-surfaced TC and EXYN as eligible after both had
+    FAILED the live screen, because delegates do not see the
+    coordinator's verdicts. Pass the day's PASS and FAIL sets into
+    EVERY delegated scan, and have the delegate drop FAILs before
+    ranking. The coordinator re-checking downstream is a backstop, not
+    the mechanism. A FAIL that reappears as a candidate is a
+    compliance near-miss even when nothing trades.
+ 3. ONE AGENT CANNOT DO BOTH JOBS. Managing an open position starves
+    the scan loop (Day 7: 5-12 min instead of 5, position polling
+    6-10 min midday). Under the cadence rules above the conflict
+    mostly disappears -- but when both are live, the POSITION WATCH
+    WINS. Exits are time-critical and irreversible; a late scan only
+    delays a pick that gets re-ranked at deployment anyway.

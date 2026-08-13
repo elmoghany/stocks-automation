@@ -154,6 +154,47 @@ CFGS = {
                  entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
                  sim_extra={"scale_out_at": 6.0,
                             "scale_out_pressure_skip": None}),
+    # ---- V-series (2026-08-12): THE LIVE SPREAD VETO, MODELLED ----
+    # Live refuses any entry whose inside book is wider than 0.5%; the
+    # sim never modelled this (it pays a 50bps premarket haircut and
+    # takes the trade). On Paper Day 7 the veto blocked EVERY premarket
+    # rank-1 pick, incl. SMWB which held rank 1 for ~15 cycles and then
+    # ran +25%. So live has been running a strictly more restrictive
+    # strategy than the one that earned $774,534 -- the benchmark does
+    # not measure what we actually trade. This series prices it.
+    # NOTE: no L2 history exists. The proxy is median 1-min bar range
+    # over the 10 bars BEFORE entry, so thresholds are NOT comparable to
+    # the live 0.5% inside-spread number. Read the sweep by VETO RATE,
+    # not by the threshold.
+    "V000": dict(desc="IDENTITY: C37, no veto (= B000 $774,534)",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0)),
+    "V050": dict(desc="veto entries with proxy > 0.5%",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 spread_veto=0.5),
+    "V100": dict(desc="veto entries with proxy > 1.0%",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 spread_veto=1.0),
+    "V200": dict(desc="veto entries with proxy > 2.0%",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 spread_veto=2.0),
+    "V300": dict(desc="veto entries with proxy > 3.0%",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 spread_veto=3.0),
+    "V500": dict(desc="veto entries with proxy > 5.0%",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 spread_veto=5.0),
+    "V800": dict(desc="veto entries with proxy > 8.0%",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 spread_veto=8.0),
+    # CONTROLS: identical machinery, proxy read from a RANDOM other bar
+    # window in the same day -- same veto RATE, zero information. If the
+    # real veto does no better than this, it is just 'trade less'.
+    "VC10": dict(desc="CONTROL shuffled proxy, 1.0% cap",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 spread_veto=1.0, veto_shuffle=True),
+    "VC30": dict(desc="CONTROL shuffled proxy, 3.0% cap",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 spread_veto=3.0, veto_shuffle=True),
 }
 
 
@@ -236,7 +277,50 @@ def gates_ok(r, is_top):
     return r["halal"]
 
 
-def run_day(cands, date, cfg):
+def spread_proxy(df, ts, lookback=10):
+    """Proxy for BOOK WIDTH at the moment just before `ts`.
+
+    We have no historical L2, so the live 0.5% inside-spread veto cannot
+    be replayed exactly. The honest stand-in is the median 1-minute bar
+    range (H-L)/C over the `lookback` bars ENDING BEFORE ts -- a wide,
+    gappy, low-print tape is exactly what a wide book produces, and
+    using bars strictly before entry keeps our own trigger bar out of
+    the estimate. Returns percent, or None when there is not enough
+    tape (treated as NOT vetoed, matching live where a missing book
+    reading falls through to the other gates).
+    LOUD LIMITATION: this bounds the veto's effect, it does not measure
+    the real spread. Bar range conflates volatility with book width.
+    """
+    w = df[df.index < ts]
+    if len(w) < lookback:
+        return None
+    tail = w.iloc[-lookback:]
+    c = tail["Close"].values
+    rng = (tail["High"].values - tail["Low"].values)
+    vals = [(r / p) * 100 for r, p in zip(rng, c) if p > 0]
+    if not vals:
+        return None
+    vals.sort()
+    n = len(vals)
+    return vals[n // 2] if n % 2 else (vals[n // 2 - 1] + vals[n // 2]) / 2
+
+
+def _shuffled_proxy(df, ts, lookback, date, sym, k):
+    """CONTROL: same machinery, but the proxy is read from a RANDOM
+    other bar-window in the same day. Preserves the marginal
+    distribution (so the veto RATE matches) while destroying the
+    information. If the real veto performs no better than this, the
+    proxy carries nothing and the veto is just 'trade less'."""
+    import random as _rnd
+    w = df[df.index.time < dtime(15, 0)]
+    if len(w) < lookback + 2:
+        return None
+    rng = _rnd.Random(f"vc-{date}-{sym}-{k}")
+    j = rng.randrange(lookback, len(w))
+    return spread_proxy(df, w.index[j], lookback)
+
+
+def run_day(cands, date, cfg, stats=None):
     entry_open = cfg.get("entry_open", dtime(7, 0))
     cutoff = cfg.get("entry_cutoff", dtime(12, 0))
     rotate = cfg.get("rotate", True)
@@ -293,6 +377,30 @@ def run_day(cands, date, cfg):
             last_sym = pick["c"]["symbol"] if not rotate else last_sym
             continue
         first_entry = tr[0]["entry_time"]
+        # ---- LIVE-PARITY SPREAD VETO (V-series) ----
+        # Live refuses any entry whose inside book is wider than the cap;
+        # the sim has never modelled this -- it only pays a 50bps
+        # premarket haircut and takes the trade. Applied here, post-hoc
+        # at the entry bar, so NO engine change is needed (identity of
+        # every prior result is untouched by construction).
+        vcap = cfg.get("spread_veto")
+        if vcap:
+            lb = cfg.get("veto_lookback", 10)
+            if cfg.get("veto_shuffle"):
+                prox = _shuffled_proxy(df, first_entry, lb, date,
+                                       pick["c"]["symbol"], ticket_i)
+            else:
+                prox = spread_proxy(df, first_entry, lb)
+            if stats is not None:
+                stats["checked"] = stats.get("checked", 0) + 1
+            if prox is not None and prox > vcap:
+                if stats is not None:
+                    stats["vetoed"] = stats.get("vetoed", 0) + 1
+                # vetoed: no ticket consumed, step past the trigger bar
+                # and re-rank -- exactly what live does when the book is
+                # too wide (SMWB was vetoed 15 cycles running on Day 7).
+                t = _step(first_entry.time())
+                continue
         grp = [x for x in tr if x["entry_time"] == first_entry]
         pnl = sum(x["pnl"] for x in grp)
         exit_t = max(x["exit_time"] for x in grp).time()
@@ -318,6 +426,7 @@ def run(cfg_id, max_days=None):
     out = {}
     for lab in ("year", "y2025"):
         byday = px.load_by_day(lab, 50, "novol")
+        stats = {}
         total, days, monthly = 0.0, 0, defaultdict(float)
         items = sorted(byday.items())
         if max_days:
@@ -328,7 +437,7 @@ def run(cfg_id, max_days=None):
                                    cfg.get("cand_top", 16))
             if not cands:
                 continue
-            tr = run_day(cands, date, cfg)
+            tr = run_day(cands, date, cfg, stats)
             if tr:
                 p = sum(x["pnl"] for x in tr)
                 total += p
@@ -340,8 +449,13 @@ def run(cfg_id, max_days=None):
         negm = sum(1 for v in monthly.values() if v < 0)
         print(f" {cfg_id} {lab:<6} {days:>4}d ${total:>+12,.0f} "
               f"{negm}/{len(monthly)}  [{cfg['desc']}]", flush=True)
+        vch, vvt = stats.get("checked", 0), stats.get("vetoed", 0)
+        if vch:
+            print(f"   veto: {vvt}/{vch} entries blocked "
+                  f"({100*vvt/vch:.1f}%)", flush=True)
         out[lab] = {"total": round(total), "days": days, "negm": negm,
-                    "nmonths": len(monthly)}
+                    "nmonths": len(monthly),
+                    "veto_checked": vch, "veto_blocked": vvt}
     res = json.loads(RES_F.read_text()) if RES_F.exists() else {}
     res[cfg_id] = {"desc": cfg["desc"], **out}
     RES_F.write_text(json.dumps(res, indent=1))
