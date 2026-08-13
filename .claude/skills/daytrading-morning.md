@@ -8,9 +8,14 @@ The full Cameron Ross morning workflow. Data sources: Robinhood MCP
 
 ## Step 1 — Run the saved Robinhood scan (all rules server-side)
 
-Call MCP tool `run_scan` with scan_id `5f132877-7730-4a18-9e72-b3f0d2c9df83`
-(filters: Last >$2 NO CEILING, %Change>=10% 1d, RelVolume>=5x 30d,
-sorted %Change desc; C1 adopted 2026-08-03: ceiling+float removed). Results are live. If empty: no A+ gapper today — DO
+Call MCP tool `run_scan` with scan_id `5f132877-7730-4a18-9e72-b3f0d2c9df83`.
+VERIFIED against the API 2026-08-13 -- the scan has exactly TWO filters:
+Last > $2, and %Change > 10% (changeFromCloseAllDayRatio, 1d, so it
+includes premarket), sorted %Change desc. Relative volume is a COLUMN,
+not a filter. (This line previously claimed a RelVolume>=5x filter; that
+was WRONG and would have contradicted the champion, whose pool is
+"novol" with NO volume gate. Never re-add a volume filter here.)
+Results are live. If empty: no A+ gapper today — DO
 NOT force a trade; the edge comes from patience (see NOTES-DAYTRADING.md).
 
 ## Step 2 — Refresh the Robinhood caches for the candidates
@@ -713,3 +718,58 @@ GUARANTEES AND LIMITS:
    NOT a pass -- run the live screen before arming.
  * It ranks; it does not arm. Book/L2 depth, the fill-arming rule and
    the thin-book veto are still yours to check at the moment of arming.
+
+
+## LIVE-vs-BACKTEST PARITY AUDIT (2026-08-13) -- read before every session
+
+Two divergences have already cost real money to discover (the spread
+veto, worth $100k+ of modelled edge; ranking-by-conversation, which
+produced the Day-6 retest slip). This is the standing list. When you
+find a new one, add it here.
+
+### REAL DIVERGENCES (live behaves differently from the champion)
+ 1. BOOK/SPREAD VETO. Live refuses entries wider than 0.5% inside
+    spread. The sim has NO such veto -- it pays a 50bps premarket
+    haircut and takes the trade. Modelled (V-series): the optimum
+    blocks the widest ~50-65% of would-be entries; live's premarket
+    rate is ~90-100% (Day 7 blocked EVERY premarket rank-1). WE ARE
+    TOO AGGRESSIVE PREMARKET. Log the veto rate every session so this
+    stays measurable; calibrate by RATE, not by threshold, and treat
+    premarket and post-open separately (09:30 collapses spreads).
+ 2. THE CROSS IS A LATCH IN THE SIM, A SNAPSHOT IN THE SCANNER. The
+    scan filters on %Change > 10% RIGHT NOW. A name that prints +12%
+    and fades to +8% DISAPPEARS from the scan -- but the champion
+    still considers it eligible, because its +10% cross has printed.
+    Keep a day-long CROSSED SET: once a name appears, it stays a
+    candidate for the rest of the session even when it drops off the
+    scanner. Dropping it is under-discovery, and it silently makes
+    live a different (smaller-universe) strategy.
+ 3. ENTRY PATTERN SET. The champion's buy_set is EXACTLY eight:
+    bullish_engulfing, bullish_spinning_top, hammer, morning_star,
+    rising_three, tweezer_bottom, macd_cross_up, rsi_cross_up.
+    The engine can also label dragonfly_doji and inverted_hammer --
+    the champion DELIBERATELY EXCLUDES BOTH (dragonfly_doji measured
+    -$1,186; inverted_hammer +$17/position, below transaction cost).
+    "Any bullish reversal pattern" is therefore WRONG as an entry
+    rule. Only those eight count as Trigger C.
+
+### CHECKED AND NOT DIVERGENT (do not re-litigate)
+ * Relative volume: the saved scan has NO rvol filter (verified via
+   get_scans 2026-08-13). Matches the champion's novol pool.
+ * News: the C37 protocol has NO news gate, and Day 7 correctly
+   applied none. The old "news within 18h" rule in the Rules-recap
+   section is SUPERSEDED -- earnings/news flags were measured as
+   noise (a shuffled control out-earned the real gate).
+ * Ticket schedule: the champion's $25k opener is popped by the
+   rotation harness; flat $15k (last $10k) is correct for both.
+ * Exit end: 15:00 in both.
+
+### STALE SECTIONS ABOVE -- SUPERSEDED, DO NOT FOLLOW
+The C37 MORNING PROTOCOL section wins on every conflict. These older
+lines are dead and are kept only for history:
+ * "EVERYTHING flat by NOON" and "force-flat at 1PM" -> C37 exits by
+   15:00, new tickets until 14:30.
+ * "trade top-2 qualifying gappers/day" -> C37 is ONE position at a
+   time with sequential ticket rotation.
+ * "any bullish reversal pattern" -> the eight-member buy_set above.
+ * "news within 18h" as a hard gate -> not a gate.
