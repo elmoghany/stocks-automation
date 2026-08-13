@@ -508,7 +508,13 @@ HARAM_INDUSTRY_WORDS = ["bank", "gambling", "casino", "alcohol", "brewer",
                         "beer", "wine", "winery", "liquor", "spirits",
                         "vineyard", "betting", "wager", "lottery",
                         "sportsbook", "poker", "pork", "swine", "bacon",
-                        "nightclub", "strip club", "pawn", "payday"]
+                        "nightclub", "strip club", "pawn", "payday",
+                        # user ruling 2026-08-13: ENTERTAINMENT IS HARAM
+                        # -- a hard FAIL, not merely unverifiable. Film,
+                        # streaming and venue exhibition are the same
+                        # business, so they fail with it.
+                        "entertainment", "theater", "theatre", "cinema",
+                        "movie", "film studio", "streaming media"]
 
 # Industries where haram REVENUE is plausible but is NOT measurable from
 # the statements we can read. haram_pct is interest-income-only, so a
@@ -517,13 +523,15 @@ HARAM_INDUSTRY_WORDS = ["bank", "gambling", "casino", "alcohol", "brewer",
 # against a -1.396 P/B. Absence of evidence is not compliance: these
 # resolve to CANNOT-VERIFY, which is NOT tradeable, until a human checks
 # the revenue mix.
+# NOTE: "retail" was here and is NOT (user ruling 2026-08-13) -- plain
+# retail is permissible, and including it made almost every consumer
+# name unverifiable for no reason. "entertainment" moved the other way,
+# into HARAM_INDUSTRY_WORDS as a hard FAIL.
 REVENUE_SENSITIVE_WORDS = ["restaurant", "dining", "food", "beverage",
                            "grocer", "supermarket", "convenience store",
                            "hotel", "resort", "leisure", "cruise",
-                           "entertainment", "theater", "cinema",
                            "hospitality", "bar ", "pub", "catering",
-                           "meat", "protein", "packaged food", "snack",
-                           "retail"]
+                           "meat", "protein", "packaged food", "snack"]
 
 
 def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
