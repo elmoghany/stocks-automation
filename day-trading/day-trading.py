@@ -2490,14 +2490,36 @@ def cmd_rank(pairs, as_of=None, date=None, top=None, as_json=False,
     else:
         cutoff = et_now.time()
 
+    # HALAL LIST STALENESS GATE (2026-08-13). The universe was built by
+    # build_halal_universe.py calling halal_check VERBATIM -- so a list
+    # built before the revenue-mix fixes carries the defective verdicts
+    # (NFLX, ANGX and CMG were all on the 2026-08-09 list). Membership in
+    # a stale list is NOT evidence of permissibility, so we refuse to
+    # honour it: every name reads NEEDS-SCREEN until the list is rebuilt.
+    # Enforced here rather than in the protocol text, because a rule that
+    # depends on an agent noticing a date is a rule that will be missed.
+    SCREEN_EPOCH = "2026-08-13"
     halal = set()
+    stale = None
     hf = _DIR / "data/halal_list.json"
     if hf.exists():
         try:
-            halal = set(json.loads(hf.read_text()).get("symbols", []))
+            _hl = json.loads(hf.read_text())
+            _upd = str(_hl.get("updated", ""))
+            if _upd < SCREEN_EPOCH:
+                stale = _upd or "unknown"
+            else:
+                halal = set(_hl.get("symbols", []))
         except Exception as e:
             print(f"ERROR: halal_list.json unreadable ({e}) -- every name "
                   f"will read NEEDS-SCREEN; do NOT treat that as PASS")
+    if stale:
+        print(f"ERROR: halal_list.json was built {stale}, BEFORE the "
+              f"{SCREEN_EPOCH} revenue-mix fixes. Its verdicts are not "
+              f"trustworthy (NFLX/ANGX/CMG were on it). Ignoring the "
+              f"list: every name reads NEEDS-SCREEN and MUST be live-"
+              f"screened before arming. Rebuild with "
+              f"plan/build_halal_universe.py --refresh.")
 
     rows = []
     for spec in pairs:
