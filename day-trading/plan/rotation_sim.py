@@ -59,6 +59,28 @@ import os as _os
 _SHARD = _os.environ.get("ROTSHARD", "")
 RES_F = ROOT / (f"data/massive/rotation_results_{_SHARD}.json" if _SHARD
                 else "data/massive/rotation_results.json")
+# Feature cache is OPT-IN (FEATCACHE=1). It only ever supplies numbers
+# identical to live computation -- prove it with
+# `python plan/feature_cache.py --verify` before switching it on.
+USE_FEATCACHE = _os.environ.get("FEATCACHE") == "1"
+_FC = {}
+
+
+def _featcache_for(date):
+    if date not in _FC:
+        try:
+            spec = importlib.util.spec_from_file_location(
+                "fc", ROOT / "plan/feature_cache.py")
+            m = importlib.util.module_from_spec(spec)
+            spec.loader.exec_module(m)
+            _FC[date] = m.load(date)
+        except Exception as e:
+            print(f"ERROR: feature cache unavailable ({e}) -- computing "
+                  f"live for {date}")
+            _FC[date] = None
+    return _FC[date]
+
+
 TICKETS = [15_000.0] * 6 + [10_000.0]          # user schedule: 6x15k + 10k
 SCAN_STEP = 5                                   # minutes between re-ranks
 EXIT_END = dtime(15, 0)
@@ -326,23 +348,34 @@ def day_candidates(cs, date, dfs, top=16, causal_pool=True):
     return out
 
 
-def rank_at(cands, t, top=None):
+def rank_at(cands, t, top=None, fc=None):
     """Causal rank at clock time t: crossed names only; coiled group
-    first (last<=t close / high<=t >= 0.95), pressure(30) order within."""
+    first (last<=t close / high<=t >= 0.95), pressure(30) order within.
+
+    `fc` is an optional feature-cache dict for this date (see
+    plan/feature_cache.py). It is a pure accelerator: values are the
+    same numbers this function would compute, verified row-by-row by
+    `feature_cache.py --verify`. Any cache miss falls through to live
+    computation, so a partial cache is safe, never silently wrong."""
     scored = []
+    key = f"{t.hour:02d}{t.minute:02d}"
     for r in cands:
         if r["cross"] > t:
             continue
-        w = r["df"][r["df"].index.time <= t]
-        if len(w) < 3:
-            continue
-        last = float(w["Close"].iloc[-1])
-        hi = float(w["High"].max())
-        coil = last / hi if hi > 0 else 0
-        prs = None
-        if len(w) >= 5:
-            cd = dt.Candles(w)
-            prs = cd.pressure(cd.n - 1, 30, 20_000)
+        hit = fc.get(r["c"]["symbol"], {}).get(key) if fc else None
+        if hit is not None:
+            _last, _hi, coil, prs = hit
+        else:
+            w = r["df"][r["df"].index.time <= t]
+            if len(w) < 3:
+                continue
+            last = float(w["Close"].iloc[-1])
+            hi = float(w["High"].max())
+            coil = last / hi if hi > 0 else 0
+            prs = None
+            if len(w) >= 5:
+                cd = dt.Candles(w)
+                prs = cd.pressure(cd.n - 1, 30, 20_000)
         scored.append(((0 if coil >= 0.95 else 1,
                         -(prs if prs is not None else -1)), r))
     scored.sort(key=lambda x: x[0])
@@ -430,7 +463,7 @@ def _shuffled_proxy(df, ts, lookback, date, sym, k):
     return spread_proxy(df, w.index[j], lookback)
 
 
-def run_day(cands, date, cfg, stats=None):
+def run_day(cands, date, cfg, stats=None, fc=None):
     entry_open = cfg.get("entry_open", dtime(7, 0))
     cutoff = cfg.get("entry_cutoff", dtime(12, 0))
     rotate = cfg.get("rotate", True)
@@ -442,7 +475,7 @@ def run_day(cands, date, cfg, stats=None):
         if t >= cutoff:
             break
         # pick at time t
-        pool = rank_at(cands, t, cfg.get("top"))
+        pool = rank_at(cands, t, cfg.get("top"), fc)
         if cfg.get("rand"):
             import random as _rnd
             _rnd.Random(f"rc60-{date}-{ticket_i}").shuffle(pool)
@@ -532,6 +565,15 @@ def _step(t):
     return dtime(min(m // 60, 23), m % 60)
 
 
+def out_dd(daily):
+    eq = pk = dd = 0.0
+    for _, pnl, _ in daily:
+        eq += pnl
+        pk = max(pk, eq)
+        dd = max(dd, pk - eq)
+    return dd
+
+
 def run(cfg_id, max_days=None):
     cfg = CFGS[cfg_id]
     print(f"{cfg_id}: {cfg['desc']}", flush=True)
@@ -540,6 +582,7 @@ def run(cfg_id, max_days=None):
         byday = px.load_by_day(lab, 50, "novol")
         stats = {}
         total, days, monthly = 0.0, 0, defaultdict(float)
+        daily = []          # per-traded-day P&L, for drawdown/exposure
         items = sorted(byday.items())
         if max_days:
             items = items[:max_days]
@@ -550,25 +593,51 @@ def run(cfg_id, max_days=None):
                                    not cfg.get("biased_pool", False))
             if not cands:
                 continue
-            tr = run_day(cands, date, cfg, stats)
+            fc = _featcache_for(date) if USE_FEATCACHE else None
+            tr = run_day(cands, date, cfg, stats, fc)
             if tr:
                 p = sum(x["pnl"] for x in tr)
                 total += p
                 days += 1
                 monthly[date[:7]] += p
+                daily.append((date, p, len({x.get("ticket")
+                                            for x in tr})))
             if n % 50 == 0:
                 print(f"  ..{lab} {n}/{len(items)} "
                       f"({days}d ${total:+,.0f})", flush=True)
         negm = sum(1 for v in monthly.values() if v < 0)
         print(f" {cfg_id} {lab:<6} {days:>4}d ${total:>+12,.0f} "
-              f"{negm}/{len(monthly)}  [{cfg['desc']}]", flush=True)
+              f"{negm}/{len(monthly)}  maxDD ${out_dd(daily):>9,.0f}  "
+              f"[{cfg['desc']}]", flush=True)
         vch, vvt = stats.get("checked", 0), stats.get("vetoed", 0)
         if vch:
             print(f"   veto: {vvt}/{vch} entries blocked "
                   f"({100*vvt/vch:.1f}%)", flush=True)
+        # RISK COLUMNS (2026-08-13). Total P&L and negative months alone
+        # cannot distinguish edge from leverage -- the S-campaign learned
+        # that when pressure-scaled sizing "won" purely by deploying more
+        # capital. Drawdown and ticket usage make that visible.
+        eq = pk = dd = 0.0
+        for _, pnl, _ in daily:
+            eq += pnl
+            pk = max(pk, eq)
+            dd = max(dd, pk - eq)
+        wins = sum(1 for _, pnl, _ in daily if pnl > 0)
+        tks = [t for _, _, t in daily]
         out[lab] = {"total": round(total), "days": days, "negm": negm,
                     "nmonths": len(monthly),
                     "veto_checked": vch, "veto_blocked": vvt,
+                    "max_dd": round(dd),
+                    "max_dd_pct_of_peak": (round(100 * dd / pk, 1)
+                                           if pk > 0 else None),
+                    "win_days_pct": (round(100 * wins / len(daily), 1)
+                                     if daily else None),
+                    "worst_day": round(min((p for _, p, _ in daily),
+                                           default=0)),
+                    "best_day": round(max((p for _, p, _ in daily),
+                                          default=0)),
+                    "tickets_per_day_avg": (round(sum(tks) / len(tks), 2)
+                                            if tks else None),
                     "monthly": {k: round(v) for k, v in
                                 sorted(monthly.items())}}
     res = json.loads(RES_F.read_text()) if RES_F.exists() else {}
