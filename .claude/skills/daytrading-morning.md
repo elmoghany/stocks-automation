@@ -20,16 +20,38 @@ HARD CONSTRAINTS, never negotiable:
 * Halal gate before any arming. Missing verdict → live screen. A real
   FAIL is never re-litigated.
 
-**THE HALAL TEST** (all must hold, on filed-quarter statements):
+**THE HALAL TEST** — TWO independent questions. Both must pass, and
+only `verdict == "PASS"` is armable.
+
+***1. Is it FINANCED permissibly?*** (ratios, filed-quarter statements)
 loans / market cap and deposits (cash) / market cap each ≤ 10%,
 **EXCEPT that ONE side may exceed 10% provided combined ≤ 20%**
-(this is what `halal_check` actually implements — see
-`day-trading.py:511`; corrected 2026-08-13 after HLIT at loan 10.07 /
-combined 18.44 and ANGX at 9.94 / 16.14 both sat in that zone),
-haram revenue < 5%, and no haram industry (see `/halal-check`).
-Market cap is REQUIRED — a missing mcap once silently PASSED two
-names at ~900% loans/mcap, so a missing denominator is a FAIL, never
-a pass.
+(this is what `halal_check` actually implements; corrected 2026-08-13
+after HLIT at loan 10.07 / combined 18.44 and ANGX at 9.94 / 16.14
+both sat in that zone). Market cap is REQUIRED — a missing mcap once
+silently PASSED two names at ~900% loans/mcap, so a missing
+denominator is a FAIL, never a pass.
+
+***2. Does it EARN permissibly?*** — **THE 5% RULE.** Haram revenue
+must be **under 5% of total revenue**; if it is the main line or ~50%,
+the name is haram. Three verdicts:
+ * **FAIL** — the company's OWN business is haram, so proportion is not
+   in question: brewery / distillery / winery, casino / sportsbook /
+   lottery / betting, bank / lending / mortgage / insurance, tobacco,
+   defense / aerospace, adult, pork, and **entertainment** — film,
+   cinema, streaming (user ruling 2026-08-13).
+ * **CANNOT-VERIFY** — exposure is plausible but the SHARE is unknown:
+   restaurants, hotels, grocers, food / beverage, or any summary
+   mentioning alcohol. `haram_pct` in the code is **interest income
+   only** and cannot see product revenue, so the 5% test has NOT been
+   run. NOT tradeable until segment revenue is checked by hand. This is
+   a refusal to guess, not a compliance failure.
+ * **PASS** — neither applies and the ratios clear.
+
+Plain **retail is permissible** and is not a revenue-sensitive term.
+On Paper Day 8 a film studio (ANGX) was armed because the screen
+answered question 1 and never asked question 2; that trade is recorded
+as VOID in `data/paper_days/2026-08-13.md`.
 
 **THE SCREEN HAS THREE BLIND SPOTS (2026-08-13). Do not treat a
 `halal=True` as final without a sanity check:**
