@@ -109,7 +109,22 @@
     "OWLT",
     "MH",
     "FEDU",
-    "ABTC"
+    "ABTC",
+    "PSQH",
+    "FTLF",
+    "UPLD",
+    "OPRX",
+    "ANGX",
+    "INBS",
+    "RUM",
+    "EXOD",
+    "LEXX",
+    "SMCI",
+    "SHPH",
+    "HYPD",
+    "PLRZ",
+    "STRZ",
+    "FIEE"
   ],
   "crossed_set_note": "Latched for the whole session. A name that fades below +10% and drops off the scanner stays eligible (parity item: the cross is a latch in the sim, a snapshot in the scanner).",
   "halal": {
@@ -118,7 +133,8 @@
       "HLIT",
       "DAAQ",
       "IPCX",
-      "AZ"
+      "AZ",
+      "ANGX"
     ],
     "NEEDS_SCREEN": [
       "FORTY",
@@ -505,6 +521,26 @@
       "size_cap_binding": false,
       "outcome_usd": null,
       "note": "Day's ranked pick after the post-open re-rank (rank 3; TBBB and COLL above it both fail calm-gap). Halal PASS. Blocked purely on a 0.92% spread."
+    },
+    {
+      "n": 3,
+      "time_et": "10:38",
+      "sym": "ANGX",
+      "session_phase": "post-open",
+      "trigger": "session-high ratchet 4.1450",
+      "reason": "FILL-ARMING RULE / chase cap - book cannot fill inside trigger+0.5%",
+      "inside_bid": 4.17,
+      "inside_ask": 4.18,
+      "spread_pct": 0.24,
+      "spread_cap_pct": 0.5,
+      "spread_pass": true,
+      "marketable_limit_cap": 4.1657,
+      "best_ask": 4.18,
+      "gap_beyond_cap_pct": 0.85,
+      "size_cap_shares": 20427,
+      "size_cap_binding": false,
+      "outcome_usd": null,
+      "note": "NOT a spread veto - the spread was fine at 0.24%. Price had already run 0.85% past the trigger, so a stop would have been a disguised market order and a marketable limit could not fill inside the 0.5% cap. This is the Day-5 LFST error (-1.6% fill) being actively prevented. Correct action per protocol: wait for a retest."
     }
   ],
   "trades": [],
@@ -648,6 +684,20 @@
       "state": "FLAT-ARM",
       "action": "AZ spread tightened to 0.41% -> ARMED at 7.78",
       "top": "AZ"
+    },
+    {
+      "cycle": 15,
+      "time_et": "10:29",
+      "state": "FLAT-5m",
+      "action": "scan+rank; 15 new crossers; TOP rotates AZ -> ANGX; ANGX chase-vetoed",
+      "top": "ANGX"
+    },
+    {
+      "cycle": 16,
+      "time_et": "10:44",
+      "state": "FLAT-ARM",
+      "action": "ANGX retest -> ARMED at 4.2650 (ticket reduced to $12,965.60 on displayed depth)",
+      "top": "ANGX"
     }
   ],
   "lessons": [
@@ -743,6 +793,41 @@
       },
       "halal": "live PASS (loan 0.64 / cash 15.28 / combined 15.93 / haram 1.21)",
       "note": "AZ is the highest-ranked name passing eligibility + calm-gap + halal. MH/TBBB/COLL rank above it but all fail calm-gap; OWLT/AIFA/FFAI/IREN rank between and all failed the live halal screen.",
+      "protective_stop_on_fill": "resting stop-limit at max(entry x 0.92, peak x 0.60)",
+      "status": "CANCELLED at 10:38 - AZ fell to rank 5 when ANGX took TOP. Trigger 7.78 never touched (AZ drifted 7.57 -> 7.35)."
+    },
+    {
+      "n": 4,
+      "time_et": "10:44",
+      "sym": "ANGX",
+      "company": "Angel Studios",
+      "paper_only": true,
+      "type": "stop-limit BUY (resting) - session-high ratchet",
+      "session_high": 4.265,
+      "session_high_time_et": "10:32",
+      "trigger": 4.265,
+      "limit": 4.2863,
+      "limit_rule": "trigger x 1.005",
+      "shares": 3040,
+      "notional_usd": 12965.6,
+      "ticket": 1,
+      "ticket_reduced_from_usd": 15000.0,
+      "gates": {
+        "spread_pct": 0.238,
+        "spread_cap_pct": 0.5,
+        "spread_pass": true,
+        "inside_bid": 4.19,
+        "inside_ask": 4.2,
+        "depth_shares_inside_to_trigger_plus_0p5pct": 3040,
+        "shares_intended_full_ticket": 3517,
+        "depth_action": "REDUCE ticket to displayed depth (3040/3517 = 86%, well above the 25% skip floor)",
+        "fill_arming_rule": "PASS - last 4.195 < trigger 4.2650 after the pullback",
+        "trailing10_vol": 179972,
+        "size_cap_shares": 35994,
+        "size_pass": true
+      },
+      "halal": "live PASS - loan 9.94 / cash 6.20 / combined 16.14 / haram 0.12 (both sides under 10%, cleanest of the day)",
+      "note": "The 10:38 chase veto resolved exactly as the protocol predicts: price ran to 4.2650, then retested back to 4.195 within ~10 minutes, restoring a legitimate stop entry above the high.",
       "protective_stop_on_fill": "resting stop-limit at max(entry x 0.92, peak x 0.60)"
     }
   ]
