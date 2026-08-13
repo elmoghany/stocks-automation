@@ -3341,3 +3341,70 @@ and post-open separately, since 09:30 collapses spreads.
 NOT ADOPTABLE AS C38 YET: needs the full battery (slippage stress,
 walk-8 coverage, both-direction walk-forward, monthly bootstrap) and,
 more importantly, a proxy that is not confounded with volatility.
+
+## C38 FULL BATTERY -- REJECTED, AND C37's BENCHMARK IS OVERSTATED
+## (2026-08-13)
+Candidate: C37 + spread veto, proxy cap 2.0% (V200). Full guardrail
+battery run, plus a causality audit the user asked for explicitly.
+
+### THE HEADLINE IS NOT THE CANDIDATE -- IT IS A LEAK IN C37 ITSELF
+rotation_sim.day_candidates cut the pool with
+`sorted(cs, key=-gain_pct)[:16]`, and `gain_pct` in the gappers files
+is the DAY-HIGH gain -- a full-day statistic. Pool MEMBERSHIP was
+therefore chosen with hindsight even though rank_at orders it causally.
+Measured: ~213 candidates/day exist, bars exist for only ~17, and the
+top-16 cut keeps 16 of them -- so the sort removes a median of ONE name
+per day. But that one name is, by construction, a name that did NOT
+post a big day-high: including it lets the causal ranker pick a known
+future loser. The cut was silently pre-removing losers.
+  C37 on the hindsight-cut pool  $774,534  0/23 negm  396d  $1,956/day
+  C37 on a CAUSAL pool (VP00)    $665,667  0/23 negm  432d  $1,541/day
+  cost of the leak               -$108,867 (-14%)
+=> THE PAPER-TRADING BENCHMARK MUST BE $1,541/day, NOT $1,956/day.
+RESIDUAL, DISCLOSED: even $665,667 is an upper bound -- minute bars were
+only ever FETCHED to full-day-gain depth (~17 names/day), so the
+universe stays coverage-biased. Repairing that needs bars for all ~213
+daily candidates; no simulator change can do it.
+
+### THE CANDIDATE: real effect, below the bar, NOT ADOPTED
+  adjacency (coherent plateau, peak 2.0%, cliff below 1.5%)
+    8.0% 767,859 | 5.0% 776,717 | 3.0% 835,432 | 2.5% 836,678
+    2.0% 845,521 | 1.75% 824,227 | 1.5% 782,455 | 1.0% 663,930
+    0.5% 441,107                                  (C37 774,534)   PASS
+  both-direction walk-forward: BOTH years independently select cap
+    2.0%; fit-Y1 -> Y2 +24,624, fit-Y2 -> Y1 +46,363              PASS
+  10bps/side slippage stress   +22,187                            PASS
+  walk-8 coverage robustness    +9,110                            PASS
+  controls (shuffled proxy): all fail. Rate-matched pair is
+    V200 (64%) $845,521 vs VC30 (66%) $610,506 = +$235,015        PASS
+  lookback robustness: 20-bar +103,273 PASS, 5-bar -52,073        FAIL
+  ON THE CAUSAL POOL: +$27,782 (below the +$30k bar) AND negm
+    worsens 0/23 -> 1/23 (VP20 693,449 vs VP00 665,667)           FAIL
+  monthly bootstrap: UNINFORMATIVE -- with 0 negative months in
+    sample a resample cannot estimate negative-month risk.
+VERDICT: REJECTED. The leak was inflating the candidate's apparent edge
+2.5x (+$70,987 biased vs +$27,782 causal). It is also not implementable
+as measured: the proxy is bar range, not inside spread.
+
+### THE VOLATILITY CONFOUND IS REFUTED (unexpected bonus)
+The planned "leak detector" (VF20: same veto computed from POST-entry
+bars) does NOT work as a leak test -- vetoing on future tape width
+removes the RUNNERS, so it scores far below the causal version
+($375,050 vs $845,521) by construction. The verdict line in the
+scratch script is inverted; ignore it. What the number DOES prove is
+more useful: if the causal proxy were merely a volatility filter it
+would behave the same measured before or after entry. It does not.
+Wide tape BEFORE entry is bad, wide tape AFTER entry is good. So the
+pre-entry signal is about ENTRY QUALITY at the moment of commitment,
+not about the name's volatility -- which was the main confound flagged
+when the V-series opened.
+NO LEAK ASSERTIONS FIRED across the entire battery (spread_proxy
+asserts its window ends strictly before the entry bar; the assertion
+was unit-tested against a deliberate off-by-one and does fire).
+
+### STILL ACTIONABLE FOR LIVE (unchanged by the rejection)
+The veto RATE result stands on both pools: blocking the widest ~50-65%
+of would-be entries is where the optimum sits; live's premarket rate is
+~90-100% (Day 7 blocked every premarket rank-1). Live is too aggressive
+premarket. Calibrate by RATE, not by threshold, premarket and post-open
+separately.

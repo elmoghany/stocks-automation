@@ -195,6 +195,47 @@ CFGS = {
     "VC30": dict(desc="CONTROL shuffled proxy, 3.0% cap",
                  entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
                  spread_veto=3.0, veto_shuffle=True),
+    # ---- C38 FULL BATTERY (2026-08-13) on the V200 candidate ----
+    # Finer adjacency across the cliff between 1.0% and 3.0%.
+    "V150": dict(desc="adjacency: veto proxy > 1.5%",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 spread_veto=1.5),
+    "V250": dict(desc="adjacency: veto proxy > 2.5%",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 spread_veto=2.5),
+    "V175": dict(desc="adjacency: veto proxy > 1.75%",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 spread_veto=1.75),
+    # stress + robustness on the candidate
+    "VS20": dict(desc="C38 cand under 10bps/side slippage stress",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 spread_veto=2.0, slip=0.001),
+    "VW20": dict(desc="C38 cand coverage robustness: walk-8 candidates",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 spread_veto=2.0, cand_top=8),
+    "VL20": dict(desc="C38 cand lookback robustness: 5-bar window",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 spread_veto=2.0, veto_lookback=5),
+    "VL21": dict(desc="C38 cand lookback robustness: 20-bar window",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 spread_veto=2.0, veto_lookback=20),
+    # controls
+    "VC20": dict(desc="CONTROL shuffled proxy at the candidate cap 2.0%",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 spread_veto=2.0, veto_shuffle=True),
+    # LEAK DETECTOR -- deliberately NON-causal, never adoptable. The
+    # causal candidate must score clearly BELOW this clairvoyant twin;
+    # if they tie, the "causal" version is peeking.
+    "VF20": dict(desc="LEAK DETECTOR: same veto from POST-entry bars",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 spread_veto=2.0, veto_future=True),
+    # CAUSAL-POOL pair: drops the hindsight day-high-gain pool cut.
+    "VP00": dict(desc="LEAK AUDIT: C37 baseline on a causal pool",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 causal_pool=True),
+    "VP20": dict(desc="LEAK AUDIT: C38 candidate on a causal pool",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 spread_veto=2.0, causal_pool=True),
 }
 
 
@@ -210,10 +251,27 @@ def bars_for(sym, date):
         return None
 
 
-def day_candidates(cs, date, dfs, top=16):
-    """Pre-compute per-candidate causal series needed by the ranker."""
+def day_candidates(cs, date, dfs, top=16, causal_pool=False):
+    """Pre-compute per-candidate causal series needed by the ranker.
+
+    LEAK NOTE (audited 2026-08-13): `gain_pct` in the gappers files is
+    the DAY-HIGH gain -- a full-day statistic. Sorting by it and cutting
+    to `top` therefore selects the POOL with hindsight, even though
+    rank_at orders that pool causally. Measured impact: bars exist for
+    only ~17 names/day (median) and the top-16 cut keeps 16 of them, so
+    the explicit sort removes a median of 1 name/day. The dominant bias
+    is UPSTREAM and disclosed: minute bars were only ever fetched to
+    full-day-gain depth, so the universe itself is coverage-biased.
+    causal_pool=True drops the hindsight sort and takes every candidate
+    that has bars -- it cannot repair the upstream coverage bias, but it
+    removes the one leak this file controls."""
+    if causal_pool:
+        pool = [c for c in cs
+                if (M1 / f"{c['symbol']}_{date}.csv").exists()]
+    else:
+        pool = sorted(cs, key=lambda x: -x["gain_pct"])[:top]
     out = []
-    for c in sorted(cs, key=lambda x: -x["gain_pct"])[:top]:
+    for c in pool:
         pc = c.get("prev_close") or 0
         if pc <= 0:
             continue
@@ -295,12 +353,39 @@ def spread_proxy(df, ts, lookback=10):
     if len(w) < lookback:
         return None
     tail = w.iloc[-lookback:]
+    # LEAK GATE: the estimate may never touch the entry bar or anything
+    # after it. Asserted every call -- a silent off-by-one here would
+    # manufacture a future signal that looks like edge.
+    assert tail.index.max() < ts, (
+        f"FUTURE LEAK in spread_proxy: window max {tail.index.max()} "
+        f">= entry {ts}")
     c = tail["Close"].values
     rng = (tail["High"].values - tail["Low"].values)
     vals = [(r / p) * 100 for r, p in zip(rng, c) if p > 0]
     if not vals:
         return None
     vals.sort()
+    n = len(vals)
+    return vals[n // 2] if n % 2 else (vals[n // 2 - 1] + vals[n // 2]) / 2
+
+
+def future_proxy(df, ts, lookback=10):
+    """LEAK DETECTOR (deliberately non-causal -- never a candidate).
+
+    Same statistic computed from the `lookback` bars AT AND AFTER the
+    entry, i.e. it knows how the tape behaved after we committed. If the
+    causal version scores about the same as this, the 'causal' version
+    is peeking; a genuinely causal signal should be clearly WEAKER than
+    its clairvoyant twin. Reported alongside, never adopted."""
+    w = df[df.index >= ts]
+    if len(w) < lookback:
+        return None
+    tail = w.iloc[:lookback]
+    c = tail["Close"].values
+    rng = (tail["High"].values - tail["Low"].values)
+    vals = sorted((r / p) * 100 for r, p in zip(rng, c) if p > 0)
+    if not vals:
+        return None
     n = len(vals)
     return vals[n // 2] if n % 2 else (vals[n // 2 - 1] + vals[n // 2]) / 2
 
@@ -389,6 +474,8 @@ def run_day(cands, date, cfg, stats=None):
             if cfg.get("veto_shuffle"):
                 prox = _shuffled_proxy(df, first_entry, lb, date,
                                        pick["c"]["symbol"], ticket_i)
+            elif cfg.get("veto_future"):
+                prox = future_proxy(df, first_entry, lb)   # LEAK DETECTOR
             else:
                 prox = spread_proxy(df, first_entry, lb)
             if stats is not None:
@@ -434,7 +521,8 @@ def run(cfg_id, max_days=None):
         for n, (date, cs) in enumerate(items, 1):
             dfs = {}
             cands = day_candidates(cs, date, dfs,
-                                   cfg.get("cand_top", 16))
+                                   cfg.get("cand_top", 16),
+                                   cfg.get("causal_pool", False))
             if not cands:
                 continue
             tr = run_day(cands, date, cfg, stats)
@@ -455,7 +543,9 @@ def run(cfg_id, max_days=None):
                   f"({100*vvt/vch:.1f}%)", flush=True)
         out[lab] = {"total": round(total), "days": days, "negm": negm,
                     "nmonths": len(monthly),
-                    "veto_checked": vch, "veto_blocked": vvt}
+                    "veto_checked": vch, "veto_blocked": vvt,
+                    "monthly": {k: round(v) for k, v in
+                                sorted(monthly.items())}}
     res = json.loads(RES_F.read_text()) if RES_F.exists() else {}
     res[cfg_id] = {"desc": cfg["desc"], **out}
     RES_F.write_text(json.dumps(res, indent=1))
