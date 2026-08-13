@@ -1,131 +1,158 @@
 ---
-description: Penny-stock morning workflow — Robinhood scan, cache refresh, screen, live watch, order (7AM-noon ET)
+description: C37 halal day-trading session — sequential ticket rotation, one position at a time, paper only (7:00–15:00 ET)
 ---
 
-The full Cameron Ross morning workflow. Data sources: Robinhood MCP
-(scanner, 1-min bars with real premarket volume, float/sector), Finnhub
-(news 18h), E*TRADE (live quotes/volume + orders). Run during 7AM-noon ET.
+# C37 — THE ONLY PROTOCOL. Everything below the HISTORY divider is
+# background; nothing there overrides this section.
 
-## Step 1 — Run the saved Robinhood scan (all rules server-side)
+Champion: **C37** sequential ticket rotation.
+**Benchmark: $665,667 / 2yr over 432 traded days = ~$1,541 per traded
+day, 0/23 negative months. Judge weeks, not days.**
+(The older $774,534 / $1,956-a-day figure was inflated 14% by a
+hindsight pool cut, fixed 2026-08-13. Paper Days 5–7 were scored
+against the inflated number.)
 
-Call MCP tool `run_scan` with scan_id `5f132877-7730-4a18-9e72-b3f0d2c9df83`.
-VERIFIED against the API 2026-08-13 -- the scan has exactly TWO filters:
-Last > $2, and %Change > 10% (changeFromCloseAllDayRatio, 1d, so it
-includes premarket), sorted %Change desc. Relative volume is a COLUMN,
-not a filter. (This line previously claimed a RelVolume>=5x filter; that
-was WRONG and would have contradicted the champion, whose pool is
-"novol" with NO volume gate. Never re-add a volume filter here.)
-Results are live. If empty: no A+ gapper today — DO
-NOT force a trade; the edge comes from patience (see NOTES-DAYTRADING.md).
+HARD CONSTRAINTS, never negotiable:
+* **NO REAL ORDERS, EVER.** Paper ledger only, one file per day.
+* **ONE POSITION AT A TIME.** Never a second ticket while one is open.
+* Flat **$15,000** tickets, the 7th/last **$10,000**, **$100,000/day**
+  cap, T+1 cash.
+* Halal gate before any arming. Missing verdict → live screen. A real
+  FAIL is never re-litigated.
 
-## Step 2 — Refresh the Robinhood caches for the candidates
+**THE HALAL TEST** (all must hold, on filed-quarter statements):
+loans / market cap ≤ 10%, deposits (cash) / market cap ≤ 10%,
+combined ≤ 20%, haram revenue < 5%, and no haram industry
+(see `/halal-check`). Market cap is REQUIRED — a missing mcap once
+silently PASSED two names at ~900% loans/mcap, so a missing
+denominator is a FAIL, never a pass. Low-mcap gappers fail these
+ratios constantly (small denominator); that is by design and is the
+single largest determinant of what we can trade.
 
-DAY PICK (calm-gap rule, $15k/day total): among qualifying gappers,
-trade the HIGHEST-GAIN one whose 7AM price is <= prev_close x 1.20 --
-if the leader gapped hotter than +20% at 7AM it is an exhausted
-overnight move (they bleed); walk down to the next calm one (check top
-4), else skip the day. The $2k+ days are intraday developers: modest
-7AM gap, then a +100-300% session run our trail rides. For each scan hit (top 3 max for cache refresh):
-1. `get_equity_fundamentals` (bounds=extended) → update
-   `data/rh_fundamentals.json`: keys float, shares_outstanding, market_cap,
-   sector, industry, avg_volume_30d, avg_volume_2wk, fetched, source.
-2. `get_equity_historicals` symbols=[SYM], interval=minute, bounds=extended,
-   start_time=TODAY 11:00Z, end_time=now (window 7AM-NOON ET; 7AM = 11:00 UTC summer,
-   12:00 UTC in winter) → write `data/rh_bars/{SYM}_{YYYY-MM-DD}.csv` with
-   header `begins_at,open,high,low,close,volume` — SKIP bars where
-   interpolated=true. day-trading.py merges these over yfinance
-   automatically (Robinhood wins on overlapping minutes).
+## Pre-open (from 6:40)
 
-## Step 3 — Verify rules + news (python, uses the caches)
+1. Trading-day guard. Verify `data/halal_list.json` age < 35 days.
+2. Confirm no paper agent is already running for today.
+3. Start the persistent Monitor tick clock (UTC-armed, 300s). One-shot
+   sleep timers get reaped — see *Paper-session ops hardening*.
 
-```bash
-python day-trading/day-trading.py screen SYM1 SYM2 ...   # 6-rule table; news via
-                                              # Finnhub (lazy, last gate)
-python day-trading/day-trading.py livescreen SYMS --prod # E*TRADE real-time cross-check
-```
+## The cycle
 
-Trade only symbols passing ALL rules including news-within-18h.
+**Scan cadence is state-dependent** (see *SCAN ECONOMY*): full 5-minute
+rank only while FLAT with tickets left; a light bench refresh every
+~20 min while holding; a full fresh re-rank AT the exit; nothing after
+the 14:30 entry cutoff.
 
-## Step 4 — Watch for the entry, then order
+1. `run_scan` scan_id `5f132877-7730-4a18-9e72-b3f0d2c9df83`. Verified
+   2026-08-13: exactly two filters, Last > $2 and %Change > 10%
+   (includes premarket). Relative volume is a COLUMN, not a filter —
+   **never add a volume gate**, the champion's pool is `novol`.
+2. Maintain a **day-long CROSSED SET**. The scan is a snapshot; the
+   champion's +10% cross is a **latch**. A name that prints +12% and
+   fades to +8% drops off the scan but stays eligible all day.
+3. Fetch bars: batched `get_equity_historicals`, **≤10 symbols per
+   call**, and **assert the returned symbol set equals the request** —
+   it silently truncates. Write `data/rh_bars/{SYM}_{YYYY-MM-DD}.csv`,
+   skipping `interpolated=true` bars.
+4. **Rank with the command, never by hand:**
+   ```bash
+   python day-trading/day-trading.py rank SYM:PREVCLOSE ... --as-of HH:MM
+   ```
+   It returns coil, 30-bar pressure, 7AM gap, calm-gap verdict, halal
+   status, exclusions and the armable TOP in one call. Its ordering is
+   parity-tested against the backtest's ranker (180 rankings, 0
+   mismatches). **If a hand-ranking disagrees, the command is right.**
+   Eligibility: price ≥ $2, +10% cross has printed, common stock, ≥50
+   sessions, on the halal list. NO volume gate.
+   Ranking: COILED first (price / premarket high ≥ 0.95), by 30-bar
+   buy pressure (20k-share floor) within group. Calm-gap ≤ 20% gates
+   entry, 35% grace for the top name only.
+5. Halal-screen **lazily**, only at candidacy (top-3 + coil + calm
+   gap). Pass the day's PASS/FAIL sets into every delegated scan —
+   FAILs must never re-enter the candidate pool.
 
-```bash
-python day-trading/day-trading.py livebars PICK --prod   # live 1-min candles + patterns
-```
+## Entry — exactly three triggers, nothing else
 
-Entry per current calibration (NOTES-DAYTRADING.md, 2026-08-04, C02 spec):
-DEFAULT = any bullish reversal pattern OR 5-minute opening-range breakout
-(break of the first-5-volume-bars high) OR premarket-high stop-buy (break
-of the premarket high, one-shot), no volume gate, entry only while price
->= prev_close x1.10. Size up to 20% of trailing 10-MINUTE volume (was
-10%/5min). RIDE with a PRESSURE-MODULATED trail (C21): base 20% from peak, TIGHTEN
-to 10% when rolling 10-min sell pressure <= -0.3, WIDEN to 40% when buy
-pressure >= +0.3 (pressure = volume-weighted close position in bar
-range, 20k-share floor); -8% hard stop; bank 1/3 at +25% UNLESS buyers
-still dominate (P >= +0.3) -- then keep the full position riding.
-Ignore lone 1-bar wicks >3x surrounding closes when tracking peaks. EVERYTHING flat
-by NOON same day (1PM extension tested and withdrawn by user).
-(C21: Y1 +$395,243 / Y2 +$519,641, ZERO negative months both years;
-avg +22.6% of capital per trading day; 93% survives 10bps slippage.)
-UNIVERSE: any clean ticker >= $2 -- NO price ceiling (the $75 cap
-silently deleted the mid/large-cap earnings gappers that carried
-Jan-Mar 2025; scanner must not cap price). Live halal via current
-data IS point-in-time correct; walk up to 8 calm candidates for the
-first compliant one. Position ~$15k (capped at 20% of trailing 10-min volume; PDT needs
-$25k+ equity). Expect roughly: half of qualifying days trade, ~3 of 4
-traded days win, losses capped ~-$1,500, profit concentrated in a few
-big trailing winners. ALWAYS flat by NOON.
+**5-minute ORB break**, **premarket-high stop-buy**, or a **reversal
+signal from the champion's eight-member set**:
+`bullish_engulfing, bullish_spinning_top, hammer, morning_star,
+rising_three, tweezer_bottom, macd_cross_up, rsi_cross_up`.
+`dragonfly_doji` (−$1,186) and `inverted_hammer` (below transaction
+cost) are **excluded** — "any bullish reversal pattern" is wrong.
+**There is no retest entry** — the G-series rejected the whole family
+(a nonsense-level control beat every real level).
 
-UNFILLED-BUY RULE (1 minute): place LIMIT at trigger +0.5%; if not
-filled in 60s, CANCEL. If price ran <= +2% above trigger, re-place at
-market price once; beyond +2% DO NOT CHASE -- the ORB ratchet re-arms
-at each new high and will produce the next trigger. If price fell back
-below the trigger, cancel and wait (pullback often gives a pattern
-entry). In paper sessions log both the assumed trigger fill AND the
-price 60s later -- that spread is the live slippage measurement.
+Before arming, every time:
+* **FILL-ARMING RULE** — re-quote first. Never arm a stop whose trigger
+  is already met (it is a market order and sweeps the top). Use a
+  marketable limit capped at trigger +0.5%, or veto and wait.
+* **Thin-book veto** — skip if the L2 spread exceeds the 0.5% cap.
+  **Log the veto rate every session**: modelling says the optimum
+  blocks ~50–65% of would-be entries and our premarket rate is
+  ~90–100%, i.e. too aggressive. Calibrate by rate, premarket and
+  post-open separately.
+* Size ≤ 20% of the trailing 10 completed minutes' volume.
+* Use resting orders — see *RESTING-ORDER ARCHITECTURE*. They are what
+  make a monitoring outage settleable.
 
-UNFILLED-SELL RULES (asymmetric: sells are NEVER abandoned):
-- Stop/trail exits: limit at stop level -1% (marketable); unfilled in
-  60s -> escalate to bid -2%, repeat every 60s until flat. Position
-  size <= 20% of 10-min volume guarantees exit liquidity exists.
-- Scale-out +25%: NOT a resting limit (the C21 skip decides at the
-  touch using pressure) -- the 1-min watcher sells with a marketable
-  limit when banking is chosen.
-- Pressure-flip/bearish exits: marketable limit -0.5%, same 60s
-  escalation.
-- NOON FLATTEN: start 11:57 at bid -1%, escalate 11:59 to bid -2%;
-  flat by 12:00 without exception.
-- Known residual: halt/gap-throughs fill at the reopen, not the stop
-  (sim behaves the same; the backtest's worst day was exactly this).
+## In position
 
-Orders go through E*TRADE (LIMIT only):
-```bash
-python bollinger-trading/test_extended_order.py --session EXTENDED --account 0   # preview
-# add --confirm to place; needs daily prod token (--auth / --verifier)
-```
+Watch **1-minute** bars; the position watch always outranks the scan
+loop. Trail 20% from peak, tightening to 10% when 10-bar pressure
+≤ −0.3 and widening to 40% when ≥ +0.3. Hard stop −8%. Bank 1/3 at
++25% unless pressure ≥ +0.3. Wick guard. Halt protocol: never enter on
+a reopen bar.
 
-## Backtesting note
+**Do not add a profit-take.** Banking early was rejected five times,
+most recently the B-series under rotation itself: banking at +6% costs
+−$366,602 over two years and the ladder is monotonic (4 < 5 < 6 < 8 <
+10 < 15 < 25 < none). The give-back is the premium paid for the tail.
 
-Backtests run offline against merged Robinhood-CSV + yfinance data:
-`python day-trading/day-trading.py backtest SYM --days 7` (also candletest / gridtest /
-pairtest / optimize). To backtest a past gapper day properly, fetch its
-1-min bars via `get_equity_historicals` for that date (bounds=extended) and
-write the CSV first — Robinhood 1-min history reaches ~2+ weeks back,
-5minute reaches ~3+ months (write 5-min caches for older dates).
+## Rotation and exits
 
-## Rules recap (all enforced in day-trading.py)
+When a ticket exits, the next goes to whatever ranks best **now** —
+same name only if it still ranks first. Late crossers are first-class:
+a 13:40 crosser is a legitimate 13:45 pick. New tickets until **14:30**.
+If the pick has not entered by **10:00**, re-rank and switch.
+**All exits by 15:00**, flatten ladder from 14:57. Same day, always.
 
-Gate ORDER (lazy -- each stage only runs if the prior passed):
-1. FREE: price $2+ (no ceiling) + up >=10% + rvol >=5x (one quote/history call)
-2. HALAL: loans/mcap <=10%, deposits/mcap <=10%, combined <=20%, haram
-   revenue <5%, no haram industry (see /halal-check) -- FIRST expensive
-   gate so no time is wasted on non-halal stocks
-3. hot sector (float rule DROPPED 2026-08-03 -- float shown as info only)
-4. news within 18h (Finnhub first, Yahoo second -- FH:/YF: tags)
-Trading: buy inside 7AM-noon, exits until 1PM, force-flat at 1PM (C23, re-adopted 2026-08-05); $2 floor and +10% re-checked AT ENTRY per bar (NO price ceiling);
-trade top-2 qualifying gappers/day.
-WARNING from live testing: low-mcap gappers frequently fail halal on the
-cash or debt ratio (small mcap denominator) -- expect the halal gate to
-eliminate many scanner hits; that is by design.
+## Reporting
+
+Material events to main as they happen (fills, exits, rotations, stop
+tests, veto saves, halts). EOD: trade record, veto ledger both ways,
+halal rejects, fill-realism vs the +60s mark, P&L vs **$1,541/day**,
+coverage gaps, process notes. Write `data/paper_days/{date}.json` and
+`.md`, update notes, commit and push.
+
+If monitoring dies, follow *OUTAGE / DEAD-MONITOR SETTLEMENT*: settle
+open positions from already-armed rules, never backfill entries.
+
+## Where the detail lives (all below the divider)
+
+`SCAN ECONOMY` · `API HYGIENE` · `THE rank COMMAND` ·
+`LIVE-vs-BACKTEST PARITY AUDIT` · `FILL-ARMING RULE` ·
+`OUTAGE / DEAD-MONITOR SETTLEMENT` · `RESTING-ORDER ARCHITECTURE` ·
+`Real-time execution: L2 depth + fill protocol` ·
+`HALAL UNIVERSE PRE-SCREEN` · `MARKET CAP IS REQUIRED FOR THE HALAL
+GATE` · `Bar-granularity policy` · `Trading-day guard` ·
+`Paper-session ops hardening` · `SESSION START TIMING` ·
+`LOOK-AHEAD PARITY FIXES`
+
+Backtests: `python day-trading/day-trading.py backtest SYM --days 7`
+(also candletest / gridtest / pairtest / optimize). Rotation configs
+live in `day-trading/plan/rotation_sim.py`.
+Real orders would go through E*TRADE limit-only
+(`bollinger-trading/test_extended_order.py`) — **not used in paper
+sessions**.
+
+---
+
+# ================= HISTORY / RATIONALE BELOW THIS LINE =================
+# Dated working notes, kept for the reasoning behind the rules above.
+# Where any of it conflicts with the C37 section, the C37 section wins.
+# Known-dead: noon and 1PM flatten times, "top-2 gappers per day",
+# "any bullish reversal pattern", news-within-18h as a hard gate, the
+# $25k opening ticket, and the Z300/Z104 protocol block.
 
 ## Paper-session ops hardening (2026-08-05, after the Day-2 timer stall)
 
@@ -440,7 +467,7 @@ first trading morning each month: check the log, backfill needs_mcap
 names via Robinhood, and COMMIT the refreshed lists.
 
 
-## Z300 RANKING (2026-08-09, supersedes gain-ordering)
+## [SUPERSEDED by C37] Z300 RANKING (2026-08-09)
 At each 5-minute scan, among names currently >= +10% vs yesterday's
 close: rank by COIL = current price / premarket high, DESCENDING
 (closest to reclaiming its premarket high first). Walk up to 12
@@ -449,8 +476,10 @@ top-ranked) + halal-list check is the day's stock. Benchmark: Z300,
 +$706,089/2yr fully causal, ~$1,790/day.
 
 
-## ===== Z300 MORNING PROTOCOL (2026-08-10 onward) -- AUTHORITATIVE =====
-## One checklist; earlier sections give background. On conflict, THIS wins.
+## ===== [SUPERSEDED] Z300/Z104 MORNING PROTOCOL (2026-08-10) =====
+## DEAD. Replaced by C37 (one position, flat $15k tickets, rotation,
+## 14:30 cutoff, 15:00 exits). Kept only for the reasoning. Its $25k
+## opener, 12:00 scan end and Z104 benchmark are all wrong now.
 
 PRE-OPEN (from 6:56):
  1. Trading-day guard; verify halal_list.json age (<35 days) -- else warn.
@@ -489,8 +518,8 @@ neg months. Compare against this, not C35/W109/Z300.
 REPORTING: entries/exits relayed to main as they happen + EOD summary.
 
 
-## ===== C37 MORNING PROTOCOL (2026-08-10 onward) -- AUTHORITATIVE =====
-## Supersedes the Z300/Z104 section. On conflict, THIS wins.
+## C37 MORNING PROTOCOL (2026-08-10) -- original entry, now restated
+## in full at the TOP of this file. Benchmark line below is stale.
 
 TICKETS (user cash rules, hard): flat $15,000 each, the 7th/last is
 $10,000, total $100,000/day. ONE position at a time -- never a second
@@ -763,13 +792,3 @@ find a new one, add it here.
  * Ticket schedule: the champion's $25k opener is popped by the
    rotation harness; flat $15k (last $10k) is correct for both.
  * Exit end: 15:00 in both.
-
-### STALE SECTIONS ABOVE -- SUPERSEDED, DO NOT FOLLOW
-The C37 MORNING PROTOCOL section wins on every conflict. These older
-lines are dead and are kept only for history:
- * "EVERYTHING flat by NOON" and "force-flat at 1PM" -> C37 exits by
-   15:00, new tickets until 14:30.
- * "trade top-2 qualifying gappers/day" -> C37 is ONE position at a
-   time with sequential ticket rotation.
- * "any bullish reversal pattern" -> the eight-member buy_set above.
- * "news within 18h" as a hard gate -> not a gate.
