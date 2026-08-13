@@ -517,20 +517,26 @@ def etrade_live_metrics(symbols: list[str]) -> dict:
 # Getting this wrong in either direction is costly: hard-failing every
 # restaurant refuses permissible names, while passing them on a clean
 # ratio sheet is how a film studio (ANGX) got armed on Paper Day 8.
-HARAM_PRIMARY_WORDS = [
-    # finance / insurance
-    "bank", "lending", "mortgage", "insurance", "pawn", "payday",
-    # gambling
-    "gambling", "casino", "sportsbook", "lottery", "poker", "betting",
-    "wager",
-    # alcohol PRODUCERS (the business itself, not a menu item)
-    "brewer", "brewery", "distiller", "distillery", "winery", "vineyard",
-    # other prohibited primary lines
-    "tobacco", "defense", "aerospace", "adult", "nightclub",
-    "strip club", "pork", "swine",
+# MATCHED ON THE SECTOR/INDUSTRY LABEL ONLY. These words appear
+# constantly in business summaries as the CUSTOMER market rather than
+# the company's own line -- Skyworks (RF chips) mentions defense,
+# aerospace and entertainment markets and would be hard-failed on a
+# free-text match. What a company sells to is not what it sells.
+HARAM_PRIMARY_LABEL = [
+    "bank", "lending", "mortgage", "insurance", "gambling", "casino",
+    "tobacco", "defense", "aerospace",
     # user ruling 2026-08-13: ENTERTAINMENT IS HARAM
     "entertainment", "theater", "theatre", "cinema", "movie",
-    "film studio", "streaming media",
+]
+
+# High-confidence phrases: matched ANYWHERE (label, name or summary),
+# because these name the business itself and are not plausible as a
+# customer market.
+HARAM_PRIMARY_ANY = [
+    "brewer", "brewery", "distiller", "distillery", "winery", "vineyard",
+    "sportsbook", "lottery", "casino resort", "adult entertainment",
+    "adult content", "nightclub", "strip club", "pawn shop", "payday loan",
+    "film studio", "streaming media", "pork", "swine",
 ]
 
 # Haram exposure is plausible here but the SHARE is unmeasurable from
@@ -541,14 +547,41 @@ HARAM_PRIMARY_WORDS = [
 # permissible and including it made nearly every consumer name
 # unverifiable for no reason.
 REVENUE_SENSITIVE_WORDS = ["alcohol", "beer", "wine", "liquor", "spirits",
-                           "restaurant", "dining", "food", "beverage",
+                           "restaurant", "dining", "beverage",
                            "grocer", "supermarket", "convenience store",
-                           "hotel", "resort", "leisure", "cruise",
-                           "hospitality", "bar ", "pub", "catering",
-                           "meat", "protein", "packaged food", "snack"]
+                           "hotel", "resort", "cruise", "hospitality",
+                           "tavern", "brewpub", "catering", "delicatessen"]
+
+# AMBIGUOUS: these name a haram line, but they also appear constantly
+# as the CUSTOMER market ("serves aerospace and entertainment markets").
+# Seen in the label -> FAIL. Seen only in free text -> CANNOT-VERIFY, so
+# a human decides. Never a silent PASS, never a silent FAIL.
+HARAM_AMBIGUOUS_ANY = ["entertainment", "theater", "theatre", "cinema",
+                       "movie", "gaming", "defense", "aerospace",
+                       "casino", "gambl"]
 
 # Back-compat alias: older callers screen against this name.
-HARAM_INDUSTRY_WORDS = HARAM_PRIMARY_WORDS
+HARAM_INDUSTRY_WORDS = HARAM_PRIMARY_LABEL + HARAM_PRIMARY_ANY
+
+
+def _kw_hits(words, text):
+    """PREFIX match anchored at a word boundary: \bbrewer matches
+    brewer/brewers/brewery/breweries, which a trailing \b does not.
+
+    Two failure modes already bitten, both recorded here so the list is
+    never "simplified" back:
+      * substring matching flagged "pub" inside "publicly traded" (5 of
+        45 sampled names) and "adult" inside "adult patients" (Ocugen).
+      * a trailing \b then missed brewery/distillery entirely, passing
+        Boston Beer.
+    So: anchor the START only, and never put a term here that is a
+    prefix of a common word. "pub" is banned for that reason -- use
+    tavern / brewpub / public house.
+    """
+    import re as _re
+    tl = (text or "").lower()
+    return [w.strip() for w in words
+            if _re.search(r"\b" + _re.escape(w.strip()), tl)]
 
 
 def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
@@ -673,13 +706,16 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
         ])
     except Exception:
         pass
-    tl = text.lower()
-    hits = [w for w in HARAM_INDUSTRY_WORDS if w in tl]
+    # Label-only terms are checked against the sector/industry label;
+    # high-confidence phrases anywhere. Both word-boundary matched.
+    hits = (_kw_hits(HARAM_PRIMARY_LABEL, ind)
+            + _kw_hits(HARAM_PRIMARY_ANY, text))
     industry_ok = not hits
     # haram_pct measures INTEREST INCOME ONLY. For revenue-sensitive
     # businesses that number cannot see alcohol/pork/gaming revenue, so a
     # clean ratio sheet is not evidence of a permissible revenue mix.
-    rev_hits = [w for w in REVENUE_SENSITIVE_WORDS if w in tl]
+    amb = _kw_hits(HARAM_AMBIGUOUS_ANY, text)
+    rev_hits = _kw_hits(REVENUE_SENSITIVE_WORDS, text) + amb
     unverifiable = bool(rev_hits) and not hits
 
     halal = (loan_ok and cash_ok and combined_ok and haram_ok
