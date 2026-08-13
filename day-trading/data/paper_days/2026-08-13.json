@@ -99,7 +99,17 @@
     "AMPY",
     "CMTV",
     "COLL",
-    "NCMI"
+    "NCMI",
+    "PARK",
+    "PTN",
+    "FFAI",
+    "IREN",
+    "AIFA",
+    "PLYX",
+    "OWLT",
+    "MH",
+    "FEDU",
+    "ABTC"
   ],
   "crossed_set_note": "Latched for the whole session. A name that fades below +10% and drops off the scanner stays eligible (parity item: the cross is a latch in the sim, a snapshot in the scanner).",
   "halal": {
@@ -154,7 +164,11 @@
       "HYLN",
       "WYFI",
       "DFDV",
-      "BLSH"
+      "BLSH",
+      "OWLT",
+      "AIFA",
+      "FFAI",
+      "IREN"
     ],
     "fail_note": "Day-scoped and inherited. Must be passed into every delegated scan so a FAIL cannot re-enter the pool (API HYGIENE defect #2).",
     "live_screens": [
@@ -331,6 +345,46 @@
         "halal": "REFUSED",
         "fail_reason": "CANNOT VERIFY -- refusing to evaluate, not a compliance pass",
         "note": "The screen returned halal=True but BOTH inputs are untrustworthy. (1) loan_pct 0.00 is implausible: Red Robin carries substantial debt and RH reports pb_ratio -1.396, i.e. NEGATIVE book value -- a debt-free reading is a data gap, not a clean balance sheet. (2) haram_pct is computed as interest income / revenue, which is STRUCTURALLY BLIND to alcohol sales; RRGB's own description lists 'signature alcoholic beverages', and casual-dining alcohol mix is typically well above the 5% limit. Treating this as a PASS would be exactly the silent-pass failure mode the market-cap rule was written to prevent."
+      },
+      {
+        "sym": "OWLT",
+        "loan_pct": 9.22,
+        "cash_pct": 17.42,
+        "combined": 26.64,
+        "haram_pct": 0.76,
+        "halal": false,
+        "fail_reason": "CASH>10+COMBINED>20",
+        "note": "Only name today rejected primarily on the DEPOSITS side while loans stayed under 10%."
+      },
+      {
+        "sym": "AIFA",
+        "loan_pct": 45.1,
+        "cash_pct": 78.42,
+        "combined": 123.52,
+        "haram_pct": 15.08,
+        "halal": false,
+        "fail_reason": "LOAN>10+COMBINED>20",
+        "note": "Fails on ratios AND haram revenue 15.08%. Independently a haram-industry concern: the company's own description says it operates esports venues and live events for video games AND POKER (gambling). The keyword screen did not fire on industry='Movies/Entertainment' -- flagged as a keyword-coverage gap."
+      },
+      {
+        "sym": "FFAI",
+        "loan_pct": 1081.06,
+        "cash_pct": 116.99,
+        "combined": 1198.04,
+        "haram_pct": 121.0,
+        "halal": false,
+        "fail_reason": "LOAN>10+COMBINED>20",
+        "note": "Faraday Future. Worst ratios of the day by an order of magnitude."
+      },
+      {
+        "sym": "IREN",
+        "loan_pct": 22.72,
+        "cash_pct": 12.68,
+        "combined": 35.4,
+        "haram_pct": 3.76,
+        "halal": false,
+        "fail_reason": "LOAN>10+COMBINED>20",
+        "note": "$17.5B mcap with the TIGHTEST book on the board (0.04% spread) -- would have been the most tradeable name all day. Rejected on 35.4% combined."
       }
     ],
     "REFUSED_CANNOT_VERIFY": [
@@ -580,10 +634,25 @@
       "state": "FLAT-5m",
       "action": "post-open re-rank; 19 new crossers; pick rotated HLIT -> AZ",
       "top": "AZ"
+    },
+    {
+      "cycle": 13,
+      "time_et": "10:05",
+      "state": "FLAT-5m",
+      "action": "scan + rank; 10 new crossers; OWLT/AIFA/FFAI/IREN screened and failed; pick reverts to AZ",
+      "top": "AZ"
+    },
+    {
+      "cycle": 14,
+      "time_et": "10:14",
+      "state": "FLAT-ARM",
+      "action": "AZ spread tightened to 0.41% -> ARMED at 7.78",
+      "top": "AZ"
     }
   ],
   "lessons": [
-    "LATCH DEMONSTRATED LIVE: SFHG printed +11.4% at 06:47, faded to +8.4% by 07:02 and vanished from the scan. It remained a ranked candidate because the +10% cross had already printed. A snapshot-only scanner would have silently shrunk the universe here."
+    "LATCH DEMONSTRATED LIVE: SFHG printed +11.4% at 06:47, faded to +8.4% by 07:02 and vanished from the scan. It remained a ranked candidate because the +10% cross had already printed. A snapshot-only scanner would have silently shrunk the universe here.",
+    "SPREAD AND HALAL ARE ANTI-CORRELATED TODAY: the three tightest books on the board (IREN 0.04%, ABTC 0.26%, MH 0.39%) were all halal-ineligible, while the halal-eligible pick (AZ) sat at 0.54-0.92%. Big liquid names carry the leverage that fails the ratio test; the names that pass tend to be small and wide. This is a structural tension between the halal gate and the spread veto, not bad luck."
   ],
   "armed_orders": [
     {
@@ -643,6 +712,38 @@
       },
       "note": "Heavy ask walls sit ABOVE the trigger at 15.20 (6,495), 15.25 (3,120), 15.29 (2,700), 15.30 (7,055). Our limit 15.1353 sits below all of them, so a fill would occur before that resistance.",
       "status": "CANCELLED at 09:53 - HLIT fell out of the top 12 on the post-open re-rank; trigger 15.06 never touched (post-arm high 14.82). Rotation: the pick is now AZ."
+    },
+    {
+      "n": 3,
+      "time_et": "10:14",
+      "sym": "AZ",
+      "paper_only": true,
+      "type": "stop-limit BUY (resting) - session/ORB high break",
+      "orb_window": "09:30-09:34",
+      "orb_high": 7.78,
+      "session_high": 7.78,
+      "trigger": 7.78,
+      "limit": 7.8189,
+      "limit_rule": "trigger x 1.005",
+      "shares": 1928,
+      "notional_usd": 14999.84,
+      "ticket": 1,
+      "gates": {
+        "spread_pct": 0.41,
+        "spread_cap_pct": 0.5,
+        "spread_pass": true,
+        "inside_bid": 7.37,
+        "inside_ask": 7.4,
+        "depth_shares_inside_to_trigger_plus_0p5pct": 6753,
+        "depth_pass": true,
+        "fill_arming_rule": "PASS - last 7.36 < trigger 7.78",
+        "trailing10_vol": 101936,
+        "size_cap_shares": 20387,
+        "size_pass": true
+      },
+      "halal": "live PASS (loan 0.64 / cash 15.28 / combined 15.93 / haram 1.21)",
+      "note": "AZ is the highest-ranked name passing eligibility + calm-gap + halal. MH/TBBB/COLL rank above it but all fail calm-gap; OWLT/AIFA/FFAI/IREN rank between and all failed the live halal screen.",
+      "protective_stop_on_fill": "resting stop-limit at max(entry x 0.92, peak x 0.60)"
     }
   ]
 }
