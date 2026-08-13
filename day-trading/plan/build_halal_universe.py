@@ -102,9 +102,16 @@ def screen_one(sym):
     time.sleep(PACE_SEC)
     try:
         r = dt.halal_check(sym)
+        # KEY NAMES MUST MATCH halal_check's OUTPUT. They did not: it
+        # returns "combined" and "haram_pct", so "combined_pct" and
+        # "haram_rev_pct" cached None for every one of the 1,347 names
+        # in the 2026-08-09 universe -- silently, because nothing read
+        # them back. Also cache "verdict" so CANNOT-VERIFY (reviewable)
+        # stays distinguishable from FAIL (permanently out); both set
+        # halal=False, so the flag alone conflates them.
         return sym, {k: r.get(k) for k in
-                     ("halal", "source", "loan_pct", "cash_pct",
-                      "combined_pct", "haram_rev_pct", "fail_reason")}
+                     ("halal", "verdict", "source", "loan_pct", "cash_pct",
+                      "combined", "haram_pct", "fail_reason")}
     except Exception as e:
         return sym, {"halal": False, "source": "error",
                      "fail_reason": f"ERROR: {type(e).__name__}: {e}"}
