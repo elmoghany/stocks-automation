@@ -3408,3 +3408,46 @@ of would-be entries is where the optimum sits; live's premarket rate is
 ~90-100% (Day 7 blocked every premarket rank-1). Live is too aggressive
 premarket. Calibrate by RATE, not by threshold, premarket and post-open
 separately.
+
+## C37 RE-MEASURED HONESTLY -- THE EDGE SURVIVES, THE NUMBER DOES NOT
+## (2026-08-13, after fixing the hindsight pool cut)
+day_candidates now builds the pool CAUSALLY by default (every candidate
+with cached bars); the old hindsight cut (`sorted(cs, -gain_pct)[:16]`,
+gain_pct = DAY-HIGH gain) is opt-in via biased_pool=True.
+IDENTITY: VOLD (biased_pool=True) reproduces $774,534 EXACT, so the
+opt-out path is intact and the change is surgical.
+
+  config  pool              2yr        days    $/day   negm
+  VOLD    hindsight cut  $774,534      396    $1,956   0/23   (OLD)
+  C37H    causal         $665,667      432    $1,541   0/23   (REAL)
+                         -$108,867  = -14% of the reported edge
+
+### ROTATION STILL EARNS ITS ADOPTION -- checked on the honest pool
+The configs that justified adopting rotation were themselves measured
+on the biased pool, so they were re-run too. The edge is not the leak:
+  C37H  rotation (champion)             $665,667        --   0/23
+  N023  NO rotation, same-name ladder   $392,957  -272,710   5/23
+  NC60  CONTROL random-pick rotation    $477,060  -188,607   1/23
+  N060  adjacency, 14:00 window         $665,695       +28   0/23
+  N062  stress, 10bps/side slippage     $603,232   -62,435   0/23
+* rotation beats no-rotation by +$272,710 (+69%) -- LARGER in relative
+  terms than the +64% originally claimed on the biased pool.
+* the random-pick control fails by $188,607, so the coil/pressure
+  ranking carries real information on the honest pool too.
+* 14:00 vs 14:30 differ by $28 -- the window choice sits on a FLAT
+  optimum, not a knife edge.
+* 91% of the honest edge survives 10bps/side slippage.
+* consistency improves relative to the alternatives: 0/23 negative
+  months vs 5/23 for the static ladder.
+
+CONCLUSION: C37 remains the champion. Only the scoreboard was wrong.
+The leak inflated the reported P&L by 14% but did NOT manufacture the
+edge -- every comparison that justified the config still holds, and two
+of them look better on honest data.
+ACTIONS TAKEN: skill BENCHMARK line corrected to ~$1,541/traded day;
+paper Days 5-7 were scored against the inflated figure and their
+"% of benchmark" verdicts should be re-read at the corrected number
+(Day 7's +$104.58 is 6.8% of a C37 day, not 5.3%).
+STILL DISCLOSED: bars were only ever fetched to full-day-gain depth
+(~17 of ~213 candidates/day), so the universe remains coverage-biased.
+$665,667 is an upper bound; closing it needs a full-breadth bar fetch.

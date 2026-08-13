@@ -511,8 +511,15 @@ SCAN LOOP every 5 MINUTES, 7:00-14:30 (RH data only):
     hard stop -8%, bank 1/3 at +25% unless pressure >= +0.3, wick
     guard, halt protocol (no entries on reopen bars). ALL EXITS BY
     15:00, same day always.
-BENCHMARK: C37 = $774,534/2yr, ~$1,956/traded day, 0/23 neg months.
-Judge weeks, not days.
+BENCHMARK (CORRECTED 2026-08-13): C37 = $665,667/2yr over 432 traded
+days = ~$1,541/traded day, 0/23 negative months. Judge weeks, not days.
+The old $774,534 / $1,956-a-day figure was inflated 14% by a hindsight
+pool cut (the sim picked its 16 candidates by DAY-HIGH gain, a full-day
+statistic, which quietly pre-removed names that turned out not to run).
+Fixed 2026-08-13; the strategy itself is unchanged and still beats both
+its no-rotation baseline (+69%) and a random-pick control (+$188,607).
+Paper sessions before 2026-08-13 were scored against the inflated
+number -- re-read those verdicts with $1,541/day in mind.
 
 
 ## FILL-ARMING RULE (2026-08-10, from Paper Day 5's -1.6% fill miss)

@@ -235,7 +235,27 @@ CFGS = {
                  causal_pool=True),
     "VP20": dict(desc="LEAK AUDIT: C38 candidate on a causal pool",
                  entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
-                 spread_veto=2.0, causal_pool=True),
+                 spread_veto=2.0),
+    # ---- N-series (2026-08-13): the champion re-measured HONESTLY ----
+    # Causal pool is now the default. C37 and the two configs that
+    # justified adopting rotation are re-run here; the old numbers were
+    # all inflated by the hindsight pool cut.
+    "C37H": dict(desc="C37 HONEST: rotation, 14:30 window, 10:00 escape",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0)),
+    "N023": dict(desc="HONEST no-rotation baseline (same-name ladder)",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 rotate=False),
+    "NC60": dict(desc="HONEST CONTROL: random-pick rotation",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 rand=True),
+    "N060": dict(desc="HONEST adjacency: 14:00 window",
+                 entry_cutoff=dtime(14, 0), escape=dtime(10, 0)),
+    "N062": dict(desc="HONEST stress: 10bps/side slippage",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 slip=0.001),
+    "VOLD": dict(desc="LEGACY biased pool, reproduces the old $774,534",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 biased_pool=True),
 }
 
 
@@ -251,7 +271,7 @@ def bars_for(sym, date):
         return None
 
 
-def day_candidates(cs, date, dfs, top=16, causal_pool=False):
+def day_candidates(cs, date, dfs, top=16, causal_pool=True):
     """Pre-compute per-candidate causal series needed by the ranker.
 
     LEAK NOTE (audited 2026-08-13): `gain_pct` in the gappers files is
@@ -265,6 +285,11 @@ def day_candidates(cs, date, dfs, top=16, causal_pool=False):
     causal_pool=True drops the hindsight sort and takes every candidate
     that has bars -- it cannot repair the upstream coverage bias, but it
     removes the one leak this file controls."""
+    # DEFAULT CHANGED 2026-08-13: causal pool is now the default. Every
+    # rotation number produced BEFORE this date (R0xx, B0xx, V0xx incl.
+    # the adopted "C37 = $774,534") was measured on the hindsight-cut
+    # pool and is NOT comparable to anything produced after it. Configs
+    # that need the old behaviour must set biased_pool=True explicitly.
     if causal_pool:
         pool = [c for c in cs
                 if (M1 / f"{c['symbol']}_{date}.csv").exists()]
@@ -522,7 +547,7 @@ def run(cfg_id, max_days=None):
             dfs = {}
             cands = day_candidates(cs, date, dfs,
                                    cfg.get("cand_top", 16),
-                                   cfg.get("causal_pool", False))
+                                   not cfg.get("biased_pool", False))
             if not cands:
                 continue
             tr = run_day(cands, date, cfg, stats)
