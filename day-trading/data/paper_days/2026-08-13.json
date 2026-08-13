@@ -69,7 +69,8 @@
     "YXT",
     "AVAH",
     "KGEI",
-    "DERM"
+    "DERM",
+    "JACK"
   ],
   "crossed_set_note": "Latched for the whole session. A name that fades below +10% and drops off the scanner stays eligible (parity item: the cross is a latch in the sim, a snapshot in the scanner).",
   "halal": {
@@ -107,7 +108,8 @@
       "AIRO",
       "NAMI",
       "BIRK",
-      "AVAH"
+      "AVAH",
+      "JACK"
     ],
     "fail_note": "Day-scoped and inherited. Must be passed into every delegated scan so a FAIL cannot re-enter the pool (API HYGIENE defect #2).",
     "live_screens": [
@@ -169,6 +171,18 @@
         "halal": false,
         "fail_reason": "LOAN>10+COMBINED>20",
         "note": "Aveanna Healthcare, $1.97B mcap, home health. Debt at 76.23% of market cap. Another liquid, tradeable book rejected purely on leverage."
+      },
+      {
+        "sym": "JACK",
+        "market_cap": 376122970,
+        "source": "quarterly",
+        "loan_pct": 693.96,
+        "cash_pct": 11.44,
+        "combined": 705.4,
+        "haram_pct": 0.04,
+        "halal": false,
+        "fail_reason": "LOAN>10+COMBINED>20",
+        "note": "Jack in the Box, $376M mcap carrying post-Del Taco debt at ~694% of market cap. Would also be questionable on a food-based haram screen (pork), but leverage rejected it first."
       }
     ]
   },
@@ -338,6 +352,17 @@
         "KGEI",
         "DERM"
       ]
+    },
+    {
+      "cycle": 7,
+      "time_et": "08:07",
+      "state": "FLAT-~30m",
+      "action": "delegated scan + bars + rank",
+      "top": "HLIT",
+      "new_crossers": [
+        "JACK"
+      ],
+      "note": "YXT surged +15.5% -> +49.7% but coil only 0.888, so it never reached candidacy."
     }
   ],
   "lessons": [
