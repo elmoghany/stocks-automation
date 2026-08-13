@@ -21,7 +21,9 @@
     "halal_list_updated": "2026-08-09",
     "halal_list_n": 1347,
     "halal_list_age_days": 4,
-    "tick_clock": "persistent Monitor TICK-A, UTC-armed, 300s, breaks 15:05 ET"
+    "tick_clock": "persistent Monitor TICK-A, UTC-armed, 300s, breaks 15:05 ET",
+    "end_et": "15:00",
+    "flat_at_close": true
   },
   "tickets": {
     "schedule_usd": [
@@ -38,7 +40,8 @@
     "new_ticket_cutoff_et": "14:30",
     "all_exits_by_et": "15:00",
     "flatten_ladder_from_et": "14:57",
-    "deployed_usd": 12965.6
+    "deployed_usd": 12965.6,
+    "cutoff_state": "14:30 passed while holding ANGX. Tickets 2-7 never deployed: the one-position rule blocks a second ticket, and the cutoff blocks any new one after 14:30."
   },
   "crossed_set": [
     "DUKR",
@@ -125,7 +128,25 @@
     "HYPD",
     "PLRZ",
     "STRZ",
-    "FIEE"
+    "FIEE",
+    "QMLS",
+    "BBGI",
+    "CREX",
+    "SNDK",
+    "SCWO",
+    "BCAR",
+    "TMS",
+    "VIVO",
+    "ARTW",
+    "GANX",
+    "IMC",
+    "HUHU",
+    "ENRD",
+    "YSWY",
+    "GWRS",
+    "ASMB",
+    "SNSC",
+    "CNTB"
   ],
   "crossed_set_note": "Latched for the whole session. A name that fades below +10% and drops off the scanner stays eligible (parity item: the cross is a latch in the sim, a snapshot in the scanner).",
   "halal": {
@@ -576,10 +597,148 @@
         "hard_flatten": "all exits by 15:00 ET; flatten ladder from 14:57 (bid -1%), 14:59 (bid -2%)"
       },
       "note": "Trail only becomes binding above +15% (peak x 0.80 > entry x 0.92); until then the -8% hard stop at 3.9238 governs. That is C37's let-it-run design, not an oversight.",
-      "status": "OPEN"
+      "status": "CLOSED",
+      "peak_since_entry": 4.3,
+      "position_watch": [
+        {
+          "time_et": "11:31",
+          "last": 4.205,
+          "unrealized_pct": -1.41,
+          "unrealized_usd": -182.4,
+          "peak": 4.275,
+          "hard_stop": 3.9238,
+          "trail20_from_peak": 3.42,
+          "trail10_from_peak": 3.8475,
+          "trail40_from_peak": 2.565,
+          "binding_exit": "hard stop 3.9238 (-6.7% away)",
+          "note": "11:25 bar sold off hard to 4.1450 on 45,927 sh then recovered to 4.2050. No exit rule met."
+        },
+        {
+          "time_et": "11:52",
+          "last": 4.27,
+          "unrealized_pct": 0.12,
+          "unrealized_usd": 15.2,
+          "peak": 4.275,
+          "hard_stop": 3.9238,
+          "binding_exit": "hard stop 3.9238",
+          "note": "Recovered from the 11:25 flush; no exit rule met."
+        },
+        {
+          "time_et": "12:12",
+          "last": 4.295,
+          "unrealized_pct": 0.7,
+          "unrealized_usd": 91.2,
+          "peak": 4.3,
+          "note": "New peak 4.3000 at 12:05."
+        },
+        {
+          "time_et": "12:23",
+          "last": 4.295,
+          "unrealized_pct": 0.7,
+          "unrealized_usd": 91.2,
+          "peak": 4.3,
+          "note": "Ranging 4.2520-4.3000. Trail@20% = 3.4400, still far below the hard stop 3.9238, so the hard stop remains the only live exit."
+        },
+        {
+          "time_et": "12:33",
+          "last": 4.295,
+          "unrealized_pct": 0.7,
+          "peak": 4.3,
+          "note": "Quiet midday range."
+        },
+        {
+          "time_et": "12:53",
+          "last": 4.225,
+          "unrealized_pct": -0.94,
+          "unrealized_usd": -121.6,
+          "peak": 4.3,
+          "note": "Drifted 4.300 -> 4.200-4.230 on very light volume. Hard stop 3.9238 still 8.4% away; no rule met."
+        },
+        {
+          "time_et": "14:12",
+          "last": 4.255,
+          "unrealized_pct": -0.23,
+          "peak": 4.3
+        },
+        {
+          "time_et": "14:32",
+          "last": 4.255,
+          "unrealized_pct": -0.23,
+          "unrealized_usd": -30.4,
+          "peak": 4.3,
+          "note": "14:30 entry cutoff passed with ANGX still open. No further tickets today (one-position rule + cutoff). Scanning stops entirely per SCAN ECONOMY rule 4; exit management only."
+        }
+      ],
+      "monitoring_plan": "All three trail widths (peak x0.80=3.4200, x0.90=3.8475, x0.60=2.5650) currently sit BELOW the -8% hard stop 3.9238, so the hard stop is the ONLY live exit until the position gains ~15%. Poll cadence is therefore set by distance to 3.9238: ~8-10 min while >4% away, tightening to 1-2 min if price comes within 2%. Bars are fetched in full 1-minute granularity so no minute goes unobserved -- the latency is in DECISION time, not observation, and is logged as such.",
+      "exit_time_et": "14:57",
+      "exit_reason": "15:00 hard flatten - ladder step 1 (bid -1%)",
+      "exit_order": "marketable sell limit @ 4.2372 (bid 4.28 x 0.99)",
+      "exit_fills": [
+        {
+          "price": 4.28,
+          "shares": 113
+        },
+        {
+          "price": 4.27,
+          "shares": 500
+        },
+        {
+          "price": 4.26,
+          "shares": 400
+        },
+        {
+          "price": 4.25,
+          "shares": 1865
+        },
+        {
+          "price": 4.24,
+          "shares": 162
+        }
+      ],
+      "exit_vwap": 4.2552,
+      "proceeds_usd": 12935.77,
+      "pnl_usd": -29.83,
+      "pnl_pct": -0.23,
+      "exit_fill_realism": {
+        "depth_swept_vwap": 4.2552,
+        "optimistic_inside_bid_only": 4.28,
+        "optimistic_pnl_usd": 45.6,
+        "delta_usd": 75.43,
+        "reading": "Recorded the DEPTH-SWEPT VWAP as the fill. The inside bid held only 113 of the 3,040 shares, so a marketable limit walks the ladder to 4.24. Assuming a single fill at the inside bid would have booked +$45.60 instead of -$29.83 -- a $75.43 self-flattery on one small ticket. Displayed size understates real liquidity (hidden/iceberg), so the true fill is probably between the two; the conservative number is recorded."
+      },
+      "max_favourable_pct": 0.82,
+      "max_adverse_pct": -2.82,
+      "exit_rules_that_fired": "None of the trail/stop/scale rules fired. Hard stop 3.9238 was never approached (session low after entry 4.1450, -2.82%). The position was closed by the 15:00 hard flatten."
     }
   ],
-  "coverage_gaps": [],
+  "coverage_gaps": [
+    {
+      "type": "none-material",
+      "detail": "No monitoring outage. Session ran 06:34-15:00 ET continuously; the persistent Monitor tick clock never died and no dead-monitor settlement was needed."
+    },
+    {
+      "type": "scan-cadence-deviation",
+      "window": "07:00-09:12 ET",
+      "detail": "Premarket full scan+rank ran at ~10-30 min intervals instead of the protocol's 5 min. Deliberate and stated at the time: nothing was armable while spreads were 3%+ and no ticket could deploy. True 5-min cadence resumed 09:12 and held through the open.",
+      "risk": "A late premarket crosser could have been seen up to ~25 min late. Given the crossed set is a LATCH, nothing was permanently lost -- only decision timing."
+    },
+    {
+      "type": "position-watch-latency",
+      "window": "11:17-14:57 ET",
+      "detail": "1-minute bars were FETCHED IN FULL so no minute went unobserved, but polls ran every ~10-20 min, so a bar-close exit decision could have been up to ~20 min late. Justified because all trail levels sat below the -8% hard stop, which was never within 6% of price.",
+      "risk": "Real but unrealised today. Would matter on a fast-moving name."
+    },
+    {
+      "type": "news-capture-partial",
+      "detail": "Same-day Finnhub headlines captured for 50 of the ~103 common stocks that crossed +10%. The protocol asks for every scan symbol; the day's crossed set grew far beyond previous days (103 vs ~20). Captured set covers every name that was screened, ranked in a top-12, armed, or traded.",
+      "risk": "Low -- news is not a C37 gate; this is an audit-trail shortfall only."
+    },
+    {
+      "type": "trigger-C-not-mechanically-evaluated",
+      "detail": "The eight-member reversal-candle set (Trigger C) was NOT evaluated by a detector during the session. day-trading.py's `patterns` command takes a bare symbol and reads daily data, so it cannot score live 1-minute RH bars. Entries today used Trigger A (ORB) and Trigger B (session-high stop-buy) only.",
+      "risk": "MATERIAL. One of the three legal entry triggers was effectively unavailable all day. This is a tooling gap, not a judgement call, and is the single most valuable fix for the next session."
+    }
+  ],
   "cadence_log": [
     {
       "cycle": 1,
@@ -740,11 +899,45 @@
       "state": "FILL -> HOLD-1m",
       "action": "ANGX filled 3040 @ 4.2650; switching to 1-minute position watch",
       "top": "ANGX"
+    },
+    {
+      "cycle": 18,
+      "time_et": "11:52",
+      "state": "HOLD-20m-bench",
+      "action": "light bench refresh (no halal screens, no ranking) per SCAN ECONOMY",
+      "top": "ANGX (held)",
+      "new_crossers": 18,
+      "note": "Champion does NO ranking while in a position; bench keeps the post-exit re-rank warm."
+    },
+    {
+      "cycle": 19,
+      "time_et": "12:53",
+      "state": "HOLD-1m",
+      "action": "position watch",
+      "note": "Poll gap widened to ~15-20 min through the quiet midday range: stop is 8.4% away and ANGX is moving <1%/hr. Full 1-minute bars are fetched each poll so NO MINUTE GOES UNOBSERVED -- the latency is in decision time, not observation. Will tighten into the close."
+    },
+    {
+      "cycle": 20,
+      "time_et": "14:32",
+      "state": "HOLD-EXIT-ONLY",
+      "action": "entry cutoff passed; scanning stopped; exit management only"
+    },
+    {
+      "cycle": 21,
+      "time_et": "14:57",
+      "state": "FLATTEN",
+      "action": "ladder step 1 executed, flat before 15:00"
     }
   ],
   "lessons": [
     "LATCH DEMONSTRATED LIVE: SFHG printed +11.4% at 06:47, faded to +8.4% by 07:02 and vanished from the scan. It remained a ranked candidate because the +10% cross had already printed. A snapshot-only scanner would have silently shrunk the universe here.",
-    "SPREAD AND HALAL ARE ANTI-CORRELATED TODAY: the three tightest books on the board (IREN 0.04%, ABTC 0.26%, MH 0.39%) were all halal-ineligible, while the halal-eligible pick (AZ) sat at 0.54-0.92%. Big liquid names carry the leverage that fails the ratio test; the names that pass tend to be small and wide. This is a structural tension between the halal gate and the spread veto, not bad luck."
+    "SPREAD AND HALAL ARE ANTI-CORRELATED TODAY: the three tightest books on the board (IREN 0.04%, ABTC 0.26%, MH 0.39%) were all halal-ineligible, while the halal-eligible pick (AZ) sat at 0.54-0.92%. Big liquid names carry the leverage that fails the ratio test; the names that pass tend to be small and wide. This is a structural tension between the halal gate and the spread veto, not bad luck.",
+    "HALAL IS THE BINDING CONSTRAINT, NOT THE STRATEGY. 103 names crossed +10%; 33 were live-screened; 31 FAILED. Only ANGX, AZ (and the untouched EUDA/HLIT/DAAQ/IPCX) passed. Five names that reached genuine candidacy -- AIRO, NAMI, BIRK, AVAH, JACK -- were rejected on screening, and BIRK/AVAH/IREN were exactly the liquid, tight-book names the strategy most wants.",
+    "THE HALAL GATE AND THE SPREAD VETO PULL IN OPPOSITE DIRECTIONS. The tightest books of the day (IREN 0.04%, SMCI 0.02%, ABTC 0.26%, MH 0.39%) were all halal-ineligible; the eligible names were small and wide (AZ 0.41-0.92%). Big liquid names carry the leverage that fails the ratio test. This is structural and is the main reason C37 struggles to deploy capital live.",
+    "VETO RATE 50% (3/6) IS ON TARGET for the first time -- the modelled optimum is 50-65% and Day 7 ran 90-100%. Post-open alone was 40%, slightly BELOW the band, suggesting the 0.5% cap is now roughly right post-open and remains too tight premarket (1/1 blocked).",
+    "THE FILL-ARMING RULE EARNED ITS KEEP. The 10:38 ANGX block was NOT a spread veto -- spread was 0.24%. Price had run 0.85% past the trigger, so a stop would have been a market order. Waiting cost nothing: the ratchet re-armed 6 minutes later at a higher, legitimate level and filled.",
+    "EXIT DEPTH MODELLING MATTERS MORE THAN ENTRY DEPTH. Selling 3,040 shares into a 113-share inside bid swept the ladder to 4.24. Booking the naive inside-bid fill would have turned -$29.83 into +$45.60 -- a $75 self-flattery on a single $13k ticket. On seven tickets a day that error compounds into a fictional edge.",
+    "ONE POSITION + A SLOW NAME = ONE TICKET. ANGX was held 3h40m and moved in a 2.5% band all afternoon. The one-position rule meant tickets 2-7 ($87,034 of the $100,000 budget) never deployed. C37's $1,541/day assumes rotation through multiple tickets; a day with one quiet holder cannot reach it by construction."
   ],
   "armed_orders": [
     {
@@ -968,5 +1161,13 @@
     "modelled_optimum_pct": "50-65",
     "verdict": "50% overall sits at the LOW EDGE of the modelled 50-65% optimum -- a large improvement on Day 7's 90-100%. Post-open is 40%, i.e. slightly BELOW the optimum band; premarket remains 100% but on a single decision, too small to conclude from.",
     "note": "Only 2 of the 3 vetoes were spread vetoes. The third (ANGX 10:38) was the fill-arming/chase cap, a different mechanism that should be counted separately when calibrating the spread threshold."
+  },
+  "pnl": {
+    "realized_usd": -29.83,
+    "trades": 1,
+    "benchmark_per_day": 1541.0,
+    "shortfall_vs_benchmark": -1570.83,
+    "cumulative_before": -227.74,
+    "cumulative_after": -257.57
   }
 }

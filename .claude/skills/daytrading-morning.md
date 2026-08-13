@@ -21,11 +21,28 @@ HARD CONSTRAINTS, never negotiable:
   FAIL is never re-litigated.
 
 **THE HALAL TEST** (all must hold, on filed-quarter statements):
-loans / market cap ≤ 10%, deposits (cash) / market cap ≤ 10%,
-combined ≤ 20%, haram revenue < 5%, and no haram industry
-(see `/halal-check`). Market cap is REQUIRED — a missing mcap once
-silently PASSED two names at ~900% loans/mcap, so a missing
-denominator is a FAIL, never a pass. Low-mcap gappers fail these
+loans / market cap and deposits (cash) / market cap each ≤ 10%,
+**EXCEPT that ONE side may exceed 10% provided combined ≤ 20%**
+(this is what `halal_check` actually implements — see
+`day-trading.py:511`; corrected 2026-08-13 after HLIT at loan 10.07 /
+combined 18.44 and ANGX at 9.94 / 16.14 both sat in that zone),
+haram revenue < 5%, and no haram industry (see `/halal-check`).
+Market cap is REQUIRED — a missing mcap once silently PASSED two
+names at ~900% loans/mcap, so a missing denominator is a FAIL, never
+a pass.
+
+**THE SCREEN HAS THREE BLIND SPOTS (2026-08-13). Do not treat a
+`halal=True` as final without a sanity check:**
+* `haram_pct` is *interest income / revenue* only — it is
+  STRUCTURALLY BLIND to alcohol and pork revenue. A casual-dining
+  chain scores ~0%. RRGB was refused on this basis.
+* The industry keyword screen missed **gambling** (AIFA runs poker
+  venues, labelled `Movies/Entertainment`).
+* RH sector labels are unreliable (AZ makes shopping carts, labelled
+  `Financial Conglomerates`).
+If a `True` rests on an implausible input — e.g. `loan_pct 0.00` on a
+company with negative book value — record **CANNOT VERIFY → refusing**,
+which is distinct from a compliance FAIL. Low-mcap gappers fail these
 ratios constantly (small denominator); that is by design and is the
 single largest determinant of what we can trade.
 
@@ -801,3 +818,106 @@ find a new one, add it here.
  * Ticket schedule: the champion's $25k opener is popped by the
    rotation harness; flat $15k (last $10k) is correct for both.
  * Exit end: 15:00 in both.
+
+
+## PAPER DAY 8 (2026-08-13) — what the session taught
+
+Result: **1 ticket, ANGX -$29.83**, flat by 15:00, zero real orders. Cumulative -$257.57.
+First fully clean session in three (no outage, on-time 06:34 start, zero API truncations).
+
+### 1. THE HALAL GATE AND THE SPREAD VETO PULL IN OPPOSITE DIRECTIONS
+
+103 names crossed +10%; 33 were live-screened; **31 FAILED**. The three tightest books
+of the day — **IREN 0.04%, SMCI 0.02%, ABTC 0.26%** — were all halal-ineligible, while
+the eligible pick (AZ) sat at 0.41-0.92%. Large liquid names carry the leverage that
+fails the ratio test; the names that pass tend to be small and wide.
+
+This is **structural, not bad luck**, and it is the main reason C37 cannot deploy capital
+live. BIRK (20.3% LBO debt), AVAH (76%), JACK (694%) and IREN (35% combined) were exactly
+the tradeable books the strategy wants. Any future work on "why is live below benchmark"
+should start here rather than with the entry logic.
+
+### 2. EXIT DEPTH MODELLING IS WORTH MORE THAN ENTRY DEPTH MODELLING
+
+Selling 3,040 ANGX into a **113-share inside bid** swept the ladder 4.28 → 4.24, VWAP
+4.2552. Booking the naive "filled at the inside bid" would have recorded **+$45.60
+instead of -$29.83 — a $75.43 self-flattery on one $13k ticket.** Across seven tickets a
+day that fabricates an edge that does not exist.
+
+**Rule: always model the exit as a ladder sweep against displayed depth, and record the
+optimistic single-price figure only as a bracket.** Entry fills have been fine (2 of 3
+favourable); exits are where the fiction creeps in.
+
+### 3. TRIGGER C WAS UNAVAILABLE ALL DAY — TOOLING GAP, HIGHEST-VALUE FIX
+
+The champion's eight-member reversal set was **never mechanically evaluated**.
+`day-trading.py patterns` takes a bare symbol and reads *daily* data, so it cannot score
+live 1-minute RH bars. Only Trigger A (ORB) and Trigger B (session-high stop-buy) were
+usable. **One of three legal entry triggers was missing**, which directly reduces how
+many setups qualify on a day when almost nothing passes halal.
+
+TODO: add a `patterns --bars-dir data/rh_bars --as-of HH:MM SYM` path that scores the
+eight-member buy_set on cached 1-minute bars, the way `rank` already does.
+
+### 4. VETO RATE FINALLY IN BAND — 3/6 = 50.0%
+
+| phase | decisions | vetoed | rate |
+|---|---|---|---|
+| premarket | 1 | 1 | 100% |
+| post-open | 5 | 2 | 40% |
+| **total** | **6** | **3** | **50.0%** |
+
+Modelled optimum is 50-65%; Day 7 ran 90-100%. **All three vetoes were saves; none cost
+money.** Post-open at 40% is slightly *below* the band, so the 0.5% cap now looks about
+right post-open. Premarket still blocks everything but on a single decision.
+
+**Count the fill-arming/chase veto SEPARATELY from spread vetoes** — only 2 of the 3 were
+spread-driven. Mixing them corrupts the threshold calibration.
+
+### 5. THE FILL-ARMING RULE PAID FOR ITSELF, AND "RETEST" IS STILL THE WRONG WORD
+
+ANGX at 10:38: spread was fine (0.24%) but price had run **0.85% past the trigger**, so a
+stop would have been a market order and a marketable limit could not fill inside the
++0.5% cap → veto. Six minutes later the **ratchet re-armed** at a new session high
+(4.2650) with last back below it, giving a genuine forward stop. It filled at 11:17,
+**0.12% better than the +60 s mark**.
+
+Say **"ratchet re-armed at the new high; waited for last < trigger"**. Do **not** say
+"retest" — retest entries are a rejected mechanic (G-series: a nonsense-level control
+beat every real retest level). This wording slipped on Day 6 and again on Day 8.
+
+### 6. NEW LIVE-ONLY DIVERGENCE: L2 DEPTH TICKET REDUCTION
+
+ANGX was cut from 3,517 sh / $15,000 to **3,040 sh / $12,965.60 (-$2,034.40, -13.6%)**
+because displayed ask depth to trigger+0.5% was only 3,040 shares. The sim sizes purely
+on 20% of trailing 10-min completed volume and models **no** book depth. Bias is
+**conservative** — live deploys less than the champion, so filled-ticket P&L understates
+the strategy. Keep it, but price it later the way the spread veto was priced.
+
+### 7. CHEAP NEW DETECTOR: ALL-INTERPOLATED BARS = FAKE GAP
+
+EUDA (+50%), FORTY (+38%) and DAAQ (+13%) each returned **161 interpolated bars and zero
+real ones** — they had not traded premarket at all, and their headline scan %Change was a
+stale mark. The interpolated-bar count is a one-line detector for scanner artefacts on
+illiquid names. `plan/rh_bars_ingest.py` now reports it per symbol.
+
+### 8. OPS THAT WORKED — KEEP DOING THESE
+
+* **Delegate the scan sweep to a subagent** with the day's PASS/FAIL sets passed in.
+  Keeps ~6k tokens of raw scan JSON per cycle out of the coordinator AND makes the
+  API-HYGIENE #2 inheritance structural. No FAIL re-entered the pool all day.
+* **`plan/rh_bars_ingest.py`** (new) asserts the returned symbol set equals the request
+  and skips interpolated bars. Zero truncations across ~10 batched calls.
+* **`get_equity_quotes` for spread monitoring, `get_equity_price_book` only at the moment
+  of arming.** The full L2 ladder is expensive; inside bid/ask for 5-10 symbols is not.
+* **Oversized MCP responses spill to a file** — that is a feature. Fetch bars for up to
+  10 symbols, let the response overflow, and parse the file. The bars never touch context.
+* Foreground `until`-loop waits (10-min cap) are the reliable way to pace a long session.
+
+### 9. ONE POSITION + ONE SLOW NAME = ONE TICKET
+
+ANGX was held 3h40m and moved in a ~2.5% band. The one-position rule meant tickets 2-7
+(**$87,034 of the $100,000 budget**) never deployed, and the 14:30 cutoff closed the
+window. C37's $1,541/day assumes rotation through several tickets; a day with one quiet
+holder cannot reach it by construction. That is a property of the champion, not a bug —
+but it means **single-holder days should be judged on process, not P&L.**
