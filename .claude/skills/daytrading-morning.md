@@ -213,8 +213,17 @@ protocol violation -- log an ERROR line, use 5-min.
 Run `python day-trading/plan/market_calendar.py` before ANY scheduled
 paper session. TRADING -> proceed; NO-TRADE (weekend/holiday) -> abort
 silently; ERROR (year outside the calendar) -> abort LOUDLY and extend
-HOLIDAYS in that file. Half days close at 13:00 -- C30's flatten
-already matches; E01 uses the official close regardless.
+HOLIDAYS in that file. Half days close at 13:00.
+*** STALE-NOTE CORRECTION 2026-08-13: this line used to say "C30's
+flatten already matches", which was true when we flattened at NOON.
+C37 does NOT match -- it takes new tickets until 14:30 and exits at
+15:00, BOTH AFTER a 13:00 close. On a half day, C37 must scale to the
+official close: last new ticket 60 min before it (12:00), all exits by
+the close (13:00), flatten ladder from 12:57. The sim degrades safely
+on its own (bars simply end and the window-close flatten fires), so
+this is a LIVE-ONLY hazard: an agent following the 14:30/15:00 clock
+would arm orders into a closed market. Next US half days: 2026-11-27
+and 2026-12-24. ***
 
 ## Real-time execution: L2 depth + fill protocol (2026-08-07)
 
