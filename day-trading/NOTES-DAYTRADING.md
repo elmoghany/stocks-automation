@@ -3510,3 +3510,57 @@ RISK TOO, NOT JUST RETURN: max drawdown RISES under stall release
 safer" defence -- the new drawdown column closes that door.
 C37 stands. Exits remain a flat optimum; the give-back is the premium
 paid for the fat tail.
+
+## SIBLING RE-VALIDATION ON THE CAUSAL POOL -- C37 SURVIVES (2026-08-13)
+C37 was originally chosen by comparing rotation variants on the
+HINDSIGHT-cut pool, where sibling margins were $10-20k on a $780k base
+-- and the cut was later measured at $109k. A distortion that large can
+reorder a ranking with margins that thin, so the whole family was re-run
+honestly, each sibling twice: plain (the champion's own definition, NO
+veto) and with the 2.0% spread veto.
+
+  cfg   variant                        2yr    vsC37      Y1d      Y2d  negm
+  C37H  champion 14:30/10:00       665,667       +0       +0       +0  0/23
+  SB24  top-3 restriction          716,778  +51,111  -39,156  +90,267  1/23
+  SV24    + veto                   669,094   +3,427  -36,055  +39,482  0/23
+  SBNE  no stale-pick escape       672,463   +6,796   -1,060   +7,856  0/23
+  SVNE    + veto                   690,139  +24,472  +11,320  +13,152  1/23
+  SB25  escape 09:30               671,758   +6,091   +1,657   +4,434  0/23
+  SV25    + veto                   697,186  +31,519  +14,794  +16,725  1/23
+  SB13  window 13:00               626,298  -39,369  -32,908   -6,461  0/22
+  SV13    + veto                   647,126  -18,541  -22,685   +4,144  1/22
+  SB20  window 12:00               613,222  -52,445  -41,238  -11,207  1/22
+  SV20    + veto                   586,117  -79,550  -32,295  -47,255  2/22
+  SB21  rotate only after a loss   577,598  -88,069  -39,481  -48,588  2/23
+  SV21    + veto                   612,673  -52,994  -13,084  -39,910  1/23
+
+VERDICT: NOTHING DISPLACES C37. Adoption needs all of: both years
+independently positive, dComb >= +$30k, and no worsening of 0/23
+negative months.
+ * SB24 (+$51,111) is the trap the both-years rule exists to catch --
+   the entire gain is Year 2 (+$90,267) against a Year 1 LOSS of
+   -$39,156, plus 1/23 negm. On a single-year view it would have looked
+   like the biggest win of the campaign.
+ * SB25 (escape 09:30) is the only cell passing both-years AND holding
+   0/23 -- but at +$6,091 it is noise on a $665k base, far under the
+   +$30k bar. Escape timing remains a FLAT OPTIMUM (09:30 / 10:00 /
+   none all within ~$7k), same as the 14:00-vs-14:30 window's $28.
+ * SV25 (escape 09:30 + veto) is the nearest miss: +$31,519, both years
+   positive, clears the $30k bar -- and then breaks the negative-month
+   record (1/23). Identical failure mode to the C38 candidate.
+ * Shortening the entry window costs real money in both years (13:00
+   -$39k, 12:00 -$52k), re-confirming "late crossers are profit" on
+   honest data.
+ * Rotate-on-loss-only is decisively worse (-$88k, 2/23).
+
+THE VETO'S SIGNATURE IS CONSISTENT ACROSS THE GRID: it ADDS return on 4
+of 6 siblings (+$18k to +$35k) and REDUCES max drawdown almost
+everywhere (SV24 6,141 vs 13,306; SV21 6,954 vs 12,046), but it costs a
+negative month nearly every time it helps. That is now the third
+independent sighting of the same trade: the spread veto buys
+smoothness and pays for it in month-level consistency. Worth revisiting
+ONLY with a real inside-spread measurement (no L2 history today), and
+worth considering whether the 0/23 rule should be a risk-adjusted
+criterion rather than an absolute one -- but that is a change to the
+GUARDRAILS and must not be decided while a candidate is on the table.
+C37 stands as the traded config.

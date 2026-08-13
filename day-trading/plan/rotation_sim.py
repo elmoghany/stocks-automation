@@ -327,6 +327,39 @@ CFGS = {
                  entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
                  sim_extra={"time_stop_min": 20, "time_stop_pressure": 0.0,
                             "time_stop_pressure_inv": True}),
+    # ---- SIBLING RE-VALIDATION ON THE CAUSAL POOL (2026-08-13) ----
+    # C37 was chosen by comparing rotation variants on the HINDSIGHT-cut
+    # pool, where the margins between siblings were $10-20k on a $780k
+    # base -- and the cut itself was later measured at $109k. A
+    # distortion that large can reorder a ranking with margins that
+    # thin, so the whole family is re-run honestly. Each sibling is run
+    # twice: plain (the champion's own definition, NO veto) and with the
+    # 2.0% spread veto, since the veto may interact with a different
+    # rotation policy than it did with C37's.
+    "SB20": dict(desc="rotation, window 12:00 (original R020 default)",
+                 entry_cutoff=dtime(12, 0), escape=dtime(10, 0)),
+    "SV20": dict(desc="rotation, window 12:00 (original R020 default) + 2% spread veto",
+                 entry_cutoff=dtime(12, 0), escape=dtime(10, 0), spread_veto=2.0),
+    "SB13": dict(desc="rotation, window 13:00",
+                 entry_cutoff=dtime(13, 0), escape=dtime(10, 0)),
+    "SV13": dict(desc="rotation, window 13:00 + 2% spread veto",
+                 entry_cutoff=dtime(13, 0), escape=dtime(10, 0), spread_veto=2.0),
+    "SB21": dict(desc="rotate only after a LOSING ticket",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0), on_win="stay"),
+    "SV21": dict(desc="rotate only after a LOSING ticket + 2% spread veto",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0), on_win="stay", spread_veto=2.0),
+    "SB24": dict(desc="rotation restricted to current top-3",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0), top=3),
+    "SV24": dict(desc="rotation restricted to current top-3 + 2% spread veto",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0), top=3, spread_veto=2.0),
+    "SB25": dict(desc="stale-pick escape 09:30 instead of 10:00",
+                 entry_cutoff=dtime(14, 30), escape=dtime(9, 30)),
+    "SV25": dict(desc="stale-pick escape 09:30 instead of 10:00 + 2% spread veto",
+                 entry_cutoff=dtime(14, 30), escape=dtime(9, 30), spread_veto=2.0),
+    "SBNE": dict(desc="NO stale-pick escape",
+                 entry_cutoff=dtime(14, 30)),
+    "SVNE": dict(desc="NO stale-pick escape + 2% spread veto",
+                 entry_cutoff=dtime(14, 30), spread_veto=2.0),
 }
 
 
