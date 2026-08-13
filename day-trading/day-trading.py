@@ -502,7 +502,28 @@ def etrade_live_metrics(symbols: list[str]) -> dict:
 
 HARAM_INDUSTRY_WORDS = ["bank", "gambling", "casino", "alcohol", "brewer",
                         "distiller", "tobacco", "defense", "aerospace",
-                        "insurance", "lending", "mortgage", "adult"]
+                        "insurance", "lending", "mortgage", "adult",
+                        # added 2026-08-13 after Paper Day 8: the list
+                        # had no beverage/pork/betting terms at all.
+                        "beer", "wine", "winery", "liquor", "spirits",
+                        "vineyard", "betting", "wager", "lottery",
+                        "sportsbook", "poker", "pork", "swine", "bacon",
+                        "nightclub", "strip club", "pawn", "payday"]
+
+# Industries where haram REVENUE is plausible but is NOT measurable from
+# the statements we can read. haram_pct is interest-income-only, so a
+# restaurant selling alcohol or pork scores 0.00% and sails through --
+# on Paper Day 8 RRGB (Red Robin) returned halal=True with loan_pct 0.00
+# against a -1.396 P/B. Absence of evidence is not compliance: these
+# resolve to CANNOT-VERIFY, which is NOT tradeable, until a human checks
+# the revenue mix.
+REVENUE_SENSITIVE_WORDS = ["restaurant", "dining", "food", "beverage",
+                           "grocer", "supermarket", "convenience store",
+                           "hotel", "resort", "leisure", "cruise",
+                           "entertainment", "theater", "cinema",
+                           "hospitality", "bar ", "pub", "catering",
+                           "meat", "protein", "packaged food", "snack",
+                           "retail"]
 
 
 def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
@@ -608,19 +629,56 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
     combined_ok = combined <= 20
     haram_ok = haram_pct < 5
 
-    # industry screen: RH cache sector/industry first, yfinance fallback
+    # Industry screen. Paper Day 8 showed RH sector labels are unreliable
+    # (AZ, a shopping-cart maker, is tagged "Financial Conglomerates"), so
+    # we screen the NAME and BUSINESS SUMMARY too, not just the label --
+    # AIFA runs poker venues under a label that never says gambling.
     rh = load_rh_fundamentals().get(symbol.upper())
     ind = f"{(rh or {}).get('sector', '')} {(rh or {}).get('industry', '')}"
-    if not ind.strip():
-        try:
-            info = t.info or {}
+    text = ind
+    try:
+        info = t.info or {}
+        if not ind.strip():
             ind = f"{info.get('sector', '')} {info.get('industry', '')}"
-        except Exception:
-            ind = ""
-    industry_ok = not any(w in ind.lower() for w in HARAM_INDUSTRY_WORDS)
+        text = " ".join([
+            ind,
+            str(info.get("sector", "")), str(info.get("industry", "")),
+            str(info.get("shortName", "")), str(info.get("longName", "")),
+            str(info.get("longBusinessSummary", "")),
+        ])
+    except Exception:
+        pass
+    tl = text.lower()
+    hits = [w for w in HARAM_INDUSTRY_WORDS if w in tl]
+    industry_ok = not hits
+    # haram_pct measures INTEREST INCOME ONLY. For revenue-sensitive
+    # businesses that number cannot see alcohol/pork/gaming revenue, so a
+    # clean ratio sheet is not evidence of a permissible revenue mix.
+    rev_hits = [w for w in REVENUE_SENSITIVE_WORDS if w in tl]
+    unverifiable = bool(rev_hits) and not hits
 
-    halal = loan_ok and cash_ok and combined_ok and haram_ok and industry_ok
+    halal = (loan_ok and cash_ok and combined_ok and haram_ok
+             and industry_ok and not unverifiable)
+    if unverifiable:
+        return {
+            "loan_pct": round(loan_pct, 2),
+            "cash_pct": round(cash_pct, 2),
+            "combined": round(combined, 2),
+            "haram_pct": round(haram_pct, 2),
+            "halal": False,
+            "verdict": "CANNOT-VERIFY",
+            "source": src,
+            "fail_reason": (
+                f"CANNOT-VERIFY revenue mix ({', '.join(rev_hits[:3])}): "
+                f"haram_pct is interest-income-only and cannot see "
+                f"alcohol/pork/gaming revenue. Ratios pass "
+                f"(loan {loan_pct:.2f} cash {cash_pct:.2f}) but that is "
+                f"NOT a permissibility verdict. Human review required; "
+                f"do NOT trade on this."),
+        }
     return {
+        "verdict": "PASS" if halal else "FAIL",
+        "haram_pct_note": "interest income only -- blind to revenue mix",
         "loan_pct": round(loan_pct, 2),
         "cash_pct": round(cash_pct, 2),
         "combined": round(combined, 2),
@@ -628,7 +686,7 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
         "halal": halal,
         "source": src,
         "fail_reason": "" if halal else (
-            "HARAM INDUSTRY" if not industry_ok else
+            f"HARAM INDUSTRY ({', '.join(hits[:3])})" if not industry_ok else
             "LOAN>10+COMBINED>20" if not loan_ok else
             "CASH>10+COMBINED>20" if not cash_ok else
             "COMBINED>20" if not combined_ok else
@@ -2466,6 +2524,73 @@ def cmd_rank(pairs, as_of=None, date=None, top=None, as_json=False,
              "   TOP = none (nothing passes every gate)"))
 
 
+# The champion's buy_set -- EXACTLY these eight. dragonfly_doji
+# (measured -$1,186) and inverted_hammer (+$17/position, below
+# transaction cost) are labelled by the engine but DELIBERATELY excluded.
+C37_BUY_SET = {"bullish_engulfing", "bullish_spinning_top", "hammer",
+               "morning_star", "rising_three", "tweezer_bottom",
+               "macd_cross_up", "rsi_cross_up"}
+
+
+def cmd_trigger(symbols, as_of=None, date=None, bars=8, bars_dir=None):
+    """TRIGGER C on LIVE 1-minute bars -- the reversal-candle entry.
+
+    WHY THIS EXISTS (Paper Day 8): `patterns` pulls yfinance with
+    period="1d", interval="1m", prepost=False -- daily-session only, no
+    premarket, one bare symbol, and it prints EVERY pattern the engine
+    can label rather than the champion's eight. So Trigger C was
+    effectively unavailable for a whole live session: one of three legal
+    entries simply did not exist. This reads the same cached RH 1-minute
+    bars `rank` uses and scores only the buy_set.
+
+    Causal: bars after --as-of are never read.
+    """
+    from datetime import datetime as _dt
+    et_now = _dt.now(ET)
+    date = date or et_now.strftime("%Y-%m-%d")
+    if as_of:
+        hh, mm = (int(x) for x in as_of.split(":"))
+        cutoff = dtime(hh, mm)
+    else:
+        cutoff = et_now.time()
+
+    print(f"TRIGGER C  {date} as-of {cutoff}  (champion buy_set only; "
+          f"last {bars} bars)")
+    any_fired = False
+    for sym in symbols:
+        sym = sym.upper()
+        df = (load_rh_bars(sym) if bars_dir is None
+              else _bars_from(bars_dir, sym))
+        if df is None or df.empty:
+            print(f"  {sym:<7} NO BARS (fetch first)")
+            continue
+        df = df[df.index.strftime("%Y-%m-%d") == date]
+        w = df[df.index.time <= cutoff]
+        if len(w) < 6:
+            print(f"  {sym:<7} only {len(w)} bars <= {cutoff}")
+            continue
+        cd = Candles(w)
+        fired = []
+        for i in range(max(0, cd.n - bars), cd.n):
+            sigs = set(cd.bullish_patterns(i)) | set(cd.indicator_bullish(i))
+            keep = sorted(sigs & C37_BUY_SET)
+            excl = sorted(sigs - C37_BUY_SET)
+            if keep:
+                fired.append((cd.index[i], keep, excl))
+        if not fired:
+            print(f"  {sym:<7} no buy_set signal in the last {bars} bars")
+            continue
+        any_fired = True
+        for ts, keep, excl in fired:
+            note = (f"   (ignored, not in buy_set: {', '.join(excl)})"
+                    if excl else "")
+            print(f"  {sym:<7} {ts.strftime('%H:%M')}  "
+                  f"{', '.join(keep)}{note}")
+    if not any_fired:
+        print("  -> no Trigger C anywhere. Do NOT substitute another "
+              "pattern; the eight are the whole set.")
+
+
 def _bars_from(bars_dir, sym):
     fs = sorted(Path(bars_dir).glob(f"{sym.upper()}_*.csv"))
     if not fs:
@@ -2551,8 +2676,20 @@ def main() -> None:
     rk.add_argument("--bars-dir", default=None,
                     help="override the bar cache directory")
 
+    tg = sub.add_parser("trigger",
+                        help="Trigger C on live 1-min bars (champion "
+                             "buy_set only)")
+    tg.add_argument("symbols", nargs="+")
+    tg.add_argument("--as-of", default=None)
+    tg.add_argument("--date", default=None)
+    tg.add_argument("--bars", type=int, default=8)
+    tg.add_argument("--bars-dir", default=None)
+
     args = p.parse_args()
-    if args.cmd == "rank":
+    if args.cmd == "trigger":
+        cmd_trigger(args.symbols, args.as_of, args.date, args.bars,
+                    args.bars_dir)
+    elif args.cmd == "rank":
         cmd_rank(args.pairs, args.as_of, args.date, args.top,
                  args.as_json, args.bars_dir)
     elif args.cmd == "scan":
