@@ -3280,3 +3280,64 @@ in banking frequency too.
 DAY-7 SPECIFIC: banking at 6% would have turned BE's +$105 into ~+$921
 that single day. The two-year price of that rule is $366,602.
 C37 stands unchanged. Capture ratio 0.29 remains the tail's premium.
+
+## V-SERIES: THE LIVE SPREAD VETO, MODELLED (2026-08-12)
+Live refuses any entry whose inside book is wider than 0.5%. The sim
+NEVER modelled this -- it pays a 50bps premarket haircut and takes the
+trade. So live has been running a strictly more restrictive strategy
+than the one that earned $774,534, and the ~$1,956/day benchmark does
+not measure what we actually trade. This series prices the difference.
+
+METHOD: no L2 history exists, so the proxy is the MEDIAN 1-min bar
+range (H-L)/C over the 10 bars BEFORE entry (our own trigger bar
+excluded). Implemented in the HARNESS (rotation_sim.run_day), post-hoc
+at the entry bar -- no engine change, so every prior identity holds by
+construction. V000 reproduces C37 at $774,534. A vetoed entry consumes
+NO ticket and the clock steps past the trigger, exactly as live does.
+READ THE SWEEP BY VETO RATE, not by the threshold: the proxy is not
+comparable in units to a 0.5% inside spread.
+
+  cfg    cap      Y1        Y2       2yr     vs C37   %   rate  negm
+  V000   none  389,685   384,849   774,534       --  100%    -  0/23
+  V800   8.0%  371,979   395,880   767,859   -6,675   99%   8%  0/23
+  V500   5.0%  404,214   372,503   776,717   +2,183  100%  25%  0/23
+  V300   3.0%  435,073   400,359   835,432  +60,898  108%  48%  0/23
+  V200   2.0%  436,048   409,473   845,521  +70,987  109%  64%  0/23
+  V100   1.0%  363,612   300,318   663,930 -110,604   86%  85%  0/23
+  V050   0.5%  281,026   160,081   441,107 -333,427   57%  93%  0/23
+  VC30  shuf3  285,651   324,855   610,506 -164,028   79%  66%  0/23
+  VC10  shuf1  127,799   204,253   332,052 -442,482   43%  94%  0/22
+
+RESULT 1 -- THE VETO HAS AN INTERIOR OPTIMUM, and we are on the wrong
+side of it. Blocking the widest ~50-65% of entries ADDS ~$61-71k
+(+8-9%) and improves BOTH years independently (V200: Y1 +46,363, Y2
++24,624) at 0/23 negative months. Blocking 85-93% DESTROYS the
+strategy (-$111k at 85%, -$333k at 93%). The curve is non-monotonic
+with a sharp cliff below a 2% proxy cap.
+RESULT 2 -- THE PROXY CARRIES REAL INFORMATION. Rate-matched controls:
+  V200 (64% rate) $845,521  vs  VC30 shuffled (66% rate) $610,506
+  V050 (93% rate) $441,107  vs  VC10 shuffled (94% rate) $332,052
+At essentially identical veto rates the real proxy beats the shuffled
+one by +$235,015 and +$109,055. Wide-tape entries really are worse;
+this is not "trade less".
+RESULT 3 -- IT IS ORDERING, NOT GATING, WHICH IS WHY IT WORKS. Under
+rotation a veto does not delete a trade, it REDIRECTS the ticket to the
+next candidate. That makes this a preference for tight-tape names, not
+a subtracting gate -- consistent with lesson #1 (gates subtract, only
+ordering adds) rather than a counterexample to it.
+
+LIVE IMPLICATION (the actionable part): on Paper Day 7 the live 0.5%
+cap vetoed essentially every premarket rank-1 pick -- a ~90-100% veto
+rate, which maps to the V050/V100 region where the model says we are
+burning $111-333k of annualised edge. THE LIVE VETO IS TOO AGGRESSIVE
+IN THE PREMARKET. It also fully explains the ticket-utilisation gap
+(1 of 7 tickets deployed, 3 sessions running).
+DO NOT hard-code a new threshold from this. The proxy conflates book
+width with volatility, so the mapping from "proxy > 2%" to an inside-
+spread number is unknown. The correct live change is to TARGET A VETO
+RATE (~50-65% of would-be entries), measure the rate the current cap
+actually produces, and calibrate the cap to hit that rate -- premarket
+and post-open separately, since 09:30 collapses spreads.
+NOT ADOPTABLE AS C38 YET: needs the full battery (slippage stress,
+walk-8 coverage, both-direction walk-forward, monthly bootstrap) and,
+more importantly, a proxy that is not confounded with volatility.
