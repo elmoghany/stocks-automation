@@ -70,7 +70,14 @@
     "AVAH",
     "KGEI",
     "DERM",
-    "JACK"
+    "JACK",
+    "XHG",
+    "ELMT",
+    "PAVM",
+    "CRMD",
+    "FOSL",
+    "IPWR",
+    "AMBP"
   ],
   "crossed_set_note": "Latched for the whole session. A name that fades below +10% and drops off the scanner stays eligible (parity item: the cross is a latch in the sim, a snapshot in the scanner).",
   "halal": {
@@ -88,7 +95,12 @@
       "CVKD",
       "YXT",
       "KGEI",
-      "DERM"
+      "DERM",
+      "XHG",
+      "ELMT",
+      "PAVM",
+      "FOSL",
+      "IPWR"
     ],
     "FAIL": [
       "DUKR",
@@ -109,7 +121,9 @@
       "NAMI",
       "BIRK",
       "AVAH",
-      "JACK"
+      "JACK",
+      "AMBP",
+      "CRMD"
     ],
     "fail_note": "Day-scoped and inherited. Must be passed into every delegated scan so a FAIL cannot re-enter the pool (API HYGIENE defect #2).",
     "live_screens": [
@@ -183,6 +197,30 @@
         "halal": false,
         "fail_reason": "LOAN>10+COMBINED>20",
         "note": "Jack in the Box, $376M mcap carrying post-Del Taco debt at ~694% of market cap. Would also be questionable on a food-based haram screen (pork), but leverage rejected it first."
+      },
+      {
+        "sym": "AMBP",
+        "market_cap": 3188202875,
+        "source": "quarterly",
+        "loan_pct": 136.25,
+        "cash_pct": 5.93,
+        "combined": 142.18,
+        "haram_pct": 0.85,
+        "halal": false,
+        "fail_reason": "LOAN>10+COMBINED>20",
+        "note": "Ardagh Metal Packaging -- 136% debt/mcap."
+      },
+      {
+        "sym": "CRMD",
+        "market_cap": 557400750,
+        "source": "quarterly",
+        "loan_pct": 25.99,
+        "cash_pct": 31.95,
+        "combined": 57.94,
+        "haram_pct": 0.0,
+        "halal": false,
+        "fail_reason": "LOAN>10+COMBINED>20",
+        "note": "CorMedix. Failed on BOTH sides -- 25.99% debt and 31.95% cash. A cash-rich biotech fails the deposits test the same way a levered name fails the loans test; the screen is symmetric."
       }
     ]
   },
@@ -363,6 +401,22 @@
         "JACK"
       ],
       "note": "YXT surged +15.5% -> +49.7% but coil only 0.888, so it never reached candidacy."
+    },
+    {
+      "cycle": 8,
+      "time_et": "08:39",
+      "state": "FLAT-~30m",
+      "action": "delegated scan + bars + rank",
+      "top": "HLIT",
+      "new_crossers": [
+        "XHG",
+        "ELMT",
+        "PAVM",
+        "CRMD",
+        "FOSL",
+        "IPWR",
+        "AMBP"
+      ]
     }
   ],
   "lessons": [
