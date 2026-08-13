@@ -500,38 +500,55 @@ def etrade_live_metrics(symbols: list[str]) -> dict:
     return out
 
 
-HARAM_INDUSTRY_WORDS = ["bank", "gambling", "casino", "alcohol", "brewer",
-                        "distiller", "tobacco", "defense", "aerospace",
-                        "insurance", "lending", "mortgage", "adult",
-                        # added 2026-08-13 after Paper Day 8: the list
-                        # had no beverage/pork/betting terms at all.
-                        "beer", "wine", "winery", "liquor", "spirits",
-                        "vineyard", "betting", "wager", "lottery",
-                        "sportsbook", "poker", "pork", "swine", "bacon",
-                        "nightclub", "strip club", "pawn", "payday",
-                        # user ruling 2026-08-13: ENTERTAINMENT IS HARAM
-                        # -- a hard FAIL, not merely unverifiable. Film,
-                        # streaming and venue exhibition are the same
-                        # business, so they fail with it.
-                        "entertainment", "theater", "theatre", "cinema",
-                        "movie", "film studio", "streaming media"]
+# THE 5% PROPORTION RULE (user ruling 2026-08-13).
+# Haram revenue is permissible only below 5% of the business. So the
+# screen must separate two very different situations, which the earlier
+# flat keyword list conflated:
+#
+#   PRIMARY  -- the company's OWN line of business is haram. A brewery
+#               earns ~100% from alcohol; proportion is not in question.
+#               Hard FAIL.
+#   PROPORTION -- haram revenue is PLAUSIBLE but its share is unknown. A
+#               restaurant serving alcohol might be 3% or 30%; a grocer
+#               might carry pork or not. haram_pct cannot tell us --
+#               it is interest-income-only. CANNOT-VERIFY until the 5%
+#               test is applied to real segment revenue.
+#
+# Getting this wrong in either direction is costly: hard-failing every
+# restaurant refuses permissible names, while passing them on a clean
+# ratio sheet is how a film studio (ANGX) got armed on Paper Day 8.
+HARAM_PRIMARY_WORDS = [
+    # finance / insurance
+    "bank", "lending", "mortgage", "insurance", "pawn", "payday",
+    # gambling
+    "gambling", "casino", "sportsbook", "lottery", "poker", "betting",
+    "wager",
+    # alcohol PRODUCERS (the business itself, not a menu item)
+    "brewer", "brewery", "distiller", "distillery", "winery", "vineyard",
+    # other prohibited primary lines
+    "tobacco", "defense", "aerospace", "adult", "nightclub",
+    "strip club", "pork", "swine",
+    # user ruling 2026-08-13: ENTERTAINMENT IS HARAM
+    "entertainment", "theater", "theatre", "cinema", "movie",
+    "film studio", "streaming media",
+]
 
-# Industries where haram REVENUE is plausible but is NOT measurable from
-# the statements we can read. haram_pct is interest-income-only, so a
-# restaurant selling alcohol or pork scores 0.00% and sails through --
-# on Paper Day 8 RRGB (Red Robin) returned halal=True with loan_pct 0.00
-# against a -1.396 P/B. Absence of evidence is not compliance: these
-# resolve to CANNOT-VERIFY, which is NOT tradeable, until a human checks
-# the revenue mix.
-# NOTE: "retail" was here and is NOT (user ruling 2026-08-13) -- plain
-# retail is permissible, and including it made almost every consumer
-# name unverifiable for no reason. "entertainment" moved the other way,
-# into HARAM_INDUSTRY_WORDS as a hard FAIL.
-REVENUE_SENSITIVE_WORDS = ["restaurant", "dining", "food", "beverage",
+# Haram exposure is plausible here but the SHARE is unmeasurable from
+# the statements we can read, so the 5% test cannot be applied
+# automatically. Resolves to CANNOT-VERIFY (not tradeable, not a
+# compliance failure) pending human review of segment revenue.
+# "retail" is deliberately NOT here (user ruling): plain retail is
+# permissible and including it made nearly every consumer name
+# unverifiable for no reason.
+REVENUE_SENSITIVE_WORDS = ["alcohol", "beer", "wine", "liquor", "spirits",
+                           "restaurant", "dining", "food", "beverage",
                            "grocer", "supermarket", "convenience store",
                            "hotel", "resort", "leisure", "cruise",
                            "hospitality", "bar ", "pub", "catering",
                            "meat", "protein", "packaged food", "snack"]
+
+# Back-compat alias: older callers screen against this name.
+HARAM_INDUSTRY_WORDS = HARAM_PRIMARY_WORDS
 
 
 def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
@@ -678,11 +695,14 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
             "source": src,
             "fail_reason": (
                 f"CANNOT-VERIFY revenue mix ({', '.join(rev_hits[:3])}): "
-                f"haram_pct is interest-income-only and cannot see "
-                f"alcohol/pork/gaming revenue. Ratios pass "
-                f"(loan {loan_pct:.2f} cash {cash_pct:.2f}) but that is "
-                f"NOT a permissibility verdict. Human review required; "
-                f"do NOT trade on this."),
+                f"APPLY THE 5% RULE -- haram revenue must be under 5% of "
+                f"total revenue, and if it is the main line or ~50% the "
+                f"name is haram. haram_pct here is INTEREST INCOME ONLY "
+                f"({haram_pct:.2f}%) and cannot see product revenue, so "
+                f"the test has NOT been run. Ratios pass (loan "
+                f"{loan_pct:.2f} cash {cash_pct:.2f}) but financing "
+                f"permissibly is not earning permissibly. Check segment "
+                f"revenue by hand; do NOT trade until it clears 5%."),
         }
     return {
         "verdict": "PASS" if halal else "FAIL",
