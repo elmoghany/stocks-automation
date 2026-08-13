@@ -34,10 +34,11 @@
       10000
     ],
     "day_cap_usd": 100000,
-    "deployed": 0,
+    "deployed": 1,
     "new_ticket_cutoff_et": "14:30",
     "all_exits_by_et": "15:00",
-    "flatten_ladder_from_et": "14:57"
+    "flatten_ladder_from_et": "14:57",
+    "deployed_usd": 12965.6
   },
   "crossed_set": [
     "DUKR",
@@ -543,7 +544,41 @@
       "note": "NOT a spread veto - the spread was fine at 0.24%. Price had already run 0.85% past the trigger, so a stop would have been a disguised market order and a marketable limit could not fill inside the 0.5% cap. This is the Day-5 LFST error (-1.6% fill) being actively prevented. Correct action per protocol: wait for a retest."
     }
   ],
-  "trades": [],
+  "trades": [
+    {
+      "n": 1,
+      "sym": "ANGX",
+      "company": "Angel Studios",
+      "ticket": 1,
+      "paper_only": true,
+      "side": "LONG",
+      "entry_time_et": "11:17",
+      "entry_price": 4.265,
+      "shares": 3040,
+      "cost_usd": 12965.6,
+      "trigger_type": "Trigger B - session-high stop-buy (ratchet re-armed at 4.2650)",
+      "fill_basis": "Backtest convention: breaks fill AT the trigger. Stop-limit trigger 4.2650, limit 4.2863; realistic fill band [4.2650, 4.2863].",
+      "entry_bar": "11:17 ET o4.2510 h4.2700 l4.2510 c4.2650 v1913 -- traded through the trigger intrabar",
+      "fill_realism": {
+        "assumed_fill": 4.265,
+        "price_plus_60s": 4.27,
+        "delta_pct": 0.117,
+        "reading": "Fill was 0.117% BETTER than the price 60 seconds later (we bought below it). Third fill-realism data point; the first two were LZ +1.7% (favourable) and LFST -1.6% (adverse)."
+      },
+      "halal": "live PASS - loan 9.94 / cash 6.20 / combined 16.14 / haram 0.12",
+      "exit_rules_armed_at_entry": {
+        "hard_stop_resting": 3.9238,
+        "resting_stop_formula": "max(entry x 0.92, peak x 0.60)",
+        "trail": "20% from peak (peak x 0.80); tighten to 10% (peak x 0.90) if 10-bar pressure <= -0.3; widen to 40% (peak x 0.60) if >= +0.3",
+        "scale_out": "bank 1/3 at +25% (5.3313) unless pressure >= +0.3",
+        "wick_guard": true,
+        "halt_protocol": "never enter on a reopen bar",
+        "hard_flatten": "all exits by 15:00 ET; flatten ladder from 14:57 (bid -1%), 14:59 (bid -2%)"
+      },
+      "note": "Trail only becomes binding above +15% (peak x 0.80 > entry x 0.92); until then the -8% hard stop at 3.9238 governs. That is C37's let-it-run design, not an oversight.",
+      "status": "OPEN"
+    }
+  ],
   "coverage_gaps": [],
   "cadence_log": [
     {
@@ -698,6 +733,13 @@
       "state": "FLAT-ARM",
       "action": "ANGX retest -> ARMED at 4.2650 (ticket reduced to $12,965.60 on displayed depth)",
       "top": "ANGX"
+    },
+    {
+      "cycle": 17,
+      "time_et": "11:17",
+      "state": "FILL -> HOLD-1m",
+      "action": "ANGX filled 3040 @ 4.2650; switching to 1-minute position watch",
+      "top": "ANGX"
     }
   ],
   "lessons": [
@@ -829,7 +871,8 @@
       "halal": "live PASS - loan 9.94 / cash 6.20 / combined 16.14 / haram 0.12 (both sides under 10%, cleanest of the day)",
       "note": "Ratchet re-armed at the new session high 4.2650; waited for last < trigger so the stop is a TRUE FORWARD STOP, not a disguised market order. NOT a retest entry -- retests are a rejected mechanic (G-series: a nonsense-level control beat every real retest level). Only three triggers are valid: 5-min ORB break, premarket/session-high stop-buy, reversal candle from the eight-member set.",
       "protective_stop_on_fill": "resting stop-limit at max(entry x 0.92, peak x 0.60)",
-      "trigger_type": "Trigger B - session-high stop-buy via the ORB/session-high RATCHET re-arming at the new high 4.2650"
+      "trigger_type": "Trigger B - session-high stop-buy via the ORB/session-high RATCHET re-arming at the new high 4.2650",
+      "status": "FILLED 11:17 ET"
     }
   ],
   "live_vs_backtest_divergences": [
