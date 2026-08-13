@@ -6,8 +6,12 @@
   "real_orders_placed": 0,
   "benchmark_per_traded_day": 1541.0,
   "benchmark_note": "$665,667/2yr over 432 traded days, 0/23 negative months. Corrected 2026-08-13; Days 5-7 were scored against an inflated $1,956.",
-  "prior_days": {"day5": -65.78, "day6": -266.54, "day7": 104.58, "cumulative_before_today": -227.74},
-
+  "prior_days": {
+    "day5": -65.78,
+    "day6": -266.54,
+    "day7": 104.58,
+    "cumulative_before_today": -227.74
+  },
   "session": {
     "trading_day_guard": "TRADING 2026-08-13 full",
     "half_day": false,
@@ -19,70 +23,257 @@
     "halal_list_age_days": 4,
     "tick_clock": "persistent Monitor TICK-A, UTC-armed, 300s, breaks 15:05 ET"
   },
-
   "tickets": {
-    "schedule_usd": [15000, 15000, 15000, 15000, 15000, 15000, 10000],
+    "schedule_usd": [
+      15000,
+      15000,
+      15000,
+      15000,
+      15000,
+      15000,
+      10000
+    ],
     "day_cap_usd": 100000,
     "deployed": 0,
     "new_ticket_cutoff_et": "14:30",
     "all_exits_by_et": "15:00",
     "flatten_ladder_from_et": "14:57"
   },
-
-  "crossed_set": ["DUKR","EUDA","ARX","FORTY","CURI","HLIT","FRGT","OMER","FGI","TRIB","HHS","DAAQ","XBP","CGEM","CRMT","USIO","ENS","IPCX","BCAB"],
+  "crossed_set": [
+    "DUKR",
+    "EUDA",
+    "ARX",
+    "FORTY",
+    "CURI",
+    "HLIT",
+    "FRGT",
+    "OMER",
+    "FGI",
+    "TRIB",
+    "HHS",
+    "DAAQ",
+    "XBP",
+    "CGEM",
+    "CRMT",
+    "USIO",
+    "ENS",
+    "IPCX",
+    "BCAB",
+    "SFHG",
+    "AIRO",
+    "NAMI"
+  ],
   "crossed_set_note": "Latched for the whole session. A name that fades below +10% and drops off the scanner stays eligible (parity item: the cross is a latch in the sim, a snapshot in the scanner).",
-
   "halal": {
-    "PASS": ["EUDA","HLIT","DAAQ","IPCX"],
-    "NEEDS_SCREEN": ["FORTY"],
-    "FAIL": ["DUKR","ARX","CURI","FRGT","OMER","FGI","TRIB","HHS","XBP","CGEM","CRMT","USIO","ENS","BCAB"],
+    "PASS": [
+      "EUDA",
+      "HLIT",
+      "DAAQ",
+      "IPCX"
+    ],
+    "NEEDS_SCREEN": [
+      "FORTY",
+      "SFHG"
+    ],
+    "FAIL": [
+      "DUKR",
+      "ARX",
+      "CURI",
+      "FRGT",
+      "OMER",
+      "FGI",
+      "TRIB",
+      "HHS",
+      "XBP",
+      "CGEM",
+      "CRMT",
+      "USIO",
+      "ENS",
+      "BCAB",
+      "AIRO",
+      "NAMI"
+    ],
     "fail_note": "Day-scoped and inherited. Must be passed into every delegated scan so a FAIL cannot re-enter the pool (API HYGIENE defect #2).",
     "live_screens": [
-      {"sym": "HLIT", "market_cap": 1301952000, "source": "quarterly",
-       "loan_pct": 10.07, "cash_pct": 8.37, "combined": 18.44, "haram_pct": 0.22,
-       "halal": true,
-       "note": "loan_pct exceeds the 10% figure quoted in the skill summary, but the implemented rule (day-trading.py:511) permits one side over 10% while combined stays under 20%. Combined 18.44% -> genuine PASS. Headroom 1.56pp."}
+      {
+        "sym": "HLIT",
+        "market_cap": 1301952000,
+        "source": "quarterly",
+        "loan_pct": 10.07,
+        "cash_pct": 8.37,
+        "combined": 18.44,
+        "haram_pct": 0.22,
+        "halal": true,
+        "note": "loan_pct exceeds the 10% figure quoted in the skill summary, but the implemented rule (day-trading.py:511) permits one side over 10% while combined stays under 20%. Combined 18.44% -> genuine PASS. Headroom 1.56pp."
+      },
+      {
+        "sym": "AIRO",
+        "market_cap": 315579514,
+        "source": "quarterly",
+        "loan_pct": 1.38,
+        "cash_pct": 17.18,
+        "combined": 18.56,
+        "haram_pct": 1.06,
+        "halal": false,
+        "fail_reason": "HARAM INDUSTRY",
+        "note": "Aerospace & Defense. Ratios alone would have PASSED (combined 18.56<20); the industry keyword screen is what rejected it."
+      },
+      {
+        "sym": "NAMI",
+        "market_cap": 11939209,
+        "source": "quarterly",
+        "loan_pct": 168.5,
+        "cash_pct": 663.94,
+        "combined": 832.44,
+        "haram_pct": 0.0,
+        "halal": false,
+        "fail_reason": "LOAN>10+COMBINED>20",
+        "note": "$11.9M mcap against a large balance sheet -- textbook small-denominator failure."
+      }
     ]
   },
-
   "excluded_non_common": 37,
   "excluded_non_common_note": "Of 56 scan hits, 37 were ETFs/ETNs/leveraged funds (Corgi 2x, T-REX 2X, Tradr, Leverage Shares, ProShares, MicroSectors, Defiance). Not common stock -> ineligible.",
-
   "data_quality_findings": [
     {
       "id": "interpolated-only-bars",
-      "symbols": ["EUDA","DAAQ","FORTY"],
+      "symbols": [
+        "EUDA",
+        "DAAQ",
+        "FORTY"
+      ],
       "detail": "161 interpolated bars and 0 real bars each -- no genuine premarket trading. Headline scan gains (EUDA +50%, FORTY +38%, DAAQ +13%) are stale marks, not real gaps. EUDA synthetic bars sat at 13.19 vs a 13.30 prev close, i.e. flat.",
       "action": "Ranker correctly excluded all three as NO BARS. Interpolated-bar count is a cheap detector for scanner %Change artefacts on illiquid names.",
       "new": true
     }
   ],
-
   "api_hygiene": {
     "historicals_batches": [
-      {"requested": ["EUDA","HLIT","DAAQ","IPCX","FORTY"], "returned": ["DAAQ","EUDA","FORTY","HLIT","IPCX"], "truncated": false}
+      {
+        "requested": [
+          "EUDA",
+          "HLIT",
+          "DAAQ",
+          "IPCX",
+          "FORTY"
+        ],
+        "returned": [
+          "DAAQ",
+          "EUDA",
+          "FORTY",
+          "HLIT",
+          "IPCX"
+        ],
+        "truncated": false
+      },
+      {
+        "requested": [
+          "HLIT",
+          "SFHG",
+          "EUDA",
+          "DAAQ",
+          "IPCX",
+          "FORTY"
+        ],
+        "returned": [
+          "DAAQ",
+          "EUDA",
+          "FORTY",
+          "HLIT",
+          "IPCX",
+          "SFHG"
+        ],
+        "truncated": false
+      },
+      {
+        "requested": [
+          "HLIT",
+          "SFHG",
+          "AIRO",
+          "NAMI",
+          "IPCX",
+          "EUDA",
+          "DAAQ",
+          "FORTY"
+        ],
+        "returned": [
+          "AIRO",
+          "DAAQ",
+          "EUDA",
+          "FORTY",
+          "HLIT",
+          "IPCX",
+          "NAMI",
+          "SFHG"
+        ],
+        "truncated": false
+      }
     ],
     "assertion": "returned symbol set == requested set, checked in plan/rh_bars_ingest.py"
   },
-
   "veto_ledger": [
     {
-      "n": 1, "time_et": "06:53", "sym": "HLIT", "session_phase": "premarket",
+      "n": 1,
+      "time_et": "06:43",
+      "sym": "HLIT",
+      "session_phase": "premarket",
       "trigger": "premarket-high stop-buy 15.3000",
       "fill_arming_rule": "satisfied (last 14.9100 < trigger, a stop was legitimate)",
       "reason": "thin book",
-      "inside_bid": 14.80, "inside_ask": 15.30, "spread_pct": 3.32, "spread_cap_pct": 0.5,
-      "depth_shares_to_trigger_plus_0p5pct": 169, "shares_intended": 980,
-      "size_cap_shares": 1021, "size_cap_binding": false,
+      "inside_bid": 14.8,
+      "inside_ask": 15.3,
+      "spread_pct": 3.32,
+      "spread_cap_pct": 0.5,
+      "depth_shares_to_trigger_plus_0p5pct": 169,
+      "shares_intended": 980,
+      "size_cap_shares": 1021,
+      "size_cap_binding": false,
       "outcome_usd": null,
       "note": "Spread was the binding constraint, not size. 20% of trailing 10 completed minutes was ~a full $15k ticket."
     }
   ],
-
   "trades": [],
   "coverage_gaps": [],
   "cadence_log": [
-    {"cycle": 1, "time_et": "06:40", "state": "FLAT-5m", "action": "full scan + rank", "top": "HLIT"}
+    {
+      "cycle": 1,
+      "time_et": "06:40",
+      "state": "FLAT-5m",
+      "action": "full scan + rank",
+      "top": "HLIT"
+    },
+    {
+      "cycle": 2,
+      "time_et": "06:47",
+      "state": "FLAT-5m",
+      "action": "delegated scan + rank",
+      "top": "HLIT",
+      "new_crossers": [
+        "SFHG"
+      ]
+    },
+    {
+      "cycle": 3,
+      "time_et": "06:48",
+      "state": "FLAT-5m",
+      "action": "HLIT book recheck",
+      "top": "HLIT",
+      "note": "14.77x15.30 spread 3.5% - veto stands, bid side thinned"
+    },
+    {
+      "cycle": 4,
+      "time_et": "07:00",
+      "state": "FLAT-5m",
+      "action": "delegated scan + bars + rank",
+      "top": "HLIT",
+      "new_crossers": [
+        "AIRO",
+        "NAMI"
+      ],
+      "note": "SFHG faded to +8.4% and dropped OFF the scanner but stayed ranked via the crossed-set LATCH -- the parity rule working in the live session."
+    }
   ],
-  "lessons": []
+  "lessons": [
+    "LATCH DEMONSTRATED LIVE: SFHG printed +11.4% at 06:47, faded to +8.4% by 07:02 and vanished from the scan. It remained a ranked candidate because the +10% cross had already printed. A snapshot-only scanner would have silently shrunk the universe here."
+  ]
 }
