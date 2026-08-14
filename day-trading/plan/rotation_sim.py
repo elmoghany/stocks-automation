@@ -278,6 +278,15 @@ CFGS = {
     "VOLD": dict(desc="LEGACY biased pool, reproduces the old $774,534",
                  entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
                  biased_pool=True),
+    # ---- GATE RE-BASELINE (2026-08-14) ----
+    # Identical parameters to C37H; the difference is the ENVIRONMENT:
+    # run with HALAL_STRICT=1 so halal_pt uses the live gate semantics
+    # (unknown industry refuses, word-boundary matching, no
+    # liabilities-for-debt approximation). Separate config id so this
+    # row can never overwrite the champion's C37H entry.
+    "C37S": dict(desc="C37 re-baselined under the LIVE halal gate "
+                      "(HALAL_STRICT=1)",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0)),
     # ---- T-series (2026-08-13): STALL RELEASE UNDER ROTATION ----
     # Hold-time study (797 legs): winners median 15m, LOSERS median 8m,
     # 78% of all profit lands in the 10-30m band, sub-10m trades LOSE in

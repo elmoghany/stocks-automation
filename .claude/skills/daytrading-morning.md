@@ -943,3 +943,37 @@ ANGX was held 3h40m and moved in a ~2.5% band. The one-position rule meant ticke
 window. C37's $1,541/day assumes rotation through several tickets; a day with one quiet
 holder cannot reach it by construction. That is a property of the champion, not a bug —
 but it means **single-holder days should be judged on process, not P&L.**
+
+
+## TRIGGER C CADENCE (2026-08-14, from Paper Day 9's 7 fires / 0 takeable)
+
+A pattern entry is valid ONLY on the 1-minute close that produced it.
+Day 9 proved a 5-minute rank loop makes every Trigger C signal 1-5 min
+stale, so one of the three legal entries had effectively never run live.
+
+RULE: while FLAT with a TOP name selected, poll THAT name's 1-minute
+bars EVERY MINUTE (one batched bars call) and run
+  python day-trading/day-trading.py trigger TOP --as-of HH:MM
+on each close. The command now tags every signal [TAKEABLE NOW] or
+[STALE Nm old -- DO NOT ENTER] (default freshness 2 min, --max-age).
+NEVER enter on a STALE tag -- the tag does the refusing, not judgement.
+The 5-minute cadence still owns the full re-rank; the 1-minute poll is
+only for the current TOP name's pattern trigger. Triggers A (ORB) and B
+(high stop-buy) are resting orders and need no polling.
+
+## DEPTH VETO and SPREAD VETO ARE DIFFERENT RULES (2026-08-14)
+
+Day 9's LPTH PASSED spread (0.485%) and FAILED depth 4 minutes later on
+the same name (200 sh at the inside ask, then a 2.8% air pocket). Log
+and count them separately, plus fill-arming/chase vetoes as a third
+category. The ~50-65% optimum from the V-series was modelled on a
+bar-range proxy and speaks to the SPREAD veto only; the depth veto and
+chase veto have never been modelled. A single blended "veto rate" hides
+which rule is binding.
+
+## CLOCK RULE (2026-08-14): TZ env is BROKEN on this machine
+
+`TZ=America/New_York date` returns UTC on this box -- it silently cost
+Day 9's first clock an hour. Never trust the TZ environment variable.
+Compute ET explicitly (UTC-4 in summer / UTC-5 in winter) or via
+Python zoneinfo("America/New_York"); arm all Monitor clocks on UTC.

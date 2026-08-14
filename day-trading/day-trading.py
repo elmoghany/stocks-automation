@@ -2645,7 +2645,8 @@ C37_BUY_SET = {"bullish_engulfing", "bullish_spinning_top", "hammer",
                "macd_cross_up", "rsi_cross_up"}
 
 
-def cmd_trigger(symbols, as_of=None, date=None, bars=8, bars_dir=None):
+def cmd_trigger(symbols, as_of=None, date=None, bars=8, bars_dir=None,
+                max_age_min=2):
     """TRIGGER C on LIVE 1-minute bars -- the reversal-candle entry.
 
     WHY THIS EXISTS (Paper Day 8): `patterns` pulls yfinance with
@@ -2695,10 +2696,24 @@ def cmd_trigger(symbols, as_of=None, date=None, bars=8, bars_dir=None):
             continue
         any_fired = True
         for ts, keep, excl in fired:
+            # STALENESS GATE (2026-08-14, from Paper Day 9): a pattern
+            # entry is only valid ON the 1-min close that produced it.
+            # Day 9 saw ~7 Trigger C fires and ZERO takeable entries
+            # because a 5-min rank loop made every signal 1-5 min stale.
+            # Enforced here so a stale signal cannot be mistaken for an
+            # entry -- the tag does the refusing, not agent discipline.
+            age = (_dt.combine(_dt.strptime(date, "%Y-%m-%d").date(),
+                               cutoff) - ts.replace(tzinfo=None)
+                   ).total_seconds() / 60
+            if age <= max_age_min:
+                tag = "TAKEABLE NOW"
+            else:
+                tag = (f"STALE ({age:.0f}m old) -- DO NOT ENTER; wait "
+                       f"for a fresh signal")
             note = (f"   (ignored, not in buy_set: {', '.join(excl)})"
                     if excl else "")
             print(f"  {sym:<7} {ts.strftime('%H:%M')}  "
-                  f"{', '.join(keep)}{note}")
+                  f"{', '.join(keep)}  [{tag}]{note}")
     if not any_fired:
         print("  -> no Trigger C anywhere. Do NOT substitute another "
               "pattern; the eight are the whole set.")
@@ -2797,11 +2812,13 @@ def main() -> None:
     tg.add_argument("--date", default=None)
     tg.add_argument("--bars", type=int, default=8)
     tg.add_argument("--bars-dir", default=None)
+    tg.add_argument("--max-age", type=int, default=2, dest="max_age",
+                    help="minutes before a signal reads STALE (default 2)")
 
     args = p.parse_args()
     if args.cmd == "trigger":
         cmd_trigger(args.symbols, args.as_of, args.date, args.bars,
-                    args.bars_dir)
+                    args.bars_dir, args.max_age)
     elif args.cmd == "rank":
         cmd_rank(args.pairs, args.as_of, args.date, args.top,
                  args.as_json, args.bars_dir)
