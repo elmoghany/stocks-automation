@@ -583,6 +583,15 @@
         "trail_px": 109.96,
         "resting_stop": 164.6,
         "note": "Pressure >= +0.3 so the trail is WIDE (40%) - the champion deliberately gives the tail room here. The -8% resting stop at 164.60 is the binding level and is 10% away. No profit-take exists by design; +25% scale-out would be 223.64, far above."
+      },
+      "status_11_30": {
+        "et": "11:30",
+        "last": 180.28,
+        "open_pnl_usd": 114,
+        "peak": 184.28,
+        "max_favourable_usd": 446,
+        "max_adverse_usd": -29,
+        "note": "Round-tripped from +$446 at the 184.28 peak down to -$29 and back to +$114. The 20% trail sits at 147.43 and the -8% resting stop at 164.60, so nothing came close to firing. This is the no-profit-take rule doing exactly what it was measured to do: banking at +6% was rejected at a cost of -$366,602 over two years, and the give-back is the premium paid for the tail."
       }
     }
   ],
