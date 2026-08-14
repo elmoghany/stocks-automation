@@ -213,6 +213,48 @@
       "top": "RDDT",
       "new_crossers": [],
       "note": "No new names; 81 scan rows all resolved from inherited verdicts. The ingest assert fired 'TRUNCATED -- missing GRSD': a FALSE alarm of my own making, because I fetched 10 symbols but ranked 11. Fixed by giving paper_cycle.py an explicit --fetched list, so the assert covers exactly what was requested from the API. A permanent false alarm is dangerous - it trains you to ignore the real thing."
+    },
+    {
+      "cycle": 10,
+      "time_et": "08:08",
+      "state": "FLAT-5m",
+      "ranked": 11,
+      "armable": "4",
+      "top": "RDDT",
+      "new_crossers": [],
+      "note": "SPAI first appeared, REJECT. DAAQ now excluded from the active set."
+    },
+    {
+      "cycle": 11,
+      "time_et": "08:11",
+      "state": "FLAT-5m",
+      "ranked": 11,
+      "armable": "4",
+      "top": "RDDT",
+      "new_crossers": [],
+      "note": "RCMT surfaced as a new halal-PASS crosser; bars fetched next cycle."
+    },
+    {
+      "cycle": 12,
+      "time_et": "08:12",
+      "state": "FLAT-5m",
+      "ranked": 10,
+      "armable": "4",
+      "top": "BRUN",
+      "new_crossers": [
+        "RCMT"
+      ],
+      "note": "RCMT added to the active set; ONFO dropped from bar fetching (needs-screen AND permanently calm-gap FAIL at gap7 +29%)."
+    },
+    {
+      "cycle": 13,
+      "time_et": "08:14-08:16",
+      "state": "FLAT-5m",
+      "ranked": 9,
+      "armable": 4,
+      "top": "BRUN",
+      "new_crossers": [],
+      "note": "MATERIAL: TOP changed to BRUN, so the flat ticket re-targeted. BRUN then failed the spread veto at 3.14%, so the RDDT trigger stays armed at 178.90. RCMT excluded - only 1 bar. Trigger C fired BRUN tweezer_bottom 08:04 and RDDT hammer 08:02 / bullish_engulfing 08:07, all >5 min stale by evaluation time and therefore NOT takeable."
     }
   ],
   "crossed_set": [
@@ -229,6 +271,7 @@
     "NOMA",
     "ONFO",
     "RCG",
+    "RCMT",
     "RDDT",
     "SGML",
     "SXTC"
@@ -236,9 +279,24 @@
   "crossed_set_note": "Latched for the whole session; a name that fades below +10% stays eligible.",
   "trades": [],
   "veto_ledger": {
-    "spread_vetoes": [],
+    "spread_vetoes": [
+      {
+        "n": 1,
+        "sym": "BRUN",
+        "et": "08:15",
+        "phase": "premarket",
+        "rank_at_decision": 1,
+        "bid": 25.5,
+        "ask": 26.3,
+        "spread_pct": 3.14,
+        "cap_pct": 0.5,
+        "would_be_trigger": "B - session high 27.00 (last 26.30 below it, so the fill-arming rule itself was satisfied)",
+        "verdict": "VETOED on spread. 3.14% is more than 6x the 0.5% cap; a stop-limit capped at trigger+0.5% could not fill.",
+        "note": "BRUN took TOP rank from RDDT at 08:12 on 30-bar pressure. The veto did NOT cost a trade: rank 2 RDDT was quoting 175.22/175.25 = 0.017%, so the armed ticket simply stayed where it was."
+      }
+    ],
     "fill_arming_chase_vetoes": [],
-    "decisions_total": 0
+    "decisions_total": 2
   },
   "lessons": [],
   "armed_orders": [
@@ -300,5 +358,6 @@
       "retired_et": "08:05",
       "reason": "gap7 = +43.0%. The calm gap is measured at 07:00 and is therefore FIXED for the day; 43.0% exceeds even the 35% grace reserved for the top-ranked name, so DAAQ can never become armable today. Retired from the active bar-fetch/rank set to free a batch slot (the batch cap is 10). It remains in the crossed set for the record."
     }
-  ]
+  ],
+  "spread_observation": "Day 8's finding inverted today: the tightest book of the morning belongs to a name that IS halal-armable. RDDT 0.017% vs BRUN 3.14%. Liquidity and permissibility are not always opposed."
 }
