@@ -9,6 +9,83 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## Backtest Loses Live (2026-08-13)
+
+C37 replayed over the four live paper days. Hypothesis tested: the
+backtest would have made materially more, i.e. our execution and gating
+leave money on the table. **REFUTED.** On the three evaluable days
+(08-13 is void, ANGX ruled haram) live made **-$227.74** and the
+backtest made **-$1,527 / -$1,422 / -$4,698** depending on the gate.
+Live is the BEST of the four measurements. Full writeup with the
+per-day table, the asymmetries and the reproduce commands:
+[`data/paper_days/REPLAY-2026-08-10_13.md`](data/paper_days/REPLAY-2026-08-10_13.md).
+
+| Date | Live | full pool / PT gate | walk-16 / PT | full / PT + today's screen |
+|---|---:|---:|---:|---:|
+| 08-10 | -65.78 | -2,588.52 | -1,633.12 | -4,054.96 |
+| 08-11 | -266.54 | +970.37 | +210.71 | +78.69 |
+| 08-12 | +104.58 | +90.85 | 0.00 | -721.52 |
+| **D5-7** | **-227.74** | **-1,527.30** | **-1,422.41** | **-4,697.79** |
+| 08-13 (void) | 0.00 | +1,465.88 | +1,193.15 | +327.89 |
+
+Tickets: live 3 eligible; backtest 16 / 7 / 11. The backtest rotated 4x
+more capital and lost more with it -- the "idle tickets" story does not
+convert to profit on these days. The benchmark implies +$4,623 for three
+days; live and backtest both missed it by the same order, so the
+shortfall belongs to the DAYS, not to execution.
+
+Two head-to-heads decide it. **BE 08-12**, same name same tape: live
+armed the PM-high stop-buy and filled 09:26 @235.37 for **+$104.58**;
+the sim waited for a rank-1 slot on the 5-min re-rank and paid 09:45
+@243.61 for **-$353.49**. **SMWB 08-12**, logged live as "largest veto
+cost of the day" (rank 1 for ~15 cycles, vetoed on an 8.4-12.4% book,
+then ran +25%): let the sim buy it and it **loses -$368.03** -- C37's
+exits never captured the run. The spread veto cost nothing that day.
+
+THE TWO FINDINGS THAT OUTLIVE THE P&L QUESTION:
+
+1. **The benchmark is measured on a population we cannot trade.** The m1
+   cache behind $665,667 was backfilled by DAY-HIGH gain depth (walk-8 /
+   top-12 / walk-16, ~17 names/day). Of the halal-list names in these
+   pools only 2 / 3 / 1 per day fall inside a top-16-by-gain window. The
+   names live actually traded rank 80th of 124 (LFST), 23rd of 68
+   (FRMI), 42nd of 113 (BE). The halal gate kills the monsters by
+   design -- SCKT +617% (loans 255% of a $3.2M mcap), BOXL +237% -- and
+   the backfill never reached the +10-18% names that survive it.
+2. **The backtest's halal gate is not the live halal gate.** `halal_pt`
+   fell through to the conservative Massive-bounds path (all liabilities
+   as debt, all current assets as cash) and REFUSED LFST, FRMI, SLN and
+   NESR, all of which live screened and passed on real quarterlies
+   (LFST loans 9.74 / cash 4.79 / combined 14.53). In the other
+   direction it PASSED CAVA, HYLN, HP, HPK and KOPN, all of which
+   today's screen refuses. Neither is a superset of the other, so
+   $665,667 was earned under a gate we do not trade.
+
+Halal audit of every name the backtest picked, against today's rules:
+**5 of 10 would be refused, and they carry +$2,157.71 -- more than 100%
+of the run's gross profit.** HYLN alone is Day 8's entire apparent
++$1,466 and live correctly failed it on haram revenue (13.15% vs 5%).
+Not banked.
+
+Inputs had to be built from nothing: universe reconstructed from the
+ledgers' own crossers and verified against Polygon dailies (124/68/113/59),
+1-min bars fetched to **100% coverage** for 08-10/11/12, halal caches
+warmed for all 323 symbols with 0 failures. 08-13 is still 403 on
+Polygon's free tier, so it runs on partial Robinhood bars (59 of 103
+crossers, 31 with premarket) -- unreliable in both directions, hence
+reported separately. Re-run the pool builder tomorrow to upgrade it.
+
+Asymmetries stated in full in the writeup. The load-bearing ones: the
+sim models no book-depth/spread veto (live vetoes wide books, 3 of 6
+arming decisions on Day 8), the sim sizes at 20% of trailing 10-min
+volume while live also cut on L2 depth, and **Day 6 live was truncated
+by a 4.5h outage from 10:35 ET** -- Day 6 is the one day the backtest
+wins, and the outage is a real part of that. It is an availability
+failure, not a gating one, and it is the only component of the whole
+comparison that supports the hypothesis.
+
+---
+
 ## Code Review of day-trading.py (2026-08-05)
 
 Full review of Candles + simulate_trades after the X100-X300 additions.
