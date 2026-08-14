@@ -552,13 +552,20 @@ REVENUE_SENSITIVE_WORDS = ["alcohol", "beer", "wine", "liquor", "spirits",
                            "hotel", "resort", "cruise", "hospitality",
                            "tavern", "brewpub", "catering", "delicatessen"]
 
-# AMBIGUOUS: these name a haram line, but they also appear constantly
-# as the CUSTOMER market ("serves aerospace and entertainment markets").
-# Seen in the label -> FAIL. Seen only in free text -> CANNOT-VERIFY, so
-# a human decides. Never a silent PASS, never a silent FAIL.
-HARAM_AMBIGUOUS_ANY = ["entertainment", "theater", "theatre", "cinema",
-                       "movie", "gaming", "defense", "aerospace",
-                       "casino", "gambl"]
+# USER RULING 2026-08-14: "consider it haram if it is PURE defense --
+# i.e. AMD is halal". Selling chips INTO defense/aerospace/gaming/
+# entertainment markets is permissible; BEING a defense contractor or a
+# studio is not. Every one of these terms is already caught by
+# HARAM_PRIMARY_LABEL when it is the company's actual line of business
+# (Lockheed's industry label says Aerospace & Defense; Netflix's says
+# Entertainment), so matching them in free text ONLY ever produced false
+# positives -- it removed AMD, ANET, ADI, ADSK and 128 others from the
+# universe because their summaries name their customers.
+# Measured: defense (75) and aerospace (57) alone drove 132 of the 212
+# CANNOT-VERIFY removals in the 2026-08-13 rebuild.
+# Kept as an empty list rather than deleted so the reasoning survives
+# and nobody re-adds free-text matching for these.
+HARAM_AMBIGUOUS_ANY = []
 
 # Back-compat alias: older callers screen against this name.
 HARAM_INDUSTRY_WORDS = HARAM_PRIMARY_LABEL + HARAM_PRIMARY_ANY

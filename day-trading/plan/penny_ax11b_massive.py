@@ -93,15 +93,45 @@ def shares_asof(sym, date):
     return sh
 
 
+# GATE RECONCILIATION (2026-08-14). The replay of Paper Days 5-8 showed
+# this gate and the LIVE gate are different functions in BOTH directions:
+# halal_pt REFUSED LFST/FRMI/SLN/NESR (live passed them on real
+# quarterlies) and PASSED CAVA/HYLN/HP/HPK/KOPN (live refuses them).
+# So $665,667 was earned under a gate we do not trade. Three causes:
+#   1. unknown industry -> ALLOW here, but "absence of evidence is not
+#      compliance" live. This is why the CAVA/HYLN class passes.
+#   2. substring matching here vs word-boundary live ("pub" in "public").
+#   3. the conservative-bounds path below uses TOTAL LIABILITIES and
+#      CURRENT ASSETS as proxies for debt and cash -- far stricter than
+#      the real ratio, which is why the LFST/FRMI class is refused.
+# HALAL_STRICT=1 switches this module to the live semantics. Default OFF
+# so every stored result and identity gate reproduces untouched; adopt
+# only after re-baselining the champion against it.
+import os as _os
+HALAL_STRICT = _os.environ.get("HALAL_STRICT") == "1"
+
+
 def industry_clean(sym):
     sec = VER.get(sym, {}).get("sector_raw", "")
-    if sec:
-        return not any(w in sec.lower() for w in HARAM)
+    ind = ""
     st_f = PT / f"{sym}.json"
     if st_f.exists():
-        ind = json.loads(st_f.read_text()).get("industry", "")
-        if ind.strip():
-            return not any(w in ind.lower() for w in HARAM)
+        try:
+            ind = json.loads(st_f.read_text()).get("industry", "") or ""
+        except Exception:
+            ind = ""
+    label = f"{sec} {ind}".strip()
+    if HALAL_STRICT:
+        # live semantics: word-boundary match on the label, and an
+        # unknown label REFUSES rather than allows.
+        if not label:
+            return False
+        return not ps._kw_hits(ps.HARAM_PRIMARY_LABEL
+                               + ps.HARAM_PRIMARY_ANY, label)
+    if sec:
+        return not any(w in sec.lower() for w in HARAM)
+    if ind.strip():
+        return not any(w in ind.lower() for w in HARAM)
     return True   # unknown industry -> allow (ratios still must pass)
 
 
@@ -151,6 +181,14 @@ def halal_pt(sym, date, prev_close):
             return ((loan <= 10 or comb <= 20)
                     and (cash <= 10 or comb <= 20)
                     and comb <= 20 and haram < 5)
+    if HALAL_STRICT:
+        # No FILED quarterly available point-in-time => we cannot verify.
+        # The bounds path below substitutes total liabilities for debt
+        # and current assets for cash, which is not the test live runs --
+        # it refused LFST/FRMI/SLN/NESR that live passed on real
+        # statements. Live's rule is "missing data is a FAIL, never a
+        # pass", so refuse rather than approximate.
+        return False
     # conservative bounds (Massive financials)
     fins = massive_fin(sym)
     sel = None
