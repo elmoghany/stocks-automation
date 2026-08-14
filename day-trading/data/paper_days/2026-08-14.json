@@ -168,6 +168,30 @@
         "EUDA (rejected: fake gap)"
       ],
       "note": "EUDA appeared as a new halal-PASS crosser and was killed by the fake-gap detector before any screening effort was spent on it."
+    },
+    {
+      "cycle": 6,
+      "time_et": "07:42-07:45",
+      "state": "FLAT-5m",
+      "scan_rows": 83,
+      "ranked": 10,
+      "armable": 3,
+      "top": "RDDT",
+      "new_crossers": [],
+      "note": "CMCT, DFH, NU first appeared on the scan; all three REJECT on the halal screen. RDDT 174.50, now +10.4% - still crossed via the latch but drifting further from its 178.90 trigger. No chase, no re-arm (a re-arm only happens at a NEW session high)."
+    },
+    {
+      "cycle": 7,
+      "time_et": "07:48-07:52",
+      "state": "FLAT-5m",
+      "scan_rows": 83,
+      "ranked": 11,
+      "armable": 4,
+      "top": "RDDT",
+      "new_crossers": [
+        "SGML"
+      ],
+      "note": "SGML (halal PASS, prev close 11.33) joins at rank 3 with coil 1.000 and calm-gap +8.1%, but its 30-bar pressure is UNTRUSTED (<20k sh) so it sorts last within the coiled group - exactly the champion's ordering. CIIT and CPS first appeared and both REJECT. RDDT still TOP at 174.39."
     }
   ],
   "crossed_set": [
@@ -185,6 +209,7 @@
     "ONFO",
     "RCG",
     "RDDT",
+    "SGML",
     "SXTC"
   ],
   "crossed_set_note": "Latched for the whole session; a name that fades below +10% stays eligible.",
