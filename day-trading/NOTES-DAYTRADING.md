@@ -3757,3 +3757,36 @@ of missing statement lines, the SSP bug class wearing a new hat. Annotated with
 **ATTO** (biotech, quarterly, comb 15.4) and **CITR** (fire prevention, info-tier, comb 2.5).
 TVC/TVE excluded by hand: TVA is a federal corporation with no public common equity — those
 listings are its PARRS bonds despite the directory saying "Common Stock".
+
+## C37S: THE CHAMPION UNDER THE LIVE HALAL GATE (2026-08-14)
+HALAL_STRICT=1 re-baseline of C37H -- same rotation, same exits, but
+halal_pt now uses live semantics: unknown industry REFUSES, word-boundary
+keyword matching, and NO liabilities-for-debt approximation (a missing
+filed quarterly refuses rather than approximates).
+
+              2yr        days   $/day   negm   maxDD Y1/Y2
+  C37H     $665,667      432   $1,541   0/23   12,393/12,560  (old gate)
+  C37S     $405,826      298   $1,362   3/22    6,701/11,602  (live gate)
+  delta    -$259,841 (-39%)   -134 traded days
+
+READ IT AS A LOWER BOUND, not the truth: strict refuses any name whose
+FILED quarterly is absent from our PT cache, but live sees real filings
+at screen time (the replay proved live passed LFST/FRMI on quarterlies
+the cache lacks). The honest number lies between $405,826 and $665,667;
+closing that interval needs a fuller historical fundamentals cache, not
+more sim work. What strict DOES remove is the false-pass class (CAVA/
+HYLN/unknown-industry), so its picks are all names live could actually
+arm. The 0/23 negative-month record does NOT survive the honest gate
+(3/22), and ~31% of previously-traded days have no eligible pick.
+
+## IDENTITY DRIFT, INTENDED (2026-08-14): Z104 y2025 420,935 -> 417,040
+idgate6: S095 both years EXACT, Z104 year EXACT, Z104 y2025 -$3,895.
+Cause: the flagged coupling (penny_ax11b_massive HARAM =
+ps.HARAM_INDUSTRY_WORDS) carried the user's compliance rulings
+(entertainment haram etc.) into the legacy gate's substring screen, so
+entertainment-labelled names Z104 traded in Y2 are now refused. This is
+COMPLIANCE flowing through, not mechanical drift -- the code path is
+unchanged (S095 and Z104-Y1 exact). Expected values re-baselined:
+Z104 y2025 = 417,040 as of compliance-epoch 2026-08-14 (was 420,935
+under the pre-ruling word list). Every future identity failure must
+still be treated as a bug until traced to a dated compliance ruling.
