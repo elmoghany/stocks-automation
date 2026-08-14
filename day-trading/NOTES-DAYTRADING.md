@@ -3734,3 +3734,26 @@ $85,150 of the $100,000 budget never deployed. C37's $1,541/day assumes rotation
 several tickets; a single-holder day cannot reach it by construction. **Judge single-holder
 days on process.** Same conclusion as Day 8 §9 — now seen twice, and it is the main reason
 live sits below benchmark even on a clean session.
+
+## 2026-08-14 — needs_mcap backfill: 5,930 "no market cap" names resolved
+
+The halal pre-screen's `needs_mcap.json` (5,930 symbols refused for a missing yfinance
+mcap) turned out to be **94% funds**: nasdaqtrader.com symbol-directory classification
+found 5,561 exchange-flagged ETFs, ~330 notes/preferreds/debentures/CEFs/test issues —
+all correctly unverifiable forever. Only **34 plausible common stocks** were sent to the
+RH MCP (`get_equity_fundamentals`, batches of 10, every response symbol-set asserted
+against the request; zero silent truncations; one loud 400: EAOR/IVRS/JRE inactive).
+16 real securities got mcaps → merged into `rh_fundamentals.json` (55→70 entries,
+via `plan/merge_needs_mcap_backfill.py`, which refuses mcap<=0 and fund industries — both
+RH spellings of "Investment Trusts"). `plan/recheck_needs_mcap.py` re-ran `halal_check`
+with the mcap explicit → `data/halal_mcap_recheck.json`: **6 PASS, 1 FAIL (AADX: defense),
+9 NO-DATA** (yfinance still has no statements — recent IPOs/SPACs).
+
+**Trap caught, not merged:** 4 of the 6 passes (MLAA OTAI SHOT VII) are blank-check SPACs
+passing on cash_pct≈0 / haram_pct=0 — but a SPAC is ~100% interest-bearing trust; yfinance
+just omits "investments held in trust" and interest income lines. The ratios are artifacts
+of missing statement lines, the SSP bug class wearing a new hat. Annotated with
+`review_note` in the recheck file; recommend CANNOT-VERIFY at merge. Clean recoveries:
+**ATTO** (biotech, quarterly, comb 15.4) and **CITR** (fire prevention, info-tier, comb 2.5).
+TVC/TVE excluded by hand: TVA is a federal corporation with no public common equity — those
+listings are its PARRS bonds despite the directory saying "Common Stock".
