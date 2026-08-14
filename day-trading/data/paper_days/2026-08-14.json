@@ -37,11 +37,11 @@
       10000
     ],
     "day_cap_usd": 100000,
-    "deployed": 0,
+    "deployed": 1,
     "new_ticket_cutoff_et": "14:30",
     "all_exits_by_et": "15:00",
     "flatten_ladder_from_et": "14:57",
-    "deployed_usd": 0.0
+    "deployed_usd": 14849.53
   },
   "coverage_gaps": [
     {
@@ -431,9 +431,43 @@
       "top": "LPTH",
       "new_crossers": [],
       "note": "MF first appeared, REJECT. Scan 89/89."
+    },
+    {
+      "cycle": 31,
+      "time_et": "09:32",
+      "state": "FLAT-5m",
+      "ranked": 9,
+      "armable": "5",
+      "top": "RDDT",
+      "new_crossers": [],
+      "note": "MARKET OPEN. AEHR and XHLD surfaced as new halal-PASS crossers, VOGX needs a screen. Scan pool shrank to 64 rows as premarket stale marks cleared."
+    },
+    {
+      "cycle": 32,
+      "time_et": "09:33",
+      "state": "FLAT-5m",
+      "ranked": 9,
+      "armable": "6",
+      "top": "RDDT",
+      "new_crossers": [
+        "AEHR",
+        "XHLD"
+      ],
+      "note": "AEHR and XHLD added to the active set."
+    },
+    {
+      "cycle": 33,
+      "time_et": "09:32",
+      "state": "ENTRY",
+      "ranked": 8,
+      "armable": 6,
+      "top": "RDDT",
+      "new_crossers": [],
+      "note": "MATERIAL: TICKET 1 FILLED. RDDT stop 178.90 taken out intrabar on the 09:32 bar. Cadence now switches to HOLD: 1-minute position watch, no ranking duty, light bench refresh every ~20 min."
     }
   ],
   "crossed_set": [
+    "AEHR",
     "ALF",
     "BRUN",
     "BSEM",
@@ -453,10 +487,65 @@
     "RCMT",
     "RDDT",
     "SGML",
-    "SXTC"
+    "SXTC",
+    "XHLD"
   ],
   "crossed_set_note": "Latched for the whole session; a name that fades below +10% stays eligible.",
-  "trades": [],
+  "trades": [
+    {
+      "n": 1,
+      "sym": "RDDT",
+      "company": "Reddit",
+      "ticket": 15000,
+      "paper_only": true,
+      "side": "BUY",
+      "entry_time_et": "09:32",
+      "entry_price": 178.91,
+      "shares": 83,
+      "cost_usd": 14849.53,
+      "trigger_type": "B - session/premarket-high stop-buy at 178.90 (armed 07:20, unfired for 2h12m)",
+      "fill_basis": "Stop 178.90 triggered INTRABAR on the 09:32 bar (high 179.95, low 177.64, close 179.30, vol 211,123). Stop-limit converted to a limit at 179.79; the inside ask at the observed 09:32:45 book was 178.91 with 220 shares resting, so 83 shares fill inside the first level. Booked at 178.91 = trigger +0.006%, NOT at a post-break sweep price.",
+      "entry_bar": "2026-08-14T13:32:00Z 177.650/179.950/177.640/179.300 vol 211123",
+      "fill_arming_rule": "PASSED at 09:32:43 - last 178.515 and bid 178.36 were BOTH below the 178.90 trigger, so this was a genuine forward stop, not an already-met market order.",
+      "spread_at_arming": {
+        "bid": 178.36,
+        "ask": 178.9,
+        "pct": 0.303,
+        "cap": 0.5,
+        "verdict": "PASS (post-open)"
+      },
+      "depth_at_arming": {
+        "cum_ask_to_limit_179.79": 308,
+        "levels": "178.91x220, 179.64x77, 179.68x11",
+        "wanted": 83,
+        "verdict": "PASS - no reduction"
+      },
+      "size_cap": {
+        "trailing_10min_vol": 32272,
+        "cap_20pct": 6454,
+        "wanted": 83,
+        "verdict": "PASS"
+      },
+      "halal": "PASS - rebuilt 2026-08-14 list; loan 0.07%, cash 9.16%; social/advertising, not entertainment.",
+      "rank_context": "TOP of 8 crossed / 6 armable; coil 0.994, 30-bar pressure +0.70 (trusted), gap7 +12.5%, calm-gap PASS.",
+      "exit_rules_armed_at_entry": {
+        "hard_stop_px": 164.6,
+        "hard_stop_rule": "max(entry x0.92, peak x0.60), resting, tested INTRABAR against each 1-min LOW",
+        "trail": "20% from peak; 10% when 10-bar pressure <= -0.3; 40% when >= +0.3",
+        "scale_out": "bank 1/3 at +25% (223.64) unless 10-bar pressure >= +0.3",
+        "wick_guard": true,
+        "no_profit_take": true,
+        "flatten": "all exits by 15:00 ET; ladder 14:57 bid-1%, 14:59 bid-2%"
+      },
+      "status": "OPEN",
+      "peak_since_entry": 179.95,
+      "fill_realism": {
+        "assumed_fill": 178.91,
+        "plus_60s_mark": null,
+        "note": "to be filled from the 09:33/09:34 bars"
+      }
+    }
+  ],
   "veto_ledger": {
     "spread_vetoes": [
       {
@@ -520,7 +609,7 @@
       "ticket_usd": 15000,
       "paper_only": true,
       "armed_et": "07:20",
-      "state": "ARMED (resting paper stop-limit, no real order)",
+      "state": "FILLED at 09:32",
       "trigger_type": "B - premarket/session-high stop-buy",
       "trigger_px": 178.9,
       "trigger_basis": "premarket high 178.9000 printed 07:13 ET",
