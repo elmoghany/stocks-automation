@@ -70,6 +70,25 @@ def load_rh_fundamentals() -> dict:
         return {}
 
 
+def _coerce_ohlcv(df: pd.DataFrame) -> pd.DataFrame:
+    """Force OHLCV columns to numeric dtype.
+
+    BUGFIX 2026-08-14 (Paper Day 9): a day whose bars were ALL interpolated
+    leaves a header-only CSV in the cache (DAAQ_2026-08-13.csv). pd.concat of
+    that empty, object-dtype frame with a real one silently makes EVERY column
+    object dtype. Candles.__init__ guards zero-range bars with
+    `np.where(rng > 0, ...)`, but on an object array numpy evaluates both
+    branches in Python, so a flat bar (high == low) raises ZeroDivisionError
+    instead of being masked -- crashing `rank` on exactly the illiquid gappers
+    C37 trades. Coercing here restores the guard's intent; it changes no
+    ranking semantics.
+    """
+    for col in ("Open", "High", "Low", "Close", "Volume"):
+        if col in df:
+            df[col] = pd.to_numeric(df[col], errors="coerce")
+    return df.dropna(subset=["Open", "High", "Low", "Close"])
+
+
 def load_rh_bars(symbol: str) -> pd.DataFrame | None:
     """Load cached Robinhood 1-min bars (REAL premarket volume, unlike
     yfinance). Files: data/rh_bars/{SYM}_{YYYY-MM-DD}.csv with columns
@@ -84,7 +103,8 @@ def load_rh_bars(symbol: str) -> pd.DataFrame | None:
     df = df.rename(columns={"open": "Open", "high": "High", "low": "Low",
                             "close": "Close", "volume": "Volume"})
     df = df.set_index("begins_at").sort_index()
-    return df[["Open", "High", "Low", "Close", "Volume"]]
+    df = df[["Open", "High", "Low", "Close", "Volume"]]
+    return _coerce_ohlcv(df)
 
 # ---------------------------------------------------------------------------
 # Strategy configuration (rules 1-8)
@@ -2693,8 +2713,8 @@ def _bars_from(bars_dir, sym):
                        .dt.tz_convert(ET))
     df = df.rename(columns={"open": "Open", "high": "High", "low": "Low",
                             "close": "Close", "volume": "Volume"})
-    return df.set_index("begins_at").sort_index()[
-        ["Open", "High", "Low", "Close", "Volume"]]
+    return _coerce_ohlcv(df.set_index("begins_at").sort_index()[
+        ["Open", "High", "Low", "Close", "Volume"]])
 
 
 def main() -> None:

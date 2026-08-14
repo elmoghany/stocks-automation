@@ -1,0 +1,195 @@
+{
+  "date": "2026-08-14",
+  "day_index": 9,
+  "protocol": "C37 sequential ticket rotation",
+  "paper_only": true,
+  "real_orders_placed": 0,
+  "benchmark_per_traded_day": 1541.0,
+  "benchmark_note": "$665,667/2yr over 432 traded days, 0/23 negative months.",
+  "prior_days": {
+    "day5": -65.78,
+    "day6": -266.54,
+    "day7": 104.58,
+    "day8": "VOID (ANGX ruled haram - entertainment/film)",
+    "cumulative_before_today": -227.74
+  },
+  "session": {
+    "trading_day_guard": "TRADING 2026-08-14 full",
+    "half_day": false,
+    "start_et": "07:12",
+    "on_time": false,
+    "front_of_window_gap": true,
+    "halal_list_updated": "2026-08-14",
+    "halal_list_n": 1242,
+    "halal_list_age_days": 0,
+    "tick_clock": "persistent Monitor, ET=UTC-4 arithmetic, 300s, breaks 15:02 ET",
+    "end_et": null,
+    "flat_at_close": null
+  },
+  "tickets": {
+    "schedule_usd": [
+      15000,
+      15000,
+      15000,
+      15000,
+      15000,
+      15000,
+      10000
+    ],
+    "day_cap_usd": 100000,
+    "deployed": 0,
+    "new_ticket_cutoff_et": "14:30",
+    "all_exits_by_et": "15:00",
+    "flatten_ladder_from_et": "14:57",
+    "deployed_usd": 0.0
+  },
+  "coverage_gaps": [
+    {
+      "window_et": "07:00-07:12",
+      "window_utc": "11:00-11:12",
+      "cause": "Session opened at ~07:12 ET; the 07:00-14:30 scan window was already open at launch.",
+      "backfilled_picks": 0,
+      "note": "No entries credited for these minutes. Per SESSION START TIMING, the ranking for un-scanned minutes was NOT reconstructed. Trigger C on RDDT had fired at 07:12 (bullish_engulfing, tweezer_bottom) but that 1-min close was already ~10 min stale when first evaluated at 07:22, so it was NOT taken - a pattern entry must be sent immediately on its close."
+    }
+  ],
+  "halal": {
+    "list_rebuild_note": "halal_list.json REBUILT 2026-08-14 (1,242 names, was 1,347). Verified programmatically that all 16 CANNOT-VERIFY and both FAIL verdicts are EXCLUDED from the list, so list membership == armable PASS.",
+    "scan_screen_cycle1": {
+      "scan_rows": 84,
+      "on_halal_list_PASS": [
+        "CGTL",
+        "DAAQ",
+        "ETON",
+        "HTFL",
+        "RDDT",
+        "RCG",
+        "ALF",
+        "NOMA"
+      ],
+      "missing_from_universe_NEEDS_SCREEN": [
+        "SXTC",
+        "BSEM",
+        "ONFO",
+        "DFSC",
+        "GRSD"
+      ],
+      "rejected_total": 71,
+      "rejected_by_verdict": {
+        "NO_FUNDAMENTALS_DATA_cannot_verify": 52,
+        "LOAN_gt10_COMBINED_gt20": 7,
+        "CASH_gt10_COMBINED_gt20": 4,
+        "CANNOT_VERIFY_revenue_mix": 5,
+        "HARAM_INDUSTRY": 3
+      },
+      "haram_industry_detail": {
+        "defense_aerospace": 1,
+        "entertainment": 1,
+        "bank": 1
+      },
+      "cannot_verify_revenue_mix_detail": "gaming, dining/hotel, defense/aerospace, entertainment/gaming, beverage - one each. All NOT armable: haram_pct is interest income only, so the 5% revenue test has not been run.",
+      "note": "The 52 NO-FUNDAMENTALS rejects are overwhelmingly leveraged 2x/-3x ETFs and ETNs, which are not common stock and are correctly outside the pool."
+    }
+  },
+  "fake_gap_detector": {
+    "all_interpolated_zero_real_bars": [
+      "ALF",
+      "BSEM",
+      "RCG"
+    ],
+    "note": "195 interpolated bars, 0 real, each: never traded premarket, so their scan %Change is a stale mark. RCG (RENN Fund) is additionally a closed-end fund, not common stock."
+  },
+  "tooling_bug_fixed": {
+    "id": "rank-crash-object-dtype",
+    "found_et": "07:19",
+    "symptom": "`day-trading.py rank` died with ZeroDivisionError in Candles.__init__ on DAAQ, aborting the WHOLE ranking cycle.",
+    "root_cause": "A day whose bars were all interpolated leaves a header-only CSV in data/rh_bars (DAAQ_2026-08-13.csv, written by Day 8's fake-gap names). pd.concat of that empty object-dtype frame with a real one silently coerces EVERY OHLCV column to object dtype. Candles guards flat bars with np.where(rng > 0, ...), but on an object array numpy evaluates both branches in Python, so high == low raises ZeroDivisionError instead of being masked.",
+    "impact": "Latent since the fake-gap detector started leaving empty CSVs. It crashes on exactly the illiquid gappers C37 trades - 5 of 10 candidates today carry flat 1-min bars. A crashed ranker is worse than a wrong one: it returns nothing at all.",
+    "fix": "Added _coerce_ohlcv() and applied it in both load_rh_bars() and _bars_from(); forces numeric dtype and drops unparseable rows. No ranking semantics changed.",
+    "verified": "rank returned a full 9-name ordering immediately after the fix."
+  },
+  "cycles": [
+    {
+      "cycle": 1,
+      "time_et": "07:14-07:24",
+      "state": "FLAT-5m",
+      "scan_rows": 84,
+      "ranked": 9,
+      "armable": 2,
+      "top": "RDDT",
+      "note": "First cycle of the session. Ranker crashed mid-cycle and was fixed before any decision was taken.",
+      "armed": "RDDT trigger B @ 178.90"
+    }
+  ],
+  "crossed_set": [
+    "CGTL",
+    "DAAQ",
+    "ETON",
+    "HTFL",
+    "RDDT",
+    "RCG",
+    "ALF",
+    "NOMA",
+    "SXTC",
+    "BSEM",
+    "ONFO",
+    "DFSC",
+    "GRSD"
+  ],
+  "crossed_set_note": "Latched for the whole session; a name that fades below +10% stays eligible.",
+  "trades": [],
+  "veto_ledger": {
+    "spread_vetoes": [],
+    "fill_arming_chase_vetoes": [],
+    "decisions_total": 0
+  },
+  "lessons": [],
+  "armed_orders": [
+    {
+      "n": 1,
+      "sym": "RDDT",
+      "company": "Reddit",
+      "ticket_usd": 15000,
+      "paper_only": true,
+      "armed_et": "07:24",
+      "state": "ARMED (resting paper stop-limit, no real order)",
+      "trigger_type": "B - premarket/session-high stop-buy",
+      "trigger_px": 178.9,
+      "trigger_basis": "premarket high 178.9000 printed 07:13 ET",
+      "limit_px": 179.79,
+      "limit_basis": "trigger x1.005 (+0.5% cap)",
+      "shares": 83,
+      "cost_at_trigger_usd": 14848.7,
+      "fill_arming_rule": "PASSED - re-quoted at 07:18:38; last/bid 177.100 < trigger 178.90, so the stop is a genuine forward trigger, not an already-met market order.",
+      "spread_check": {
+        "bid": 177.1,
+        "ask": 177.68,
+        "spread_pct": 0.327,
+        "cap_pct": 0.5,
+        "verdict": "PASS (premarket)"
+      },
+      "depth_check": {
+        "cum_ask_shares_to_limit": 2062,
+        "levels": "177.68(1) 177.80(5) 178.00(1) 178.39(1000) 178.44(410) 179.00(45) 179.35(100) 179.40(500)",
+        "wanted": 83,
+        "verdict": "AMPLE - no ticket reduction needed"
+      },
+      "size_cap_check": {
+        "trailing_10min_completed_vol": 16333,
+        "cap_20pct": 3266,
+        "wanted": 83,
+        "verdict": "PASS"
+      },
+      "halt_check": "quote state=active, has_traded=true, bars printing continuously - not halted. (get_equity_tradability needs an account number; none is used in a paper session.)",
+      "halal": "PASS - on the 2026-08-14 rebuilt list; loan 0.07%, cash 9.16%, both plausible for Reddit. Social/advertising business, NOT film/cinema/streaming, so the 2026-08-13 entertainment ruling does not apply.",
+      "rank_context": "TOP of 9 ranked / 2 armable; coil 0.994, 30-bar pressure +0.17 (trusted), gap7 +12.5%, calm-gap PASS.",
+      "exit_rules_armed_at_entry": {
+        "hard_stop": "-8% from entry (resting, intrabar vs each 1-min LOW)",
+        "trail": "20% from peak; tighten to 10% when 10-bar pressure <= -0.3; widen to 40% when >= +0.3",
+        "scale_out": "bank 1/3 at +25% unless 10-bar pressure >= +0.3",
+        "wick_guard": true,
+        "no_profit_take": "deliberately absent - banking early is a rejected mechanic",
+        "hard_flatten": "all exits by 15:00 ET; ladder from 14:57 (bid -1%), 14:59 (bid -2%)"
+      }
+    }
+  ]
+}
