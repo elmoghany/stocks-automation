@@ -118,22 +118,36 @@
       "top": "RDDT",
       "note": "First cycle of the session. Ranker crashed mid-cycle and was fixed before any decision was taken.",
       "armed": "RDDT trigger B @ 178.90"
+    },
+    {
+      "cycle": 2,
+      "time_et": "07:21-07:24",
+      "state": "FLAT-5m",
+      "scan_rows": 83,
+      "ranked": 10,
+      "armable": 3,
+      "top": "RDDT",
+      "new_crossers": [
+        "BRUN"
+      ],
+      "note": "RDDT faded 178.90 -> 177.36; trigger B stays armed at the 178.90 session high (last still < trigger, so no re-arm and no chase). CGTL squeezed 4.39 -> 7.20 -> 5.65 on 150-290k-share minutes but coil fell to 0.785, so it ranks 6th, below every coiled name. DAAQ/ETON/HTFL/GRSD printed only interpolated bars this window - effectively not trading. Crossed-set LATCH confirmed working: BRUN is now +9.1%, below the +10% scan filter, and still ranked because its cross printed."
     }
   ],
   "crossed_set": [
+    "ALF",
+    "BRUN",
+    "BSEM",
     "CGTL",
     "DAAQ",
-    "ETON",
-    "HTFL",
-    "RDDT",
-    "RCG",
-    "ALF",
-    "NOMA",
-    "SXTC",
-    "BSEM",
-    "ONFO",
     "DFSC",
-    "GRSD"
+    "ETON",
+    "GRSD",
+    "HTFL",
+    "NOMA",
+    "ONFO",
+    "RCG",
+    "RDDT",
+    "SXTC"
   ],
   "crossed_set_note": "Latched for the whole session; a name that fades below +10% stays eligible.",
   "trades": [],
@@ -150,7 +164,7 @@
       "company": "Reddit",
       "ticket_usd": 15000,
       "paper_only": true,
-      "armed_et": "07:24",
+      "armed_et": "07:20",
       "state": "ARMED (resting paper stop-limit, no real order)",
       "trigger_type": "B - premarket/session-high stop-buy",
       "trigger_px": 178.9,
