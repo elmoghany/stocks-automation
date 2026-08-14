@@ -6,15 +6,15 @@ description: C37 halal day-trading session — sequential ticket rotation, one p
 # background; nothing there overrides this section.
 
 Champion: **C37** sequential ticket rotation.
-**Benchmark is an INTERVAL (2026-08-14): $1,362–$1,541 per traded day.**
-Upper: $665,667/2yr over 432 days under the old backtest gate. Lower:
-**C37S $405,826/2yr over 298 days = $1,362/day under the LIVE halal
-gate** (HALAL_STRICT=1) — a lower bound, because strict refuses names
-whose filed quarterlies our historical cache lacks while live sees real
-filings. Under the honest gate the negative-month record is **3/22, not
-0/23**, and ~31% of former traded days have NO eligible pick — an
-all-veto day is the modelled norm about one day in three, not a
-failure. Judge weeks, not days.
+**Benchmark (2026-08-14 final): ~$1,517 per traded day** — C37E,
+$635,759/2yr over 419 days, measured under the LIVE halal gate
+(HALAL_STRICT=1) with the EDGAR filed-date fundamentals cache
+(PT_FILED=1). Negative months 1/22. The last honest residual vs the
+old-gate $1,541 figure is $29,908 of names strict refuses for want of
+a CIK / foreign-filer statements — treat [$1,517, $1,541] as the band
+and $1,517 as the number to quote. ~3% of former traded days drop out
+(419 vs 432), so an occasional all-veto day remains normal.
+Judge weeks, not days.
 (History: $1,956/day was a hindsight pool cut, fixed 2026-08-13;
 $1,541/day was the corrected pool but the WRONG halal gate, fixed
 2026-08-14. Paper Days 5–9 were scored against those older figures.)
