@@ -3790,3 +3790,115 @@ unchanged (S095 and Z104-Y1 exact). Expected values re-baselined:
 Z104 y2025 = 417,040 as of compliance-epoch 2026-08-14 (was 420,935
 under the pre-ruling word list). Every future identity failure must
 still be treated as a bug until traced to a dated compliance ruling.
+
+## EDGAR POINT-IN-TIME FUNDAMENTALS BACKFILL (2026-08-14)
+Goal: tighten the honest-champion interval C37S $405,826 (298d, live
+gate, 133-symbol cache) .. C37H $665,667 (432d, old gate). The strict
+gate refuses any name whose FILED quarterly is absent from
+data/pt_halal/; EDGAR's companyfacts bulk file (1.4GB, one download)
+has the real statements WITH exact filing dates.
+
+BUILD (plan/edgar_backfill.py: extract / merge / report / spot):
+  companyfacts.zip + company_tickers.json -> data/edgar/ (gitignored)
+  2,429 m1 candidate symbols -> 1,345 with >=1 full quarter extracted
+  (12,491 quarters, median 10/symbol, ends 2024-03-31..present).
+  Unreachable remainder: 538 no CIK/companyfacts (delisted/renamed),
+  372 foreign 20-F/6-K filers (NOT forced, per spec), 174 domestic
+  without a complete quarter. Strict-verifiable (symbol,day) decisions:
+  year 5.7% -> 39.0%, y2025 2.6% -> 37.5% (+36,940 decisions).
+
+TWO SEMANTIC CALLS, both deviations from the task spec as written,
+both forced by evidence and disclosed loudly:
+  1. EDGAR-only quarters live under a NEW side key "quarters_edgar",
+     NOT inline in "quarters". The flag-OFF legacy gate selects from
+     st["quarters"], so inlining ~12k new quarters would have flipped
+     legacy verdicts (the LFST class: bounds-refused today, precise-
+     passed with data) and broken the S095/Z104 identity gate BY DATA
+     ALONE. The side key is invisible to every existing reader; only
+     the PT_FILED=1 path merges it. Existing quarters keep their yf
+     values untouched and gain only the ignored "filed" key.
+  2. A quarter EXISTS only when a filed balance sheet anchors it (cash
+     tag present); an absent LINE on a present statement reads as the
+     statement's own ZERO. The task-spec rule (missing tag = absent
+     quarter) was tested and refuses BOTH of the task's own sanity
+     names: LFST tags no interest-income concept at all (only
+     InterestExpense) and FRMI is pre-revenue with no revenue tag.
+     Zero-for-absent-line is the INCUMBENT cache semantics (the yf
+     builder penny_ax11_pt_halal.py val() returns 0.0 for any absent
+     row) -- the same semantics the live gate passed LFST/FRMI under.
+     Counts: zero:debt 4,777 / zero:rev 2,571 / zero:intinc 7,146 of
+     12,491; all-zero rows REFUSED (16 dropped -- they would pass the
+     ratio gate vacuously). Fiscal-Q4 flows derived FY-minus-siblings
+     when untagged (rev 1,990, intinc 1,015 quarters, exact
+     arithmetic on filed numbers).
+
+TAG NETS (widened from spec after spot-check evidence, all in the
+conservative direction -- extra debt/cash only ever REFUSES more):
+  debt tier1 spec trio + notes-payable/convertible/LOC/commercial-
+  paper/finance-lease lines; tier2 DebtCurrent/LongTermDebt/...;
+  tier3 combined. cash anchor + restricted-cash fallback; short-term
+  investments = MAX across 6 concepts (ABSI forced this: $117M in
+  MarketableSecuritiesCurrent, ShortTermInvestments $0 -- UNDER-
+  counted cash is the false-PASS direction). rev: spec 3 + 5
+  alternates. intinc: spec 2 + 3 alternates incl InterestIncome-
+  ExpenseNet (yf 'Net Interest Income' -- gate takes abs()).
+
+PT_FILED=1 (penny_ax11b_massive.py, the ONLY existing-file edit +
+C37E registry row): selection prefers the TRUE filing date, usable
+the day AFTER filing (companyfacts has no acceptance time; most land
+post-close, same-day use at a 7AM scan would leak). Quarters without
+"filed" fall back to _avail (end + FILING_LAG_DAYS). DEFAULT OFF.
+
+VERIFICATION:
+  * identity gate 4/4 EXACT after the code edit (pre-enrichment) AND
+    4/4 EXACT after the merge (S095 513,965/649,573; Z104 225,646/
+    417,040) -- idgate7, idgate8.
+  * flag-off projection assertion: every pt_halal file's legacy-
+    visible content (quarters' 5 keys, industry, err) byte-identical
+    to the gate-passed state; new files carry empty "quarters" and
+    empty industry, so both legacy and strict flag-off paths are
+    untouched by construction.
+  * filed dates: LFST 10/10, ABAT 9/9, FRMI 4/4, ABSI 4/4, SLN 4/4
+    match the EDGAR filing index exactly. Values: ABSI cash/rev and
+    ABAT rev (incl derived-Q4 2,775,847) match the yf cache to the
+    dollar; LFST cash 2026-06-30 = 225,943,000 matches the live
+    EDGAR companyconcept API to the dollar.
+  * LFST: strict+PT_FILED now PASSES on real quarterlies on both its
+    pool days (2024-11-07 via Q2-24 filed 2024-08-08; 2025-05-27 via
+    Q1-25 filed 2025-05-07) -- the exact class the replay showed live
+    passing while the cache-bound gate refused.
+  * FRMI: Q1-2026 (filed 2026-05-15) point-in-time selectable for its
+    Aug-2026 traded day; ratios computable (debt 842.6M / cash 207.5M
+    vs its multi-B mcap). CAVEAT: the strict INDUSTRY leg still
+    refuses FRMI because the VER snapshot (rules_ytd.json) predates
+    its IPO -- unknown-label-refuses is live semantics. Unlocking
+    FRMI-class names needs a VER/industry re-snapshot, not more
+    fundamentals. Industry was deliberately left "" on all new files:
+    legacy industry_clean reads pt_halal industry when VER sector is
+    empty, so backfilling it would breach the identity gate by data.
+
+C37E (CFGS row in rotation_sim.py; identical params to C37S/C37H;
+run HALAL_STRICT=1 PT_FILED=1 ROTSHARD=edgar; results shard
+data/massive/rotation_results_edgar.json):
+                2yr        days   $/day   negm    maxDD Y1/Y2
+  C37H       $665,667      432   $1,541   0/23   12,393/12,560  (old gate)
+  C37E       $635,759      419   $1,517   1/22    9,008/15,112  (live gate + EDGAR)
+  C37S       $405,826      298   $1,362   3/22    6,701/11,602  (live gate, 133-sym cache)
+  Y1 402,147/236d 0/12 negm, win 72.5%, 6.16 tickets/day, worst -5,910
+  Y2 233,612/183d 1/10 negm, win 62.8%, 6.36 tickets/day, worst -5,360
+THE INTERVAL: the honest benchmark tightens from [$1,362 .. $1,541]
+to [$1,517 .. $1,541]/traded day -- the EDGAR filed-date cache
+recovered 87% of the C37S->C37H gap while refusing everything the
+strict gate cannot verify. C37E is the number the paper benchmark
+should use as its LOWER BOUND: every one of its picks passed the
+live-semantics industry screen AND a real 10-Q/10-K available on the
+trade date by its true filing date. The residual $29,908 vs C37H is
+the class strict still refuses honestly: no-CIK/foreign/no-VER-
+industry names (538+372 symbols, plus the FRMI industry gap above).
+Negative months 3/22 -> 1/22; the 0/23 record remains exclusive to
+the old too-lenient gate.
+
+SEC fair use: one bulk download (resumed once), UA
+"cornell-stocks-research m.osama.elmoghany@gmail.com"; per-company
+calls only for spot checks (<10, throttled). Nothing here touches
+Robinhood/E*TRADE.

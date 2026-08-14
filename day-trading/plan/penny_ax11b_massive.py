@@ -156,6 +156,32 @@ def _avail(period_end):
         return "9999-12-31"      # unparseable date -> never usable
 
 
+# PT_FILED=1 (2026-08-14, EDGAR backfill): prefer the TRUE 10-Q/10-K
+# filing date stored by plan/edgar_backfill.py over the flat _avail
+# lag, and see the EDGAR-only quarters stored under "quarters_edgar"
+# (a side key precisely so this flag-OFF module can never read them --
+# S095/Z104 identity holds by construction, not by hope). A filed
+# report counts as usable the day AFTER filing: companyfacts carries
+# only the filing DATE, and most acceptances land after the close, so
+# same-day use at a 7AM scan would be a leak. DEFAULT OFF: with the
+# flag unset the selection below reads only q["date"] via _avail,
+# byte-identical to the pre-backfill behaviour.
+PT_FILED = _os.environ.get("PT_FILED") == "1"
+
+
+def _filed_usable(q, date):
+    """PT_FILED availability: real filed date + 1 day when present,
+    else the legacy _avail lag on the period end."""
+    f = q.get("filed")
+    if not f:
+        return _avail(q["date"]) <= date
+    from datetime import date as _d, timedelta as _td
+    try:
+        return (_d.fromisoformat(f[:10]) + _td(days=1)).isoformat() <= date
+    except ValueError:
+        return False             # unparseable filed date -> never usable
+
+
 def halal_pt(sym, date, prev_close):
     if not industry_clean(sym):
         return False
@@ -168,9 +194,17 @@ def halal_pt(sym, date, prev_close):
     if st_f.exists():
         st = json.loads(st_f.read_text())
         qs = sorted(st.get("quarters", []), key=lambda q: q["date"])
+        if PT_FILED:
+            # EDGAR-only quarters live under "quarters_edgar" so that
+            # the default-off reader above can never select them.
+            seen = {q["date"] for q in qs}
+            qs = sorted(qs + [q for q in st.get("quarters_edgar", [])
+                              if q["date"] not in seen],
+                        key=lambda q: q["date"])
         sel = None
         for q in qs:
-            if _avail(q["date"]) <= date:      # filed, not just ended
+            if (_filed_usable(q, date) if PT_FILED
+                    else _avail(q["date"]) <= date):   # filed, not ended
                 sel = q
         if sel:
             loan = sel["debt"] / mcap * 100

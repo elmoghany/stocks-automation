@@ -287,6 +287,15 @@ CFGS = {
     "C37S": dict(desc="C37 re-baselined under the LIVE halal gate "
                       "(HALAL_STRICT=1)",
                  entry_cutoff=dtime(14, 30), escape=dtime(10, 0)),
+    # C37E (2026-08-14): identical parameters to C37S; the difference
+    # is again the ENVIRONMENT: HALAL_STRICT=1 PT_FILED=1 with the
+    # EDGAR-backfilled pt_halal cache, so the strict gate can verify
+    # names on their REAL filed quarterlies (true filing dates) instead
+    # of refusing everything outside the old 133-symbol yf cache.
+    # Tightened LOWER bound: should land between C37S ($405,826) and
+    # C37H ($665,667).
+    "C37E": dict(desc="C37 under live gate + EDGAR filed-date cache",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0)),
     # ---- T-series (2026-08-13): STALL RELEASE UNDER ROTATION ----
     # Hold-time study (797 legs): winners median 15m, LOSERS median 8m,
     # 78% of all profit lands in the 10-30m band, sub-10m trades LOSE in
