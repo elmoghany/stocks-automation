@@ -192,6 +192,27 @@
         "SGML"
       ],
       "note": "SGML (halal PASS, prev close 11.33) joins at rank 3 with coil 1.000 and calm-gap +8.1%, but its 30-bar pressure is UNTRUSTED (<20k sh) so it sorts last within the coiled group - exactly the champion's ordering. CIIT and CPS first appeared and both REJECT. RDDT still TOP at 174.39."
+    },
+    {
+      "cycle": 8,
+      "time_et": "07:55-07:58",
+      "state": "FLAT-5m",
+      "scan_rows": 82,
+      "ranked": 11,
+      "armable": 4,
+      "top": "RDDT",
+      "new_crossers": [],
+      "note": "No new names. SGML faded 12.70 -> 11.60 (+2.4%), decoiled to 0.913 and fell to rank 11 - still latched, still eligible. RDDT remains TOP; its 178.90 trigger has now been unfired for 40 minutes."
+    },
+    {
+      "cycle": 9,
+      "time_et": "08:04",
+      "state": "FLAT-5m",
+      "ranked": 12,
+      "armable": "4",
+      "top": "RDDT",
+      "new_crossers": [],
+      "note": "No new names; 81 scan rows all resolved from inherited verdicts. The ingest assert fired 'TRUNCATED -- missing GRSD': a FALSE alarm of my own making, because I fetched 10 symbols but ranked 11. Fixed by giving paper_cycle.py an explicit --fetched list, so the assert covers exactly what was requested from the API. A permanent false alarm is dangerous - it trains you to ignore the real thing."
     }
   ],
   "crossed_set": [
@@ -270,6 +291,14 @@
     }
   ],
   "process_notes": [
-    "API/context: get_equity_historicals for a SINGLE symbol returns INLINE (~40k chars) and floods context; the same call for 10 symbols exceeds the cap and spills to a file, which is what we want. Always batch bar fetches to the full candidate set so the payload spills and never touches context."
+    "API/context: get_equity_historicals for a SINGLE symbol returns INLINE (~40k chars) and floods context; the same call for 10 symbols exceeds the cap and spills to a file, which is what we want. Always batch bar fetches to the full candidate set so the payload spills and never touches context.",
+    "Built plan/paper_cycle.py: one call does ingest -> rank -> ledger append and prints only the top 3 ranks plus the TOP line. The 07:00-15:00 session made per-cycle overhead, not the API, the binding constraint."
+  ],
+  "retired_candidates": [
+    {
+      "sym": "DAAQ",
+      "retired_et": "08:05",
+      "reason": "gap7 = +43.0%. The calm gap is measured at 07:00 and is therefore FIXED for the day; 43.0% exceeds even the 35% grace reserved for the top-ranked name, so DAAQ can never become armable today. Retired from the active bar-fetch/rank set to free a batch slot (the batch cap is 10). It remains in the crossed set for the record."
+    }
   ]
 }
