@@ -309,6 +309,46 @@
         "OBX"
       ],
       "note": "OBX added; ETON dropped from the active batch (gap7 +25.0%, armable only if TOP)."
+    },
+    {
+      "cycle": 19,
+      "time_et": "08:34",
+      "state": "FLAT-5m",
+      "ranked": 9,
+      "armable": "4",
+      "top": "RDDT",
+      "new_crossers": [],
+      "note": "DPU surfaced, missing from the universe -> needs a live screen if it ever reaches candidacy (top-3 + coil + calm gap). Lazy screening per protocol: not screened yet. STKH REJECT. Scan 91/91, no cap."
+    },
+    {
+      "cycle": 20,
+      "time_et": "08:40",
+      "state": "FLAT-5m",
+      "ranked": 9,
+      "armable": "4",
+      "top": "RDDT",
+      "new_crossers": [],
+      "note": "NERV first appeared, REJECT. Scan 89/89."
+    },
+    {
+      "cycle": 21,
+      "time_et": "08:45",
+      "state": "FLAT-5m",
+      "ranked": 9,
+      "armable": "4",
+      "top": "RDDT",
+      "new_crossers": [],
+      "note": "Scan 92/92, no new names. Premarket pool has stabilised at 8 crossed / 4 armable."
+    },
+    {
+      "cycle": 22,
+      "time_et": "08:51",
+      "state": "FLAT-5m",
+      "ranked": 9,
+      "armable": "4",
+      "top": "RDDT",
+      "new_crossers": [],
+      "note": "Scan 92/92, no new names."
     }
   ],
   "crossed_set": [
