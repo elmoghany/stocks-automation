@@ -94,9 +94,11 @@
     "all_interpolated_zero_real_bars": [
       "ALF",
       "BSEM",
-      "RCG"
+      "RCG",
+      "EUDA"
     ],
-    "note": "195 interpolated bars, 0 real, each: never traded premarket, so their scan %Change is a stale mark. RCG (RENN Fund) is additionally a closed-end fund, not common stock."
+    "note": "195 interpolated bars, 0 real, each: never traded premarket, so their scan %Change is a stale mark. RCG (RENN Fund) is additionally a closed-end fund, not common stock.",
+    "euda_note": "EUDA surfaced as a NEW halal-PASS crosser at 07:35 (prev close 14.00) but returned 217 bars, ALL interpolated, zero real - it has not traded premarket at all. Dropped. EUDA was a fake gap on Day 8 too, so this is a repeat offender."
   },
   "tooling_bug_fixed": {
     "id": "rank-crash-object-dtype",
@@ -131,6 +133,41 @@
         "BRUN"
       ],
       "note": "RDDT faded 178.90 -> 177.36; trigger B stays armed at the 178.90 session high (last still < trigger, so no re-arm and no chase). CGTL squeezed 4.39 -> 7.20 -> 5.65 on 150-290k-share minutes but coil fell to 0.785, so it ranks 6th, below every coiled name. DAAQ/ETON/HTFL/GRSD printed only interpolated bars this window - effectively not trading. Crossed-set LATCH confirmed working: BRUN is now +9.1%, below the +10% scan filter, and still ranked because its cross printed."
+    },
+    {
+      "cycle": 3,
+      "time_et": "07:26-07:29",
+      "state": "FLAT-5m",
+      "scan_rows": 82,
+      "ranked": 10,
+      "armable": 3,
+      "top": "RDDT",
+      "new_crossers": [],
+      "note": "No new crossers. RDDT 176.90, trigger B unchanged at 178.90. CGTL now +64.9% but coil 0.843 - still not coiled, still ranks 6th."
+    },
+    {
+      "cycle": 4,
+      "time_et": "07:29-07:32",
+      "state": "FLAT-5m",
+      "scan_rows": 83,
+      "ranked": 10,
+      "armable": 3,
+      "top": "RDDT",
+      "new_crossers": [],
+      "note": "RDDT drifting away from its trigger (177.86 -> 175.78); no chase, trigger B stays at the 178.90 session high. BRUN re-coiled to 0.976 and moved to rank 2. CGTL +68.2% but coil 0.860, still not coiled."
+    },
+    {
+      "cycle": 5,
+      "time_et": "07:35-07:38",
+      "state": "FLAT-5m",
+      "scan_rows": 79,
+      "ranked": 10,
+      "armable": 3,
+      "top": "RDDT",
+      "new_crossers": [
+        "EUDA (rejected: fake gap)"
+      ],
+      "note": "EUDA appeared as a new halal-PASS crosser and was killed by the fake-gap detector before any screening effort was spent on it."
     }
   ],
   "crossed_set": [
@@ -141,6 +178,7 @@
     "DAAQ",
     "DFSC",
     "ETON",
+    "EUDA",
     "GRSD",
     "HTFL",
     "NOMA",
@@ -205,5 +243,8 @@
         "hard_flatten": "all exits by 15:00 ET; ladder from 14:57 (bid -1%), 14:59 (bid -2%)"
       }
     }
+  ],
+  "process_notes": [
+    "API/context: get_equity_historicals for a SINGLE symbol returns INLINE (~40k chars) and floods context; the same call for 10 symbols exceeds the cap and spills to a file, which is what we want. Always batch bar fetches to the full candidate set so the payload spills and never touches context."
   ]
 }
