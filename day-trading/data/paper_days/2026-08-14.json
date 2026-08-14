@@ -255,6 +255,60 @@
       "top": "BRUN",
       "new_crossers": [],
       "note": "MATERIAL: TOP changed to BRUN, so the flat ticket re-targeted. BRUN then failed the spread veto at 3.14%, so the RDDT trigger stays armed at 178.90. RCMT excluded - only 1 bar. Trigger C fired BRUN tweezer_bottom 08:04 and RDDT hammer 08:02 / bullish_engulfing 08:07, all >5 min stale by evaluation time and therefore NOT takeable."
+    },
+    {
+      "cycle": 14,
+      "time_et": "08:18",
+      "state": "FLAT-5m",
+      "ranked": 10,
+      "armable": "4",
+      "top": "RDDT",
+      "new_crossers": [],
+      "note": "RCAT first appeared, REJECT."
+    },
+    {
+      "cycle": 15,
+      "time_et": "08:22",
+      "state": "FLAT-5m",
+      "ranked": 10,
+      "armable": "4",
+      "top": "RDDT",
+      "new_crossers": [],
+      "note": "JAB surfaced as a new halal-PASS crosser. SCAN CAP OBSERVED: 84 rows matched but only 63 returned (frontend_limit) - a genuine under-discovery risk, logged."
+    },
+    {
+      "cycle": 16,
+      "time_et": "08:23",
+      "state": "FLAT-5m",
+      "ranked": 9,
+      "armable": "4",
+      "top": "RDDT",
+      "new_crossers": [
+        "JAB"
+      ],
+      "note": "JAB added; HTFL dropped from the active batch (gap7 +25.6%, armable only if it became TOP, which its untrusted pressure makes very unlikely)."
+    },
+    {
+      "cycle": 17,
+      "time_et": "08:28",
+      "state": "FLAT-5m",
+      "ranked": 9,
+      "armable": "4",
+      "top": "RDDT",
+      "new_crossers": [],
+      "note": "OBX surfaced as a new halal-PASS crosser. Scan cap check: total_items 88, returned 88 - no capping this cycle, so the cycle-15 63/84 was transient."
+    },
+    {
+      "cycle": 18,
+      "time_et": "08:29",
+      "state": "FLAT-5m",
+      "ranked": 8,
+      "armable": "4",
+      "top": "RDDT",
+      "new_crossers": [
+        "OBX"
+      ],
+      "note": "OBX added; ETON dropped from the active batch (gap7 +25.0%, armable only if TOP)."
     }
   ],
   "crossed_set": [
@@ -268,7 +322,9 @@
     "EUDA",
     "GRSD",
     "HTFL",
+    "JAB",
     "NOMA",
+    "OBX",
     "ONFO",
     "RCG",
     "RCMT",
