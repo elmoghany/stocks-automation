@@ -541,9 +541,12 @@
       "peak_since_entry": 179.95,
       "fill_realism": {
         "assumed_fill": 178.91,
-        "plus_60s_mark": null,
-        "note": "to be filled from the 09:33/09:34 bars"
-      }
+        "plus_60s_mark": 178.615,
+        "delta_pct": -0.165,
+        "verdict": "UNFAVOURABLE - we paid 0.165% ABOVE where the stock traded 60 seconds later.",
+        "note": "Third live data point. E01 LZ was +1.7% favourable, ANGX +0.12% favourable, this one -0.165%. Entering on a stop-buy into a fast 211k-share minute means buying the spike; the -0.165% is the cost of that, and it is small because the fill-arming rule kept us from chasing past the trigger."
+      },
+      "position_watch": "plan/paper_watch.py running as a persistent loop-layer process; bars file refreshed from the authoritative data/rh_bars cache each cycle via plan/bars_csv_to_json.py."
     }
   ],
   "veto_ledger": {
