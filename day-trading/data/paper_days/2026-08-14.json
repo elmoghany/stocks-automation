@@ -496,10 +496,13 @@
     "AEHR",
     "ALF",
     "ALOY",
+    "APLM",
     "BRUN",
     "BSEM",
     "BUUU",
     "CGTL",
+    "CNXU",
+    "CUE",
     "DAAQ",
     "DFSC",
     "EBON",
@@ -514,12 +517,15 @@
     "NOMA",
     "OBX",
     "ONFO",
+    "OUST",
     "RCG",
     "RCMT",
     "RDDT",
     "REA",
+    "SAIH",
     "SGML",
     "SXTC",
+    "TMCR",
     "TVRD",
     "USDE",
     "XHLD"
@@ -748,6 +754,20 @@
         "EBON": 1.94
       },
       "note": "Seven new halal-PASS crossers in one 45-minute window - the RTH session produces far more late crossers than premarket did (premarket added roughly one name per 20 minutes). Late crossers are FIRST-CLASS under C37, so these go straight into the bench for the re-rank at exit. They were NOT screened further here: lazy screening means the halal work happens at candidacy, not at discovery."
+    },
+    "refresh_12_23": {
+      "et": "12:23",
+      "scan_rows": 112,
+      "new_halal_PASS": {
+        "APLM": 17.37,
+        "TMCR": 6.13,
+        "CNXU": 7.97,
+        "OUST": 45.13,
+        "SAIH": 19.51,
+        "CUE": 31.08
+      },
+      "new_needs_screen": {},
+      "note": "Six more halal-PASS late crossers; scan pool has grown from 64 rows at the open to 112. The bench is now far richer than the premarket pool was - which is the case FOR the 14:30 cutoff rather than a noon one."
     }
   }
 }
