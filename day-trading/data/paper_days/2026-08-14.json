@@ -23,8 +23,8 @@
     "halal_list_n": 1242,
     "halal_list_age_days": 0,
     "tick_clock": "persistent Monitor, ET=UTC-4 arithmetic, 300s, breaks 15:02 ET",
-    "end_et": null,
-    "flat_at_close": null
+    "end_et": "15:00",
+    "flat_at_close": true
   },
   "tickets": {
     "schedule_usd": [
@@ -577,7 +577,7 @@
         "no_profit_take": true,
         "flatten": "all exits by 15:00 ET; ladder 14:57 bid-1%, 14:59 bid-2%"
       },
-      "status": "OPEN",
+      "status": "CLOSED",
       "peak_since_entry": 183.27,
       "fill_realism": {
         "assumed_fill": 178.91,
@@ -605,7 +605,32 @@
         "max_favourable_usd": 446,
         "max_adverse_usd": -29,
         "note": "Round-tripped from +$446 at the 184.28 peak down to -$29 and back to +$114. The 20% trail sits at 147.43 and the -8% resting stop at 164.60, so nothing came close to firing. This is the no-profit-take rule doing exactly what it was measured to do: banking at +6% was rejected at a cost of -$366,602 over two years, and the give-back is the premium paid for the tail."
-      }
+      },
+      "exit_time_et": "14:58",
+      "exit_price": 177.27,
+      "exit_reason": "15:00 FLATTEN LADDER (C35). No stop, trail, scale-out or wick guard ever fired - the position spent the whole day between the 164.60 resting stop and the 223.64 scale-out.",
+      "exit_order": "Flatten ladder step 1 (14:57+): marketable limit capped at bid -1% = 175.50. Filled at the inside bid; never needed the 14:59 bid -2% step.",
+      "exit_fills": [
+        {
+          "px": 177.27,
+          "shares": 83,
+          "level": "inside bid 177.27 with 259 resting"
+        }
+      ],
+      "exit_vwap": 177.27,
+      "exit_ladder_analysis": "Book at 14:58:22 showed 259 shares at the inside bid 177.27 versus 83 to sell, so the whole ticket cleared the top level with NO ladder sweep. Contrast Day 8, where 3,040 ANGX shares hit a 113-share inside bid and swept 4.28 -> 4.24. Modelling the exit against displayed depth is still the right default; today it simply cost nothing, because a $30bn name has a deep book and an 83-share ticket is nothing to it.",
+      "proceeds_usd": 14713.41,
+      "pnl_usd": -136.12,
+      "pnl_pct": -0.917,
+      "max_favourable_usd": 446.04,
+      "max_adverse_usd": -406.7,
+      "max_favourable_px": 184.284,
+      "max_adverse_px": 174.01,
+      "hold_time": "5h26m (09:32 -> 14:58)",
+      "exit_fill_realism": "Exit modelled at the inside bid with full top-level depth; no optimistic single-price assumption was needed because the bracket is degenerate (all 83 shares at one level).",
+      "exit_rules_that_fired": [
+        "window-close flatten only"
+      ]
     }
   ],
   "veto_ledger": {
@@ -640,7 +665,7 @@
       }
     ],
     "fill_arming_chase_vetoes": [],
-    "decisions_total": 4,
+    "decisions_total": 5,
     "depth_vetoes": [
       {
         "n": 1,
@@ -660,7 +685,68 @@
         "verdict": "SKIP - ERROR: thin book. 19.5% of the intended ticket is below the 25% floor, so this is a skip rather than a size reduction.",
         "note": "LOGGED SEPARATELY FROM SPREAD VETOES ON PURPOSE. LPTH passed the spread test on this attempt and still failed - the two mechanisms disagreed within four minutes on the same name. A tight inside quote said 'tradeable' while the ladder behind it was empty. Mixing these two into one veto rate would corrupt the calibration the way mixing spread and fill-arming vetoes did on Day 8."
       }
-    ]
+    ],
+    "summary": {
+      "arming_decisions": 5,
+      "decisions": [
+        {
+          "n": 1,
+          "et": "07:20",
+          "sym": "RDDT",
+          "phase": "premarket",
+          "outcome": "ARMED (spread 0.327%, depth 2062 vs 83)"
+        },
+        {
+          "n": 2,
+          "et": "08:15",
+          "sym": "BRUN",
+          "phase": "premarket",
+          "outcome": "SPREAD VETO 3.14%"
+        },
+        {
+          "n": 3,
+          "et": "09:01",
+          "sym": "LPTH",
+          "phase": "premarket",
+          "outcome": "SPREAD VETO 0.835%"
+        },
+        {
+          "n": 4,
+          "et": "09:05",
+          "sym": "LPTH",
+          "phase": "premarket",
+          "outcome": "DEPTH VETO 200sh vs 1028 intended (19.5% < 25% floor); spread had PASSED at 0.485%"
+        },
+        {
+          "n": 5,
+          "et": "09:32",
+          "sym": "RDDT",
+          "phase": "post-open",
+          "outcome": "PASSED re-check and FILLED (spread 0.303%, depth 308 vs 83, last 178.515 < trigger)"
+        }
+      ],
+      "vetoed": 3,
+      "rate_pct": 60.0,
+      "by_mechanism": {
+        "spread": 2,
+        "depth": 1,
+        "fill_arming_chase": 0
+      },
+      "by_phase": {
+        "premarket": {
+          "decisions": 4,
+          "vetoed": 3,
+          "rate_pct": 75.0
+        },
+        "post_open": {
+          "decisions": 1,
+          "vetoed": 0,
+          "rate_pct": 0.0
+        }
+      },
+      "verdict": "60.0% overall sits INSIDE the modelled 50-65% optimum, the second session running in band (Day 8 was 50.0%, Day 7 was 90-100%). But the composition matters more than the rate: premarket ran 75% and post-open 0%, which is the same shape as Day 8 and reinforces that the 0.5% cap is roughly right after 09:30 and still punitive before it.",
+      "cost_of_vetoes": "Unlike Day 8, where all three vetoes were saves, at least one veto here plausibly COST money: LPTH was TOP with the strongest trusted pressure of the day (+0.50) and coil 0.992, and it went on to trade 15.18 at the open versus the 14.58 trigger we refused - roughly +4% on a $15k ticket, about +$600, against the -$136 the session actually made. Recorded as a cost, not a save. One observation is not a finding, but this is the first time the spread/depth veto has visibly blocked the day's best-looking setup."
+    }
   },
   "lessons": [],
   "armed_orders": [
@@ -769,5 +855,13 @@
       "new_needs_screen": {},
       "note": "Six more halal-PASS late crossers; scan pool has grown from 64 rows at the open to 112. The bench is now far richer than the premarket pool was - which is the case FOR the 14:30 cutoff rather than a noon one."
     }
+  },
+  "pnl": {
+    "gross_usd": -136.12,
+    "tickets": 1,
+    "benchmark_per_traded_day": 1541.0,
+    "vs_benchmark_usd": -1677.12,
+    "cumulative_before": -227.74,
+    "cumulative_after": -363.86
   }
 }

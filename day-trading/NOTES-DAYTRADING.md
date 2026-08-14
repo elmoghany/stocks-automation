@@ -3641,3 +3641,96 @@ worth considering whether the 0/23 rule should be a risk-adjusted
 criterion rather than an absolute one -- but that is a change to the
 GUARDRAILS and must not be decided while a candidate is on the table.
 C37 stands as the traded config.
+
+
+## PAPER DAY 9 (2026-08-14) — RDDT −$136.12, 1 ticket, flat by 15:00
+
+Cumulative −$363.86 over 4 scored days (Day 8 VOID). Benchmark $1,541/traded day.
+
+**Trade.** RDDT 83 sh @ 178.91 → 177.27. Trigger B (session high 178.90, armed 07:20,
+unfired 2h12m) filled INTRABAR at 09:32 on a 177.64→179.95 / 211k-share bar. Held 5h26m,
+exited on the 15:00 flatten. MFE +$446, MAE −$407. **No stop, trail, scale-out or wick
+guard ever fired** — the position lived entirely between the 164.60 resting stop and the
+223.64 scale-out. It round-tripped +$446 → −$407 → −$136; the no-profit-take rule cost
+~$580 of a transient peak, which is the tail premium and the correct price.
+
+### 1. BLOCKING RANKER BUG — empty CSVs poison OHLCV dtype (FIXED)
+
+`rank` died with `ZeroDivisionError` in `Candles.__init__`. A day whose bars are ALL
+interpolated leaves a **header-only CSV** in `data/rh_bars` (`DAAQ_2026-08-13.csv`, left
+by **Day 8's own fake-gap names**). `load_rh_bars` concatenates every cached file, and
+concatenating that empty object-dtype frame silently coerces **every OHLCV column to
+`object`** — so the flat-bar guard `np.where(rng > 0, ...)` evaluates both branches in
+Python and `high == low` RAISES instead of being masked.
+
+Flat 1-min bars are the norm on illiquid gappers (5 of 10 candidates today). The failure
+mode is the bad one: the ranker returns NOTHING, not a wrong answer. Fixed with
+`_coerce_ohlcv()` in `load_rh_bars()` and `_bars_from()`. **Day 8's fake-gap detector and
+the bar cache interact destructively — check that pairing when adding either.**
+
+### 2. THE VETO COST MONEY FOR THE FIRST TIME
+
+Rate **60.0%** (3 of 5 arming decisions) — inside the modelled 50–65% optimum, second
+session running in band. Premarket 3/4 = 75%, post-open 0/1 = 0%: same shape as Day 8,
+so the 0.5% cap still looks right post-open and punitive premarket.
+
+But unlike Day 8 (all three vetoes were saves), **LPTH was a cost**. It was TOP with the
+strongest trusted pressure of the day (+0.50) and coil 0.992; we refused it twice, and it
+opened trading 15.18 against the 14.58 trigger — roughly +4% on a $15k ticket (~+$600)
+versus the −$136 actually made. First sighting of the veto blocking the day's best setup.
+
+**Depth vetoes must be counted separately from spread vetoes.** LPTH PASSED spread
+(0.485%) and FAILED depth four minutes later on the same name: 200 shares at the inside
+ask then nothing until 14.90, a **2.8% air pocket**. A tight inside quote is not evidence
+of a tradeable ladder.
+
+### 3. TRIGGER C IS UNUSABLE WHILE FLAT ON A 5-MIN CADENCE (unresolved)
+
+The `trigger` command works now, and fired ~7 times today across RDDT/BRUN/CGTL. **Not
+one was takeable**: a pattern entry must be sent on the 1-min close that produced it, and
+a 5-minute rank cadence makes every signal 1–5 min stale. The sim does not have this
+problem — it ranks at the 5-min mark then simulates forward on 1-MINUTE bars.
+
+**Protocol fix:** once a name is the ranked TOP, poll ITS 1-minute bars every minute for a
+buy_set close. "No ranking while in a position" governs RANKING, not watching the armed
+name. Until then, one of three legal entries is missing live.
+
+### 4. DAY 8's HALAL/LIQUIDITY COMPLAINT IS NOT A LAW
+
+Day 8 concluded the tightest books are always halal-ineligible. Today the tightest book of
+the morning was **armable**: RDDT 0.017% vs BRUN 3.14%. That was a property of Day 8's
+pool, not a structural truth.
+
+### 5. LATE CROSSERS DOMINATE — evidence for the 14:30 cutoff
+
+Premarket added ~1 name / 20 min. RTH added **7 halal-PASS crossers 09:31–10:17** and 6
+more by 12:23; scan pool 64 → 112 rows. Crossed set closed at 38, latched all day (BRUN
+ranked at +9.1%, below the scanner's live filter, purely on its printed cross).
+
+### 6. HALAL LIST REBUILD VERIFIED
+
+1,242 names (was 1,347). Confirmed programmatically that all 16 CANNOT-VERIFY and both
+FAIL verdicts are EXCLUDED, so list membership == armable PASS. 8 of 84 scan rows armable.
+Fake-gap detector killed 4 (ALF, BSEM, RCG, **EUDA** — a repeat offender from Day 8).
+
+### 7. OPS
+
+* `TZ=America/New_York` **returns UTC on this box** (no tzdata). The first tick clock was
+  an hour wrong. Use explicit UTC−4 arithmetic; never trust a named timezone here.
+* `paper_watch` was **reaped twice** as a background daemon. No impact on the record —
+  state persists in `position.json` and all bars are replayed each invocation — but the
+  permanent fix is a **FOREGROUND one-shot per cycle**, exactly as its docstring says.
+* Zero API truncations in ~45 batched calls. The one assert that fired was a false alarm
+  of my own making (fetched 10, ranked 11) — fixed with an explicit `--fetched` list,
+  because **a permanent false alarm trains you to ignore the real one**.
+* New: `plan/paper_cycle.py` (ingest→rank→ledger, 4 lines out) and
+  `plan/bars_csv_to_json.py` (feeds paper_watch from the authoritative cache).
+* Single-symbol `get_equity_historicals` returns INLINE and floods context; batching 10
+  makes it spill to a file. Always batch.
+
+### 8. STRUCTURAL, AGAIN: ONE HOLDER = ONE TICKET
+
+$85,150 of the $100,000 budget never deployed. C37's $1,541/day assumes rotation through
+several tickets; a single-holder day cannot reach it by construction. **Judge single-holder
+days on process.** Same conclusion as Day 8 §9 — now seen twice, and it is the main reason
+live sits below benchmark even on a clean session.
