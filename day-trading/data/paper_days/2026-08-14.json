@@ -57,6 +57,13 @@
       "impact": "NONE to the record. The gap is in NOTIFICATION only, not in evaluation: paper_watch re-reads the full day's 1-minute bars from data/rh_bars on restart and its peak/scaled state persists in data/paper/position.json, so every bar in the window is still evaluated intrabar against the resting stop and on close against the loop-layer rules.",
       "backfilled_picks": 0,
       "action": "Restarted immediately. This is the second process-reaping incident in the programme (Day 2's timer stall was the first) and it is the argument for resting orders: because every exit rule was fully specified at arm time, a dead watcher cannot change the outcome, only delay the report."
+    },
+    {
+      "window_et": "~11:33-11:41",
+      "cause": "paper_watch reaped a SECOND time (first was ~10:36-10:41). Persistent background loops do not survive in this harness.",
+      "impact": "NONE to the record - same reasoning as the first: state persists in data/paper/position.json (peak 184.28 was intact on restart) and every 1-min bar is replayed from data/rh_bars on each invocation, so no bar went unevaluated.",
+      "backfilled_picks": 0,
+      "action": "PERMANENT FIX: stopped running paper_watch as a persistent background loop and switched to a FOREGROUND one-shot per cycle (`timeout 12 python plan/paper_watch.py ...`). Its own docstring says 'one evaluation per invocation - the agent drives the cadence', which is exactly right; running it as a daemon was my error and it re-introduced the Day-2 timer-stall failure mode."
     }
   ],
   "halal": {
@@ -701,7 +708,8 @@
   ],
   "process_notes": [
     "API/context: get_equity_historicals for a SINGLE symbol returns INLINE (~40k chars) and floods context; the same call for 10 symbols exceeds the cap and spills to a file, which is what we want. Always batch bar fetches to the full candidate set so the payload spills and never touches context.",
-    "Built plan/paper_cycle.py: one call does ingest -> rank -> ledger append and prints only the top 3 ranks plus the TOP line. The 07:00-15:00 session made per-cycle overhead, not the API, the binding constraint."
+    "Built plan/paper_cycle.py: one call does ingest -> rank -> ledger append and prints only the top 3 ranks plus the TOP line. The 07:00-15:00 session made per-cycle overhead, not the API, the binding constraint.",
+    "Ops: the reliable shape for the position watch is a FOREGROUND one-shot per cycle, not a background daemon. Background tasks were reaped twice in one session. Because paper_watch is stateless-per-invocation (state in position.json, bars re-read from the cache), a one-shot is strictly more robust with identical semantics."
   ],
   "retired_candidates": [
     {
