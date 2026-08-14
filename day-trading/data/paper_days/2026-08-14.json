@@ -381,6 +381,26 @@
       "top": "LPTH",
       "new_crossers": [],
       "note": "MATERIAL: LPTH took TOP (coil 0.992, pressure +0.50 trusted, gap7 +9.5%) and was then vetoed on a 0.835% spread. RDDT stays the armed ticket."
+    },
+    {
+      "cycle": 26,
+      "time_et": "09:03",
+      "state": "FLAT-5m",
+      "ranked": 9,
+      "armable": "5",
+      "top": "LPTH",
+      "new_crossers": [],
+      "note": "HHS first appeared, REJECT. Scan 91/91."
+    },
+    {
+      "cycle": 27,
+      "time_et": "09:05",
+      "state": "FLAT-5m",
+      "ranked": 8,
+      "armable": 5,
+      "top": "LPTH",
+      "new_crossers": [],
+      "note": "MATERIAL: LPTH re-evaluated. Spread had tightened 0.835% -> 0.485% (PASS), but the fresh book showed only 200 shares to the limit vs 1,028 intended -> thin-book SKIP. RDDT stays the armed ticket."
     }
   ],
   "crossed_set": [
@@ -439,7 +459,27 @@
       }
     ],
     "fill_arming_chase_vetoes": [],
-    "decisions_total": 3
+    "decisions_total": 4,
+    "depth_vetoes": [
+      {
+        "n": 1,
+        "sym": "LPTH",
+        "et": "09:05",
+        "phase": "premarket",
+        "rank_at_decision": 1,
+        "spread_pct": 0.485,
+        "spread_verdict": "PASS - tightened from 0.835% at 09:01 to 0.485%, inside the cap",
+        "would_be_trigger": "B - session high 14.58; last 14.4823 below it, fill-arming rule satisfied",
+        "limit_px": 14.65,
+        "cum_ask_shares_to_limit": 200,
+        "intended_shares": 1028,
+        "pct_of_intended": 19.5,
+        "skip_floor_pct": 25.0,
+        "book": "14.49 x200, then NOTHING until 14.90 x200 - a 2.8% air pocket above the inside ask",
+        "verdict": "SKIP - ERROR: thin book. 19.5% of the intended ticket is below the 25% floor, so this is a skip rather than a size reduction.",
+        "note": "LOGGED SEPARATELY FROM SPREAD VETOES ON PURPOSE. LPTH passed the spread test on this attempt and still failed - the two mechanisms disagreed within four minutes on the same name. A tight inside quote said 'tradeable' while the ladder behind it was empty. Mixing these two into one veto rate would corrupt the calibration the way mixing spread and fill-arming vetoes did on Day 8."
+      }
+    ]
   },
   "lessons": [],
   "armed_orders": [
