@@ -477,18 +477,25 @@
     }
   ],
   "crossed_set": [
+    "AAOI",
+    "AEHL",
     "AEHR",
     "ALF",
+    "ALOY",
     "BRUN",
     "BSEM",
+    "BUUU",
     "CGTL",
     "DAAQ",
     "DFSC",
+    "EBON",
     "ETON",
     "EUDA",
     "GRSD",
     "HTFL",
+    "IPCX",
     "JAB",
+    "KOPN",
     "LPTH",
     "NOMA",
     "OBX",
@@ -496,8 +503,11 @@
     "RCG",
     "RCMT",
     "RDDT",
+    "REA",
     "SGML",
     "SXTC",
+    "TVRD",
+    "USDE",
     "XHLD"
   ],
   "crossed_set_note": "Latched for the whole session; a name that fades below +10% stays eligible.",
@@ -694,5 +704,26 @@
       "fix": "Once a name is the ranked TOP, poll ITS 1-minute bars every minute for a buy_set close and act on the next one - do not wait for the next 5-minute rank. The scan economy's 'no ranking while in a position' is about RANKING, not about watching the armed name.",
       "status": "Identified 2026-08-14 09:01. Not changing the rule mid-session; recorded for the protocol."
     }
-  ]
+  ],
+  "bench": {
+    "refresh_10_17": {
+      "et": "10:17",
+      "state": "HOLD - light bench refresh, no ranking duty",
+      "new_halal_PASS": {
+        "ALOY": 12.95,
+        "REA": 13.39,
+        "AAOI": 130.08,
+        "USDE": 2.59,
+        "KOPN": 4.83,
+        "BUUU": 28.02,
+        "IPCX": 3.81
+      },
+      "new_needs_screen": {
+        "AEHL": 4.73,
+        "TVRD": 1.77,
+        "EBON": 1.94
+      },
+      "note": "Seven new halal-PASS crossers in one 45-minute window - the RTH session produces far more late crossers than premarket did (premarket added roughly one name per 20 minutes). Late crossers are FIRST-CLASS under C37, so these go straight into the bench for the re-rank at exit. They were NOT screened further here: lazy screening means the halal work happens at candidacy, not at discovery."
+    }
+  }
 }
