@@ -349,6 +349,38 @@
       "top": "RDDT",
       "new_crossers": [],
       "note": "Scan 92/92, no new names."
+    },
+    {
+      "cycle": 23,
+      "time_et": "08:56",
+      "state": "FLAT-5m",
+      "ranked": 9,
+      "armable": "4",
+      "top": "RDDT",
+      "new_crossers": [],
+      "note": "LPTH surfaced as a new halal-PASS crosser."
+    },
+    {
+      "cycle": 24,
+      "time_et": "08:57",
+      "state": "FLAT-5m",
+      "ranked": 9,
+      "armable": "5",
+      "top": "LPTH",
+      "new_crossers": [
+        "LPTH"
+      ],
+      "note": "LPTH added; SXTC dropped from the active batch (needs-screen AND permanently calm-gap FAIL at gap7 +35.2%)."
+    },
+    {
+      "cycle": 25,
+      "time_et": "09:00-09:01",
+      "state": "FLAT-5m",
+      "ranked": 8,
+      "armable": 5,
+      "top": "LPTH",
+      "new_crossers": [],
+      "note": "MATERIAL: LPTH took TOP (coil 0.992, pressure +0.50 trusted, gap7 +9.5%) and was then vetoed on a 0.835% spread. RDDT stays the armed ticket."
     }
   ],
   "crossed_set": [
@@ -363,6 +395,7 @@
     "GRSD",
     "HTFL",
     "JAB",
+    "LPTH",
     "NOMA",
     "OBX",
     "ONFO",
@@ -389,10 +422,24 @@
         "would_be_trigger": "B - session high 27.00 (last 26.30 below it, so the fill-arming rule itself was satisfied)",
         "verdict": "VETOED on spread. 3.14% is more than 6x the 0.5% cap; a stop-limit capped at trigger+0.5% could not fill.",
         "note": "BRUN took TOP rank from RDDT at 08:12 on 30-bar pressure. The veto did NOT cost a trade: rank 2 RDDT was quoting 175.22/175.25 = 0.017%, so the armed ticket simply stayed where it was."
+      },
+      {
+        "n": 2,
+        "sym": "LPTH",
+        "et": "09:01",
+        "phase": "premarket",
+        "rank_at_decision": 1,
+        "bid": 14.37,
+        "ask": 14.49,
+        "spread_pct": 0.835,
+        "cap_pct": 0.5,
+        "would_be_trigger": "B - session high 14.58 (last 14.4666 below it, so the fill-arming rule was satisfied)",
+        "verdict": "VETOED on spread (0.835% vs 0.5% cap).",
+        "note": "LPTH took TOP with the strongest trusted pressure of the session (+0.50) and coil 0.992. This is the veto costing us the best-looking setup so far, not a save - worth weighing when the rate is calibrated. Fell back to rank-2 RDDT, already armed."
       }
     ],
     "fill_arming_chase_vetoes": [],
-    "decisions_total": 2
+    "decisions_total": 3
   },
   "lessons": [],
   "armed_orders": [
@@ -455,5 +502,15 @@
       "reason": "gap7 = +43.0%. The calm gap is measured at 07:00 and is therefore FIXED for the day; 43.0% exceeds even the 35% grace reserved for the top-ranked name, so DAAQ can never become armable today. Retired from the active bar-fetch/rank set to free a batch slot (the batch cap is 10). It remains in the crossed set for the record."
     }
   ],
-  "spread_observation": "Day 8's finding inverted today: the tightest book of the morning belongs to a name that IS halal-armable. RDDT 0.017% vs BRUN 3.14%. Liquidity and permissibility are not always opposed."
+  "spread_observation": "Day 8's finding inverted today: the tightest book of the morning belongs to a name that IS halal-armable. RDDT 0.017% vs BRUN 3.14%. Liquidity and permissibility are not always opposed.",
+  "findings": [
+    {
+      "id": "trigger-C-vs-5min-cadence",
+      "title": "Trigger C is structurally unusable while FLAT on a 5-minute rank cadence",
+      "detail": "Trigger C works now (Day 8's tooling gap is closed) and it has fired repeatedly today - RDDT bullish_engulfing+tweezer_bottom 07:12, hammer 08:02, bullish_engulfing 08:07, macd_cross_up 08:49, tweezer_bottom 08:55; BRUN tweezer_bottom 08:04; CGTL bullish_engulfing 07:10. NOT ONE was takeable. A pattern entry must be sent as a marketable limit immediately on the 1-minute close that produced it, but a 5-minute scan cadence means the signal is already 1-5 minutes old the moment we see it. Acting on it anyway would be a chase, and backfilling it would be dishonest.",
+      "why_it_matters": "The champion's harness ranks at the 5-minute mark and then simulates the ticket forward on 1-MINUTE bars, so in the sim Trigger C fires on a bar that is current. Live, we only look every 5 minutes, so we systematically miss the entire trigger. That is a live-vs-backtest divergence of the same class as the spread veto, and it removes one of three legal entries.",
+      "fix": "Once a name is the ranked TOP, poll ITS 1-minute bars every minute for a buy_set close and act on the next one - do not wait for the next 5-minute rank. The scan economy's 'no ranking while in a position' is about RANKING, not about watching the armed name.",
+      "status": "Identified 2026-08-14 09:01. Not changing the rule mid-session; recorded for the protocol."
+    }
+  ]
 }
