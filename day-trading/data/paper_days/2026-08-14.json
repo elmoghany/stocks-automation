@@ -401,6 +401,36 @@
       "top": "LPTH",
       "new_crossers": [],
       "note": "MATERIAL: LPTH re-evaluated. Spread had tightened 0.835% -> 0.485% (PASS), but the fresh book showed only 200 shares to the limit vs 1,028 intended -> thin-book SKIP. RDDT stays the armed ticket."
+    },
+    {
+      "cycle": 28,
+      "time_et": "09:07",
+      "state": "FLAT-5m",
+      "ranked": 9,
+      "armable": "5",
+      "top": "LPTH",
+      "new_crossers": [],
+      "note": "PAVS and VIDI first appeared, both REJECT. Scan 93/93."
+    },
+    {
+      "cycle": 29,
+      "time_et": "09:12",
+      "state": "FLAT-5m",
+      "ranked": 9,
+      "armable": "5",
+      "top": "LPTH",
+      "new_crossers": [],
+      "note": "Scan 87/87, no new names."
+    },
+    {
+      "cycle": 30,
+      "time_et": "09:17",
+      "state": "FLAT-5m",
+      "ranked": 9,
+      "armable": "5",
+      "top": "LPTH",
+      "new_crossers": [],
+      "note": "MF first appeared, REJECT. Scan 89/89."
     }
   ],
   "crossed_set": [
