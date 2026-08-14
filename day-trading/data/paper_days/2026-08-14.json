@@ -50,6 +50,13 @@
       "cause": "Session opened at ~07:12 ET; the 07:00-14:30 scan window was already open at launch.",
       "backfilled_picks": 0,
       "note": "No entries credited for these minutes. Per SESSION START TIMING, the ranking for un-scanned minutes was NOT reconstructed. Trigger C on RDDT had fired at 07:12 (bullish_engulfing, tweezer_bottom) but that 1-min close was already ~10 min stale when first evaluated at 07:22, so it was NOT taken - a pattern entry must be sent immediately on its close."
+    },
+    {
+      "window_et": "~10:36-10:41",
+      "cause": "The persistent paper_watch loop-layer process was reaped by the harness while the RDDT position was open.",
+      "impact": "NONE to the record. The gap is in NOTIFICATION only, not in evaluation: paper_watch re-reads the full day's 1-minute bars from data/rh_bars on restart and its peak/scaled state persists in data/paper/position.json, so every bar in the window is still evaluated intrabar against the resting stop and on close against the loop-layer rules.",
+      "backfilled_picks": 0,
+      "action": "Restarted immediately. This is the second process-reaping incident in the programme (Day 2's timer stall was the first) and it is the argument for resting orders: because every exit rule was fully specified at arm time, a dead watcher cannot change the outcome, only delay the report."
     }
   ],
   "halal": {
