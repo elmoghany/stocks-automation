@@ -3902,3 +3902,11 @@ SEC fair use: one bulk download (resumed once), UA
 "cornell-stocks-research m.osama.elmoghany@gmail.com"; per-company
 calls only for spot checks (<10, throttled). Nothing here touches
 Robinhood/E*TRADE.
+
+## FEATURE CACHE QUARANTINED (2026-08-15)
+Full-range verify: 71 mismatches / 265,401 rows (the 40-date sample
+had 0). Cause undiagnosed; FEATCACHE=1 stays OFF (it was never enabled
+for any stored result -- every number in rotation_results was computed
+live). Marker: data/massive/featcache/QUARANTINE.json. Do not enable
+until a from-scratch rebuild passes a FULL verify. The 2026-08-13 note
+claiming "55,490 rows, 0 mismatches" was the sample, not the range.
