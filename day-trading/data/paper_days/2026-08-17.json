@@ -109,7 +109,7 @@
    "shares": 5033,
    "ticket_usd": 15000,
    "protective_stop_on_fill": 2.7416,
-   "status": "resting"
+   "status": "filled 07:46"
   }
  ],
  "vetoes": [
@@ -187,7 +187,28 @@
    }
   ]
  },
- "trades": [],
+ "trades": [
+  {
+   "ticket": 1,
+   "sym": "HIVE",
+   "side": "long",
+   "shares": 5033,
+   "entry": 2.98,
+   "entry_usd": 14998.34,
+   "entry_time_et": "07:46",
+   "entry_trigger": "B pm-high stop-limit 2.98/2.9949 (armed 07:40)",
+   "fill_bracket": [
+    2.98,
+    2.9949
+   ],
+   "fill_realism_60s_mark": 2.99,
+   "fill_vs_60s_pct": -0.33,
+   "protective_stop": 2.7416,
+   "scale_out_level": 3.725,
+   "status": "open",
+   "peak": 3.05
+  }
+ ],
  "coverage_gaps": [],
  "notes": "premarket watch delegated 07:47-09:24 (signal-file architecture); coordinator retains arming authority"
 }
