@@ -1,0 +1,193 @@
+{
+ "date": "2026-08-17",
+ "day": 10,
+ "protocol": "C37",
+ "paper_only": true,
+ "benchmark_per_day": 1517,
+ "session_start_et": "06:55",
+ "guards": {
+  "trading_day": "TRADING full",
+  "halal_list_age_days": 2,
+  "halal_list_n": 1244
+ },
+ "crossed_set": [
+  "IVF",
+  "IPST",
+  "DUKR",
+  "EUDA",
+  "SLE",
+  "MYSZ",
+  "BSEM",
+  "BRBI",
+  "XPON",
+  "MNDR",
+  "OABI",
+  "JLHL",
+  "QNTM",
+  "DPU",
+  "NNNN",
+  "FIEE",
+  "BNR",
+  "MRCY",
+  "GGR",
+  "TCRT",
+  "PURR",
+  "IPX",
+  "FULC",
+  "EP",
+  "WETO",
+  "ARGX",
+  "BGDE",
+  "BESS",
+  "MINE",
+  "OCUL",
+  "FVR",
+  "WOK",
+  "BCAB",
+  "DFSC",
+  "HIVE",
+  "DSX"
+ ],
+ "halal": {
+  "pass": [
+   "EUDA",
+   "OABI",
+   "NNNN",
+   "FIEE",
+   "IPX",
+   "ARGX",
+   "MINE",
+   "HIVE"
+  ],
+  "fail": {
+   "IPST": "CANNOT-VERIFY spirits",
+   "DUKR": "defense",
+   "SLE": "CANNOT-VERIFY entertainment/gaming",
+   "BRBI": "bank LOAN 6456",
+   "XPON": "LOAN+COMB",
+   "JLHL": "CASH+COMB",
+   "QNTM": "CANNOT-VERIFY alcohol",
+   "BNR": "LOAN+COMB",
+   "MRCY": "defense",
+   "GGR": "LOAN+COMB",
+   "PURR": "HARAM>=5%",
+   "FULC": "CASH 112.6",
+   "EP": "LOAN 13.7 COMB 21.6",
+   "WETO": "LOAN 779",
+   "BGDE": "LOAN 93",
+   "BESS": "CASH 34",
+   "OCUL": "CASH 27",
+   "FVR": "CANNOT-VERIFY restaurant",
+   "WOK": "LOAN 127",
+   "BCAB": "LOAN 106",
+   "DSX": "LOAN 162"
+  },
+  "absent_screen_at_candidacy": [
+   "IVF",
+   "MYSZ",
+   "BSEM",
+   "MNDR",
+   "DPU",
+   "TCRT",
+   "DFSC"
+  ]
+ },
+ "fake_gaps": [
+  "TCRT",
+  "BSEM",
+  "DPU",
+  "EUDA"
+ ],
+ "armed_orders": [
+  {
+   "time_et": "07:40",
+   "sym": "HIVE",
+   "type": "stop_limit_buy",
+   "trigger": "B pm-high",
+   "stop": 2.98,
+   "limit": 2.9949,
+   "shares": 5033,
+   "ticket_usd": 15000,
+   "protective_stop_on_fill": 2.7416,
+   "status": "resting"
+  }
+ ],
+ "vetoes": [
+  {
+   "n": 1,
+   "et": "07:05",
+   "sym": "NNNN",
+   "phase": "pre",
+   "type": "SPREAD",
+   "detail": "4.40% (10.00/10.45); vol10=0 size 0"
+  },
+  {
+   "n": 2,
+   "et": "07:04",
+   "sym": "NNNN",
+   "phase": "pre",
+   "type": "CHASE",
+   "detail": "trigger 10.47 met; cap 10.52 < ask 11.00"
+  },
+  {
+   "n": 3,
+   "et": "07:07",
+   "sym": "NNNN",
+   "phase": "pre",
+   "type": "SPREAD",
+   "detail": "ratchet 10.4998; 9.5%; 0 depth to 10.55"
+  },
+  {
+   "n": 4,
+   "et": "07:34",
+   "sym": "NNNN",
+   "phase": "pre",
+   "type": "SPREAD",
+   "detail": "ratchet 10.65; 11.5%; 0 depth to 10.70"
+  },
+  {
+   "n": 5,
+   "et": "07:41",
+   "sym": "HIVE",
+   "phase": "pre",
+   "type": "SPREAD",
+   "detail": "TriggerC tweezer TAKEABLE; 0.68%; 1-sh bid"
+  },
+  {
+   "n": 6,
+   "et": "07:44",
+   "sym": "HIVE",
+   "phase": "pre",
+   "type": "SPREAD",
+   "detail": "TriggerC hammer TAKEABLE; 0.68%"
+  }
+ ],
+ "trigger_c": {
+  "first_live_outing": true,
+  "fires": [
+   {
+    "et": "07:37",
+    "sym": "HIVE",
+    "pattern": "tweezer_bottom",
+    "tag": "STALE (rotation gap)"
+   },
+   {
+    "et": "07:39",
+    "sym": "HIVE",
+    "pattern": "tweezer_bottom",
+    "tag": "TAKEABLE",
+    "outcome": "spread veto #5"
+   },
+   {
+    "et": "07:42",
+    "sym": "HIVE",
+    "pattern": "hammer",
+    "tag": "TAKEABLE",
+    "outcome": "spread veto #6"
+   }
+  ]
+ },
+ "trades": [],
+ "coverage_gaps": [],
+ "notes": "premarket watch delegated 07:47-09:24 (signal-file architecture); coordinator retains arming authority"
+}
