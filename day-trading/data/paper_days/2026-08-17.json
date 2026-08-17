@@ -160,6 +160,14 @@
    "phase": "pre",
    "type": "SPREAD",
    "detail": "TriggerC hammer TAKEABLE; 0.68%"
+  },
+  {
+   "n": 7,
+   "et": "07:47",
+   "sym": "HIVE",
+   "phase": "pre",
+   "type": "SPREAD",
+   "detail": "TriggerC macd_cross_up TAKEABLE; 0.99%/1.32%"
   }
  ],
  "trigger_c": {
@@ -184,6 +192,13 @@
     "pattern": "hammer",
     "tag": "TAKEABLE",
     "outcome": "spread veto #6"
+   },
+   {
+    "et": "07:47",
+    "sym": "HIVE",
+    "pattern": "macd_cross_up",
+    "tag": "TAKEABLE",
+    "outcome": "spread veto #7"
    }
   ]
  },
@@ -210,5 +225,5 @@
   }
  ],
  "coverage_gaps": [],
- "notes": "premarket watch delegated 07:47-09:24 (signal-file architecture); coordinator retains arming authority"
+ "notes": "premarket watch delegated 07:47-09:24 (signal-file architecture); coordinator retains arming authority; premarket delegate 07:47-09:24 clean (95 bars, 0 exit fires, peak 3.14/+$795); bench PASS: RTB JAB AGPU DUOT"
 }
