@@ -321,7 +321,7 @@
       "entry_et": "08:59",
       "entry_trigger": "B premarket-high stop-buy (armed 08:50, resting)",
       "entry_bar": "o244.02 h246.60 l244.00 c245.50",
-      "fill_realism_60s_mark": 245.82,
+      "fill_realism_60s_mark": 245.45,
       "exit_px": null,
       "exit_et": null,
       "exit_reason": null,
@@ -337,7 +337,16 @@
   "tickets_used": 1,
   "capital_deployed": 14952.32,
   "pnl": 0.0,
-  "fill_realism": [],
+  "fill_realism": [
+    {
+      "symbol": "MRVL",
+      "ticket": 1,
+      "assumed_fill": 245.12,
+      "mark_60s": 245.45,
+      "delta_pct": 0.13,
+      "direction": "favorable"
+    }
+  ],
   "lessons": [
     "Delegated TAKEABLE handback latency ~3min > 2min freshness window: Trigger C entries unreachable through delegation; Triggers A/B (resting stops) are the latency-immune paths - matches resting-order architecture rationale. Coordinator must run the 1-min loop personally to take pattern entries."
   ],
@@ -366,5 +375,8 @@
       },
       "status": "FILLED 08:59 bar at stop 245.12"
     }
+  ],
+  "data_notes": [
+    "08:38 bar high revised to exactly 245.12 in later fetch (pre-arming tape, excluded from fill check by delegate - correct)"
   ]
 }
