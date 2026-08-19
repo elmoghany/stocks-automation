@@ -185,6 +185,13 @@
       "top": "MRVL",
       "armable_count": 3,
       "note": "TOP change MRVI->MRVL (MRVL press +0.22 vs MRVI +0.17 within coil group); MRVL book 0.08-0.20%"
+    },
+    {
+      "as_of_et": "08:52",
+      "state": "FLAT-5m+ARMED",
+      "top": "MRVI",
+      "armable_count": 3,
+      "note": "TOP flip back MRVI (press +0.17 vs MRVL +0.14) - churn within coil group; PICK stays MRVL (armed 245.12) until entry or 10:00 stale-pick escape"
     }
   ],
   "premarket_books_et_0808": {
@@ -267,6 +274,22 @@
         "hammer@08:27 TAKEABLE"
       ],
       "action": "SPREAD veto at act-time re-quote"
+    },
+    {
+      "time_et": "08:51",
+      "symbol": "MRVL",
+      "signals": [
+        "tweezer_bottom@08:50 TAKEABLE at detection"
+      ],
+      "action": "handback pipeline took ~3min; STALE at coordinator act-time (08:54) -> refused by freshness rule; book was 0.26pct/depth OK - latency killed it, not the veto"
+    },
+    {
+      "time_et": "08:55",
+      "symbol": "MRVL",
+      "signals": [
+        "tweezer_bottom@08:50 STALE 5m"
+      ],
+      "action": "no fresh signal on 08:52-08:53 bars; no entry"
     }
   ],
   "veto_counts": {
@@ -288,7 +311,9 @@
   "capital_deployed": 0,
   "pnl": 0.0,
   "fill_realism": [],
-  "lessons": [],
+  "lessons": [
+    "Delegated TAKEABLE handback latency ~3min > 2min freshness window: Trigger C entries unreachable through delegation; Triggers A/B (resting stops) are the latency-immune paths - matches resting-order architecture rationale. Coordinator must run the 1-min loop personally to take pattern entries."
+  ],
   "status": "IN_PROGRESS",
   "armed_orders": [
     {
