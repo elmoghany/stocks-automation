@@ -98,3 +98,32 @@ BENCH 09:21 mrvi=6.86/2.9% vrca=5.14/6.9%stale mss=2.03/1.0% eltx=3.39/10%
 10:22 SCAN-NOTE >10pct scan total=100 (was 58 at 09:41) broad tape: gold/silver miners + biotech complex crossing en masse
 10:24 POS MRVL last=231.81 peak=247.10 stop=225.51 press=0.20 pnl=$-812
 10:25 WINDOW-END position handback
+10:31 POS MRVL last=232.58 peak=247.10 stop=225.51 press=0.13 pnl=$-765
+10:37 POS MRVL last=233.58 peak=247.10 stop=225.51 press=0.54 pnl=$-704
+10:41 BENCH MRVI 7.505 +30.8% | VRCA 4.915 +5.0% | MRK 149.90 +10.9% | PPC 32.70 +14.8%
+10:41 NEW-CROSSER FEMY (Femasys) last=2.755 +25.2% NEEDS-SCREEN
+10:41 NEW-CROSSER ZSTK (Zerostack) last=2.2293 +21.2% NEEDS-SCREEN
+10:41 NEW-CROSSER TWST (Twist Bioscience) last=138.53 +19.3% NEEDS-SCREEN
+10:41 NEW-CROSSER TEM (Tempus AI) last=57.455 +16.4% NEEDS-SCREEN
+10:41 NEW-CROSSER GDC (GD Culture Group) last=2.16 +15.5% NEEDS-SCREEN
+10:41 NEW-CROSSER EDIT (Editas Medicine) last=3.2899 +14.2% NEEDS-SCREEN
+10:41 SCAN-NOTE total=128 (was 100 at 10:22); miners crossing en masse: HYMC HL CDE NG ARIS SCZM THM ASM AG ITRG KGC MTA USAS GAU AUGO CTGO WPM SSRM EQX AGI AYA IAG; biotech/other new: SONM INLF HSCS ELWT ABSI GRNQ BAK BTGO CDLX SANA TGL DFH EYPT IOVA SRPT FDMT MSGY ZSQR; NO ranking while position open
+10:45 POS MRVL last=234.44 peak=247.10 stop=225.51 press=0.12 pnl=$-651
+10:52 POS MRVL last=232.85 peak=247.10 stop=225.51 press=-0.09 pnl=$-748
+10:59 POS MRVL last=234.65 peak=247.10 stop=225.51 press=-0.07 pnl=$-639
+11:02 BENCH MRVI 7.49 +30.5% | VRCA 4.89 +4.5% | MRK 149.20 +10.4% | PPC 32.75 +15.0%
+11:02 NEW-CROSSER BLSH (Bullish) last=27.915 +13.4% NEEDS-SCREEN
+11:02 NEW-CROSSER AGEN (Agenus) last=8.4738 +12.5% NEEDS-SCREEN
+11:02 NEW-CROSSER JELD (Jeld-Wen) last=2.065 +12.2% NEEDS-SCREEN
+11:02 NEW-CROSSER MIMI (Mint Incorporation) last=2.125 +11.8% NEEDS-SCREEN
+11:02 NEW-CROSSER MSTR (Strategy Inc.) last=103.13 +11.5% NEEDS-SCREEN
+11:02 NEW-CROSSER ASST (Strive Inc.) last=14.25 +11.3% NEEDS-SCREEN
+11:02 NEW-CROSSER CRCL (Circle Internet Group) last=79.755 +11.2% NEEDS-SCREEN
+11:02 NEW-CROSSER ATXG (Addentax Group) last=4.4499 +11.0% NEEDS-SCREEN
+11:02 NEW-CROSSER ABTC (American Bitcoin Corp.) last=7.69 +10.8% NEEDS-SCREEN
+11:02 NEW-CROSSER GURE (Gulf Resources) last=3.41 +10.1% NEEDS-SCREEN
+11:02 SCAN-NOTE total=134 (was 128 at 10:41); crypto complex now crossing (MSTR CRCL BLSH ASST ABTC); miners persist; NO ranking while position open
+11:06 POS MRVL last=230.30 peak=247.10 stop=225.51 press=-0.30 pnl=$-904
+11:12 POS MRVL last=232.35 peak=247.10 stop=225.51 press=-0.06 pnl=$-779
+11:19 POS MRVL last=233.69 peak=247.10 stop=225.51 press=0.05 pnl=$-697
+11:20 WINDOW-END position handback
