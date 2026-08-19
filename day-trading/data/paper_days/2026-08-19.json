@@ -4,7 +4,15 @@
   "protocol": "C37",
   "benchmark_per_day": 1517,
   "config": {
-    "tickets": [15000, 15000, 15000, 15000, 15000, 15000, 10000],
+    "tickets": [
+      15000,
+      15000,
+      15000,
+      15000,
+      15000,
+      15000,
+      10000
+    ],
     "day_cap": 100000,
     "one_position": true,
     "entry_cutoff_et": "14:30",
@@ -27,33 +35,101 @@
     "scan_id": "5f132877-7730-4a18-9e72-b3f0d2c9df83",
     "first_scan_et": "08:07",
     "total_items": 86,
-    "filters_verified": ["Last > 2", "% Change > 0.10 (ratio, incl. premarket)"]
+    "filters_verified": [
+      "Last > 2",
+      "% Change > 0.10 (ratio, incl. premarket)"
+    ]
   },
-  "crossed_set": ["DUKR", "TNON", "RDAC", "MRNA", "YJ", "ARCT", "SKK", "ZNB", "EHGO", "WSO.B", "BNTX", "EFOI", "EIKN", "NUR", "ELTK", "MDBH", "BNR", "GBLI", "VRAX", "MRVI", "YXT", "AXIL", "TCGX"],
+  "crossed_set": [
+    "DUKR",
+    "TNON",
+    "RDAC",
+    "MRNA",
+    "YJ",
+    "ARCT",
+    "SKK",
+    "ZNB",
+    "EHGO",
+    "WSO.B",
+    "BNTX",
+    "EFOI",
+    "EIKN",
+    "NUR",
+    "ELTK",
+    "MDBH",
+    "BNR",
+    "GBLI",
+    "VRAX",
+    "MRVI",
+    "YXT",
+    "AXIL",
+    "TCGX",
+    "KC"
+  ],
   "prev_closes": {
-    "DUKR": 5.41, "TNON": 5.45, "RDAC": 5.85, "MRNA": 62.96, "YJ": 1.74,
-    "ARCT": 8.21, "SKK": 4.2, "ZNB": 2.23, "EHGO": 1.81, "WSO.B": 312.44,
-    "BNTX": 92.75, "EFOI": 3.0, "EIKN": 11.65, "NUR": 2.67, "ELTK": 8.0209,
-    "MDBH": 2.8601, "BNR": 9.31, "GBLI": 25.34, "VRAX": 2.76, "MRVI": 5.74,
-    "YXT": 3.0, "AXIL": 6.65, "TCGX": 14.0
+    "DUKR": 5.41,
+    "TNON": 5.45,
+    "RDAC": 5.85,
+    "MRNA": 62.96,
+    "YJ": 1.74,
+    "ARCT": 8.21,
+    "SKK": 4.2,
+    "ZNB": 2.23,
+    "EHGO": 1.81,
+    "WSO.B": 312.44,
+    "BNTX": 92.75,
+    "EFOI": 3.0,
+    "EIKN": 11.65,
+    "NUR": 2.67,
+    "ELTK": 8.0209,
+    "MDBH": 2.8601,
+    "BNR": 9.31,
+    "GBLI": 25.34,
+    "VRAX": 2.76,
+    "MRVI": 5.74,
+    "YXT": 3.0,
+    "AXIL": 6.65,
+    "TCGX": 14.0,
+    "KC": 10.84
   },
-  "fake_gap_no_real_bars": ["DUKR", "WSO.B", "BNR", "EFOI", "ELTK", "MDBH", "NUR", "TCGX"],
+  "fake_gap_no_real_bars": [
+    "DUKR",
+    "WSO.B",
+    "BNR",
+    "EFOI",
+    "ELTK",
+    "MDBH",
+    "NUR"
+  ],
   "halal": {
-    "pass": ["MRVI"],
+    "pass": [
+      "MRVI"
+    ],
     "fail": {
       "GBLI": "HARAM INDUSTRY (insurance)",
       "BNTX": "cash 63.86% mcap (CASH>10+COMBINED>20), filed-quarter",
       "YXT": "loans 540.02% mcap",
       "SKK": "loans 106.03% mcap",
       "ARCT": "loans 10.27 + cash 85.71",
-      "EIKN": "loans 45.57 + cash 91.58"
+      "EIKN": "loans 45.57 + cash 91.58",
+      "KC": "loans 204.85 + cash 143.56 (universe, filed-quarter)"
     },
     "cannot_verify": {
       "RDAC": "universe PASS but cash-shell SPAC with cash_pct 0.03 is an implausible input; moot (calm-gap FAIL)"
     },
-    "unscreened_absent": ["EHGO"]
+    "unscreened_absent": [
+      "EHGO"
+    ]
   },
-  "calm_gap_fail": ["EIKN", "MRNA", "YJ", "VRAX", "RDAC", "ZNB", "TNON"],
+  "calm_gap_fail": [
+    "EIKN",
+    "MRNA",
+    "YJ",
+    "VRAX",
+    "RDAC",
+    "ZNB",
+    "TNON"
+  ],
   "rankings": [
     {
       "as_of_et": "08:09",
@@ -61,12 +137,31 @@
       "top": "MRVI",
       "armable_count": 1,
       "note": "BNTX ranked 1 pre-screen, halal FAIL; MRVI coil 0.955 calm +4.5% pressure untrusted"
+    },
+    {
+      "as_of_et": "08:21",
+      "state": "FLAT-5m",
+      "top": "MRVI",
+      "armable_count": 1,
+      "note": "MRVI 7.16 +24.7% coil 0.988; KC #2 screened FAIL; YJ +153% calm-FAIL"
     }
   ],
   "premarket_books_et_0808": {
-    "BNTX": {"bid": 108.5, "ask": 109.2, "spread_pct": 0.64},
-    "MRVI": {"bid": 5.8, "ask": 7.08, "spread_pct": 22.1},
-    "YXT": {"bid": 2.96, "ask": 3.2, "spread_pct": 7.8}
+    "BNTX": {
+      "bid": 108.5,
+      "ask": 109.2,
+      "spread_pct": 0.64
+    },
+    "MRVI": {
+      "bid": 5.8,
+      "ask": 7.08,
+      "spread_pct": 22.1
+    },
+    "YXT": {
+      "bid": 2.96,
+      "ask": 3.2,
+      "spread_pct": 7.8
+    }
   },
   "vetoes": [
     {
@@ -77,12 +172,50 @@
       "phase": "premarket",
       "detail": "Trigger B stop-buy 6.70 (last 6.40, forward stop legal); book 5.80/7.08 = 22.1% vs 0.5% cap; trailing-10-min vol ~525 sh caps size at ~105 sh anyway",
       "outcome": "not armed"
+    },
+    {
+      "n": 2,
+      "time_et": "08:21",
+      "symbol": "MRVI",
+      "rule": "SPREAD",
+      "phase": "premarket",
+      "detail": "Trigger C bullish_engulfing TAKEABLE (08:19 bar); act-time L2 7.08x100/7.24x1 = 2.23% vs 0.5% cap; bid ladder air below inside",
+      "outcome": "not entered"
     }
   ],
   "trigger_c_events": [
-    {"time_et": "08:12", "symbol": "MRVI", "signals": ["macd_cross_up@07:07 STALE", "macd_cross_up@08:00 STALE"], "action": "refused by STALE tag"}
+    {
+      "time_et": "08:12",
+      "symbol": "MRVI",
+      "signals": [
+        "macd_cross_up@07:07 STALE",
+        "macd_cross_up@08:00 STALE"
+      ],
+      "action": "refused by STALE tag"
+    },
+    {
+      "time_et": "08:21",
+      "symbol": "MRVI",
+      "signals": [
+        "bullish_engulfing@08:19 TAKEABLE"
+      ],
+      "action": "SPREAD veto at act-time re-quote"
+    }
   ],
-  "veto_counts": {"SPREAD": {"premarket": 1, "post_open": 0}, "DEPTH": {"premarket": 0, "post_open": 0}, "CHASE": {"premarket": 0, "post_open": 0}},
+  "veto_counts": {
+    "SPREAD": {
+      "premarket": 2,
+      "post_open": 0
+    },
+    "DEPTH": {
+      "premarket": 0,
+      "post_open": 0
+    },
+    "CHASE": {
+      "premarket": 0,
+      "post_open": 0
+    }
+  },
   "trades": [],
   "tickets_used": 0,
   "capital_deployed": 0,

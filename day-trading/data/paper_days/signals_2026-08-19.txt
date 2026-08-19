@@ -1,0 +1,7 @@
+08:14 WATCH-START delegate day11 top=MRVI armable=1
+08:15 FAKE-GAP-CLEARED TCGX first real bar (still rank-excluded: 1 bar)
+08:15 CYCLE FLAT top=MRVI armable=1 mrvi_last=6.59 mrvi_spread=7.7% stale_sigs=1
+08:20 NEW-CROSSER KC prev=10.84 last=12.13
+08:20 CYCLE FLAT top=MRVI armable=1 mrvi_last=7.2486 mrvi_spread=3.5% stale_sigs=3
+08:21 TAKEABLE MRVI bullish_engulfing (08:19 bar) rank: MRVI #1 coil 0.988 PASS; KC new-crosser #2 NEEDS-SCREEN
+08:21 WATCH-EXIT alerting coordinator
