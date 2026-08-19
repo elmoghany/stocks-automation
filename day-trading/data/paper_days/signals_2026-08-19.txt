@@ -25,3 +25,5 @@
 08:44 IPST no cross: maxhigh=17.25 < 17.336 (103 bars); also off >10pct scan (unarmable regardless)
 08:44 NEW-CROSSER EL (Estee Lauder) prev=84.27 last=93.00 +10.4% large-cap NEEDS-SCREEN no bars (not ranked)
 08:44 RANK-EVENT TCGX enters ranking #3 coil=0.952 NEEDS-SCREEN calm-gap FAIL (fake-gap name in top-3) -- EXIT to coordinator
+08:48 CYCLE FLAT top=MRVL armable=3 mrvi=7.22/1.25% mrvl=241.67/0.08% vrca=5.20/6.92% stale=1
+08:48 RANK-EVENT TOP change MRVI->MRVL: MRVL coil=0.989 press=+0.22 gain=12.2% calm=yes PASS vs MRVI coil=0.994 -- EXIT to coordinator
