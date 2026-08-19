@@ -12,3 +12,9 @@
 08:26 RANK-EVENT EHGO candidacy: #2 coil=0.968 calm=ok gain=32.6% NEEDS-SCREEN
 08:26 RANK-EVENT armable=2 (MRVI + VRCA) != 1 -- EXIT to coordinator
 08:29 TAKEABLE MRVI hammer (bar 08:27, detected as-of 08:29)
+08:33 CYCLE FLAT top=MRVI armable=2 mrvi=7.10/1.41% vrca=5.20/6.91% stale=2
+08:38 CYCLE FLAT top=MRVI armable=3 mrvi=7.24/0.83% vrca=5.20/6.91% stale=1
+08:38 NEW-CROSSER MRVL prev=216.00 last=242.75 +12.4% halal=PASS calm=ok COILED ranks #2 (new name in top-3)
+08:38 NEW-CROSSER RNAZ prev=3.24 last=3.58 +10.5% NEEDS-SCREEN calm-gap FAIL ranks #4
+08:38 NEW-CROSSER IPST prev=15.76 last=17.35 excluded (+10% cross not printed in bars yet)
+08:38 RANK-EVENT armable=3 (MRVI + MRVL + VRCA) != 2 -- EXIT to coordinator

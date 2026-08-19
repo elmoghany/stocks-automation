@@ -65,7 +65,9 @@
     "AXIL",
     "TCGX",
     "KC",
-    "VRCA"
+    "VRCA",
+    "MRVL",
+    "RNAZ"
   ],
   "prev_closes": {
     "DUKR": 5.41,
@@ -92,7 +94,9 @@
     "AXIL": 6.65,
     "TCGX": 14.0,
     "KC": 10.84,
-    "VRCA": 4.68
+    "VRCA": 4.68,
+    "MRVL": 216.0,
+    "RNAZ": 3.24
   },
   "fake_gap_no_real_bars": [
     "DUKR",
@@ -106,7 +110,8 @@
   "halal": {
     "pass": [
       "MRVI",
-      "VRCA"
+      "VRCA",
+      "MRVL"
     ],
     "fail": {
       "GBLI": "HARAM INDUSTRY (insurance)",
@@ -116,10 +121,12 @@
       "ARCT": "loans 10.27 + cash 85.71",
       "EIKN": "loans 45.57 + cash 91.58",
       "KC": "loans 204.85 + cash 143.56 (universe, filed-quarter)",
-      "EHGO": "loans 41.73 + cash 103.33, combined 145.06 (live screen, filed quarterly, RH mcap 5.76M)"
+      "EHGO": "loans 41.73 + cash 103.33, combined 145.06 (live screen, filed quarterly, RH mcap 5.76M)",
+      "RNAZ": "cash 348.46% mcap (universe, filed-quarter)"
     },
     "cannot_verify": {
-      "RDAC": "universe PASS but cash-shell SPAC with cash_pct 0.03 is an implausible input; moot (calm-gap FAIL)"
+      "RDAC": "universe PASS but cash-shell SPAC with cash_pct 0.03 is an implausible input; moot (calm-gap FAIL)",
+      "IPST": "spirits revenue mix unknown, 5% rule NOT run (universe flag); also +10% cross not yet printed in bars"
     },
     "unscreened_absent": []
   },
@@ -130,7 +137,8 @@
     "VRAX",
     "RDAC",
     "ZNB",
-    "TNON"
+    "TNON",
+    "RNAZ"
   ],
   "rankings": [
     {
@@ -153,6 +161,13 @@
       "top": "MRVI",
       "armable_count": 2,
       "note": "MRVI 7.05 coil 0.972 press +0.22; EHGO #2 screened FAIL; VRCA #3 PASS coil 1.000; MRVI spread 0.849%"
+    },
+    {
+      "as_of_et": "08:38",
+      "state": "FLAT-5m",
+      "top": "MRVI",
+      "armable_count": 3,
+      "note": "MRVI 7.2424 coil 0.999 press +0.43 spread 0.83%; MRVL crossed +12.4% PASS book 0.257%; VRCA 6.9% book"
     }
   ],
   "premarket_books_et_0808": {
@@ -199,6 +214,15 @@
       "phase": "premarket",
       "detail": "Trigger C hammer TAKEABLE (08:27 bar); act-time L2 7.04x104/7.14x135 = 1.41% vs 0.5% cap; ask depth to +0.3% cap only 135 sh (depth would also fail but spread binds first)",
       "outcome": "not entered"
+    },
+    {
+      "n": 4,
+      "time_et": "08:39",
+      "symbol": "MRVI",
+      "rule": "CHASE",
+      "phase": "premarket",
+      "detail": "Trigger B arming attempt at session high 7.25: last=high so trigger already met (fill-arming rule); marketable-limit fallback fails spread 7.19/7.25=0.83%>0.5%; wait for ratchet re-arm on fresh high",
+      "outcome": "not armed"
     }
   ],
   "trigger_c_events": [
@@ -238,7 +262,7 @@
       "post_open": 0
     },
     "CHASE": {
-      "premarket": 0,
+      "premarket": 1,
       "post_open": 0
     }
   },
