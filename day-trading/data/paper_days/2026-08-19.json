@@ -67,7 +67,8 @@
     "KC",
     "VRCA",
     "MRVL",
-    "RNAZ"
+    "RNAZ",
+    "EL"
   ],
   "prev_closes": {
     "DUKR": 5.41,
@@ -96,7 +97,8 @@
     "KC": 10.84,
     "VRCA": 4.68,
     "MRVL": 216.0,
-    "RNAZ": 3.24
+    "RNAZ": 3.24,
+    "EL": 84.27
   },
   "fake_gap_no_real_bars": [
     "DUKR",
@@ -104,8 +106,7 @@
     "BNR",
     "EFOI",
     "ELTK",
-    "MDBH",
-    "NUR"
+    "MDBH"
   ],
   "halal": {
     "pass": [
@@ -122,11 +123,13 @@
       "EIKN": "loans 45.57 + cash 91.58",
       "KC": "loans 204.85 + cash 143.56 (universe, filed-quarter)",
       "EHGO": "loans 41.73 + cash 103.33, combined 145.06 (live screen, filed quarterly, RH mcap 5.76M)",
-      "RNAZ": "cash 348.46% mcap (universe, filed-quarter)"
+      "RNAZ": "cash 348.46% mcap (universe, filed-quarter)",
+      "EL": "loans 29.44 + cash 9.89, combined 39.3 (universe, filed-quarter)"
     },
     "cannot_verify": {
       "RDAC": "universe PASS but cash-shell SPAC with cash_pct 0.03 is an implausible input; moot (calm-gap FAIL)",
-      "IPST": "spirits revenue mix unknown, 5% rule NOT run (universe flag); also +10% cross not yet printed in bars"
+      "IPST": "spirits revenue mix unknown, 5% rule NOT run (universe flag); also +10% cross not yet printed in bars",
+      "TCGX": "NO FUNDAMENTALS DATA (SPAC shell) - refusing; also calm-gap FAIL +195%"
     },
     "unscreened_absent": []
   },
@@ -168,6 +171,13 @@
       "top": "MRVI",
       "armable_count": 3,
       "note": "MRVI 7.2424 coil 0.999 press +0.43 spread 0.83%; MRVL crossed +12.4% PASS book 0.257%; VRCA 6.9% book"
+    },
+    {
+      "as_of_et": "08:44",
+      "state": "FLAT-5m",
+      "top": "MRVI",
+      "armable_count": 3,
+      "note": "MRVI 7.22/0.83%; MRVL 240.29/0.34%; VRCA 5.20/6.91%; TCGX #3 calm-FAIL no-screen-due; EL crossed FAIL; NUR first bar; IPST never crossed"
     }
   ],
   "premarket_books_et_0808": {

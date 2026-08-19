@@ -18,3 +18,10 @@
 08:38 NEW-CROSSER RNAZ prev=3.24 last=3.58 +10.5% NEEDS-SCREEN calm-gap FAIL ranks #4
 08:38 NEW-CROSSER IPST prev=15.76 last=17.35 excluded (+10% cross not printed in bars yet)
 08:38 RANK-EVENT armable=3 (MRVI + MRVL + VRCA) != 2 -- EXIT to coordinator
+08:42 WATCH-START delegate day11 window5 top=MRVI armable=3
+08:44 CYCLE FLAT top=MRVI armable=3 mrvi=7.22/0.83% mrvl=240.29/0.34% vrca=5.20/6.91% stale=1
+08:44 FAKE-GAP-CLEARED NUR first real bar (still rank-excluded: 1 bar)
+08:44 FAKE-GAP-DROP DUKR NUR off >10pct scan; WSO.B BNR EFOI ELTK MDBH still 0 real bars
+08:44 IPST no cross: maxhigh=17.25 < 17.336 (103 bars); also off >10pct scan (unarmable regardless)
+08:44 NEW-CROSSER EL (Estee Lauder) prev=84.27 last=93.00 +10.4% large-cap NEEDS-SCREEN no bars (not ranked)
+08:44 RANK-EVENT TCGX enters ranking #3 coil=0.952 NEEDS-SCREEN calm-gap FAIL (fake-gap name in top-3) -- EXIT to coordinator
