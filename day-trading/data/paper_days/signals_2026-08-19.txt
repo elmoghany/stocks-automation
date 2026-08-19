@@ -39,3 +39,4 @@
 09:01 ENTRY-FILL MRVL 245.12 x61 bar=08:59 (bar o=244.02 h=246.60 l=244.00 c=245.50; open<stop, high>=245.12 -> fill at stop 245.12)
 09:02 FILL+60s mark=245.45 (09:00 bar close; o=245.69 h=245.75 l=244.56) unrealized=+0.33/sh (+$20.13 x61)
 09:02 WATCH-EXIT window8: ENTRY-FILL MRVL 245.12 x61 -- handback to coordinator
+BENCH 09:21 mrvi=6.86/2.9% vrca=5.14/6.9%stale mss=2.03/1.0% eltx=3.39/10%

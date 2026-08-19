@@ -385,5 +385,9 @@
   ],
   "data_notes": [
     "08:38 bar high revised to exactly 245.12 in later fetch (pre-arming tape, excluded from fill check by delegate - correct)"
-  ]
+  ],
+  "open_0930": {
+    "mrvl_open_bar": "o240.65 h241.50 l235.84 c238.59 v896k",
+    "note": "opening flush -3.8% from entry reversed to 245.30 by 09:32; no exit rule approached (trail 197.68, stop 225.51)"
+  }
 }
