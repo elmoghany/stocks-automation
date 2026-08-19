@@ -185,3 +185,63 @@ BENCH 09:21 mrvi=6.86/2.9% vrca=5.14/6.9%stale mss=2.03/1.0% eltx=3.39/10%
 12:23 SCAN-NOTE total=186 (was 182 at 12:03); 100 ETF/leveraged wrappers excluded (incl IDNA iShares); NO ranking while position open
 12:28 POS MRVL last=236.74 peak=247.10 stop=225.51 press=0.20 pnl=$-511
 12:30 WINDOW-END position handback
+12:38 POS MRVL last=236.16 peak=247.10 stop=225.51 press=0.09 pnl=$-547
+12:42 BENCH MRVI 7.155 (+24.7%) VRCA 4.95 (+5.8%) MRK 149.795 (+10.8%) TWST 135.375 (+16.6%)
+12:43 NEW-CROSSER PSIG (PS International Group Ltd) last=2.18 +37.1% NEEDS-SCREEN
+12:43 NEW-CROSSER SEGG (Sports Entertainment Gaming) last=2.68 +11.7% NEEDS-SCREEN
+12:43 NEW-CROSSER AIBZ (Bitzero Holdings Inc.) last=6.90 +11.3% NEEDS-SCREEN
+12:43 NEW-CROSSER SDGR (Schrodinger) last=19.56 +10.7% NEEDS-SCREEN
+12:43 NEW-CROSSER TAOX (Tao Synergies) last=3.55 +10.2% NEEDS-SCREEN
+12:43 SCAN-NOTE total=181 (was 186 at 12:23); 100 ETF/leveraged wrappers excluded; NO ranking while position open
+12:47 POS MRVL last=236.69 peak=247.10 stop=225.51 press=-0.02 pnl=$-514
+12:55 POS MRVL last=236.35 peak=247.10 stop=225.51 press=-0.32 pnl=$-535
+13:01 BENCH MRVI 7.05 (+22.8%) VRCA 4.95 (+5.8%) MRK 150.17 (+11.1%) TWST 134.98 (+16.3%)
+13:01 NEW-CROSSER APUS (Apimeds Pharmaceuticals US) last=4.53 +13.3% NEEDS-SCREEN
+13:01 NEW-CROSSER ODTX (Odyssey Therapeutics) last=24.44 +11.3% NEEDS-SCREEN
+13:01 NEW-CROSSER BSEM (BioStem Technologies) last=3.50 +11.1% NEEDS-SCREEN
+13:01 SCAN-NOTE total=176 (was 181 at 12:43); 94 ETF/leveraged wrappers excluded; NO ranking while position open
+13:03 POS MRVL last=235.39 peak=247.10 stop=225.51 press=-0.01 pnl=$-594
+13:10 POS MRVL last=234.72 peak=247.10 stop=225.51 press=0.15 pnl=$-635
+13:18 POS MRVL last=234.17 peak=247.10 stop=225.51 press=-0.01 pnl=$-668
+13:20 BENCH MRVI 7.005 (+22.0%) VRCA 4.975 (+6.3%) MRK 150.925 (+11.7%) TWST 135.64 (+16.8%)
+13:21 NEW-CROSSER DWTX (Dogwood Therapeutics) last=2.40 +12.1% NEEDS-SCREEN
+13:21 NEW-CROSSER CADL (Candel Therapeutics) last=13.33 +10.6% NEEDS-SCREEN
+13:21 NEW-CROSSER ANIX (Anixa Biosciences) last=3.78 +10.2% NEEDS-SCREEN
+13:21 NEW-CROSSER UUU (Universal Safety Products) last=4.98 +10.2% NEEDS-SCREEN
+13:21 NEW-CROSSER NVAX (Novavax) last=8.735 +10.2% NEEDS-SCREEN
+13:21 NEW-CROSSER ACHV (Achieve Life Sciences) last=8.275 +10.0% NEEDS-SCREEN
+13:21 SCAN-NOTE total=164 (was 176 at 13:01); 85 ETF/leveraged wrappers excluded; NO ranking while position open
+13:27 POS MRVL last=233.28 peak=247.10 stop=225.51 press=-0.15 pnl=$-722
+13:35 POS MRVL last=233.13 peak=247.10 stop=225.51 press=-0.05 pnl=$-731
+13:40 WINDOW-END position handback
+13:42 BENCH MRVI 6.974 +21.5% | VRCA 4.95 +5.8% | MRK 150.75 +11.5% | TWST 137.79 +18.7%
+13:42 NEW-CROSSER RGNT (Regentis Biomaterials) last=2.2305 +12.1% float=5.1M vol=53k NEEDS-SCREEN
+13:42 NEW-CROSSER SOC (Sable Offshore) last=4.46 +11.8% float=150.2M vol=8820k NEEDS-SCREEN
+13:42 NEW-CROSSER NVCT (Nuvectis Pharma) last=23.225 +11.1% float=21.6M vol=167k NEEDS-SCREEN
+13:42 SCAN-NOTE total=159 (was 164 at 13:21); 85 wrappers excluded; NO ranking while position open
+13:48 POS MRVL last=233.31 peak=247.10 stop=225.51 press=-0.12 pnl=$-720
+13:56 POS MRVL last=233.68 peak=247.10 stop=225.51 press=0.18 pnl=$-698
+14:02 BENCH MRVI 7.068 +23.1% | VRCA 4.95 +5.8% | MRK 151.09 +11.8% | TWST 136.62 +17.7%
+14:02 NEW-CROSSER ABOS (Acumen Pharmaceuticals) last=3.0599 +11.7% float=50.4M vol=374k NEEDS-SCREEN
+14:02 NEW-CROSSER SUGP (SU Group Holdings) last=2.68 +11.7% float=0.7M vol=395k NEEDS-SCREEN
+14:02 NEW-CROSSER ALEC (Alector) last=2.465 +11.5% float=105.4M vol=2592k NEEDS-SCREEN
+14:02 NEW-CROSSER BDSX (Biodesix) last=24.72 +10.7% float=6.1M vol=94k NEEDS-SCREEN
+14:02 NEW-CROSSER RXRX (Recursion Pharmaceuticals) last=3.415 +10.5% float=511.4M vol=19290k NEEDS-SCREEN
+14:02 NEW-CROSSER DNUT (Krispy Kreme) last=3.575 +10.3% float=97.1M vol=3084k NEEDS-SCREEN
+14:02 NEW-CROSSER BYND (Beyond Meat) last=14.05 +10.3% float=17.0M vol=1413k NEEDS-SCREEN
+14:02 NEW-CROSSER NTLA (Intellia Therapeutics) last=12.775 +10.1% float=111.2M vol=2798k NEEDS-SCREEN
+14:02 SCAN-NOTE total=186 (was 159 at 13:42); 92 wrappers excluded; NO ranking while position open
+14:04 POS MRVL last=234.43 peak=247.10 stop=225.51 press=0.08 pnl=$-652
+14:12 POS MRVL last=231.97 peak=247.10 stop=225.51 press=-0.20 pnl=$-802
+14:20 POS MRVL last=232.67 peak=247.10 stop=225.51 press=0.03 pnl=$-759
+14:23 BENCH MRVI 7.245 +26.2% | VRCA 4.99 +6.6% | MRK 151.80 +12.3% | TWST 136.17 +17.3%
+14:23 NEW-CROSSER NXTT (Next Technology Holding) last=6.39 +11.7% float=1.5M vol=74k NEEDS-SCREEN
+14:23 NEW-CROSSER BKKT (Bakkt) last=7.67 +10.7% float=23.6M vol=1542k NEEDS-SCREEN
+14:23 NEW-CROSSER BRCB (Black Rock Coffee Bar) last=8.59 +10.3% float=19.9M vol=262k NEEDS-SCREEN
+14:23 SCAN-NOTE total=164 (was 186 at 14:02); 86 wrappers excluded; LAST scan of day (14:30 entry cutoff); NO ranking while position open
+14:28 POS MRVL last=232.81 peak=247.10 stop=225.51 press=0.24 pnl=$-751
+14:36 POS MRVL last=233.66 peak=247.10 stop=225.51 press=-0.00 pnl=$-699
+14:44 POS MRVL last=234.48 peak=247.10 stop=225.51 press=-0.07 pnl=$-649
+14:57 TICK MRVL 234.10  LADDER-1 (bid-1%) working out before 15:00
+14:58 TICK MRVL 233.21  LADDER-1 (bid-1%) working out before 15:00
+15:00 POSITION-EXIT MRVL EXIT-FLATTEN MRVL @ 233.71  P&L $-696

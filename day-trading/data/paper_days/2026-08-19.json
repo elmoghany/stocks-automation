@@ -329,21 +329,30 @@
       "entry_trigger": "B premarket-high stop-buy (armed 08:50, resting)",
       "entry_bar": "o244.02 h246.60 l244.00 c245.50",
       "fill_realism_60s_mark": 245.45,
-      "exit_px": null,
-      "exit_et": null,
-      "exit_reason": null,
-      "pnl": null,
+      "exit_px": 233.71,
+      "exit_et": "15:00",
+      "exit_reason": "EXIT-FLATTEN (15:00 close-out; no stop/trail/scale-out ever fired)",
+      "pnl": -696.01,
       "exit_rules": {
         "hard_stop": 225.51,
         "trail": "20%/10%/40% by pressure from peak",
         "scale_out": "1/3 at 306.40 unless press>=+0.3",
         "flatten": "15:00"
+      },
+      "hold_duration": "6h01m",
+      "peak": 247.1,
+      "session_low_in_hold": 228.1,
+      "exit_realism": {
+        "recorded": 233.71,
+        "quote_60s_bid": 233.67,
+        "quote_60s_last": 233.767,
+        "note": "61 sh vs liquid book; inside-spread fill, ladder sweep negligible"
       }
     }
   ],
   "tickets_used": 1,
   "capital_deployed": 14952.32,
-  "pnl": 0.0,
+  "pnl": -696.01,
   "fill_realism": [
     {
       "symbol": "MRVL",
@@ -352,12 +361,26 @@
       "mark_60s": 245.45,
       "delta_pct": 0.13,
       "direction": "favorable"
+    },
+    {
+      "symbol": "MRVL",
+      "ticket": 1,
+      "side": "exit",
+      "assumed_fill": 233.71,
+      "mark_60s": 233.767,
+      "delta_pct": -0.02,
+      "direction": "neutral-slightly-against"
     }
   ],
   "lessons": [
-    "Delegated TAKEABLE handback latency ~3min > 2min freshness window: Trigger C entries unreachable through delegation; Triggers A/B (resting stops) are the latency-immune paths - matches resting-order architecture rationale. Coordinator must run the 1-min loop personally to take pattern entries."
+    "Delegated TAKEABLE handback latency ~3min > 2min freshness window: Trigger C entries unreachable through delegation; Triggers A/B (resting stops) are the latency-immune paths - matches resting-order architecture rationale. Coordinator must run the 1-min loop personally to take pattern entries.",
+    "One-position + one slow large-cap holder = one ticket again (Day-8 ANGX pattern): MRVL held 6h01m in a -3%..-6% band; tickets 2-7 (85k) never deployed; single-holder days are process-judged",
+    "Trigger B resting stop was the ONLY workable entry path premarket: all four fresh Trigger C fires died to spread veto or pipeline staleness",
+    "MRVL trail never ratcheted: peak 247.10 set 3 min after entry; 20% trail (197.68) and hard stop (225.51) both slack all day - the champion give-back rule held the loser to the flatten, worth reviewing against the B-series banking ladder (no action: banking rejected 5x)",
+    "Position-watch delegation works ONLY with foreground pacing; bg-timer yield stalls (window 1). Windows 2-6: 172 clean cycles",
+    "Watch-liveness via state-file mtime is the reliable dead-man check (caught the stall in 9 min)"
   ],
-  "status": "IN_PROGRESS",
+  "status": "COMPLETE",
   "armed_orders": [
     {
       "ticket": 1,
@@ -389,5 +412,9 @@
   "open_0930": {
     "mrvl_open_bar": "o240.65 h241.50 l235.84 c238.59 v896k",
     "note": "opening flush -3.8% from entry reversed to 245.30 by 09:32; no exit rule approached (trail 197.68, stop 225.51)"
-  }
+  },
+  "benchmark_delta": -2213.01,
+  "cumulative_before_today": -363.86,
+  "cumulative_after_today_excl_day10": -1059.87,
+  "tick_log_note": "persistent Monitor tick clock ran 08:06-15:00+ ET without gaps (300s UTC-armed)"
 }
