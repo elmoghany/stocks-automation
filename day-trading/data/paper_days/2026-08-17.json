@@ -220,10 +220,75 @@
    "fill_vs_60s_pct": -0.33,
    "protective_stop": 2.7416,
    "scale_out_level": 3.725,
-   "status": "open",
-   "peak": 3.05
+   "exit": 3.1101,
+   "exit_time_et": "14:57",
+   "exit_rule": "flatten_ladder_1457 (no armed rule fired; settled from tape)",
+   "exit_bracket": [
+    3.1001,
+    3.12
+   ],
+   "exit_settled_from_tape": true,
+   "pnl": 654.79,
+   "pnl_pct": 4.37,
+   "mfe_usd": 905.94,
+   "mfe_px": 3.16,
+   "mae_usd": -704.62,
+   "mae_px": 2.84,
+   "peak": 3.16,
+   "status": "closed (settled 2026-08-19 per OUTAGE/DEAD-MONITOR SETTLEMENT)"
   }
  ],
- "coverage_gaps": [],
+ "settlement": {
+  "performed": "2026-08-19",
+  "method": "OUTAGE / DEAD-MONITOR SETTLEMENT: replay of ALREADY-ARMED rules, bar-by-bar, from the documented death state; no discretion, no backfill",
+  "state_at_death": {
+   "last_bar_processed_utc": "2026-08-17T14:05:00Z",
+   "last_heartbeat_et": "10:03",
+   "peak_hwm": 3.14,
+   "pressure_at_last_hb": -0.3,
+   "trail_width_at_death_pct": 10,
+   "trail_floor_at_death": 2.826,
+   "hard_stop": 2.7416,
+   "scale_out": 3.725,
+   "rules_fired_before_death": [],
+   "source": "pos_state.json (mtime 10:06 ET) + live_signals.log (recovered delegate/coordinator signal file, last line 10:03 ET)"
+  },
+  "replay": {
+   "bars": "14:06Z-18:59Z, 299 regular-session 1-min bars via get_equity_historicals; appended to data/rh_bars/HIVE_2026-08-17.csv; 0 mismatches vs cache on the 14:00-14:05Z overlap",
+   "hard_stop_check": "gap low 2.91 @ 10:47 ET -> margin +0.1684 over 2.7416; never touched",
+   "trail_check": "peak rose 3.14 -> 3.16 (12:09 ET); tightest gap-window floor 2.844 (13:35 ET, press -0.31, width 10%) vs closes >= 2.92; never fired",
+   "scale_out_check": "3.725 never approached (gap high 3.16)",
+   "wick_guard": "3x-neighboring-closes cap applied to peak tracking; never binding",
+   "first_rule_met": "none -> 14:57 flatten ladder governs",
+   "flatten_bar_1457": {
+    "o": 3.105,
+    "h": 3.12,
+    "l": 3.1001,
+    "c": 3.1101,
+    "v": 66885
+   }
+  }
+ },
+ "coverage_gaps": [
+  {
+   "window_et": "2026-08-17 ~10:09-15:00",
+   "window_utc": "2026-08-17 ~14:09-19:00Z",
+   "cause": "platform login expiry killed the coordinator position watch; last bar processed 14:05Z (10:05 ET, pass at 10:06), last heartbeat 10:03 ET; never resumed that day; nothing backfilled",
+   "tickets_undeployable": "2-7 ($85,001.66 of the $100,000 budget) from ~10:09 ET; day understates C37"
+  }
+ ],
+ "missed_sessions": [
+  {
+   "date": "2026-08-18",
+   "cause": "platform logged out; NO session at all — a full missed trading day, not a coverage gap within a day"
+  }
+ ],
+ "realized_pnl": 654.79,
+ "pnl_vs_benchmark": "+654.79 vs $1,517/day (43%); single-ticket day with rotation dead from ~10:09 ET — understates a full C37 session by construction",
+ "verdict": "+$654.79. Settled exit 3.1101 @ 14:57 ET via the flatten ladder — none of the armed rules (hard stop 2.7416, pressure trail, scale-out 3.725, wick guard) fired over the 10:09-15:00 gap tape. Process clean: fill-arming rule honored, one-position rule held, no real orders, settlement per protocol. Second full settlement exercise after Day 6.",
+ "cumulative": {
+  "before_day10": -363.86,
+  "after_day10": 290.93
+ },
  "notes": "premarket watch delegated 07:47-09:24 (signal-file architecture); coordinator retains arming authority; premarket delegate 07:47-09:24 clean (95 bars, 0 exit fires, peak 3.14/+$795); bench PASS: RTB JAB AGPU DUOT"
 }

@@ -3910,3 +3910,29 @@ for any stored result -- every number in rotation_results was computed
 live). Marker: data/massive/featcache/QUARANTINE.json. Do not enable
 until a from-scratch rebuild passes a FULL verify. The 2026-08-13 note
 claiming "55,490 rows, 0 mismatches" was the sample, not the range.
+
+## PAPER DAY 10 (2026-08-17) — HIVE +$654.79 settled; LOGIN EXPIRY = NEW OUTAGE CAUSE
+
+Cumulative −$363.86 → **+$290.93** (Days 5-10 evaluable; Day 8 VOID at $0) — first
+positive cumulative. Benchmark now $1,517/day (C37E, live gate + EDGAR).
+
+**Trade.** HIVE 5,033 sh @ 2.98 (07:46, Trigger B resting stop-limit, fill 0.33% better
+than +60s) → 3.1101 (14:57 flatten, SETTLED). +$654.79 (+4.37%). MFE +$906 (3.16),
+MAE −$705 (2.84 @ 09:41). No armed rule (stop 2.7416 / pressure trail / scale-out 3.725 /
+wick guard) ever fired — gap low 2.91 left a 17c stop margin.
+
+**The outage.** Platform LOGIN EXPIRY killed the watch ~10:09 ET Mon (last pass 10:06,
+heartbeat 10:03, press −0.30, peak 3.14, trail floor 2.826) and it never resumed;
+**Tue 2026-08-18 was fully missed** (no session at all — a missed trading day, not a
+coverage gap). Login expiry joins internet loss (Day 6) as a monitoring-death cause: the
+watcher must treat "session invalid" like connectivity loss — fail loudly, alert, re-auth.
+Second full OUTAGE/DEAD-MONITOR settlement after Day 6, and the cleaner of the two: state
+recovered from the delegate signal file + pos_state.json, 299-bar replay, zero discretion,
+0 cache/tape mismatches. Resting-order architecture again made the blackout settleable.
+Tickets 2-7 ($85k) undeployable from 10:09 → the day understates C37 by construction.
+
+**Trigger C's first live outing**: 3 TAKEABLE fires (HIVE tweezer_bottom 07:39, hammer
+07:42, macd_cross_up 07:47) — ALL spread-vetoed. First live TAKEABLE signals ever; the
+tooling works, the premarket book is what blocks it. Veto ledger: 7 vetoes, all premarket
+(6 SPREAD, 1 CHASE, 0 DEPTH), 7/8 premarket decisions = 87.5% — still far above the
+50-65% modelled optimum, consistent with Days 7-9.
