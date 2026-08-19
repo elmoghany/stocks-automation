@@ -190,6 +190,15 @@
       "phase": "premarket",
       "detail": "Trigger C bullish_engulfing TAKEABLE (08:19 bar); act-time L2 7.08x100/7.24x1 = 2.23% vs 0.5% cap; bid ladder air below inside",
       "outcome": "not entered"
+    },
+    {
+      "n": 3,
+      "time_et": "08:29",
+      "symbol": "MRVI",
+      "rule": "SPREAD",
+      "phase": "premarket",
+      "detail": "Trigger C hammer TAKEABLE (08:27 bar); act-time L2 7.04x104/7.14x135 = 1.41% vs 0.5% cap; ask depth to +0.3% cap only 135 sh (depth would also fail but spread binds first)",
+      "outcome": "not entered"
     }
   ],
   "trigger_c_events": [
@@ -209,11 +218,19 @@
         "bullish_engulfing@08:19 TAKEABLE"
       ],
       "action": "SPREAD veto at act-time re-quote"
+    },
+    {
+      "time_et": "08:29",
+      "symbol": "MRVI",
+      "signals": [
+        "hammer@08:27 TAKEABLE"
+      ],
+      "action": "SPREAD veto at act-time re-quote"
     }
   ],
   "veto_counts": {
     "SPREAD": {
-      "premarket": 2,
+      "premarket": 3,
       "post_open": 0
     },
     "DEPTH": {
