@@ -29,6 +29,13 @@
       "end_utc": "12:06",
       "cause": "Platform login expired Monday, restored this morning",
       "backfilled": false
+    },
+    {
+      "start_et": "09:05",
+      "end_et": "09:15",
+      "scope": "position watch only (scan not due; position settled from tape per armed rules)",
+      "cause": "position-watch delegate timer stall (Day-2 class); coordinator took over the watch personally",
+      "backfilled": "rules replayed bar-by-bar, no discretion"
     }
   ],
   "scan": {
