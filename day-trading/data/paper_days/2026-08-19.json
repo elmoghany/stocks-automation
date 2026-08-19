@@ -68,8 +68,21 @@
     "MRVI": {"bid": 5.8, "ask": 7.08, "spread_pct": 22.1},
     "YXT": {"bid": 2.96, "ask": 3.2, "spread_pct": 7.8}
   },
-  "vetoes": [],
-  "veto_counts": {"SPREAD": {"premarket": 0, "post_open": 0}, "DEPTH": {"premarket": 0, "post_open": 0}, "CHASE": {"premarket": 0, "post_open": 0}},
+  "vetoes": [
+    {
+      "n": 1,
+      "time_et": "08:12",
+      "symbol": "MRVI",
+      "rule": "SPREAD",
+      "phase": "premarket",
+      "detail": "Trigger B stop-buy 6.70 (last 6.40, forward stop legal); book 5.80/7.08 = 22.1% vs 0.5% cap; trailing-10-min vol ~525 sh caps size at ~105 sh anyway",
+      "outcome": "not armed"
+    }
+  ],
+  "trigger_c_events": [
+    {"time_et": "08:12", "symbol": "MRVI", "signals": ["macd_cross_up@07:07 STALE", "macd_cross_up@08:00 STALE"], "action": "refused by STALE tag"}
+  ],
+  "veto_counts": {"SPREAD": {"premarket": 1, "post_open": 0}, "DEPTH": {"premarket": 0, "post_open": 0}, "CHASE": {"premarket": 0, "post_open": 0}},
   "trades": [],
   "tickets_used": 0,
   "capital_deployed": 0,
