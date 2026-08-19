@@ -127,3 +127,33 @@ BENCH 09:21 mrvi=6.86/2.9% vrca=5.14/6.9%stale mss=2.03/1.0% eltx=3.39/10%
 11:12 POS MRVL last=232.35 peak=247.10 stop=225.51 press=-0.06 pnl=$-779
 11:19 POS MRVL last=233.69 peak=247.10 stop=225.51 press=0.05 pnl=$-697
 11:20 WINDOW-END position handback
+11:23 BENCH MRVI 7.255 +26.4% | VRCA 4.931 +5.4% | MRK 150.08 +11.0% | TWST 138.70 +19.5%
+11:23 NEW-CROSSER RDAC (Rising Dragon Acquisition Corp.) last=14.81 +153.2% vol=12.9M NEEDS-SCREEN
+11:23 NEW-CROSSER SKK (SKK Holdings) last=5.595 +33.2% vol=6.3M NEEDS-SCREEN
+11:23 NEW-CROSSER BNTX (BioNTech) last=110.96 +19.6% large-cap NEEDS-SCREEN
+11:23 NEW-CROSSER ARCT (Arcturus Therapeutics) last=9.71 +18.3% NEEDS-SCREEN
+11:23 NEW-CROSSER EIKN (Eikon Therapeutics) last=13.23 +13.6% NEEDS-SCREEN
+11:23 NEW-CROSSER NMTC (NeuroOne Medical) last=2.10 +11.7% vol=15k thin NEEDS-SCREEN
+11:23 NEW-CROSSER NAKA (Nakamoto) last=5.59 +11.6% NEEDS-SCREEN
+11:23 NEW-CROSSER BMNR (BitMine Immersion) last=20.285 +11.0% NEEDS-SCREEN
+11:23 NEW-CROSSER CNXC (Concentrix) last=26.22 +10.8% NEEDS-SCREEN
+11:23 NEW-CROSSER YDES (YD Bio) last=4.40 +10.6% vol=40k thin NEEDS-SCREEN
+11:23 NEW-CROSSER SBET (Sharplink) last=6.95 +10.5% NEEDS-SCREEN
+11:23 NEW-CROSSER SCTX (Scribe Therapeutics) last=29.89 +10.3% vol=100k NEEDS-SCREEN
+11:23 NEW-CROSSER XXI (Twenty One Capital) last=5.33 +10.1% NEEDS-SCREEN
+11:23 NEW-CROSSER AMLX (Amylyx Pharmaceuticals) last=38.66 +10.1% NEEDS-SCREEN
+11:23 SCAN-NOTE total=140 (was 134 at 11:02); mRNA complex extends (BNTX ARCT join MRNA); crypto-treasury names persist (BMNR SBET XXI NAKA); ~70 leveraged/ETF wrappers excluded; NO ranking while position open
+11:27 POS MRVL last=234.54 peak=247.10 stop=225.51 press=0.33 pnl=$-645
+11:33 POS MRVL last=233.35 peak=247.10 stop=225.51 press=0.11 pnl=$-718
+11:40 POS MRVL last=232.58 peak=247.10 stop=225.51 press=-0.26 pnl=$-765
+11:43 BENCH MRVI 7.165 +24.8% | VRCA 4.848 +3.6% | MRK 149.93 +10.9% | TWST 137.82 +18.7%
+11:43 NEW-CROSSER VOGX (Vogenx) last=23.89 +20.9% vol=293k NEEDS-SCREEN
+11:43 NEW-CROSSER BRNX (BrenX) last=3.11 +17.4% float=0.7M vol=1.3M NEEDS-SCREEN
+11:43 NEW-CROSSER BGIN (Bgin Blockchain) last=2.20 +14.6% vol=9k thin NEEDS-SCREEN
+11:43 NEW-CROSSER COIN (Coinbase) last=163.30 +11.7% large-cap NEEDS-SCREEN
+11:43 NEW-CROSSER AMR (Alpha Metallurgical Resources) last=188.30 +11.1% float=8.8M NEEDS-SCREEN
+11:43 NEW-CROSSER HYPD (Hyperion DeFi) last=2.985 +10.6% NEEDS-SCREEN
+11:43 NEW-CROSSER ELPW (Elong Power) last=4.29 +10.5% float=0.5M vol=222k NEEDS-SCREEN
+11:43 SCAN-NOTE total=162 (was 140 at 11:23); COIN joins crypto complex; 87 ETF/leveraged wrappers excluded; NO ranking while position open
+11:47 POS MRVL last=233.19 peak=247.10 stop=225.51 press=-0.15 pnl=$-727
+11:53 POS MRVL last=232.26 peak=247.10 stop=225.51 press=0.25 pnl=$-784
