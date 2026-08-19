@@ -40,3 +40,61 @@
 09:02 FILL+60s mark=245.45 (09:00 bar close; o=245.69 h=245.75 l=244.56) unrealized=+0.33/sh (+$20.13 x61)
 09:02 WATCH-EXIT window8: ENTRY-FILL MRVL 245.12 x61 -- handback to coordinator
 BENCH 09:21 mrvi=6.86/2.9% vrca=5.14/6.9%stale mss=2.03/1.0% eltx=3.39/10%
+09:39 POS MRVL last=236.68 peak=247.10 stop=225.51 press=0.08 pnl=$-515
+09:41 BENCH mrvi=7.17/0.6% vrca=4.82/5.8% mss=2.29/0.9% eltx=3.24/2.8%
+09:41 NEW-CROSSER YJ (Yunji) prev=1.74 last=4.48 +157.5% NEEDS-SCREEN
+09:41 NEW-CROSSER TNON (Tenon Medical) prev=5.45 last=12.855 +135.9% float=627k NEEDS-SCREEN
+09:41 NEW-CROSSER MRNA (Moderna) prev=62.96 last=123.56 +96.3% large-cap NEEDS-SCREEN
+09:41 NEW-CROSSER FEMY (Femasys) prev=2.20 last=3.3438 +52.0% NEEDS-SCREEN
+09:41 NEW-CROSSER KWM (K Wave Media) prev=2.64 last=3.16 +19.7% NEEDS-SCREEN
+09:41 NEW-CROSSER VRAX (Virax Biolabs) prev=2.76 last=3.2816 +18.9% float=776k NEEDS-SCREEN
+09:41 NEW-CROSSER TWST (Twist Bioscience) prev=116.10 last=134.685 +16.0% large-cap NEEDS-SCREEN
+09:41 NEW-CROSSER TEM (Tempus AI) prev=49.36 last=56.305 +14.1% large-cap NEEDS-SCREEN
+09:41 NEW-CROSSER ZNB (Zeta Network) prev=2.23 last=2.5002 +12.1% float=970k NEEDS-SCREEN
+09:41 NEW-CROSSER DRD (DRDGOLD) prev=24.30 last=27.23 +12.1% NEEDS-SCREEN
+09:41 NEW-CROSSER OBX (Obsidian Therapeutics) prev=19.95 last=22.33 +11.9% vol=4.1k thin NEEDS-SCREEN
+09:41 NEW-CROSSER PRME (Prime Medicine) prev=3.05 last=3.406 +11.7% NEEDS-SCREEN
+09:41 NEW-CROSSER IDN (Intellicheck) prev=2.97 last=3.28 +10.4% NEEDS-SCREEN
+09:41 NEW-CROSSER PYXS (Pyxis Oncology) prev=2.99 last=3.295 +10.2% NEEDS-SCREEN
+09:41 NEW-CROSSER AARD (Aardvark Therapeutics) prev=6.145 last=6.77 +10.2% vol=3.1k thin NEEDS-SCREEN
+09:44 POS MRVL last=235.44 peak=247.10 stop=225.51 press=-0.06 pnl=$-590
+09:50 POS MRVL last=236.51 peak=247.10 stop=225.51 press=0.16 pnl=$-525
+09:57 POS MRVL last=233.22 peak=247.10 stop=225.51 press=-0.40 pnl=$-726
+10:01 BENCH mrvi=7.41/0.1% vrca=4.865/2.4% mss=2.375/0.4% eltx=3.08/0.6% (eltx now below prev close 3.11)
+10:01 NEW-CROSSER DBGI (Digital Brands Group) prev=10.905 last=13.75 +26.1% float=575k vol=45k thin NEEDS-SCREEN
+10:01 NEW-CROSSER PPC (Pilgrims Pride) prev=28.49 last=32.00 +12.3% large-cap NEEDS-SCREEN
+10:01 NEW-CROSSER ASTL (Algoma Steel) prev=4.09 last=4.61 +12.7% NEEDS-SCREEN
+10:01 NEW-CROSSER NCT (Intercont Cayman) prev=3.89 last=4.35 +11.8% NEEDS-SCREEN
+10:01 NEW-CROSSER MRK (Merck) prev=135.17 last=149.72 +10.8% mega-cap NEEDS-SCREEN
+10:01 NEW-CROSSER AVD (American Vanguard) prev=2.17 last=2.39 +10.1% NEEDS-SCREEN
+10:04 POS MRVL last=231.25 peak=247.10 stop=225.51 press=0.11 pnl=$-846
+10:10 POS MRVL last=230.29 peak=247.10 stop=225.51 press=-0.04 pnl=$-904
+10:17 POS MRVL last=232.16 peak=247.10 stop=225.51 press=0.12 pnl=$-791
+10:21 BENCH mrvi=7.16/0.1% vrca=5.00/2.8% mss=2.199/0.5% eltx=3.10/1.0% (eltx hovering prev close)
+10:22 NEW-CROSSER GDC (GD Culture Group) prev=1.87 last=2.1724 +16.2% NEEDS-SCREEN
+10:22 NEW-CROSSER CDTG (CDT Environmental) prev=3.29 last=3.7999 +15.5% NEEDS-SCREEN
+10:22 NEW-CROSSER GRNQ (Greenpro Capital) prev=12.20 last=14.04 +15.1% vol=1.1k thin NEEDS-SCREEN
+10:22 NEW-CROSSER CDLX (Cardlytics) prev=4.12 last=4.6785 +13.6% NEEDS-SCREEN
+10:22 NEW-CROSSER INLF (INLIF Limited) prev=4.52 last=5.125 +13.4% float=1.0M NEEDS-SCREEN
+10:22 NEW-CROSSER TGL (Treasure Global) prev=2.67 last=3.0142 +12.9% NEEDS-SCREEN
+10:22 NEW-CROSSER CABA (Cabaletta Bio) prev=2.91 last=3.2601 +12.0% NEEDS-SCREEN
+10:22 NEW-CROSSER EDIT (Editas Medicine) prev=2.88 last=3.225 +12.0% NEEDS-SCREEN
+10:22 NEW-CROSSER EYPT (EyePoint) prev=5.47 last=6.11 +11.7% NEEDS-SCREEN
+10:22 NEW-CROSSER DFH (Dream Finders Homes) prev=14.29 last=15.96 +11.7% NEEDS-SCREEN
+10:22 NEW-CROSSER ARIS (Aris Mining) prev=17.59 last=19.6372 +11.6% NEEDS-SCREEN
+10:22 NEW-CROSSER SORA (AsiaStrategy) prev=2.25 last=2.51 +11.6% NEEDS-SCREEN
+10:22 NEW-CROSSER NG (NovaGold) prev=7.41 last=8.24 +11.2% NEEDS-SCREEN
+10:22 NEW-CROSSER BTGO (BitGo) prev=5.39 last=5.9716 +10.8% NEEDS-SCREEN
+10:22 NEW-CROSSER BAK (Braskem) prev=1.97 last=2.18 +10.7% NEEDS-SCREEN
+10:22 NEW-CROSSER SANA (Sana Biotechnology) prev=3.63 last=4.015 +10.6% NEEDS-SCREEN
+10:22 NEW-CROSSER CDE (Coeur Mining) prev=18.51 last=20.425 +10.3% NEEDS-SCREEN
+10:22 NEW-CROSSER SCZM (Santacruz Silver) prev=8.37 last=9.2328 +10.3% NEEDS-SCREEN
+10:22 NEW-CROSSER THM (Intl Tower Hill Mines) prev=2.54 last=2.80 +10.2% NEEDS-SCREEN
+10:22 NEW-CROSSER EXK (Endeavour Silver) prev=9.66 last=10.64 +10.1% NEEDS-SCREEN
+10:22 NEW-CROSSER FSM (Fortuna Mining) prev=10.45 last=11.51 +10.1% NEEDS-SCREEN
+10:22 NEW-CROSSER DNA (Ginkgo Bioworks) prev=6.53 last=7.19 +10.1% NEEDS-SCREEN
+10:22 NEW-CROSSER ARMP (Armata Pharma) prev=4.56 last=5.02 +10.1% NEEDS-SCREEN
+10:22 NEW-CROSSER SG (Sweetgreen) prev=5.82 last=6.405 +10.1% NEEDS-SCREEN
+10:22 SCAN-NOTE >10pct scan total=100 (was 58 at 09:41) broad tape: gold/silver miners + biotech complex crossing en masse
+10:24 POS MRVL last=231.81 peak=247.10 stop=225.51 press=0.20 pnl=$-812
+10:25 WINDOW-END position handback
