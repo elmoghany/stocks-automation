@@ -30,3 +30,12 @@
 08:53 TAKEABLE-HANDBACK MRVL tweezer_bottom spread=0.06% bid=240.36 ask=240.50
 08:53 RANK-EVENT TOP change MRVL->MRVI (MRVI coil=0.994 vs MRVL 0.973) armable=3; VRCA off >10pct scan (tape stale 08:21) -- armed order needs coordinator re-decision
 08:53 WATCH-EXIT window7: armed order UNTOUCHED, no bar high >= 245.12 since 12:46Z (max high 244.10 @ 08:46)
+08:58 WATCH-START delegate day11 window8 armed=MRVL-stop245.12-limit246.35-x61 top=MRVI armable=3
+08:59 BAR-NOTE MRVL 12:38Z bar high now prints 245.12 (=stop) -- pre-arming bar (order fixed 08:50, window7 ruled tape untouched); NOT a fill. Post-arming maxhigh=244.79 @08:55
+08:59 ARMED-CHECK NO-TRIGGER post-arm maxhigh=244.79 @08:55 last_bar=08:56; trigger: tweezer_bottom@08:50 STALE, bullish_engulfing@08:54 STALE (count-only)
+09:00 NEW-CROSSER MSS (Maison Solutions) prev=1.57 last=2.01 +28.0% float=569k NEEDS-SCREEN (crossed $2 scan floor 08:56)
+09:00 NEW-CROSSER ELTX (Elicio Therapeutics) prev=3.11 last=3.45 +10.9% float=20.4M NEEDS-SCREEN thin tape (first real bar 08:42)
+09:00 CYCLE FLAT+ARMED top=MRVI armable=3 mrvl=245.82/0.37% mrvi=7.15/6.95% vrca=5.20/3.32%(tape-stale-08:21) stale=2 fake-gap=unchanged(DUKR WSO.B BNR EFOI ELTK MDBH 0 bars)
+09:01 ENTRY-FILL MRVL 245.12 x61 bar=08:59 (bar o=244.02 h=246.60 l=244.00 c=245.50; open<stop, high>=245.12 -> fill at stop 245.12)
+09:02 FILL+60s mark=245.45 (09:00 bar close; o=245.69 h=245.75 l=244.56) unrealized=+0.33/sh (+$20.13 x61)
+09:02 WATCH-EXIT window8: ENTRY-FILL MRVL 245.12 x61 -- handback to coordinator

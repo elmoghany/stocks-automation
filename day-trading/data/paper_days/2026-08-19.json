@@ -68,7 +68,9 @@
     "VRCA",
     "MRVL",
     "RNAZ",
-    "EL"
+    "EL",
+    "MSS",
+    "ELTX"
   ],
   "prev_closes": {
     "DUKR": 5.41,
@@ -98,7 +100,9 @@
     "VRCA": 4.68,
     "MRVL": 216.0,
     "RNAZ": 3.24,
-    "EL": 84.27
+    "EL": 84.27,
+    "MSS": 1.57,
+    "ELTX": 3.11
   },
   "fake_gap_no_real_bars": [
     "DUKR",
@@ -306,9 +310,32 @@
       "post_open": 0
     }
   },
-  "trades": [],
-  "tickets_used": 0,
-  "capital_deployed": 0,
+  "trades": [
+    {
+      "ticket": 1,
+      "symbol": "MRVL",
+      "side": "long",
+      "shares": 61,
+      "entry_px": 245.12,
+      "entry_notional": 14952.32,
+      "entry_et": "08:59",
+      "entry_trigger": "B premarket-high stop-buy (armed 08:50, resting)",
+      "entry_bar": "o244.02 h246.60 l244.00 c245.50",
+      "fill_realism_60s_mark": 245.82,
+      "exit_px": null,
+      "exit_et": null,
+      "exit_reason": null,
+      "pnl": null,
+      "exit_rules": {
+        "hard_stop": 225.51,
+        "trail": "20%/10%/40% by pressure from peak",
+        "scale_out": "1/3 at 306.40 unless press>=+0.3",
+        "flatten": "15:00"
+      }
+    }
+  ],
+  "tickets_used": 1,
+  "capital_deployed": 14952.32,
   "pnl": 0.0,
   "fill_realism": [],
   "lessons": [
@@ -337,7 +364,7 @@
         "scale_out": "1/3 at +25% unless press>=+0.3",
         "flatten": "15:00, ladder 14:57"
       },
-      "status": "ARMED"
+      "status": "FILLED 08:59 bar at stop 245.12"
     }
   ]
 }
