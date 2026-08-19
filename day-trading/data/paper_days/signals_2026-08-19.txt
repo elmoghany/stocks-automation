@@ -157,3 +157,31 @@ BENCH 09:21 mrvi=6.86/2.9% vrca=5.14/6.9%stale mss=2.03/1.0% eltx=3.39/10%
 11:43 SCAN-NOTE total=162 (was 140 at 11:23); COIN joins crypto complex; 87 ETF/leveraged wrappers excluded; NO ranking while position open
 11:47 POS MRVL last=233.19 peak=247.10 stop=225.51 press=-0.15 pnl=$-727
 11:53 POS MRVL last=232.26 peak=247.10 stop=225.51 press=0.25 pnl=$-784
+12:00 POS MRVL last=232.98 peak=247.10 stop=225.51 press=-0.17 pnl=$-741
+12:03 BENCH MRVI 7.175 +25.0% | VRCA 4.870 +4.1% | MRK 149.95 +10.9% | TWST 136.34 +17.4%
+12:03 NEW-CROSSER PSNL (Personalis) last=15.475 +11.3% NEEDS-SCREEN
+12:03 NEW-CROSSER USDE (StablecoinX) last=3.10 +11.1% vol=293k NEEDS-SCREEN
+12:03 NEW-CROSSER PURR (Hyperliquid Strategies) last=7.985 +10.9% vol=12.1M NEEDS-SCREEN
+12:03 NEW-CROSSER AEM (Agnico Eagle Mines) last=206.91 +10.7% large-cap NEEDS-SCREEN
+12:03 NEW-CROSSER BTDR (Bitdeer Technologies) last=9.96 +10.7% NEEDS-SCREEN
+12:03 NEW-CROSSER GEMI (Gemini Space Station) last=3.915 +10.6% NEEDS-SCREEN
+12:03 NEW-CROSSER COTY (Coty) last=3.025 +10.4% large-float NEEDS-SCREEN
+12:03 NEW-CROSSER FWDI (Forward Industries) last=5.01 +10.4% NEEDS-SCREEN
+12:03 NEW-CROSSER AAUC (Allied Gold) last=23.14 +10.2% NEEDS-SCREEN
+12:03 NEW-CROSSER AU (AngloGold Ashanti) last=107.88 +10.1% large-cap NEEDS-SCREEN
+12:03 NEW-CROSSER SKE (Skeena Resources) last=34.21 +10.1% NEEDS-SCREEN
+12:03 NEW-CROSSER PPHC (Public Policy Holding) last=11.27 +10.1% vol=73k thin NEEDS-SCREEN
+12:03 SCAN-NOTE total=182 (was 162 at 11:43); gold complex broadens (AEM AU AAUC SKE); crypto-treasury adds (PURR USDE GEMI BTDR FWDI); 95 ETF/leveraged wrappers excluded; NO ranking while position open
+12:07 POS MRVL last=234.75 peak=247.10 stop=225.51 press=0.20 pnl=$-633
+12:13 POS MRVL last=237.08 peak=247.10 stop=225.51 press=0.18 pnl=$-490
+12:20 POS MRVL last=237.28 peak=247.10 stop=225.51 press=0.29 pnl=$-478
+12:23 BENCH MRVI 7.145 +24.5% | VRCA 4.930 +5.3% | MRK 150.34 +11.2% | TWST 137.34 +18.3%
+12:23 NEW-CROSSER EXOD (Exodus Movement) last=7.20 +13.7% float=6.8M vol=36k thin NEEDS-SCREEN
+12:23 NEW-CROSSER MODD (Modular Medical) last=3.40 +12.2% vol=336k NEEDS-SCREEN
+12:23 NEW-CROSSER BRR (ProCap Financial) last=2.115 +10.7% NEEDS-SCREEN
+12:23 NEW-CROSSER NIPG (NIP Group) last=13.19 +10.5% vol=45k thin NEEDS-SCREEN
+12:23 NEW-CROSSER RNAC (Cartesian Therapeutics) last=10.14 +10.2% NEEDS-SCREEN
+12:23 NEW-CROSSER WRBY (Warby Parker) last=28.18 +10.0% NEEDS-SCREEN
+12:23 SCAN-NOTE total=186 (was 182 at 12:03); 100 ETF/leveraged wrappers excluded (incl IDNA iShares); NO ranking while position open
+12:28 POS MRVL last=236.74 peak=247.10 stop=225.51 press=0.20 pnl=$-511
+12:30 WINDOW-END position handback
