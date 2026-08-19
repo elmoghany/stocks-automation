@@ -414,7 +414,10 @@
     "note": "opening flush -3.8% from entry reversed to 245.30 by 09:32; no exit rule approached (trail 197.68, stop 225.51)"
   },
   "benchmark_delta": -2213.01,
-  "cumulative_before_today": -363.86,
-  "cumulative_after_today_excl_day10": -1059.87,
-  "tick_log_note": "persistent Monitor tick clock ran 08:06-15:00+ ET without gaps (300s UTC-armed)"
+  "tick_log_note": "persistent Monitor tick clock ran 08:06-15:00+ ET without gaps (300s UTC-armed)",
+  "cumulative": {
+    "before_today_days5_10_day8_void": 290.93,
+    "day10_note": "Day 10 settled +654.79 (HIVE) per NOTES-DAYTRADING.md - the pre-session brief was stale",
+    "after_today": -405.08
+  }
 }

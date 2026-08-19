@@ -3936,3 +3936,44 @@ Tickets 2-7 ($85k) undeployable from 10:09 → the day understates C37 by constr
 tooling works, the premarket book is what blocks it. Veto ledger: 7 vetoes, all premarket
 (6 SPREAD, 1 CHASE, 0 DEPTH), 7/8 premarket decisions = 87.5% — still far above the
 50-65% modelled optimum, consistent with Days 7-9.
+
+## PAPER DAY 11 (2026-08-19) — MRVL −$696.01 to the flatten; the halal/liquidity squeeze picked the day's one liquid PASS
+
+Cumulative +$290.93 → **−$405.08** (Days 5-11 evaluable; Day 8 VOID). Benchmark $1,517/day.
+Late start 08:05 ET (login expiry Monday, restored same morning): 07:00-08:06 coverage gap,
+nothing backfilled.
+
+**Trade.** MRVL 61 sh @ 245.12 (08:59, Trigger B resting stop at the 245.12 premarket
+high, armed 08:50 on the pullback at a 0.20% book; fill +0.13% better than +60s) →
+233.71 (15:00 EXIT-FLATTEN). **−$696.01.** Peak 247.10 printed 3 min after entry and
+never again; open flushed to 235.84 and reversed; the day then drifted 228-237 for six
+hours. No armed rule (stop 225.51 / trail 197.68-222.39 / scale-out 306.40 / wick guard)
+ever fired — closest approach 228.10 (1.1% above the stop). One-position rule + one slow
+holder = tickets 2-7 ($85k) never deployed (Day-8 ANGX pattern on a large-cap).
+
+**Halal squeeze, day 3 of the pattern**: 10 FAILs (BNTX cash 64%, ARCT, EIKN, KC 348%,
+EHGO 145% live-screened, YXT 540%, SKK, RNAZ, EL, GBLI insurance), 3 CANNOT-VERIFY (IPST
+spirits/5%-unrun, TCGX+RDAC SPAC shells), 3 PASS (MRVI, MRVL, VRCA). The tight books
+failed the gate; the gate's rare liquid PASS (MRVL, mega-cap semi, loans 2.65/cash 1.93)
+was the only deployable name and the day traded it.
+
+**Trigger C still unreachable live — now for a NEW reason**: 4 fresh fires on the PASS
+names (engulfing 08:19, morning_star 08:25, hammer 08:27 on MRVI; tweezer 08:50 on MRVL).
+2 spread-vetoed at act-time re-quote (2.23%, 1.41% books), 1 aged out in a watcher window
+transition, and the MRVL one — spread 0.06%, book fine — **died to handback latency**:
+detect→signal→exit→coordinator re-quote took ~3 min vs the 2-min freshness window. With
+delegated watching, pattern entries are structurally out of reach; resting stops (A/B)
+are the latency-immune path and produced the day's only fill. If Trigger C is ever to
+fire live, the arming authority itself must sit in a ≤1-min loop.
+
+**Veto ledger**: SPREAD 3 (all premarket, all MRVI), CHASE 1 (MRVI at-high 08:39),
+DEPTH 0. Premarket 4/4 decisions vetoed = 100% (band: 50-65%); post-open 0/1 (MRVL armed
+clean). Same premarket-over-blocking signature as Days 7-10.
+
+**Ops**: position-watch delegate #1 died the Day-2 death (armed a bg timer and yielded);
+caught in 9 min via state-file mtime, gap settled bar-by-bar from tape (no rule had
+fired), watch retaken personally through the open, then re-delegated with
+FOREGROUND-PACING-ONLY orders — windows 2-6 ran 172 clean cycles to the close. State-file
+mtime is the dead-man check. 0 API truncations across ~60 batched calls; scan JSON never
+touched coordinator context (delegated sweeps + signal file). Scanner audit deferred to
+after 16:00 (grouped daily not final at 15:00).
