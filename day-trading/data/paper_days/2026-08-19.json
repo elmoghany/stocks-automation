@@ -64,7 +64,8 @@
     "YXT",
     "AXIL",
     "TCGX",
-    "KC"
+    "KC",
+    "VRCA"
   ],
   "prev_closes": {
     "DUKR": 5.41,
@@ -90,7 +91,8 @@
     "YXT": 3.0,
     "AXIL": 6.65,
     "TCGX": 14.0,
-    "KC": 10.84
+    "KC": 10.84,
+    "VRCA": 4.68
   },
   "fake_gap_no_real_bars": [
     "DUKR",
@@ -103,7 +105,8 @@
   ],
   "halal": {
     "pass": [
-      "MRVI"
+      "MRVI",
+      "VRCA"
     ],
     "fail": {
       "GBLI": "HARAM INDUSTRY (insurance)",
@@ -112,14 +115,13 @@
       "SKK": "loans 106.03% mcap",
       "ARCT": "loans 10.27 + cash 85.71",
       "EIKN": "loans 45.57 + cash 91.58",
-      "KC": "loans 204.85 + cash 143.56 (universe, filed-quarter)"
+      "KC": "loans 204.85 + cash 143.56 (universe, filed-quarter)",
+      "EHGO": "loans 41.73 + cash 103.33, combined 145.06 (live screen, filed quarterly, RH mcap 5.76M)"
     },
     "cannot_verify": {
       "RDAC": "universe PASS but cash-shell SPAC with cash_pct 0.03 is an implausible input; moot (calm-gap FAIL)"
     },
-    "unscreened_absent": [
-      "EHGO"
-    ]
+    "unscreened_absent": []
   },
   "calm_gap_fail": [
     "EIKN",
@@ -144,6 +146,13 @@
       "top": "MRVI",
       "armable_count": 1,
       "note": "MRVI 7.16 +24.7% coil 0.988; KC #2 screened FAIL; YJ +153% calm-FAIL"
+    },
+    {
+      "as_of_et": "08:26",
+      "state": "FLAT-5m",
+      "top": "MRVI",
+      "armable_count": 2,
+      "note": "MRVI 7.05 coil 0.972 press +0.22; EHGO #2 screened FAIL; VRCA #3 PASS coil 1.000; MRVI spread 0.849%"
     }
   ],
   "premarket_books_et_0808": {

@@ -5,3 +5,9 @@
 08:20 CYCLE FLAT top=MRVI armable=1 mrvi_last=7.2486 mrvi_spread=3.5% stale_sigs=3
 08:21 TAKEABLE MRVI bullish_engulfing (08:19 bar) rank: MRVI #1 coil 0.988 PASS; KC new-crosser #2 NEEDS-SCREEN
 08:21 WATCH-EXIT alerting coordinator
+08:24 TRIGGER-STALE MRVI bullish_engulfing@08:19 (5m old, count-only)
+08:25 CYCLE FLAT top=MRVI armable=2 mrvi_last=7.05 mrvi_spread=0.85% stale_sigs=1
+08:25 NEW-CROSSER VRCA (Verrica Pharma) prev_close=4.68 last=5.20 +11.1% halal=PASS
+08:26 RANK-EVENT VRCA ranks #3 coil=1.000 calm=ok COILED (new name in top-3)
+08:26 RANK-EVENT EHGO candidacy: #2 coil=0.968 calm=ok gain=32.6% NEEDS-SCREEN
+08:26 RANK-EVENT armable=2 (MRVI + VRCA) != 1 -- EXIT to coordinator
