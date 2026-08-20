@@ -1,0 +1,198 @@
+{
+ "date": "2026-08-20",
+ "day_number": 12,
+ "protocol": "C37 sequential rotation",
+ "benchmark_per_day": 1517,
+ "config": {
+  "tickets": "flat $15k, 7th $10k, $100k/day cap",
+  "one_position": true,
+  "entry_cutoff": "14:30",
+  "exit_deadline": "15:00",
+  "flatten_ladder": "14:57",
+  "trigger_c_ownership": "coordinator (Day-11 standing finding)"
+ },
+ "session": {
+  "start_et": "06:55:57",
+  "scan_window_open": "07:00",
+  "coverage_gaps": [],
+  "monitor_task": "bbtmsibc3",
+  "platform_probe": "06:57 SPY quote live"
+ },
+ "trades": [
+  {
+   "ticket": 1,
+   "sym": "RARE",
+   "shares": 524,
+   "entry": 28.6,
+   "entry_et": "07:14",
+   "entry_trigger": "C: hammer+rsi_cross_up on 07:12 bar, marketable limit at inside ask (spread 0.457%, depth 4580 vs 524, size cap 1673)",
+   "exit": 26.31,
+   "exit_et": "09:42",
+   "exit_reason": "EXIT-RESTING-STOP -8% intrabar (bar low 26.1596)",
+   "pnl": -1199.31,
+   "deployed": 14986.4,
+   "fill_realism": {
+    "entry_vs_60s": "-0.01% (neutral)",
+    "exit_vs_60s": "-0.7% (conservative; bracket 26.312 opt / 26.16 pess)"
+   }
+  },
+  {
+   "ticket": 2,
+   "sym": "MRVI",
+   "shares": 701,
+   "entry": 8.15,
+   "entry_et": "11:13",
+   "entry_trigger": "C: morning_star on 11:11 bar, marketable limit capped at signal+0.5% (8.159); DEPTH-REDUCED 701 of 1833 intended (38%, >=25% floor)",
+   "exit": 8.24,
+   "exit_et": "14:57",
+   "exit_reason": "LADDER-1 flatten at inside bid (1741 sh displayed vs 701)",
+   "pnl": 63.09,
+   "deployed": 5713.15,
+   "fill_realism": {
+    "entry_vs_60s": "+0.12% (favourable)",
+    "exit_vs_60s": "+0.06% (favourable)"
+   },
+   "note": "resting Trigger B stop 8.1789 x1833 armed 11:04, cancelled on pattern fill; would have filled 11:43"
+  }
+ ],
+ "day_pnl": -1136.22,
+ "cumulative_pnl_after": -1541.3,
+ "tickets_used": "2/7",
+ "capital_deployed": 20699.55,
+ "veto_ledger": [
+  {
+   "n": 1,
+   "et": "07:05",
+   "sym": "RARE",
+   "rule": "SPREAD",
+   "phase": "premarket",
+   "detail": "Trigger B 30.85 armable; book 28.19/28.76 = 2.02%"
+  },
+  {
+   "n": 2,
+   "et": "07:06",
+   "sym": "RARE",
+   "rule": "SPREAD",
+   "phase": "premarket",
+   "detail": "Trigger C engulfing+rsi TAKEABLE; book 28.50/28.76 = 0.91%; depth+size would pass"
+  },
+  {
+   "n": 3,
+   "et": "09:49",
+   "sym": "TAOX",
+   "rule": "SPREAD",
+   "phase": "post-open",
+   "detail": "Trigger B 3.90 armable; book 3.63/3.79 = 4.42%"
+  },
+  {
+   "n": 4,
+   "et": "10:37",
+   "sym": "TAOX",
+   "rule": "SPREAD",
+   "phase": "post-open",
+   "detail": "Trigger C macd TAKEABLE; book 3.59/3.74 = 4.18%; ask depth 200 sh (depth also fails, spread binds first)"
+  }
+ ],
+ "veto_rates": {
+  "premarket": "2/3 = 67% (first session in 50-65% band since Day 8)",
+  "post_open": "2/4 = 50%",
+  "counts": {
+   "SPREAD": 4,
+   "DEPTH": 0,
+   "CHASE": 0
+  }
+ },
+ "trigger_c": {
+  "fires_seen": 5,
+  "caught_fresh": 3,
+  "entered": 2,
+  "spread_vetoed_takeable": 1,
+  "aged_in_pacing": 1,
+  "note": "coordinator-owned polling: 71s bar-close-to-entry on ticket 1; both entries were Trigger C, class was 0-for-campaign before today"
+ },
+ "halal": {
+  "pass": [
+   "RARE",
+   "MRVI",
+   "TAOX",
+   "GDC",
+   "RTB",
+   "PTLE",
+   "VMET"
+  ],
+  "pass_notes": {
+   "TAOX": "candidacy sanity review done: equity-financed token treasury, real inputs, industry not in haram list",
+   "GDC": "live screen, mcap $9.91M: loans 14.81 one-side>10 combined 14.97<=20; live-commerce retail permissible",
+   "VMET": "calm-gap FAIL all day, unarmable"
+  },
+  "fail": {
+   "BULL": "cash 20.15 combined 21.96",
+   "MSTR": "loans 17.71 combined 24.11",
+   "DFDV": "loans 121.57",
+   "SGLY": "loans 71.56",
+   "MODD": "cash 68.58",
+   "ATS": "loans 70.41",
+   "IPST": "loans 307.51",
+   "EVAX": "cash 68.86",
+   "WETO": "loans 778.67",
+   "QCLS": "cash 57.77",
+   "FWDI": "loans 17.35 combined 22.80",
+   "FVCB": "HARAM INDUSTRY bank",
+   "CNTN": "live screen cash 24.82 combined 24.82",
+   "HUIZ": "insurance broker class",
+   "FUTU": "brokerage class",
+   "CJMB": "live screen loans 12.85 combined 20.97",
+   "SCSC": "cash 11.31 combined 20.90",
+   "STKH": "HARAM INDUSTRY pork",
+   "MB": "HARAM INDUSTRY pork + loans 204",
+   "JUNS": "loans 104.6",
+   "ICCM": "cash 78.95",
+   "JZ": "loans 130.64",
+   "YQ": "cash 1521.93",
+   "MARA": "loans 69.31",
+   "BTDR": "loans 85.21",
+   "XXI": "loans 17.23 combined 21.29",
+   "CDTG": "live screen loans 55.89",
+   "XOS": "loans 54.21 combined 82.04",
+   "SCTX": "loans 12.06 combined 25.0",
+   "PCLA": "loans 461.94",
+   "IDAI": "cash 27.93 combined 36.24",
+   "EEIQ": "loans 58.47 combined 66.0",
+   "DERM": "loans 14.45 combined 29.9",
+   "CUVL": "cash 66.08",
+   "TEM": "loans 14.74 combined 23.07",
+   "SPPL": "loans 14.45 combined 27.75"
+  },
+  "cannot_verify": {
+   "AIAI": "no fundamentals data - refusal",
+   "RFAI": "cash-shell SPAC cash_pct 0.04 implausible input",
+   "USDE": "stablecoin-yield treasury - interest-like carry, 5% rule unrunnable"
+  }
+ },
+ "crossed_set_final_count": 67,
+ "fake_gap_all_day": [
+  "DUKR",
+  "WSO.B",
+  "GDEV",
+  "ALF",
+  "FVR",
+  "GSIW",
+  "PODC",
+  "BLIV"
+ ],
+ "api_hygiene": {
+  "truncations": 0,
+  "batched_bars_calls": "~25 asserted",
+  "delegated_sweeps": 7,
+  "fail_set_reentries": 0,
+  "notes": "scan Volume column correctly treated as prior-session"
+ },
+ "coverage_gaps": [],
+ "lessons": [
+  "Coordinator-owned Trigger C validated: 71s detect-to-entry; both entries were pattern entries (class 0-for-campaign before)",
+  "rank has no liquidity input: TAOX held rank-1 76 min on stale pressure with a 200-sh ask book; spread veto refused correctly but cadence pinned to an untradeable name while tradeable MRVI sat #2",
+  "Depth-reduction second data point: 701/1833 (38%), conservative bias confirmed; cancelled full-size Trigger B would have filled 30 min later",
+  "Ladder exit cheap on liquid names (1741 displayed vs 701 sold, single level); Day-8 sweep penalty is the thin-name case",
+  "Premarket veto rate 67% - first session inside the 50-65% modelled band since Day 8"
+ ]
+}
