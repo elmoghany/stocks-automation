@@ -3977,3 +3977,60 @@ FOREGROUND-PACING-ONLY orders — windows 2-6 ran 172 clean cycles to the close.
 mtime is the dead-man check. 0 API truncations across ~60 batched calls; scan JSON never
 touched coordinator context (delegated sweeps + signal file). Scanner audit deferred to
 after 16:00 (grouped daily not final at 15:00).
+
+## Paper Day 12 — 2026-08-20 (Thu): −$1,136.22 — first 2-ticket rotation day; Trigger C goes 2-for-2 under coordinator polling
+
+Cumulative −$405.08 → **−$1,541.30** (Days 5-12 evaluable; Day 8 VOID). Benchmark $1,517/day.
+
+**Ticket 1 RARE (Ultragenyx) −$1,199.31**: sole PASS of the 07:00 pool. Trigger C
+hammer+rsi on the 07:12 bar, caught by the coordinator 1-min poll and entered in **71
+seconds** (524 @ 28.60, spread 0.457% first premarket pass, depth 4,580 vs 524, size cap
+clear). Drifted −2/−3% all premarket, survived the 09:30 flush (low 27.70), then the
+second RTH leg took the −8% resting stop intrabar on the 09:42 bar (low 26.16 → fill
+26.31). Stop did its designed job into a falling open; +60s mark 26.50 makes the modelled
+stop fill conservative by 0.7%.
+
+**Ticket 2 MRVI (Maravai, Day-11 PASS name returning) +$63.09**: late crosser found by
+bench sweep 5 at 10:47 (+11.3%, 3.6M vol). Took rank-1 at 11:03 when TAOX broke coil.
+Trigger B armed 11:04 (stop 8.1789 ×1,833, book 0.123%); Trigger C morning_star 11:11
+TAKEABLE → marketable limit capped at signal+0.5% = 8.159; ask depth inside the cap only
+701 sh (38% ≥ 25% floor) → **DEPTH-REDUCED entry 701 @ 8.15**, resting B cancelled
+(one-position). Ran to 8.38, pressure never held ≥+0.3 at a +25% touch (never close),
+faded, recovered, **LADDER-1 flatten 14:57 @ 8.24 into a 1,741-sh displayed bid — single
+level, no sweep** (the liquid-name counterpoint to Day 8's ANGX sweep). Exit +60s
+favourable. The cancelled full-size B would have filled at 11:43 for 1,833 sh — the
+depth reduction cost size but bought price; second data point for the conservative bias.
+
+**THE TAOX HOLE (new live-only divergence, measured 09:47–11:03)**: TAOX (TAO-token
+treasury, universe PASS, sanity-reviewed at candidacy) held rank-1 for 76 minutes on a
++0.65 pressure computed from bars HOURS old — its tape printed ~1 bar per 7 minutes and
+its book sat 2.7–4.4% wide with 200 sh of ask depth. Two takeable events (Trigger B
+09:49, Trigger C macd 10:37) both spread-vetoed correctly, but the pick-continuity rule
+kept the Trigger-C cadence pinned to an untradeable name while MRVI (tradeable, PASS,
+coiled) sat #2 on marginally lower pressure. **The rank command has no liquidity input
+because the champion's pool never contained an untradeable book — this is the pool-
+construction gap surfacing as a ranking gap.** Logged as measurement; no rule changed.
+
+**Veto ledger**: SPREAD 4 (pm 2 / post 2), DEPTH 0 (both TAOX takeables also failed
+depth but spread bound first — Day-9 count-once rule), CHASE 0. **Premarket rate 2/3 =
+67% — first session at/near the 50-65% modelled band since Day 8** (Days 9-11 ran
+60/87.5/100). Post-open 2/4 = 50%.
+
+**Trigger C under coordinator ownership (Day-11 finding, first full test): 5 fires seen,
+3 caught fresh, 2 ENTERED — the entry class that was 0-for-campaign produced both of the
+day's tickets.** One fresh fire lost to a 2-min pacing stretch (MRVI engulfing 11:07)
+while attention sat on untradeable TAOX — the cost of the TAOX hole, not of the
+architecture.
+
+**Halal**: 30 FAIL / 3 CANNOT-VERIFY (incl. USDE StablecoinX — earning side is
+interest-like basis carry, 5% test unrunnable → refused despite a universe "PASS" on
+zeroed inputs) / 7 PASS (RARE MRVI TAOX GDC RTB PTLE VMET). Day 4 of the structural
+pattern: TEM (Tempus, 12M vol) and every other liquid mover failed financing; the one
+liquid PASS (MRVI) supplied both clean armings.
+
+**Ops**: ZERO coverage gaps (first of the campaign), 0 truncations (~25 asserted batched
+calls), 7 delegated bench sweeps (notification-only, FAIL sets inherited, 0 re-entries),
+paper_watch run as foreground one-shots (daemon loop killed after each evaluation —
+CLOCK-RULE compliant), 18 intraday commits. Fake-gap detector excluded 8 stale-mark
+names all session against a misleading prior-session Volume column. Scanner audit
+deferred to after 16:00 as usual.
