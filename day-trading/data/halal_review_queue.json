@@ -1,0 +1,1985 @@
+{
+ "built": "2026-08-21",
+ "purpose": "CANNOT-VERIFY human-review queue (W-campaign Phase 4). Suggestions are machine evidence only; the USER rules. Rulings go in data/halal_rulings.json.",
+ "ranking": "pool_days * (1 + live_days); pool = gappers_novol_year+y2025 name-days; live = paper_days crossed_set days",
+ "cv_total": 634,
+ "cv_in_pool": 535,
+ "pool_name_days": 4621,
+ "queue": [
+  {
+   "rank": 1,
+   "symbol": "RETO",
+   "company": "ReTo Eco-Solutions, Inc.",
+   "cik": 1687277,
+   "score": 65,
+   "pool_days": 65,
+   "live_days": 0,
+   "triggers": [
+    "beer"
+   ],
+   "stale_triggers": [],
+   "loan_pct": 17.76,
+   "cash_pct": 1.82,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001687277&type=10-K&dateb=&owner=include&count=10",
+   "ruling": {
+    "verdict": "CANNOT-VERIFY",
+    "date": "2026-08-21",
+    "basis": "delegated review 2026-08-21, deliberately left unresolved: makes 'smart craft beer machines' -- equipment DEDICATED to alcohol production. Not false association (the product's sole use is brewing) and not a sized haram line (share undisclosed; also mining equipment, waste treatment, building materials). The user's precedents (AMD: sell-into OK / brewer: being one is not) do not decide dedicated-haram-equipment; needs the user's own call.",
+    "haram_share_est": null
+   }
+  },
+  {
+   "rank": 2,
+   "symbol": "NDLS",
+   "company": "NOODLES & Co",
+   "cik": 1275158,
+   "score": 59,
+   "pool_days": 59,
+   "live_days": 0,
+   "triggers": [
+    "restaurant"
+   ],
+   "stale_triggers": [],
+   "loan_pct": 272.08,
+   "cash_pct": 1.45,
+   "evidence": {
+    "status": "ok",
+    "tags": [
+     {
+      "tag": "FoodAndBeverageCostOfSales",
+      "class": "UPPER-BOUND",
+      "revenue_line": false,
+      "share_pct": null,
+      "period": null,
+      "value": null,
+      "total_rev": null,
+      "total_rev_tag": null
+     },
+     {
+      "tag": "FoodAndBeverageRevenue",
+      "class": "UPPER-BOUND",
+      "revenue_line": true,
+      "share_pct": 98.93,
+      "period": "2017-01-04..2018-01-02",
+      "value": 451599000.0,
+      "total_rev": 456492000.0,
+      "total_rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
+     },
+     {
+      "tag": "NumberOfRestaurants",
+      "class": "UPPER-BOUND",
+      "revenue_line": false,
+      "share_pct": null,
+      "period": null,
+      "value": null,
+      "total_rev": null,
+      "total_rev_tag": null
+     },
+     {
+      "tag": "OccupancyNet",
+      "class": "CONTEXT",
+      "revenue_line": false,
+      "share_pct": null,
+      "period": null,
+      "value": null,
+      "total_rev": null,
+      "total_rev_tag": null
+     }
+    ]
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "superset line 98.93% of revenue -- haram subset unknown: FoodAndBeverageRevenue=98.93% [FY 2017]",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001275158&type=10-K&dateb=&owner=include&count=10",
+   "ruling": {
+    "verdict": "CANNOT-VERIFY",
+    "date": "2026-08-21",
+    "basis": "delegated review 2026-08-21, deliberately left unresolved: fast-casual restaurant chain; its own description names only noodles/pasta/soups/salads (no alcohol), so the RRGB rule-2 template does not affirmatively apply, but some locations do serve beer/wine and no filing discloses the share. EDGAR shows only FoodAndBeverageRevenue 98.9% (superset). No evidence either way at the 5% line.",
+    "haram_share_est": null
+   }
+  },
+  {
+   "rank": 3,
+   "symbol": "UK",
+   "company": "Ucommune International Ltd",
+   "cik": 1821424,
+   "score": 48,
+   "pool_days": 48,
+   "live_days": 0,
+   "triggers": [
+    "catering",
+    "entertainment"
+   ],
+   "stale_triggers": [
+    "entertainment"
+   ],
+   "loan_pct": 183.39,
+   "cash_pct": 431.46,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001821424&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 4,
+   "symbol": "GSIT",
+   "company": "GSI TECHNOLOGY INC",
+   "cik": 1126741,
+   "score": 47,
+   "pool_days": 47,
+   "live_days": 0,
+   "triggers": [
+    "cruise",
+    "defense",
+    "aerospace"
+   ],
+   "stale_triggers": [
+    "defense",
+    "aerospace"
+   ],
+   "loan_pct": 3.26,
+   "cash_pct": 25.87,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001126741&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 5,
+   "symbol": "SOGP",
+   "company": "Sound Group Inc.",
+   "cik": 1783407,
+   "score": 47,
+   "pool_days": 47,
+   "live_days": 0,
+   "triggers": [
+    "entertainment"
+   ],
+   "stale_triggers": [
+    "entertainment"
+   ],
+   "loan_pct": 51.07,
+   "cash_pct": 1361.08,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001783407&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 6,
+   "symbol": "SPCB",
+   "company": "SuperCom Ltd",
+   "cik": 1291855,
+   "score": 47,
+   "pool_days": 47,
+   "live_days": 0,
+   "triggers": [
+    "hospitality"
+   ],
+   "stale_triggers": [],
+   "loan_pct": 34.7,
+   "cash_pct": 21.37,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001291855&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 7,
+   "symbol": "FLX",
+   "company": "BingEx Ltd",
+   "cik": 1858724,
+   "score": 46,
+   "pool_days": 46,
+   "live_days": 0,
+   "triggers": [
+    "restaurant"
+   ],
+   "stale_triggers": [],
+   "loan_pct": 14.41,
+   "cash_pct": 602.25,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001858724&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 8,
+   "symbol": "AP",
+   "company": "AMPCO PITTSBURGH CORP",
+   "cik": 6176,
+   "score": 45,
+   "pool_days": 45,
+   "live_days": 0,
+   "triggers": [
+    "defense"
+   ],
+   "stale_triggers": [
+    "defense"
+   ],
+   "loan_pct": 73.08,
+   "cash_pct": 4.86,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000006176&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 9,
+   "symbol": "JG",
+   "company": "Aurora Mobile Ltd",
+   "cik": 1737339,
+   "score": 45,
+   "pool_days": 45,
+   "live_days": 0,
+   "triggers": [
+    "entertainment",
+    "gaming"
+   ],
+   "stale_triggers": [
+    "entertainment",
+    "gaming"
+   ],
+   "loan_pct": 46.67,
+   "cash_pct": 439.82,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001737339&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 10,
+   "symbol": "DKI",
+   "company": "DarkIris Inc.",
+   "cik": 2058584,
+   "score": 44,
+   "pool_days": 44,
+   "live_days": 0,
+   "triggers": [
+    "gaming"
+   ],
+   "stale_triggers": [
+    "gaming"
+   ],
+   "loan_pct": 0.0,
+   "cash_pct": 20.68,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002058584&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 11,
+   "symbol": "GDEV",
+   "company": "GDEV Inc.",
+   "cik": 1848739,
+   "score": 44,
+   "pool_days": 44,
+   "live_days": 0,
+   "triggers": [
+    "gaming"
+   ],
+   "stale_triggers": [
+    "gaming"
+   ],
+   "loan_pct": 1.07,
+   "cash_pct": 31.04,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001848739&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 12,
+   "symbol": "AZ",
+   "company": "A2Z CUST2MATE SOLUTIONS CORP.",
+   "cik": 1866030,
+   "score": 44,
+   "pool_days": 22,
+   "live_days": 1,
+   "triggers": [
+    "grocer",
+    "supermarket",
+    "convenience store"
+   ],
+   "stale_triggers": [],
+   "loan_pct": 0.64,
+   "cash_pct": 15.28,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001866030&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 13,
+   "symbol": "VIVO",
+   "company": "VivoPower PLC",
+   "cik": 1681348,
+   "score": 44,
+   "pool_days": 22,
+   "live_days": 1,
+   "triggers": [
+    "defense"
+   ],
+   "stale_triggers": [
+    "defense"
+   ],
+   "loan_pct": 20.56,
+   "cash_pct": 0.02,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001681348&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 14,
+   "symbol": "ADV",
+   "company": "Advantage Solutions Inc.",
+   "cik": 1776661,
+   "score": 43,
+   "pool_days": 43,
+   "live_days": 0,
+   "triggers": [
+    "grocer"
+   ],
+   "stale_triggers": [],
+   "loan_pct": 364.36,
+   "cash_pct": 24.19,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001776661&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 15,
+   "symbol": "JFU",
+   "company": "9F Inc.",
+   "cik": 1619544,
+   "score": 43,
+   "pool_days": 43,
+   "live_days": 0,
+   "triggers": [
+    "liquor",
+    "beverage"
+   ],
+   "stale_triggers": [],
+   "loan_pct": 81.99,
+   "cash_pct": 11276.98,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001619544&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 16,
+   "symbol": "PXLW",
+   "company": "PIXELWORKS, INC",
+   "cik": 1040161,
+   "score": 43,
+   "pool_days": 43,
+   "live_days": 0,
+   "triggers": [
+    "cinema"
+   ],
+   "stale_triggers": [
+    "cinema"
+   ],
+   "loan_pct": 1.24,
+   "cash_pct": 126.56,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001040161&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 17,
+   "symbol": "FLNT",
+   "company": "Fluent, Inc.",
+   "cik": 1460329,
+   "score": 42,
+   "pool_days": 42,
+   "live_days": 0,
+   "triggers": [
+    "entertainment"
+   ],
+   "stale_triggers": [
+    "entertainment"
+   ],
+   "loan_pct": 23.35,
+   "cash_pct": 7.78,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001460329&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 18,
+   "symbol": "QH",
+   "company": "QUHUO Ltd",
+   "cik": 1781193,
+   "score": 42,
+   "pool_days": 42,
+   "live_days": 0,
+   "triggers": [
+    "grocer",
+    "hotel"
+   ],
+   "stale_triggers": [],
+   "loan_pct": 0.03,
+   "cash_pct": 0.01,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001781193&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 19,
+   "symbol": "BOF",
+   "company": "BranchOut Food Inc.",
+   "cik": 1962481,
+   "score": 41,
+   "pool_days": 41,
+   "live_days": 0,
+   "triggers": [
+    "grocer"
+   ],
+   "stale_triggers": [],
+   "loan_pct": 11.18,
+   "cash_pct": 1.35,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001962481&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 20,
+   "symbol": "HTOO",
+   "company": "Fusion Fuel Green PLC",
+   "cik": 1819794,
+   "score": 40,
+   "pool_days": 40,
+   "live_days": 0,
+   "triggers": [
+    "dining",
+    "catering"
+   ],
+   "stale_triggers": [],
+   "loan_pct": 12.93,
+   "cash_pct": 3.39,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001819794&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 21,
+   "symbol": "SSP",
+   "company": "E.W. SCRIPPS Co",
+   "cik": 832428,
+   "score": 40,
+   "pool_days": 40,
+   "live_days": 0,
+   "triggers": [
+    "entertainment"
+   ],
+   "stale_triggers": [
+    "entertainment"
+   ],
+   "loan_pct": 819.03,
+   "cash_pct": 4.1,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000832428&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 22,
+   "symbol": "NEPH",
+   "company": "NEPHROS INC",
+   "cik": 1196298,
+   "score": 38,
+   "pool_days": 38,
+   "live_days": 0,
+   "triggers": [
+    "restaurant",
+    "convenience store",
+    "hospitality"
+   ],
+   "stale_triggers": [],
+   "loan_pct": 1.9,
+   "cash_pct": 7.89,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001196298&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 23,
+   "symbol": "DDD",
+   "company": "3D SYSTEMS CORP",
+   "cik": 910638,
+   "score": 37,
+   "pool_days": 37,
+   "live_days": 0,
+   "triggers": [
+    "defense",
+    "aerospace"
+   ],
+   "stale_triggers": [
+    "defense",
+    "aerospace"
+   ],
+   "loan_pct": 23.97,
+   "cash_pct": 14.15,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000910638&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 24,
+   "symbol": "SYPR",
+   "company": "SYPRIS SOLUTIONS INC",
+   "cik": 864240,
+   "score": 37,
+   "pool_days": 37,
+   "live_days": 0,
+   "triggers": [
+    "defense",
+    "aerospace"
+   ],
+   "stale_triggers": [
+    "defense",
+    "aerospace"
+   ],
+   "loan_pct": 54.39,
+   "cash_pct": 9.8,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000864240&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 25,
+   "symbol": "VATE",
+   "company": "INNOVATE Corp.",
+   "cik": 1006837,
+   "score": 37,
+   "pool_days": 37,
+   "live_days": 0,
+   "triggers": [
+    "hotel",
+    "casino"
+   ],
+   "stale_triggers": [
+    "casino"
+   ],
+   "loan_pct": 665.98,
+   "cash_pct": 85.7,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001006837&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 26,
+   "symbol": "ADIL",
+   "company": "ADIAL PHARMACEUTICALS, INC.",
+   "cik": 1513525,
+   "score": 36,
+   "pool_days": 36,
+   "live_days": 0,
+   "triggers": [
+    "alcohol"
+   ],
+   "stale_triggers": [],
+   "loan_pct": 0.0,
+   "cash_pct": 47.71,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001513525&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 27,
+   "symbol": "LEDS",
+   "company": "SemiLEDs Corp",
+   "cik": 1333822,
+   "score": 36,
+   "pool_days": 36,
+   "live_days": 0,
+   "triggers": [
+    "entertainment"
+   ],
+   "stale_triggers": [
+    "entertainment"
+   ],
+   "loan_pct": 13.31,
+   "cash_pct": 33.92,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001333822&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 28,
+   "symbol": "BHST",
+   "company": "BIOHARVEST SCIENCES INC.",
+   "cik": 1723464,
+   "score": 35,
+   "pool_days": 35,
+   "live_days": 0,
+   "triggers": [
+    "wine",
+    "beverage"
+   ],
+   "stale_triggers": [],
+   "loan_pct": 30.34,
+   "cash_pct": 43.58,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001723464&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 29,
+   "symbol": "CTW",
+   "company": "CTW",
+   "cik": 2047148,
+   "score": 35,
+   "pool_days": 35,
+   "live_days": 0,
+   "triggers": [
+    "gaming"
+   ],
+   "stale_triggers": [
+    "gaming"
+   ],
+   "loan_pct": 4.6,
+   "cash_pct": 11.97,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002047148&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 30,
+   "symbol": "FGNX",
+   "company": "FG Nexus Inc.",
+   "cik": 1591890,
+   "score": 35,
+   "pool_days": 35,
+   "live_days": 0,
+   "triggers": [
+    "restaurant"
+   ],
+   "stale_triggers": [],
+   "loan_pct": 4.28,
+   "cash_pct": 71.86,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001591890&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 31,
+   "symbol": "INTG",
+   "company": "INTERGROUP CORP",
+   "cik": 69422,
+   "score": 34,
+   "pool_days": 34,
+   "live_days": 0,
+   "triggers": [
+    "restaurant",
+    "dining",
+    "hotel"
+   ],
+   "stale_triggers": [],
+   "loan_pct": 257.76,
+   "cash_pct": 13.73,
+   "evidence": {
+    "status": "ok",
+    "tags": [
+     {
+      "tag": "DirectCostsOfHotels",
+      "class": "CONTEXT",
+      "revenue_line": false,
+      "share_pct": null,
+      "period": null,
+      "value": null,
+      "total_rev": null,
+      "total_rev_tag": null
+     },
+     {
+      "tag": "RevenueFromLeasedAndOwnedHotels",
+      "class": "CONTEXT",
+      "revenue_line": true,
+      "share_pct": 78.74,
+      "period": "2016-07-01..2017-06-30",
+      "value": 54334000.0,
+      "total_rev": 69005000.0,
+      "total_rev_tag": "Revenues"
+     }
+    ]
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "only context/cost tags matched (2 tags, 2 context) -- no measurable haram revenue line",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000069422&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 32,
+   "symbol": "LCUT",
+   "company": "LIFETIME BRANDS, INC",
+   "cik": 874396,
+   "score": 34,
+   "pool_days": 34,
+   "live_days": 0,
+   "triggers": [
+    "beverage",
+    "grocer",
+    "hospitality"
+   ],
+   "stale_triggers": [],
+   "loan_pct": 117.88,
+   "cash_pct": 2.48,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000874396&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 33,
+   "symbol": "LPCN",
+   "company": "Lipocine Inc.",
+   "cik": 1535955,
+   "score": 34,
+   "pool_days": 34,
+   "live_days": 0,
+   "triggers": [
+    "alcohol"
+   ],
+   "stale_triggers": [],
+   "loan_pct": 0.0,
+   "cash_pct": 137.0,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001535955&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 34,
+   "symbol": "SCOR",
+   "company": "COMSCORE, INC.",
+   "cik": 1158172,
+   "score": 34,
+   "pool_days": 34,
+   "live_days": 0,
+   "triggers": [
+    "movie"
+   ],
+   "stale_triggers": [
+    "movie"
+   ],
+   "loan_pct": 51.2,
+   "cash_pct": 23.92,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001158172&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 35,
+   "symbol": "SEAT",
+   "company": "Vivid Seats Inc.",
+   "cik": 1856031,
+   "score": 34,
+   "pool_days": 34,
+   "live_days": 0,
+   "triggers": [
+    "hotel",
+    "theater"
+   ],
+   "stale_triggers": [
+    "theater"
+   ],
+   "loan_pct": 498.25,
+   "cash_pct": 169.81,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001856031&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 36,
+   "symbol": "JACK",
+   "company": "JACK IN THE BOX INC",
+   "cik": 807882,
+   "score": 34,
+   "pool_days": 17,
+   "live_days": 1,
+   "triggers": [
+    "restaurant"
+   ],
+   "stale_triggers": [],
+   "loan_pct": 693.96,
+   "cash_pct": 11.44,
+   "evidence": {
+    "status": "ok",
+    "tags": [
+     {
+      "tag": "NumberOfRestaurants",
+      "class": "UPPER-BOUND",
+      "revenue_line": false,
+      "share_pct": null,
+      "period": null,
+      "value": null,
+      "total_rev": null,
+      "total_rev_tag": null
+     },
+     {
+      "tag": "OccupancyNet",
+      "class": "CONTEXT",
+      "revenue_line": false,
+      "share_pct": null,
+      "period": null,
+      "value": null,
+      "total_rev": null,
+      "total_rev_tag": null
+     }
+    ]
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "only context/cost tags matched (2 tags, 1 context) -- no measurable haram revenue line",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000807882&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 37,
+   "symbol": "VSAT",
+   "company": "VIASAT INC",
+   "cik": 797721,
+   "score": 33,
+   "pool_days": 33,
+   "live_days": 0,
+   "triggers": [
+    "defense"
+   ],
+   "stale_triggers": [
+    "defense"
+   ],
+   "loan_pct": 60.65,
+   "cash_pct": 15.2,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000797721&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 38,
+   "symbol": "BWEN",
+   "company": "BROADWIND, INC.",
+   "cik": 1120370,
+   "score": 32,
+   "pool_days": 32,
+   "live_days": 0,
+   "triggers": [
+    "defense"
+   ],
+   "stale_triggers": [
+    "defense"
+   ],
+   "loan_pct": 22.29,
+   "cash_pct": 0.75,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001120370&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 39,
+   "symbol": "JVA",
+   "company": "COFFEE HOLDING CO INC",
+   "cik": 1007019,
+   "score": 32,
+   "pool_days": 32,
+   "live_days": 0,
+   "triggers": [
+    "supermarket"
+   ],
+   "stale_triggers": [],
+   "loan_pct": 23.71,
+   "cash_pct": 11.53,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001007019&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 40,
+   "symbol": "HHS",
+   "company": "HARTE HANKS INC",
+   "cik": 45919,
+   "score": 32,
+   "pool_days": 16,
+   "live_days": 1,
+   "triggers": [
+    "restaurant",
+    "hospitality",
+    "entertainment"
+   ],
+   "stale_triggers": [
+    "entertainment"
+   ],
+   "loan_pct": 105.59,
+   "cash_pct": 21.77,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000045919&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 41,
+   "symbol": "MSGM",
+   "company": "Motorsport Games Inc.",
+   "cik": 1821175,
+   "score": 31,
+   "pool_days": 31,
+   "live_days": 0,
+   "triggers": [
+    "gaming"
+   ],
+   "stale_triggers": [
+    "gaming"
+   ],
+   "loan_pct": 1.94,
+   "cash_pct": 31.33,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001821175&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 42,
+   "symbol": "ATAI",
+   "company": "AtaiBeckley Inc.",
+   "cik": 2081043,
+   "score": 30,
+   "pool_days": 30,
+   "live_days": 0,
+   "triggers": [
+    "alcohol"
+   ],
+   "stale_triggers": [],
+   "loan_pct": 0.07,
+   "cash_pct": 8.58,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0002081043&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 43,
+   "symbol": "FUBO",
+   "company": "FuboTV Inc.",
+   "cik": 1484769,
+   "score": 30,
+   "pool_days": 30,
+   "live_days": 0,
+   "triggers": [
+    "entertainment"
+   ],
+   "stale_triggers": [
+    "entertainment"
+   ],
+   "loan_pct": 136.06,
+   "cash_pct": 77.8,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001484769&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 44,
+   "symbol": "LPSN",
+   "company": "LIVEPERSON INC",
+   "cik": 1102993,
+   "score": 30,
+   "pool_days": 30,
+   "live_days": 0,
+   "triggers": [
+    "hospitality"
+   ],
+   "stale_triggers": [],
+   "loan_pct": 1110.16,
+   "cash_pct": 269.27,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001102993&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 45,
+   "symbol": "ODYS",
+   "company": "Odysight.ai Inc.",
+   "cik": 1577445,
+   "score": 30,
+   "pool_days": 30,
+   "live_days": 0,
+   "triggers": [
+    "defense",
+    "aerospace"
+   ],
+   "stale_triggers": [
+    "defense",
+    "aerospace"
+   ],
+   "loan_pct": 0.97,
+   "cash_pct": 31.82,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001577445&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 46,
+   "symbol": "ALT",
+   "company": "Altimmune, Inc.",
+   "cik": 1326190,
+   "score": 29,
+   "pool_days": 29,
+   "live_days": 0,
+   "triggers": [
+    "alcohol"
+   ],
+   "stale_triggers": [],
+   "loan_pct": 6.4,
+   "cash_pct": 59.19,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001326190&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 47,
+   "symbol": "TRVG",
+   "company": "trivago N.V.",
+   "cik": 1683825,
+   "score": 29,
+   "pool_days": 29,
+   "live_days": 0,
+   "triggers": [
+    "hotel"
+   ],
+   "stale_triggers": [],
+   "loan_pct": 9.7,
+   "cash_pct": 42.48,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001683825&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 48,
+   "symbol": "TJGC",
+   "company": "TJGC GROUP Ltd",
+   "cik": 1969928,
+   "score": 28,
+   "pool_days": 28,
+   "live_days": 0,
+   "triggers": [
+    "gaming"
+   ],
+   "stale_triggers": [
+    "gaming"
+   ],
+   "loan_pct": 41.37,
+   "cash_pct": 6.66,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001969928&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 49,
+   "symbol": "TPCS",
+   "company": "TECHPRECISION CORP",
+   "cik": 1328792,
+   "score": 28,
+   "pool_days": 28,
+   "live_days": 0,
+   "triggers": [
+    "defense",
+    "aerospace"
+   ],
+   "stale_triggers": [
+    "defense",
+    "aerospace"
+   ],
+   "loan_pct": 21.74,
+   "cash_pct": 0.89,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001328792&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 50,
+   "symbol": "WW",
+   "company": "WW INTERNATIONAL, INC.",
+   "cik": 105319,
+   "score": 28,
+   "pool_days": 28,
+   "live_days": 0,
+   "triggers": [
+    "beverage"
+   ],
+   "stale_triggers": [],
+   "loan_pct": 295.06,
+   "cash_pct": 70.25,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000105319&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  }
+ ],
+ "categories": {
+  "alcohol": [
+   "ADIL",
+   "ALT",
+   "ATAI",
+   "LPCN"
+  ],
+  "beer": [
+   "RETO"
+  ],
+  "beverage": [
+   "LCUT",
+   "WW"
+  ],
+  "catering": [
+   "UK"
+  ],
+  "cinema": [
+   "PXLW"
+  ],
+  "cruise": [
+   "GSIT"
+  ],
+  "defense": [
+   "AP",
+   "BWEN",
+   "DDD",
+   "ODYS",
+   "SYPR",
+   "TPCS",
+   "VIVO",
+   "VSAT"
+  ],
+  "dining": [
+   "HTOO"
+  ],
+  "entertainment": [
+   "FLNT",
+   "FUBO",
+   "JG",
+   "LEDS",
+   "SOGP",
+   "SSP"
+  ],
+  "gaming": [
+   "CTW",
+   "DKI",
+   "GDEV",
+   "MSGM",
+   "TJGC"
+  ],
+  "grocer": [
+   "ADV",
+   "AZ",
+   "BOF",
+   "QH"
+  ],
+  "hospitality": [
+   "LPSN",
+   "SPCB"
+  ],
+  "hotel": [
+   "SEAT",
+   "TRVG",
+   "VATE"
+  ],
+  "liquor": [
+   "JFU"
+  ],
+  "movie": [
+   "SCOR"
+  ],
+  "restaurant": [
+   "FGNX",
+   "FLX",
+   "HHS",
+   "INTG",
+   "JACK",
+   "NDLS",
+   "NEPH"
+  ],
+  "supermarket": [
+   "JVA"
+  ],
+  "wine": [
+   "BHST"
+  ]
+ },
+ "rulings_applied": [
+  {
+   "symbol": "LBGJ",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association (AZ shopping-cart precedent) -- manufactures stainless-steel commercial kitchen EQUIPMENT sold to hotels/restaurants/schools/hospitals; the equipment maker is not the diner or hotelier.",
+   "haram_share_est": 0,
+   "pool_days": 99,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "FBYD",
+   "verdict": "FAIL",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: 'operates as an entertainment company' -- theme parks, entertainment/hospitality destinations, and it develops/owns/operates resort hotels, dining and entertainment venues. Entertainment+hotel operator IS the business (user ruling 2026-08-13).",
+   "haram_share_est": 90,
+   "pool_days": 91,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by user ruling 2026-08-21: delegated ruling per user 2026-08-21: 'operates"
+  },
+  {
+   "symbol": "QMCO",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association (AMD principle) -- data-storage hardware/software (StorNext, surveillance storage); media & entertainment / gaming / hospitality are CUSTOMER industries it serves.",
+   "haram_share_est": 0,
+   "pool_days": 90,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "QNTM",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association -- biopharmaceutical company; 'alcohol' names its TREATMENT of alcohol-misuse disorders (Lucid-MS lead compound, unbuzzd detox supplement). Treating alcohol harm is not selling alcohol.",
+   "haram_share_est": 0,
+   "pool_days": 89,
+   "live_verdict": "FAIL",
+   "live_reason": "CASH>10+COMBINED>20"
+  },
+  {
+   "symbol": "CMCT",
+   "verdict": "FAIL",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: hotel operation is a reportable segment (owns and operates a Northern California hotel; EDGAR tags RevenueFromLeasedAndOwnedHotels; segment reporting puts hotel revenue far above 5% -- on the order of a third of revenue), plus an SBA lending segment. Hotel operator class.",
+   "haram_share_est": 30,
+   "pool_days": 88,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by user ruling 2026-08-21: delegated ruling per user 2026-08-21: hotel ope"
+  },
+  {
+   "symbol": "QUBT",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association -- photonics/quantum computing company; the 'beverage' hit is its FORMER NAME 'Innovative Beverage Group Holdings' in the summary. Pure historical artifact.",
+   "haram_share_est": 0,
+   "pool_days": 82,
+   "live_verdict": "FAIL",
+   "live_reason": "CASH>10+COMBINED>20"
+  },
+  {
+   "symbol": "LAES",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association (AMD principle) -- secure-semiconductor maker; 'aerospace and military telecommunications' is one customer sector among smart energy/automotive/IoT/medical.",
+   "haram_share_est": 0,
+   "pool_days": 80,
+   "live_verdict": "FAIL",
+   "live_reason": "CASH>10+COMBINED>20"
+  },
+  {
+   "symbol": "WNW",
+   "verdict": "FAIL",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: sells alcohol itself -- food e-commerce platform whose own product list is 'beverages, alcohol, and tea; groceries'. Alcohol retail is a standard revenue stream with no disclosure proving <5%.",
+   "haram_share_est": null,
+   "pool_days": 80,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by user ruling 2026-08-21: delegated ruling per user 2026-08-21: sells alc"
+  },
+  {
+   "symbol": "NEGG",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association (AMD principle one level up) -- electronics e-retailer; 'gaming' names PC-gaming HARDWARE (gaming laptops, GPUs, consoles, desks). Selling gaming hardware is the permissible side of the user's AMD line; no gambling exposure.",
+   "haram_share_est": 0,
+   "pool_days": 78,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "PDYN",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: not PURE defense (user rule 2026-08-14) -- general-purpose robot AI/ML software platform serving industrial manufacturing, infrastructure, energy, aerospace AND defense; product is industry-agnostic autonomy software.",
+   "haram_share_est": null,
+   "pool_days": 78,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "FCEL",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association -- fuel-cell power generation; 'hospitality' is a customer vertical for on-site power.",
+   "haram_share_est": 0,
+   "pool_days": 76,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "RGTI",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association -- quantum computers/QCaaS; 'defense laboratories' appear only in the customer list alongside academia and national labs.",
+   "haram_share_est": 0,
+   "pool_days": 75,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM>=5%"
+  },
+  {
+   "symbol": "SNAL",
+   "verdict": "FAIL",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: BEING the studio (user 2026-08-14: selling INTO gaming/entertainment is permissible, BEING a studio is not) -- 'develops and publishes interactive digital entertainment' is the entire business (game developer/publisher).",
+   "haram_share_est": 90,
+   "pool_days": 75,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "USAR",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association -- rare-earth mining/processing; aerospace/defense are listed END USES of the minerals, alongside semiconductors, data centers, energy, healthcare.",
+   "haram_share_est": 0,
+   "pool_days": 75,
+   "live_verdict": "FAIL",
+   "live_reason": "CASH>10+COMBINED>20"
+  },
+  {
+   "symbol": "ASTI",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association -- thin-film solar module maker; 'aerospace' is a customer market (space power, satellites).",
+   "haram_share_est": 0,
+   "pool_days": 74,
+   "live_verdict": "FAIL",
+   "live_reason": "CASH>10+COMBINED>20"
+  },
+  {
+   "symbol": "UPC",
+   "verdict": "FAIL",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: sells an alcohol product -- its own product list includes 'shiquan dabu medicinal LIQUOR' and other yaojiu (alcohol-based TCM products for ingestion). An alcohol beverage product line with no disclosure proving <5%.",
+   "haram_share_est": null,
+   "pool_days": 70,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by user ruling 2026-08-21: delegated ruling per user 2026-08-21: sells an "
+  },
+  {
+   "symbol": "JFB",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association -- construction company; builds restaurant/hospitality BUILDINGS among offices, retail, fitness, industrial. The builder is not the operator (AZ principle).",
+   "haram_share_est": 0,
+   "pool_days": 69,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "ONDS",
+   "verdict": "FAIL",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: weapons ARE a primary line -- Ondas Autonomous Systems segment sells military interceptor drones and 'loitering munition systems... for ISR defense and strike' (munitions manufacture). Defense contractor side of the user's 2026-08-14 line.",
+   "haram_share_est": null,
+   "pool_days": 69,
+   "live_verdict": "FAIL",
+   "live_reason": "CASH>10+COMBINED>20"
+  },
+  {
+   "symbol": "PAVS",
+   "verdict": "FAIL",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: 'operates in the AI-powered entertainment industry... AI-driven games and applications' -- entertainment IS the declared business (user ruling 2026-08-13).",
+   "haram_share_est": 90,
+   "pool_days": 69,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "SLE",
+   "verdict": "FAIL",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: entertainment IS the line (user ruling 2026-08-13: entertainment is haram) -- 'creates and publishes content experiences', production/curation/distribution of entertainment content for digital channels; formerly Super League Gaming.",
+   "haram_share_est": 90,
+   "pool_days": 69,
+   "live_verdict": "FAIL",
+   "live_reason": "CASH>10+COMBINED>20"
+  },
+  {
+   "symbol": "WXM",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association -- HVAC/floor-heating/water-purification installation and maintenance; 'hotels' are one served project class among offices, airports, hospitals.",
+   "haram_share_est": 0,
+   "pool_days": 68,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "BBAI",
+   "verdict": "FAIL",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: defense contractor by primary line -- AI decision intelligence 'for national security' with the Department of Defense and intelligence community as the named core customers (vulnerability assessment, force deployment, C2 for defense/intel). Not the AMD side of the 2026-08-14 line.",
+   "haram_share_est": null,
+   "pool_days": 67,
+   "live_verdict": "FAIL",
+   "live_reason": "CASH>10+COMBINED>20"
+  },
+  {
+   "symbol": "NDRA",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association -- clinical ultrasound diagnostics; the 'alcohol' hit is 'NON-ALCOHOLIC fatty liver disease', the condition its imaging targets.",
+   "haram_share_est": 0,
+   "pool_days": 67,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "UP",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: own line clearly permissible -- on-demand private aviation (charter/membership flight services); 'catering' is an ancillary flight-related service and 'defense solutions' are government charter/cargo missions. Air transport is permissible; alcohol nowhere named.",
+   "haram_share_est": null,
+   "pool_days": 67,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "RETO",
+   "verdict": "CANNOT-VERIFY",
+   "date": "2026-08-21",
+   "basis": "delegated review 2026-08-21, deliberately left unresolved: makes 'smart craft beer machines' -- equipment DEDICATED to alcohol production. Not false association (the product's sole use is brewing) and not a sized haram line (share undisclosed; also mining equipment, waste treatment, building materials). The user's precedents (AMD: sell-into OK / brewer: being one is not) do not decide dedicated-haram-equipment; needs the user's own call.",
+   "haram_share_est": null,
+   "pool_days": 65,
+   "live_verdict": "CANNOT-VERIFY",
+   "live_reason": "CANNOT-VERIFY revenue mix (beer): APPLY THE 5% RULE -- haram revenue must be und"
+  },
+  {
+   "symbol": "EEIQ",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association -- education services company; 'catering' is student dormitory/cafeteria dining services for its college programs. Food service without any alcohol connection.",
+   "haram_share_est": 0,
+   "pool_days": 63,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "ALMU",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association (AMD principle) -- compound-semiconductor materials and chips; defense/aerospace are listed application markets among mobile, automotive, AI, AR/VR, quantum.",
+   "haram_share_est": 0,
+   "pool_days": 60,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM>=5%"
+  },
+  {
+   "symbol": "NDLS",
+   "verdict": "CANNOT-VERIFY",
+   "date": "2026-08-21",
+   "basis": "delegated review 2026-08-21, deliberately left unresolved: fast-casual restaurant chain; its own description names only noodles/pasta/soups/salads (no alcohol), so the RRGB rule-2 template does not affirmatively apply, but some locations do serve beer/wine and no filing discloses the share. EDGAR shows only FoodAndBeverageRevenue 98.9% (superset). No evidence either way at the 5% line.",
+   "haram_share_est": null,
+   "pool_days": 59,
+   "live_verdict": "CANNOT-VERIFY",
+   "live_reason": "CANNOT-VERIFY revenue mix (restaurant): APPLY THE 5% RULE -- haram revenue must "
+  },
+  {
+   "symbol": "YHGJ",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association (AZ precedent) -- balloons, novelty items and packaging films; 'grocery chains' are retail outlets it sells THROUGH, not its business.",
+   "haram_share_est": 0,
+   "pool_days": 59,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "IPWR",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association (AMD principle) -- semiconductor maker (bidirectional TRANsistor power switches); 'defense' appears only as one customer market among EV/renewables/industrial.",
+   "haram_share_est": 0,
+   "pool_days": 58,
+   "live_verdict": "FAIL",
+   "live_reason": "CASH>10+COMBINED>20"
+  },
+  {
+   "symbol": "UONEK",
+   "verdict": "FAIL",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: entertainment media IS the business -- radio broadcasting, cable TV networks (TV One, CLEO TV 'a lifestyle and entertainment network'), syndicated entertainment shows. Broadcaster/studio side of the user's line (2026-08-13).",
+   "haram_share_est": null,
+   "pool_days": 58,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "BOXL",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association -- education-technology displays and classroom software; the 'gaming' hit is GameZones, a multi-student interactive LESSON feature. No gambling, no game publishing.",
+   "haram_share_est": 0,
+   "pool_days": 57,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "GMM",
+   "verdict": "FAIL",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: produces entertainment content -- virtual content production/VFX services and digital-asset licensing FOR movies, TV series, animation and gaming; the output IS the entertainment product (film-studio side of the user's 2026-08-13/14 line, ANGX precedent).",
+   "haram_share_est": null,
+   "pool_days": 57,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "DNA",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association -- cell-engineering platform (biotech R&D services); 'government and defense' is one customer industry among pharma, agriculture, food, consumer.",
+   "haram_share_est": 0,
+   "pool_days": 56,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "NTHI",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association -- clinical-stage biopharma for brain cancer; the 'alcohol' hit is PERILLYL ALCOHOL, a terpene compound in its drug candidate NEO212. Chemistry, not beverage.",
+   "haram_share_est": 0,
+   "pool_days": 56,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "KRKR",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association -- business/tech NEWS content and advertising services in China; 'media and entertainment' is an industry it reports ON. Journalism and marketing services, not entertainment production.",
+   "haram_share_est": 0,
+   "pool_days": 55,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "TGEN",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association (AMD principle) -- cogeneration/chiller equipment maker; wineries, hotels and food & beverage processors are CUSTOMER industries for general-purpose power equipment.",
+   "haram_share_est": 0,
+   "pool_days": 55,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "UPLD",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association -- enterprise knowledge/content-management software; 'hospitality' is one of ~12 customer industries listed in the summary.",
+   "haram_share_est": 0,
+   "pool_days": 54,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "LIVE",
+   "verdict": "FAIL",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: entertainment retail is a reportable segment -- the Retail-Entertainment segment (Vintage Stock) sells movies, video games and music as one of five segments, well above 5% of revenue (~15%). Haram line >=5% affirmatively.",
+   "haram_share_est": 15,
+   "pool_days": 53,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by user ruling 2026-08-21: delegated ruling per user 2026-08-21: entertain"
+  },
+  {
+   "symbol": "MVIS",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association (AMD principle) -- lidar sensor maker; automotive OEMs first, 'security and defense contractors' one customer class among industrial/agriculture/mining.",
+   "haram_share_est": 0,
+   "pool_days": 53,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "SOUN",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association -- voice-AI software; 'restaurants' are customers of its voice-ordering products. Selling software INTO restaurants is the AZ/AMD side of the line.",
+   "haram_share_est": 0,
+   "pool_days": 52,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "VNET",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association -- data-center hosting/colocation in China; 'gaming and entertainment' is one served customer industry among cloud, e-commerce, financial services.",
+   "haram_share_est": 0,
+   "pool_days": 51,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "GURE",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association -- bromine/crude-salt chemical producer; 'food and beverage' is an industry its salt is sold INTO.",
+   "haram_share_est": 0,
+   "pool_days": 49,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "NPT",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association -- chemical supply-chain company; 'alcohols' are INDUSTRIAL chemical feedstocks for fabrics/coatings/packaging (not beverage alcohol), 'beverage packaging' is a downstream use of its materials, 'aerospace' a customer industry for steel/plastics.",
+   "haram_share_est": 0,
+   "pool_days": 49,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "VHC",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association -- internet-security software (VPN/secure-communications platform) sold to DoD, federal AND commercial customers; a security-software vendor with government customers is the AMD side, not a weapons contractor.",
+   "haram_share_est": 0,
+   "pool_days": 49,
+   "live_verdict": "FAIL",
+   "live_reason": "CASH>10+COMBINED>20"
+  },
+  {
+   "symbol": "IPST",
+   "verdict": "FAIL",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: alcohol IS a reportable business line -- company operates through 'Crypto and Related Business' AND 'Spirits Business' segments (formerly Heritage Distilling, a craft distillery); a named spirits segment is not <5% and distilling is haram outright.",
+   "haram_share_est": null,
+   "pool_days": 46,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by user ruling 2026-08-21: delegated ruling per user 2026-08-21: alcohol I"
+  },
+  {
+   "symbol": "UONE",
+   "verdict": "FAIL",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: same issuer as UONEK (Urban One class A) -- entertainment media IS the business: radio broadcasting, cable TV networks (TV One, CLEO TV), syndicated entertainment shows. Identical ruling to UONEK.",
+   "haram_share_est": null,
+   "pool_days": 46,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "LSF",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: own line clearly permissible -- plant-based foods: coffee creamers, coffee/tea/hot chocolate, coconut water, mushroom supplements, snacks. 'Beverage' here is non-alcoholic by the company's own enumeration; no alcohol product exists.",
+   "haram_share_est": 0,
+   "pool_days": 45,
+   "live_verdict": "FAIL",
+   "live_reason": "CASH>10+COMBINED>20"
+  },
+  {
+   "symbol": "LEXX",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association -- drug-delivery platform licensor (DehydraTECH); 'beverages' names product FORMATS its licensees use, not a beverage business of its own.",
+   "haram_share_est": 0,
+   "pool_days": 43,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "RRGB",
+   "verdict": "FAIL",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: the user's rule verbatim -- casual-dining chain where alcohol is a standard menu revenue stream ('alcoholic specialty drinks, cocktails, wine, and beers' in its own description) with no disclosure proving <5%; historical 10-K mix puts alcoholic beverages around 8% of restaurant revenue.",
+   "haram_share_est": 8,
+   "pool_days": 32,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by user ruling 2026-08-21: delegated ruling per user 2026-08-21: the user'"
+  },
+  {
+   "symbol": "MRNA",
+   "verdict": "PASS",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: false association -- mRNA vaccine maker; the 'defense' hit is DARPA/BARDA named among research partners and funders. NOTE: the live screen currently FAILs MRNA on HARAM>=5% (interest income vs collapsed revenue) -- this ruling only clears the CV flag and never touches that ratio verdict.",
+   "haram_share_est": 0,
+   "pool_days": 25,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM>=5%"
+  }
+ ]
+}

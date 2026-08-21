@@ -9,6 +9,122 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## Review Queue Built (2026-08-21)
+
+W-campaign Phase 4: the CANNOT-VERIFY human-review queue. CV names
+(haram revenue plausible, share unmeasurable -- the 5% rule has NOT
+been run) are not tradeable pending a human ruling; 683 sit in the
+universe, 584 recur in the 2-year gapper pool across 7,747 name-days,
+while live sees only 3-7 armable PASS names/day. Ruling the top
+recurrers is the compliant path to widening that. **We only assemble
+evidence; the user rules.**
+
+Built:
+
+1. **`plan/build_review_queue.py`** -- collects CV names by
+   `fail_reason` match (the cached `verdict` field is sparse), ranks by
+   expected value `pool_days x (1 + live_days)` (pool = both gapper
+   files; live = paper_days crossed sets; live presence is a x2 bonus
+   rather than a hard factor because a bare product zeroes everything
+   outside the 5-day live sample), takes the top 50, and pulls EDGAR
+   evidence from the on-disk companyfacts.zip: haram-adjacent us-gaap
+   tags classified DIRECT (Casino/Alcohol/... = the haram line itself),
+   UPPER-BOUND (FoodAndBeverage = contains the haram subset) and
+   CONTEXT (Occupancy/rooms), each revenue line's share of total
+   revenue via the same fallback chain as `plan/edgar_backfill.py`.
+   Spot-proof of the machinery on known filers: MGM CasinoRevenue
+   46.46% -> FAIL-suggested, RRR 55.95% / CZR 82.96% -> FAIL-suggested
+   (main line), RRGB FoodAndBeverage 98.38% superset -> NEEDS-MANUAL.
+2. **`data/halal_review_queue.md` / `.json`** -- one row per name:
+   ticker, company, why flagged, evidence, suggested verdict, blank
+   RULING box; plus a category bulk view (beverage/restaurant/hotel/
+   defense/...) so a whole category can be ruled in one stroke.
+   RESULT: **50/50 NEEDS-MANUAL** (0 PASS-suggested, 0 FAIL-suggested,
+   2 with superset evidence: RRGB 98.4%, NDLS 98.9%). Expected --
+   companyfacts has no segment dimensions, and the top recurrers are
+   small caps flagged on summary words, not casino/brewer filers (those
+   tag their haram lines and would auto-suggest). Post-ASC-606 filings
+   stopped tagging CasinoRevenue-style lines (~2018), so even real
+   casinos need the manual segment note; evidence rows carry the FY
+   vintage. Stale triggers (defense/aerospace/entertainment/gaming from
+   pre-08-14 free-text screens) are annotated -- a re-screen may not CV
+   those names at all.
+3. **`data/halal_rulings.json` overlay** (schema in its `_schema` key)
+   wired into `day-trading.py::halal_check`: consulted ONLY when the
+   computed verdict would be CANNOT-VERIFY. A ruling converts CV->PASS
+   or CV->FAIL; it can NEVER override a hard industry FAIL (that path
+   never reaches the overlay) or a ratio FAIL (a PASS ruling clears
+   only the unverifiability -- the debt/cash verdict still runs), and a
+   FAIL ruling is final. Proven live: KO + PASS ruling -> PASS (loan
+   11.18 combined 15.38); KR/ACI/JACK/ABM/LSF/NDLS/UPLD + PASS ruling
+   -> still ratio FAIL; FBYD + FAIL ruling -> FAIL final; SAM/NFLX
+   industry FAILs ignore rulings entirely.
+
+Neutrality: with an EMPTY rulings file, 31/31 re-screened names
+(PASS/FAIL/CV mix: AMD ANET HLIT LMT RTX NFLX ANGX SAM CMG RRGB KO
+SWKS JACK ACI KR AAT ABM QNTM QMCO FBYD LSF NDLS CMCT MRNA AAPL MSFT
+NVDA AAL BAC UPLD SLE) returned **byte-identical** dicts pre- vs
+post-edit (same yf.Ticker fed to both, isolating the code change).
+
+**Delegated rulings (mandate extension, user 2026-08-21: "fix the
+halal and decide on my behalf").** The user's ESTABLISHED framework
+applied strictly to the top 50 -- PASS only with affirmative evidence
+(<5% with margin, or false association: the AMD/AZ sell-INTO
+principle); FAIL with affirmative evidence (haram line >=5% or IS a
+primary line; entertainment haram per 2026-08-13, defense-contractor
+per 2026-08-14); genuinely unresolvable names STAY CANNOT-VERIFY
+(absence of evidence is never compliance). Result, all recorded with
+bases in `data/halal_rulings.json` (51 entries -- UONE added to match
+its twin UONEK):
+
+* **34 PASS** -- overwhelmingly false association: tech/industrial
+  names whose summaries list flagged industries as CUSTOMER markets
+  (QMCO data storage "serves media & entertainment, gaming and
+  hospitality"; LBGJ makes kitchen equipment; QUBT's hit is its former
+  NAME "Innovative Beverage Group"; NDRA's is "NON-alcoholic fatty
+  liver disease"; NTHI's is perillyl alcohol, a terpene).
+* **15 FAIL** -- entertainment IS the business (SLE, SNAL, PAVS, GMM,
+  UONEK+UONE, FBYD), alcohol product lines with no <5% proof (RRGB
+  ~8% menu alcohol, WNW sells alcohol on its platform, UPC medicinal
+  liquor, IPST's Spirits segment ex-Heritage Distilling), hotel
+  operator (CMCT, hotel is ~1/3 of segment revenue + SBA lending),
+  entertainment-retail segment >=5% (LIVE ~15% Vintage Stock),
+  defense contractors (ONDS loitering munitions, BBAI DoD/intel core).
+* **2 STAY CV** -- RETO (dedicated craft-beer-machine manufacturing:
+  neither false association nor a sized line; the user's precedents do
+  not decide dedicated-haram-equipment) and NDLS (no alcohol named in
+  its own description, some locations serve beer/wine, no share
+  disclosure anywhere). Untradeable stands; queued for the user.
+
+Wired through the REAL engine path (each ruled name re-screened via
+halal_check with the overlay live, universe entries updated the way
+the nightly builder caches them, halal_list.json rebuilt):
+**armable list 1,244 -> 1,251 (+7)**. Only JFB, LEXX, NDRA, NTHI,
+PDYN, SOUN, TGEN clear the debt/cash ratio gates today; the other 27
+PASS rulings (incl. LBGJ 99 pool-days, QMCO 90) sit dormant and
+convert automatically the day their ratios clear -- a PASS ruling
+never bypasses a ratio FAIL. The most consequential conversions by
+pool-day frequency: FBYD 91 FAIL, CMCT 88 FAIL, WNW 80 FAIL, PDYN 78
+LIVE-PASS, SNAL 75 FAIL, UPC 70 FAIL, JFB 69 LIVE-PASS, PAVS/ONDS/SLE
+69 FAIL, NDRA 67 LIVE-PASS, BBAI 67 FAIL. The queue MD carries the
+full 51-row rulings log and rolls forward to the next 50 unruled CV
+names (RETO and NDLS at top, then UK, GSIT, SOGP, ...).
+
+Identity gate (m1 full-breadth backfill landed mid-campaign; Z104
+flagged KNOWN-SHIFTED pending the backfill agent's formal re-baseline
+via plan/idgate.py --prepool): **S095 EXACT both pools** ($513,965
+year / $649,573 y2025). **Z104 DRIFTED both pools: year -$29,460 vs
+the +$225,646 baseline, y2025 -$1,872 vs +$417,040** -- the gate
+script prints FAILED because it predates the backfill; reported as
+found, not rationalized. Attribution checked: no sim file calls
+halal_check and none reads halal_list/universe/rulings (halal_pt uses
+pt_halal caches + Massive financials only), so the overlay work CANNOT
+reach the sim -- S095's exactness on the walk-cut pool shows the
+engine itself is untouched, and the Z104 shift is the ~13x pool
+growth awaiting the formal re-baseline. The C37R measurement row is
+QUEUED pending the backfill agent's C37F baseline -- rotation_sim.py
+is theirs right now and was not touched.
+
 ## Backtest Loses Live (2026-08-13)
 
 C37 replayed over the four live paper days. Hypothesis tested: the

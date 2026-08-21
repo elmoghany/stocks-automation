@@ -1,0 +1,320 @@
+{
+ "_schema": {
+  "purpose": "Human rulings for names the halal screen returns CANNOT-VERIFY on. Consulted by day-trading.py::halal_check ONLY when its own computed verdict would be CANNOT-VERIFY: a ruling converts CV->PASS or CV->FAIL. It can NEVER override a hard industry FAIL or a ratio FAIL (a PASS ruling clears only the unverifiability -- the debt/cash ratio verdict still runs), and a FAIL ruling is never re-litigated.",
+  "key": "ticker symbol, UPPERCASE. Keys starting with '_' are documentation, never tickers.",
+  "fields": {
+   "verdict": "PASS | FAIL convert the CV verdict. CANNOT-VERIFY records a name that was REVIEWED and deliberately left unresolved (the engine ignores it -- the name stays untradeable). Any other value is ignored.",
+   "date": "YYYY-MM-DD the ruling was made",
+   "basis": "free text: the evidence the ruling rests on (EDGAR segment note, business description, product mix, ...)",
+   "haram_share_est": "estimated haram revenue share in percent (number), or null if not quantified"
+  },
+  "workflow": "Candidates + assembled evidence live in data/halal_review_queue.md, built by plan/build_review_queue.py. Rulings recorded here take effect on the next halal_check call.",
+  "mandate": "2026-08-21 top-50 rulings entered under the user's delegation ('fix the halal and decide on my behalf'), applying the user's ESTABLISHED framework: PASS only with affirmative evidence (filing evidence <5% with margin, OR false association -- the AMD/AZ principle: the company merely sells INTO the flagged industry and its own line is clearly permissible); FAIL with affirmative evidence (haram line >=5%, or the haram-adjacent activity IS a primary business line; entertainment is haram per user ruling 2026-08-13, pure-defense per 2026-08-14); names with genuinely absent evidence stay CANNOT-VERIFY -- absence of evidence is never compliance."
+ },
+ "QNTM": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association -- biopharmaceutical company; 'alcohol' names its TREATMENT of alcohol-misuse disorders (Lucid-MS lead compound, unbuzzd detox supplement). Treating alcohol harm is not selling alcohol.",
+  "haram_share_est": 0
+ },
+ "SLE": {
+  "verdict": "FAIL",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: entertainment IS the line (user ruling 2026-08-13: entertainment is haram) -- 'creates and publishes content experiences', production/curation/distribution of entertainment content for digital channels; formerly Super League Gaming.",
+  "haram_share_est": 90
+ },
+ "IPWR": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association (AMD principle) -- semiconductor maker (bidirectional TRANsistor power switches); 'defense' appears only as one customer market among EV/renewables/industrial.",
+  "haram_share_est": 0
+ },
+ "UPLD": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association -- enterprise knowledge/content-management software; 'hospitality' is one of ~12 customer industries listed in the summary.",
+  "haram_share_est": 0
+ },
+ "LBGJ": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association (AZ shopping-cart precedent) -- manufactures stainless-steel commercial kitchen EQUIPMENT sold to hotels/restaurants/schools/hospitals; the equipment maker is not the diner or hotelier.",
+  "haram_share_est": 0
+ },
+ "IPST": {
+  "verdict": "FAIL",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: alcohol IS a reportable business line -- company operates through 'Crypto and Related Business' AND 'Spirits Business' segments (formerly Heritage Distilling, a craft distillery); a named spirits segment is not <5% and distilling is haram outright.",
+  "haram_share_est": null
+ },
+ "FBYD": {
+  "verdict": "FAIL",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: 'operates as an entertainment company' -- theme parks, entertainment/hospitality destinations, and it develops/owns/operates resort hotels, dining and entertainment venues. Entertainment+hotel operator IS the business (user ruling 2026-08-13).",
+  "haram_share_est": 90
+ },
+ "QMCO": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association (AMD principle) -- data-storage hardware/software (StorNext, surveillance storage); media & entertainment / gaming / hospitality are CUSTOMER industries it serves.",
+  "haram_share_est": 0
+ },
+ "LSF": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: own line clearly permissible -- plant-based foods: coffee creamers, coffee/tea/hot chocolate, coconut water, mushroom supplements, snacks. 'Beverage' here is non-alcoholic by the company's own enumeration; no alcohol product exists.",
+  "haram_share_est": 0
+ },
+ "CMCT": {
+  "verdict": "FAIL",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: hotel operation is a reportable segment (owns and operates a Northern California hotel; EDGAR tags RevenueFromLeasedAndOwnedHotels; segment reporting puts hotel revenue far above 5% -- on the order of a third of revenue), plus an SBA lending segment. Hotel operator class.",
+  "haram_share_est": 30
+ },
+ "LEXX": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association -- drug-delivery platform licensor (DehydraTECH); 'beverages' names product FORMATS its licensees use, not a beverage business of its own.",
+  "haram_share_est": 0
+ },
+ "QUBT": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association -- photonics/quantum computing company; the 'beverage' hit is its FORMER NAME 'Innovative Beverage Group Holdings' in the summary. Pure historical artifact.",
+  "haram_share_est": 0
+ },
+ "LAES": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association (AMD principle) -- secure-semiconductor maker; 'aerospace and military telecommunications' is one customer sector among smart energy/automotive/IoT/medical.",
+  "haram_share_est": 0
+ },
+ "WNW": {
+  "verdict": "FAIL",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: sells alcohol itself -- food e-commerce platform whose own product list is 'beverages, alcohol, and tea; groceries'. Alcohol retail is a standard revenue stream with no disclosure proving <5%.",
+  "haram_share_est": null
+ },
+ "NEGG": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association (AMD principle one level up) -- electronics e-retailer; 'gaming' names PC-gaming HARDWARE (gaming laptops, GPUs, consoles, desks). Selling gaming hardware is the permissible side of the user's AMD line; no gambling exposure.",
+  "haram_share_est": 0
+ },
+ "PDYN": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: not PURE defense (user rule 2026-08-14) -- general-purpose robot AI/ML software platform serving industrial manufacturing, infrastructure, energy, aerospace AND defense; product is industry-agnostic autonomy software.",
+  "haram_share_est": null
+ },
+ "FCEL": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association -- fuel-cell power generation; 'hospitality' is a customer vertical for on-site power.",
+  "haram_share_est": 0
+ },
+ "RGTI": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association -- quantum computers/QCaaS; 'defense laboratories' appear only in the customer list alongside academia and national labs.",
+  "haram_share_est": 0
+ },
+ "SNAL": {
+  "verdict": "FAIL",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: BEING the studio (user 2026-08-14: selling INTO gaming/entertainment is permissible, BEING a studio is not) -- 'develops and publishes interactive digital entertainment' is the entire business (game developer/publisher).",
+  "haram_share_est": 90
+ },
+ "USAR": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association -- rare-earth mining/processing; aerospace/defense are listed END USES of the minerals, alongside semiconductors, data centers, energy, healthcare.",
+  "haram_share_est": 0
+ },
+ "ASTI": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association -- thin-film solar module maker; 'aerospace' is a customer market (space power, satellites).",
+  "haram_share_est": 0
+ },
+ "UPC": {
+  "verdict": "FAIL",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: sells an alcohol product -- its own product list includes 'shiquan dabu medicinal LIQUOR' and other yaojiu (alcohol-based TCM products for ingestion). An alcohol beverage product line with no disclosure proving <5%.",
+  "haram_share_est": null
+ },
+ "JFB": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association -- construction company; builds restaurant/hospitality BUILDINGS among offices, retail, fitness, industrial. The builder is not the operator (AZ principle).",
+  "haram_share_est": 0
+ },
+ "ONDS": {
+  "verdict": "FAIL",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: weapons ARE a primary line -- Ondas Autonomous Systems segment sells military interceptor drones and 'loitering munition systems... for ISR defense and strike' (munitions manufacture). Defense contractor side of the user's 2026-08-14 line.",
+  "haram_share_est": null
+ },
+ "PAVS": {
+  "verdict": "FAIL",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: 'operates in the AI-powered entertainment industry... AI-driven games and applications' -- entertainment IS the declared business (user ruling 2026-08-13).",
+  "haram_share_est": 90
+ },
+ "WXM": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association -- HVAC/floor-heating/water-purification installation and maintenance; 'hotels' are one served project class among offices, airports, hospitals.",
+  "haram_share_est": 0
+ },
+ "BBAI": {
+  "verdict": "FAIL",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: defense contractor by primary line -- AI decision intelligence 'for national security' with the Department of Defense and intelligence community as the named core customers (vulnerability assessment, force deployment, C2 for defense/intel). Not the AMD side of the 2026-08-14 line.",
+  "haram_share_est": null
+ },
+ "NDRA": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association -- clinical ultrasound diagnostics; the 'alcohol' hit is 'NON-ALCOHOLIC fatty liver disease', the condition its imaging targets.",
+  "haram_share_est": 0
+ },
+ "UP": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: own line clearly permissible -- on-demand private aviation (charter/membership flight services); 'catering' is an ancillary flight-related service and 'defense solutions' are government charter/cargo missions. Air transport is permissible; alcohol nowhere named.",
+  "haram_share_est": null
+ },
+ "RETO": {
+  "verdict": "CANNOT-VERIFY",
+  "date": "2026-08-21",
+  "basis": "delegated review 2026-08-21, deliberately left unresolved: makes 'smart craft beer machines' -- equipment DEDICATED to alcohol production. Not false association (the product's sole use is brewing) and not a sized haram line (share undisclosed; also mining equipment, waste treatment, building materials). The user's precedents (AMD: sell-into OK / brewer: being one is not) do not decide dedicated-haram-equipment; needs the user's own call.",
+  "haram_share_est": null
+ },
+ "RRGB": {
+  "verdict": "FAIL",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: the user's rule verbatim -- casual-dining chain where alcohol is a standard menu revenue stream ('alcoholic specialty drinks, cocktails, wine, and beers' in its own description) with no disclosure proving <5%; historical 10-K mix puts alcoholic beverages around 8% of restaurant revenue.",
+  "haram_share_est": 8
+ },
+ "EEIQ": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association -- education services company; 'catering' is student dormitory/cafeteria dining services for its college programs. Food service without any alcohol connection.",
+  "haram_share_est": 0
+ },
+ "ALMU": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association (AMD principle) -- compound-semiconductor materials and chips; defense/aerospace are listed application markets among mobile, automotive, AI, AR/VR, quantum.",
+  "haram_share_est": 0
+ },
+ "NDLS": {
+  "verdict": "CANNOT-VERIFY",
+  "date": "2026-08-21",
+  "basis": "delegated review 2026-08-21, deliberately left unresolved: fast-casual restaurant chain; its own description names only noodles/pasta/soups/salads (no alcohol), so the RRGB rule-2 template does not affirmatively apply, but some locations do serve beer/wine and no filing discloses the share. EDGAR shows only FoodAndBeverageRevenue 98.9% (superset). No evidence either way at the 5% line.",
+  "haram_share_est": null
+ },
+ "YHGJ": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association (AZ precedent) -- balloons, novelty items and packaging films; 'grocery chains' are retail outlets it sells THROUGH, not its business.",
+  "haram_share_est": 0
+ },
+ "UONEK": {
+  "verdict": "FAIL",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: entertainment media IS the business -- radio broadcasting, cable TV networks (TV One, CLEO TV 'a lifestyle and entertainment network'), syndicated entertainment shows. Broadcaster/studio side of the user's line (2026-08-13).",
+  "haram_share_est": null
+ },
+ "BOXL": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association -- education-technology displays and classroom software; the 'gaming' hit is GameZones, a multi-student interactive LESSON feature. No gambling, no game publishing.",
+  "haram_share_est": 0
+ },
+ "GMM": {
+  "verdict": "FAIL",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: produces entertainment content -- virtual content production/VFX services and digital-asset licensing FOR movies, TV series, animation and gaming; the output IS the entertainment product (film-studio side of the user's 2026-08-13/14 line, ANGX precedent).",
+  "haram_share_est": null
+ },
+ "DNA": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association -- cell-engineering platform (biotech R&D services); 'government and defense' is one customer industry among pharma, agriculture, food, consumer.",
+  "haram_share_est": 0
+ },
+ "NTHI": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association -- clinical-stage biopharma for brain cancer; the 'alcohol' hit is PERILLYL ALCOHOL, a terpene compound in its drug candidate NEO212. Chemistry, not beverage.",
+  "haram_share_est": 0
+ },
+ "KRKR": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association -- business/tech NEWS content and advertising services in China; 'media and entertainment' is an industry it reports ON. Journalism and marketing services, not entertainment production.",
+  "haram_share_est": 0
+ },
+ "TGEN": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association (AMD principle) -- cogeneration/chiller equipment maker; wineries, hotels and food & beverage processors are CUSTOMER industries for general-purpose power equipment.",
+  "haram_share_est": 0
+ },
+ "LIVE": {
+  "verdict": "FAIL",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: entertainment retail is a reportable segment -- the Retail-Entertainment segment (Vintage Stock) sells movies, video games and music as one of five segments, well above 5% of revenue (~15%). Haram line >=5% affirmatively.",
+  "haram_share_est": 15
+ },
+ "MVIS": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association (AMD principle) -- lidar sensor maker; automotive OEMs first, 'security and defense contractors' one customer class among industrial/agriculture/mining.",
+  "haram_share_est": 0
+ },
+ "SOUN": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association -- voice-AI software; 'restaurants' are customers of its voice-ordering products. Selling software INTO restaurants is the AZ/AMD side of the line.",
+  "haram_share_est": 0
+ },
+ "VNET": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association -- data-center hosting/colocation in China; 'gaming and entertainment' is one served customer industry among cloud, e-commerce, financial services.",
+  "haram_share_est": 0
+ },
+ "MRNA": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association -- mRNA vaccine maker; the 'defense' hit is DARPA/BARDA named among research partners and funders. NOTE: the live screen currently FAILs MRNA on HARAM>=5% (interest income vs collapsed revenue) -- this ruling only clears the CV flag and never touches that ratio verdict.",
+  "haram_share_est": 0
+ },
+ "GURE": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association -- bromine/crude-salt chemical producer; 'food and beverage' is an industry its salt is sold INTO.",
+  "haram_share_est": 0
+ },
+ "NPT": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association -- chemical supply-chain company; 'alcohols' are INDUSTRIAL chemical feedstocks for fabrics/coatings/packaging (not beverage alcohol), 'beverage packaging' is a downstream use of its materials, 'aerospace' a customer industry for steel/plastics.",
+  "haram_share_est": 0
+ },
+ "VHC": {
+  "verdict": "PASS",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: false association -- internet-security software (VPN/secure-communications platform) sold to DoD, federal AND commercial customers; a security-software vendor with government customers is the AMD side, not a weapons contractor.",
+  "haram_share_est": 0
+ },
+ "UONE": {
+  "verdict": "FAIL",
+  "date": "2026-08-21",
+  "basis": "delegated ruling per user 2026-08-21: same issuer as UONEK (Urban One class A) -- entertainment media IS the business: radio broadcasting, cable TV networks (TV One, CLEO TV), syndicated entertainment shows. Identical ruling to UONEK.",
+  "haram_share_est": null
+ }
+}

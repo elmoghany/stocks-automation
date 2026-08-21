@@ -611,6 +611,24 @@ def _kw_hits(words, text):
             if _re.search(r"\b" + _re.escape(w.strip()), tl)]
 
 
+HALAL_RULINGS_FILE = _DIR / "data/halal_rulings.json"
+
+
+def _halal_ruling(symbol: str) -> dict | None:
+    """USER ruling for a CANNOT-VERIFY name (W-campaign Phase 4,
+    2026-08-21). Schema documented in data/halal_rulings.json `_schema`;
+    candidates + evidence are assembled by plan/build_review_queue.py.
+    Read per call so a fresh ruling takes effect without a restart; keys
+    starting with '_' are docs, never tickers. Missing or broken file =
+    no rulings = no behavior change."""
+    try:
+        with open(HALAL_RULINGS_FILE) as f:
+            r = json.load(f).get(symbol.upper())
+        return r if isinstance(r, dict) else None
+    except Exception:
+        return None
+
+
 def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
     """Halal compliance (same criteria as plan/full_screen.py and the
     /halal-check skill): loans/mcap <= 10%, deposits/mcap <= 10%,
@@ -745,6 +763,35 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
     rev_hits = _kw_hits(REVENUE_SENSITIVE_WORDS, text) + amb
     unverifiable = bool(rev_hits) and not hits
 
+    # ---- human-rulings overlay (W-campaign Phase 4, 2026-08-21) -------
+    # data/halal_rulings.json carries the USER's per-name rulings for
+    # names THIS screen would return CANNOT-VERIFY on. Consulted ONLY on
+    # that path -- never on a hard industry FAIL (`hits` above blocks
+    # `unverifiable`) and never on a ratio FAIL. A FAIL ruling is final
+    # and returns here; a PASS ruling clears ONLY the unverifiability,
+    # so the normal debt/cash ratio verdict still runs below and can
+    # still FAIL the name. Empty/missing rulings file = no change.
+    ruling = _halal_ruling(symbol) if unverifiable else None
+    if ruling and ruling.get("verdict") == "FAIL":
+        return {
+            "verdict": "FAIL",
+            "loan_pct": round(loan_pct, 2),
+            "cash_pct": round(cash_pct, 2),
+            "combined": round(combined, 2),
+            "haram_pct": round(haram_pct, 2),
+            "halal": False,
+            "source": src,
+            "ruling": ruling,
+            "fail_reason": (f"HARAM by user ruling "
+                            f"{ruling.get('date', '?')}: "
+                            f"{ruling.get('basis', '')}"),
+        }
+    if ruling and ruling.get("verdict") == "PASS":
+        unverifiable = False        # ruled; ratio gates still apply below
+    else:
+        ruling = None               # malformed verdict changes nothing
+    # -------------------------------------------------------------------
+
     halal = (loan_ok and cash_ok and combined_ok and haram_ok
              and industry_ok and not unverifiable)
     if unverifiable:
@@ -767,7 +814,7 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
                 f"permissibly is not earning permissibly. Check segment "
                 f"revenue by hand; do NOT trade until it clears 5%."),
         }
-    return {
+    out = {
         "verdict": "PASS" if halal else "FAIL",
         "haram_pct_note": "interest income only -- blind to revenue mix",
         "loan_pct": round(loan_pct, 2),
@@ -784,6 +831,9 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
             "HARAM>=5%"
         ),
     }
+    if ruling:
+        out["ruling"] = ruling      # provenance: CV cleared by user ruling
+    return out
 
 
 def _finnhub_key() -> str | None:

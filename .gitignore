@@ -34,6 +34,9 @@ day-trading/data/*
 !day-trading/data/paper/
 !day-trading/data/paper_days/
 !day-trading/data/paper_mimic/
+!day-trading/data/halal_rulings.json
+!day-trading/data/halal_review_queue.md
+!day-trading/data/halal_review_queue.json
 earnings-trading/data/*
 !earnings-trading/data/paper/
 !earnings-trading/data/earnings_trading_results.json
