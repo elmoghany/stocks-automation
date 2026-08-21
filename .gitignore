@@ -33,6 +33,7 @@ wheels/
 day-trading/data/*
 !day-trading/data/paper/
 !day-trading/data/paper_days/
+!day-trading/data/paper_mimic/
 earnings-trading/data/*
 !earnings-trading/data/paper/
 !earnings-trading/data/earnings_trading_results.json
