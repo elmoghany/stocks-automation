@@ -27,7 +27,14 @@ def _key() -> str:
 
 _TH_LOCK = __import__("threading").Lock()
 _TH_NEXT = [0.0]
-_TH_INTERVAL = 12.5    # free tier: 5 req/min hard limit (confirmed)
+# Default pacing stays the free-tier-safe 12.5s so nothing speeds up
+# silently. The account moved to the PAID starter tier on 2026-08-20
+# (verified: 8 calls in 5.4s, zero 429s); batch jobs that want the paid
+# pace set MASSIVE_TH_INTERVAL (seconds between request starts) or
+# assign massive._TH_INTERVAL in-process. 429s are still retried below,
+# so a too-low interval degrades to slow, never to wrong.
+import os as _os
+_TH_INTERVAL = float(_os.environ.get("MASSIVE_TH_INTERVAL", "12.5"))
 
 
 def _throttle():

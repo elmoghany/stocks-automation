@@ -107,19 +107,29 @@ def build():
     man["known_biases"] = [
         {
             "id": "bar-coverage-by-full-day-gain",
-            "severity": "OPEN -- bounds every backtest number we publish",
-            "what": "Minute bars were only ever FETCHED to full-day-gain "
-                    "depth (~17 of ~213 candidates/day). The universe a "
-                    "simulation can choose from is therefore selected "
-                    "with hindsight.",
-            "impact": "C37 on a causal pool is $665,667; the same config "
-                      "on the old hindsight-cut pool read $774,534. The "
-                      "remaining coverage bias means $665,667 is an "
-                      "UPPER BOUND, not a point estimate.",
-            "fix": "Fetch minute bars for the full candidate set (~92k "
-                   "symbol-days, ~3 GB) and rebuild. Needs an unlimited "
-                   "call plan; the free tier's 5 req/min makes it "
-                   "impossible.",
+            "severity": "FIXED 2026-08-21",
+            "what": "HISTORY (was: OPEN -- bounds every backtest number "
+                    "we publish): minute bars were only ever FETCHED to "
+                    "full-day-gain depth (~17 of ~213 candidates/day). "
+                    "The universe a simulation could choose from was "
+                    "therefore selected with hindsight.",
+            "impact": "HISTORY: C37 on a causal pool read $665,667 vs "
+                      "$774,534 on the hindsight-cut pool, and the "
+                      "residual coverage bias made every such number an "
+                      "UPPER BOUND, not a point estimate. Every result "
+                      "produced BEFORE 2026-08-21 was measured on the "
+                      "biased cache and is not comparable to post-fix "
+                      "runs (C37F is the first full-coverage benchmark).",
+            "fix": "plan/backfill_m1_full.py (2026-08-21, paid Polygon "
+                   "tier): fetched bars for the full novol candidate "
+                   "union -- every (symbol,date) with hist_n>=50, "
+                   "~108k symbol-days. Coverage is now the pool itself, "
+                   "not a gain-ranked slice; see this manifest's "
+                   "bar_coverage_pct per pool for the measured state. "
+                   "Configs that read the OLD cache shape (Z104-class "
+                   "causal_cut, C37E-class causal pools) shift by "
+                   "construction; expectations re-baselined 2026-08-21 "
+                   "(plan/idgate.py + NOTES-DAYTRADING.md).",
         },
         {
             "id": "pool-cut-by-day-high-gain",

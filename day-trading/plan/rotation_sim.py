@@ -296,6 +296,16 @@ CFGS = {
     # C37H ($665,667).
     "C37E": dict(desc="C37 under live gate + EDGAR filed-date cache",
                  entry_cutoff=dtime(14, 30), escape=dtime(10, 0)),
+    # C37F (2026-08-21, W-campaign Phase 0.1): identical parameters AND
+    # environment to C37E (HALAL_STRICT=1 PT_FILED=1); the difference is
+    # the DATA: the full-breadth m1 backfill (plan/backfill_m1_full.py)
+    # closed the bar-coverage-by-full-day-gain bias, so the causal pool
+    # is now every candidate/day (~213) instead of the ~17 that had
+    # gain-selected bars. Separate id so C37E's pre-backfill row is
+    # never overwritten. Run: HALAL_STRICT=1 PT_FILED=1 ROTSHARD=full.
+    "C37F": dict(desc="C37 on the FULL-coverage pool (post-backfill "
+                      "benchmark)",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0)),
     # ---- T-series (2026-08-13): STALL RELEASE UNDER ROTATION ----
     # Hold-time study (797 legs): winners median 15m, LOSERS median 8m,
     # 78% of all profit lands in the 10-30m band, sub-10m trades LOSE in

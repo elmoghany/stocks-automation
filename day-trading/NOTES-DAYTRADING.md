@@ -4178,3 +4178,28 @@ halal-friendly (53% of screenable names PASS, the survey's 40-60% estimate) and 
 passing names never cross our +10% scanner -- mimicry adds ATTENTION, not entries.
 Parked: large-cap news-name feed as a possible future scanner input, separate campaign,
 separate pre-registration. NO arm graduates to live paper mimicry.
+
+## W-CAMPAIGN PHASE 0.1 — FULL-BREADTH MINUTE-BAR BACKFILL: THE COVERAGE BIAS IS CLOSED (2026-08-21)
+=====================================================================
+The paid Polygon tier landed, so the one bias that bounded every published number
+(`bar-coverage-by-full-day-gain`: bars fetched only to full-day-gain depth, ~17 of
+~213 candidates/day, 7% coverage) is now FIXED BY DATA, not by disclosure.
+
+FETCH (plan/backfill_m1_full.py, resumable, atomic writes, EMPTY sentinels):
+  universe   108,464 symbol-days = union over gappers_novol_{year,y2025}, hist_n>=50
+             (6,981 distinct symbols; 8,472 files pre-existed, snapshotted in
+             data/massive/m1_prebackfill_files.txt for replay proofs)
+  fetched    100,317 with bars + 172 EMPTY (Massive has nothing those days)
+  failures   0 permanent (backfill_errors.json empty) -- 42.4 min at ~40 workers
+  cache now  108,991 files / 7,008 symbols / 451 dates / ~2.0 GB
+  coverage   gappers_novol_year  7.63%  -> 100.0%   (median 223 with bars/day)
+             gappers_novol_y2025 6.94%  -> 100.0%   (median 213 with bars/day)
+  manifest   bias `bar-coverage-by-full-day-gain` re-graded OPEN -> FIXED
+             2026-08-21 (old text kept as history in plan/data_manifest.py);
+             pre-backfill manifest preserved as MANIFEST_prebackfill_2026-08-21.json
+  shared/massive.py: default pacing UNCHANGED (12.5s); batch jobs opt into the
+             paid pace via MASSIVE_TH_INTERVAL env or in-process assignment.
+
+EVERY number produced before 2026-08-21 was measured on the coverage-biased cache.
+Post-fix runs are NOT comparable to pre-fix runs; C37F (rotation_sim registry) is
+the first full-coverage benchmark. Identity adjudication follows below.
