@@ -4203,3 +4203,39 @@ FETCH (plan/backfill_m1_full.py, resumable, atomic writes, EMPTY sentinels):
 EVERY number produced before 2026-08-21 was measured on the coverage-biased cache.
 Post-fix runs are NOT comparable to pre-fix runs; C37F (rotation_sim registry) is
 the first full-coverage benchmark. Identity adjudication follows below.
+
+## PAPER DAY 13 (2026-08-21) -- +$150.19, 1 ticket, the book finally opened
+
+Result: ASST 460 sh 17.55 -> 17.8765 (flatten ladder), +$150.19 vs $1,517
+benchmark. Cumulative -$1,391.11 (12 scored days). Third green day. Zero
+coverage gaps (2nd zero-gap session), zero truncations, zero compliance
+near-misses. Ops: the 06:20 scheduled launcher FAILED to start (empty flag
+file only); manual recovery at 06:41 beat the 07:00 window -- investigate the
+launcher before Day 14.
+
+What the day taught (full detail in data/paper_days/2026-08-21.md):
+1. PREMARKET BOOK IS THE BINDING CONSTRAINT, NOT THE PIPELINE. 11 Trigger C
+   fires; 9 caught fresh by the coordinator 1-min poll; 8 fresh fires died
+   on spread (0.56-2.05% vs 0.5% cap); the FIRST sub-cap book of the day
+   (0.28% at 08:57) became a filled ticket in 66 seconds and the day's
+   profit. Premarket veto rate 9/9, post-open 0/1.
+2. NEW DEFECT CLASS, FIXED INTRADAY: never append the pacing wait AFTER the
+   trigger call in one tool invocation -- a [TAKEABLE NOW] tag sat unseen
+   for 2 min (08:09 fire aged out). Loop shape: fetch -> merge+trigger
+   (read output immediately) -> wait as a separate call.
+3. Depth reduction 4th data point: 854 -> 460 sh (-46%); full size was worth
+   +$279 vs the +$150 realized. Conservative bias confirmed again.
+4. Halal structural pattern, 3rd session: every screened liquid mover
+   failed financing ratios (PAL, LZM, SCTX, RPC, MRNA-class); the only
+   tradeable PASS produced the ticket. ABUS (PASS, liquid) was excluded all
+   day by the conservative missing-7AM-bar calm-gap rule -- the rank
+   contract's fail-conservative clause has a real opportunity cost when a
+   name first prints after 07:00.
+5. Scan-feed data-quality: rel-vol/volume fields began populating ~10:30
+   and ~30 crossers arrived in ONE sweep -- the feed under-reported
+   crossers before that. First-seen times are unreliable today; the latch +
+   bars-based entry timing contained the damage.
+6. halal_rulings.json overlay went live (51 rulings; IPST hard-FAIL).
+   CODE BUG for repo owner: halal_check CV-branch prose says "Ratios pass"
+   while ratios exceed limits (YJ 220/987, BIVI 2/83); verdict boolean is
+   correct, the prose is wrong.

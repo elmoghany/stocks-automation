@@ -14,5 +14,11 @@
  "peak": 19.09,
  "trail_pct": 0.2,
  "scale_out_at": 21.9375,
- "notes": "first spread pass of day 0.28%"
+ "notes": "first spread pass of day 0.28%",
+ "exit_time_et": "14:57:15",
+ "exit_vwap": 17.8765,
+ "exit_ladder": "297@17.88 + 163@17.87 (bid -1% cap 17.70 never needed)",
+ "exit_reason": "15:00 flatten ladder (14:57)",
+ "pnl": 150.19,
+ "status": "CLOSED"
 }

@@ -1,0 +1,184 @@
+{
+ "date": "2026-08-21",
+ "day_number": 13,
+ "protocol": "C37",
+ "benchmark_per_day": 1517,
+ "pnl": 150.19,
+ "cumulative_after": -1391.11,
+ "tickets_used": 1,
+ "budget_deployed": 8072.5,
+ "ops": {
+  "scheduled_launcher": "fired 06:20, FAILED to start session (empty flag file); manual recovery session started 06:41 ET, zero coverage gap",
+  "orphan_pids": [
+   13428,
+   29168
+  ],
+  "halal_rulings_overlay": "live 07:07 ET, 51 rulings; IPST hard-FAIL by ruling",
+  "git_pushes": "~30 intraday; one transient SSH failure 13:57 UTC recovered 14:01",
+  "scan_feed_flag": "rel-vol/volume fields began populating ~10:30 ET; ~30 crossers arrived in one sweep; first-seen times understate true crossing times"
+ },
+ "trades": [
+  {
+   "ticket": 1,
+   "symbol": "ASST",
+   "side": "long",
+   "shares": 460,
+   "intended_shares": 854,
+   "entry_time_et": "08:57:30",
+   "entry_px": 17.55,
+   "entry_trigger": "Trigger C: 08:55 macd_cross_up + morning_star (caught fresh 1m24s)",
+   "entry_book": "17.50x180 / 17.55x460, spread 0.28% (first sub-cap book of day)",
+   "exit_time_et": "14:57:15",
+   "exit_vwap": 17.8765,
+   "exit_ladder": "297@17.88 + 163@17.87",
+   "exit_reason": "15:00 flatten ladder",
+   "pnl": 150.19,
+   "peak": 19.09,
+   "held": "6h00m",
+   "fill_realism": {
+    "entry_vs_60s": "0.00% neutral",
+    "exit_vs_60s": "-0.16% conservative"
+   }
+  }
+ ],
+ "vetoes": {
+  "spread_premarket": [
+   {
+    "time": "07:03",
+    "trigger": "B",
+    "spread_pct": 1.23
+   },
+   {
+    "time": "07:24",
+    "trigger": "C",
+    "spread_pct": 1.13
+   },
+   {
+    "time": "07:29",
+    "trigger": "C",
+    "spread_pct": 1.52
+   },
+   {
+    "time": "07:40",
+    "trigger": "C",
+    "spread_pct": 1.59
+   },
+   {
+    "time": "07:46",
+    "trigger": "C",
+    "spread_pct": 1.03
+   },
+   {
+    "time": "08:31",
+    "trigger": "C",
+    "spread_pct": 0.69
+   },
+   {
+    "time": "08:37",
+    "trigger": "C",
+    "spread_pct": 1.32
+   },
+   {
+    "time": "08:41",
+    "trigger": "C",
+    "spread_pct": 2.05
+   },
+   {
+    "time": "08:45",
+    "trigger": "C",
+    "spread_pct": 1.02
+   }
+  ],
+  "spread_postopen": [],
+  "depth_standalone": [],
+  "chase": [],
+  "depth_reductions": [
+   {
+    "time": "08:57",
+    "intended": 854,
+    "filled": 460,
+    "reduction_pct": -46
+   }
+  ],
+  "rates": {
+   "premarket": "9/9 = 100%",
+   "postopen": "0/1 = 0%"
+  }
+ },
+ "trigger_c": {
+  "fires": 11,
+  "caught_fresh": 9,
+  "entered": 1,
+  "spread_vetoed_fresh": 8,
+  "aged": [
+   {
+    "time": "07:02",
+    "cause": "cycle-1 setup work"
+   },
+   {
+    "time": "08:09",
+    "cause": "PIPELINE DEFECT: wait appended after trigger in same tool call; fixed intraday"
+   }
+  ]
+ },
+ "halal": {
+  "PASS": [
+   "ASST",
+   "ADXN",
+   "ABUS",
+   "GLSI",
+   "EXOZ"
+  ],
+  "FAIL": [
+   "MSTR",
+   "ZOOZ",
+   "IPST",
+   "BRNX",
+   "SUGP",
+   "JUNS",
+   "NCTY",
+   "YJ",
+   "RPC",
+   "SCTX",
+   "BIVI",
+   "HCWB",
+   "LZM",
+   "PMI",
+   "AEMD",
+   "SFBS"
+  ],
+  "CANNOT_VERIFY": [
+   "USDE",
+   "RFAI"
+  ],
+  "INELIGIBLE": [
+   "TREO (<50 sessions)"
+  ],
+  "fake_gap": [
+   "DUKR",
+   "EUDA",
+   "HUHU",
+   "PTLE",
+   "BNR",
+   "GDEV",
+   "ILAG",
+   "OIO"
+  ],
+  "deferred_unscreened": "~50 late crossers incl. uranium cluster (DNN UEC USAR TMC INFQ) - never reached candidacy",
+  "calm_gap_blocked": {
+   "ADXN": "+25.2% at 7AM",
+   "ABUS": "no real 7AM bar -> conservative FAIL",
+   "SUGP": "+57%",
+   "RFAI": "+508%"
+  },
+  "code_bug": "halal_check CV branch prints 'Ratios pass' when ratios exceed limits (YJ, BIVI); verdict halal=False still correct"
+ },
+ "coverage_gaps": [],
+ "lessons": [
+  "premarket book is the constraint, not the pipeline: 9 fresh fires died 0.56-2.05% spread; first 0.28% book converted in 66s",
+  "never append the pacing wait after the trigger call (08:09 miss)",
+  "depth reduction 4th data point: -46%; full size would have earned +$279",
+  "single 6-hour holder = 1 ticket, 92% budget undeployed (Day-8 #9 repeats)",
+  "trail premium honest: peak +8.8% -> realized +1.9% at mandatory flatten"
+ ]
+}
