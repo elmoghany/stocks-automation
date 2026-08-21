@@ -1,0 +1,18 @@
+{
+ "ticket": 1,
+ "symbol": "ASST",
+ "side": "long",
+ "shares": 460,
+ "entry_px": 17.55,
+ "entry_time_et": "08:57:30",
+ "entry_bar": "08:55 macd_cross_up+morning_star (Trigger C)",
+ "limit_cap": 17.6027,
+ "intended_shares": 854,
+ "depth_reduced_to": 460,
+ "stop_resting": 16.146,
+ "stop_rule": "max(entry*0.92, peak*0.60), intrabar vs bar LOW",
+ "peak": 17.68,
+ "trail_pct": 0.2,
+ "scale_out_at": 21.9375,
+ "notes": "first spread pass of day 0.28%"
+}
