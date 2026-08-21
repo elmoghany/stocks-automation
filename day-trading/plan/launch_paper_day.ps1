@@ -1,0 +1,48 @@
+# \Stocks\C37MorningLaunch -- durable paper-session launcher (W-campaign 1.3)
+# Fires 06:20 ET weekdays via Windows Task Scheduler. Survives Claude session
+# death, login expiry (logged loudly), and REPL-busy cron starvation -- the
+# three measured causes of late/missed sessions (5 of 8 late, Tue 08-18 missed
+# entirely). The in-session cron remains as backup; double-launch is prevented
+# by the day-file check here AND in the session prompt.
+$ErrorActionPreference = "Continue"
+$root = "C:\cornell\stocks-automation"
+$log  = "$root\day-trading\data\scheduler_log.txt"
+$day  = (Get-Date).ToString("yyyy-MM-dd")
+function Log($m) { Add-Content -Path $log -Value "$((Get-Date).ToString('yyyy-MM-dd HH:mm:ss')) $m" -Encoding utf8 }
+
+Log "LAUNCH task fired for $day"
+
+# 1. Trading-day guard (python prints TRADING / NO-TRADE / ERROR)
+$guard = & python "$root\day-trading\plan\market_calendar.py" 2>&1 | Out-String
+if ($guard -notmatch "TRADING") { Log "abort: not a trading day ($($guard.Trim()))"; exit 0 }
+
+# 2. No-double-launch: day file already present?
+if ((Test-Path "$root\day-trading\data\paper_days\$day.json") -or
+    (Test-Path "$root\day-trading\data\paper_days\$day.md")) {
+    Log "abort: day file for $day already exists (session already running)"; exit 0
+}
+
+# 3. Headless launch. Auth failure (login expired) is the known risk: claude
+#    exits non-zero fast -> flag file so the interactive session / user sees it.
+$claude = "C:\Users\My PC\.local\bin\claude.exe"
+$prompt = @'
+Read C:\cornell\stocks-automation\.claude\skills\daytrading-morning.md and run today's C37 paper-trading session yourself, following the TOP section exactly (everything below the HISTORY divider never overrides it). You were launched headless by the Windows scheduled task \Stocks\C37MorningLaunch because durable presence is the campaign's top priority. Hard constraints: NO REAL ORDERS EVER; ONE position at a time; flat $15k tickets ($10k last) to $100k/day; entries until 14:30; all exits by 15:00. Use the rank command (never hand-rank), the coordinator-owned Trigger C 1-minute polling ([TAKEABLE NOW] only), the crossed-set latch, the fill-arming rule, the three-way veto ledger (spread/depth/chase), the clock rule (TZ env broken; compute ET as UTC-4; Monitors on UTC), paper_watch as foreground one-shots, and commit the ledger to git as the day runs. Halal: only verdict PASS is armable; CANNOT-VERIFY is not tradeable. Benchmark $1,517/traded day. If monitoring dies, follow OUTAGE / DEAD-MONITOR SETTLEMENT. Write data/paper_days/{today}.json and .md, EOD summary, commit and push.
+'@
+Log "starting headless claude session"
+# Marker BEFORE launch: the in-session backup cron (06:25) treats this flag as
+# SKIP, closing the 5-minute double-launch race while the headless session is
+# still writing its day-file skeleton.
+New-Item -ItemType File -Path "$root\day-trading\data\paper_days\LAUNCHED_BY_SCHEDULER_$day.flag" -Force | Out-Null
+Set-Location $root
+$p = Start-Process -FilePath $claude -ArgumentList @("-p", $prompt, "--permission-mode", "acceptEdits") `
+     -RedirectStandardOutput "$root\day-trading\data\scheduler_stdout_$day.txt" `
+     -RedirectStandardError  "$root\day-trading\data\scheduler_stderr_$day.txt" `
+     -NoNewWindow -PassThru
+# Give it 3 minutes to prove liveness (day file or output growth), then report
+Start-Sleep -Seconds 180
+if ($p.HasExited -and $p.ExitCode -ne 0) {
+    Log "LAUNCH FAILED fast (exit $($p.ExitCode)) -- likely auth/login expiry"
+    New-Item -ItemType File -Path "$root\day-trading\data\paper_days\LAUNCH_FAILED_$day.flag" -Force | Out-Null
+} else {
+    Log "headless session running (pid $($p.Id))"
+}
