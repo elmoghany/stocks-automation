@@ -1,0 +1,43 @@
+{
+ "arm": "cameron",
+ "window": "all",
+ "sessions_with_calls": 4,
+ "entry_calls_total": 60,
+ "counted_long_timed": 6,
+ "short_calls_logged": 0,
+ "untimed_excluded": 54,
+ "weeks_covered": 2,
+ "counted_per_week": 3.0,
+ "halal_verdicts": {
+  "FAIL": 4,
+  "PASS": 2
+ },
+ "halal_pass": 2,
+ "halal_pass_per_week": 1.0,
+ "decay_all": {
+  "d60_med": 2.33,
+  "d60_mean": 2.86,
+  "d300_med": 12.53,
+  "d300_mean": 9.83,
+  "n": 6
+ },
+ "decay_pass": {
+  "d60_med": 2.33,
+  "d60_mean": 2.33,
+  "d300_med": 3.51,
+  "d300_mean": 3.51,
+  "n": 2
+ },
+ "scanner_overlap_pct": 100.0,
+ "cross_before_call_pct": 83.3,
+ "mimic_sims": 2,
+ "mimic_wins": 0,
+ "mimic_pnl": -2399.43,
+ "mimic_pnl_slip10": -2457.01,
+ "mimic_pnl_per_trade": -1199.71,
+ "sequential_trades": 2,
+ "sequential_pnl_slip10": -2457.01,
+ "reconstruction_weeks": 2.6,
+ "counted_per_recon_week": 2.31,
+ "halal_pass_per_recon_week": 0.77
+}

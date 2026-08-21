@@ -1,0 +1,90 @@
+{
+ "all_morning": {
+  "arm": "tradertv",
+  "window": "all",
+  "sessions_with_calls": 14,
+  "entry_calls_total": 120,
+  "counted_long_timed": 68,
+  "short_calls_logged": 52,
+  "untimed_excluded": 0,
+  "weeks_covered": 3,
+  "counted_per_week": 22.67,
+  "halal_verdicts": {
+   "PASS": 27,
+   "FAIL": 24,
+   "NO-DATA": 17
+  },
+  "halal_pass": 27,
+  "halal_pass_per_week": 9.0,
+  "decay_all": {
+   "d60_med": 0.04,
+   "d60_mean": 0.07,
+   "d300_med": 0.1,
+   "d300_mean": 0.12,
+   "n": 68
+  },
+  "decay_pass": {
+   "d60_med": 0.05,
+   "d60_mean": -0.02,
+   "d300_med": 0.1,
+   "d300_mean": -0.14,
+   "n": 27
+  },
+  "scanner_overlap_pct": 19.1,
+  "cross_before_call_pct": 16.2,
+  "mimic_sims": 27,
+  "mimic_wins": 11,
+  "mimic_pnl": -2238.48,
+  "mimic_pnl_slip10": -3041.61,
+  "mimic_pnl_per_trade": -82.91,
+  "sequential_trades": 12,
+  "sequential_pnl_slip10": -227.56,
+  "reconstruction_weeks": 2.8,
+  "counted_per_recon_week": 24.29,
+  "halal_pass_per_recon_week": 9.64
+ },
+ "window_0930_1100": {
+  "arm": "tradertv",
+  "window": "(datetime.time(9, 30), datetime.time(11, 0))",
+  "sessions_with_calls": 14,
+  "entry_calls_total": 113,
+  "counted_long_timed": 66,
+  "short_calls_logged": 47,
+  "untimed_excluded": 0,
+  "weeks_covered": 3,
+  "counted_per_week": 22.0,
+  "halal_verdicts": {
+   "PASS": 27,
+   "FAIL": 22,
+   "NO-DATA": 17
+  },
+  "halal_pass": 27,
+  "halal_pass_per_week": 9.0,
+  "decay_all": {
+   "d60_med": 0.04,
+   "d60_mean": 0.05,
+   "d300_med": 0.1,
+   "d300_mean": 0.12,
+   "n": 66
+  },
+  "decay_pass": {
+   "d60_med": 0.05,
+   "d60_mean": -0.02,
+   "d300_med": 0.1,
+   "d300_mean": -0.14,
+   "n": 27
+  },
+  "scanner_overlap_pct": 18.2,
+  "cross_before_call_pct": 15.2,
+  "mimic_sims": 27,
+  "mimic_wins": 11,
+  "mimic_pnl": -2238.48,
+  "mimic_pnl_slip10": -3041.61,
+  "mimic_pnl_per_trade": -82.91,
+  "sequential_trades": 12,
+  "sequential_pnl_slip10": -227.56,
+  "reconstruction_weeks": 2.8,
+  "counted_per_recon_week": 23.57,
+  "halal_pass_per_recon_week": 9.64
+ }
+}

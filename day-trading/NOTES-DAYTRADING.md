@@ -4150,3 +4150,31 @@ paper_watch run as foreground one-shots (daemon loop killed after each evaluatio
 CLOCK-RULE compliant), 18 intraday commits. Fake-gap detector excluded 8 stale-mark
 names all session against a misleading prior-session Volume column. Scanner audit
 deferred to after 16:00 as usual.
+
+## W-CAMPAIGN PHASE 3.4 — TRADER-MIMICRY PILOT BACKTEST: ALL THREE ARMS KILLED (2026-08-21)
+=====================================================================
+Pre-registered (data/paper_mimic/README.md committed BEFORE data), then reconstructed
+2.6-2.8 weeks per arm from public captions only (watch-skill --transcript-only, no vision),
+gated every call through halal_check, priced +0/+60/+300s off Polygon minute bars, and
+replayed the mimic trade ($15k at the +60s mark, -8% stop / 20% trail / 15:00 flatten).
+180 curated quotes audited verbatim against transcripts, 0 misses. Full report:
+data/paper_mimic/PILOT-BACKTEST.md. Mimic results NEVER touch the C37 ledger.
+
+  arm       calls      pass/wk  d60 med   PASS-sim P&L(10bps)   overlap  verdict
+  Cameron   60 (6 timed)  0.77   +2.33%   -$2,457 (2 stops)      100%    KILL (all 3 criteria)
+  TraderTV  120 (68 long) 9.6    +0.04%   -$3,042 / 27 trades     19%    KILL (no +60s edge)
+  Madaz     0             --       --            --                --    KILL (no public archive)
+
+WHAT THE CALIBRATION ARM PROVED: our scanner already sees 100% of Cameron's timed calls
+(83% BEFORE he acts); +60s of latency costs ~2.3% on his gappers, which our -8% stop
+converts into instant stop-outs; and his public channel is post-hoc recaps -- only 10%
+of recap calls are timeable at all. Following the source workflow adds zero discovery
+and negative execution. Fifth confirmation of "the halal gate kills the monsters":
+GNPX cash/mcap 557%, NAMI 832% combined, HUIZ insurance, both MRNA +180%-day longs
+(interest income >=5%), SPCX industry-blocked (aerospace/defense).
+
+SALVAGE (survey section 5.8 predicted exactly this): TraderTV's feed is genuinely
+halal-friendly (53% of screenable names PASS, the survey's 40-60% estimate) and 81% of
+passing names never cross our +10% scanner -- mimicry adds ATTENTION, not entries.
+Parked: large-cap news-name feed as a possible future scanner input, separate campaign,
+separate pre-registration. NO arm graduates to live paper mimicry.
