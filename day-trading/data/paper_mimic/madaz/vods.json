@@ -1,0 +1,29 @@
+[
+ {
+  "video_id": null,
+  "url": "https://x.com/madaznfootballr",
+  "title": "X profile probe (primary archive per survey)",
+  "probe_ts_et": "2026-08-21",
+  "status": "skipped-other",
+  "skip_reason": "HTTP 402 Payment Required without login; X syndication endpoint returns empty. Public unauthenticated access to the post archive does not exist in 2026; logging in / signing up is off-limits per pilot guardrails.",
+  "calls_extracted": 0
+ },
+ {
+  "video_id": "-rUmDD-7CoM",
+  "url": "https://www.youtube.com/@madaztrader/videos",
+  "title": "YouTube channel probe (recap videos per survey)",
+  "probe_ts_et": "2026-08-21",
+  "status": "skipped-other",
+  "skip_reason": "Channel dormant: newest upload -rUmDD-7CoM dated 2021-03-12 (GME era). Zero VODs exist inside or near the 2026 reconstruction window.",
+  "calls_extracted": 0
+ },
+ {
+  "video_id": null,
+  "url": "https://www.madazmoney.com/highlights",
+  "title": "madazmoney.com Daily Highlights probe (Morning Mic sessions)",
+  "probe_ts_et": "2026-08-21",
+  "status": "skipped-other",
+  "skip_reason": "Highlights page requires a TradeData account login to view content; account creation is off-limits per pilot guardrails (no signups).",
+  "calls_extracted": 0
+ }
+]
