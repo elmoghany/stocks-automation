@@ -11,7 +11,7 @@
  "depth_reduced_to": 460,
  "stop_resting": 16.146,
  "stop_rule": "max(entry*0.92, peak*0.60), intrabar vs bar LOW",
- "peak": 18.54,
+ "peak": 19.05,
  "trail_pct": 0.2,
  "scale_out_at": 21.9375,
  "notes": "first spread pass of day 0.28%"
