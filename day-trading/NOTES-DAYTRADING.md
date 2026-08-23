@@ -4412,3 +4412,21 @@ Fri 08-28: first weekly same-day replay + first weekly campaign memo
 Standing decision points: L-series Tier A/B adoption; K-frontier
 verdict; depth-reduction pricing via Amihud; strategy verdict not
 before k=60 evaluable days (~late September).
+
+## COVERAGE EPOCH 2026-08-22: Z104 WAS A COVERAGE ARTIFACT
+The full-breadth m1 backfill (8,472 -> 108,991 files) re-ran the
+identity chain both ways. S095: EXACT on both file sets, both years --
+the engine is stable. Z104: EXACT on the pre-backfill file set
+(--prepool), but on the honest full pool BOTH years collapse:
+  year   +225,646 -> -29,460
+  y2025  +417,040 ->  -1,872
+Mechanical trace complete: the delta is the data and only the data.
+The static-era champion's profit was substantially an artifact of the
+bar cache being fetched to full-day-gain depth -- with 13x more
+candidates its causal walk-12 rank picks differently and loses.
+Consequence: every pre-2026-08-21 backtest number is comparable only
+within its own coverage era; the C37 family must be (and is being)
+re-measured on the full pool (C37E-postfill, C37F) before any Phase 2
+experiment reads against it. idgate expectations re-baselined with the
+dated note; --prepool retains the old values as the mechanical-trace
+reference.
