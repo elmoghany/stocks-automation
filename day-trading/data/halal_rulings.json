@@ -186,10 +186,10 @@
   "haram_share_est": null
  },
  "RETO": {
-  "verdict": "CANNOT-VERIFY",
-  "date": "2026-08-21",
-  "basis": "delegated review 2026-08-21, deliberately left unresolved: makes 'smart craft beer machines' -- equipment DEDICATED to alcohol production. Not false association (the product's sole use is brewing) and not a sized haram line (share undisclosed; also mining equipment, waste treatment, building materials). The user's precedents (AMD: sell-into OK / brewer: being one is not) do not decide dedicated-haram-equipment; needs the user's own call.",
-  "haram_share_est": null
+  "verdict": "FAIL",
+  "date": "2026-08-22",
+  "haram_share_est": null,
+  "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. RETO manufactures DEDICATED beer-brewing equipment -- unlike the AMD principle (general-purpose product incidentally sold into a haram market), a product whose sole use is haram production makes the haram industry the main line of income. FAIL."
  },
  "RRGB": {
   "verdict": "FAIL",
@@ -210,10 +210,10 @@
   "haram_share_est": 0
  },
  "NDLS": {
-  "verdict": "CANNOT-VERIFY",
-  "date": "2026-08-21",
-  "basis": "delegated review 2026-08-21, deliberately left unresolved: fast-casual restaurant chain; its own description names only noodles/pasta/soups/salads (no alcohol), so the RRGB rule-2 template does not affirmatively apply, but some locations do serve beer/wine and no filing discloses the share. EDGAR shows only FoodAndBeverageRevenue 98.9% (superset). No evidence either way at the 5% line.",
-  "haram_share_est": null
+  "verdict": "FAIL",
+  "date": "2026-08-22",
+  "haram_share_est": null,
+  "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. Restaurant chain, alcohol service plausible, no disclosure proving <5% (RRGB precedent measured ~8%). Unverified -> FAIL."
  },
  "YHGJ": {
   "verdict": "PASS",
@@ -316,5 +316,72 @@
   "date": "2026-08-21",
   "basis": "delegated ruling per user 2026-08-21: same issuer as UONEK (Urban One class A) -- entertainment media IS the business: radio broadcasting, cable TV networks (TV One, CLEO TV), syndicated entertainment shows. Identical ruling to UONEK.",
   "haram_share_est": null
+ },
+ "_binary_rule": "USER RULING 2026-08-22: 'halal stocks has to be halal or not'. The CANNOT-VERIFY state is abolished as an outcome: halal_check now returns FAIL for unverifiable revenue mix, and every name previously left unresolved is ruled below. An affirmative <5% evidence ruling may convert such a FAIL to PASS later; absence of evidence is never compliance.",
+ "USDE": {
+  "verdict": "FAIL",
+  "date": "2026-08-22",
+  "haram_share_est": null,
+  "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. Stablecoin carry/funding-rate yield business -- interest-like financial income IS the product; also unverifiable. FAIL on both grounds."
+ },
+ "RFAI": {
+  "verdict": "FAIL",
+  "date": "2026-08-22",
+  "haram_share_est": null,
+  "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check: trust assets are ~100% interest-bearing instruments (cash/mcap >> 10% in substance even when statements omit the trust line). FAIL per SPAC class rule."
+ },
+ "AIAI": {
+  "verdict": "FAIL",
+  "date": "2026-08-22",
+  "haram_share_est": null,
+  "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. Repeatedly unverifiable across sessions (no reliable statements). Missing data is a FAIL, never a pass."
+ },
+ "MLAA": {
+  "verdict": "FAIL",
+  "date": "2026-08-22",
+  "haram_share_est": null,
+  "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL."
+ },
+ "OTAI": {
+  "verdict": "FAIL",
+  "date": "2026-08-22",
+  "haram_share_est": null,
+  "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL."
+ },
+ "SHOT": {
+  "verdict": "FAIL",
+  "date": "2026-08-22",
+  "haram_share_est": null,
+  "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL."
+ },
+ "VII": {
+  "verdict": "FAIL",
+  "date": "2026-08-22",
+  "haram_share_est": null,
+  "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL."
+ },
+ "TCGX": {
+  "verdict": "FAIL",
+  "date": "2026-08-22",
+  "haram_share_est": null,
+  "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL."
+ },
+ "RDAC": {
+  "verdict": "FAIL",
+  "date": "2026-08-22",
+  "haram_share_est": null,
+  "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL."
+ },
+ "ASPC": {
+  "verdict": "FAIL",
+  "date": "2026-08-22",
+  "haram_share_est": null,
+  "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL."
+ },
+ "MCAH": {
+  "verdict": "FAIL",
+  "date": "2026-08-22",
+  "haram_share_est": null,
+  "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL."
  }
 }

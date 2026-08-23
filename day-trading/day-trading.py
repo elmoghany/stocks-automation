@@ -801,18 +801,29 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
             "combined": round(combined, 2),
             "haram_pct": round(haram_pct, 2),
             "halal": False,
-            "verdict": "CANNOT-VERIFY",
+            # USER RULING 2026-08-22: "halal stocks has to be halal or
+            # not" -- the verdict is BINARY. Unverifiable haram-revenue
+            # exposure is a FAIL, not a third state: a stock we cannot
+            # verify is not halal. (Behaviourally identical -- this
+            # branch was never armable -- but doctrine, code and skill
+            # now say one thing.) An AFFIRMATIVE ruling in
+            # halal_rulings.json (evidence that the haram share is <5%)
+            # can convert this FAIL to PASS; absent that, FAIL stands.
+            "verdict": "FAIL",
             "source": src,
             "fail_reason": (
-                f"CANNOT-VERIFY revenue mix ({', '.join(rev_hits[:3])}): "
-                f"APPLY THE 5% RULE -- haram revenue must be under 5% of "
-                f"total revenue, and if it is the main line or ~50% the "
-                f"name is haram. haram_pct here is INTEREST INCOME ONLY "
-                f"({haram_pct:.2f}%) and cannot see product revenue, so "
-                f"the test has NOT been run. Ratios pass (loan "
-                f"{loan_pct:.2f} cash {cash_pct:.2f}) but financing "
-                f"permissibly is not earning permissibly. Check segment "
-                f"revenue by hand; do NOT trade until it clears 5%."),
+                f"FAIL (unverified revenue mix: {', '.join(rev_hits[:3])})"
+                f" -- the 5% rule cannot be run from statements "
+                f"(haram_pct is interest-income-only, {haram_pct:.2f}%),"
+                f" and unverified is HARAM by rule (2026-08-22). "
+                f"Financing ratios were loan {loan_pct:.2f} / cash "
+                f"{cash_pct:.2f}"
+                + ("" if (loan_pct <= 10 or loan_pct + cash_pct <= 20)
+                   and (cash_pct <= 10 or loan_pct + cash_pct <= 20)
+                   and loan_pct + cash_pct <= 20
+                   else " (which ALSO exceed the 10/10/20 limits)")
+                + ". Convertible to PASS only by an affirmative "
+                f"<5% evidence ruling in halal_rulings.json."),
         }
     out = {
         "verdict": "PASS" if halal else "FAIL",

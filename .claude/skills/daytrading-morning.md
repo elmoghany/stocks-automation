@@ -39,21 +39,28 @@ both sat in that zone). Market cap is REQUIRED — a missing mcap once
 silently PASSED two names at ~900% loans/mcap, so a missing
 denominator is a FAIL, never a pass.
 
-***2. Does it EARN permissibly?*** — **THE 5% RULE.** Haram revenue
-must be **under 5% of total revenue**; if it is the main line or ~50%,
-the name is haram. Three verdicts:
- * **FAIL** — the company's OWN business is haram, so proportion is not
-   in question: brewery / distillery / winery, casino / sportsbook /
-   lottery / betting, bank / lending / mortgage / insurance, tobacco,
-   defense / aerospace, adult, pork, and **entertainment** — film,
-   cinema, streaming (user ruling 2026-08-13).
- * **CANNOT-VERIFY** — exposure is plausible but the SHARE is unknown:
-   restaurants, hotels, grocers, food / beverage, or any summary
-   mentioning alcohol. `haram_pct` in the code is **interest income
-   only** and cannot see product revenue, so the 5% test has NOT been
-   run. NOT tradeable until segment revenue is checked by hand. This is
-   a refusal to guess, not a compliance failure.
- * **PASS** — neither applies and the ratios clear.
+***2. Does it EARN permissibly?*** — **THE 5% RULE, BINARY (user
+ruling 2026-08-22: "halal stocks has to be halal or not").** Haram
+revenue must be **under 5% of total revenue**; if it is the main line
+or ~50%, the name is haram. TWO verdicts only:
+ * **FAIL** — any of: the company's OWN business is haram (brewery /
+   distillery / winery, casino / sportsbook / lottery / betting, bank /
+   lending / mortgage / insurance, tobacco, pure defense / aerospace,
+   adult, pork, entertainment — film / cinema / streaming); OR haram
+   revenue ≥5%; OR **the share cannot be verified** — unverified is
+   haram by rule. Restaurants/hotels/grocers/alcohol-adjacent names
+   without <5% disclosure are FAIL. SPACs/blank-check are FAIL (trust
+   is interest-bearing in substance). Dedicated haram-production
+   equipment (e.g. brewing machinery) is FAIL — unlike the AMD
+   principle, a product whose sole use is haram production makes the
+   haram industry the main income line.
+ * **PASS** — the business is permissible and either no haram-adjacent
+   exposure exists or affirmative evidence shows it under 5%. Selling
+   general-purpose products INTO defense/aerospace/gaming markets is
+   permissible (AMD is halal). Plain retail is permissible.
+A FAIL from unverifiability is convertible to PASS ONLY by an
+affirmative <5% evidence ruling recorded in `data/halal_rulings.json`
+(dated, with basis). Absence of evidence is never compliance.
 
 Plain **retail is permissible** and is not a revenue-sensitive term.
 On Paper Day 8 a film studio (ANGX) was armed because the screen
@@ -70,8 +77,8 @@ as VOID in `data/paper_days/2026-08-13.md`.
 * RH sector labels are unreliable (AZ makes shopping carts, labelled
   `Financial Conglomerates`).
 If a `True` rests on an implausible input — e.g. `loan_pct 0.00` on a
-company with negative book value — record **CANNOT VERIFY → refusing**,
-which is distinct from a compliance FAIL. Low-mcap gappers fail these
+company with negative book value — record **FAIL (unverified)** — since 2026-08-22 unverified IS the
+compliance verdict, convertible only by an affirmative evidence ruling. Low-mcap gappers fail these
 ratios constantly (small denominator); that is by design and is the
 single largest determinant of what we can trade.
 
