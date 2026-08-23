@@ -4239,3 +4239,38 @@ What the day taught (full detail in data/paper_days/2026-08-21.md):
    CODE BUG for repo owner: halal_check CV-branch prose says "Ratios pass"
    while ratios exceed limits (YJ 220/987, BIVI 2/83); verdict boolean is
    correct, the prose is wrong.
+
+## W-CAMPAIGN (2026-08-22) -- liquidity WITHOUT L2: estimators calibrated on real books
+
+Historical L2 will not be bought (user direction); the workaround is bar-only
+estimators calibrated against the REAL book reads the live sessions log daily.
+Full study: liquidity-estimation.md. New files only (rotation_sim/data_manifest/
+day-trading.py/massive/idgate untouched -- identity runs in flight):
+plan/liquidity_estimators.py (causal, self-tested: known 1.0% synthetic spread
+recovered at 0.94-1.04; causality proved by poisoning future bars),
+plan/extract_liquidity_truth.py -> data/liquidity_truth.json (176 book obs
+mined from Days 5-13 ledgers, 153 calibratable, validated against the ledgers'
+own numbers), plan/calibrate_liquidity.py -> data/liquidity_calibration.json.
+
+FINDINGS (Spearman vs observed inside spread):
+1. THE INCUMBENT spread_proxy (median 10-bar range) IS ANTI-CORRELATED
+   PREMARKET: rho -0.34. On 22% of premarket reads the last 10 bars are
+   single-print H=L bars -> proxy reads 0.0% while the median REAL spread
+   there is 3.2%. Wide premarket books make SPARSE tapes, not wide-range
+   ones. Every V-series premarket veto replay inherits this inversion --
+   and it explains live premarket veto rates (90-100%) vs modelled (50-65%).
+2. Winners premarket: AMIHUD rho +0.667 (cluster-collapsed +0.704),
+   no_trade_share +0.541 (defined on EVERY row), Abdi-Ranaldo +0.497
+   (+0.74 collapsed). Paired bootstrap vs incumbent: P(better)=1.00.
+3. Post-open: KEEP THE INCUMBENT (+0.48/+0.85; nothing beats it at n=14).
+4. Cap mapping (premarket): veto if amihud30 > 0.24 (x1e6, ci90 working
+   band 0.18-0.27, balanced acc 0.82) or no_trade_share30 > 0.18 (acc 0.80).
+   Incumbent's best cut manages 0.56 -- coin-flip.
+5. Missing-data policy must FLIP premarket: estimator undefined (thin tape)
+   = evidence of width (median real spread 1.72% on those reads), not a pass.
+6. Depth side: amihud -0.50 vs logged displayed shares (right sign, coarse --
+   depth ground truth mixes definitions; ask live sessions to log
+   depth_to_cap consistently).
+Confidence: 153 obs / 35 symbol-day clusters / one fortnight; sign findings
+robust, cut values coarse; re-run both scripts after each session (idempotent,
+sample grows for free). L-series consumes the winners when C37F lands.
