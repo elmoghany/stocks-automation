@@ -4274,3 +4274,28 @@ FINDINGS (Spearman vs observed inside spread):
 Confidence: 153 obs / 35 symbol-day clusters / one fortnight; sign findings
 robust, cut values coarse; re-run both scripts after each session (idempotent,
 sample grows for free). L-series consumes the winners when C37F lands.
+
+## W-CAMPAIGN FORWARD SCHEDULE (registered 2026-08-22 night)
+Sun 08-23 (build day): re-baseline idgate expectations from the full-
+pool runs + commit the stranded backfill-agent edits + close manifest
+items (coverage FIXED, no-l2-history WORKED-AROUND-BY-CALIBRATION).
+Build Phase 1 (live_vs_bench.py on C37F's daily series; decision rules
++ VOID rule into the skill; decision_ledger.json; replay_live_days.py)
+and run the first formal checkpoint (k=12 evaluable days). PRE-REGISTER
+Phase 2 configs with priors and pass/fail: K-series (top-k splits),
+TOD-series (flatten sweep 11/12/13/14 + morning-entry asymmetric),
+XP-series (sell_set ablation + pandas-ta bearish additions; TA-Lib
+install), L-series UPGRADED per the liquidity calibration -- Amihud
+demotion premarket (cut 0.24, ci 0.18-0.27) / bar-range post-open,
+undefined-estimator-premarket = width evidence. Launch all batteries
+overnight Sunday against C37F.
+Mon 08-24: scheduler's first autonomous launch test 06:20 (Day 14).
+C37R rulings-measurement row after C37F. Batteries continue.
+Tue-Fri: video sweep (transcript-only first; vision cluster when user
+approves a Duo push), HF bar-model survey (sentiment family dropped
+with Alpaca), battery verdicts as they land under standing law.
+Fri 08-28: first weekly same-day replay + first weekly campaign memo
+(quantstats six-metric block + decision-ledger row + experiment table).
+Standing decision points: L-series Tier A/B adoption; K-frontier
+verdict; depth-reduction pricing via Amihud; strategy verdict not
+before k=60 evaluable days (~late September).
