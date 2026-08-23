@@ -4430,3 +4430,45 @@ re-measured on the full pool (C37E-postfill, C37F) before any Phase 2
 experiment reads against it. idgate expectations re-baselined with the
 dated note; --prepool retains the old values as the mechanical-trace
 reference.
+
+## C37F: THE CHAMPION HAS NO HONEST EDGE (2026-08-23, the deepest finding)
+C37's exact parameters, live halal gate, EDGAR filed-date cache, on the
+FULL-coverage pool (108,991 bar files, every novol candidate):
+
+              2yr        days    $/day   negm    maxDD Y1/Y2
+  C37E     +$635,759     419    +$1,517   1/22   9,008/15,112  (biased cache)
+  C37F      -$72,673     445     -$163   18/23  58,188/29,049  (honest pool)
+
+Same engine, same rules, same gate. The ONLY difference is which
+candidates have bars. With 13x more (honest) candidates the coil/
+pressure rank picks among the full junk field and loses in 18 of 23
+months. Combined with Z104's identical collapse: THE ENTIRE HISTORICAL
+EDGE -- static era and rotation era alike -- was manufactured by the
+bar cache being fetched to full-day-gain depth. Selection into the
+measurable universe WAS the strategy.
+
+THE LIVE CAMPAIGN WAS RIGHT ALL ALONG. 13 live days ≈ -$107/day against
+the honest backtest's -$163/day (Y1) / -$89/day (Y2): sign and
+magnitude match. Live was never underperforming a real +$1,517/day
+edge; it was tracking (and slightly beating) an honestly losing
+strategy. Live beats the naive honest sim plausibly BECAUSE its
+spread/depth vetoes filter the junk the sim buys freely -- consistent
+with the V-series (veto ADDS on ordering) and the liquidity
+calibration (premarket books are where the junk lives).
+
+WHAT THIS CHANGES:
+ 1. The paper benchmark is retired. There is no $1,517/day to chase.
+    The honest current-ruleset baseline is ≈ -$163/day.
+ 2. The W-campaign re-aims: not "improve a champion" but "find a real
+    edge on the honest universe". First candidates, in order of prior
+    evidence: (a) L-series liquidity ORDERING with the calibrated
+    Amihud/no-trade-share instruments (live evidence + V-series both
+    point here -- the veto was worth +$70k even on the biased pool);
+    (b) the V-series veto re-run on the honest pool; (c) K/TOD/XP
+    against the honest baseline.
+ 3. Live paper continues (user choice stands): it is now the ground
+    truth generator, and its vetoes are the best-performing ruleset we
+    have.
+ 4. Every number in CONFIGS-TESTED/X-RESULTS from before 2026-08-21 is
+    a biased-cache-era artifact. Comparisons across the epoch line are
+    invalid.
