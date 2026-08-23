@@ -719,6 +719,32 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
     # refuse. Absence of evidence must never read as compliance.
     if mcap <= 0 or (total_debt == 0 and cash_total == 0
                      and total_rev == 0):
+        # USER EXCEPTION (2026-08-22): "the only exception for my halal
+        # rules: the stocks that are not verifiable because we could not
+        # find its finances. then for these use zoya and etc." -- when NO
+        # financials exist our 10/10/20 ratios cannot run at all, so a
+        # professional screener's FULL verdict (their AAOIFI thresholds
+        # included) is adopted whole. ONLY rulings explicitly marked
+        # class B-no-financials ride this branch: a Class A ruling
+        # (financials exist, revenue mix was the question) must never
+        # bypass the ratio gates just because yfinance had an outage on
+        # the day of the call.
+        b_ruling = _halal_ruling(symbol)
+        if (isinstance(b_ruling, dict)
+                and b_ruling.get("class") == "B-no-financials"
+                and b_ruling.get("verdict") in ("PASS", "FAIL")):
+            ok = b_ruling["verdict"] == "PASS"
+            return {
+                "verdict": b_ruling["verdict"],
+                "loan_pct": None, "cash_pct": None, "combined": None,
+                "haram_pct": None, "halal": ok,
+                "source": "external-ruling",
+                "ruling": b_ruling,
+                "fail_reason": "" if ok else (
+                    f"HARAM by external-screener ruling "
+                    f"{b_ruling.get('date', '?')}: "
+                    f"{b_ruling.get('basis', '')}"),
+            }
         return {
             "loan_pct": None, "cash_pct": None, "combined": None,
             "haram_pct": None, "halal": False,
@@ -825,6 +851,34 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
                 + ". Convertible to PASS only by an affirmative "
                 f"<5% evidence ruling in halal_rulings.json."),
         }
+    # A FAIL RULING IS FINAL ON EVERY PATH (2026-08-22). The overlay was
+    # consulted only on the unverifiable branch, so a FAIL-ruled name
+    # whose fresh data screens clean silently re-entered the armable
+    # list: the 2026-08-22 rebuild caught user-ruled-FAIL SPACs (ASPC,
+    # RDAC, RFAI) and USDE sitting IN halal_list, and SLE (entertainment
+    # FAIL ruling 2026-08-21) returning live PASS after 'entertainment'
+    # went label-only -- re-litigating verdicts the user closed. The
+    # documented doctrine (rulings _schema; NOTES 2026-08-21: 'a FAIL
+    # ruling is final') always said otherwise; the code now matches it.
+    # This check only ever narrows (PASS -> FAIL), never loosens, and
+    # PASS rulings keep their existing single role (clearing
+    # unverifiability only).
+    if halal:
+        _fr = _halal_ruling(symbol)
+        if isinstance(_fr, dict) and _fr.get("verdict") == "FAIL":
+            return {
+                "verdict": "FAIL",
+                "loan_pct": round(loan_pct, 2),
+                "cash_pct": round(cash_pct, 2),
+                "combined": round(combined, 2),
+                "haram_pct": round(haram_pct, 2),
+                "halal": False,
+                "source": src,
+                "ruling": _fr,
+                "fail_reason": (f"HARAM by user ruling (final, "
+                                f"{_fr.get('date', '?')}): "
+                                f"{_fr.get('basis', '')}"),
+            }
     out = {
         "verdict": "PASS" if halal else "FAIL",
         "haram_pct_note": "interest income only -- blind to revenue mix",

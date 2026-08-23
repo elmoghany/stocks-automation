@@ -9,6 +9,119 @@ configs with results + the script that reproduces each) is registered in
 
 ---
 
+## External Evidence Resolved (2026-08-22)
+
+W-campaign: the user's direction "no unverified can be both. try to
+find if it is halal or not. search zoya or find a way", plus the
+exception "the only exception for my halal rules: the stocks that are
+not verifiable because we could not find its finances. then for these
+use zoya and etc." Full methodology, source calibration and the
+standing pipeline: **`data/halal_external/SOURCES.md`**; raw verdicts
+archived in `data/halal_external/screener_verdicts.json`; fund
+holdings in `data/halal_external/etf_holdings.json`.
+
+**Sources probed** (public pages only, no signups): Zoya
+(`zoya.finance/stocks/<sym>`, verdict-only, 4,574-page sitemap,
+539/634 of our CV names), Musaffa (`musaffa.com/stock/<SYM>`,
+verdict + AAOIFI label + as-of month, 23,371 US pages, 617/634),
+Islamicly (account-gated per stock -- STOPPED per guardrail, user
+decides on signups), five shariah ETFs' holdings (SPUS/SPTE/SPRE
+daily Tidal CSVs + HLAL/UMMA via SEC N-PORT), and EDGAR 10-K/S-1
+reads for names nothing covers. Calibration on knowns matched house
+verdicts (AMD/KO compliant; NFLX/SAM/RRGB not).
+
+**Composition rule** (critical): external screeners run AAOIFI
+(~30-33% debt/mcap) -- LOOSER than house 10/10/20. An external
+"compliant" therefore only clears the BUSINESS-ACTIVITY leg (<5%
+impermissible revenue); our ratios still gate on our data. A bare
+external "non-compliant" is NEVER adopted as a Class A FAIL (public
+pages carry no reason; it may be their ratio legs) -- the default FAIL
+just stands. Class B (NO financials findable) adopts the full external
+verdict whole per the user's exception, marked
+`"class": "B-no-financials"` in the rulings file.
+
+**Sweep results** (634 Class A CV names + 5,923 Class B no-data names,
+1,168 public fetches, robots-compliant, paced): Zoya 171 compliant /
+363 not / 14 questionable; Musaffa 152 halal / 410 not halal / 58
+doubtful (100% of Musaffa-covered Class A names fetched; 76 Class B
+CEF/preferred tail names cut when Musaffa slowed to a crawl --
+recorded NOT-CHECKED, FAIL-by-default regardless).
+
+**Rulings written: +174 (62 -> 236).** 155 Class A PASS (activity leg
+affirmed externally; ratios still gate -- most sit dormant until
+ratios clear), 9 Class A FAIL, 3 Class B PASS (the halal ETFs
+themselves: HLAL, SPUS, MNZL), 7 Class B FAIL (banks/CEFs/ preferreds
+by adopted verdict). Highlights:
+
+* **KO PASS** -- Zoya + Musaffa both affirm; house ratios pass ->
+  armable. Same for SBUX, BROS (no-alcohol restaurant chains CAN pass
+  the professional activity screen -- the affirmative evidence the
+  framework demanded), DASH, UBER, PEP, MNST, HSY, V, SNOW, RBLX...
+  (RBLX excepted, see below).
+* **House rules outrank external** -- 4 names where both/one screener
+  said compliant but the user's industry rulings govern: RBLX (game
+  platform IS the business, SNAL precedent), PSN (Parsons: DoD/intel
+  core customers, BBAI side), MUSA (Murphy USA: 10-K merchandise
+  22.2% superset with licensed alcohol+nicotine retail, WNW/RRGB
+  template), BRID (Bridgford: pork among top raw materials, dry
+  sausage/salami a core line). VIK (Viking cruises) and SOLS
+  (ticker-collision affirmation) excluded from PASS.
+* **EDGAR reads resolved the 12 zero-coverage names**: PASS DETX
+  (weapons-DETECTION scanners), ENRD (Einride freight), SUJA (juice;
+  'alcohol' hits are Prop-65 trace-ethanol litigation), JMKE (Jersey
+  Mike's; every 'wine' hit is red-wine VINEGAR), DMC (Fresh Del
+  Monte renamed), GYGY (golf tech), NMAD (biopharma); FAIL FIRY
+  (= Skillz renamed, cash-prize mobile gaming), PPLI (= IAC renamed,
+  People/EW media + MGM stake), PUSA (golf clubs, liquor-licensed
+  bars, F&B 21% superset per 10-K Note 9), ENHA + BRKH (SPACs).
+* **NDLS**: both screeners refuse it -- FAIL stands,
+  source-corroborated. **USDE/AIAI**: zero coverage anywhere
+  (StablecoinX / AIAI Holdings identities confirmed); FAILs stand as
+  real "we looked" records. NOTE: AIAI now has info-tier financials
+  that screen clean -- flagged for the user as a re-litigation
+  candidate (only the user lifts a FAIL).
+
+**Two surgical halal_check edits** (both proven, coordinator-
+authorized doctrine changes):
+
+1. **Class-B overlay branch**: the NO-FUNDAMENTALS-DATA refusal now
+   consults rulings marked `B-no-financials` and adopts them whole
+   (the user's exception). 31-name pre/post diff: **0 differences**;
+   HLAL/MNZL flip refusal->PASS, BRKL refusal->FAIL exactly as ruled.
+2. **A FAIL ruling is final on EVERY path** (bug fix matching the
+   documented doctrine): rulings were consulted only on the
+   unverifiable branch, so FAIL-ruled names whose fresh data screens
+   clean re-entered the armable list -- found user-ruled-FAIL SPACs
+   **ASPC, RDAC, RFAI + USDE sitting IN halal_list** since before
+   this session, and SLE returning live PASS after 'entertainment'
+   went label-only. The new check fires only when the screen would
+   PASS a FAIL-ruled name (strictly narrowing). SLE/ASPC verified
+   FAIL post-fix; AAPL et al. untouched.
+
+halal_check remains provably outside the sim path (2026-08-21
+attribution: no sim file calls it or reads halal_list/universe/
+rulings), so identity gates are unaffected by construction.
+
+**Armable list: 1,251 -> 1,330 (+83 new, -4 leaks).** New armable
+(ratio-passing subset of the PASS rulings): AAON ACU AIRG ALLE ALNY
+AME AOS ATR AYI AZ BCPC BROS BUDA CECO CELH CHRW COCO CSGP CTAS CTSH
+CVCO DAKT DASH DCI DETX EME EXPO EXTR FIZZ GNTX HLAL HQI HSY IBEX
+IESC IOT IR ITW JBHT JJSF KO KRT LIN LQDT MAMA MANH MATX MCHP MNST
+MNZL MSI MYRG MZTI NEPH NHC NMAD ODC OWLS PG RACE RAMP RBC ROK RYAAY
+SN SNOW SPUS STRA SXT TGLS TH TILE TR UBER UNF V WAB WDAY WDFC WELL
+WSM XMAX YETI. Removed: ASPC RDAC RFAI USDE (user-ruled FAIL, had
+leaked in). The other ~76 PASS rulings sit dormant on ratio FAILs
+(SBUX 21.3 combined, WIX, TZOO, JVA, EXPE, BKNG, PEP, MDLZ...) and
+convert automatically the day their ratios clear. Top pool-day
+conversions: NEPH 38d armable-PASS, JVA 32d dormant-PASS, AZ 22d+live
+armable-PASS, AIRG 22d armable-PASS, WIX 13d dormant, CECO 13d
+armable, TBCH/TH/BUDA/IESC 12d armable. 10-ruling spot check through
+the live engine: every class behaves (A-PASS armable, A-PASS dormant,
+house-FAIL final, B-PASS/B-FAIL adopted, EDGAR PASS/FAIL, SPAC FAIL
+narrowed from a would-be ratio PASS). Review queue rebuilt -- ruled
+names dropped out, next-50 unruled CV names queued (UK, GSIT, SOGP
+top).
+
 ## Review Queue Built (2026-08-21)
 
 W-campaign Phase 4: the CANNOT-VERIFY human-review queue. CV names

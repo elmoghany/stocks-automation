@@ -37,6 +37,7 @@ day-trading/data/*
 !day-trading/data/halal_rulings.json
 !day-trading/data/halal_review_queue.md
 !day-trading/data/halal_review_queue.json
+!day-trading/data/halal_external/
 !day-trading/data/liquidity_truth.json
 !day-trading/data/liquidity_calibration.json
 earnings-trading/data/*

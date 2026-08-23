@@ -1,112 +1,13 @@
 {
- "built": "2026-08-21",
+ "built": "2026-08-22",
  "purpose": "CANNOT-VERIFY human-review queue (W-campaign Phase 4). Suggestions are machine evidence only; the USER rules. Rulings go in data/halal_rulings.json.",
  "ranking": "pool_days * (1 + live_days); pool = gappers_novol_year+y2025 name-days; live = paper_days crossed_set days",
- "cv_total": 634,
- "cv_in_pool": 535,
- "pool_name_days": 4621,
+ "cv_total": 464,
+ "cv_in_pool": 401,
+ "pool_name_days": 3793,
  "queue": [
   {
    "rank": 1,
-   "symbol": "RETO",
-   "company": "ReTo Eco-Solutions, Inc.",
-   "cik": 1687277,
-   "score": 65,
-   "pool_days": 65,
-   "live_days": 0,
-   "triggers": [
-    "beer"
-   ],
-   "stale_triggers": [],
-   "loan_pct": 17.76,
-   "cash_pct": 1.82,
-   "evidence": {
-    "status": "ok",
-    "tags": []
-   },
-   "suggested": "NEEDS-MANUAL",
-   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
-   "est_haram_share_pct": null,
-   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001687277&type=10-K&dateb=&owner=include&count=10",
-   "ruling": {
-    "verdict": "CANNOT-VERIFY",
-    "date": "2026-08-21",
-    "basis": "delegated review 2026-08-21, deliberately left unresolved: makes 'smart craft beer machines' -- equipment DEDICATED to alcohol production. Not false association (the product's sole use is brewing) and not a sized haram line (share undisclosed; also mining equipment, waste treatment, building materials). The user's precedents (AMD: sell-into OK / brewer: being one is not) do not decide dedicated-haram-equipment; needs the user's own call.",
-    "haram_share_est": null
-   }
-  },
-  {
-   "rank": 2,
-   "symbol": "NDLS",
-   "company": "NOODLES & Co",
-   "cik": 1275158,
-   "score": 59,
-   "pool_days": 59,
-   "live_days": 0,
-   "triggers": [
-    "restaurant"
-   ],
-   "stale_triggers": [],
-   "loan_pct": 272.08,
-   "cash_pct": 1.45,
-   "evidence": {
-    "status": "ok",
-    "tags": [
-     {
-      "tag": "FoodAndBeverageCostOfSales",
-      "class": "UPPER-BOUND",
-      "revenue_line": false,
-      "share_pct": null,
-      "period": null,
-      "value": null,
-      "total_rev": null,
-      "total_rev_tag": null
-     },
-     {
-      "tag": "FoodAndBeverageRevenue",
-      "class": "UPPER-BOUND",
-      "revenue_line": true,
-      "share_pct": 98.93,
-      "period": "2017-01-04..2018-01-02",
-      "value": 451599000.0,
-      "total_rev": 456492000.0,
-      "total_rev_tag": "RevenueFromContractWithCustomerExcludingAssessedTax"
-     },
-     {
-      "tag": "NumberOfRestaurants",
-      "class": "UPPER-BOUND",
-      "revenue_line": false,
-      "share_pct": null,
-      "period": null,
-      "value": null,
-      "total_rev": null,
-      "total_rev_tag": null
-     },
-     {
-      "tag": "OccupancyNet",
-      "class": "CONTEXT",
-      "revenue_line": false,
-      "share_pct": null,
-      "period": null,
-      "value": null,
-      "total_rev": null,
-      "total_rev_tag": null
-     }
-    ]
-   },
-   "suggested": "NEEDS-MANUAL",
-   "suggested_reason": "superset line 98.93% of revenue -- haram subset unknown: FoodAndBeverageRevenue=98.93% [FY 2017]",
-   "est_haram_share_pct": null,
-   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001275158&type=10-K&dateb=&owner=include&count=10",
-   "ruling": {
-    "verdict": "CANNOT-VERIFY",
-    "date": "2026-08-21",
-    "basis": "delegated review 2026-08-21, deliberately left unresolved: fast-casual restaurant chain; its own description names only noodles/pasta/soups/salads (no alcohol), so the RRGB rule-2 template does not affirmatively apply, but some locations do serve beer/wine and no filing discloses the share. EDGAR shows only FoodAndBeverageRevenue 98.9% (superset). No evidence either way at the 5% line.",
-    "haram_share_est": null
-   }
-  },
-  {
-   "rank": 3,
    "symbol": "UK",
    "company": "Ucommune International Ltd",
    "cik": 1821424,
@@ -133,7 +34,7 @@
    "ruling": null
   },
   {
-   "rank": 4,
+   "rank": 2,
    "symbol": "GSIT",
    "company": "GSI TECHNOLOGY INC",
    "cik": 1126741,
@@ -162,7 +63,7 @@
    "ruling": null
   },
   {
-   "rank": 5,
+   "rank": 3,
    "symbol": "SOGP",
    "company": "Sound Group Inc.",
    "cik": 1783407,
@@ -188,7 +89,7 @@
    "ruling": null
   },
   {
-   "rank": 6,
+   "rank": 4,
    "symbol": "SPCB",
    "company": "SuperCom Ltd",
    "cik": 1291855,
@@ -212,7 +113,7 @@
    "ruling": null
   },
   {
-   "rank": 7,
+   "rank": 5,
    "symbol": "FLX",
    "company": "BingEx Ltd",
    "cik": 1858724,
@@ -236,7 +137,7 @@
    "ruling": null
   },
   {
-   "rank": 8,
+   "rank": 6,
    "symbol": "AP",
    "company": "AMPCO PITTSBURGH CORP",
    "cik": 6176,
@@ -262,7 +163,7 @@
    "ruling": null
   },
   {
-   "rank": 9,
+   "rank": 7,
    "symbol": "JG",
    "company": "Aurora Mobile Ltd",
    "cik": 1737339,
@@ -290,7 +191,7 @@
    "ruling": null
   },
   {
-   "rank": 10,
+   "rank": 8,
    "symbol": "DKI",
    "company": "DarkIris Inc.",
    "cik": 2058584,
@@ -316,7 +217,7 @@
    "ruling": null
   },
   {
-   "rank": 11,
+   "rank": 9,
    "symbol": "GDEV",
    "company": "GDEV Inc.",
    "cik": 1848739,
@@ -342,33 +243,7 @@
    "ruling": null
   },
   {
-   "rank": 12,
-   "symbol": "AZ",
-   "company": "A2Z CUST2MATE SOLUTIONS CORP.",
-   "cik": 1866030,
-   "score": 44,
-   "pool_days": 22,
-   "live_days": 1,
-   "triggers": [
-    "grocer",
-    "supermarket",
-    "convenience store"
-   ],
-   "stale_triggers": [],
-   "loan_pct": 0.64,
-   "cash_pct": 15.28,
-   "evidence": {
-    "status": "ok",
-    "tags": []
-   },
-   "suggested": "NEEDS-MANUAL",
-   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
-   "est_haram_share_pct": null,
-   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001866030&type=10-K&dateb=&owner=include&count=10",
-   "ruling": null
-  },
-  {
-   "rank": 13,
+   "rank": 10,
    "symbol": "VIVO",
    "company": "VivoPower PLC",
    "cik": 1681348,
@@ -394,7 +269,7 @@
    "ruling": null
   },
   {
-   "rank": 14,
+   "rank": 11,
    "symbol": "ADV",
    "company": "Advantage Solutions Inc.",
    "cik": 1776661,
@@ -418,7 +293,7 @@
    "ruling": null
   },
   {
-   "rank": 15,
+   "rank": 12,
    "symbol": "JFU",
    "company": "9F Inc.",
    "cik": 1619544,
@@ -443,7 +318,7 @@
    "ruling": null
   },
   {
-   "rank": 16,
+   "rank": 13,
    "symbol": "PXLW",
    "company": "PIXELWORKS, INC",
    "cik": 1040161,
@@ -469,7 +344,7 @@
    "ruling": null
   },
   {
-   "rank": 17,
+   "rank": 14,
    "symbol": "FLNT",
    "company": "Fluent, Inc.",
    "cik": 1460329,
@@ -495,7 +370,7 @@
    "ruling": null
   },
   {
-   "rank": 18,
+   "rank": 15,
    "symbol": "QH",
    "company": "QUHUO Ltd",
    "cik": 1781193,
@@ -520,7 +395,7 @@
    "ruling": null
   },
   {
-   "rank": 19,
+   "rank": 16,
    "symbol": "BOF",
    "company": "BranchOut Food Inc.",
    "cik": 1962481,
@@ -544,7 +419,7 @@
    "ruling": null
   },
   {
-   "rank": 20,
+   "rank": 17,
    "symbol": "HTOO",
    "company": "Fusion Fuel Green PLC",
    "cik": 1819794,
@@ -569,7 +444,7 @@
    "ruling": null
   },
   {
-   "rank": 21,
+   "rank": 18,
    "symbol": "SSP",
    "company": "E.W. SCRIPPS Co",
    "cik": 832428,
@@ -595,33 +470,7 @@
    "ruling": null
   },
   {
-   "rank": 22,
-   "symbol": "NEPH",
-   "company": "NEPHROS INC",
-   "cik": 1196298,
-   "score": 38,
-   "pool_days": 38,
-   "live_days": 0,
-   "triggers": [
-    "restaurant",
-    "convenience store",
-    "hospitality"
-   ],
-   "stale_triggers": [],
-   "loan_pct": 1.9,
-   "cash_pct": 7.89,
-   "evidence": {
-    "status": "ok",
-    "tags": []
-   },
-   "suggested": "NEEDS-MANUAL",
-   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
-   "est_haram_share_pct": null,
-   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001196298&type=10-K&dateb=&owner=include&count=10",
-   "ruling": null
-  },
-  {
-   "rank": 23,
+   "rank": 19,
    "symbol": "DDD",
    "company": "3D SYSTEMS CORP",
    "cik": 910638,
@@ -649,7 +498,7 @@
    "ruling": null
   },
   {
-   "rank": 24,
+   "rank": 20,
    "symbol": "SYPR",
    "company": "SYPRIS SOLUTIONS INC",
    "cik": 864240,
@@ -677,7 +526,7 @@
    "ruling": null
   },
   {
-   "rank": 25,
+   "rank": 21,
    "symbol": "VATE",
    "company": "INNOVATE Corp.",
    "cik": 1006837,
@@ -704,7 +553,7 @@
    "ruling": null
   },
   {
-   "rank": 26,
+   "rank": 22,
    "symbol": "ADIL",
    "company": "ADIAL PHARMACEUTICALS, INC.",
    "cik": 1513525,
@@ -728,7 +577,7 @@
    "ruling": null
   },
   {
-   "rank": 27,
+   "rank": 23,
    "symbol": "LEDS",
    "company": "SemiLEDs Corp",
    "cik": 1333822,
@@ -754,32 +603,7 @@
    "ruling": null
   },
   {
-   "rank": 28,
-   "symbol": "BHST",
-   "company": "BIOHARVEST SCIENCES INC.",
-   "cik": 1723464,
-   "score": 35,
-   "pool_days": 35,
-   "live_days": 0,
-   "triggers": [
-    "wine",
-    "beverage"
-   ],
-   "stale_triggers": [],
-   "loan_pct": 30.34,
-   "cash_pct": 43.58,
-   "evidence": {
-    "status": "ok",
-    "tags": []
-   },
-   "suggested": "NEEDS-MANUAL",
-   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
-   "est_haram_share_pct": null,
-   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001723464&type=10-K&dateb=&owner=include&count=10",
-   "ruling": null
-  },
-  {
-   "rank": 29,
+   "rank": 24,
    "symbol": "CTW",
    "company": "CTW",
    "cik": 2047148,
@@ -805,7 +629,7 @@
    "ruling": null
   },
   {
-   "rank": 30,
+   "rank": 25,
    "symbol": "FGNX",
    "company": "FG Nexus Inc.",
    "cik": 1591890,
@@ -829,7 +653,7 @@
    "ruling": null
   },
   {
-   "rank": 31,
+   "rank": 26,
    "symbol": "INTG",
    "company": "INTERGROUP CORP",
    "cik": 69422,
@@ -876,7 +700,7 @@
    "ruling": null
   },
   {
-   "rank": 32,
+   "rank": 27,
    "symbol": "LCUT",
    "company": "LIFETIME BRANDS, INC",
    "cik": 874396,
@@ -902,7 +726,7 @@
    "ruling": null
   },
   {
-   "rank": 33,
+   "rank": 28,
    "symbol": "LPCN",
    "company": "Lipocine Inc.",
    "cik": 1535955,
@@ -926,7 +750,7 @@
    "ruling": null
   },
   {
-   "rank": 34,
+   "rank": 29,
    "symbol": "SCOR",
    "company": "COMSCORE, INC.",
    "cik": 1158172,
@@ -952,7 +776,7 @@
    "ruling": null
   },
   {
-   "rank": 35,
+   "rank": 30,
    "symbol": "SEAT",
    "company": "Vivid Seats Inc.",
    "cik": 1856031,
@@ -979,7 +803,7 @@
    "ruling": null
   },
   {
-   "rank": 36,
+   "rank": 31,
    "symbol": "JACK",
    "company": "JACK IN THE BOX INC",
    "cik": 807882,
@@ -1024,7 +848,7 @@
    "ruling": null
   },
   {
-   "rank": 37,
+   "rank": 32,
    "symbol": "VSAT",
    "company": "VIASAT INC",
    "cik": 797721,
@@ -1050,7 +874,7 @@
    "ruling": null
   },
   {
-   "rank": 38,
+   "rank": 33,
    "symbol": "BWEN",
    "company": "BROADWIND, INC.",
    "cik": 1120370,
@@ -1076,31 +900,7 @@
    "ruling": null
   },
   {
-   "rank": 39,
-   "symbol": "JVA",
-   "company": "COFFEE HOLDING CO INC",
-   "cik": 1007019,
-   "score": 32,
-   "pool_days": 32,
-   "live_days": 0,
-   "triggers": [
-    "supermarket"
-   ],
-   "stale_triggers": [],
-   "loan_pct": 23.71,
-   "cash_pct": 11.53,
-   "evidence": {
-    "status": "ok",
-    "tags": []
-   },
-   "suggested": "NEEDS-MANUAL",
-   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
-   "est_haram_share_pct": null,
-   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001007019&type=10-K&dateb=&owner=include&count=10",
-   "ruling": null
-  },
-  {
-   "rank": 40,
+   "rank": 34,
    "symbol": "HHS",
    "company": "HARTE HANKS INC",
    "cik": 45919,
@@ -1128,7 +928,7 @@
    "ruling": null
   },
   {
-   "rank": 41,
+   "rank": 35,
    "symbol": "MSGM",
    "company": "Motorsport Games Inc.",
    "cik": 1821175,
@@ -1154,7 +954,7 @@
    "ruling": null
   },
   {
-   "rank": 42,
+   "rank": 36,
    "symbol": "ATAI",
    "company": "AtaiBeckley Inc.",
    "cik": 2081043,
@@ -1178,7 +978,7 @@
    "ruling": null
   },
   {
-   "rank": 43,
+   "rank": 37,
    "symbol": "FUBO",
    "company": "FuboTV Inc.",
    "cik": 1484769,
@@ -1204,7 +1004,7 @@
    "ruling": null
   },
   {
-   "rank": 44,
+   "rank": 38,
    "symbol": "LPSN",
    "company": "LIVEPERSON INC",
    "cik": 1102993,
@@ -1228,7 +1028,7 @@
    "ruling": null
   },
   {
-   "rank": 45,
+   "rank": 39,
    "symbol": "ODYS",
    "company": "Odysight.ai Inc.",
    "cik": 1577445,
@@ -1256,7 +1056,7 @@
    "ruling": null
   },
   {
-   "rank": 46,
+   "rank": 40,
    "symbol": "ALT",
    "company": "Altimmune, Inc.",
    "cik": 1326190,
@@ -1280,7 +1080,7 @@
    "ruling": null
   },
   {
-   "rank": 47,
+   "rank": 41,
    "symbol": "TRVG",
    "company": "trivago N.V.",
    "cik": 1683825,
@@ -1304,7 +1104,7 @@
    "ruling": null
   },
   {
-   "rank": 48,
+   "rank": 42,
    "symbol": "TJGC",
    "company": "TJGC GROUP Ltd",
    "cik": 1969928,
@@ -1330,7 +1130,7 @@
    "ruling": null
   },
   {
-   "rank": 49,
+   "rank": 43,
    "symbol": "TPCS",
    "company": "TECHPRECISION CORP",
    "cik": 1328792,
@@ -1358,7 +1158,7 @@
    "ruling": null
   },
   {
-   "rank": 50,
+   "rank": 44,
    "symbol": "WW",
    "company": "WW INTERNATIONAL, INC.",
    "cik": 105319,
@@ -1380,17 +1180,170 @@
    "est_haram_share_pct": null,
    "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000105319&type=10-K&dateb=&owner=include&count=10",
    "ruling": null
+  },
+  {
+   "rank": 45,
+   "symbol": "CHPT",
+   "company": "ChargePoint Holdings, Inc.",
+   "cik": 1777393,
+   "score": 26,
+   "pool_days": 26,
+   "live_days": 0,
+   "triggers": [
+    "hospitality"
+   ],
+   "stale_triggers": [],
+   "loan_pct": 164.91,
+   "cash_pct": 63.37,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001777393&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 46,
+   "symbol": "CMCM",
+   "company": "Cheetah Mobile Inc.",
+   "cik": 1597835,
+   "score": 25,
+   "pool_days": 25,
+   "live_days": 0,
+   "triggers": [
+    "defense"
+   ],
+   "stale_triggers": [
+    "defense"
+   ],
+   "loan_pct": 0.0,
+   "cash_pct": 1362.75,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001597835&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 47,
+   "symbol": "CYD",
+   "company": "CHINA YUCHAI INTERNATIONAL LTD",
+   "cik": 932695,
+   "score": 25,
+   "pool_days": 25,
+   "live_days": 0,
+   "triggers": [
+    "hospitality"
+   ],
+   "stale_triggers": [],
+   "loan_pct": 0.0,
+   "cash_pct": 0.0,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0000932695&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 48,
+   "symbol": "MX",
+   "company": "MAGNACHIP SEMICONDUCTOR Corp",
+   "cik": 1325702,
+   "score": 25,
+   "pool_days": 25,
+   "live_days": 0,
+   "triggers": [
+    "entertainment"
+   ],
+   "stale_triggers": [
+    "entertainment"
+   ],
+   "loan_pct": 32.32,
+   "cash_pct": 69.25,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001325702&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 49,
+   "symbol": "SLNG",
+   "company": "Stabilis Solutions, Inc.",
+   "cik": 1043186,
+   "score": 25,
+   "pool_days": 25,
+   "live_days": 0,
+   "triggers": [
+    "aerospace"
+   ],
+   "stale_triggers": [
+    "aerospace"
+   ],
+   "loan_pct": 28.13,
+   "cash_pct": 2.95,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001043186&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
+  },
+  {
+   "rank": 50,
+   "symbol": "TTEC",
+   "company": "TTEC Holdings, Inc.",
+   "cik": 1013880,
+   "score": 25,
+   "pool_days": 25,
+   "live_days": 0,
+   "triggers": [
+    "hospitality",
+    "entertainment"
+   ],
+   "stale_triggers": [
+    "entertainment"
+   ],
+   "loan_pct": 1257.67,
+   "cash_pct": 114.67,
+   "evidence": {
+    "status": "ok",
+    "tags": []
+   },
+   "suggested": "NEEDS-MANUAL",
+   "suggested_reason": "no haram-adjacent us-gaap tags at all (companyfacts has no segment dimensions -- check the 10-K segment note by hand)",
+   "est_haram_share_pct": null,
+   "edgar_url": "https://www.sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001013880&type=10-K&dateb=&owner=include&count=10",
+   "ruling": null
   }
  ],
  "categories": {
+  "aerospace": [
+   "SLNG"
+  ],
   "alcohol": [
    "ADIL",
    "ALT",
    "ATAI",
    "LPCN"
-  ],
-  "beer": [
-   "RETO"
   ],
   "beverage": [
    "LCUT",
@@ -1408,6 +1361,7 @@
   "defense": [
    "AP",
    "BWEN",
+   "CMCM",
    "DDD",
    "ODYS",
    "SYPR",
@@ -1423,6 +1377,7 @@
    "FUBO",
    "JG",
    "LEDS",
+   "MX",
    "SOGP",
    "SSP"
   ],
@@ -1435,13 +1390,15 @@
   ],
   "grocer": [
    "ADV",
-   "AZ",
    "BOF",
    "QH"
   ],
   "hospitality": [
+   "CHPT",
+   "CYD",
    "LPSN",
-   "SPCB"
+   "SPCB",
+   "TTEC"
   ],
   "hotel": [
    "SEAT",
@@ -1459,15 +1416,7 @@
    "FLX",
    "HHS",
    "INTG",
-   "JACK",
-   "NDLS",
-   "NEPH"
-  ],
-  "supermarket": [
-   "JVA"
-  ],
-  "wine": [
-   "BHST"
+   "JACK"
   ]
  },
  "rulings_applied": [
@@ -1669,7 +1618,7 @@
    "haram_share_est": 90,
    "pool_days": 69,
    "live_verdict": "FAIL",
-   "live_reason": "CASH>10+COMBINED>20"
+   "live_reason": "HARAM by user ruling (final, 2026-08-21): delegated ruling per user 2026-08-21: "
   },
   {
    "symbol": "WXM",
@@ -1713,13 +1662,13 @@
   },
   {
    "symbol": "RETO",
-   "verdict": "CANNOT-VERIFY",
-   "date": "2026-08-21",
-   "basis": "delegated review 2026-08-21, deliberately left unresolved: makes 'smart craft beer machines' -- equipment DEDICATED to alcohol production. Not false association (the product's sole use is brewing) and not a sized haram line (share undisclosed; also mining equipment, waste treatment, building materials). The user's precedents (AMD: sell-into OK / brewer: being one is not) do not decide dedicated-haram-equipment; needs the user's own call.",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. RETO manufactures DEDICATED beer-brewing equipment -- unlike the AMD principle (general-purpose product incidentally sold into a haram market), a product whose sole use is haram production makes the haram industry the main line of income. FAIL.",
    "haram_share_est": null,
    "pool_days": 65,
-   "live_verdict": "CANNOT-VERIFY",
-   "live_reason": "CANNOT-VERIFY revenue mix (beer): APPLY THE 5% RULE -- haram revenue must be und"
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by user ruling 2026-08-22: user ruling 2026-08-22: verdict is BINARY -- un"
   },
   {
    "symbol": "EEIQ",
@@ -1730,6 +1679,16 @@
    "pool_days": 63,
    "live_verdict": "FAIL",
    "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "DXYZ",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "external screener verdict adopted whole per user exception 2026-08-22 (no financials available to run house 10/10/20): Zoya 'NO-COVERAGE'; Musaffa 'not halal' (as of August 2026)",
+   "haram_share_est": null,
+   "pool_days": 61,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by external-screener ruling 2026-08-22: external screener verdict adopted "
   },
   {
    "symbol": "ALMU",
@@ -1743,13 +1702,13 @@
   },
   {
    "symbol": "NDLS",
-   "verdict": "CANNOT-VERIFY",
-   "date": "2026-08-21",
-   "basis": "delegated review 2026-08-21, deliberately left unresolved: fast-casual restaurant chain; its own description names only noodles/pasta/soups/salads (no alcohol), so the RRGB rule-2 template does not affirmatively apply, but some locations do serve beer/wine and no filing discloses the share. EDGAR shows only FoodAndBeverageRevenue 98.9% (superset). No evidence either way at the 5% line.",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. Restaurant chain, alcohol service plausible, no disclosure proving <5% (RRGB precedent measured ~8%). Unverified -> FAIL. Resolution attempt 2026-08-22 per user direction ('try to find if it is halal or not. search zoya'): Zoya 'not Shariah-compliant' AND Musaffa 'not halal' (AAOIFI, as of Aug 2026) -- both professional screeners refuse it; public pages carry no reason text, so the alcohol question stays unanswered and nothing clears the activity leg. FAIL stands, now source-corroborated",
    "haram_share_est": null,
    "pool_days": 59,
-   "live_verdict": "CANNOT-VERIFY",
-   "live_reason": "CANNOT-VERIFY revenue mix (restaurant): APPLY THE 5% RULE -- haram revenue must "
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by user ruling 2026-08-22: user ruling 2026-08-22: verdict is BINARY -- un"
   },
   {
    "symbol": "YHGJ",
@@ -1962,6 +1921,56 @@
    "live_reason": ""
   },
   {
+   "symbol": "RDAC",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL.",
+   "haram_share_est": null,
+   "pool_days": 43,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by user ruling (final, 2026-08-22): user ruling 2026-08-22: verdict is BIN"
+  },
+  {
+   "symbol": "LAZR",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "external screener verdict adopted whole per user exception 2026-08-22 (no financials available to run house 10/10/20): Zoya 'not Shariah-compliant'; Musaffa 'not halal' (as of August 2026)",
+   "haram_share_est": null,
+   "pool_days": 42,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by external-screener ruling 2026-08-22: external screener verdict adopted "
+  },
+  {
+   "symbol": "NEPH",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: restaurant, convenience store, hospitality)",
+   "haram_share_est": null,
+   "pool_days": 38,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "BHST",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'NO-COVERAGE'; Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: wine, beverage)",
+   "haram_share_est": null,
+   "pool_days": 35,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "JVA",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'NO-COVERAGE'; Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: supermarket)",
+   "haram_share_est": null,
+   "pool_days": 32,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
    "symbol": "RRGB",
    "verdict": "FAIL",
    "date": "2026-08-21",
@@ -1980,6 +1989,1796 @@
    "pool_days": 25,
    "live_verdict": "FAIL",
    "live_reason": "HARAM>=5%"
+  },
+  {
+   "symbol": "AIRG",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hospitality)",
+   "haram_share_est": null,
+   "pool_days": 22,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "AZ",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'NO-COVERAGE'; Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: grocer, supermarket, convenience store)",
+   "haram_share_est": null,
+   "pool_days": 22,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "ASPC",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL.",
+   "haram_share_est": null,
+   "pool_days": 19,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by user ruling (final, 2026-08-22): user ruling 2026-08-22: verdict is BIN"
+  },
+  {
+   "symbol": "ASAN",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hospitality)",
+   "haram_share_est": null,
+   "pool_days": 15,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "BLTE",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "external screener verdict adopted whole per user exception 2026-08-22 (no financials available to run house 10/10/20): Zoya 'not Shariah-compliant'",
+   "haram_share_est": null,
+   "pool_days": 13,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by external-screener ruling 2026-08-22: external screener verdict adopted "
+  },
+  {
+   "symbol": "CECO",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage)",
+   "haram_share_est": null,
+   "pool_days": 13,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "WIX",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'NO-COVERAGE'; Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: restaurant, hotel)",
+   "haram_share_est": null,
+   "pool_days": 13,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "BUDA",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: alcohol, beverage)",
+   "haram_share_est": null,
+   "pool_days": 12,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "IESC",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hospitality)",
+   "haram_share_est": null,
+   "pool_days": 12,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "TBCH",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: entertainment, gaming)",
+   "haram_share_est": null,
+   "pool_days": 12,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "TH",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'doubtful' (as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hospitality, catering)",
+   "haram_share_est": null,
+   "pool_days": 12,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "ENHA",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "EDGAR read 2026-08-22 (10-K filed 2026-02-09, Item 1): Enhanced Group / A Paradise Acquisition Corp is a blank-check SPAC (BVI, IPO 2025-07-31) whose stated target sector is 'leisure and entertainment'. SPAC class rule (trust is interest-bearing in substance) + entertainment target intent. No screener coverage.",
+   "haram_share_est": null,
+   "pool_days": 11,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM>=5%"
+  },
+  {
+   "symbol": "EVI",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage)",
+   "haram_share_est": null,
+   "pool_days": 11,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "TZOO",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: restaurant, hotel, cruise)",
+   "haram_share_est": null,
+   "pool_days": 11,
+   "live_verdict": "FAIL",
+   "live_reason": "CASH>10+COMBINED>20"
+  },
+  {
+   "symbol": "AAON",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: supermarket)",
+   "haram_share_est": null,
+   "pool_days": 10,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "DLO",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'NO-COVERAGE'; Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: gaming)",
+   "haram_share_est": null,
+   "pool_days": 10,
+   "live_verdict": "FAIL",
+   "live_reason": "CASH>10+COMBINED>20"
+  },
+  {
+   "symbol": "FIVE",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'doubtful' (as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: movie)",
+   "haram_share_est": null,
+   "pool_days": 10,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "HOFT",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: dining, hotel, hospitality)",
+   "haram_share_est": null,
+   "pool_days": 10,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "HQI",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hospitality)",
+   "haram_share_est": null,
+   "pool_days": 10,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "IOT",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage)",
+   "haram_share_est": null,
+   "pool_days": 10,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "RBLX",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "house rule outranks external (2026-08-22): Zoya 'Shariah-compliant' AND Musaffa 'halal' (AAOIFI, Aug 2026) are RECORDED but cannot override the user's industry rulings -- Roblox develops and operates an interactive game platform; BEING the studio/platform is the haram side of the user's 2026-08-13/14 line (SNAL precedent: 'develops and publishes interactive digital entertainment' is the entire business).",
+   "haram_share_est": 90,
+   "pool_days": 10,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by user ruling (final, 2026-08-22): house rule outranks external (2026-08-"
+  },
+  {
+   "symbol": "SNOW",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hospitality)",
+   "haram_share_est": null,
+   "pool_days": 10,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "CELH",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: alcohol, beverage, supermarket)",
+   "haram_share_est": null,
+   "pool_days": 9,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "DRAM",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "external screener verdict adopted whole per user exception 2026-08-22 (no financials available to run house 10/10/20): Zoya 'not Shariah-compliant'",
+   "haram_share_est": null,
+   "pool_days": 9,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by external-screener ruling 2026-08-22: external screener verdict adopted "
+  },
+  {
+   "symbol": "MCHP",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) HLAL+SPTE+SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: aerospace)",
+   "haram_share_est": null,
+   "pool_days": 9,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "AIAI",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. Repeatedly unverifiable across sessions (no reliable statements). Missing data is a FAIL, never a pass. Resolution attempt 2026-08-22: no Zoya/Musaffa coverage (absent from both sitemaps), Islamicly account-gated; identity confirmed AIAI Holdings Corp (ex-MXLII, Dallas 'AI holding company', NASDAQ listing 2026-05-14, no annual statements yet). No source can resolve it -- default FAIL stands",
+   "haram_share_est": null,
+   "pool_days": 8,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by user ruling (final, 2026-08-22): user ruling 2026-08-22: verdict is BIN"
+  },
+  {
+   "symbol": "DAIO",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: aerospace)",
+   "haram_share_est": null,
+   "pool_days": 8,
+   "live_verdict": "FAIL",
+   "live_reason": "CASH>10+COMBINED>20"
+  },
+  {
+   "symbol": "ELTK",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'NO-COVERAGE'; Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: defense, aerospace)",
+   "haram_share_est": null,
+   "pool_days": 8,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "SN",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage)",
+   "haram_share_est": null,
+   "pool_days": 8,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "URBN",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: restaurant)",
+   "haram_share_est": null,
+   "pool_days": 8,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "EXPE",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'not halal' (as of August 2026); held by shariah ETF(s) SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hotel). NOTE one source reports non-compliant without a public reason (their looser ratio legs are the likely cause; our own ratio test governs that leg regardless)",
+   "haram_share_est": null,
+   "pool_days": 7,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "OWLS",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hotel, hospitality)",
+   "haram_share_est": null,
+   "pool_days": 7,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "BROS",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: restaurant)",
+   "haram_share_est": null,
+   "pool_days": 6,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "COCO",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: alcohol, beverage)",
+   "haram_share_est": null,
+   "pool_days": 6,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "DETX",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "EDGAR read 2026-08-22 (424B4 filed 2026-04-21, tm261972-22): Liberty Defense Holdings sells AI weapons-DETECTION security screening (HEXWAVE millimeter-wave scanners, HD-AIT airport checkpoint upgrade kits). Detection/protection equipment, not weapons manufacture -- AMD-principle false association ('defense' names its market, the product is a metal detector's successor). No screener coverage existed (absent from Zoya+Musaffa sitemaps).",
+   "haram_share_est": 0,
+   "pool_days": 6,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "ENRD",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "EDGAR read 2026-08-22 (F-1 filed 2026-07-08): Einride AB -- digital/electric/autonomous road freight platform (Saga freight OS, Einride Driver autonomy, FCaaS). Freight logistics technology; the stale 'defense' trigger is false association. No screener coverage.",
+   "haram_share_est": 0,
+   "pool_days": 6,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "EXTR",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hospitality)",
+   "haram_share_est": null,
+   "pool_days": 6,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "IPGP",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: defense, aerospace)",
+   "haram_share_est": null,
+   "pool_days": 6,
+   "live_verdict": "FAIL",
+   "live_reason": "CASH>10+COMBINED>20"
+  },
+  {
+   "symbol": "PINC",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "external screener verdict adopted whole per user exception 2026-08-22 (no financials available to run house 10/10/20): Zoya 'not Shariah-compliant'",
+   "haram_share_est": null,
+   "pool_days": 6,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by external-screener ruling 2026-08-22: external screener verdict adopted "
+  },
+  {
+   "symbol": "VTEX",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'NO-COVERAGE'; Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: grocer)",
+   "haram_share_est": null,
+   "pool_days": 6,
+   "live_verdict": "FAIL",
+   "live_reason": "CASH>10+COMBINED>20"
+  },
+  {
+   "symbol": "WDAY",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'not halal' (as of August 2026); held by shariah ETF(s) SPTE+SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hospitality). NOTE one source reports non-compliant without a public reason (their looser ratio legs are the likely cause; our own ratio test governs that leg regardless)",
+   "haram_share_est": null,
+   "pool_days": 6,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "BHE",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: defense, aerospace)",
+   "haram_share_est": null,
+   "pool_days": 5,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "CPNG",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: restaurant, grocer)",
+   "haram_share_est": null,
+   "pool_days": 5,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "DAKT",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: restaurant, cruise, casino)",
+   "haram_share_est": null,
+   "pool_days": 5,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "FRPT",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: grocer)",
+   "haram_share_est": null,
+   "pool_days": 5,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "IBEX",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hospitality)",
+   "haram_share_est": null,
+   "pool_days": 5,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "LUV",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'not halal' (as of August 2026); held by shariah ETF(s) HLAL (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: entertainment, movie). NOTE one source reports non-compliant without a public reason (their looser ratio legs are the likely cause; our own ratio test governs that leg regardless)",
+   "haram_share_est": null,
+   "pool_days": 5,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "MANH",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: grocer)",
+   "haram_share_est": null,
+   "pool_days": 5,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "MATX",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage)",
+   "haram_share_est": null,
+   "pool_days": 5,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "ODC",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: grocer)",
+   "haram_share_est": null,
+   "pool_days": 5,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "SUJA",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "EDGAR read 2026-08-22 (424B4 filed 2026-05-08): Suja Life -- cold-pressed juices, wellness shots, functional sodas. The only 'alcohol' hits are Prop-65 trace-ethanol litigation language and an executive's former employer (Constellation Brands) in his bio; no alcohol product line exists. False association. No screener coverage.",
+   "haram_share_est": 0,
+   "pool_days": 5,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "TILE",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hospitality)",
+   "haram_share_est": null,
+   "pool_days": 5,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "UNF",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: restaurant)",
+   "haram_share_est": null,
+   "pool_days": 5,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "ALNY",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: alcohol)",
+   "haram_share_est": null,
+   "pool_days": 4,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "BBY",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'not Shariah-compliant'; Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage, entertainment, theater). NOTE one source reports non-compliant without a public reason (their looser ratio legs are the likely cause; our own ratio test governs that leg regardless)",
+   "haram_share_est": null,
+   "pool_days": 4,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "BDC",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hospitality)",
+   "haram_share_est": null,
+   "pool_days": 4,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "FLS",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage)",
+   "haram_share_est": null,
+   "pool_days": 4,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "KNX",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage)",
+   "haram_share_est": null,
+   "pool_days": 4,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "KRT",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: restaurant, beverage)",
+   "haram_share_est": null,
+   "pool_days": 4,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "MAMA",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'doubtful' (as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: supermarket)",
+   "haram_share_est": null,
+   "pool_days": 4,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "MYRG",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hotel)",
+   "haram_share_est": null,
+   "pool_days": 4,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "NYAX",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'NO-COVERAGE'; Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: gaming)",
+   "haram_share_est": null,
+   "pool_days": 4,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "QRVO",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: gaming, defense, aerospace)",
+   "haram_share_est": null,
+   "pool_days": 4,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "RAMP",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hospitality)",
+   "haram_share_est": null,
+   "pool_days": 4,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "RL",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: restaurant, dining)",
+   "haram_share_est": null,
+   "pool_days": 4,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "RLGT",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage)",
+   "haram_share_est": null,
+   "pool_days": 4,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "ROK",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) HLAL+SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage)",
+   "haram_share_est": null,
+   "pool_days": 4,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "WILC",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'NO-COVERAGE'; Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: supermarket)",
+   "haram_share_est": null,
+   "pool_days": 4,
+   "live_verdict": "FAIL",
+   "live_reason": "CASH>10+COMBINED>20"
+  },
+  {
+   "symbol": "WSM",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: dining)",
+   "haram_share_est": null,
+   "pool_days": 4,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "XPER",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'doubtful' (as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: entertainment, movie)",
+   "haram_share_est": null,
+   "pool_days": 4,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "YETI",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: wine, beverage)",
+   "haram_share_est": null,
+   "pool_days": 4,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "CRAI",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'doubtful' (as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: entertainment)",
+   "haram_share_est": null,
+   "pool_days": 3,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "CTSH",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'not halal' (as of August 2026); held by shariah ETF(s) SPTE+SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hospitality). NOTE one source reports non-compliant without a public reason (their looser ratio legs are the likely cause; our own ratio test governs that leg regardless)",
+   "haram_share_est": null,
+   "pool_days": 3,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "DASH",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: dining)",
+   "haram_share_est": null,
+   "pool_days": 3,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "ENS",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: defense)",
+   "haram_share_est": null,
+   "pool_days": 3,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "ITT",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage, aerospace)",
+   "haram_share_est": null,
+   "pool_days": 3,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "JBHT",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage)",
+   "haram_share_est": null,
+   "pool_days": 3,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "LQDT",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: aerospace)",
+   "haram_share_est": null,
+   "pool_days": 3,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "LSPD",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'NO-COVERAGE'; Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: restaurant, hospitality)",
+   "haram_share_est": null,
+   "pool_days": 3,
+   "live_verdict": "FAIL",
+   "live_reason": "CASH>10+COMBINED>20"
+  },
+  {
+   "symbol": "NHC",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: restaurant)",
+   "haram_share_est": null,
+   "pool_days": 3,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "PLUS",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: entertainment)",
+   "haram_share_est": null,
+   "pool_days": 3,
+   "live_verdict": "FAIL",
+   "live_reason": "CASH>10+COMBINED>20"
+  },
+  {
+   "symbol": "RBC",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage)",
+   "haram_share_est": null,
+   "pool_days": 3,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "RYAAY",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'doubtful' (as of August 2026); held by shariah ETF(s) SPWO (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage)",
+   "haram_share_est": null,
+   "pool_days": 3,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "SCSC",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hospitality)",
+   "haram_share_est": null,
+   "pool_days": 3,
+   "live_verdict": "FAIL",
+   "live_reason": "CASH>10+COMBINED>20"
+  },
+  {
+   "symbol": "SXT",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage)",
+   "haram_share_est": null,
+   "pool_days": 3,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "TGLS",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'NO-COVERAGE'; Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hotel)",
+   "haram_share_est": null,
+   "pool_days": 3,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "WAB",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) HLAL+SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: cruise)",
+   "haram_share_est": null,
+   "pool_days": 3,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "ALKS",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: alcohol)",
+   "haram_share_est": null,
+   "pool_days": 2,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "ALLE",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) HLAL+SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hospitality)",
+   "haram_share_est": null,
+   "pool_days": 2,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "AVY",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: grocer)",
+   "haram_share_est": null,
+   "pool_days": 2,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "AYI",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hospitality)",
+   "haram_share_est": null,
+   "pool_days": 2,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "BRKL",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "external screener verdict adopted whole per user exception 2026-08-22 (no financials available to run house 10/10/20): Zoya 'not Shariah-compliant'",
+   "haram_share_est": null,
+   "pool_days": 2,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by external-screener ruling 2026-08-22: external screener verdict adopted "
+  },
+  {
+   "symbol": "CALM",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: grocer, supermarket)",
+   "haram_share_est": null,
+   "pool_days": 2,
+   "live_verdict": "FAIL",
+   "live_reason": "CASH>10+COMBINED>20"
+  },
+  {
+   "symbol": "CHRW",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: restaurant, grocer)",
+   "haram_share_est": null,
+   "pool_days": 2,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "DD",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) HLAL+SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: aerospace)",
+   "haram_share_est": null,
+   "pool_days": 2,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "EME",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: catering)",
+   "haram_share_est": null,
+   "pool_days": 2,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "ENSG",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: entertainment)",
+   "haram_share_est": null,
+   "pool_days": 2,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "ETD",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: entertainment)",
+   "haram_share_est": null,
+   "pool_days": 2,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "EXPO",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage)",
+   "haram_share_est": null,
+   "pool_days": 2,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "MUSA",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "EDGAR read 2026-08-22 (10-K filed 2026-02-18, Note 3 disaggregation): Murphy USA merchandise sales $4,303.8M = 22.2% of total revenue FY2025, a SUPERSET whose alcohol+nicotine subset is undisclosed; Item 1 confirms alcoholic-beverage and nicotine retail under state licenses as standard c-store categories. RRGB/WNW template: haram retail lines are a standard revenue stream with no <5% proof. Zoya 'Shariah-compliant' recorded but the house template governs.",
+   "haram_share_est": null,
+   "pool_days": 2,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by user ruling 2026-08-22: EDGAR read 2026-08-22 (10-K filed 2026-02-18, N"
+  },
+  {
+   "symbol": "OLLI",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage)",
+   "haram_share_est": null,
+   "pool_days": 2,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "SBUX",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: restaurant, beverage, grocer)",
+   "haram_share_est": null,
+   "pool_days": 2,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "ABT",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) HLAL+SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: alcohol)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "ACU",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: alcohol)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "ASR",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'doubtful' (as of August 2026); held by shariah ETF(s) SPWO (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: restaurant, catering)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "BKNG",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'not halal' (as of August 2026); held by shariah ETF(s) SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: restaurant, cruise). NOTE one source reports non-compliant without a public reason (their looser ratio legs are the likely cause; our own ratio test governs that leg regardless)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "BRID",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "EDGAR read 2026-08-22 (10-K filed 2026-01-28): Bridgford Foods' core snack-food line is 'dry sausage products, salami and beef jerky' and the company 'purchase[s] large quantities of pork, beef, and flour' -- pork-based products are a primary named product line (pork is a house hard class), share undisclosed. IPST/WNW template: named haram product line with no <5% proof. Zoya 'Shariah-compliant' recorded but house rules govern.",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by user ruling 2026-08-22: EDGAR read 2026-08-22 (10-K filed 2026-01-28): "
+  },
+  {
+   "symbol": "CBRE",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'doubtful' (as of August 2026); held by shariah ETF(s) HLAL (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hotel)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "CF",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) HLAL+SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: liquor)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "COKE",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: alcohol, restaurant, beverage)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "CVCO",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hotel)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "DCI",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "FIRY",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "EDGAR read 2026-08-22 (10-K filed 2026-03-31, primary doc sklz-20251231.htm): Firy Inc IS Skillz Inc renamed -- 'advancing competitive mobile gaming', a paid-entry cash-prize mobile-gaming tournament platform. Being the gaming/wagering platform is the haram side of the user's 2026-08-13/14 line (SNAL precedent), with gambling-adjacent cash-entry mechanics. No screener coverage.",
+   "haram_share_est": 90,
+   "pool_days": 1,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "FIZZ",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: alcohol, beverage)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "GNTX",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hotel)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "HLAL",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external screener verdict adopted whole per user exception 2026-08-22 (no financials available to run house 10/10/20): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "HSY",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) HLAL+SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage, grocer, convenience store)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "INGR",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'doubtful' (as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "IR",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) HLAL+SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "JJSF",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'doubtful' (as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: restaurant, dining, beverage)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "LH",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'not halal' (as of August 2026); held by shariah ETF(s) HLAL+SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: alcohol). NOTE one source reports non-compliant without a public reason (their looser ratio legs are the likely cause; our own ratio test governs that leg regardless)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "MGRC",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: defense, aerospace)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "MNST",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) HLAL+SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: alcohol, beer, beverage)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "MSI",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hospitality)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "NMAD",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "EDGAR read 2026-08-22 (10-K filed 2026-03-31): Nomad Power Solutions (10-K Item 1) is a clinical-stage biopharmaceutical + proton cancer-therapy company (LB-100 protein-phosphatase inhibitor; majority holder of Liora's LiGHT proton-therapy system). The 'resort' trigger is false association. No screener coverage.",
+   "haram_share_est": 0,
+   "pool_days": 1,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "NSC",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "PPG",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) HLAL+SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: aerospace)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "PSN",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "house defense-contractor line outranks external (2026-08-22): Zoya 'Shariah-compliant' recorded, but Parsons' Federal Solutions segment -- the majority of revenue -- serves DoD/intelligence customers (missile defense, cyber, space C2). Defense/intel as named core customers is the BBAI/ONDS side of the user's 2026-08-14 line, not the AMD side.",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "PUSA",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "EDGAR read 2026-08-22 (10-K filed 2026-03-31, Note 9 revenue disaggregation): Aureus Greenway Holdings operates two Florida golf country clubs whose clubhouses hold state liquor licenses and sell 'non-alcoholic and alcoholic beverages' at the bar; food-and-beverage revenue $614,997 = ~21% of total revenue FY2025 (superset containing the alcohol subset, share undisclosed). RRGB template: alcohol is a standard revenue stream with no <5% proof. No screener coverage.",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by user ruling 2026-08-22: EDGAR read 2026-08-22 (10-K filed 2026-03-31, N"
+  },
+  {
+   "symbol": "RACE",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'doubtful' (as of August 2026); held by shariah ETF(s) UMMA (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: restaurant)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "REYN",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: grocer)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "SHOT",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL.",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by user ruling (final, 2026-08-22): user ruling 2026-08-22: verdict is BIN"
+  },
+  {
+   "symbol": "SPUS",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external screener verdict adopted whole per user exception 2026-08-22 (no financials available to run house 10/10/20): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "STRA",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hospitality)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "UBER",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'not halal' (as of August 2026); held by shariah ETF(s) HLAL+SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: alcohol, restaurant, grocer). NOTE one source reports non-compliant without a public reason (their looser ratio legs are the likely cause; our own ratio test governs that leg regardless)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "USDE",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. Stablecoin carry/funding-rate yield business -- interest-like financial income IS the product; also unverifiable. FAIL on both grounds. Resolution attempt 2026-08-22: no Zoya/Musaffa coverage (absent from both sitemaps), Islamicly per-stock data is account-gated (not used per guardrail); identity confirmed StablecoinX Inc, Ethena-ecosystem stablecoin treasury whose yield IS funding-rate/staking carry. Evidence-based FAIL unchanged",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by user ruling (final, 2026-08-22): user ruling 2026-08-22: verdict is BIN"
+  },
+  {
+   "symbol": "V",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: dining)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "WDFC",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: grocer)",
+   "haram_share_est": null,
+   "pool_days": 1,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "AME",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "AOS",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: restaurant, hotel)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "ATR",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "AZO",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: entertainment)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "BCPC",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "BRKH",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "EDGAR identity 2026-08-22: Burtech Acquisition Corp II -- SPAC/blank-check class rule: trust assets are interest-bearing in substance (424B4 filed 2026-05-26). No screener coverage.",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by user ruling 2026-08-22: EDGAR identity 2026-08-22: Burtech Acquisition "
+  },
+  {
+   "symbol": "CHT",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) SPWO (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: defense)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "CSGP",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'questionable'; Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) HLAL+SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hotel, hospitality)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "CTAS",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) HLAL+SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hospitality)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "DMC",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "EDGAR read 2026-08-22 (10-K filed 2026-02-19, CIK 1047340): Del Monte Corp (renamed Fresh Del Monte Produce; primary doc fdp-20251226.htm) -- vertically integrated fresh/prepared fruit and vegetables, juices, snacks. Only 'alcohol' hit is FMCSA driver drug-and-alcohol-testing regulation. Grocer/beverage triggers are false association (it is the produce grower, not a liquor retailer). No screener coverage.",
+   "haram_share_est": 0,
+   "pool_days": 0,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "DOX",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: entertainment, gaming)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "ECL",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) HLAL+SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: restaurant, beverage, grocer)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "GYGY",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "EDGAR read 2026-08-22 (S-1 filed 2026-08-21): Game Your Game Inc -- AI golf shot-tracking hardware + app (GameGolf KZN, Smart Caddie). Sports-performance technology; 'aerospace' (GPS) trigger is false association; 'game' in the name is golf, not gambling or game publishing. No screener coverage.",
+   "haram_share_est": 0,
+   "pool_days": 0,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM>=5%"
+  },
+  {
+   "symbol": "ITW",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "J",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'not Shariah-compliant'; Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) HLAL (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: defense). NOTE one source reports non-compliant without a public reason (their looser ratio legs are the likely cause; our own ratio test governs that leg regardless)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "JMKE",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "EDGAR read 2026-08-22 (424B4 filed 2026-07-31): Jersey Mike's Subs -- sub-sandwich franchisor. All 7 'wine' hits in the prospectus are 'red wine VINEGAR' (the signature Juice dressing) plus one 'swine flu' substring; zero 'beer'/'alcohol' occurrences. No alcohol service line. False association. No screener coverage.",
+   "haram_share_est": 0,
+   "pool_days": 0,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "KMB",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: supermarket)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "KO",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: alcohol, restaurant, beverage)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "KOF",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'NO-COVERAGE'; Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) SPWO (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: alcohol, beer, restaurant)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "LIN",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) HLAL+SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "MCAH",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL.",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by user ruling (final, 2026-08-22): user ruling 2026-08-22: verdict is BIN"
+  },
+  {
+   "symbol": "MDLZ",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'doubtful' (as of August 2026); held by shariah ETF(s) HLAL+SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage, grocer, supermarket)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "MKC",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'not Shariah-compliant'; Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) HLAL+SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: grocer). NOTE one source reports non-compliant without a public reason (their looser ratio legs are the likely cause; our own ratio test governs that leg regardless)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "MLAA",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL.",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by user ruling (final, 2026-08-22): user ruling 2026-08-22: verdict is BIN"
+  },
+  {
+   "symbol": "MNZL",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external screener verdict adopted whole per user exception 2026-08-22 (no financials available to run house 10/10/20): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "MZTI",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: restaurant)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "OTAI",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL.",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by user ruling (final, 2026-08-22): user ruling 2026-08-22: verdict is BIN"
+  },
+  {
+   "symbol": "PDPA",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "external screener verdict adopted whole per user exception 2026-08-22 (no financials available to run house 10/10/20): Zoya 'not Shariah-compliant'",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by external-screener ruling 2026-08-22: external screener verdict adopted "
+  },
+  {
+   "symbol": "PEP",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'doubtful' (as of August 2026); held by shariah ETF(s) SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: alcohol, beverage, grocer)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "PG",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) HLAL+SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: grocer, gambl)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "PKG",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) HLAL+SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "PPLI",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "EDGAR read 2026-08-22 (10-K filed 2026-02-20, primary doc iaci-20251231.htm): People Inc IS IAC renamed -- portfolio of entertainment/lifestyle media brands (People, Entertainment Weekly, Dotdash Meredith publishing) plus strategic equity in MGM Resorts International (casinos). Entertainment media IS the business (UONE/UONEK precedent, user ruling 2026-08-13). No screener coverage.",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by user ruling 2026-08-22: EDGAR read 2026-08-22 (10-K filed 2026-02-20, p"
+  },
+  {
+   "symbol": "RFAI",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check: trust assets are ~100% interest-bearing instruments (cash/mcap >> 10% in substance even when statements omit the trust line). FAIL per SPAC class rule.",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by user ruling (final, 2026-08-22): user ruling 2026-08-22: verdict is BIN"
+  },
+  {
+   "symbol": "TCGX",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL.",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "FAIL",
+   "live_reason": "NO FUNDAMENTALS DATA -- cannot verify, refusing (not a compliance failure)"
+  },
+  {
+   "symbol": "TLK",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'NO-COVERAGE'; Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: entertainment)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "TR",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: grocer, supermarket)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "VII",
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL.",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "FAIL",
+   "live_reason": "HARAM by user ruling (final, 2026-08-22): user ruling 2026-08-22: verdict is BIN"
+  },
+  {
+   "symbol": "VIV",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'doubtful' (as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: entertainment)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "VLTO",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) HLAL+SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: beverage)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "FAIL",
+   "live_reason": "LOAN>10+COMBINED>20"
+  },
+  {
+   "symbol": "WELL",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) HLAL+SPRE+SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hospitality)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "PASS",
+   "live_reason": ""
+  },
+  {
+   "symbol": "XMAX",
+   "verdict": "PASS",
+   "date": "2026-08-22",
+   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: dining, hospitality)",
+   "haram_share_est": null,
+   "pool_days": 0,
+   "live_verdict": "PASS",
+   "live_reason": ""
   }
  ]
 }
