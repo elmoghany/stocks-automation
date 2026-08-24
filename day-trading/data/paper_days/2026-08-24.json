@@ -1,0 +1,36 @@
+{
+  "date": "2026-08-24",
+  "day_number": 14,
+  "protocol": "C37 sequential ticket rotation, paper only",
+  "epoch": "honest-baseline (C37F, 2026-08-23): retired $1,517/day benchmark; score vs -$163/day honest baseline",
+  "benchmark_per_day": -163,
+  "config": {
+    "tickets": [15000, 15000, 15000, 15000, 15000, 15000, 10000],
+    "day_cap": 100000,
+    "one_position_at_a_time": true,
+    "entry_cutoff_et": "14:30",
+    "all_exits_by_et": "15:00",
+    "scan_id": "5f132877-7730-4a18-9e72-b3f0d2c9df83",
+    "scan_filters": "Last>$2, %Change>10%, NO volume gate",
+    "halal_list": "2026-08-22, 1330 symbols, age 1.35d",
+    "halal_rulings": 237
+  },
+  "ops": {
+    "scheduler_test": "PASS - LAUNCHED_BY_SCHEDULER_2026-08-24.flag written 06:20:02 ET (Day 13 launch had failed)",
+    "agent_start_et": "06:24",
+    "clock": "UTC-4 computed explicitly; TZ env untrusted"
+  },
+  "inherited_verdicts": {
+    "PASS": ["ASST", "ADXN", "ABUS", "GLSI", "EXOZ"],
+    "FAIL": ["MSTR", "ZOOZ", "IPST", "BRNX", "SUGP", "JUNS", "NCTY", "YJ", "RPC", "SCTX", "BIVI", "HCWB", "LZM", "PMI", "AEMD", "SFBS"],
+    "CANNOT_VERIFY": ["USDE", "RFAI"],
+    "fake_gap": ["DUKR", "EUDA", "HUHU", "PTLE", "BNR", "GDEV", "ILAG", "OIO"]
+  },
+  "trades": [],
+  "candidates": {},
+  "vetoes": {"spread": [], "depth": [], "chase": []},
+  "trigger_c": [],
+  "halal": {"PASS": [], "FAIL": [], "CANNOT_VERIFY": [], "fake_gap": []},
+  "coverage_gaps": [],
+  "lessons": []
+}
