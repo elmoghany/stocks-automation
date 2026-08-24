@@ -991,3 +991,13 @@ which rule is binding.
 Day 9's first clock an hour. Never trust the TZ environment variable.
 Compute ET explicitly (UTC-4 in summer / UTC-5 in winter) or via
 Python zoneinfo("America/New_York"); arm all Monitor clocks on UTC.
+
+
+## TRIGGER C LOOP ORDERING (2026-08-21, Day 13 defect, fixed in-session)
+
+The 1-minute Trigger C loop must be: fetch bars -> merge + run `trigger`
+-> READ THE TAG NOW -> then wait for the next minute. Day 13 appended
+the pacing wait AFTER the trigger call in one loop revision, so a
+[TAKEABLE NOW] tag sat unseen for 2 minutes and aged out. The read is
+the time-critical step; the wait is never allowed between the trigger
+call and reading its output.
