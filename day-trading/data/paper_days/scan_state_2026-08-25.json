@@ -1,39 +1,44 @@
 {
  "candidates": {
   "DAIC": {
-   "pct": 97.77,
-   "last": 3.4215,
+   "pct": 84.39,
+   "last": 3.1899,
    "prev_close": 1.73,
-   "first_seen": "06:45",
-   "name": "CID HoldCo"
+   "vol": "1.02227999371224e+08",
+   "name": "CID HoldCo, Inc.",
+   "first_seen": "06:45"
   },
   "DFNS": {
-   "pct": 68.54,
-   "last": 18.5561,
+   "pct": 47.96,
+   "last": 16.2904,
    "prev_close": 11.01,
-   "first_seen": "06:45",
-   "name": "T3 Defense"
+   "vol": "1.665573064739e+06",
+   "name": "T3 Defense",
+   "first_seen": "06:45"
   },
   "AMIX": {
-   "pct": 38.18,
-   "last": 7.42,
+   "pct": 42.14,
+   "last": 7.6331,
    "prev_close": 5.37,
-   "first_seen": "06:45",
-   "name": "Autonomix Medical"
+   "vol": "1.5602214882818e+07",
+   "name": "Autonomix Medical",
+   "first_seen": "06:45"
   },
   "JEM": {
-   "pct": 32.98,
-   "last": 5.08,
+   "pct": 35.42,
+   "last": 5.1731,
    "prev_close": 3.82,
-   "first_seen": "06:45",
-   "name": "707 Cayman Holdings"
+   "vol": "3.42853371336e+06",
+   "name": "707 Cayman Holdings Limited",
+   "first_seen": "06:45"
   },
   "BTCT": {
-   "pct": 15.54,
-   "last": 2.0104,
+   "pct": 21.24,
+   "last": 2.1096,
    "prev_close": 1.74,
-   "first_seen": "06:45",
-   "name": "BTC Digital"
+   "vol": "1.86156805494294e+08",
+   "name": "BTC Digital",
+   "first_seen": "06:45"
   },
   "XAIR": {
    "pct": -3.6,
@@ -62,6 +67,30 @@
    "prev_close": 5.37,
    "first_seen": "07:35",
    "name": "Safe Pro Group"
+  },
+  "SWVL": {
+   "pct": 91.14,
+   "last": 2.8098,
+   "prev_close": 1.47,
+   "vol": "3506.143",
+   "name": "Swvl",
+   "first_seen": "08:00"
+  },
+  "APUS": {
+   "pct": 18.74,
+   "last": 5.64,
+   "prev_close": 4.75,
+   "vol": "15874.961701",
+   "name": "Apimeds Pharmaceuticals US",
+   "first_seen": "08:00"
+  },
+  "NYAX": {
+   "pct": 12.13,
+   "last": 51.7805,
+   "prev_close": 46.18,
+   "vol": "28021.565616",
+   "name": "Nayax Ltd",
+   "first_seen": "08:00"
   }
  },
  "halal_fail": [
@@ -69,7 +98,8 @@
   "WLDS",
   "WVVI",
   "KURA",
-  "SPAI"
+  "SPAI",
+  "NYAX"
  ],
  "fake_gap": [
   "GYRO",

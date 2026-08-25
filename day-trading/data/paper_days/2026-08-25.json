@@ -29,7 +29,8 @@
     "agent_start_et": "06:20",
     "clock": "UTC-4 computed explicitly; TZ env untrusted",
     "cycle_1": "07:05 rank: TENX #1 coiled calm-PASS but halal FAIL; 0 armable",
-    "cycle_4": "07:40 rank: KURA #1 coiled calm liquid -> halal FAIL; SPAI #2 -> defense FAIL; 0 armable"
+    "cycle_4": "07:40 rank: KURA #1 coiled calm liquid -> halal FAIL; SPAI #2 -> defense FAIL; 0 armable",
+    "cycle_5": "07:45 real: 3 new crossers; NYAX #1 coil 1.000 calm-PASS -> halal FAIL 37.1 combined. 6 screens 6 FAILs"
   },
   "inherited_verdicts": {
     "PASS": [
@@ -158,6 +159,21 @@
       "prev_close": 2.18,
       "first_seen": "07:35",
       "note": "HALAL FAIL winery instant"
+    },
+    "NYAX": {
+      "prev_close": 46.18,
+      "first_seen": "07:45",
+      "note": "HALAL FAIL loans 19.3+cash 17.7=37.1 combined; was #1 coil 1.000 calm-PASS"
+    },
+    "SWVL": {
+      "prev_close": 1.47,
+      "first_seen": "07:45",
+      "note": "calm-gap n/a->FAIL; +119% on thin tape"
+    },
+    "APUS": {
+      "prev_close": 4.75,
+      "first_seen": "07:45",
+      "note": "watch: 1 real bar, +18.7pct, gap likely <20"
     }
   },
   "vetoes": {
@@ -173,7 +189,8 @@
       "WLDS",
       "WVVI",
       "KURA",
-      "SPAI"
+      "SPAI",
+      "NYAX"
     ],
     "CANNOT_VERIFY": [],
     "fake_gap": [
