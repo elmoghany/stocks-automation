@@ -1,42 +1,42 @@
 {
  "candidates": {
   "DAIC": {
-   "pct": 110.98,
-   "last": 3.65,
+   "pct": 173.05,
+   "last": 4.7237,
    "prev_close": 1.73,
-   "vol": "1.02227999371224e+08",
+   "vol": "5.7146940412217e+07",
    "name": "CID HoldCo, Inc.",
    "first_seen": "06:45"
   },
   "DFNS": {
-   "pct": 46.5,
-   "last": 16.13,
+   "pct": 29.34,
+   "last": 14.24,
    "prev_close": 11.01,
-   "vol": "1.665573064739e+06",
+   "vol": "6.527680952786e+06",
    "name": "T3 Defense",
    "first_seen": "06:45"
   },
   "AMIX": {
-   "pct": 44.88,
-   "last": 7.78,
+   "pct": 49.72,
+   "last": 8.04,
    "prev_close": 5.37,
-   "vol": "1.5602214882818e+07",
+   "vol": "1.0058882366109e+07",
    "name": "Autonomix Medical",
    "first_seen": "06:45"
   },
   "JEM": {
-   "pct": 37.43,
-   "last": 5.2497,
+   "pct": 35.34,
+   "last": 5.17,
    "prev_close": 3.82,
-   "vol": "3.42853371336e+06",
+   "vol": "3.420466437314e+06",
    "name": "707 Cayman Holdings Limited",
    "first_seen": "06:45"
   },
   "BTCT": {
-   "pct": 18.97,
-   "last": 2.0701,
+   "pct": 24.71,
+   "last": 2.17,
    "prev_close": 1.74,
-   "vol": "1.86156805494294e+08",
+   "vol": "1.2321324102313e+07",
    "name": "BTC Digital",
    "first_seen": "06:45"
   },
@@ -69,10 +69,10 @@
    "name": "Safe Pro Group"
   },
   "SWVL": {
-   "pct": 59.86,
-   "last": 2.35,
+   "pct": 63.27,
+   "last": 2.4,
    "prev_close": 1.47,
-   "vol": "3506.143",
+   "vol": "5.7430399795138e+07",
    "name": "Swvl",
    "first_seen": "08:00"
   },
@@ -147,6 +147,30 @@
    "vol": "12596.0568",
    "name": "EpicQuest Education Group",
    "first_seen": "09:32"
+  },
+  "AVXL": {
+   "pct": 13.83,
+   "last": 3.54,
+   "prev_close": 3.11,
+   "vol": "241237.861549",
+   "name": "Anavex",
+   "first_seen": "09:45"
+  },
+  "CAPR": {
+   "pct": 13.38,
+   "last": 7.71,
+   "prev_close": 6.8,
+   "vol": "4.039184371819e+06",
+   "name": "Capricor",
+   "first_seen": "09:45"
+  },
+  "WETO": {
+   "pct": 11.0,
+   "last": 30.6251,
+   "prev_close": 27.59,
+   "vol": "33258.277375",
+   "name": "Wetour Robotics",
+   "first_seen": "09:45"
   }
  },
  "halal_fail": [
@@ -160,7 +184,9 @@
   "RNAZ",
   "IMTX",
   "MEI",
-  "MAIR"
+  "MAIR",
+  "AVXL",
+  "CAPR"
  ],
  "fake_gap": [
   "GYRO",

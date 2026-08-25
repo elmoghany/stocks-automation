@@ -35,7 +35,8 @@
     "cycle_7": "08:13: RZLV new 1 coiled calm -> FAIL 27.6 combined (7 screens 7 FAILs); TOP=none, 1-min loop stands down",
     "cycle_9": "08:31: RNAZ new #1 coiled calm -> FAIL cash 26.4 (8/8 FAILs). 0 armable",
     "cycle_10": "08:55-09:03: IMTX/MEI coiled 1-2, calm completed from Polygon (RH premarket-dark divergence LOGGED) -> both FAIL ratios. 10 screens 10 FAILs",
-    "cycle_open": "09:36: MAIR #1 coiled calm liquid -> FAIL 22.7 combined. 11 screens 11 FAILs"
+    "cycle_open": "09:36: MAIR #1 coiled calm liquid -> FAIL 22.7 combined. 11 screens 11 FAILs",
+    "cycle_0945": "09:44 rank: AVXL #1 (Polygon calm completion again), CAPR #3 -> both FAIL cash. 13/13"
   },
   "inherited_verdicts": {
     "PASS": [
@@ -214,6 +215,21 @@
       "prev_close": 2.6,
       "first_seen": "09:32",
       "note": "thin 12.6k vol, 1 bar"
+    },
+    "AVXL": {
+      "prev_close": 3.11,
+      "first_seen": "09:45",
+      "note": "HALAL FAIL cash 39.6; calm completed from Polygon (+2.7 at 7:29); also RH-status Noncompliant"
+    },
+    "CAPR": {
+      "prev_close": 6.8,
+      "first_seen": "09:45",
+      "note": "HALAL FAIL cash 57.4; was #3 calm-PASS 4M vol"
+    },
+    "WETO": {
+      "prev_close": 27.59,
+      "first_seen": "09:45",
+      "note": "calm-PASS +0.7 gap, coil 0.925, thin 33k vol - watch"
     }
   },
   "vetoes": {
@@ -302,7 +318,9 @@
       "RNAZ",
       "IMTX",
       "MEI",
-      "MAIR"
+      "MAIR",
+      "AVXL",
+      "CAPR"
     ],
     "CANNOT_VERIFY": [],
     "fake_gap": [
