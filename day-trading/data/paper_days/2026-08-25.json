@@ -31,7 +31,8 @@
     "cycle_1": "07:05 rank: TENX #1 coiled calm-PASS but halal FAIL; 0 armable",
     "cycle_4": "07:40 rank: KURA #1 coiled calm liquid -> halal FAIL; SPAI #2 -> defense FAIL; 0 armable",
     "cycle_5": "07:45 real: 3 new crossers; NYAX #1 coil 1.000 calm-PASS -> halal FAIL 37.1 combined. 6 screens 6 FAILs",
-    "cycle_6": "07:52-07:56: BTCT #1 w/grace, halal PASS (first of day), spread 0.457pct PASS, armed T1 stop 2.38"
+    "cycle_6": "07:52-07:56: BTCT #1 w/grace, halal PASS (first of day), spread 0.457pct PASS, armed T1 stop 2.38",
+    "cycle_7": "08:13: RZLV new 1 coiled calm -> FAIL 27.6 combined (7 screens 7 FAILs); TOP=none, 1-min loop stands down"
   },
   "inherited_verdicts": {
     "PASS": [
@@ -169,12 +170,27 @@
     "SWVL": {
       "prev_close": 1.47,
       "first_seen": "07:45",
-      "note": "calm-gap n/a->FAIL; +119% on thin tape"
+      "note": "faded +119->+40, calm n/a FAIL"
     },
     "APUS": {
       "prev_close": 4.75,
       "first_seen": "07:45",
       "note": "watch: 1 real bar, +18.7pct, gap likely <20"
+    },
+    "RZLV": {
+      "prev_close": 2.43,
+      "first_seen": "08:10",
+      "note": "HALAL FAIL loans 16.2+cash 11.4=27.6; was #1 coiled calm 7M vol"
+    },
+    "MEI": {
+      "prev_close": 14.03,
+      "first_seen": "08:10",
+      "note": "Methode Electronics 499M mcap; 1 real bar, watch"
+    },
+    "RCON": {
+      "prev_close": 2.87,
+      "first_seen": "08:10",
+      "note": "calm-PASS but Noncompliant listing, 322k float, not at candidacy"
     }
   },
   "vetoes": {
@@ -258,7 +274,8 @@
       "WVVI",
       "KURA",
       "SPAI",
-      "NYAX"
+      "NYAX",
+      "RZLV"
     ],
     "CANNOT_VERIFY": [],
     "fake_gap": [
@@ -272,16 +289,6 @@
   "coverage_gaps": [],
   "lessons": [],
   "armed": {
-    "ticket": 1,
-    "symbol": "BTCT",
-    "type": "stop_limit_buy",
-    "stop": 2.38,
-    "limit": 2.39,
-    "shares": 5276,
-    "intended_shares": 6302,
-    "depth_reduction": "84pct of intended",
-    "armed_at_et": "07:56",
-    "protective_stop_on_fill": 2.19,
-    "fill_semantics": "intrabar high>=stop"
+    "cancelled": "BTCT stop 2.38 armed 07:56, CANCELLED 08:13 at rotation (RZLV took rank 1), never filled"
   }
 }

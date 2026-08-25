@@ -1,40 +1,40 @@
 {
  "candidates": {
   "DAIC": {
-   "pct": 93.73,
-   "last": 3.3515,
+   "pct": 85.55,
+   "last": 3.21,
    "prev_close": 1.73,
    "vol": "1.02227999371224e+08",
    "name": "CID HoldCo, Inc.",
    "first_seen": "06:45"
   },
   "DFNS": {
-   "pct": 55.59,
-   "last": 17.13,
+   "pct": 56.77,
+   "last": 17.26,
    "prev_close": 11.01,
    "vol": "1.665573064739e+06",
    "name": "T3 Defense",
    "first_seen": "06:45"
   },
   "AMIX": {
-   "pct": 37.27,
-   "last": 7.3714,
+   "pct": 28.87,
+   "last": 6.9201,
    "prev_close": 5.37,
    "vol": "1.5602214882818e+07",
    "name": "Autonomix Medical",
    "first_seen": "06:45"
   },
   "JEM": {
-   "pct": 37.32,
-   "last": 5.2458,
+   "pct": 34.03,
+   "last": 5.12,
    "prev_close": 3.82,
    "vol": "3.42853371336e+06",
    "name": "707 Cayman Holdings Limited",
    "first_seen": "06:45"
   },
   "BTCT": {
-   "pct": 24.11,
-   "last": 2.1596,
+   "pct": 19.83,
+   "last": 2.085,
    "prev_close": 1.74,
    "vol": "1.86156805494294e+08",
    "name": "BTC Digital",
@@ -69,8 +69,8 @@
    "name": "Safe Pro Group"
   },
   "SWVL": {
-   "pct": 102.1,
-   "last": 2.9708,
+   "pct": 46.24,
+   "last": 2.1498,
    "prev_close": 1.47,
    "vol": "3506.143",
    "name": "Swvl",
@@ -91,6 +91,30 @@
    "vol": "28021.565616",
    "name": "Nayax Ltd",
    "first_seen": "08:00"
+  },
+  "RCON": {
+   "pct": 131.36,
+   "last": 6.64,
+   "prev_close": 2.87,
+   "vol": "105403.553287",
+   "name": "Recon Technology",
+   "first_seen": "08:10"
+  },
+  "RZLV": {
+   "pct": 10.67,
+   "last": 2.6892,
+   "prev_close": 2.43,
+   "vol": "7.09048604792e+06",
+   "name": "Rezolve AI Limited",
+   "first_seen": "08:10"
+  },
+  "MEI": {
+   "pct": 10.33,
+   "last": 15.48,
+   "prev_close": 14.03,
+   "vol": "558940.699057",
+   "name": "Methode Electronics",
+   "first_seen": "08:10"
   }
  },
  "halal_fail": [
@@ -99,7 +123,8 @@
   "WVVI",
   "KURA",
   "SPAI",
-  "NYAX"
+  "NYAX",
+  "RZLV"
  ],
  "fake_gap": [
   "GYRO",
