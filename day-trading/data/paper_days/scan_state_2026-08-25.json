@@ -1,40 +1,40 @@
 {
  "candidates": {
   "DAIC": {
-   "pct": 94.88,
-   "last": 3.3715,
+   "pct": 127.17,
+   "last": 3.93,
    "prev_close": 1.73,
    "vol": "1.02227999371224e+08",
    "name": "CID HoldCo, Inc.",
    "first_seen": "06:45"
   },
   "DFNS": {
-   "pct": 45.69,
-   "last": 16.04,
+   "pct": 40.78,
+   "last": 15.4998,
    "prev_close": 11.01,
    "vol": "1.665573064739e+06",
    "name": "T3 Defense",
    "first_seen": "06:45"
   },
   "AMIX": {
-   "pct": 31.53,
-   "last": 7.0634,
+   "pct": 33.01,
+   "last": 7.1425,
    "prev_close": 5.37,
    "vol": "1.5602214882818e+07",
    "name": "Autonomix Medical",
    "first_seen": "06:45"
   },
   "JEM": {
-   "pct": 31.16,
-   "last": 5.0103,
+   "pct": 30.63,
+   "last": 4.99,
    "prev_close": 3.82,
    "vol": "3.42853371336e+06",
    "name": "707 Cayman Holdings Limited",
    "first_seen": "06:45"
   },
   "BTCT": {
-   "pct": 18.41,
-   "last": 2.0604,
+   "pct": 18.97,
+   "last": 2.07,
    "prev_close": 1.74,
    "vol": "1.86156805494294e+08",
    "name": "BTC Digital",
@@ -93,8 +93,8 @@
    "first_seen": "08:00"
   },
   "RCON": {
-   "pct": 19.16,
-   "last": 3.42,
+   "pct": 12.2,
+   "last": 3.22,
    "prev_close": 2.87,
    "vol": "105403.553287",
    "name": "Recon Technology",
@@ -109,8 +109,8 @@
    "first_seen": "08:10"
   },
   "MEI": {
-   "pct": 10.33,
-   "last": 15.48,
+   "pct": 10.48,
+   "last": 15.5,
    "prev_close": 14.03,
    "vol": "558940.699057",
    "name": "Methode Electronics",
@@ -123,6 +123,14 @@
    "vol": "77872.131398",
    "name": "TransCode Therapeutics",
    "first_seen": "08:30"
+  },
+  "IMTX": {
+   "pct": 12.41,
+   "last": 9.768,
+   "prev_close": 8.69,
+   "vol": "338149.104321",
+   "name": "Immatics",
+   "first_seen": "08:50"
   }
  },
  "halal_fail": [
@@ -133,7 +141,9 @@
   "SPAI",
   "NYAX",
   "RZLV",
-  "RNAZ"
+  "RNAZ",
+  "IMTX",
+  "MEI"
  ],
  "fake_gap": [
   "GYRO",

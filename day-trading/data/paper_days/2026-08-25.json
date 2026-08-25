@@ -33,7 +33,8 @@
     "cycle_5": "07:45 real: 3 new crossers; NYAX #1 coil 1.000 calm-PASS -> halal FAIL 37.1 combined. 6 screens 6 FAILs",
     "cycle_6": "07:52-07:56: BTCT #1 w/grace, halal PASS (first of day), spread 0.457pct PASS, armed T1 stop 2.38",
     "cycle_7": "08:13: RZLV new 1 coiled calm -> FAIL 27.6 combined (7 screens 7 FAILs); TOP=none, 1-min loop stands down",
-    "cycle_9": "08:31: RNAZ new #1 coiled calm -> FAIL cash 26.4 (8/8 FAILs). 0 armable"
+    "cycle_9": "08:31: RNAZ new #1 coiled calm -> FAIL cash 26.4 (8/8 FAILs). 0 armable",
+    "cycle_10": "08:55-09:03: IMTX/MEI coiled 1-2, calm completed from Polygon (RH premarket-dark divergence LOGGED) -> both FAIL ratios. 10 screens 10 FAILs"
   },
   "inherited_verdicts": {
     "PASS": [
@@ -186,7 +187,7 @@
     "MEI": {
       "prev_close": 14.03,
       "first_seen": "08:10",
-      "note": "Methode Electronics 499M mcap; 1 real bar, watch"
+      "note": "HALAL FAIL loans 69.9+cash 28.0=97.9; calm-PASS via Polygon 7:10 print 14.41 (RH dark)"
     },
     "RCON": {
       "prev_close": 2.87,
@@ -197,6 +198,11 @@
       "prev_close": 2.7,
       "first_seen": "08:30",
       "note": "HALAL FAIL cash 26.4; was #1 coil 1.000 calm-PASS thin tape; negative book value noted"
+    },
+    "IMTX": {
+      "prev_close": 8.69,
+      "first_seen": "08:50",
+      "note": "HALAL FAIL cash 38.2 + interest income 11.8pct rev; calm-PASS via Polygon 7AM print 8.66 (RH premarket-dark)"
     }
   },
   "vetoes": {
@@ -282,7 +288,9 @@
       "SPAI",
       "NYAX",
       "RZLV",
-      "RNAZ"
+      "RNAZ",
+      "IMTX",
+      "MEI"
     ],
     "CANNOT_VERIFY": [],
     "fake_gap": [
@@ -294,7 +302,9 @@
     ]
   },
   "coverage_gaps": [],
-  "lessons": [],
+  "lessons": [
+    "RH premarket-dark liquid names (IMTX, MEI) read CALM-GAP FAIL from missing 7AM bar; the honest backtest feed (Polygon) has the prints. Fix used: complete gap7 from shared.massive minute_bars, log loudly. Parity-audit item: live under-discovers premarket-dark names without this completion."
+  ],
   "armed": {
     "cancelled": "BTCT stop 2.38 armed 07:56, CANCELLED 08:13 at rotation (RZLV took rank 1), never filled"
   }
