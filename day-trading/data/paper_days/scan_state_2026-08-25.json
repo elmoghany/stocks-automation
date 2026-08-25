@@ -1,32 +1,32 @@
 {
  "candidates": {
   "DAIC": {
-   "pct": 127.17,
-   "last": 3.93,
+   "pct": 110.98,
+   "last": 3.65,
    "prev_close": 1.73,
    "vol": "1.02227999371224e+08",
    "name": "CID HoldCo, Inc.",
    "first_seen": "06:45"
   },
   "DFNS": {
-   "pct": 40.78,
-   "last": 15.4998,
+   "pct": 46.5,
+   "last": 16.13,
    "prev_close": 11.01,
    "vol": "1.665573064739e+06",
    "name": "T3 Defense",
    "first_seen": "06:45"
   },
   "AMIX": {
-   "pct": 33.01,
-   "last": 7.1425,
+   "pct": 44.88,
+   "last": 7.78,
    "prev_close": 5.37,
    "vol": "1.5602214882818e+07",
    "name": "Autonomix Medical",
    "first_seen": "06:45"
   },
   "JEM": {
-   "pct": 30.63,
-   "last": 4.99,
+   "pct": 37.43,
+   "last": 5.2497,
    "prev_close": 3.82,
    "vol": "3.42853371336e+06",
    "name": "707 Cayman Holdings Limited",
@@ -34,7 +34,7 @@
   },
   "BTCT": {
    "pct": 18.97,
-   "last": 2.07,
+   "last": 2.0701,
    "prev_close": 1.74,
    "vol": "1.86156805494294e+08",
    "name": "BTC Digital",
@@ -69,8 +69,8 @@
    "name": "Safe Pro Group"
   },
   "SWVL": {
-   "pct": 43.54,
-   "last": 2.11,
+   "pct": 59.86,
+   "last": 2.35,
    "prev_close": 1.47,
    "vol": "3506.143",
    "name": "Swvl",
@@ -93,8 +93,8 @@
    "first_seen": "08:00"
   },
   "RCON": {
-   "pct": 12.2,
-   "last": 3.22,
+   "pct": 10.1,
+   "last": 3.16,
    "prev_close": 2.87,
    "vol": "105403.553287",
    "name": "Recon Technology",
@@ -131,6 +131,22 @@
    "vol": "338149.104321",
    "name": "Immatics",
    "first_seen": "08:50"
+  },
+  "MAIR": {
+   "pct": 12.62,
+   "last": 28.12,
+   "prev_close": 24.97,
+   "vol": "1.056902341429e+06",
+   "name": "Madison Air Solutions Corp",
+   "first_seen": "09:32"
+  },
+  "EEIQ": {
+   "pct": 11.54,
+   "last": 2.9,
+   "prev_close": 2.6,
+   "vol": "12596.0568",
+   "name": "EpicQuest Education Group",
+   "first_seen": "09:32"
   }
  },
  "halal_fail": [
@@ -143,7 +159,8 @@
   "RZLV",
   "RNAZ",
   "IMTX",
-  "MEI"
+  "MEI",
+  "MAIR"
  ],
  "fake_gap": [
   "GYRO",

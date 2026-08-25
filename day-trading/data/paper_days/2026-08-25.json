@@ -34,7 +34,8 @@
     "cycle_6": "07:52-07:56: BTCT #1 w/grace, halal PASS (first of day), spread 0.457pct PASS, armed T1 stop 2.38",
     "cycle_7": "08:13: RZLV new 1 coiled calm -> FAIL 27.6 combined (7 screens 7 FAILs); TOP=none, 1-min loop stands down",
     "cycle_9": "08:31: RNAZ new #1 coiled calm -> FAIL cash 26.4 (8/8 FAILs). 0 armable",
-    "cycle_10": "08:55-09:03: IMTX/MEI coiled 1-2, calm completed from Polygon (RH premarket-dark divergence LOGGED) -> both FAIL ratios. 10 screens 10 FAILs"
+    "cycle_10": "08:55-09:03: IMTX/MEI coiled 1-2, calm completed from Polygon (RH premarket-dark divergence LOGGED) -> both FAIL ratios. 10 screens 10 FAILs",
+    "cycle_open": "09:36: MAIR #1 coiled calm liquid -> FAIL 22.7 combined. 11 screens 11 FAILs"
   },
   "inherited_verdicts": {
     "PASS": [
@@ -203,6 +204,16 @@
       "prev_close": 8.69,
       "first_seen": "08:50",
       "note": "HALAL FAIL cash 38.2 + interest income 11.8pct rev; calm-PASS via Polygon 7AM print 8.66 (RH premarket-dark)"
+    },
+    "MAIR": {
+      "prev_close": 24.97,
+      "first_seen": "09:32",
+      "note": "HALAL FAIL loans 21.0+cash 1.8=22.7 (one-side exception needs combined<=20); was #1 coiled calm 1M vol at open"
+    },
+    "EEIQ": {
+      "prev_close": 2.6,
+      "first_seen": "09:32",
+      "note": "thin 12.6k vol, 1 bar"
     }
   },
   "vetoes": {
@@ -290,7 +301,8 @@
       "RZLV",
       "RNAZ",
       "IMTX",
-      "MEI"
+      "MEI",
+      "MAIR"
     ],
     "CANNOT_VERIFY": [],
     "fake_gap": [
