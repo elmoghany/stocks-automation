@@ -101,7 +101,8 @@
       },
       "status_1020": "holding; 7.60, peak 7.68, stop 7.01, P&L ~-20 to -148 band; pressure -0.1 to -0.3",
       "status_1044": "holding; 7.92, peak 8.00, +5pct impulse 10:36-10:38 on 211k bar; P&L +560 area",
-      "status_1132": "holding 90min; range 7.52-8.03, dip to 7.78 held above 7.23 tight trail, back to 7.90; P&L ~+480-580"
+      "status_1132": "holding 90min; range 7.52-8.03, dip to 7.78 held above 7.23 tight trail, back to 7.90; P&L ~+480-580",
+      "cadence_note": "12:38: watch feed moved 1min->2min while price consolidates mid-range (7.93, exits at 7.01/6.45 far); every bar still ingested per fetch, watcher evaluates all; revert to 1min near exit zones. Logged cadence economy."
     }
   ],
   "candidates": {
