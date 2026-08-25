@@ -99,7 +99,8 @@
         "delta_pct": -0.92,
         "note": "10:04 bar-close proxy; ask-fill cost ~0.9pct vs +60s"
       },
-      "status_1020": "holding; 7.60, peak 7.68, stop 7.01, P&L ~-20 to -148 band; pressure -0.1 to -0.3"
+      "status_1020": "holding; 7.60, peak 7.68, stop 7.01, P&L ~-20 to -148 band; pressure -0.1 to -0.3",
+      "status_1044": "holding; 7.92, peak 8.00, +5pct impulse 10:36-10:38 on 211k bar; P&L +560 area"
     }
   ],
   "candidates": {
