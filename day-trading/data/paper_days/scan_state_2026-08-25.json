@@ -1,42 +1,42 @@
 {
  "candidates": {
   "DAIC": {
-   "pct": 91.91,
-   "last": 3.32,
+   "pct": 98.84,
+   "last": 3.44,
    "prev_close": 1.73,
-   "vol": "7.9739172851444e+07",
+   "vol": "1.12452103770132e+08",
    "name": "CID HoldCo, Inc.",
    "first_seen": "06:45"
   },
   "DFNS": {
-   "pct": 24.8,
-   "last": 13.74,
+   "pct": 24.34,
+   "last": 13.69,
    "prev_close": 11.01,
-   "vol": "8.759498734091e+06",
+   "vol": "1.1805622154191e+07",
    "name": "T3 Defense",
    "first_seen": "06:45"
   },
   "AMIX": {
-   "pct": 55.96,
-   "last": 8.375,
+   "pct": 59.22,
+   "last": 8.55,
    "prev_close": 5.37,
-   "vol": "2.0212805967715e+07",
+   "vol": "2.6078005546924e+07",
    "name": "Autonomix Medical",
    "first_seen": "06:45"
   },
   "JEM": {
-   "pct": 39.53,
-   "last": 5.33,
+   "pct": 61.26,
+   "last": 6.16,
    "prev_close": 3.82,
-   "vol": "3.811597004115e+06",
+   "vol": "1.578860361851e+07",
    "name": "707 Cayman Holdings Limited",
    "first_seen": "06:45"
   },
   "BTCT": {
-   "pct": 24.43,
-   "last": 2.165,
+   "pct": 20.12,
+   "last": 2.0901,
    "prev_close": 1.74,
-   "vol": "1.7792249205327e+07",
+   "vol": "2.5858082961145e+07",
    "name": "BTC Digital",
    "first_seen": "06:45"
   },
@@ -69,18 +69,18 @@
    "name": "Safe Pro Group"
   },
   "SWVL": {
-   "pct": 55.78,
-   "last": 2.2899,
+   "pct": 42.86,
+   "last": 2.1,
    "prev_close": 1.47,
-   "vol": "6.6078318096464e+07",
+   "vol": "7.3310832266207e+07",
    "name": "Swvl",
    "first_seen": "08:00"
   },
   "APUS": {
-   "pct": 18.74,
-   "last": 5.64,
+   "pct": 10.32,
+   "last": 5.2401,
    "prev_close": 4.75,
-   "vol": "15874.961701",
+   "vol": "23292.66",
    "name": "Apimeds Pharmaceuticals US",
    "first_seen": "08:00"
   },
@@ -181,10 +181,10 @@
    "first_seen": "09:55"
   },
   "LHSW": {
-   "pct": 23.55,
-   "last": 3.4223,
+   "pct": 23.0,
+   "last": 3.407,
    "prev_close": 2.77,
-   "vol": "409657.755685",
+   "vol": "606009.337846",
    "name": "Lianhe Sowell International Group",
    "first_seen": "09:55"
   },
@@ -197,10 +197,10 @@
    "first_seen": "09:55"
   },
   "CRML": {
-   "pct": 14.17,
-   "last": 7.615,
+   "pct": 18.44,
+   "last": 7.9,
    "prev_close": 6.67,
-   "vol": "5.876049184238e+06",
+   "vol": "1.4020210026268e+07",
    "name": "Critical Metals",
    "first_seen": "09:55"
   },
@@ -208,55 +208,55 @@
    "pct": 18.63,
    "last": 24.9,
    "prev_close": 20.99,
-   "vol": "70532.352052",
+   "vol": "161839.545079",
    "name": "Orion Energy Systems",
    "first_seen": "09:55"
   },
   "BCTX": {
-   "pct": 13.01,
-   "last": 3.91,
+   "pct": 10.4,
+   "last": 3.82,
    "prev_close": 3.46,
-   "vol": "197339.44373",
+   "vol": "471332.815758",
    "name": "BriaCell Therapeutics",
    "first_seen": "09:55"
   },
   "ABCL": {
-   "pct": 12.77,
-   "last": 11.965,
+   "pct": 14.98,
+   "last": 12.1999,
    "prev_close": 10.61,
-   "vol": "2.981243149988e+06",
+   "vol": "7.637317599397e+06",
    "name": "Abcellera Biologics",
    "first_seen": "09:55"
   },
   "PSQH": {
-   "pct": 10.83,
-   "last": 6.55,
+   "pct": 13.88,
+   "last": 6.7301,
    "prev_close": 5.91,
-   "vol": "78754.470433",
+   "vol": "171386.546916",
    "name": "PSQ Holdings, Inc.",
    "first_seen": "09:55"
   },
   "MRAM": {
-   "pct": 15.18,
-   "last": 18.59,
+   "pct": 10.75,
+   "last": 17.875,
    "prev_close": 16.14,
-   "vol": "738626.238268",
+   "vol": "1.238714028392e+06",
    "name": "Everspin",
    "first_seen": "09:55"
   },
   "NIPG": {
-   "pct": 16.78,
-   "last": 15.87,
+   "pct": 26.56,
+   "last": 17.2,
    "prev_close": 13.59,
-   "vol": "17642.50604",
+   "vol": "73806.429094",
    "name": "NIP Group",
    "first_seen": "10:20"
   },
   "PAMT": {
-   "pct": 16.53,
-   "last": 12.9,
+   "pct": 11.83,
+   "last": 12.38,
    "prev_close": 11.07,
-   "vol": "6479.552544",
+   "vol": "12876.744965",
    "name": "PAMT CORP",
    "first_seen": "10:20"
   },
@@ -269,50 +269,50 @@
    "first_seen": "10:20"
   },
   "TMCI": {
-   "pct": 12.56,
-   "last": 4.919,
+   "pct": 10.07,
+   "last": 4.81,
    "prev_close": 4.37,
-   "vol": "269271.177262",
+   "vol": "322332.536777",
    "name": "Treace Medical Concepts",
    "first_seen": "10:20"
   },
   "VIR": {
-   "pct": 12.26,
-   "last": 11.125,
+   "pct": 10.14,
+   "last": 10.915,
    "prev_close": 9.91,
-   "vol": "656121.999845",
+   "vol": "1.468765616098e+06",
    "name": "Vir Biotechnology",
    "first_seen": "10:20"
   },
   "NEXR": {
-   "pct": 11.81,
-   "last": 2.65,
+   "pct": 17.72,
+   "last": 2.79,
    "prev_close": 2.37,
-   "vol": "109486.40882",
+   "vol": "333125.673926",
    "name": "Nexera Technologies",
    "first_seen": "10:20"
   },
   "GEMI": {
-   "pct": 11.81,
-   "last": 4.685,
+   "pct": 10.02,
+   "last": 4.61,
    "prev_close": 4.19,
-   "vol": "1.388689714431e+06",
+   "vol": "3.230677675554e+06",
    "name": "Gemini Space Station",
    "first_seen": "10:20"
   },
   "EXOD": {
-   "pct": 10.83,
-   "last": 8.7,
+   "pct": 27.01,
+   "last": 9.97,
    "prev_close": 7.85,
-   "vol": "51454.768235",
+   "vol": "242728.64984",
    "name": "Exodus Movement",
    "first_seen": "10:20"
   },
   "CDZI": {
-   "pct": 10.61,
-   "last": 4.17,
+   "pct": 10.88,
+   "last": 4.18,
    "prev_close": 3.77,
-   "vol": "544636.167149",
+   "vol": "1.22164127763e+06",
    "name": "Cadiz",
    "first_seen": "10:20"
   },
@@ -325,12 +325,452 @@
    "first_seen": "10:20"
   },
   "MRNA": {
-   "pct": 10.02,
-   "last": 152.8,
+   "pct": 13.79,
+   "last": 158.04,
    "prev_close": 138.89,
-   "vol": "1.3596610183343e+07",
+   "vol": "3.6350866220654e+07",
    "name": "Moderna",
    "first_seen": "10:20"
+  },
+  "GENB": {
+   "pct": 12.02,
+   "last": 19.85,
+   "prev_close": 17.72,
+   "vol": "3.54573534766e+06",
+   "name": "Generate Biomedicines",
+   "first_seen": "10:50"
+  },
+  "RYOJ": {
+   "pct": 21.66,
+   "last": 5.73,
+   "prev_close": 4.71,
+   "vol": "101378.813966",
+   "name": "rYojbaba Co., Ltd.",
+   "first_seen": "10:50"
+  },
+  "STDN": {
+   "pct": 17.63,
+   "last": 14.045,
+   "prev_close": 11.94,
+   "vol": "1.052719002272e+06",
+   "name": "Standard Nuclear",
+   "first_seen": "10:50"
+  },
+  "NXTC": {
+   "pct": 11.88,
+   "last": 6.59,
+   "prev_close": 5.89,
+   "vol": "78386.608068",
+   "name": "NextCure",
+   "first_seen": "10:50"
+  },
+  "DFDV": {
+   "pct": 11.98,
+   "last": 4.58,
+   "prev_close": 4.09,
+   "vol": "832641.691118",
+   "name": "DeFi Development Corp.",
+   "first_seen": "10:50"
+  },
+  "ARCT": {
+   "pct": 11.79,
+   "last": 16.03,
+   "prev_close": 14.34,
+   "vol": "769340.441112",
+   "name": "Arcturus Therapeutics Holdings",
+   "first_seen": "10:50"
+  },
+  "CUE": {
+   "pct": 22.04,
+   "last": 28.29,
+   "prev_close": 23.18,
+   "vol": "106339.29264",
+   "name": "Cue Biopharma",
+   "first_seen": "10:50"
+  },
+  "AGEN": {
+   "pct": 10.43,
+   "last": 8.47,
+   "prev_close": 7.67,
+   "vol": "412156.83312",
+   "name": "Agenus",
+   "first_seen": "10:50"
+  },
+  "DNA": {
+   "pct": 12.24,
+   "last": 7.61,
+   "prev_close": 6.78,
+   "vol": "890008.240197",
+   "name": "Ginkgo Bioworks",
+   "first_seen": "10:50"
+  },
+  "PRME": {
+   "pct": 11.38,
+   "last": 3.62,
+   "prev_close": 3.25,
+   "vol": "1.859074861248e+06",
+   "name": "Prime Medicine",
+   "first_seen": "10:50"
+  },
+  "APLM": {
+   "pct": 11.22,
+   "last": 25.7,
+   "prev_close": 23.1068,
+   "vol": "7655.727514",
+   "name": "Apollomics",
+   "first_seen": "11:15"
+  },
+  "CABO": {
+   "pct": 12.7,
+   "last": 25.73,
+   "prev_close": 22.83,
+   "vol": "235452.508011",
+   "name": "Cable One",
+   "first_seen": "11:15"
+  },
+  "CLRO": {
+   "pct": 10.71,
+   "last": 6.1,
+   "prev_close": 5.51,
+   "vol": "34913.057056",
+   "name": "ClearOne",
+   "first_seen": "11:15"
+  },
+  "EXOZ": {
+   "pct": 10.5,
+   "last": 7.68,
+   "prev_close": 6.95,
+   "vol": "964.953625",
+   "name": "eXoZymes Inc.",
+   "first_seen": "11:15"
+  },
+  "SION": {
+   "pct": 11.0,
+   "last": 6.205,
+   "prev_close": 5.59,
+   "vol": "637721.544577",
+   "name": "Sionna Therapeutics",
+   "first_seen": "11:15"
+  },
+  "NXB": {
+   "pct": 12.76,
+   "last": 2.165,
+   "prev_close": 1.92,
+   "vol": "214912.925465",
+   "name": "NextBoat",
+   "first_seen": "11:15"
+  },
+  "RDIB": {
+   "pct": 10.22,
+   "last": 9.6,
+   "prev_close": 8.71,
+   "vol": "566",
+   "name": "Reading International",
+   "first_seen": "11:15"
+  },
+  "RHLD": {
+   "pct": 13.51,
+   "last": 146.06,
+   "prev_close": 128.68,
+   "vol": "131576.408601",
+   "name": "Resolute Holdings Management",
+   "first_seen": "11:15"
+  },
+  "FGI": {
+   "pct": 10.33,
+   "last": 7.745,
+   "prev_close": 7.02,
+   "vol": "63486.5696",
+   "name": "FGI Industries",
+   "first_seen": "11:15"
+  },
+  "VCRE": {
+   "pct": 13.13,
+   "last": 13.01,
+   "prev_close": 11.5,
+   "vol": "5535.6845",
+   "name": "Vicore Pharma Holding AB ADR",
+   "first_seen": "11:45"
+  },
+  "FAC": {
+   "pct": 14.67,
+   "last": 5.275,
+   "prev_close": 4.6,
+   "vol": "288364.724577",
+   "name": "Factorial Energy Inc.",
+   "first_seen": "11:45"
+  },
+  "BDSX": {
+   "pct": 15.04,
+   "last": 29.2082,
+   "prev_close": 25.39,
+   "vol": "141822.445366",
+   "name": "Biodesix",
+   "first_seen": "11:45"
+  },
+  "RUM": {
+   "pct": 12.87,
+   "last": 10.565,
+   "prev_close": 9.36,
+   "vol": "5.9726313322e+06",
+   "name": "RUM Group",
+   "first_seen": "11:45"
+  },
+  "CLYM": {
+   "pct": 11.22,
+   "last": 18.24,
+   "prev_close": 16.4,
+   "vol": "462140.527969",
+   "name": "Climb Bio",
+   "first_seen": "11:45"
+  },
+  "ASBP": {
+   "pct": 11.14,
+   "last": 8.6801,
+   "prev_close": 7.81,
+   "vol": "18990.037334",
+   "name": "Aspire Biopharma",
+   "first_seen": "11:45"
+  },
+  "AIRI": {
+   "pct": 12.5,
+   "last": 2.61,
+   "prev_close": 2.32,
+   "vol": "174666.0938",
+   "name": "Air Industries Group",
+   "first_seen": "11:45"
+  },
+  "GLMD": {
+   "pct": 10.37,
+   "last": 4.47,
+   "prev_close": 4.05,
+   "vol": "25667.150785",
+   "name": "Galmed Pharmaceuticals",
+   "first_seen": "11:45"
+  },
+  "ASST": {
+   "pct": 10.56,
+   "last": 21.8141,
+   "prev_close": 19.73,
+   "vol": "7.817518191159e+06",
+   "name": "Strive, Inc.",
+   "first_seen": "11:45"
+  },
+  "BEAM": {
+   "pct": 10.52,
+   "last": 31.31,
+   "prev_close": 28.33,
+   "vol": "987129.079152",
+   "name": "Beam Therapeutics",
+   "first_seen": "11:45"
+  },
+  "CLPT": {
+   "pct": 12.52,
+   "last": 17.07,
+   "prev_close": 15.17,
+   "vol": "725502.076235",
+   "name": "ClearPoint Neuro",
+   "first_seen": "11:45"
+  },
+  "GLSI": {
+   "pct": 11.26,
+   "last": 19.56,
+   "prev_close": 17.58,
+   "vol": "107559.663923",
+   "name": "Greenwich LifeSciences",
+   "first_seen": "12:15"
+  },
+  "CNTN": {
+   "pct": 10.75,
+   "last": 2.37,
+   "prev_close": 2.14,
+   "vol": "533228.940378",
+   "name": "Canton Strategic Holdings",
+   "first_seen": "12:15"
+  },
+  "CGEN": {
+   "pct": 10.23,
+   "last": 2.855,
+   "prev_close": 2.59,
+   "vol": "405585.79471",
+   "name": "Compugen",
+   "first_seen": "12:15"
+  },
+  "INBX": {
+   "pct": 15.69,
+   "last": 121.4,
+   "prev_close": 104.94,
+   "vol": "306786.246061",
+   "name": "Inhibrx Biosciences",
+   "first_seen": "12:15"
+  },
+  "MCRB": {
+   "pct": 10.09,
+   "last": 5.13,
+   "prev_close": 4.66,
+   "vol": "49162.856879",
+   "name": "Seres Therapeutics",
+   "first_seen": "12:15"
+  },
+  "BESS": {
+   "pct": 10.0,
+   "last": 3.41,
+   "prev_close": 3.1,
+   "vol": "35061.5398",
+   "name": "Bimergen Energy Corporation",
+   "first_seen": "12:15"
+  },
+  "SPRU": {
+   "pct": 13.54,
+   "last": 2.18,
+   "prev_close": 1.92,
+   "vol": "89144.407749",
+   "name": "Spruce Power",
+   "first_seen": "13:00"
+  },
+  "ZSQR": {
+   "pct": 12.98,
+   "last": 4.135,
+   "prev_close": 3.66,
+   "vol": "136542.522275",
+   "name": "Z Squared",
+   "first_seen": "13:00"
+  },
+  "BLSM": {
+   "pct": 10.11,
+   "last": 17.65,
+   "prev_close": 16.03,
+   "vol": "111271.901551",
+   "name": "BlossomHill Therapeutics",
+   "first_seen": "13:00"
+  },
+  "CAAS": {
+   "pct": 12.72,
+   "last": 5.36,
+   "prev_close": 4.755,
+   "vol": "234559.418819",
+   "name": "China Automotive Systems",
+   "first_seen": "13:00"
+  },
+  "VOGX": {
+   "pct": 10.27,
+   "last": 33.8854,
+   "prev_close": 30.73,
+   "vol": "102133.132464",
+   "name": "Vogenx Inc",
+   "first_seen": "13:00"
+  },
+  "AIFU": {
+   "pct": 13.74,
+   "last": 25.25,
+   "prev_close": 22.2,
+   "vol": "71374.749367",
+   "name": "AIFU Inc.",
+   "first_seen": "14:00"
+  },
+  "SEGG": {
+   "pct": 12.86,
+   "last": 2.8553,
+   "prev_close": 2.53,
+   "vol": "69761.373557",
+   "name": "Sports Entertainment Gaming",
+   "first_seen": "14:00"
+  },
+  "IFRX": {
+   "pct": 12.44,
+   "last": 2.305,
+   "prev_close": 2.05,
+   "vol": "2.60023009649e+06",
+   "name": "InflaRx",
+   "first_seen": "14:00"
+  },
+  "OKLO": {
+   "pct": 11.82,
+   "last": 44.38,
+   "prev_close": 39.69,
+   "vol": "7.657961553842e+06",
+   "name": "Oklo",
+   "first_seen": "14:00"
+  },
+  "RGNX": {
+   "pct": 11.36,
+   "last": 8.97,
+   "prev_close": 8.055,
+   "vol": "1.116027067058e+06",
+   "name": "REGENXBIO",
+   "first_seen": "14:00"
+  },
+  "TXMD": {
+   "pct": 11.11,
+   "last": 2.3,
+   "prev_close": 2.07,
+   "vol": "181654.006827",
+   "name": "TherapeuticsMD",
+   "first_seen": "14:00"
+  },
+  "EIKN": {
+   "pct": 11.02,
+   "last": 12.39,
+   "prev_close": 11.16,
+   "vol": "316715.479728",
+   "name": "Eikon Therapeutics",
+   "first_seen": "14:00"
+  },
+  "XHLD": {
+   "pct": 10.85,
+   "last": 8.48,
+   "prev_close": 7.65,
+   "vol": "1.091702388598e+06",
+   "name": "TEN Holdings, Inc.",
+   "first_seen": "14:00"
+  },
+  "IMMX": {
+   "pct": 10.65,
+   "last": 15.06,
+   "prev_close": 13.61,
+   "vol": "2.715353433741e+06",
+   "name": "Immix Biopharma",
+   "first_seen": "14:00"
+  },
+  "BOXL": {
+   "pct": 10.42,
+   "last": 6.04,
+   "prev_close": 5.47,
+   "vol": "46075.116295",
+   "name": "Boxlight",
+   "first_seen": "14:00"
+  },
+  "TNXP": {
+   "pct": 10.36,
+   "last": 13.74,
+   "prev_close": 12.45,
+   "vol": "820122.959495",
+   "name": "Tonix Pharmaceuticals",
+   "first_seen": "14:00"
+  },
+  "NEOV": {
+   "pct": 10.26,
+   "last": 3.44,
+   "prev_close": 3.12,
+   "vol": "777988.168432",
+   "name": "NeoVolta",
+   "first_seen": "14:00"
+  },
+  "CPIX": {
+   "pct": 10.2,
+   "last": 8.64,
+   "prev_close": 7.84,
+   "vol": "54705.022112",
+   "name": "Cumberland Pharmaceuticals",
+   "first_seen": "14:00"
+  },
+  "MPLT": {
+   "pct": 10.12,
+   "last": 12.51,
+   "prev_close": 11.36,
+   "vol": "236986.748638",
+   "name": "MapLight Therapeutics",
+   "first_seen": "14:00"
   }
  },
  "halal_fail": [
@@ -389,6 +829,7 @@
  ],
  "spac": [
   "HVII",
-  "RACC"
+  "RACC",
+  "BCAR"
  ]
 }

@@ -37,7 +37,9 @@
     "cycle_10": "08:55-09:03: IMTX/MEI coiled 1-2, calm completed from Polygon (RH premarket-dark divergence LOGGED) -> both FAIL ratios. 10 screens 10 FAILs",
     "cycle_open": "09:36: MAIR #1 coiled calm liquid -> FAIL 22.7 combined. 11 screens 11 FAILs",
     "cycle_0945": "09:44 rank: AVXL #1 (Polygon calm completion again), CAPR #3 -> both FAIL cash. 13/13",
-    "cycle_1000": "10:00: 3 list-PASS names surface (OESX CRML MRAM). OESX vetoed on book. CRML ARMED T1."
+    "cycle_1000": "10:00: 3 list-PASS names surface (OESX CRML MRAM). OESX vetoed on book. CRML ARMED T1.",
+    "entry_cutoff": "14:30 passed: exit management only; CRML held from 10:03, peak 8.09, P&L ~+430-500 zone",
+    "flatten": "14:57 ladder filled entirely at first rung (spread 0.13pct, deep book); flat before 15:00"
   },
   "inherited_verdicts": {
     "PASS": [
@@ -92,7 +94,7 @@
       "spread_at_entry_pct": 0.26,
       "protective_stop": 7.01,
       "scale_out_level": 9.53,
-      "status": "OPEN",
+      "status": "CLOSED",
       "fill_realism": {
         "assumed_fill": 7.62,
         "plus60s_mark": 7.55,
@@ -102,7 +104,14 @@
       "status_1020": "holding; 7.60, peak 7.68, stop 7.01, P&L ~-20 to -148 band; pressure -0.1 to -0.3",
       "status_1044": "holding; 7.92, peak 8.00, +5pct impulse 10:36-10:38 on 211k bar; P&L +560 area",
       "status_1132": "holding 90min; range 7.52-8.03, dip to 7.78 held above 7.23 tight trail, back to 7.90; P&L ~+480-580",
-      "cadence_note": "12:38: watch feed moved 1min->2min while price consolidates mid-range (7.93, exits at 7.01/6.45 far); every bar still ingested per fetch, watcher evaluates all; revert to 1min near exit zones. Logged cadence economy."
+      "cadence_note": "12:38: watch feed moved 1min->2min while price consolidates mid-range (7.93, exits at 7.01/6.45 far); every bar still ingested per fetch, watcher evaluates all; revert to 1min near exit zones. Logged cadence economy.",
+      "exit_px_vwap": 7.8244,
+      "exit_time_et": "14:57:00",
+      "exit_mechanism": "15:00 flatten ladder from 14:57, marketable limit bid-1pct floor 7.75; ladder sweep 870@7.83 + 1098@7.82 vs displayed book",
+      "pnl": 402.3,
+      "pnl_optimistic_inside_bid": 413.28,
+      "hold_minutes": 294,
+      "peak": 8.09
     }
   ],
   "candidates": {
@@ -436,5 +445,50 @@
   },
   "errors": [
     "11:42 ET: single 502 CloudFront on get_equity_historicals; recovered on immediate retry, no coverage gap"
-  ]
+  ],
+  "pnl_day": 402.3,
+  "verdict": "GREEN: 1 ticket CRML +402.30, flat 14:57, zero real orders. Beats honest baseline (-163) by +565. Single-holder day; 85k undeployed.",
+  "veto_summary": {
+    "spread": {
+      "premarket": "2/2 vetoed (100%)",
+      "post_open": "1/2 vetoed (50%, in 50-65 band)"
+    },
+    "depth": {
+      "premarket": "2 skips + 1 reduce",
+      "post_open": "1 skip"
+    },
+    "chase": 0
+  },
+  "trigger_c_summary": "4 fires: 2 vetoed, 1 missed-by-cadence (pre-loop), 1 entered (CRML hammer)",
+  "halal_summary": "12 live ratio screens: 11 FAIL 1 PASS (BTCT); WVVI industry-FAIL; list-PASSes OESX/CRML/MRAM post-open",
+  "inherit_next": {
+    "PASS": [
+      "BTCT",
+      "CRML",
+      "OESX",
+      "MRAM"
+    ],
+    "FAIL_add": [
+      "TENX",
+      "WLDS",
+      "WVVI",
+      "KURA",
+      "SPAI",
+      "NYAX",
+      "RZLV",
+      "RNAZ",
+      "IMTX",
+      "MEI",
+      "MAIR",
+      "AVXL",
+      "CAPR"
+    ],
+    "fake_gap_add": [
+      "GYRO",
+      "PTHS",
+      "WSBK",
+      "GURE",
+      "PRHI"
+    ]
+  }
 }

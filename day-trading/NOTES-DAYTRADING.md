@@ -1,5 +1,53 @@
 # Penny Stocks Trading Notes
 
+## PAPER DAY 15 (2026-08-25) — CRML +$402.30: the list finally met the scanner
+
+**1 ticket, CRML 1,968 sh, 7.62 → 7.8244 (14:57 ladder), +$402.30, flat by 14:57,
+zero real orders.** First green day since Day 13; beats the honest baseline
+(−$163/day) by +$565. Single-holder day — tickets 2–7 ($85k) never deployed
+(CRML never exited before the 14:30 cutoff), so judge vs the retired $1,517
+figure on process, not P&L.
+
+WHAT THE DAY PROVED:
+1. **The premarket halal squeeze was TOTAL, and the unlock was the LIST.**
+   12 live ratio screens ran; 11 FAILED (biotech cash piles 26–378% of mcap:
+   TENX/KURA/RNAZ/IMTX/AVXL/CAPR/WLDS; leverage: NYAX 37, MEI 98, MAIR 23,
+   RZLV 28; industry: SPAI defense, WVVI winery). The only live PASS was BTCT
+   (miner, 9.5 combined — mining=service income per the HIVE Day-10 precedent).
+   The day became tradeable only when three halal-LIST names (OESX, CRML,
+   MRAM) crossed +10% after 09:55. Day 8's structural finding stands, with the
+   corollary: **the tradeable pool is the halal list's intersection with the
+   scanner, and it opens post-open, not premarket.**
+2. **RH premarket-dark names are silently calm-gap-blocked — Polygon completes
+   them.** IMTX, MEI, AVXL and OESX all read CALM-GAP FAIL only because RH had
+   no 7AM bar; the backtest's feed (Polygon) has the prints. Completion via
+   shared.massive.minute_bars (log it loudly) is now standing procedure — it
+   is what made OESX the #1 armable. This was live under-discovery the parity
+   audit had never caught.
+3. **Trigger C at 1-min cadence works.** 4 fires, tags did the refusing:
+   2 premarket TAKEABLEs vetoed at the book (both faded after — saves),
+   1 pre-loop signal correctly STALE, 1 entered (CRML hammer 10:01) and won.
+   Premarket spread-veto rate still 100% (2/2, optimum 50–65); post-open 50%
+   (in band). Chase vetoes: 0.
+4. **Fill realism, pattern entries**: assumed ask-fill 7.62 vs +60s mark 7.55
+   = −0.92% — second negative datapoint (LFST −1.6% Day 5). Exit ladder on a
+   deep 14:57 book cost only $11 vs the inside-bid fiction (0.07%) — contrast
+   ANGX's $75 on Day 8. Thin books make exit fiction; deep ones don't.
+5. **Headless ops held for 9 hours.** Day-14's death rule (the turn IS the
+   session; foreground ≤8-min waits only; no background Monitors) ran the
+   whole day without a coverage gap (one 502 blip, same-minute retry).
+   Scheduler prompt-truncation bug FIXED post-close: mandate lives in
+   plan/paper_day_prompt.txt, launcher passes a one-line pointer.
+   New tooling: plan/scan_sweep.py (compact sweep from a scan dump with
+   day-long NEW/GONE state), plan/append_bars.py (CLI bar appends + post-arm
+   stop check), plan/csv_to_watchjson.py (paper_watch feed — ALWAYS pass the
+   since-entry filter; full-day bars falsely trip the resting stop).
+
+Verdicts to inherit: PASS {BTCT, CRML, OESX, MRAM}; FAIL adds {TENX, WLDS,
+WVVI, KURA, SPAI, NYAX, RZLV, RNAZ, IMTX, MEI, MAIR, AVXL, CAPR}; fake-gap
+adds {GYRO, PTHS, WSBK, GURE, PRHI}. EXYN/TC (Day-7 FAILs) re-added to the
+standing drop-list after EXYN resurfaced.
+
 ## PAPER DAY 14 (2026-08-24) — DEAD BEFORE THE WINDOW: turn-end kills a headless session (written 2026-08-25 pre-open)
 
 Day 14 never traded. The scheduler launch PASSED (06:20:02, second consecutive
