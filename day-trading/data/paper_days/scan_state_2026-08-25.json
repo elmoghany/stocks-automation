@@ -1,42 +1,42 @@
 {
  "candidates": {
   "DAIC": {
-   "pct": 144.51,
-   "last": 4.23,
+   "pct": 91.91,
+   "last": 3.32,
    "prev_close": 1.73,
-   "vol": "6.8929120596524e+07",
+   "vol": "7.9739172851444e+07",
    "name": "CID HoldCo, Inc.",
    "first_seen": "06:45"
   },
   "DFNS": {
-   "pct": 16.98,
-   "last": 12.88,
+   "pct": 24.8,
+   "last": 13.74,
    "prev_close": 11.01,
-   "vol": "7.522161877372e+06",
+   "vol": "8.759498734091e+06",
    "name": "T3 Defense",
    "first_seen": "06:45"
   },
   "AMIX": {
-   "pct": 56.02,
-   "last": 8.3781,
+   "pct": 55.96,
+   "last": 8.375,
    "prev_close": 5.37,
-   "vol": "1.1504034094709e+07",
+   "vol": "2.0212805967715e+07",
    "name": "Autonomix Medical",
    "first_seen": "06:45"
   },
   "JEM": {
-   "pct": 31.94,
-   "last": 5.04,
+   "pct": 39.53,
+   "last": 5.33,
    "prev_close": 3.82,
-   "vol": "3.586797636591e+06",
+   "vol": "3.811597004115e+06",
    "name": "707 Cayman Holdings Limited",
    "first_seen": "06:45"
   },
   "BTCT": {
-   "pct": 17.13,
-   "last": 2.0381,
+   "pct": 24.43,
+   "last": 2.165,
    "prev_close": 1.74,
-   "vol": "1.4217531898885e+07",
+   "vol": "1.7792249205327e+07",
    "name": "BTC Digital",
    "first_seen": "06:45"
   },
@@ -69,10 +69,10 @@
    "name": "Safe Pro Group"
   },
   "SWVL": {
-   "pct": 54.43,
-   "last": 2.2701,
+   "pct": 55.78,
+   "last": 2.2899,
    "prev_close": 1.47,
-   "vol": "6.2731171501594e+07",
+   "vol": "6.6078318096464e+07",
    "name": "Swvl",
    "first_seen": "08:00"
   },
@@ -181,10 +181,10 @@
    "first_seen": "09:55"
   },
   "LHSW": {
-   "pct": 16.61,
-   "last": 3.23,
+   "pct": 23.55,
+   "last": 3.4223,
    "prev_close": 2.77,
-   "vol": "333750.3589",
+   "vol": "409657.755685",
    "name": "Lianhe Sowell International Group",
    "first_seen": "09:55"
   },
@@ -197,52 +197,140 @@
    "first_seen": "09:55"
   },
   "CRML": {
-   "pct": 15.29,
-   "last": 7.69,
+   "pct": 14.17,
+   "last": 7.615,
    "prev_close": 6.67,
-   "vol": "3.736849628833e+06",
+   "vol": "5.876049184238e+06",
    "name": "Critical Metals",
    "first_seen": "09:55"
   },
   "OESX": {
-   "pct": 14.34,
-   "last": 24.0,
+   "pct": 18.63,
+   "last": 24.9,
    "prev_close": 20.99,
-   "vol": "40390.47147",
+   "vol": "70532.352052",
    "name": "Orion Energy Systems",
    "first_seen": "09:55"
   },
   "BCTX": {
-   "pct": 12.86,
-   "last": 3.905,
+   "pct": 13.01,
+   "last": 3.91,
    "prev_close": 3.46,
-   "vol": "101993.063159",
+   "vol": "197339.44373",
    "name": "BriaCell Therapeutics",
    "first_seen": "09:55"
   },
   "ABCL": {
-   "pct": 11.46,
-   "last": 11.8263,
+   "pct": 12.77,
+   "last": 11.965,
    "prev_close": 10.61,
-   "vol": "1.921256464253e+06",
+   "vol": "2.981243149988e+06",
    "name": "Abcellera Biologics",
    "first_seen": "09:55"
   },
   "PSQH": {
-   "pct": 10.39,
-   "last": 6.5238,
+   "pct": 10.83,
+   "last": 6.55,
    "prev_close": 5.91,
-   "vol": "62068.018533",
+   "vol": "78754.470433",
    "name": "PSQ Holdings, Inc.",
    "first_seen": "09:55"
   },
   "MRAM": {
-   "pct": 10.25,
-   "last": 17.795,
+   "pct": 15.18,
+   "last": 18.59,
    "prev_close": 16.14,
-   "vol": "302123.138498",
+   "vol": "738626.238268",
    "name": "Everspin",
    "first_seen": "09:55"
+  },
+  "NIPG": {
+   "pct": 16.78,
+   "last": 15.87,
+   "prev_close": 13.59,
+   "vol": "17642.50604",
+   "name": "NIP Group",
+   "first_seen": "10:20"
+  },
+  "PAMT": {
+   "pct": 16.53,
+   "last": 12.9,
+   "prev_close": 11.07,
+   "vol": "6479.552544",
+   "name": "PAMT CORP",
+   "first_seen": "10:20"
+  },
+  "EXYN": {
+   "pct": 16.52,
+   "last": 2.68,
+   "prev_close": 2.3,
+   "vol": "404631.108213",
+   "name": "Exyn Technologies",
+   "first_seen": "10:20"
+  },
+  "TMCI": {
+   "pct": 12.56,
+   "last": 4.919,
+   "prev_close": 4.37,
+   "vol": "269271.177262",
+   "name": "Treace Medical Concepts",
+   "first_seen": "10:20"
+  },
+  "VIR": {
+   "pct": 12.26,
+   "last": 11.125,
+   "prev_close": 9.91,
+   "vol": "656121.999845",
+   "name": "Vir Biotechnology",
+   "first_seen": "10:20"
+  },
+  "NEXR": {
+   "pct": 11.81,
+   "last": 2.65,
+   "prev_close": 2.37,
+   "vol": "109486.40882",
+   "name": "Nexera Technologies",
+   "first_seen": "10:20"
+  },
+  "GEMI": {
+   "pct": 11.81,
+   "last": 4.685,
+   "prev_close": 4.19,
+   "vol": "1.388689714431e+06",
+   "name": "Gemini Space Station",
+   "first_seen": "10:20"
+  },
+  "EXOD": {
+   "pct": 10.83,
+   "last": 8.7,
+   "prev_close": 7.85,
+   "vol": "51454.768235",
+   "name": "Exodus Movement",
+   "first_seen": "10:20"
+  },
+  "CDZI": {
+   "pct": 10.61,
+   "last": 4.17,
+   "prev_close": 3.77,
+   "vol": "544636.167149",
+   "name": "Cadiz",
+   "first_seen": "10:20"
+  },
+  "PLYX": {
+   "pct": 10.16,
+   "last": 2.06,
+   "prev_close": 1.87,
+   "vol": "64900.029746",
+   "name": "Polaryx Therapeutics",
+   "first_seen": "10:20"
+  },
+  "MRNA": {
+   "pct": 10.02,
+   "last": 152.8,
+   "prev_close": 138.89,
+   "vol": "1.3596610183343e+07",
+   "name": "Moderna",
+   "first_seen": "10:20"
   }
  },
  "halal_fail": [
@@ -291,7 +379,9 @@
   "LZM",
   "PMI",
   "AEMD",
-  "SFBS"
+  "SFBS",
+  "EXYN",
+  "TC"
  ],
  "cannot_verify": [
   "USDE",

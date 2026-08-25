@@ -92,7 +92,14 @@
       "spread_at_entry_pct": 0.26,
       "protective_stop": 7.01,
       "scale_out_level": 9.53,
-      "status": "OPEN"
+      "status": "OPEN",
+      "fill_realism": {
+        "assumed_fill": 7.62,
+        "plus60s_mark": 7.55,
+        "delta_pct": -0.92,
+        "note": "10:04 bar-close proxy; ask-fill cost ~0.9pct vs +60s"
+      },
+      "status_1020": "holding; 7.60, peak 7.68, stop 7.01, P&L ~-20 to -148 band; pressure -0.1 to -0.3"
     }
   ],
   "candidates": {
