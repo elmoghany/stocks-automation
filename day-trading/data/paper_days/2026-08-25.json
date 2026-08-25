@@ -178,18 +178,76 @@
     }
   },
   "vetoes": {
-    "spread": [],
+    "spread": [
+      {
+        "time": "07:58",
+        "symbol": "BTCT",
+        "spread_pct": 0.92,
+        "phase": "premarket",
+        "trigger": "pattern tweezer_bottom"
+      },
+      {
+        "time": "08:11",
+        "symbol": "BTCT",
+        "spread_pct": 0.95,
+        "phase": "premarket",
+        "trigger": "pattern morning_star"
+      }
+    ],
     "depth": [
       {
         "time": "07:56",
         "symbol": "BTCT",
         "action": "REDUCE 6302->5276",
         "phase": "premarket"
+      },
+      {
+        "time": "07:58",
+        "symbol": "BTCT",
+        "depth_sh": 364,
+        "intended_sh": 6900,
+        "phase": "premarket",
+        "action": "SKIP <25pct",
+        "trigger": "pattern tweezer_bottom"
+      },
+      {
+        "time": "08:11",
+        "symbol": "BTCT",
+        "depth_sh": 600,
+        "intended_sh": 7100,
+        "phase": "premarket",
+        "action": "SKIP <25pct",
+        "trigger": "pattern morning_star"
       }
     ],
     "chase": []
   },
-  "trigger_c": [],
+  "trigger_c": [
+    {
+      "time": "07:57",
+      "symbol": "BTCT",
+      "signal": "tweezer_bottom",
+      "tag": "TAKEABLE",
+      "action": "VETOED spread 0.92pct + depth 364sh inside limit",
+      "phase": "premarket"
+    },
+    {
+      "time": "07:53",
+      "symbol": "BTCT",
+      "signal": "macd_cross_up+tweezer_bottom",
+      "tag": "STALE at loop start",
+      "action": "missed by cadence (loop started 07:56)",
+      "phase": "premarket"
+    },
+    {
+      "time": "08:09",
+      "symbol": "BTCT",
+      "signal": "morning_star",
+      "tag": "TAKEABLE",
+      "action": "VETOED spread 0.95pct + depth 600sh",
+      "phase": "premarket"
+    }
+  ],
   "halal": {
     "PASS": [
       "BTCT"
