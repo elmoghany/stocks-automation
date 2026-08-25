@@ -30,7 +30,8 @@
     "clock": "UTC-4 computed explicitly; TZ env untrusted",
     "cycle_1": "07:05 rank: TENX #1 coiled calm-PASS but halal FAIL; 0 armable",
     "cycle_4": "07:40 rank: KURA #1 coiled calm liquid -> halal FAIL; SPAI #2 -> defense FAIL; 0 armable",
-    "cycle_5": "07:45 real: 3 new crossers; NYAX #1 coil 1.000 calm-PASS -> halal FAIL 37.1 combined. 6 screens 6 FAILs"
+    "cycle_5": "07:45 real: 3 new crossers; NYAX #1 coil 1.000 calm-PASS -> halal FAIL 37.1 combined. 6 screens 6 FAILs",
+    "cycle_6": "07:52-07:56: BTCT #1 w/grace, halal PASS (first of day), spread 0.457pct PASS, armed T1 stop 2.38"
   },
   "inherited_verdicts": {
     "PASS": [
@@ -103,7 +104,7 @@
     "BTCT": {
       "prev_close": 1.74,
       "first_seen": "06:45",
-      "note": "calm-gap FAIL"
+      "note": "HALAL PASS 9.54 combined; ARMED ticket 1 stop 2.38 lim 2.39, 5276 sh depth-reduced"
     },
     "WLDS": {
       "prev_close": 2.27,
@@ -178,12 +179,21 @@
   },
   "vetoes": {
     "spread": [],
-    "depth": [],
+    "depth": [
+      {
+        "time": "07:56",
+        "symbol": "BTCT",
+        "action": "REDUCE 6302->5276",
+        "phase": "premarket"
+      }
+    ],
     "chase": []
   },
   "trigger_c": [],
   "halal": {
-    "PASS": [],
+    "PASS": [
+      "BTCT"
+    ],
     "FAIL": [
       "TENX",
       "WLDS",
@@ -202,5 +212,18 @@
     ]
   },
   "coverage_gaps": [],
-  "lessons": []
+  "lessons": [],
+  "armed": {
+    "ticket": 1,
+    "symbol": "BTCT",
+    "type": "stop_limit_buy",
+    "stop": 2.38,
+    "limit": 2.39,
+    "shares": 5276,
+    "intended_shares": 6302,
+    "depth_reduction": "84pct of intended",
+    "armed_at_et": "07:56",
+    "protective_stop_on_fill": 2.19,
+    "fill_semantics": "intrabar high>=stop"
+  }
 }
