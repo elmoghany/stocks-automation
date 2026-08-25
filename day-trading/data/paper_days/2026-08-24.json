@@ -31,6 +31,12 @@
   "vetoes": {"spread": [], "depth": [], "chase": []},
   "trigger_c": [],
   "halal": {"PASS": [], "FAIL": [], "CANNOT_VERIFY": [], "fake_gap": []},
-  "coverage_gaps": [],
-  "lessons": []
+  "coverage_gaps": [
+    {"window_et": "06:50-15:00", "window_utc": "10:50-19:00", "cause": "headless agent ended its turn after arming Monitor tick clock; claude -p terminated after 600s background-task wait (scheduler_stderr_2026-08-24.txt); watchdog fired 12:00 ET"}
+  ],
+  "lessons": [
+    "Headless -p: the turn IS the session. Ending the turn = process death 600s later. Pace with foreground until-loops; never yield expecting a Monitor to re-invoke.",
+    "Settlement was trivial only because no rules were armed pre-death; the OUTAGE protocol's arm-time discipline is what made this day honestly recordable."
+  ],
+  "verdict": "NOT a traded day - session dead before window open; 0 trades, $0 P&L, settlement clean (nothing armed)"
 }

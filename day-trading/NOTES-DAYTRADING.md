@@ -1,5 +1,32 @@
 # Penny Stocks Trading Notes
 
+## PAPER DAY 14 (2026-08-24) — DEAD BEFORE THE WINDOW: turn-end kills a headless session (written 2026-08-25 pre-open)
+
+Day 14 never traded. The scheduler launch PASSED (06:20:02, second consecutive
+success) and the agent came up at 06:24, ran a clean plumbing sweep at 06:47,
+armed the 300s Monitor tick clock at 06:50 — and then ENDED ITS TURN. In
+headless `claude -p`, turn-end starts a 600s background-task wait, after which
+the CLI terminates the process (`scheduler_stderr_2026-08-24.txt`:
+"Background tasks still running after 600s; terminating"). Dead by ~07:00;
+the 12:00 watchdog found the json 334 min stale.
+
+THE RULE THIS ADDS (headless sessions only): **the turn IS the session.**
+The 2026-08-05 ops-hardening pattern (background tick clock + yield, wake on
+tick) assumes an interactive coordinator that survives turn-end. Headless, the
+Monitor is not a backup — arming it and yielding is the death mechanism
+itself. Pace the whole day inside ONE turn with foreground until-loop waits
+(≤10-min per call); never yield expecting re-invocation.
+
+Also found 2026-08-25: the launcher's prompt does not survive
+`Start-Process -ArgumentList` quoting — the session received the single word
+"You". Fix pending in `plan/launch_paper_day.ps1` (pass the prompt via a temp
+file or stdin, or escape-quote the argument). Until fixed, a launched session
+must recover its mandate by reading the launcher script.
+
+Settlement: nothing was armed pre-death, so nothing to settle; 0 trades,
+$100k undeployed, NOT a traded day. Second consecutive lost day
+(Day 13 +$150.19 remains the last traded day).
+
 Convention: new notes go at the TOP of this file. Each note = a **3-word title**,
 then a detailed explanation of what was done and why.
 Normal (large-cap wave/value) trading notes live in `NOTES.md`.
