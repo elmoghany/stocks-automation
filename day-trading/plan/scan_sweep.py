@@ -1,0 +1,95 @@
+"""Parse a run_scan MCP dump (spilled or saved) into the compact sweep report,
+maintaining day-long NEW/GONE state and drop-lists.
+
+Usage:
+    python plan/scan_sweep.py <dump.json> <YYYY-MM-DD> <HH:MM>
+
+Schema (verified live 2026-08-25): data.result.results[] each with ticker,
+instrument_type (EQUITY for stocks AND funds -- useless), columns map with
+"% Change" (RATIO, always x100), "Last", "Net change", "Name", "Volume".
+Fund detection is by NAME only. State in data/paper_days/scan_state_{date}.json.
+"""
+import json, sys, re
+from pathlib import Path
+
+DIR = Path(__file__).resolve().parent.parent
+SPAC_PAT = re.compile(r"acquisition|blank.?check|capital investment corp|research alliance", re.I)
+FUND_PAT = re.compile(
+    r"ETF|ETN|\bfund\b|\btrust\b|ishares|proshares|direxion|vanguard|invesco|franklin|spdr"
+    r"|microsectors|leverage shares|defiance|graniteshares|tradr |corgi |themes|tidal"
+    r"|vistashares|webs |21shares|kraneshares|listed funds|ea series|first trust"
+    r"|allspring|amplify|virtus|dbx|legg mason|pinnacle focused|\b[23]x\b|ultrashort|yieldboost", re.I)
+
+def main():
+    dump, date, hhmm = sys.argv[1:4]
+    sp = DIR / "data" / "paper_days" / f"scan_state_{date}.json"
+    st = json.load(open(sp)) if sp.exists() else {
+        "candidates": {},
+        "halal_fail": [], "fake_gap": [], "inherited_fail": [],
+        "cannot_verify": [], "spac": []}
+
+    raw = json.load(open(dump, encoding="utf-8"))
+    data = raw.get("data", raw)
+    res = data.get("result", data)
+    rows = res.get("results") or []
+    total = res.get("total_items")
+    dropped = {k: [] for k in ("fund", "spac", "halal_fail", "fake_gap", "inherited_fail", "cannot_verify")}
+    cands, unhealthy = {}, []
+
+    for r in rows:
+        cols = r.get("columns") or {}
+        sym = (r.get("ticker") or cols.get("Symbol") or "").upper()
+        name = str(cols.get("Name") or "")
+        try:
+            pct = float(cols.get("% Change")) * 100.0
+            last = float(cols.get("Last"))
+        except (TypeError, ValueError):
+            unhealthy.append(f"{sym}: unparsable pct/last")
+            continue
+
+        if FUND_PAT.search(name):
+            dropped["fund"].append(sym); continue
+        if sym in st["spac"] or SPAC_PAT.search(name):
+            if sym not in st["spac"]:
+                st["spac"].append(sym)
+            dropped["spac"].append(sym); continue
+        for lst in ("halal_fail", "fake_gap", "inherited_fail", "cannot_verify"):
+            if sym in st[lst]:
+                dropped[lst].append(f"{sym} {pct:+.1f}%")
+                break
+        else:
+            prev = round(last / (1 + pct / 100), 4)
+            nc = cols.get("Net change")
+            if nc not in (None, ""):
+                try:
+                    prev2 = round(last - float(nc), 4)
+                    if prev and abs(prev2 - prev) / prev > 0.01:
+                        unhealthy.append(f"{sym}: prev_close mismatch {prev} vs {prev2}")
+                    prev = prev2
+                except (TypeError, ValueError):
+                    pass
+            cands[sym] = {"pct": round(pct, 2), "last": last, "prev_close": prev,
+                          "vol": cols.get("Volume"), "name": name[:40]}
+
+    prior = set(st["candidates"])
+    new = sorted(set(cands) - prior)
+    gone = sorted(prior - set(cands))
+    for s, d in cands.items():
+        d["first_seen"] = st["candidates"].get(s, {}).get("first_seen", hhmm)
+        st["candidates"][s] = d
+    json.dump(st, open(sp, "w"), indent=1)
+
+    print(f"SWEEP {date} {hhmm}  rows={len(rows)}/{total}  candidates_now={len(cands)}")
+    for s, d in sorted(cands.items(), key=lambda kv: -kv[1]["pct"]):
+        tag = "  <<< NEW" if s in new else ""
+        print(f"  {s:<6} {d['pct']:+8.2f}%  last {d['last']:<9} pc {d['prev_close']:<9} vol {d['vol']} | {d['name']}{tag}")
+    print(f"NEW: {new or 'none'}   GONE-from-scan (still latched): {gone or 'none'}")
+    drops = "; ".join(f"{k}({len(v)}): {' '.join(str(x) for x in v)}" for k, v in dropped.items() if v and k != "fund")
+    print(f"dropped funds={len(dropped['fund'])}; {drops}")
+    if unhealthy:
+        print("UNHEALTHY: " + " | ".join(unhealthy))
+    if len(rows) == 0:
+        print("ERROR: scan returned zero rows")
+
+if __name__ == "__main__":
+    main()

@@ -1,0 +1,115 @@
+{
+ "candidates": {
+  "DAIC": {
+   "pct": 97.77,
+   "last": 3.4215,
+   "prev_close": 1.73,
+   "first_seen": "06:45",
+   "name": "CID HoldCo"
+  },
+  "DFNS": {
+   "pct": 68.54,
+   "last": 18.5561,
+   "prev_close": 11.01,
+   "first_seen": "06:45",
+   "name": "T3 Defense"
+  },
+  "AMIX": {
+   "pct": 38.18,
+   "last": 7.42,
+   "prev_close": 5.37,
+   "first_seen": "06:45",
+   "name": "Autonomix Medical"
+  },
+  "JEM": {
+   "pct": 32.98,
+   "last": 5.08,
+   "prev_close": 3.82,
+   "first_seen": "06:45",
+   "name": "707 Cayman Holdings"
+  },
+  "BTCT": {
+   "pct": 15.54,
+   "last": 2.0104,
+   "prev_close": 1.74,
+   "first_seen": "06:45",
+   "name": "BTC Digital"
+  },
+  "XAIR": {
+   "pct": -3.6,
+   "last": 4.73,
+   "prev_close": 4.91,
+   "first_seen": "07:00",
+   "name": "Beyond Air (faded, latched)"
+  },
+  "GRDX": {
+   "pct": 13.97,
+   "last": 4.16,
+   "prev_close": 3.65,
+   "first_seen": "07:35",
+   "name": "GridAI Technologies"
+  },
+  "KURA": {
+   "pct": 10.48,
+   "last": 13.7,
+   "prev_close": 12.4,
+   "first_seen": "07:35",
+   "name": "Kura Oncology"
+  },
+  "SPAI": {
+   "pct": 10.43,
+   "last": 5.93,
+   "prev_close": 5.37,
+   "first_seen": "07:35",
+   "name": "Safe Pro Group"
+  }
+ },
+ "halal_fail": [
+  "TENX",
+  "WLDS",
+  "WVVI",
+  "KURA",
+  "SPAI"
+ ],
+ "fake_gap": [
+  "GYRO",
+  "PTHS",
+  "WSBK",
+  "GURE",
+  "PRHI",
+  "DUKR",
+  "EUDA",
+  "HUHU",
+  "PTLE",
+  "BNR",
+  "GDEV",
+  "ILAG",
+  "OIO"
+ ],
+ "inherited_fail": [
+  "MSTR",
+  "ZOOZ",
+  "IPST",
+  "BRNX",
+  "SUGP",
+  "JUNS",
+  "NCTY",
+  "YJ",
+  "RPC",
+  "SCTX",
+  "BIVI",
+  "HCWB",
+  "LZM",
+  "PMI",
+  "AEMD",
+  "SFBS"
+ ],
+ "cannot_verify": [
+  "USDE",
+  "RFAI"
+ ],
+ "spac": [
+  "HVII",
+  "RACC"
+ ]
+}
