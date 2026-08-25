@@ -80,7 +80,21 @@
       "OIO"
     ]
   },
-  "trades": [],
+  "trades": [
+    {
+      "ticket": 1,
+      "symbol": "CRML",
+      "side": "BUY",
+      "shares": 1968,
+      "entry_px": 7.62,
+      "entry_time_et": "10:03:20",
+      "entry_trigger": "Trigger C hammer 10:01 close, marketable limit ask+0.3 (cap 7.64), filled at ask",
+      "spread_at_entry_pct": 0.26,
+      "protective_stop": 7.01,
+      "scale_out_level": 9.53,
+      "status": "OPEN"
+    }
+  ],
   "candidates": {
     "DAIC": {
       "prev_close": 1.73,
@@ -362,6 +376,14 @@
       "tag": "TAKEABLE",
       "action": "VETOED spread 0.95pct + depth 600sh",
       "phase": "premarket"
+    },
+    {
+      "time": "10:01",
+      "symbol": "CRML",
+      "signal": "hammer",
+      "tag": "TAKEABLE",
+      "action": "ENTERED 1968sh at 7.62",
+      "phase": "post-open"
     }
   ],
   "halal": {
@@ -400,17 +422,6 @@
     "RH premarket-dark liquid names (IMTX, MEI) read CALM-GAP FAIL from missing 7AM bar; the honest backtest feed (Polygon) has the prints. Fix used: complete gap7 from shared.massive minute_bars, log loudly. Parity-audit item: live under-discovers premarket-dark names without this completion."
   ],
   "armed": {
-    "ticket": 1,
-    "symbol": "CRML",
-    "type": "stop_limit_buy",
-    "stop": 7.78,
-    "limit": 7.82,
-    "shares": 1928,
-    "armed_at_et": "10:02",
-    "protective_stop_on_fill": 7.16,
-    "fill_semantics": "intrabar high>=stop, fill at stop",
-    "spread_at_arm_pct": 0.26,
-    "depth_to_limit_sh": 53078,
-    "note": "OESX rank-1 vetoed (spread 1.76, depth 56sh); CRML rank-2 armable, halal-list PASS"
+    "note": "stop-buy 7.78 CANCELLED on pattern entry; protective stop 7.01 resting (intrabar semantics)"
   }
 }
