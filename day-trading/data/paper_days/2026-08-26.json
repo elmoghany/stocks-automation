@@ -162,7 +162,10 @@
     "SCYX",
     "CRDL",
     "GNLN",
-    "CGTL"
+    "CGTL",
+    "PN",
+    "BYAH",
+    "XXII"
   ],
   "trades": [
     {
@@ -1024,7 +1027,7 @@
     "rate_pct": 100.0,
     "note": "3/3 premarket, matching the historical 90-100% premarket rate the V-series flagged as TOO AGGRESSIVE. But the spread distribution is the real story: 17.54% / 8.83% / 1.37%. These are not marginal calls - two of the three are 18x and 35x the cap. Only SMMT is plausibly tradeable and only after the open."
   },
-  "heartbeat_et": "12:30:43",
+  "heartbeat_et": "13:00:54",
   "armed": [
     {
       "ticket": 1,
@@ -1368,6 +1371,30 @@
       "pnl": -624.34,
       "peak": 15.1,
       "pressure10": -0.089,
+      "trail_width": "20%"
+    },
+    {
+      "et": "12:40:44",
+      "last": 14.41,
+      "pnl": -483.36,
+      "peak": 15.1,
+      "pressure10": 0.317,
+      "trail_width": "40%"
+    },
+    {
+      "et": "12:50:42",
+      "last": 14.4,
+      "pnl": -493.43,
+      "peak": 15.1,
+      "pressure10": -0.192,
+      "trail_width": "20%"
+    },
+    {
+      "et": "13:00:44",
+      "last": 14.36,
+      "pnl": -533.71,
+      "peak": 15.1,
+      "pressure10": 0.224,
       "trail_width": "20%"
     }
   ],
