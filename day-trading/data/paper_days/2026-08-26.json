@@ -173,7 +173,11 @@
     "UPC",
     "EQ",
     "BETR",
-    "LNAI"
+    "LNAI",
+    "TROO",
+    "PRE",
+    "SPTX",
+    "NERV"
   ],
   "trades": [
     {
@@ -1035,7 +1039,7 @@
     "rate_pct": 100.0,
     "note": "3/3 premarket, matching the historical 90-100% premarket rate the V-series flagged as TOO AGGRESSIVE. But the spread distribution is the real story: 17.54% / 8.83% / 1.37%. These are not marginal calls - two of the three are 18x and 35x the cap. Only SMMT is plausibly tradeable and only after the open."
   },
-  "heartbeat_et": "13:40:25",
+  "heartbeat_et": "14:29:09",
   "armed": [
     {
       "ticket": 1,
@@ -1433,6 +1437,44 @@
       "pnl": -478.33,
       "peak": 15.1,
       "pressure10": -0.009
+    },
+    {
+      "et": "13:49:50",
+      "last": 14.4642,
+      "pnl": -428.78,
+      "peak": 15.1,
+      "pressure10": 0.327,
+      "trail_width": "40%"
+    },
+    {
+      "et": "13:59:49",
+      "last": 14.585,
+      "pnl": -307.13,
+      "peak": 15.1,
+      "pressure10": 0.518,
+      "trail_width": "40%",
+      "note": "best mark since 10:00"
+    },
+    {
+      "et": "14:09:45",
+      "last": 14.56,
+      "pnl": -332.31,
+      "peak": 15.1,
+      "pressure10": 0.168
+    },
+    {
+      "et": "14:19:10",
+      "last": 14.46,
+      "pnl": -433.01,
+      "peak": 15.1,
+      "pressure10": 0.025
+    },
+    {
+      "et": "14:28:55",
+      "last": 14.4501,
+      "pnl": -442.98,
+      "peak": 15.1,
+      "pressure10": 0.078
     }
   ],
   "cadence_decision_position": {
@@ -1443,5 +1485,14 @@
     "widened_et": "11:34",
     "widened_to": "~8-10 minutes while range-bound",
     "why_this_is_honest": "The -8% stop is a RESTING order at the broker layer, and the watcher replays every ingested bar in time order testing the stop INTRABAR against each bar's low and the trail on each bar's close. Poll spacing therefore changes only WHEN WE LEARN of a fill, never the modelled fill price or time. No bar goes unevaluated at any cadence."
+  },
+  "entry_cutoff": {
+    "et": "14:30",
+    "state": "IN POSITION (SMMT ticket 1 still open)",
+    "tickets_deployed": 1,
+    "tickets_undeployed": 6,
+    "capital_deployed": 14994.23,
+    "capital_undeployed": 85005.77,
+    "note": "The one-position rule plus a single slow holder means tickets 2-7 never deployed. This is a PROPERTY of C37, not a defect (Day-8 lesson 9): the strategy's per-day figure assumes rotation through several tickets, so a single-holder day cannot reach it by construction. Judge on process."
   }
 }
