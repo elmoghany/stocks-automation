@@ -165,7 +165,15 @@
     "CGTL",
     "PN",
     "BYAH",
-    "XXII"
+    "XXII",
+    "LABT",
+    "COPR",
+    "NDRA",
+    "GRRR",
+    "UPC",
+    "EQ",
+    "BETR",
+    "LNAI"
   ],
   "trades": [
     {
@@ -1027,7 +1035,7 @@
     "rate_pct": 100.0,
     "note": "3/3 premarket, matching the historical 90-100% premarket rate the V-series flagged as TOO AGGRESSIVE. But the spread distribution is the real story: 17.54% / 8.83% / 1.37%. These are not marginal calls - two of the three are 18x and 35x the cap. Only SMMT is plausibly tradeable and only after the open."
   },
-  "heartbeat_et": "13:00:54",
+  "heartbeat_et": "13:40:25",
   "armed": [
     {
       "ticket": 1,
@@ -1396,6 +1404,35 @@
       "peak": 15.1,
       "pressure10": 0.224,
       "trail_width": "20%"
+    },
+    {
+      "et": "13:10:17",
+      "last": 14.415,
+      "pnl": -478.33,
+      "peak": 15.1,
+      "pressure10": 0.076
+    },
+    {
+      "et": "13:20:18",
+      "last": 14.37,
+      "pnl": -523.64,
+      "peak": 15.1,
+      "pressure10": -0.302,
+      "trail_width": "10%"
+    },
+    {
+      "et": "13:30:16",
+      "last": 14.4,
+      "pnl": -493.43,
+      "peak": 15.1,
+      "pressure10": 0.072
+    },
+    {
+      "et": "13:40:15",
+      "last": 14.415,
+      "pnl": -478.33,
+      "peak": 15.1,
+      "pressure10": -0.009
     }
   ],
   "cadence_decision_position": {
