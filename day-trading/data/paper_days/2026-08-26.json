@@ -396,6 +396,21 @@
       "vol_cap_20pct_trailing10": 4887,
       "verdict": "CHASE VETO binding; spread and depth also over limits",
       "note": "3100 sh resting at 14.50 is a real bid wall. The ask side thins to 80 sh at the inside but reloads 1000 at 14.90. This is a normal-looking premarket book, unlike RPGL/TH."
+    },
+    {
+      "symbol": "SMMT",
+      "time_et": "09:09:59",
+      "phase": "premarket-late",
+      "bid": 15.05,
+      "ask": 15.09,
+      "spread_pct": 0.266,
+      "inside_bid_size": 300,
+      "inside_ask_size": 57,
+      "session_high": 15.68,
+      "cum_ask_to_trigger_plus_0.5pct": 3064,
+      "verdict": "ALL VETOES PASS - armed",
+      "spread_compression": "17:20 07:20 RPGL 17.54% | 07:45 TH 8.83% | 07:56 SMMT 1.37% | 09:08 SMMT 0.332% | 09:10 SMMT 0.266%",
+      "note": "SMMT's spread compressed 1.37% -> 0.27% over 75 minutes as the open approached. This is the single most useful liquidity-calibration observation of the session so far: the SAME name went from vetoed to armable without any change in our threshold."
     }
   ],
   "trigger_c": [],
@@ -489,6 +504,15 @@
       "armable": 2,
       "top": "SMMT",
       "outcome": "chase veto; SMMT coiled 1.000 at pm high"
+    },
+    {
+      "n": 8,
+      "time_et": "09:11",
+      "state": "FLAT-5m",
+      "rank": "3 crossed / 2 armable",
+      "top": "SMMT",
+      "trigger_c": "no buy_set signal in last 8 bars",
+      "action": "ARMED Trigger B stop-limit 15.68/15.7584 x956"
     }
   ],
   "coverage_gaps": [
@@ -686,5 +710,58 @@
     "rate_pct": 100.0,
     "note": "3/3 premarket, matching the historical 90-100% premarket rate the V-series flagged as TOO AGGRESSIVE. But the spread distribution is the real story: 17.54% / 8.83% / 1.37%. These are not marginal calls - two of the three are 18x and 35x the cap. Only SMMT is plausibly tradeable and only after the open."
   },
-  "heartbeat_et": "08:38:13"
+  "heartbeat_et": "09:10:40",
+  "armed": [
+    {
+      "ticket": 1,
+      "symbol": "SMMT",
+      "armed_et": "09:12",
+      "phase": "premarket (pre-09:30)",
+      "trigger": "B - premarket/session-high stop-buy",
+      "order_type": "STOP-LIMIT BUY (paper, resting)",
+      "stop": 15.68,
+      "limit": 15.7584,
+      "limit_basis": "trigger x 1.005, the same 0.5% cap as the thin-book veto",
+      "shares": 956,
+      "notional": 14989.0,
+      "prev_close": 13.36,
+      "cross_level_10pct": 14.696,
+      "trigger_above_cross": true,
+      "fill_arming_check": {
+        "last_at_arm": 15.05,
+        "trigger": 15.68,
+        "last_below_trigger": true,
+        "verdict": "CLEAN FORWARD STOP - trigger not yet met, so a stop-limit is legitimate (not a disguised market order)"
+      },
+      "spread_check": {
+        "bid": 15.05,
+        "ask": 15.09,
+        "spread_pct": 0.266,
+        "cap_pct": 0.5,
+        "verdict": "PASS"
+      },
+      "depth_check": {
+        "cum_ask_size_inside_to_limit": 3064,
+        "intended": 956,
+        "pct_of_intended": 320.5,
+        "verdict": "PASS - no ticket reduction needed",
+        "ladder_note": "1000 sh at 15.58 and 700 at 15.30 carry the level"
+      },
+      "size_cap_check": {
+        "trailing10min_volume": 68581,
+        "cap_20pct": 13716,
+        "intended": 956,
+        "binding": false
+      },
+      "on_fill": {
+        "protective_stop": 14.4256,
+        "stop_basis": "max(entry x 0.92, peak x 0.60) = -8% disaster backstop, placed the instant the entry fills",
+        "scale_out_level": 19.6,
+        "scale_out_rule": "bank 1/3 at +25% UNLESS 10-bar pressure >= +0.3",
+        "trail": "20% from peak; tighten to 10% when 10-bar pressure <= -0.3; widen to 40% when >= +0.3",
+        "hard_exit": "all exits by 15:00, flatten ladder from 14:57"
+      },
+      "notes": "First arming of the day and the first decision where spread, depth AND fill-arming all passed. Pressure was -0.32 at arm time; C37 gates ranking on pressure, not entry, so this does not block. NO REAL ORDER PLACED - paper ledger only."
+    }
+  ]
 }
