@@ -151,7 +151,10 @@
     "OPTX",
     "CMMB",
     "ZYME",
-    "QMLS"
+    "QMLS",
+    "SONM",
+    "WBTN",
+    "AKTX"
   ],
   "trades": [
     {
@@ -1013,7 +1016,7 @@
     "rate_pct": 100.0,
     "note": "3/3 premarket, matching the historical 90-100% premarket rate the V-series flagged as TOO AGGRESSIVE. But the spread distribution is the real story: 17.54% / 8.83% / 1.37%. These are not marginal calls - two of the three are 18x and 35x the cap. Only SMMT is plausibly tradeable and only after the open."
   },
-  "heartbeat_et": "10:13:50",
+  "heartbeat_et": "10:51:43",
   "armed": [
     {
       "ticket": 1,
@@ -1182,6 +1185,79 @@
       "pnl": -346.11,
       "peak": 15.1,
       "pressure10": -0.256,
+      "trail_width": "20%",
+      "trail": 12.08
+    },
+    {
+      "et": "10:18:14",
+      "last": 14.4,
+      "pnl": -493.43,
+      "peak": 15.1,
+      "pressure10": -0.426,
+      "trail_width": "10%",
+      "trail": 13.59
+    },
+    {
+      "et": "10:21:36",
+      "last": 14.4313,
+      "pnl": -461.91,
+      "peak": 15.1,
+      "pressure10": -0.249,
+      "trail_width": "20%",
+      "trail": 12.08
+    },
+    {
+      "et": "10:25:56",
+      "last": 14.275,
+      "pnl": -619.31,
+      "peak": 15.1,
+      "pressure10": 0.062,
+      "trail_width": "20%",
+      "trail": 12.08
+    },
+    {
+      "et": "10:31:00",
+      "last": 14.145,
+      "pnl": -750.22,
+      "peak": 15.1,
+      "pressure10": -0.089,
+      "trail_width": "20%",
+      "trail": 12.08,
+      "note": "-5.00% from entry; 3.15% above the binding hard stop at 13.6988"
+    },
+    {
+      "et": "10:35:54",
+      "last": 14.26,
+      "pnl": -634.41,
+      "peak": 15.1,
+      "pressure10": -0.434,
+      "trail_width": "10%",
+      "trail": 13.59
+    },
+    {
+      "et": "10:41:06",
+      "last": 14.1882,
+      "pnl": -706.71,
+      "peak": 15.1,
+      "pressure10": -0.294,
+      "trail_width": "20%",
+      "trail": 12.08
+    },
+    {
+      "et": "10:46:17",
+      "last": 14.175,
+      "pnl": -720.0,
+      "peak": 15.1,
+      "pressure10": -0.188,
+      "trail_width": "20%",
+      "trail": 12.08
+    },
+    {
+      "et": "10:51:32",
+      "last": 14.22,
+      "pnl": -674.69,
+      "peak": 15.1,
+      "pressure10": 0.036,
       "trail_width": "20%",
       "trail": 12.08
     }
