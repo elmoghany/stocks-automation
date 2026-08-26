@@ -123,7 +123,11 @@
     "BRNX",
     "GSIW",
     "RACC",
-    "RPGL"
+    "RPGL",
+    "ANF",
+    "RVSN",
+    "TH",
+    "LBGJ"
   ],
   "trades": [],
   "candidates": {
@@ -153,6 +157,14 @@
         "time_et": "07:20:30",
         "phase": "premarket",
         "spread_pct": 17.54,
+        "cap_pct": 0.5,
+        "outcome": "VETO"
+      },
+      {
+        "symbol": "TH",
+        "time_et": "07:45:01",
+        "phase": "premarket",
+        "spread_pct": 8.83,
         "cap_pct": 0.5,
         "outcome": "VETO"
       }
@@ -219,12 +231,30 @@
         ]
       ],
       "verdict": "SPREAD VETO + DEPTH VETO"
+    },
+    {
+      "symbol": "TH",
+      "time_et": "07:45:01",
+      "phase": "premarket",
+      "bid": 18.01,
+      "ask": 19.6,
+      "spread_pct": 8.83,
+      "inside_bid_size": 500,
+      "inside_ask_size": 150,
+      "premarket_high": 21.8662,
+      "trigger_b_level": 21.8662,
+      "ask_depth_to_trigger_plus_0.5pct": 335,
+      "intended_shares": 686,
+      "depth_pct_of_intended": 48.8,
+      "vol_cap_20pct_trailing10": 1903,
+      "verdict": "SPREAD VETO (8.83% vs 0.50% cap). Depth would have merely REDUCED the ticket to 335 sh, not skipped it."
     }
   ],
   "trigger_c": [],
   "halal": {
     "PASS": [
-      "RPGL"
+      "RPGL",
+      "TH"
     ],
     "FAIL": [
       "YYGH",
@@ -240,7 +270,10 @@
       "GYRO",
       "BRNX",
       "GSIW",
-      "RACC"
+      "RACC",
+      "ANF",
+      "RVSN",
+      "LBGJ"
     ],
     "CANNOT_VERIFY": [],
     "fake_gap": [
@@ -258,6 +291,42 @@
       "common_stock_crossed": 15,
       "armable": 0,
       "top": "RPGL (double-vetoed, untradeable)"
+    },
+    {
+      "n": 3,
+      "time_et": "07:30",
+      "state": "FLAT-5m",
+      "scan_rows": 70,
+      "new": 0
+    },
+    {
+      "n": 4,
+      "time_et": "07:35",
+      "state": "FLAT-5m",
+      "scan_rows": 73,
+      "new": [
+        "ANF",
+        "RVSN",
+        "TH"
+      ]
+    },
+    {
+      "n": 5,
+      "time_et": "07:40",
+      "state": "FLAT-5m",
+      "scan_rows": 73,
+      "new": [
+        "LBGJ"
+      ]
+    },
+    {
+      "n": 6,
+      "time_et": "07:47",
+      "state": "FLAT-5m",
+      "rank": "4 crossed / 1 armable, TOP=TH",
+      "armable": 1,
+      "top": "TH",
+      "outcome": "spread veto 8.83%"
     }
   ],
   "coverage_gaps": [
@@ -319,6 +388,43 @@
         "reason": "blank-check acquisition corp - same as BCAR"
       }
     },
-    "note": "BCAR and RACC were the ONLY 2 of 15 crossed names on halal_list.json, and both score halal=true on ratios. Question 2 is what refused them. Same failure mode as Day-8 ANGX, caught pre-arming."
+    "note": "BCAR and RACC were the ONLY 2 of 15 crossed names on halal_list.json, and both score halal=true on ratios. Question 2 is what refused them. Same failure mode as Day-8 ANGX, caught pre-arming.",
+    "post_open_wave_1": {
+      "TH": {
+        "verdict": "PASS",
+        "on_halal_list": true,
+        "loan_pct": 2.19,
+        "cash_pct": 0.31,
+        "combined": 2.5,
+        "haram_pct": 0.01,
+        "ruling": "2026-08-22 affirmative activity ruling: Zoya 'Shariah-compliant' (AAOIFI, requires impermissible revenue <5%); Musaffa 'doubtful'. Screen triggers were hospitality/catering; the ruling clears the ACTIVITY leg, house 10/10/20 ratios still gate and they pass.",
+        "note": "This is the expanded 236-ruling overlay doing exactly what it was built for - a hospitality name that the keyword screen would have refused is armable on affirmative evidence."
+      },
+      "ANF": {
+        "verdict": "FAIL",
+        "loan_pct": 26.73,
+        "cash_pct": 12.81,
+        "reason": "LOAN>10+COMBINED>20",
+        "note": "Abercrombie & Fitch +10.7% at $120.50 - a genuinely liquid name, refused on financing ratios. The structural tension from Day 8 again: the tradeable books are the leveraged ones."
+      },
+      "RVSN": {
+        "verdict": "FAIL",
+        "cash_pct": 195.15,
+        "reason": "CASH>10+COMBINED>20"
+      },
+      "LBGJ": {
+        "verdict": "FAIL",
+        "loan_pct": 22785.23,
+        "cash_pct": 6451.02,
+        "reason": "LOAN>10+COMBINED>20",
+        "note": "Has an affirmative 2026-08-21 ACTIVITY ruling (false association, AZ shopping-cart precedent - it makes commercial kitchen equipment). That ruling clears question 2 only; question 1 ratios still gate and they fail catastrophically. Ruling != blanket pass."
+      }
+    }
+  },
+  "cadence_decision": {
+    "time_et": "07:50",
+    "decision": "Trigger C polling runs at the 5-minute rank cadence PREMARKET, switching to the mandated 1-minute poll at 09:25 ET.",
+    "reason": "TH's premarket book is 8.83% wide and RPGL's is 17.5%. Every premarket Trigger C fire is pre-vetoed by the book before it can be armed, so a 1-minute poll would spend ~100 bar fetches on signals that are unarmable by construction. This follows SCAN ECONOMY's principle of looking at the market only when we can act. Logged as a deliberate, reasoned cadence choice - not a drift.",
+    "risk_accepted": "If a premarket spread were to collapse below 0.5% between 5-minute checks, a Trigger C fire could be missed. Given the observed 8.8-17.5% widths that is not a live risk this morning."
   }
 }
