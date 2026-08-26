@@ -303,6 +303,46 @@ CFGS = {
     # is now every candidate/day (~213) instead of the ~17 that had
     # gain-selected bars. Separate id so C37E's pre-backfill row is
     # never overwritten. Run: HALAL_STRICT=1 PT_FILED=1 ROTSHARD=full.
+    # ---- HV run 2 (2026-08-26): the phase hypothesis. Run 1 showed
+    # EVERY amihud threshold gains ~the same (+42-47k) AND the inverted
+    # control gains too (+22k) -- signature of "trade less in premarket"
+    # rather than "trade smarter". Test that directly: skip premarket
+    # entries entirely, with and without the post-open veto.
+    "HVN0": dict(desc="no premarket entries at all (entry_open 09:30)",
+                 entry_open=dtime(9, 30), entry_cutoff=dtime(14, 30),
+                 escape=dtime(10, 0)),
+    "HVN1": dict(desc="no premarket entries + post-open bar-range veto",
+                 entry_open=dtime(9, 30), entry_cutoff=dtime(14, 30),
+                 escape=dtime(10, 0), hv_veto={"amihud_cut": 0.24}),
+    "HVN2": dict(desc="premarket entries ONLY (control: 07:00-09:30)",
+                 entry_open=dtime(7, 0), entry_cutoff=dtime(9, 30),
+                 escape=dtime(9, 0)),
+    # ---- HV-series (2026-08-25): the honest-pool edge search, run 1.
+    # Registered before running. Baseline C37F = -72,673 / 445d / 18-23
+    # negm. Pass bar for a REAL edge: both years independently positive,
+    # controls fail, adjacency coherent; anything less is reported as-is.
+    "HV000": dict(desc="IDENTITY: C37F reproduction (hv machinery off)",
+                  entry_cutoff=dtime(14, 30), escape=dtime(10, 0)),
+    "HVA12": dict(desc="HV veto: amihud pm cut 0.12 + bar-range post 2.0",
+                  entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                  hv_veto={"amihud_cut": 0.12}),
+    "HVA18": dict(desc="HV veto: amihud pm cut 0.18 + post 2.0",
+                  entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                  hv_veto={"amihud_cut": 0.18}),
+    "HVA24": dict(desc="HV veto: amihud pm cut 0.24 (calibrated 0.5% "
+                       "map) + post 2.0",
+                  entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                  hv_veto={"amihud_cut": 0.24}),
+    "HVA36": dict(desc="HV veto: amihud pm cut 0.36 + post 2.0",
+                  entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                  hv_veto={"amihud_cut": 0.36}),
+    "HVCS": dict(desc="CONTROL: seeded random veto ~matched rate",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 hv_veto={"amihud_cut": 0.24, "shuffle_rate": 0.6},
+                 hv_shuffle=True),
+    "HVCI": dict(desc="CONTROL: INVERTED -- veto TIGHT premarket books",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 hv_veto={"amihud_cut": 0.24, "invert": True}),
     "C37F": dict(desc="C37 on the FULL-coverage pool (post-backfill "
                       "benchmark)",
                  entry_cutoff=dtime(14, 30), escape=dtime(10, 0)),
@@ -636,6 +676,44 @@ def run_day(cands, date, cfg, stats=None, fc=None):
         # premarket haircut and takes the trade. Applied here, post-hoc
         # at the entry bar, so NO engine change is needed (identity of
         # every prior result is untouched by construction).
+        # HV-series (2026-08-25): calibrated-instrument veto on the
+        # honest pool. Phase-split per plan/calibrate_liquidity.py:
+        # premarket books are measured by AMIHUD (bar-range is ANTI-
+        # correlated there, rho -0.34) with undefined = width evidence
+        # = VETO; post-open keeps the bar-range proxy at the V200 cap.
+        hv = cfg.get("hv_veto")
+        if hv:
+            import importlib.util as _ilu
+            if "liqest" not in sys.modules:
+                _sp = _ilu.spec_from_file_location(
+                    "liqest", ROOT / "plan/liquidity_estimators.py")
+                _m = _ilu.module_from_spec(_sp)
+                sys.modules["liqest"] = _m
+                _sp.loader.exec_module(_m)
+            liq = sys.modules["liqest"]
+            if stats is not None:
+                stats["checked"] = stats.get("checked", 0) + 1
+            _veto = False
+            if cfg.get("hv_shuffle"):
+                import random as _r
+                _veto = _r.Random(f"hv-{date}-{pick['c']['symbol']}-"
+                                  f"{ticket_i}").random() < hv.get(
+                                      "shuffle_rate", 0.5)
+            elif first_entry.time() < dtime(9, 30):
+                a = liq.amihud(df, first_entry, hv.get("lb", 30))
+                thr = hv["amihud_cut"]
+                wide = (a is None) or (a > thr)
+                _veto = (not wide) if hv.get("invert") else wide
+            else:
+                prox = spread_proxy(df, first_entry,
+                                    hv.get("post_lb", 10))
+                _veto = (prox is not None
+                         and prox > hv.get("post_cap", 2.0))
+            if _veto:
+                if stats is not None:
+                    stats["vetoed"] = stats.get("vetoed", 0) + 1
+                t = _step(first_entry.time())
+                continue
         vcap = cfg.get("spread_veto")
         if vcap:
             lb = cfg.get("veto_lookback", 10)
