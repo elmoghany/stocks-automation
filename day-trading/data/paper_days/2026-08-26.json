@@ -155,7 +155,12 @@
     "SONM",
     "WBTN",
     "AKTX",
-    "WSHP"
+    "WSHP",
+    "VHC",
+    "BHVN",
+    "EDSA",
+    "SCYX",
+    "CRDL"
   ],
   "trades": [
     {
@@ -1017,7 +1022,7 @@
     "rate_pct": 100.0,
     "note": "3/3 premarket, matching the historical 90-100% premarket rate the V-series flagged as TOO AGGRESSIVE. But the spread distribution is the real story: 17.54% / 8.83% / 1.37%. These are not marginal calls - two of the three are 18x and 35x the cap. Only SMMT is plausibly tradeable and only after the open."
   },
-  "heartbeat_et": "11:20:31",
+  "heartbeat_et": "11:52:09",
   "armed": [
     {
       "ticket": 1,
@@ -1302,12 +1307,43 @@
       "pressure10": -0.163,
       "trail_width": "20%",
       "note": "90 minutes range-bound 14.14-14.26; hard stop 13.6988 never approached closer than 3.2%"
+    },
+    {
+      "et": "11:26:20",
+      "last": 14.15,
+      "pnl": -745.18,
+      "peak": 15.1,
+      "pressure10": 0.079
+    },
+    {
+      "et": "11:34:09",
+      "last": 14.22,
+      "pnl": -674.69,
+      "peak": 15.1,
+      "pressure10": 0.129
+    },
+    {
+      "et": "11:42:34",
+      "last": 14.24,
+      "pnl": -654.55,
+      "peak": 15.1,
+      "pressure10": 0.225
+    },
+    {
+      "et": "11:51:55",
+      "last": 14.22,
+      "pnl": -674.69,
+      "peak": 15.1,
+      "pressure10": -0.086
     }
   ],
   "cadence_decision_position": {
     "et": "09:57",
     "decision": "Position watch at ~2-3 minute spacing while both exit levels sit ~18-20% below price; tighten to 1 minute near any exit zone or after 14:30.",
     "rationale": "Trail 12.08 and hard stop 13.70 against a 14.85-15.10 price. Every bar is still ingested and the watcher replays ALL bars bar-by-bar in time order, so no bar goes unevaluated - only the polling frequency is relaxed. Same reasoning Day 15 logged for CRML.",
-    "guarantee": "The hard stop is tested INTRABAR against each bar's LOW and the trail on each bar's CLOSE, so a fast spike down between polls is still caught when the bars arrive."
+    "guarantee": "The hard stop is tested INTRABAR against each bar's LOW and the trail on each bar's CLOSE, so a fast spike down between polls is still caught when the bars arrive.",
+    "widened_et": "11:34",
+    "widened_to": "~8-10 minutes while range-bound",
+    "why_this_is_honest": "The -8% stop is a RESTING order at the broker layer, and the watcher replays every ingested bar in time order testing the stop INTRABAR against each bar's low and the trail on each bar's close. Poll spacing therefore changes only WHEN WE LEARN of a fill, never the modelled fill price or time. No bar goes unevaluated at any cadence."
   }
 }
