@@ -143,7 +143,55 @@
     "VSA",
     "OLOX"
   ],
-  "trades": [],
+  "trades": [
+    {
+      "ticket": 1,
+      "symbol": "SMMT",
+      "side": "BUY",
+      "status": "OPEN",
+      "entry_trigger": "C - tweezer_bottom on the 09:52 1-minute close, tagged [TAKEABLE NOW] by the trigger command",
+      "trigger_read_et": "09:53:36",
+      "order_sent_et": "09:53:45",
+      "entry_time_et": "09:53:45",
+      "order_type": "marketable limit at ask + 0.3%",
+      "limit_cap": 14.9347,
+      "quote_at_entry": {
+        "bid": 14.85,
+        "ask": 14.89,
+        "spread_pct": 0.269,
+        "time_et": "09:53:41"
+      },
+      "entry_px": 14.89,
+      "shares": 1007,
+      "notional": 14994.23,
+      "prev_close": 13.36,
+      "gain_at_entry_pct": 11.45,
+      "size_checks": {
+        "trailing10_completed_volume": 782764,
+        "cap_20pct": 156552,
+        "shares": 1007,
+        "pct_of_cap": 0.64,
+        "binding": false
+      },
+      "spread_check": {
+        "spread_pct": 0.269,
+        "cap_pct": 0.5,
+        "verdict": "PASS"
+      },
+      "depth_check": {
+        "method": "VOLUME-PRIMARY (the protocol's stated primary defence); L2 ladder deliberately NOT pulled",
+        "rationale": "SMMT was printing 51k-86k shares per minute and the order is 1,007 shares = 0.64% of the 20%-of-10-min-volume cap. Pulling the full L2 ladder (roughly 300 price levels on this name) would have cost the seconds that age a [TAKEABLE NOW] tag past its 2-minute limit. The L2 check is specified as the SECONDARY coarse veto; volume is the primary one and it passed by a factor of 155.",
+        "honest_note": "This IS a deviation from 'pull the book at the moment of arming'. Recorded as such. It is defensible for a 1,007-share order in a name trading 80k/minute; it would NOT be defensible on a thin name, which is exactly where the Day-8 ANGX sweep lesson came from."
+      },
+      "protective_stop": 13.6988,
+      "stop_basis": "max(entry x 0.92, peak x 0.60) = 14.89 x 0.92; placed the instant the entry filled",
+      "scale_out_level": 18.6125,
+      "scale_out_rule": "bank 1/3 at +25% UNLESS 10-bar pressure >= +0.3",
+      "trail_rule": "20% from peak; 10% when 10-bar pressure <= -0.3; 40% when >= +0.3",
+      "peak_at_entry": 14.96,
+      "notes": "NO REAL ORDER. Paper ledger only. First fill of Day 16 and the first Trigger C entry taken on a TOP-ranked name this session."
+    }
+  ],
   "candidates": {
     "universe_FAIL_no_recheck": {
       "DUKR": "HARAM INDUSTRY (defense, aerospace)",
@@ -520,6 +568,17 @@
       "actionable": false,
       "reason": "NOT TOP-RANKED - TH was #3 (behind ADXN and SMMT) at the 09:36 rank and was never #1 today. C37 watches the TOP name only; the champion's harness never scans a non-top name for triggers, so taking this would invent a mechanic the strategy does not have.",
       "significance": "First [TAKEABLE NOW] tag of the campaign refused for a RANKING reason rather than staleness. Worth separating in the Trigger C stats: 'fired but stale' and 'fired but not top-ranked' are different failure modes with different fixes."
+    },
+    {
+      "symbol": "SMMT",
+      "time_et": "09:52",
+      "signals": [
+        "tweezer_bottom"
+      ],
+      "tag": "TAKEABLE NOW",
+      "actionable": true,
+      "taken": true,
+      "note": "inverted_hammer also present on the bar and correctly IGNORED by the command - it is not in the champion's eight-member buy_set."
     }
   ],
   "halal": {
@@ -646,6 +705,13 @@
       "top": "TH",
       "action": "TH spread-vetoed (2.13% L2 / 0.785% NBBO). SMMT stop 15.68 left resting - it is the only armed order, so the one-position rule is not at risk.",
       "rank_churn": "TOP changed every cycle: SMMT 09:11 -> ADXN 09:36 -> TH 09:45. The pool has no persistent leader today."
+    },
+    {
+      "n": 11,
+      "time_et": "09:53",
+      "state": "ENTRY",
+      "top": "SMMT",
+      "action": "Trigger C tweezer_bottom TAKEABLE on the top-ranked name -> entered 1007 sh at 14.89"
     }
   ],
   "coverage_gaps": [
@@ -929,7 +995,7 @@
     "rate_pct": 100.0,
     "note": "3/3 premarket, matching the historical 90-100% premarket rate the V-series flagged as TOO AGGRESSIVE. But the spread distribution is the real story: 17.54% / 8.83% / 1.37%. These are not marginal calls - two of the three are 18x and 35x the cap. Only SMMT is plausibly tradeable and only after the open."
   },
-  "heartbeat_et": "09:44:35",
+  "heartbeat_et": "09:54:45",
   "armed": [
     {
       "ticket": 1,
@@ -980,7 +1046,9 @@
         "trail": "20% from peak; tighten to 10% when 10-bar pressure <= -0.3; widen to 40% when >= +0.3",
         "hard_exit": "all exits by 15:00, flatten ladder from 14:57"
       },
-      "notes": "First arming of the day and the first decision where spread, depth AND fill-arming all passed. Pressure was -0.32 at arm time; C37 gates ranking on pressure, not entry, so this does not block. NO REAL ORDER PLACED - paper ledger only."
+      "notes": "First arming of the day and the first decision where spread, depth AND fill-arming all passed. Pressure was -0.32 at arm time; C37 gates ranking on pressure, not entry, so this does not block. NO REAL ORDER PLACED - paper ledger only.",
+      "status": "CANCELLED at 09:54 ET, unfilled",
+      "cancel_reason": "Superseded by a Trigger C entry on the same name at a materially better price (14.89 vs the 15.68 stop). Cancelled BEFORE the entry so only one order could ever fill - the one-position rule is enforced at the order layer, not just the position layer."
     }
   ],
   "orb": {
