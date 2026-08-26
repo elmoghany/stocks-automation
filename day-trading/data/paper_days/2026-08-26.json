@@ -160,7 +160,9 @@
     "BHVN",
     "EDSA",
     "SCYX",
-    "CRDL"
+    "CRDL",
+    "GNLN",
+    "CGTL"
   ],
   "trades": [
     {
@@ -1022,7 +1024,7 @@
     "rate_pct": 100.0,
     "note": "3/3 premarket, matching the historical 90-100% premarket rate the V-series flagged as TOO AGGRESSIVE. But the spread distribution is the real story: 17.54% / 8.83% / 1.37%. These are not marginal calls - two of the three are 18x and 35x the cap. Only SMMT is plausibly tradeable and only after the open."
   },
-  "heartbeat_et": "11:52:09",
+  "heartbeat_et": "12:30:43",
   "armed": [
     {
       "ticket": 1,
@@ -1335,6 +1337,38 @@
       "pnl": -674.69,
       "peak": 15.1,
       "pressure10": -0.086
+    },
+    {
+      "et": "12:00:48",
+      "last": 14.24,
+      "pnl": -654.55,
+      "peak": 15.1,
+      "pressure10": 0.25
+    },
+    {
+      "et": "12:10:33",
+      "last": 14.33,
+      "pnl": -563.92,
+      "peak": 15.1,
+      "pressure10": 0.349,
+      "trail_width": "40%",
+      "note": "pressure >= +0.3 so the trail WIDENED to 40%; all three trail states (10/20/40) have now been exercised live today"
+    },
+    {
+      "et": "12:20:28",
+      "last": 14.295,
+      "pnl": -599.17,
+      "peak": 15.1,
+      "pressure10": -0.123,
+      "trail_width": "20%"
+    },
+    {
+      "et": "12:30:32",
+      "last": 14.27,
+      "pnl": -624.34,
+      "peak": 15.1,
+      "pressure10": -0.089,
+      "trail_width": "20%"
     }
   ],
   "cadence_decision_position": {
