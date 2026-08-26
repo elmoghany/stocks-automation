@@ -140,7 +140,8 @@
     "STFS",
     "BZ",
     "ZJYL",
-    "VSA"
+    "VSA",
+    "OLOX"
   ],
   "trades": [],
   "candidates": {
@@ -228,6 +229,27 @@
         "inside_ask_size": 1100,
         "outcome": "NO ENTRY",
         "note": "ADXN was the TOP-ranked name at this cycle and still could not be armed. Total day volume 15,156 sh, pressure UNTRUSTED. A 4.49% spread six minutes after the open is not a premarket artifact - it is a genuinely illiquid name."
+      },
+      {
+        "n": 5,
+        "symbol": "TH",
+        "time_et": "09:43:33",
+        "phase": "post-open",
+        "spread_pct_L2": 2.13,
+        "spread_pct_NBBO": 0.785,
+        "spread_would_block": true,
+        "depth_would_block": false,
+        "chase_would_block": false,
+        "binding_rule": "spread",
+        "bid_L2": 17.86,
+        "ask_L2": 18.24,
+        "bid_NBBO": 17.82,
+        "ask_NBBO": 17.96,
+        "trigger_a_orb": 18.6794,
+        "cum_ask_to_limit": 4974,
+        "intended": 803,
+        "outcome": "NO ENTRY",
+        "note": "TOP-ranked and refused on spread by BOTH measures. Depth was ample (4,974 vs 803 intended); spread alone blocked it."
       }
     ],
     "depth": [
@@ -533,7 +555,8 @@
       "STFS",
       "BZ",
       "ZJYL",
-      "VSA"
+      "VSA",
+      "OLOX"
     ],
     "CANNOT_VERIFY": [],
     "fake_gap": [
@@ -614,6 +637,15 @@
       "top": "ADXN",
       "action": "ADXN spread-vetoed 4.49%; SMMT stop 15.68 still resting unfilled; TH tweezer TAKEABLE but not top-ranked",
       "smmt_note": "SMMT opened 14.75, traded 14.51-14.99, faded to 14.36 - below its own +10% gate of 14.696. Stop at 15.68 unfilled."
+    },
+    {
+      "n": 10,
+      "time_et": "09:45",
+      "state": "FLAT-5m",
+      "rank": "4 crossed / 3 armable",
+      "top": "TH",
+      "action": "TH spread-vetoed (2.13% L2 / 0.785% NBBO). SMMT stop 15.68 left resting - it is the only armed order, so the one-position rule is not at risk.",
+      "rank_churn": "TOP changed every cycle: SMMT 09:11 -> ADXN 09:36 -> TH 09:45. The pool has no persistent leader today."
     }
   ],
   "coverage_gaps": [
@@ -790,6 +822,11 @@
       "CISS": {
         "verdict": "NOT SCREENED",
         "note": "not in universe; never reached top-3 candidacy, so lazily left unscreened per SCAN ECONOMY rule b"
+      },
+      "OLOX": {
+        "verdict": "FAIL",
+        "loan_pct": 249.37,
+        "reason": "LOAN>10+COMBINED>20"
       }
     }
   },
@@ -863,6 +900,27 @@
       "inside_ask_size": 1100,
       "outcome": "NO ENTRY",
       "note": "ADXN was the TOP-ranked name at this cycle and still could not be armed. Total day volume 15,156 sh, pressure UNTRUSTED. A 4.49% spread six minutes after the open is not a premarket artifact - it is a genuinely illiquid name."
+    },
+    {
+      "n": 5,
+      "symbol": "TH",
+      "time_et": "09:43:33",
+      "phase": "post-open",
+      "spread_pct_L2": 2.13,
+      "spread_pct_NBBO": 0.785,
+      "spread_would_block": true,
+      "depth_would_block": false,
+      "chase_would_block": false,
+      "binding_rule": "spread",
+      "bid_L2": 17.86,
+      "ask_L2": 18.24,
+      "bid_NBBO": 17.82,
+      "ask_NBBO": 17.96,
+      "trigger_a_orb": 18.6794,
+      "cum_ask_to_limit": 4974,
+      "intended": 803,
+      "outcome": "NO ENTRY",
+      "note": "TOP-ranked and refused on spread by BOTH measures. Depth was ample (4,974 vs 803 intended); spread alone blocked it."
     }
   ],
   "premarket_veto_rate": {
@@ -871,7 +929,7 @@
     "rate_pct": 100.0,
     "note": "3/3 premarket, matching the historical 90-100% premarket rate the V-series flagged as TOO AGGRESSIVE. But the spread distribution is the real story: 17.54% / 8.83% / 1.37%. These are not marginal calls - two of the three are 18x and 35x the cap. Only SMMT is plausibly tradeable and only after the open."
   },
-  "heartbeat_et": "09:37:46",
+  "heartbeat_et": "09:44:35",
   "armed": [
     {
       "ticket": 1,
@@ -939,5 +997,16 @@
       "low": 18.1671
     },
     "window": "09:30-09:34 ET"
+  },
+  "finding_L2_vs_NBBO": {
+    "observed_et": "09:42-09:43",
+    "symbol": "TH",
+    "L2_inside": "17.86 / 18.24 = 2.13%",
+    "NBBO_quote": "17.82 / 17.96 = 0.785%",
+    "ratio": 2.7,
+    "why_it_matters": "The thin-book veto is specified against the L2 spread, and get_equity_price_book's inside market is materially WIDER than the consolidated quote for the same symbol at the same second. If the campaign's measured spread-veto rate has been computed off the L2 view it is BIASED HIGH - a candidate MECHANICAL explanation for live's 90-100% premarket veto rate against a modelled 50-65% optimum, previously attributed to threshold miscalibration.",
+    "caveat": "One observation, one name. The standing L2 notes already warn venue coverage is unverified and retail feeds are often partial views. Needs repeat measurement before it is a finding.",
+    "action": "Log BOTH numbers on every book observation from here on. Do NOT change the rule mid-session.",
+    "todays_decisions_unaffected": "Both measures exceeded the 0.50% cap on every vetoed decision today, so no entry decision turns on which is used."
   }
 }
