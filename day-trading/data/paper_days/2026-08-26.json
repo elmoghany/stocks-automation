@@ -154,7 +154,8 @@
     "QMLS",
     "SONM",
     "WBTN",
-    "AKTX"
+    "AKTX",
+    "WSHP"
   ],
   "trades": [
     {
@@ -1016,7 +1017,7 @@
     "rate_pct": 100.0,
     "note": "3/3 premarket, matching the historical 90-100% premarket rate the V-series flagged as TOO AGGRESSIVE. But the spread distribution is the real story: 17.54% / 8.83% / 1.37%. These are not marginal calls - two of the three are 18x and 35x the cap. Only SMMT is plausibly tradeable and only after the open."
   },
-  "heartbeat_et": "10:51:43",
+  "heartbeat_et": "11:20:31",
   "armed": [
     {
       "ticket": 1,
@@ -1260,6 +1261,47 @@
       "pressure10": 0.036,
       "trail_width": "20%",
       "trail": 12.08
+    },
+    {
+      "et": "10:56:34",
+      "last": 14.193,
+      "pnl": -701.88,
+      "peak": 15.1,
+      "pressure10": 0.06,
+      "trail_width": "20%"
+    },
+    {
+      "et": "11:01:47",
+      "last": 14.205,
+      "pnl": -689.8,
+      "peak": 15.1,
+      "pressure10": -0.182,
+      "trail_width": "20%"
+    },
+    {
+      "et": "11:07:08",
+      "last": 14.17,
+      "pnl": -725.04,
+      "peak": 15.1,
+      "pressure10": -0.234,
+      "trail_width": "20%"
+    },
+    {
+      "et": "11:13:30",
+      "last": 14.19,
+      "pnl": -704.9,
+      "peak": 15.1,
+      "pressure10": 0.129,
+      "trail_width": "20%"
+    },
+    {
+      "et": "11:20:19",
+      "last": 14.15,
+      "pnl": -745.18,
+      "peak": 15.1,
+      "pressure10": -0.163,
+      "trail_width": "20%",
+      "note": "90 minutes range-bound 14.14-14.26; hard stop 13.6988 never approached closer than 3.2%"
     }
   ],
   "cadence_decision_position": {
