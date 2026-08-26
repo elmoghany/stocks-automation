@@ -41,7 +41,8 @@
       "robinhood_mcp": "OK (run_scan, historicals, quotes, price_book, fundamentals all returning)",
       "trading_day_guard": "TRADING 2026-08-26 full",
       "note": "This is the Day-16 postmortem's recommended probe, run for the first time. All three green."
-    }
+    },
+    "watchdog_note": "Backup watchdog fired at 08:33 ET on a 35-min-stale day file. Correct behaviour and a useful confirmation of the Day-16 lesson in reverse: the session was alive but IDLE (premarket, nothing armable), and a presence watchdog cannot tell idle from dead. Day file is now touched every cycle so staleness means what it claims to mean."
   },
   "inherited_verdicts": {
     "PASS": [
@@ -127,7 +128,12 @@
     "ANF",
     "RVSN",
     "TH",
-    "LBGJ"
+    "LBGJ",
+    "CRE",
+    "SOGP",
+    "SMMT",
+    "EEIQ",
+    "MIMI"
   ],
   "trades": [],
   "candidates": {
@@ -153,35 +159,109 @@
   "vetoes": {
     "spread": [
       {
+        "n": 1,
         "symbol": "RPGL",
         "time_et": "07:20:30",
         "phase": "premarket",
         "spread_pct": 17.54,
-        "cap_pct": 0.5,
-        "outcome": "VETO"
+        "spread_would_block": true,
+        "depth_would_block": true,
+        "chase_would_block": false,
+        "binding_rule": "spread",
+        "ask_depth": 100,
+        "intended": 6048,
+        "outcome": "NO ENTRY"
       },
       {
+        "n": 2,
         "symbol": "TH",
         "time_et": "07:45:01",
         "phase": "premarket",
         "spread_pct": 8.83,
-        "cap_pct": 0.5,
-        "outcome": "VETO"
+        "spread_would_block": true,
+        "depth_would_block": false,
+        "chase_would_block": false,
+        "binding_rule": "spread",
+        "ask_depth": 335,
+        "intended": 686,
+        "depth_pct": 48.8,
+        "outcome": "NO ENTRY",
+        "note": "depth alone would only have REDUCED the ticket to 335 sh, not skipped it"
+      },
+      {
+        "n": 3,
+        "symbol": "SMMT",
+        "time_et": "07:59:30",
+        "phase": "premarket",
+        "spread_pct": 1.37,
+        "spread_would_block": true,
+        "depth_would_block": true,
+        "chase_would_block": true,
+        "binding_rule": "chase (fill-arming rule)",
+        "ask_depth": 80,
+        "intended": 1013,
+        "depth_pct": 7.9,
+        "trigger_b_level": 14.74,
+        "last_at_check": 14.74,
+        "outcome": "NO ENTRY",
+        "detail": "Trigger B (premarket-high stop-buy) level 14.74 was ALREADY MET - last == premarket high, so a stop would convert to a market order and sweep the book. Fill-arming rule sends us to a marketable limit capped at 14.74*1.005 = 14.8137; displayed ask inside that cap is 80 sh at 14.80 against 1,013 intended (7.9%, below the 25% floor), so the capped limit cannot fill. Veto and wait for the next bar. Spread 1.37% independently over the 0.50% cap."
       }
     ],
     "depth": [
       {
+        "n": 1,
         "symbol": "RPGL",
         "time_et": "07:20:30",
         "phase": "premarket",
+        "spread_pct": 17.54,
+        "spread_would_block": true,
+        "depth_would_block": true,
+        "chase_would_block": false,
+        "binding_rule": "spread",
         "ask_depth": 100,
         "intended": 6048,
-        "pct": 1.65,
-        "floor_pct": 25,
-        "outcome": "VETO"
+        "outcome": "NO ENTRY"
+      },
+      {
+        "n": 3,
+        "symbol": "SMMT",
+        "time_et": "07:59:30",
+        "phase": "premarket",
+        "spread_pct": 1.37,
+        "spread_would_block": true,
+        "depth_would_block": true,
+        "chase_would_block": true,
+        "binding_rule": "chase (fill-arming rule)",
+        "ask_depth": 80,
+        "intended": 1013,
+        "depth_pct": 7.9,
+        "trigger_b_level": 14.74,
+        "last_at_check": 14.74,
+        "outcome": "NO ENTRY",
+        "detail": "Trigger B (premarket-high stop-buy) level 14.74 was ALREADY MET - last == premarket high, so a stop would convert to a market order and sweep the book. Fill-arming rule sends us to a marketable limit capped at 14.74*1.005 = 14.8137; displayed ask inside that cap is 80 sh at 14.80 against 1,013 intended (7.9%, below the 25% floor), so the capped limit cannot fill. Veto and wait for the next bar. Spread 1.37% independently over the 0.50% cap."
       }
     ],
-    "chase": []
+    "chase": [
+      {
+        "n": 3,
+        "symbol": "SMMT",
+        "time_et": "07:59:30",
+        "phase": "premarket",
+        "spread_pct": 1.37,
+        "spread_would_block": true,
+        "depth_would_block": true,
+        "chase_would_block": true,
+        "binding_rule": "chase (fill-arming rule)",
+        "ask_depth": 80,
+        "intended": 1013,
+        "depth_pct": 7.9,
+        "trigger_b_level": 14.74,
+        "last_at_check": 14.74,
+        "outcome": "NO ENTRY",
+        "detail": "Trigger B (premarket-high stop-buy) level 14.74 was ALREADY MET - last == premarket high, so a stop would convert to a market order and sweep the book. Fill-arming rule sends us to a marketable limit capped at 14.74*1.005 = 14.8137; displayed ask inside that cap is 80 sh at 14.80 against 1,013 intended (7.9%, below the 25% floor), so the capped limit cannot fill. Veto and wait for the next bar. Spread 1.37% independently over the 0.50% cap."
+      }
+    ],
+    "_note": "Three SEPARATE rates per the 2026-08-14 rule. A decision can trip more than one rule; binding_rule records which one actually refused it. Rates are reported both ways at EOD so the blend never hides which rule is binding."
   },
   "book_observations": [
     {
@@ -248,13 +328,82 @@
       "depth_pct_of_intended": 48.8,
       "vol_cap_20pct_trailing10": 1903,
       "verdict": "SPREAD VETO (8.83% vs 0.50% cap). Depth would have merely REDUCED the ticket to 335 sh, not skipped it."
+    },
+    {
+      "symbol": "SMMT",
+      "time_et": "07:56:36",
+      "phase": "premarket",
+      "bid": 14.6,
+      "ask": 14.8,
+      "spread_pct": 1.37,
+      "inside_bid_size": 100,
+      "inside_ask_size": 80,
+      "premarket_high": 14.74,
+      "coil": 1.0,
+      "pressure": 0.12,
+      "ask_ladder": [
+        [
+          14.8,
+          80
+        ],
+        [
+          14.82,
+          1
+        ],
+        [
+          14.83,
+          1
+        ],
+        [
+          14.84,
+          1
+        ],
+        [
+          14.85,
+          1
+        ],
+        [
+          14.87,
+          200
+        ],
+        [
+          14.9,
+          1000
+        ],
+        [
+          15.0,
+          5
+        ]
+      ],
+      "bid_ladder": [
+        [
+          14.6,
+          100
+        ],
+        [
+          14.5,
+          3100
+        ],
+        [
+          14.2,
+          15
+        ],
+        [
+          14.16,
+          50
+        ]
+      ],
+      "vol_cap_20pct_trailing10": 4887,
+      "verdict": "CHASE VETO binding; spread and depth also over limits",
+      "note": "3100 sh resting at 14.50 is a real bid wall. The ask side thins to 80 sh at the inside but reloads 1000 at 14.90. This is a normal-looking premarket book, unlike RPGL/TH."
     }
   ],
   "trigger_c": [],
   "halal": {
     "PASS": [
       "RPGL",
-      "TH"
+      "TH",
+      "SMMT"
     ],
     "FAIL": [
       "YYGH",
@@ -273,7 +422,11 @@
       "RACC",
       "ANF",
       "RVSN",
-      "LBGJ"
+      "LBGJ",
+      "CRE",
+      "SOGP",
+      "EEIQ",
+      "MIMI"
     ],
     "CANNOT_VERIFY": [],
     "fake_gap": [
@@ -327,6 +480,15 @@
       "armable": 1,
       "top": "TH",
       "outcome": "spread veto 8.83%"
+    },
+    {
+      "n": 7,
+      "time_et": "07:59",
+      "state": "FLAT-5m",
+      "rank": "3 crossed / 2 armable",
+      "armable": 2,
+      "top": "SMMT",
+      "outcome": "chase veto; SMMT coiled 1.000 at pm high"
     }
   ],
   "coverage_gaps": [
@@ -419,6 +581,47 @@
         "reason": "LOAN>10+COMBINED>20",
         "note": "Has an affirmative 2026-08-21 ACTIVITY ruling (false association, AZ shopping-cart precedent - it makes commercial kitchen equipment). That ruling clears question 2 only; question 1 ratios still gate and they fail catastrophically. Ruling != blanket pass."
       }
+    },
+    "post_open_wave_2": {
+      "SMMT": {
+        "verdict": "PASS",
+        "on_halal_list": true,
+        "loan_pct": 0.18,
+        "cash_pct": 6.18,
+        "combined": 6.36,
+        "business": "Summit Therapeutics - clinical-stage biopharma. Permissible business, no haram line.",
+        "note": "The day's best book by a wide margin and the first name all morning whose spread is within one order of magnitude of the 0.5% cap."
+      },
+      "CRE": {
+        "verdict": "FAIL",
+        "loan_pct": 512.48,
+        "cash_pct": 980.67,
+        "reason": "LOAN>10+COMBINED>20"
+      },
+      "SOGP": {
+        "verdict": "FAIL",
+        "loan_pct": 51.07,
+        "cash_pct": 1361.08,
+        "reason": "CANNOT-VERIFY revenue mix (entertainment) + ratios blown"
+      }
+    },
+    "post_open_wave_3": {
+      "EEIQ": {
+        "verdict": "FAIL",
+        "loan_pct": 51.98,
+        "cash_pct": 6.68,
+        "combined": 58.66,
+        "reason": "LOAN>10+COMBINED>20"
+      },
+      "MIMI": {
+        "verdict": "FAIL",
+        "loan_pct": 1.5,
+        "cash_pct": 34.04,
+        "combined": 35.54,
+        "reason": "unverified revenue mix (beverage) AND cash>10/combined>20",
+        "live_screen": true,
+        "note": "Mint Inc - Hong Kong interior design/fit-out. Not in the universe, so a live screen was run: RH market cap fetched, stored, then halal_check."
+      }
     }
   },
   "cadence_decision": {
@@ -426,5 +629,62 @@
     "decision": "Trigger C polling runs at the 5-minute rank cadence PREMARKET, switching to the mandated 1-minute poll at 09:25 ET.",
     "reason": "TH's premarket book is 8.83% wide and RPGL's is 17.5%. Every premarket Trigger C fire is pre-vetoed by the book before it can be armed, so a 1-minute poll would spend ~100 bar fetches on signals that are unarmable by construction. This follows SCAN ECONOMY's principle of looking at the market only when we can act. Logged as a deliberate, reasoned cadence choice - not a drift.",
     "risk_accepted": "If a premarket spread were to collapse below 0.5% between 5-minute checks, a Trigger C fire could be missed. Given the observed 8.8-17.5% widths that is not a live risk this morning."
-  }
+  },
+  "veto_decisions": [
+    {
+      "n": 1,
+      "symbol": "RPGL",
+      "time_et": "07:20:30",
+      "phase": "premarket",
+      "spread_pct": 17.54,
+      "spread_would_block": true,
+      "depth_would_block": true,
+      "chase_would_block": false,
+      "binding_rule": "spread",
+      "ask_depth": 100,
+      "intended": 6048,
+      "outcome": "NO ENTRY"
+    },
+    {
+      "n": 2,
+      "symbol": "TH",
+      "time_et": "07:45:01",
+      "phase": "premarket",
+      "spread_pct": 8.83,
+      "spread_would_block": true,
+      "depth_would_block": false,
+      "chase_would_block": false,
+      "binding_rule": "spread",
+      "ask_depth": 335,
+      "intended": 686,
+      "depth_pct": 48.8,
+      "outcome": "NO ENTRY",
+      "note": "depth alone would only have REDUCED the ticket to 335 sh, not skipped it"
+    },
+    {
+      "n": 3,
+      "symbol": "SMMT",
+      "time_et": "07:59:30",
+      "phase": "premarket",
+      "spread_pct": 1.37,
+      "spread_would_block": true,
+      "depth_would_block": true,
+      "chase_would_block": true,
+      "binding_rule": "chase (fill-arming rule)",
+      "ask_depth": 80,
+      "intended": 1013,
+      "depth_pct": 7.9,
+      "trigger_b_level": 14.74,
+      "last_at_check": 14.74,
+      "outcome": "NO ENTRY",
+      "detail": "Trigger B (premarket-high stop-buy) level 14.74 was ALREADY MET - last == premarket high, so a stop would convert to a market order and sweep the book. Fill-arming rule sends us to a marketable limit capped at 14.74*1.005 = 14.8137; displayed ask inside that cap is 80 sh at 14.80 against 1,013 intended (7.9%, below the 25% floor), so the capped limit cannot fill. Veto and wait for the next bar. Spread 1.37% independently over the 0.50% cap."
+    }
+  ],
+  "premarket_veto_rate": {
+    "decisions": 3,
+    "vetoed": 3,
+    "rate_pct": 100.0,
+    "note": "3/3 premarket, matching the historical 90-100% premarket rate the V-series flagged as TOO AGGRESSIVE. But the spread distribution is the real story: 17.54% / 8.83% / 1.37%. These are not marginal calls - two of the three are 18x and 35x the cap. Only SMMT is plausibly tradeable and only after the open."
+  },
+  "heartbeat_et": "08:38:13"
 }
