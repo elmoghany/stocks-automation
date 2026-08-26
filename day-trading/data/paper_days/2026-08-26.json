@@ -586,76 +586,150 @@
   "trigger_c": [
     {
       "symbol": "SMMT",
-      "time_et": "09:29",
+      "bar_et": "09:29",
       "signals": [
         "rsi_cross_up",
         "tweezer_bottom"
       ],
-      "tag": "STALE (7m)",
-      "actionable": false,
-      "reason": "stale tag"
+      "tag": "STALE",
+      "cadence": "5-min",
+      "actionable": false
     },
     {
       "symbol": "SMMT",
-      "time_et": "09:30",
+      "bar_et": "09:30",
       "signals": [
         "macd_cross_up"
       ],
-      "tag": "STALE (6m)",
-      "actionable": false,
-      "reason": "stale tag"
+      "tag": "STALE",
+      "cadence": "5-min",
+      "actionable": false
     },
     {
       "symbol": "SMMT",
-      "time_et": "09:32",
+      "bar_et": "09:32",
       "signals": [
         "tweezer_bottom"
       ],
-      "tag": "STALE (4m)",
-      "actionable": false,
-      "reason": "stale tag"
+      "tag": "STALE",
+      "cadence": "5-min",
+      "actionable": false
     },
     {
-      "symbol": "TH",
-      "time_et": "09:27",
+      "symbol": "SMMT",
+      "bar_et": "09:38",
+      "signals": [
+        "rsi_cross_up"
+      ],
+      "tag": "STALE",
+      "cadence": "5-min",
+      "actionable": false
+    },
+    {
+      "symbol": "SMMT",
+      "bar_et": "09:41",
+      "signals": [
+        "morning_star"
+      ],
+      "tag": "STALE",
+      "cadence": "5-min",
+      "actionable": false
+    },
+    {
+      "symbol": "SMMT",
+      "bar_et": "09:42",
       "signals": [
         "macd_cross_up"
       ],
-      "tag": "STALE (9m)",
+      "tag": "STALE",
+      "cadence": "5-min",
+      "actionable": false
+    },
+    {
+      "symbol": "SMMT",
+      "bar_et": "09:44",
+      "signals": [
+        "bullish_engulfing"
+      ],
+      "tag": "STALE",
+      "cadence": "5-min",
+      "actionable": false
+    },
+    {
+      "symbol": "SMMT",
+      "bar_et": "09:48",
+      "signals": [
+        "bullish_engulfing"
+      ],
+      "tag": "STALE",
+      "cadence": "5-min->1-min switch",
       "actionable": false,
-      "reason": "stale tag"
+      "note": "seen at 3m old on the first 1-minute poll (09:50:54) - just missed"
+    },
+    {
+      "symbol": "SMMT",
+      "bar_et": "09:52",
+      "signals": [
+        "tweezer_bottom"
+      ],
+      "tag": "TAKEABLE NOW",
+      "cadence": "1-min",
+      "actionable": true,
+      "taken": true,
+      "note": "inverted_hammer also fired on this bar and was correctly IGNORED - not in the champion's eight-member buy_set"
     },
     {
       "symbol": "TH",
-      "time_et": "09:31",
+      "bar_et": "09:27",
+      "signals": [
+        "macd_cross_up"
+      ],
+      "tag": "STALE",
+      "cadence": "5-min",
+      "actionable": false
+    },
+    {
+      "symbol": "TH",
+      "bar_et": "09:31",
       "signals": [
         "bullish_spinning_top"
       ],
-      "tag": "STALE (5m)",
-      "actionable": false,
-      "reason": "stale tag"
+      "tag": "STALE",
+      "cadence": "5-min",
+      "actionable": false
     },
     {
       "symbol": "TH",
-      "time_et": "09:34",
+      "bar_et": "09:34",
       "signals": [
         "tweezer_bottom"
       ],
       "tag": "TAKEABLE NOW",
+      "cadence": "5-min",
       "actionable": false,
-      "reason": "NOT TOP-RANKED - TH was #3 (behind ADXN and SMMT) at the 09:36 rank and was never #1 today. C37 watches the TOP name only; the champion's harness never scans a non-top name for triggers, so taking this would invent a mechanic the strategy does not have.",
-      "significance": "First [TAKEABLE NOW] tag of the campaign refused for a RANKING reason rather than staleness. Worth separating in the Trigger C stats: 'fired but stale' and 'fired but not top-ranked' are different failure modes with different fixes."
+      "taken": false,
+      "refusal_mode": "NOT TOP-RANKED",
+      "note": "TH was #3 behind ADXN and SMMT and was never #1 today. C37 watches the TOP name only; the champion's harness never scans a non-top name for triggers. Taking this would have invented a mechanic the strategy does not have."
     },
     {
-      "symbol": "SMMT",
-      "time_et": "09:52",
+      "symbol": "TH",
+      "bar_et": "09:36",
       "signals": [
-        "tweezer_bottom"
+        "macd_cross_up"
       ],
-      "tag": "TAKEABLE NOW",
-      "actionable": true,
-      "taken": true,
-      "note": "inverted_hammer also present on the bar and correctly IGNORED by the command - it is not in the champion's eight-member buy_set."
+      "tag": "STALE",
+      "cadence": "5-min",
+      "actionable": false
+    },
+    {
+      "symbol": "TH",
+      "bar_et": "09:46",
+      "signals": [
+        "macd_cross_up"
+      ],
+      "tag": "STALE",
+      "cadence": "5-min",
+      "actionable": false
     }
   ],
   "halal": {
@@ -812,9 +886,20 @@
       "rule": "OUTAGE / DEAD-MONITOR SETTLEMENT rule 3 - no entries, rankings or verdicts credited for a gap window; no backfill"
     }
   ],
-  "lessons": [],
+  "lessons": [
+    "TRIGGER C CADENCE IS THE WHOLE BALL GAME. 12 of 14 buy_set signals were STALE and every one fired under the 5-minute cadence. Three minutes after switching to the mandated 1-minute poll, the next takeable signal became the day's only trade. Day 9 diagnosed this; Day 16 reproduced it and fixed it inside one session. The 1-minute poll must start the moment a TOP name is selected AND its book is tradeable - not when the agent gets around to it.",
+    "TWO KINDS OF REFUSED TRIGGER C. 'STALE' is a timing defect a cadence change fixes. 'NOT TOP-RANKED' (TH 09:34) is the strategy working correctly and no cadence can change it. Blending them into one 'missed signals' number would have made the ranking constraint look like a bug and invited exactly the wrong fix.",
+    "SPREAD COMPRESSION IS TIME-OF-DAY, NOT THRESHOLD. SMMT went 1.37% -> 0.33% -> 0.27% between 07:56 and 09:10 with no change to our 0.5% cap, turning a vetoed name into the day's only trade. The campaign has been treating the 90-100% premarket veto rate as a threshold-calibration problem; today says a large part of it is simply that premarket books are wide and the same name becomes tradeable on its own. Prefer waiting for the open over loosening the cap.",
+    "L2 INSIDE DISAGREES WITH THE CONSOLIDATED QUOTE. TH read 2.13% on get_equity_price_book and 0.785% on get_equity_quotes at the same second - a 2.7x gap. If the campaign's spread-veto rate has been measured off the L2 view it is biased HIGH, which is a MECHANICAL candidate explanation for the premarket rate anomaly that has been attributed to miscalibration. One observation; needs repeating. Log both numbers every time.",
+    "THE SPAC PAIR IS THE HALAL GATE'S BEST ADVERT. BCAR and RACC were the ONLY 2 of the first 15 crossers on halal_list.json and both scored halal=true on ratios (loan 0.0-0.1%, cash 0.1%). Both are blank-check vehicles - question 2 refused them. A question-1-only screen would have armed a SPAC. Same shape as Day-8's ANGX, caught pre-arming this time.",
+    "A RULING CLEARS ONE LEG, NOT BOTH. LBGJ has an affirmative 2026-08-21 activity ruling (kitchen-equipment maker, AZ shopping-cart precedent) and still FAILS at loan 22,785%. TH is the mirror image: an affirmative Zoya/AAOIFI activity ruling cleared its hospitality trigger AND its ratios passed, so it was armable. Rulings and ratios are independent gates.",
+    "EXIT-DEPTH SELF-FLATTERY SCALES WITH THINNESS. Booking the naive inside-bid fill would have flattered today's result by $8.42 on a liquid name; Day 8's ANGX on a thin book cost $75.43 on a smaller ticket. The honest ladder sweep is cheap insurance on liquid names and essential on thin ones - it is not a constant haircut.",
+    "LIVENESS != CAPABILITY, CONFIRMED FROM BOTH SIDES. The Day-16 headless launcher wrote a day file and was read as healthy while unable to trade. Today's backup watchdog fired three times on a stale day file while the session was alive but idle. A presence check cannot distinguish dead from idle in either direction; the capability probe (python / git / MCP) is the thing that actually discriminates, and it should run pre-07:00 every session.",
+    "MY OWN DELEGATE SPEC UNDER-DISCOVERED. I told the scan delegate that common stock has BOTH a non-empty Float and Market cap. Several real common stocks (SMTC/Semtech, NIPG) publish a market cap with an EMPTY Float and were skipped - 7 names excluded from the pool by a filter I wrote. Same class as the LATCH divergence: a discovery rule that silently makes live a smaller-universe strategy. Fix: treat non-empty Market cap as sufficient, and exclude on the ETF/ETN name patterns instead.",
+    "SINGLE-HOLDER DAY AGAIN. One position held 5h04m consumed the session; 6 of 7 tickets and $85,006 never deployed. C37's per-day figure assumes rotation, so these days cannot reach it by construction. Days 8, 15 and 16 have all been single-holder - that is now the modal outcome, not the exception, and it deserves its own line in the campaign accounting."
+  ],
   "pnl_day": -592.48,
-  "verdict": "IN PROGRESS",
+  "verdict": "RED vs break-even, GREEN vs the honest baseline. 1 ticket, SMMT -$592.48, flat 14:57, zero real orders. Day P&L -$592.48 against a -$163/day honest baseline = -$429 worse than baseline on the day, but cumulative live remains -$112.95/day vs -$163/day, i.e. still beating the honest backtest by $50/day over 14 scored days. The session's real value is process: the Trigger C cadence fix worked inside one session, the SPAC pair was refused pre-arming, and the spread-compression observation reframes the premarket veto problem.",
   "halal_detail": {
     "live_screens_run": {
       "YYGH": {
@@ -1535,5 +1620,119 @@
     "capital_deployed": 14994.23,
     "capital_undeployed": 85005.77,
     "note": "The one-position rule plus a single slow holder means tickets 2-7 never deployed. This is a PROPERTY of C37, not a defect (Day-8 lesson 9): the strategy's per-day figure assumes rotation through several tickets, so a single-holder day cannot reach it by construction. Judge on process."
+  },
+  "veto_summary": {
+    "arming_decisions_total": 7,
+    "vetoed": 5,
+    "passed": 2,
+    "overall_veto_rate_pct": 71.4,
+    "premarket": {
+      "decisions": 4,
+      "vetoed": 3,
+      "rate_pct": 75.0
+    },
+    "post_open": {
+      "decisions": 3,
+      "vetoed": 2,
+      "rate_pct": 66.7
+    },
+    "THREE_SEPARATE_RATES": {
+      "spread": {
+        "would_block": 5,
+        "rate_pct": 71.4,
+        "binding": 4
+      },
+      "depth": {
+        "would_block": 2,
+        "rate_pct": 28.6,
+        "binding": 0
+      },
+      "chase": {
+        "would_block": 1,
+        "rate_pct": 14.3,
+        "binding": 1
+      }
+    },
+    "vs_modelled_optimum": "The V-series optimum (50-65%) speaks to the SPREAD veto only. Spread would have blocked 71.4% of decisions and was binding on 57.1% - the BINDING figure sits inside the band for the first time in the campaign. Depth never bound. Chase bound once.",
+    "premarket_improvement": "75% premarket (3 of 4) against a historical 90-100%. The difference is entirely SMMT: its spread compressed 1.37% -> 0.27% before the open, so the 4th premarket decision passed without any threshold change."
+  },
+  "trigger_c_summary": {
+    "signal_events": 14,
+    "takeable": 2,
+    "stale": 12,
+    "taken": 1,
+    "refused_not_top_ranked": 1,
+    "stale_rate_pct": 85.7,
+    "by_symbol": {
+      "SMMT": 9,
+      "TH": 5
+    },
+    "headline": "12 of 14 signal events were STALE, and every one of them fired while the 5-minute rank cadence was in force. Within three minutes of switching to the mandated 1-minute poll at 09:50, the next takeable signal (SMMT 09:52 tweezer_bottom) was caught and taken and became the day's only trade. The Day-9 finding reproduced live AND its fix worked, in the same session.",
+    "two_distinct_refusal_modes": "STALE (a timing defect, fixed by cadence) vs NOT-TOP-RANKED (a ranking constraint no cadence change can fix). Count them separately: the first is a bug, the second is the strategy working as designed.",
+    "cadence_lesson": "The 1-minute poll is not optional once a TOP name is selected and its book is tradeable. On the 5-minute cadence this session generated 12 unusable signals and 0 entries; on the 1-minute cadence it generated 1 usable signal and 1 entry."
+  },
+  "halal_summary": {
+    "common_stock_crossers": 68,
+    "PASS": 7,
+    "PASS_names": [
+      "RPGL",
+      "TH",
+      "SMMT",
+      "ADXN",
+      "TTMI",
+      "FVN",
+      "OPTX"
+    ],
+    "FAIL": 32,
+    "pass_rate_pct": 10.3,
+    "screens_run_live": [
+      "YYGH",
+      "DAIC",
+      "SMTK",
+      "RPGL",
+      "MIMI",
+      "ZJYL",
+      "MSS"
+    ],
+    "compliance_saves": [
+      "BCAR (SPAC, ratios passed)",
+      "RACC (SPAC, ratios passed)",
+      "MSS (lottery, industry screen)",
+      "LBGJ (activity ruling PASS but ratios FAIL)"
+    ],
+    "note": "7 of 68 crossers were armable - a 10.3% pass rate. The two names on halal_list.json among the first 15 crossers were BOTH SPACs that the ratio screen passed and question 2 refused."
+  },
+  "scoring": {
+    "day_pnl": -592.48,
+    "vs_break_even": -592.48,
+    "vs_honest_baseline_per_day": -163,
+    "vs_baseline_delta": -429.48,
+    "tickets_deployed": 1,
+    "tickets_available": 7,
+    "capital_deployed": 14994.23,
+    "capital_undeployed": 85005.77,
+    "single_holder_caveat": "C37's per-day figure assumes rotation through several tickets. One position held 5h04m consumed the whole session, so 6 of 7 tickets never deployed. A single-holder day cannot reach the per-day figure by construction (Day-8 lesson 9) - judge on process."
+  },
+  "cumulative": {
+    "days_5_13": -1391.11,
+    "days_5_13_count": 12,
+    "day_14": {
+      "pnl": 0,
+      "counts": false,
+      "reason": "session died before the window opened; 0 trades, nothing armed"
+    },
+    "day_15": 402.3,
+    "day_16": -592.48,
+    "cumulative_pnl": -1581.29,
+    "scored_days": 14,
+    "per_scored_day": -112.95,
+    "vs_honest_baseline": {
+      "baseline_per_day": -163,
+      "baseline_14_days": -2282.0,
+      "live_minus_baseline_total": 700.71,
+      "live_minus_baseline_per_day": 50.05,
+      "verdict": "Live paper is running -$112.95/day against an honest backtest of -$163/day. Live BEATS the honest backtest by $50.05/day, consistent with the campaign's lead hypothesis that the spread/depth vetoes filter junk the naive sim buys."
+    },
+    "vs_break_even": "Still negative in absolute terms: -$1,581.29 over 14 scored days. Beating a losing baseline is not the same as making money."
   }
 }

@@ -4662,3 +4662,135 @@ READ HONESTLY:
 => Hypothesis for run 2: the premarket session itself is the problem.
    Testing HVN0 (no premarket entries), HVN1 (that + post-open veto),
    HVN2 (premarket-ONLY control -- should be the worst).
+
+
+## PAPER DAY 16 (2026-08-26): SMMT −$592.48, and the Trigger C cadence fix proving itself in one session
+
+Result: **1 ticket, SMMT −$592.48, flat 14:57, zero real orders.** Interactive
+takeover at 07:17 after the 06:20 headless launcher was permission-blocked and
+never scanned; coverage gap 07:00–07:17 logged, nothing backfilled.
+
+**Cumulative: −$1,581.29 over 14 scored days = −$112.95/day.**
+Against the honest −$163/day baseline (C37F), live is **ahead by $50.05/day
+($700.71 total)**. Beating a losing baseline is not making money — but the
+direction is the campaign's lead hypothesis holding up.
+(Day 14 does not count: session died pre-open, 0 trades.)
+
+### 1. TRIGGER C CADENCE — the finding of the day
+
+**14 signal events, 12 STALE (85.7%), 2 takeable, 1 taken.** Every stale signal
+fired while the 5-minute rank cadence was in force. SMMT alone threw
+`rsi_cross_up`, `macd_cross_up`, `morning_star` and two `bullish_engulfing`
+between 09:29 and 09:48 — all unusable.
+
+At 09:50 the mandated 1-minute poll started. **Three minutes later the SMMT 09:52
+`tweezer_bottom` came back [TAKEABLE NOW] and became the day's only trade.**
+
+Day 9 diagnosed this. Day 16 reproduced it *and* fixed it inside a single session.
+The rule is not "poll every minute eventually" — it is **poll every minute from the
+moment a TOP name is selected and its book is tradeable.** On the 5-minute cadence
+this session produced 12 unusable signals and 0 entries; on the 1-minute cadence,
+1 usable signal and 1 entry.
+
+**Count two refusal modes separately:**
+* **STALE** — a timing defect; cadence fixes it.
+* **NOT TOP-RANKED** — TH's 09:34 tweezer was genuinely fresh, but TH ranked #3 and
+  was never #1 all day. C37 watches the top name only. Refusing it was correct.
+  Blending these into one "missed signals" number makes a correct refusal look like
+  a bug and invites the wrong fix.
+
+### 2. SPREAD COMPRESSION IS TIME-OF-DAY, NOT THRESHOLD
+
+SMMT's inside spread went **1.37% (07:56) → 0.33% (09:08) → 0.27% (09:10)** with
+**no change to our 0.5% cap**. The same name went from vetoed to armable purely
+because the open approached, and it became the only trade of the day.
+
+The campaign has treated the 90–100% premarket veto rate as evidence the threshold
+is miscalibrated. Today says a large part of it is simply that **premarket books are
+wide**. The implied fix is *wait for the open*, not *loosen the cap*.
+
+Today's premarket rate was **75% (3 of 4)** — a real improvement on 90–100%, achieved
+without touching the threshold.
+
+### 3. VETO LEDGER — binding spread rate lands in the modelled band for the first time
+
+7 arming decisions, 5 vetoed, 2 passed. Overall **71.4%**.
+
+| rule | would block | rate | **binding** |
+|---|---|---|---|
+| SPREAD | 5 | 71.4% | **4 (57.1%)** |
+| DEPTH | 2 | 28.6% | **0** |
+| CHASE | 1 | 14.3% | **1 (14.3%)** |
+
+Premarket 75% (3/4), post-open 66.7% (2/3). The V-series 50–65% optimum applies to
+the **spread veto only**, and its **binding** rate of 57.1% is **inside the band for
+the first time in the campaign**. Depth never bound; it only ever reduced a ticket.
+
+Spread distribution: RPGL 17.54%, TH 8.83%, ADXN 4.49%, TH 2.13%, SMMT 1.37%,
+SMMT 0.33%, SMMT 0.27%. Two names were 18× and 35× the cap.
+
+### 4. NEW DEFECT CANDIDATE: L2 inside ≠ consolidated quote
+
+At the same second on **TH**: `get_equity_price_book` read **17.86 / 18.24 = 2.13%**;
+`get_equity_quotes` read **17.82 / 17.96 = 0.785%**. A **2.7× gap.**
+
+The thin-book veto is specified against the **L2** spread. If the campaign's measured
+spread-veto rate has been computed off the L2 view, **it is biased high** — which is a
+*mechanical* candidate explanation for the premarket anomaly we have been attributing
+to threshold miscalibration. One observation, one name, needs repeating before it is a
+finding. No decision turned on it today (both measures exceeded the cap on every veto).
+**Action: log both numbers on every book observation.**
+
+### 5. HALAL — 7 of 68 crossers armable (10.3%); the SPAC pair is the gate's best advert
+
+**PASS:** RPGL, TH, SMMT, ADXN, TTMI, OPTX, FVN.
+
+* **BCAR and RACC** were the **only two** of the first 15 crossers on
+  `halal_list.json`, and **both scored `halal: true`** on ratios (loan 0.0–0.1%,
+  cash 0.1%). Both are blank-check acquisition corps → **question 2 refused them.**
+  A question-1-only screen would have armed a SPAC. Same shape as Day-8 ANGX,
+  caught before arming.
+* **MSS** (Asian grocery) refused as **HARAM INDUSTRY (lottery)** — the exact blind
+  spot `haram_pct` (interest income only) cannot see.
+* **RULINGS AND RATIOS ARE INDEPENDENT GATES.** LBGJ has an affirmative 2026-08-21
+  activity ruling (kitchen-equipment maker, AZ precedent) and still fails at loan
+  22,785%. **TH is the mirror image**: an affirmative 2026-08-22 Zoya/AAOIFI ruling
+  cleared its hospitality/catering trigger *and* its ratios passed (2.19 / 0.31),
+  making it armable. The expanded overlay earned its keep — TH ranked #1 twice.
+* Day-8 structural tension held: **ANF +10.7% at $120.50** and **BZ +10.3%** were the
+  liquid, tradeable books of the day; both failed on financing ratios.
+
+### 6. FILL REALISM — exit self-flattery scales with thinness
+
+* Entry 14.89 vs the +60s mark 14.8525 = **−0.25%**. Third negative entry data point
+  (Day 5 LFST −1.6%, Day 15 CRML −0.92%, today −0.25%) — shrinking as names get more liquid.
+* Exit modelled as a ladder sweep: 165 @ 14.31 + 842 @ 14.30, VWAP 14.3016.
+  Naive inside-bid booking would have flattered by **$8.42**. Day-8's ANGX on a *thin*
+  book cost **$75.43** on a smaller ticket. **The exit-depth correction is proportional
+  to thinness, not a constant haircut** — cheap on liquid names, essential on thin ones.
+
+### 7. OPS
+
+* **Capability probe run for the first time** (python / git / MCP) — all green. This is
+  the discriminator a presence watchdog cannot provide.
+* **Liveness ≠ capability, confirmed from both sides.** The headless agent wrote a day
+  file and read as healthy while unable to trade; today's backup watchdog fired **three
+  times** on a stale day file while the session was alive but idle. Presence cannot
+  distinguish dead from idle in *either* direction.
+* **Scan delegate:** 83 cycles, 07:30–14:30, **zero errors**, 53 new crossers, no halal
+  FAIL ever re-entered the pool. Keeping ~15k tokens of scan JSON per cycle out of the
+  coordinator is what made a 7-hour session feasible.
+* **DEFECT I INTRODUCED:** I specified to the delegate that common stock has *both* a
+  non-empty Float and Market cap. Real common stocks publishing a market cap with an
+  **empty Float** (SMTC/Semtech, NIPG, +5) were skipped — **7 names silently excluded by
+  my own filter.** Same class as the LATCH divergence: a discovery rule that quietly makes
+  live a smaller-universe strategy. **Fix: non-empty Market cap is sufficient; exclude on
+  ETF/ETN name patterns instead.**
+
+### 8. SINGLE-HOLDER DAYS ARE NOW THE MODE
+
+One position held **5h04m** consumed the whole session; **6 of 7 tickets and $85,006
+never deployed**. Days 8, 15 and 16 have all been single-holder. C37's per-day figure
+assumes rotation through several tickets, so these days cannot reach it by construction.
+This is a property of the champion, not a defect — but it is now the *typical* outcome
+and deserves its own line in the campaign accounting rather than a per-day footnote.
