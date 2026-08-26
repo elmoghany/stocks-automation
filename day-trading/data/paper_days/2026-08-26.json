@@ -1,0 +1,324 @@
+{
+  "date": "2026-08-26",
+  "day_number": 16,
+  "protocol": "C37 sequential ticket rotation, paper only",
+  "epoch": "honest-baseline (C37F, 2026-08-23): the $1,517/day C37E benchmark is RETIRED. Score vs break-even and vs -$163/day.",
+  "benchmark_per_day": -163,
+  "benchmark_note": "A full-coverage backfill proved the historical edge was a bar-coverage artifact: C37's own parameters on the honest full pool return -$72,673 / 445 days = -$163/day, 18 of 23 months negative. Live paper has been running ~-$107/day, i.e. live BEATS the honest backtest, most plausibly because the spread/depth vetoes filter junk the naive sim buys. The veto ledger is first-class evidence and the campaign's lead hypothesis.",
+  "status": "LIVE",
+  "counts_as_traded_day": true,
+  "session_type": "interactive takeover after headless launch was permission-blocked",
+  "config": {
+    "tickets": [
+      15000,
+      15000,
+      15000,
+      15000,
+      15000,
+      15000,
+      10000
+    ],
+    "day_cap": 100000,
+    "one_position_at_a_time": true,
+    "entry_cutoff_et": "14:30",
+    "all_exits_by_et": "15:00",
+    "flatten_ladder_from_et": "14:57",
+    "scan_id": "5f132877-7730-4a18-9e72-b3f0d2c9df83",
+    "scan_filters": "Last>$2, %Change>10%, NO volume gate",
+    "halal_list": "data/halal_list.json mtime 2026-08-22T22:06 (age 3 days, < 35 OK), 1330 symbols",
+    "halal_rulings": "data/halal_rulings.json, 238 rulings",
+    "halal_rule": "binary since 2026-08-22: only verdict PASS is armable; unverified = FAIL"
+  },
+  "ops": {
+    "scheduler_launch": "06:20:02 ET headless; wrote day-file skeleton then found python / git-write / robinhood-MCP all auto-denied. NO scanning happened.",
+    "takeover_start_et": "07:17",
+    "stale_artifacts": "PERMISSION_BLOCKED_2026-08-26.flag deleted; headless skeleton archived to 2026-08-26.BLOCKED-SKELETON.{json,md}. LAUNCHED_BY_SCHEDULER flag left in place as the no-double-launch guard.",
+    "backfilled": "NOTHING. No entry, ranking or verdict is credited for the 06:20-07:17 window.",
+    "clock": "ET computed explicitly as UTC-4; TZ env untrusted (clock rule 2026-08-14). Monitors armed on UTC.",
+    "capability_probe": {
+      "python": "OK (3.12.0)",
+      "git_write": "OK",
+      "robinhood_mcp": "OK (run_scan, historicals, quotes, price_book, fundamentals all returning)",
+      "trading_day_guard": "TRADING 2026-08-26 full",
+      "note": "This is the Day-16 postmortem's recommended probe, run for the first time. All three green."
+    }
+  },
+  "inherited_verdicts": {
+    "PASS": [
+      "ASST",
+      "ADXN",
+      "ABUS",
+      "GLSI",
+      "EXOZ",
+      "BTCT",
+      "CRML",
+      "OESX",
+      "MRAM"
+    ],
+    "FAIL": [
+      "MSTR",
+      "ZOOZ",
+      "IPST",
+      "BRNX",
+      "SUGP",
+      "JUNS",
+      "NCTY",
+      "YJ",
+      "RPC",
+      "SCTX",
+      "BIVI",
+      "HCWB",
+      "LZM",
+      "PMI",
+      "AEMD",
+      "SFBS",
+      "TENX",
+      "WLDS",
+      "WVVI",
+      "KURA",
+      "SPAI",
+      "NYAX",
+      "RZLV",
+      "RNAZ",
+      "IMTX",
+      "MEI",
+      "MAIR",
+      "AVXL",
+      "CAPR",
+      "EXYN",
+      "TC"
+    ],
+    "CANNOT_VERIFY": [
+      "USDE",
+      "RFAI"
+    ],
+    "fake_gap": [
+      "DUKR",
+      "EUDA",
+      "HUHU",
+      "PTLE",
+      "BNR",
+      "GDEV",
+      "ILAG",
+      "OIO",
+      "GYRO",
+      "PTHS",
+      "WSBK",
+      "GURE",
+      "PRHI"
+    ]
+  },
+  "crossed_set": [
+    "YYGH",
+    "DAIC",
+    "DUKR",
+    "RDIB",
+    "XPON",
+    "SMTK",
+    "SDOT",
+    "PLAB",
+    "BCAR",
+    "ARKR",
+    "GYRO",
+    "BRNX",
+    "GSIW",
+    "RACC",
+    "RPGL"
+  ],
+  "trades": [],
+  "candidates": {
+    "universe_FAIL_no_recheck": {
+      "DUKR": "HARAM INDUSTRY (defense, aerospace)",
+      "XPON": "loan 23.67/cash 88.40",
+      "SDOT": "loan 95.97",
+      "PLAB": "cash 32.30",
+      "ARKR": "restaurant - 5% rule cannot be run",
+      "GYRO": "cash 33.02",
+      "GSIW": "cash 42.10"
+    },
+    "industry_FAIL": {
+      "RDIB": "Reading International - cinema/entertainment",
+      "BCAR": "SPAC",
+      "RACC": "SPAC"
+    },
+    "inherited_FAIL": {
+      "BRNX": "Day 15 FAIL, never re-litigated"
+    },
+    "excluded_not_common_stock": "~56 of 71 scan rows were leveraged/derivative ETFs and ETNs (Corgi 2x Daily, Tradr 2X, GraniteShares, Defiance, ProShares, WEBs, Amplify) plus closed-end bond funds PAI and CEV"
+  },
+  "vetoes": {
+    "spread": [
+      {
+        "symbol": "RPGL",
+        "time_et": "07:20:30",
+        "phase": "premarket",
+        "spread_pct": 17.54,
+        "cap_pct": 0.5,
+        "outcome": "VETO"
+      }
+    ],
+    "depth": [
+      {
+        "symbol": "RPGL",
+        "time_et": "07:20:30",
+        "phase": "premarket",
+        "ask_depth": 100,
+        "intended": 6048,
+        "pct": 1.65,
+        "floor_pct": 25,
+        "outcome": "VETO"
+      }
+    ],
+    "chase": []
+  },
+  "book_observations": [
+    {
+      "symbol": "RPGL",
+      "time_et": "07:20:30",
+      "phase": "premarket",
+      "bid": 2.11,
+      "ask": 2.48,
+      "spread_pct": 17.54,
+      "ask_depth_to_trigger_plus_0.5pct": 100,
+      "intended_shares": 6048,
+      "depth_pct_of_intended": 1.65,
+      "bids": [
+        [
+          2.11,
+          500
+        ],
+        [
+          2.08,
+          5
+        ],
+        [
+          2.05,
+          2053
+        ],
+        [
+          2.02,
+          100
+        ],
+        [
+          2.01,
+          100
+        ]
+      ],
+      "asks": [
+        [
+          2.48,
+          100
+        ],
+        [
+          2.49,
+          100
+        ],
+        [
+          2.8,
+          733
+        ]
+      ],
+      "verdict": "SPREAD VETO + DEPTH VETO"
+    }
+  ],
+  "trigger_c": [],
+  "halal": {
+    "PASS": [
+      "RPGL"
+    ],
+    "FAIL": [
+      "YYGH",
+      "DAIC",
+      "DUKR",
+      "RDIB",
+      "XPON",
+      "SMTK",
+      "SDOT",
+      "PLAB",
+      "BCAR",
+      "ARKR",
+      "GYRO",
+      "BRNX",
+      "GSIW",
+      "RACC"
+    ],
+    "CANNOT_VERIFY": [],
+    "fake_gap": [
+      "RPGL(186/198 interpolated)",
+      "DUKR",
+      "GYRO"
+    ]
+  },
+  "cycles": [
+    {
+      "n": 1,
+      "time_et": "07:18",
+      "state": "FLAT-5m",
+      "scan_rows": 71,
+      "common_stock_crossed": 15,
+      "armable": 0,
+      "top": "RPGL (double-vetoed, untradeable)"
+    }
+  ],
+  "coverage_gaps": [
+    {
+      "start_et": "07:00",
+      "start_utc": "11:00",
+      "end_et": "07:17",
+      "end_utc": "11:17",
+      "minutes": 17,
+      "cause": "headless 06:20 launcher was permission-blocked (python / git-write / robinhood MCP auto-denied); it wrote a day-file skeleton but performed zero scanning. Interactive session took over at 07:17.",
+      "settlement": "nothing to settle - no position open, no order resting, nothing armed before the gap",
+      "entries_credited": 0,
+      "rule": "OUTAGE / DEAD-MONITOR SETTLEMENT rule 3 - no entries, rankings or verdicts credited for a gap window; no backfill"
+    }
+  ],
+  "lessons": [],
+  "pnl_day": null,
+  "verdict": "IN PROGRESS",
+  "halal_detail": {
+    "live_screens_run": {
+      "YYGH": {
+        "loan_pct": 85.6,
+        "cash_pct": 16.1,
+        "combined": 101.7,
+        "verdict": "FAIL",
+        "reason": "unverified revenue mix (beverage/hotel/hospitality) AND ratios blown"
+      },
+      "DAIC": {
+        "loan_pct": 28.56,
+        "cash_pct": 11.28,
+        "combined": 39.84,
+        "verdict": "FAIL",
+        "reason": "LOAN>10+COMBINED>20"
+      },
+      "SMTK": {
+        "loan_pct": 29.31,
+        "cash_pct": 364.7,
+        "combined": 394.01,
+        "verdict": "FAIL",
+        "reason": "LOAN>10+COMBINED>20"
+      },
+      "RPGL": {
+        "loan_pct": 3.16,
+        "cash_pct": 0.0,
+        "combined": 3.16,
+        "verdict": "PASS",
+        "business": "Singapore ERP software/consulting - permissible, no haram-adjacent line"
+      }
+    },
+    "spac_saves": {
+      "BCAR": {
+        "ratio_screen": "halal=true loan 0.0 cash 0.1",
+        "verdict": "FAIL",
+        "reason": "blank-check acquisition corp - trust interest-bearing in substance; question 2 refused it. On halal_list.json - a question-1-only screen would have armed it."
+      },
+      "RACC": {
+        "ratio_screen": "halal=true loan 0.1 cash 0.1",
+        "verdict": "FAIL",
+        "reason": "blank-check acquisition corp - same as BCAR"
+      }
+    },
+    "note": "BCAR and RACC were the ONLY 2 of 15 crossed names on halal_list.json, and both score halal=true on ratios. Question 2 is what refused them. Same failure mode as Day-8 ANGX, caught pre-arming."
+  }
+}
