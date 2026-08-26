@@ -141,7 +141,17 @@
     "BZ",
     "ZJYL",
     "VSA",
-    "OLOX"
+    "OLOX",
+    "FTCI",
+    "JXG",
+    "TTMI",
+    "NVNO",
+    "XOS",
+    "FVN",
+    "OPTX",
+    "CMMB",
+    "ZYME",
+    "QMLS"
   ],
   "trades": [
     {
@@ -586,7 +596,10 @@
       "RPGL",
       "TH",
       "SMMT",
-      "ADXN"
+      "ADXN",
+      "TTMI",
+      "FVN",
+      "OPTX"
     ],
     "FAIL": [
       "YYGH",
@@ -615,7 +628,12 @@
       "BZ",
       "ZJYL",
       "VSA",
-      "OLOX"
+      "OLOX",
+      "FTCI",
+      "NVNO",
+      "XOS",
+      "ZYME",
+      "QMLS"
     ],
     "CANNOT_VERIFY": [],
     "fake_gap": [
@@ -995,7 +1013,7 @@
     "rate_pct": 100.0,
     "note": "3/3 premarket, matching the historical 90-100% premarket rate the V-series flagged as TOO AGGRESSIVE. But the spread distribution is the real story: 17.54% / 8.83% / 1.37%. These are not marginal calls - two of the three are 18x and 35x the cap. Only SMMT is plausibly tradeable and only after the open."
   },
-  "heartbeat_et": "09:54:45",
+  "heartbeat_et": "10:13:50",
   "armed": [
     {
       "ticket": 1,
@@ -1076,5 +1094,102 @@
     "caveat": "One observation, one name. The standing L2 notes already warn venue coverage is unverified and retail feeds are often partial views. Needs repeat measurement before it is a finding.",
     "action": "Log BOTH numbers on every book observation from here on. Do NOT change the rule mid-session.",
     "todays_decisions_unaffected": "Both measures exceeded the 0.50% cap on every vetoed decision today, so no entry decision turns on which is used."
+  },
+  "bench": {
+    "refreshed_et": "10:10",
+    "state": "HOLD-20m (in position; bench only, no ranking duty per SCAN ECONOMY rule 2)",
+    "PASS_available_for_post_exit_rerank": [
+      "TTMI",
+      "OPTX",
+      "FVN",
+      "TH",
+      "ADXN",
+      "RPGL"
+    ],
+    "TTMI": {
+      "gain_pct": 10.9,
+      "last": 124.5,
+      "note": "TTM Technologies - large liquid PCB maker, on halal_list, ratios PASS. Best-quality bench name of the day."
+    },
+    "FVN": {
+      "gain_pct": 10.4,
+      "last": 10.41,
+      "note": "on halal_list, ratios PASS"
+    },
+    "FAIL_this_wave": {
+      "FTCI": "loan 60.45",
+      "NVNO": "CASH>10+COMBINED>20",
+      "XOS": "CANNOT-VERIFY revenue mix (beverage)",
+      "JXG": "not in universe, not screened - never reached candidacy"
+    },
+    "OPTX": {
+      "gain_pct": 13.0,
+      "last": 8.86,
+      "note": "on halal_list, ratios PASS"
+    }
+  },
+  "position_log": [
+    {
+      "et": "09:56:46",
+      "last": 14.93,
+      "pnl": 40.28,
+      "peak": 14.93,
+      "pressure10": 0.093,
+      "trail_width": "20%",
+      "trail": 11.944
+    },
+    {
+      "et": "09:59:41",
+      "last": 15.02,
+      "pnl": 130.91,
+      "peak": 15.1,
+      "pressure10": -0.072,
+      "trail_width": "20%",
+      "trail": 12.08
+    },
+    {
+      "et": "10:03:02",
+      "last": 14.845,
+      "pnl": -45.31,
+      "peak": 15.1,
+      "pressure10": -0.17,
+      "trail_width": "20%",
+      "trail": 12.08
+    },
+    {
+      "et": "10:06:42",
+      "last": 14.61,
+      "pnl": -281.96,
+      "peak": 15.1,
+      "pressure10": -0.306,
+      "trail_width": "10%",
+      "trail": 13.59,
+      "note": "pressure crossed -0.3 so the trail TIGHTENED to 10% (13.59) - but the -8% hard stop at 13.6988 sits ABOVE it, so the hard stop is the binding exit"
+    },
+    {
+      "et": "10:09:52",
+      "last": 14.6264,
+      "pnl": -265.45,
+      "peak": 15.1,
+      "pressure10": -0.279,
+      "trail_width": "20%",
+      "trail": 12.08,
+      "note": "pressure eased back above -0.3, trail widened to 20% again"
+    },
+    {
+      "et": "10:13:32",
+      "last": 14.5463,
+      "pnl": -346.11,
+      "peak": 15.1,
+      "pressure10": -0.256,
+      "trail_width": "20%",
+      "trail": 12.08
+    }
+  ],
+  "cadence_decision_position": {
+    "et": "09:57",
+    "decision": "Position watch at ~2-3 minute spacing while both exit levels sit ~18-20% below price; tighten to 1 minute near any exit zone or after 14:30.",
+    "rationale": "Trail 12.08 and hard stop 13.70 against a 14.85-15.10 price. Every bar is still ingested and the watcher replays ALL bars bar-by-bar in time order, so no bar goes unevaluated - only the polling frequency is relaxed. Same reasoning Day 15 logged for CRML.",
+    "guarantee": "The hard stop is tested INTRABAR against each bar's LOW and the trail on each bar's CLOSE, so a fast spike down between polls is still caught when the bars arrive."
   }
 }
