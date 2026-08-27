@@ -1,5 +1,118 @@
 # Penny Stocks Trading Notes
 
+## PAPER DAY 17 (2026-08-27) — best P&L day of the campaign, worst ops day
+
+**1 ticket, OKTA +$876.33 (+5.88%), flat at the 15:00 flatten, zero real orders.**
+Cumulative live improves from −$112.95/day to **−$47.00/day over 15 scored days**
+against the −$163/day honest baseline. Full detail in `data/paper_days/2026-08-27.{json,md}`.
+
+The headless launch worked this time — the Day-16 `--allowedTools` fix is confirmed
+good. The capability probe (python / git-write / MCP) ran at 06:21 and came back
+**all green**, so the Day-16 failure mode did not recur.
+
+**What made the money.** OKTA gapped +21% on earnings at a $23B market cap *and*
+passed the halal ratio test (loan 1.76 / cash 11.08 / combined 12.84 via the
+one-side carve-out). Day 8's structural finding is that the tradeable books are the
+leveraged ones — and the rest of the board obeyed it exactly (CRM refused at loan
+25.4, UCTT at combined 24.77, AAPG at 111.6, MBUU at 29.7). **The entire day's P&L
+came from the one name where the two gates did not conflict.** Worth measuring how
+often that happens; it may be the real driver of the campaign's good days.
+
+### NEW FINDING — the 0.5% spread cap is partly a tick-size artifact
+
+One tick over price P is `0.01/P`. Solving `0.02/P ≤ 0.005` gives **P ≥ $4.00**:
+below $4 a name can never show a two-tick market inside the cap and must be quoted
+*exactly one tick wide* to be armable. Today the same rule vetoed **BTCT at exactly
+2 ticks** (0.926% / 0.943% on a $2.14 stock) and **OKTA at 88 ticks** (0.557%) —
+one measured tick size, the other measured illiquidity.
+
+The scan filters `Last > $2` and gapper pools skew cheap, so this is a **mechanical**
+candidate explanation for the 90–100% premarket veto rate that has been attributed to
+threshold miscalibration. The V-series modelled the veto on a *bar-range proxy*, which
+has no tick floor, so it could not have seen this. **Test: split the campaign veto
+ledger at $4.00** — sub-$4 spreads should cluster at exact tick multiples. This is not
+an argument to loosen the cap; it is an argument to calibrate it per price bucket.
+
+### Day 16's L2-vs-NBBO divergence did NOT reproduce
+
+Two paired reads taken seconds apart agreed exactly (OKTA 1.829/1.829, BTCT
+0.943/0.943). I nearly logged a divergence anyway: BTCT's NBBO read 0.459% at
+07:14:07 and its L2 read 0.943% at 07:15:13 — straddling the cap, so it would have
+decided the entry — but a re-quote at 07:15:23 returned 0.943%, identical to the book.
+**The reads were 66 seconds apart on a name moving 2.5%/minute.** Day 16's TH
+observation is timestamped "09:42–09:43" and may carry the same defect. Treat it as
+unproven until reproduced with reads <5s apart on a name that is not moving.
+
+### OPS POSTMORTEM — 4h01m of self-inflicted outage, and the 15:00 deadline was blown
+
+| gap | length | cost |
+|---|---|---|
+| 07:30–07:47 | 17 min | the 1-min poll declared at 07:30 never started |
+| 08:36–09:28 | 52 min | **swallowed the market open**; entry filled unobserved at 09:12 |
+| 12:47–15:39 | **2h52m** | **blew the 15:00 flatten deadline** |
+
+Root causes, all three the same shape — *issue a shell command, fail to verify it
+returned, lose the clock*:
+1. An escaped `\$(date ...)` inside a **double-quoted** `python -c` leaked a backslash
+   into the chained shell command and wedged the persistent Bash session so completely
+   that a bare `date -u` timed out. **Never embed `$` in a double-quoted `python -c`
+   that is chained to further shell commands** — use single quotes.
+2. `cd <path>` inside a compound PowerShell command triggers a permission prompt that
+   **hangs a non-interactive session**. Use absolute paths and `git -C`.
+3. Bash foreground `until`-loops are unreliable timekeepers here — a loop asked to break
+   at a target overshoots and is killed at the tool timeout.
+
+**What saved the day was architecture, not attention.** Trigger B was armed at 08:27
+with stop, limit, size, protective stop, scale-out and trail law fully specified *and
+committed to git before the gap opened* — exactly the case OUTAGE rule 2 exists for, so
+the 09:12 fill is settled from the tape. Every armed exit rule was then replayed across
+the third gap (lowest print 170.10 against a 150.742 stop) and nothing fired, so the
+ticket settles on the 15:00 flatten.
+
+**Read this as a warning, not a reassurance.** A paper ledger can settle to 15:00; a
+real account would still have been holding at 15:39. The exit is the one thing that
+cannot be deferred.
+
+**THE FIX — MCP timestamps are an independent clock.** Both shells died three times
+while MCP market data kept working throughout. Every MCP response carries a venue
+timestamp; reading it costs nothing and would have exposed all three drifts instantly.
+Next session: (a) read the timestamp on every MCP response and compare against expected
+session time, (b) treat any tool call exceeding ~2 minutes as shell failure and fall back
+to MCP-only monitoring plus Write-tool ledger updates — both stayed healthy all day,
+(c) from 14:30, drive the flatten off that independent clock, never off a shell loop.
+
+### Other findings
+
+- **A question-1-only screen would have armed an insurer.** BVC is *on*
+  `halal_list.json` with the cleanest ratios on the board (loan 0.00, cash 0.56) and
+  ranked #2 by gain; RH's profile lists life insurance, annuities and critical-illness
+  products. Question 2 alone refused it — the ANGX pattern, caught pre-arming for the
+  second session running. It was also premarket-dark (25/25 interpolated bars at a flat
+  12.10 vs a 14.86 scanner mark), so the fake-gap detector rejected it independently.
+- **Do not inherit `fake_gap` across days.** Day 16 listed RPGL as a fake gap; RPGL is
+  also a halal PASS. Seeding today's drop-list from it would have silently excluded a
+  tradeable name. A fake gap means "did not trade premarket *today*" — it is day-scoped
+  by construction. halal FAIL inherits; fake_gap must be re-detected each session.
+- **Fill realism turned positive for the first time since Day 8**: entry 163.85 vs a
+  +60s mark of 163.9461 = **+0.06% favourable**. Series: LFST −1.6%, CRML −0.92%,
+  SMMT −0.25%, OKTA +0.06%. Caveat: this was a *stop fill at the trigger*, not a pattern
+  entry paying the ask, so it is not like-for-like.
+- **Exit-depth self-flattery ≈ $0** (91 sh of a $23B name). ANGX cost $75.43, SMMT
+  $8.42, OKTA ~$0 — three points confirming the correction scales with thinness rather
+  than being a constant haircut.
+- **Fourth consecutive single-holder day**, with a twist: the 12:10 bench showed the
+  pool had *tripled to 129 names because of our own position* — OKTA's earnings dragged
+  the whole security/software complex through the +10% gate (CRWD, VEEV, RPD, SAIL, FIG,
+  PANW, SNPS, TENB). Rotating among those would have been the same bet several times.
+  **Open question: does the champion's backtest contain sector-cluster days, and does
+  rotation help or hurt on them?**
+- **Veto ledger**: spread 3/3, depth 0/3, chase 0/3. The spread veto did not cost money —
+  BTCT was refused near 2.19 and closed at 2.06.
+- **Tooling added**: `plan/bars_paste.py` (multi-symbol bar paste with a BOM guard and a
+  trailing-10-traded-minute volume cap), `plan/posn.py` (one-shot position state that
+  replays the intrabar stop from entry on *every* call, so a missed poll cannot step over
+  a breach).
+
 ## PAPER DAY 16 (2026-08-26) — OPS POSTMORTEM: the headless launch was permission-blocked
 
 *Scope: this section covers the launcher defect only. Day 16's trading result is
