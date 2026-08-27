@@ -304,6 +304,68 @@ CFGS = {
     # is now every candidate/day (~213) instead of the ~17 that had
     # gain-selected bars. Separate id so C37E's pre-backfill row is
     # never overwritten. Run: HALAL_STRICT=1 PT_FILED=1 ROTSHARD=full.
+    # FINAL DECISIVE TEST (2026-08-27): every control so far compared
+    # RANKED-with-costs against RANDOM-without-costs, which flatters
+    # the ranking. Run both under IDENTICAL 10bps slippage. If ranked
+    # still wins, the edge is real but small; if not, the whole result
+    # is drift harvesting and selection contributes nothing.
+    "K6S": dict(desc="K6 under 10bps/side slippage",
+                entry_cutoff=dtime(14, 30), escape=dtime(10, 0), topk=6,
+                slip=0.001,
+                sim_extra={"trail_pct": 999, "stop_pct": 99,
+                           "scale_out_at": None, "pressure_exit": None,
+                           "sell_mode": "target_stop_only"}),
+    "KR6S": dict(desc="CONTROL: RANDOM 6 under the SAME 10bps slippage",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0), topk=6,
+                 rand=True, slip=0.001,
+                 sim_extra={"trail_pct": 999, "stop_pct": 99,
+                            "scale_out_at": None, "pressure_exit": None,
+                            "sell_mode": "target_stop_only"}),
+    "K6": dict(desc="XHB + 6 concurrent names",
+               entry_cutoff=dtime(14, 30), escape=dtime(10, 0), topk=6,
+               sim_extra={"trail_pct": 999, "stop_pct": 99,
+                          "scale_out_at": None, "pressure_exit": None,
+                          "sell_mode": "target_stop_only"}),
+    "K7": dict(desc="XHB + 7 concurrent (full ticket schedule, $100k cap)",
+               entry_cutoff=dtime(14, 30), escape=dtime(10, 0), topk=7,
+               sim_extra={"trail_pct": 999, "stop_pct": 99,
+                          "scale_out_at": None, "pressure_exit": None,
+                          "sell_mode": "target_stop_only"}),
+    "KR7": dict(desc="CONTROL: RANDOM 7 concurrent (isolates ranking)",
+                entry_cutoff=dtime(14, 30), escape=dtime(10, 0), topk=7,
+                rand=True,
+                sim_extra={"trail_pct": 999, "stop_pct": 99,
+                           "scale_out_at": None, "pressure_exit": None,
+                           "sell_mode": "target_stop_only"}),
+    "K7S": dict(desc="K7 under 10bps/side slippage stress",
+                entry_cutoff=dtime(14, 30), escape=dtime(10, 0), topk=7,
+                slip=0.001,
+                sim_extra={"trail_pct": 999, "stop_pct": 99,
+                           "scale_out_at": None, "pressure_exit": None,
+                           "sell_mode": "target_stop_only"}),
+    # ---- XP-series (2026-08-27): the LAST untested exit combination.
+    # XH disabled bearish-pattern exits ALONGSIDE the stop and trail
+    # (sell_mode="target_stop_only"). But in the pre-backfill analysis
+    # bearish-pattern exits were the single largest profit contributor
+    # (+$1.6M over 1,450 exits) -- and they have NEVER been tested
+    # WITHOUT the stop/trail attached. Hold-to-flatten + pattern exits
+    # only is a genuinely different configuration.
+    # XPR is its random control: if random+patterns matches, the
+    # ranking still adds nothing and the campaign's answer is settled.
+    "XP0": dict(desc="hold-to-flatten + BEARISH PATTERN exits only",
+                entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                sim_extra={"trail_pct": 999, "stop_pct": 99,
+                           "scale_out_at": None, "pressure_exit": None}),
+    "XP1": dict(desc="hold + patterns + pressure-flip exits",
+                entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                sim_extra={"trail_pct": 999, "stop_pct": 99,
+                           "scale_out_at": None,
+                           "pressure_exit": (10, 0.3, "profit")}),
+    "XPR": dict(desc="CONTROL: RANDOM pick + hold + pattern exits",
+                entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                rand=True,
+                sim_extra={"trail_pct": 999, "stop_pct": 99,
+                           "scale_out_at": None, "pressure_exit": None}),
     # ---- K-series (2026-08-27): CONCURRENCY on top of XHB. With
     # hold-to-flatten one ticket occupies the whole day, so 6 of 7 sit
     # idle -- the only remaining mechanism that MULTIPLIES a per-day

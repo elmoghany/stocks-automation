@@ -5108,3 +5108,63 @@ tickets/day vs 4.8 -- the same abstention gradient HVCS exposed.
    decomposes the exit machinery one component at a time (XHB baseline
    rank + hold, XH0 gain_asc + hold, XH1 stop-only, XH2 trail-only,
    XH3 wide stop + trail).
+
+## ===== W-CAMPAIGN VERDICT (2026-08-27): THE HONEST CEILING =====
+Task: "reach C37E result without bias." Answer: C37E's +$635,759 was
+never real, and the honest ceiling for this ruleset family is about
+HALF of it -- reached by removing machinery, not adding it.
+
+THE LADDER (all full-coverage pool, live halal gate, EDGAR cache):
+  C37E  biased cache, C37 rules      +635,759   $1,517/d   ARTIFACT
+  C37F  honest pool, C37 rules        -72,673    -$163/d   the real baseline
+  XHB   + remove ALL exits            +83,759    +$188/d   both years +
+  K6    + 6 concurrent positions     +345,125    +$776/d   both years +
+  K6S   + 10bps/side slippage        +301,927    +$679/d   <- THE HONEST NUMBER
+  KR6S  random-6, same costs         +246,159    +$553/d   the control
+
+DECOMPOSITION of the +$301,927:
+  ~$246,159 (82%)  gapper-wide intraday DRIFT -- available to random
+                   selection; requires only capital, not skill
+  ~$55,768  (18%)  RANKING contribution -- real: beats its own control
+                   in BOTH years (+8,252 / +47,516) with LOWER drawdown
+                   ($33k vs $42k). This is the only defensible "edge"
+                   the campaign found.
+  Leverage: 6 concurrent tickets vs 1. Sublinear (6x capital -> 3.6x
+  return of XHB), i.e. the drift is capacity-constrained.
+
+WHAT KILLED THE ORIGINAL EDGE, in order of size:
+ 1. BAR-COVERAGE BIAS ($708k swing). Bars were fetched to full-day-gain
+    depth, so the sim chose from a hindsight-curated sliver. Z104 also
+    collapses (+225,646 -> -29,460); prepool replay EXACT both ways.
+ 2. THE EXITS ($156k swing). -8% stop + 20% trail + scale-out were
+    fitted to a cache whose survivors ran +100-300%. On the honest
+    universe of modest movers they lock in losses that recover by
+    15:00 -- removing them LOWERS drawdown ($18k vs $58k).
+ 3. Pattern/pressure exits also subtract (XP0 +54,421 vs XHB +83,759).
+    Every exit mechanism we own is negative-value on honest data.
+
+WHAT DID *NOT* WORK (all controlled, all reported):
+ * Liquidity vetoes (HV): +45k but flat adjacency AND the inverted
+   control gained too -> mostly abstention.
+ * Phase restriction (no premarket): gains are the abstention gradient.
+ * gain_asc re-ranking (IR): the IC study's own recommendation. Beats
+   C37's key WITH exits on (-$159 vs -$221/traded-day) and LOSES with
+   exits off. Cross-sectional IC != what rotation needs (a name that
+   TRENDS). Inverted control failed hard (-$89,471), so the axis is
+   real; the application is not.
+ * More concurrency past 6: K7 < K6. Capacity ceiling, not an edge.
+
+PRICE OF ADMISSION (why this is NOT adoptable as-is):
+ * 6 concurrent positions violates the user's ONE-POSITION cash rule.
+ * NO stop-loss. The result depends on holding through drawdowns to
+   the 15:00 flatten. It lowers *measured* DD but the tail risk of a
+   halted/collapsing name is unmodelled.
+ * Regime dependence: Y2 (+219k) is 2.6x Y1 (+83k). This is a bet on
+   the gapper drift persisting.
+ * The book is unmodelled at the close; 10bps is an assumption.
+
+LIVE IMPLICATION: the live paper campaign (-$107/day over 14 days) has
+been tracking the honest baseline, not underperforming a real edge.
+Its vetoes are consistent with the abstention finding. The honest
+per-day target for ONE position with exits is ~-$163; for one position
+without exits ~+$188.
