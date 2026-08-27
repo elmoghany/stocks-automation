@@ -40,7 +40,7 @@
    "permission_mode_note": "Day-16 failure mode (acceptEdits auto-approves EDITS ONLY, denying python/git/MCP) did NOT recur. Session is fully capable, not merely live.",
    "verdict": "PROCEED - full protocol authority"
   },
-  "heartbeat_et": "10:50",
+  "heartbeat_et": "11:01",
   "scan_state_seed": "drop-lists seeded from Day-16 verdicts: 32 halal_fail, 30 inherited_fail, 2 cannot_verify, 2 spac. fake_gap DELIBERATELY LEFT EMPTY - it is a DAY-SCOPED artifact (no premarket prints), not a permanent verdict. Day 16 listed RPGL as fake_gap while RPGL is a halal PASS; inheriting that list would have silently excluded a tradeable name.",
   "scan_row_classification": "101 scan rows. 19 carry a non-empty Market cap; the other 82 have EMPTY Market cap AND empty Float and are leveraged/derivative ETFs+ETNs by name. Day-16 lesson applied: non-empty Market cap is SUFFICIENT for common stock - requiring a non-empty Float too is the filter that wrongly excluded NIPG/SMTC on Day 16. NIPG has an empty Float and was correctly kept this time.",
   "clock_correction": "Cycle-2 entries were first stamped 06:52 from an ESTIMATE of elapsed time; `date -u` then read 10:38Z = 06:38 ET, so the label ran ~14 min fast. Corrected to 06:38. Every later timestamp in this ledger is stamped from `date -u` at the moment of writing, never estimated. This is the clock rule (2026-08-14) failing in a NEW way: not TZ, but assuming wall-clock from token count.",
@@ -231,8 +231,8 @@
    },
    "gap_window_exit_replay": "No exit rule fired during the unmonitored window. Replayed bar by bar in time order over 09:12-09:28: hard stop 150.742 never approached (lowest print since entry 161.2026, 6.9% above it); 20% trail from a 169.11 peak sits at 135.29 and even the tightened 10% trail sits at 152.20, both far below every bar; scale-out at 204.8125 never reached. Bearish-pattern exits are LOOP-LAYER judgement calls and are deliberately NOT settled from hindsight - only the armed rules are.",
    "notes": "NO REAL ORDER. Paper ledger only. First fill of Day 17.",
-   "mark_pnl": -93.28,
-   "mark_et": "10:50"
+   "mark_pnl": 137.41,
+   "mark_et": "11:01"
   }
  ],
  "armed": [
@@ -906,6 +906,16 @@
    "binding": 150.742,
    "binding_distance_pct": 8.02,
    "note": "position turned negative; binding stop still 8.02% away"
+  },
+  {
+   "et": "11:01",
+   "last": 165.36,
+   "pnl": 137.41,
+   "peak": 169.11,
+   "pressure10": null,
+   "trail_width": "20%",
+   "binding": 150.742,
+   "binding_distance_pct": 9.7
   }
  ],
  "lessons": [],
