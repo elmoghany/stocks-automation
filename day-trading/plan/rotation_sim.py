@@ -304,6 +304,57 @@ CFGS = {
     # is now every candidate/day (~213) instead of the ~17 that had
     # gain-selected bars. Separate id so C37E's pre-backfill row is
     # never overwritten. Run: HALAL_STRICT=1 PT_FILED=1 ROTSHARD=full.
+    # ---- K-series (2026-08-27): CONCURRENCY on top of XHB. With
+    # hold-to-flatten one ticket occupies the whole day, so 6 of 7 sit
+    # idle -- the only remaining mechanism that MULTIPLIES a per-day
+    # edge rather than shaving losses. k names are entered at the SAME
+    # decision points the rotation loop already uses, each with
+    # budget/k, each running the identical hold-to-flatten exits.
+    # NOTE user constraint: live stays ONE position at a time; this is
+    # a backtest-only measurement (user approval 2026-08-20).
+    "K2": dict(desc="XHB + 2 concurrent names (budget split 2)",
+               entry_cutoff=dtime(14, 30), escape=dtime(10, 0), topk=2,
+               sim_extra={"trail_pct": 999, "stop_pct": 99,
+                          "scale_out_at": None, "pressure_exit": None,
+                          "sell_mode": "target_stop_only"}),
+    "K3": dict(desc="XHB + 3 concurrent names (budget split 3)",
+               entry_cutoff=dtime(14, 30), escape=dtime(10, 0), topk=3,
+               sim_extra={"trail_pct": 999, "stop_pct": 99,
+                          "scale_out_at": None, "pressure_exit": None,
+                          "sell_mode": "target_stop_only"}),
+    "K4": dict(desc="XHB + 4 concurrent names (budget split 4)",
+               entry_cutoff=dtime(14, 30), escape=dtime(10, 0), topk=4,
+               sim_extra={"trail_pct": 999, "stop_pct": 99,
+                          "scale_out_at": None, "pressure_exit": None,
+                          "sell_mode": "target_stop_only"}),
+    "KR3": dict(desc="CONTROL: RANDOM 3 concurrent (isolates ranking)",
+                entry_cutoff=dtime(14, 30), escape=dtime(10, 0), topk=3,
+                rand=True,
+                sim_extra={"trail_pct": 999, "stop_pct": 99,
+                           "scale_out_at": None, "pressure_exit": None,
+                           "sell_mode": "target_stop_only"}),
+    # ---- XH controls (2026-08-27): XHB (+83,759, both years, maxDD
+    # LOWER than baseline) must survive these before it means anything.
+    # XHR is the decider: "buy a +10% gapper and hold to 15:00" may be
+    # harvesting an intraday drift common to ALL gappers -- beta, not
+    # edge. If random picks earn too, the ranking contributes nothing.
+    "XHR": dict(desc="CONTROL: RANDOM pick + hold-to-flatten (beta test)",
+                entry_cutoff=dtime(14, 30), escape=dtime(10, 0), rand=True,
+                sim_extra={"trail_pct": 999, "stop_pct": 99,
+                           "scale_out_at": None, "pressure_exit": None,
+                           "sell_mode": "target_stop_only"}),
+    "XHS": dict(desc="XHB under 10bps/side slippage stress",
+                entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                slip=0.001,
+                sim_extra={"trail_pct": 999, "stop_pct": 99,
+                           "scale_out_at": None, "pressure_exit": None,
+                           "sell_mode": "target_stop_only"}),
+    "XHW": dict(desc="XHB coverage robustness: walk-8 candidate depth",
+                entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                cand_top=8,
+                sim_extra={"trail_pct": 999, "stop_pct": 99,
+                           "scale_out_at": None, "pressure_exit": None,
+                           "sell_mode": "target_stop_only"}),
     # ---- XH-series (2026-08-27): ARE THE EXITS EATING THE SIGNAL?
     # The IC study measured the tradeable corner at +2.52% mean/trade
     # with entry-at-next-print and HOLD TO FLATTEN -- no stop, no trail.
@@ -730,6 +781,57 @@ def run_day(cands, date, cfg, stats=None, fc=None):
                     break
         if pick is None:
             t = _step(t)
+            continue
+        # K-series concurrency: deploy k tickets to the k best ARMABLE
+        # names at this same decision point, each its own full ticket
+        # (the $100k/day cap and the ticket schedule still bind). The
+        # clock then advances past the LAST exit, so capital is never
+        # double-counted. topk=None keeps the sequential champion path
+        # byte-identical -- K-series is measurement only; live remains
+        # ONE position at a time per the user's cash rules.
+        topk = cfg.get("topk")
+        if topk:
+            picks = []
+            for i, r in enumerate(pool):
+                if len(picks) >= topk or ticket_i + len(picks) >= len(TICKETS):
+                    break
+                if gates_ok(r, i == 0):
+                    picks.append(r)
+            if not picks:
+                t = _step(t)
+                continue
+            last_exit = t
+            got = False
+            for r in picks:
+                dfk = r["df"]
+                wk = dfk[(dfk.index.time >= entry_open)
+                         & (dfk.index.time < EXIT_END)]
+                if len(wk) < 20:
+                    continue
+                kwk = dict(SIMKW)
+                kwk.update(cfg.get("sim_extra") or {})
+                if cfg.get("slip"):
+                    kwk["slippage_bps"] = cfg["slip"] * 1e4
+                if r.get("pmh"):
+                    kwk["extra_break_high"] = r["pmh"]
+                trk = dt.simulate_trades(
+                    wk, prev_close=r["pc"], budget=TICKETS[ticket_i],
+                    entry_start=max(t, r["cross"]), **kwk)
+                trk = [x for x in trk if x.get("entry_time") is not None]
+                if not trk:
+                    continue
+                fe = trk[0]["entry_time"]
+                grpk = [x for x in trk if x["entry_time"] == fe]
+                for x in grpk:
+                    x["ticket"] = ticket_i
+                    x["symbol"] = r["c"]["symbol"]
+                trades += grpk
+                ticket_i += 1
+                got = True
+                ex = max(x["exit_time"] for x in grpk).time()
+                if ex > last_exit:
+                    last_exit = ex
+            t = _step(max(t, last_exit)) if got else _step(t)
             continue
         # simulate ONE ticket on this name from t
         df = pick["df"]
