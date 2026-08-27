@@ -6,7 +6,7 @@
  "session_type": "headless launch by Windows Task Scheduler (\\Stocks\\C37MorningLaunch)",
  "epoch": "honest-baseline (C37F, 2026-08-23): the $1,517/day C37E benchmark is RETIRED. Score vs break-even and vs -$163/day.",
  "benchmark_per_day": -163,
- "status": "PREMARKET - scanning, flat, 7 tickets available",
+ "status": "PREMARKET - flat, TOP=OKTA spread-vetoed, 7 tickets available",
  "counts_as_traded_day": false,
  "config": {
   "tickets": [
@@ -40,7 +40,7 @@
    "permission_mode_note": "Day-16 failure mode (acceptEdits auto-approves EDITS ONLY, denying python/git/MCP) did NOT recur. Session is fully capable, not merely live.",
    "verdict": "PROCEED - full protocol authority"
   },
-  "heartbeat_et": "06:50",
+  "heartbeat_et": "07:04",
   "scan_state_seed": "drop-lists seeded from Day-16 verdicts: 32 halal_fail, 30 inherited_fail, 2 cannot_verify, 2 spac. fake_gap DELIBERATELY LEFT EMPTY - it is a DAY-SCOPED artifact (no premarket prints), not a permanent verdict. Day 16 listed RPGL as fake_gap while RPGL is a halal PASS; inheriting that list would have silently excluded a tradeable name.",
   "scan_row_classification": "101 scan rows. 19 carry a non-empty Market cap; the other 82 have EMPTY Market cap AND empty Float and are leveraged/derivative ETFs+ETNs by name. Day-16 lesson applied: non-empty Market cap is SUFFICIENT for common stock - requiring a non-empty Float too is the filter that wrongly excluded NIPG/SMTC on Day 16. NIPG has an empty Float and was correctly kept this time.",
   "clock_correction": "Cycle-2 entries were first stamped 06:52 from an ESTIMATE of elapsed time; `date -u` then read 10:38Z = 06:38 ET, so the label ran ~14 min fast. Corrected to 06:38. Every later timestamp in this ledger is stamped from `date -u` at the moment of writing, never estimated. This is the clock rule (2026-08-14) failing in a NEW way: not TZ, but assuming wall-clock from token count."
@@ -215,12 +215,120 @@
   }
  },
  "vetoes": {
-  "spread": [],
+  "spread": [
+   {
+    "n": 1,
+    "symbol": "OKTA",
+    "time_et": "07:03:23",
+    "phase": "premarket",
+    "spread_pct_L2": 1.829,
+    "spread_pct_NBBO": 1.829,
+    "bid": 159.09,
+    "ask": 162.0,
+    "inside_bid_size": 8,
+    "inside_ask_size": 50,
+    "spread_would_block": true,
+    "depth_would_block": false,
+    "chase_would_block": false,
+    "binding_rule": "spread",
+    "trigger_b_level": 163.85,
+    "limit_cap": 164.669,
+    "cum_ask_to_limit": 796,
+    "intended": 91,
+    "depth_pct": 874.7,
+    "last_at_check": 160.0,
+    "last_below_trigger": true,
+    "outcome": "NO ENTRY",
+    "note": "TOP-ranked $23B name, refused on a 1.83% spread against the 0.50% cap. Depth was ample (796 sh resting to trigger+0.5% against a 91-share ticket) and the fill-arming check was clean (last 160.00 below the 163.85 trigger, so a stop-limit would be a legitimate forward stop). Spread is the only binding rule."
+   }
+  ],
   "depth": [],
   "chase": [],
   "_note": "Three SEPARATE rates per the 2026-08-14 rule; binding_rule records which one refused each decision."
  },
- "book_observations": [],
+ "book_observations": [
+  {
+   "symbol": "OKTA",
+   "time_et": "07:03:23",
+   "phase": "premarket",
+   "bid": 159.09,
+   "ask": 162.0,
+   "spread_pct_L2": 1.829,
+   "spread_pct_NBBO": 1.829,
+   "inside_bid_size": 8,
+   "inside_ask_size": 50,
+   "ask_ladder_head": [
+    [
+     162.0,
+     50
+    ],
+    [
+     162.64,
+     30
+    ],
+    [
+     163.0,
+     1
+    ],
+    [
+     163.28,
+     2
+    ],
+    [
+     163.5,
+     5
+    ],
+    [
+     163.6,
+     10
+    ],
+    [
+     163.82,
+     10
+    ],
+    [
+     164.0,
+     636
+    ],
+    [
+     164.5,
+     50
+    ]
+   ],
+   "bid_ladder_head": [
+    [
+     159.09,
+     8
+    ],
+    [
+     159.01,
+     1
+    ],
+    [
+     159.0,
+     158
+    ],
+    [
+     158.0,
+     15
+    ],
+    [
+     157.5,
+     350
+    ],
+    [
+     157.0,
+     387
+    ],
+    [
+     155.0,
+     501
+    ]
+   ],
+   "verdict": "SPREAD VETO (1.829% vs 0.50% cap); depth and fill-arming both PASS",
+   "note": "The inside is 8 shares bid against 50 offered - a $23B company quoted 3 dollars wide at 07:03. Real size does not appear until 164.00 (636 sh) on the ask and 157.00-155.00 on the bid. This is a premarket book, not an illiquidity property of the name."
+  }
+ ],
  "trigger_c": [],
  "halal": {
   "PASS": [
@@ -273,6 +381,43 @@
    "phase": "premarket",
    "action": "OKTA premarket bars cached (47 traded minutes, 04:00-06:24 ET). Premarket high 163.85, last 162.02, coil 0.989 COILED.",
    "note": "waiting on the 07:00 bar - calm-gap is the last gate before a TOP can be named"
+  },
+  {
+   "n": 4,
+   "time_et": "07:03",
+   "state": "FLAT-5m",
+   "phase": "premarket",
+   "rank": "3 crossed / 2 armable",
+   "top": "OKTA",
+   "armable": 2,
+   "ranking": [
+    {
+     "sym": "OKTA",
+     "coil": 0.981,
+     "press": -0.42,
+     "gap7": 19.6,
+     "calm": true,
+     "halal": "PASS"
+    },
+    {
+     "sym": "LTRX",
+     "coil": 0.988,
+     "press": "n/a",
+     "gap7": 14.8,
+     "calm": true,
+     "halal": "PASS"
+    },
+    {
+     "sym": "BTCT",
+     "coil": 0.927,
+     "press": 0.24,
+     "gap7": 11.6,
+     "calm": true,
+     "halal": "PASS (live screen)"
+    }
+   ],
+   "outcome": "OKTA spread-vetoed 1.829%",
+   "note": "BTCT was initially EXCLUDED from the ranking for want of bars. Ranking on a partial universe is API-HYGIENE defect #1, so its 1-minute premarket was fetched before the ranking was trusted. It came back non-coiled (0.927) and sorted last - the same answer I would have guessed, but produced by the command rather than by hand."
   }
  ],
  "coverage_gaps": [],
@@ -357,5 +502,41 @@
    "resolution": "NOT a divergence. Polygon/Massive minute bars - the simulator's native feed - also omit no-trade minutes (a probe of OKTA returned 53 bars across 128 premarket minutes). So the sim's 'trailing 10 bars' is likewise the last 10 TRADED minutes, and the CSV convention matches it. Recorded because the two readings differ by 3.5x and picking the wrong one would silently change ticket size.",
    "binding_today": "No. A $15,000 OKTA ticket is 93 shares against a 1,024-share cap either way."
   }
- ]
+ ],
+ "veto_decisions": [
+  {
+   "n": 1,
+   "symbol": "OKTA",
+   "time_et": "07:03:23",
+   "phase": "premarket",
+   "spread_pct_L2": 1.829,
+   "spread_pct_NBBO": 1.829,
+   "bid": 159.09,
+   "ask": 162.0,
+   "inside_bid_size": 8,
+   "inside_ask_size": 50,
+   "spread_would_block": true,
+   "depth_would_block": false,
+   "chase_would_block": false,
+   "binding_rule": "spread",
+   "trigger_b_level": 163.85,
+   "limit_cap": 164.669,
+   "cum_ask_to_limit": 796,
+   "intended": 91,
+   "depth_pct": 874.7,
+   "last_at_check": 160.0,
+   "last_below_trigger": true,
+   "outcome": "NO ENTRY",
+   "note": "TOP-ranked $23B name, refused on a 1.83% spread against the 0.50% cap. Depth was ample (796 sh resting to trigger+0.5% against a 91-share ticket) and the fill-arming check was clean (last 160.00 below the 163.85 trigger, so a stop-limit would be a legitimate forward stop). Spread is the only binding rule."
+  }
+ ],
+ "finding_L2_vs_NBBO_day17": {
+  "observed_et": "07:03:23",
+  "symbol": "OKTA",
+  "L2_inside": "159.09 / 162.00 = 1.829%",
+  "NBBO_quote": "159.09 / 162.00 = 1.829%",
+  "ratio": 1.0,
+  "significance": "Day 16 found get_equity_price_book quoting TH 2.7x WIDER than get_equity_quotes at the same second, and flagged it as a candidate MECHANICAL explanation for live's 90-100% premarket veto rate. Today's first paired reading shows the two sources IDENTICAL to the cent. One agreeing observation does not refute one disagreeing observation - it means the divergence is not universal and is probably name- or venue-specific rather than a systematic bias in the L2 endpoint.",
+  "action": "keep logging both numbers on every book observation; do not adjust the rule"
+ }
 }
