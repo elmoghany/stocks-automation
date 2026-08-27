@@ -6,7 +6,7 @@
  "session_type": "headless launch by Windows Task Scheduler (\\Stocks\\C37MorningLaunch)",
  "epoch": "honest-baseline (C37F, 2026-08-23): the $1,517/day C37E benchmark is RETIRED. Score vs break-even and vs -$163/day.",
  "benchmark_per_day": -163,
- "status": "PREMARKET - flat, TOP=OKTA spread-vetoed, 7 tickets available",
+ "status": "PREMARKET - ARMED Trigger B on OKTA, flat, 7 tickets available",
  "counts_as_traded_day": false,
  "config": {
   "tickets": [
@@ -40,7 +40,7 @@
    "permission_mode_note": "Day-16 failure mode (acceptEdits auto-approves EDITS ONLY, denying python/git/MCP) did NOT recur. Session is fully capable, not merely live.",
    "verdict": "PROCEED - full protocol authority"
   },
-  "heartbeat_et": "08:10",
+  "heartbeat_et": "08:27",
   "scan_state_seed": "drop-lists seeded from Day-16 verdicts: 32 halal_fail, 30 inherited_fail, 2 cannot_verify, 2 spac. fake_gap DELIBERATELY LEFT EMPTY - it is a DAY-SCOPED artifact (no premarket prints), not a permanent verdict. Day 16 listed RPGL as fake_gap while RPGL is a halal PASS; inheriting that list would have silently excluded a tradeable name.",
   "scan_row_classification": "101 scan rows. 19 carry a non-empty Market cap; the other 82 have EMPTY Market cap AND empty Float and are leveraged/derivative ETFs+ETNs by name. Day-16 lesson applied: non-empty Market cap is SUFFICIENT for common stock - requiring a non-empty Float too is the filter that wrongly excluded NIPG/SMTC on Day 16. NIPG has an empty Float and was correctly kept this time.",
   "clock_correction": "Cycle-2 entries were first stamped 06:52 from an ESTIMATE of elapsed time; `date -u` then read 10:38Z = 06:38 ET, so the label ran ~14 min fast. Corrected to 06:38. Every later timestamp in this ledger is stamped from `date -u` at the moment of writing, never estimated. This is the clock rule (2026-08-14) failing in a NEW way: not TZ, but assuming wall-clock from token count."
@@ -165,7 +165,67 @@
   "YAAS"
  ],
  "trades": [],
- "armed": [],
+ "armed": [
+  {
+   "ticket": 1,
+   "symbol": "OKTA",
+   "armed_et": "08:27",
+   "phase": "premarket (pre-09:30)",
+   "trigger": "B - premarket/session-high stop-buy",
+   "order_type": "STOP-LIMIT BUY (PAPER, resting) - NO REAL ORDER PLACED",
+   "stop": 163.85,
+   "limit": 164.669,
+   "limit_basis": "trigger x 1.005, the same 0.5% cap as the thin-book veto",
+   "shares": 91,
+   "notional": 14910.35,
+   "prev_close": 134.42,
+   "cross_level_10pct": 147.862,
+   "trigger_above_cross": true,
+   "premkt_high_set_at": "04:01 ET on a 1,100-share print; price has held 157-159 for the four hours since",
+   "distance_to_trigger_pct": 3.9,
+   "fill_arming_check": {
+    "last_at_arm": 157.7021,
+    "trigger": 163.85,
+    "last_below_trigger": true,
+    "verdict": "CLEAN FORWARD STOP - trigger not yet met, so a stop-limit is legitimate, not a disguised market order"
+   },
+   "spread_check": {
+    "bid_L2": 157.63,
+    "ask_L2": 158.05,
+    "spread_pct_L2": 0.2665,
+    "bid_NBBO": 157.5,
+    "ask_NBBO": 158.05,
+    "spread_pct_NBBO": 0.349,
+    "reads_65s_apart": true,
+    "note": "both inside the 0.50% cap, so the entry decision does not turn on which is used. The 0.08pp difference is again a TIMING artifact - the book snapshot is 65 seconds after the quote - not a feed divergence.",
+    "cap_pct": 0.5,
+    "verdict": "PASS"
+   },
+   "depth_check": {
+    "cum_ask_inside_to_limit": 1056,
+    "intended": 91,
+    "pct_of_intended": 1160.4,
+    "verdict": "PASS - no ticket reduction needed",
+    "ladder_note": "465 sh at 164.00 carries the level; the path from 158.05 to 164.67 is thin but the ticket is only 91 shares"
+   },
+   "size_cap_check": {
+    "trailing10_traded_min_volume": 3293,
+    "cap_20pct": 659,
+    "intended": 91,
+    "binding": false
+   },
+   "on_fill": {
+    "protective_stop": 150.742,
+    "stop_basis": "max(entry x 0.92, peak x 0.60) = 163.85 x 0.92, placed the instant the entry fills",
+    "scale_out_level": 204.8125,
+    "scale_out_rule": "bank 1/3 at +25% UNLESS 10-bar pressure >= +0.3",
+    "trail": "20% from peak; tighten to 10% when 10-bar pressure <= -0.3; widen to 40% when >= +0.3",
+    "hard_exit": "all exits by 15:00, flatten ladder from 14:57"
+   },
+   "notes": "First arming of Day 17 and the first decision all session where spread, depth, size cap and fill-arming ALL passed. OKTA is a $23B name gapping +17% on earnings that also clears the halal ratio gate - the combination the Day-8 structural-tension note says is rare. Pressure is UNTRUSTED (<20k shares over 30 bars) so it neither helps nor blocks; C37 gates ranking on pressure, not entry.",
+   "status": "RESTING - unfilled"
+  }
+ ],
  "candidates": {
   "armable_pool_ratios_PASS": {
    "OKTA": {
@@ -640,6 +700,23 @@
    "top": "OKTA",
    "armable_by_book": 0,
    "drop_list_fix": "todays 7 FAIL verdicts added to scan_state halal_fail so latched FAILs stop resurfacing each sweep"
+  },
+  {
+   "n": 9,
+   "time_et": "08:25",
+   "state": "FLAT-5m",
+   "phase": "premarket",
+   "rank": "3 crossed / 2 armable",
+   "top": "OKTA",
+   "armable": 2,
+   "spreads": {
+    "OKTA": 0.349,
+    "BTCT": 0.943,
+    "LTRX": 3.011,
+    "NCEL": 3.582
+   },
+   "action": "ARMED Trigger B stop-limit 163.85/164.669 x91 on OKTA",
+   "ncel_note": "NCEL excluded from the ranking for want of bars. It cannot be armed regardless: entry requires price >= prev_close x 1.10 = 3.707 and NCEL is quoted 3.47. Its +15% scan mark came from a 4.05 print on total premarket volume of 1,085 shares; it is currently +2.7%. Latched, not entry-eligible."
   }
  ],
  "coverage_gaps": [
