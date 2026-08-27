@@ -4959,3 +4959,32 @@ counts were left. Recorded rather than quietly fixed.
 
 Read-only analysis: `rotation_sim.py`, `day-trading.py`, `idgate.py`,
 `data_manifest.py` and every config are untouched.
+
+## IR-SERIES (2026-08-27): re-ranking is REAL but not sufficient
+Acting on the IC study (c37_rank_score IC -0.0433; gain_now IC -0.24..-0.03).
+Ordering key swapped ONLY; eligibility, gates, exits, rotation untouched.
+
+  cfg      2yr      vsC37F      Y1       Y2     negm  days  tk/d
+  IR000  -72,673        +0  -55,423  -17,250  18/23   445   4.8  (identity: EXACT)
+  IRGA   -58,318   +14,355  -38,377  -19,941  15/23   419   1.9  (gain_asc)
+  IRGC   -55,694   +16,979  -51,236   -4,458  17/23   445   3.3  (coil+gain_asc)
+  IRGD  -162,144   -89,471  -50,754 -111,390  17/23   445   6.0  (INVERTED control)
+  IRGN   -22,842   +49,831  -12,538  -10,304  12/23   370   1.3  (gain_asc, 09:30 open)
+  IRG10  -20,951   +51,722   -5,072  -15,879  12/22   230   1.2  (gain_asc, 10:00 open)
+
+VERDICT: the extension axis is REAL -- the inverted control loses
+$89,471 and blows the drawdown to $125k, the sharpest control failure
+of the campaign. gain_asc beats the champion's key at near-equal day
+count (IRGA 419d vs 445d, -$159/traded-day vs -$221). But NOTHING
+crosses zero and NOTHING passes both-years. The later-open variants
+(IRGN, IRG10) post the best totals purely by trading less -- 1.2-1.3
+tickets/day vs 4.8 -- the same abstention gradient HVCS exposed.
+=> Re-ranking recovers ~20% of the loss; it is not the missing edge.
+=> Next: the exits. The IC study measured +2.52%/trade on entry-at-
+   next-print HOLD-TO-FLATTEN; the harness applies C37's -8% stop and
+   20% trail and the same entries lose. Those exits were tuned on the
+   biased cache, whose survivors were +100-300% monsters -- a 20%
+   trail is generous there and brutal on a name up 12%. XH-series
+   decomposes the exit machinery one component at a time (XHB baseline
+   rank + hold, XH0 gain_asc + hold, XH1 stop-only, XH2 trail-only,
+   XH3 wide stop + trail).

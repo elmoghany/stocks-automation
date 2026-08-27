@@ -81,6 +81,7 @@ def _featcache_for(date):
     return _FC[date]
 
 
+_RANK_MODE = [None]      # set per-config by run_day; None = champion key
 TICKETS = [15_000.0] * 6 + [10_000.0]          # user schedule: 6x15k + 10k
 SCAN_STEP = 5                                   # minutes between re-ranks
 EXIT_END = dtime(15, 0)
@@ -303,6 +304,68 @@ CFGS = {
     # is now every candidate/day (~213) instead of the ~17 that had
     # gain-selected bars. Separate id so C37E's pre-backfill row is
     # never overwritten. Run: HALAL_STRICT=1 PT_FILED=1 ROTSHARD=full.
+    # ---- XH-series (2026-08-27): ARE THE EXITS EATING THE SIGNAL?
+    # The IC study measured the tradeable corner at +2.52% mean/trade
+    # with entry-at-next-print and HOLD TO FLATTEN -- no stop, no trail.
+    # The harness applies C37's exits (-8% stop, 20% peak trail,
+    # scale-out) and the same entries LOSE. Those exits were tuned on
+    # the biased cache, whose survivors were +100-300% monsters; a 20%
+    # trail is generous there and brutal on a name up 12%. Isolate the
+    # exit machinery on the honest pool, one component at a time.
+    # HOLD = trail/stop set out of reach + no scale-out + no pattern or
+    # pressure exits => only the 15:00 window-close flatten can fire.
+    "XHB": dict(desc="baseline rank + HOLD-to-flatten (exits isolated)",
+                entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                sim_extra={"trail_pct": 999, "stop_pct": 99,
+                           "scale_out_at": None, "pressure_exit": None,
+                           "sell_mode": "target_stop_only"}),
+    "XH0": dict(desc="gain_asc + HOLD-to-flatten (the IC study's own rule)",
+                entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                rank_mode="gain_asc",
+                sim_extra={"trail_pct": 999, "stop_pct": 99,
+                           "scale_out_at": None, "pressure_exit": None,
+                           "sell_mode": "target_stop_only"}),
+    "XH1": dict(desc="gain_asc + STOP only (-8%, no trail)",
+                entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                rank_mode="gain_asc",
+                sim_extra={"trail_pct": 999, "stop_pct": 8,
+                           "scale_out_at": None, "pressure_exit": None,
+                           "sell_mode": "target_stop_only"}),
+    "XH2": dict(desc="gain_asc + TRAIL only (20%, stop out of reach)",
+                entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                rank_mode="gain_asc",
+                sim_extra={"trail_pct": 20, "stop_pct": 99,
+                           "scale_out_at": None, "pressure_exit": None,
+                           "sell_mode": "target_stop_only"}),
+    "XH3": dict(desc="gain_asc + wide stop 15%% + trail 20%%",
+                entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                rank_mode="gain_asc",
+                sim_extra={"trail_pct": 20, "stop_pct": 15,
+                           "scale_out_at": None, "pressure_exit": None,
+                           "sell_mode": "target_stop_only"}),
+    # ---- IR-series (2026-08-27): RE-RANK, not re-filter. From the IC
+    # study (IC-STUDY-honest-pool.md): c37_rank_score IC -0.0433 (ranks
+    # backwards); gain_now IC -0.241..-0.032, 29/30 sign-stable, beats
+    # both negative controls. Pre-registered pass bar: both years
+    # independently positive, gain_desc control must LOSE, adjacency
+    # coherent across the variants, negm better than C37F's 18/23.
+    "IR000": dict(desc="IDENTITY: C37F (rank_mode off)",
+                  entry_cutoff=dtime(14, 30), escape=dtime(10, 0)),
+    "IRGA": dict(desc="RE-RANK: least-extended crosser first (gain_now asc)",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 rank_mode="gain_asc"),
+    "IRGC": dict(desc="RE-RANK: coil group, gain_now asc within",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 rank_mode="gain_asc_coil"),
+    "IRGD": dict(desc="CONTROL INVERTED: most-extended first (must lose)",
+                 entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                 rank_mode="gain_desc"),
+    "IRGN": dict(desc="gain_asc + no premarket entries (09:30 open)",
+                 entry_open=dtime(9, 30), entry_cutoff=dtime(14, 30),
+                 escape=dtime(10, 0), rank_mode="gain_asc"),
+    "IRG10": dict(desc="gain_asc + 10:00 open (IC study best corner)",
+                  entry_open=dtime(10, 0), entry_cutoff=dtime(14, 30),
+                  escape=dtime(10, 30), rank_mode="gain_asc"),
     # ---- HV run 2 (2026-08-26): the phase hypothesis. Run 1 showed
     # EVERY amihud threshold gains ~the same (+42-47k) AND the inverted
     # control gains too (+22k) -- signature of "trade less in premarket"
@@ -515,6 +578,7 @@ def rank_at(cands, t, top=None, fc=None):
         hit = fc.get(r["c"]["symbol"], {}).get(key) if fc else None
         if hit is not None:
             _last, _hi, coil, prs = hit
+            last = _last
         else:
             w = r["df"][r["df"].index.time <= t]
             if len(w) < 3:
@@ -526,6 +590,27 @@ def rank_at(cands, t, top=None, fc=None):
             if len(w) >= 5:
                 cd = dt.Candles(w)
                 prs = cd.pressure(cd.n - 1, 30, 20_000)
+        # IR-series (2026-08-27): the IC study found the champion's own
+        # ordering key has mean IC -0.0433 (30/30 sign-stable, control
+        # bar 0.013) -- C37 ranks BACKWARDS. gain_now (how far a name
+        # has ALREADY run at t) is the strongest stable feature, sign
+        # NEGATIVE: prefer the LEAST-extended crosser. rank_mode swaps
+        # the ordering key only; eligibility, gates, exits, rotation and
+        # the ticket schedule are untouched. Strictly causal: gain_now
+        # uses last close <= t vs the PRIOR day's close.
+        rm = _RANK_MODE[0]
+        if rm:
+            gain_now = (last / r["pc"] - 1) * 100 if r["pc"] else 0.0
+            if rm == "gain_asc":            # least-extended first
+                k = (gain_now,)
+            elif rm == "gain_desc":         # INVERTED control: must lose
+                k = (-gain_now,)
+            elif rm == "gain_asc_coil":     # coil group, gain_asc within
+                k = (0 if coil >= 0.95 else 1, gain_now)
+            else:
+                raise ValueError(f"unknown rank_mode {rm}")
+            scored.append((k, r))
+            continue
         scored.append(((0 if coil >= 0.95 else 1,
                         -(prs if prs is not None else -1)), r))
     scored.sort(key=lambda x: x[0])
@@ -614,6 +699,7 @@ def _shuffled_proxy(df, ts, lookback, date, sym, k):
 
 
 def run_day(cands, date, cfg, stats=None, fc=None):
+    _RANK_MODE[0] = cfg.get("rank_mode")
     entry_open = cfg.get("entry_open", dtime(7, 0))
     cutoff = cfg.get("entry_cutoff", dtime(12, 0))
     rotate = cfg.get("rotate", True)
