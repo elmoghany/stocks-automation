@@ -40,7 +40,7 @@
    "permission_mode_note": "Day-16 failure mode (acceptEdits auto-approves EDITS ONLY, denying python/git/MCP) did NOT recur. Session is fully capable, not merely live.",
    "verdict": "PROCEED - full protocol authority"
   },
-  "heartbeat_et": "07:47",
+  "heartbeat_et": "07:55",
   "scan_state_seed": "drop-lists seeded from Day-16 verdicts: 32 halal_fail, 30 inherited_fail, 2 cannot_verify, 2 spac. fake_gap DELIBERATELY LEFT EMPTY - it is a DAY-SCOPED artifact (no premarket prints), not a permanent verdict. Day 16 listed RPGL as fake_gap while RPGL is a halal PASS; inheriting that list would have silently excluded a tradeable name.",
   "scan_row_classification": "101 scan rows. 19 carry a non-empty Market cap; the other 82 have EMPTY Market cap AND empty Float and are leveraged/derivative ETFs+ETNs by name. Day-16 lesson applied: non-empty Market cap is SUFFICIENT for common stock - requiring a non-empty Float too is the filter that wrongly excluded NIPG/SMTC on Day 16. NIPG has an empty Float and was correctly kept this time.",
   "clock_correction": "Cycle-2 entries were first stamped 06:52 from an ESTIMATE of elapsed time; `date -u` then read 10:38Z = 06:38 ET, so the label ran ~14 min fast. Corrected to 06:38. Every later timestamp in this ledger is stamped from `date -u` at the moment of writing, never estimated. This is the clock rule (2026-08-14) failing in a NEW way: not TZ, but assuming wall-clock from token count."
@@ -811,5 +811,28 @@
   "poll_shape": "fetch 1-min bars -> merge -> run `trigger` -> READ THE TAG NOW -> only then wait. The wait is never allowed between the trigger call and reading its output (Day-13 defect).",
   "arming_check_deferred": "quote + price_book are pulled ONLY when a [TAKEABLE NOW] tag appears, not every minute - the fill-arming rule's re-quote, and it halves per-poll cost.",
   "honest_note": "With the tick-size floor, BTCT at 2.14 is armable only at EXACTLY one tick, so the odds any fresh signal is takeable are low. Polling anyway: the tag does the refusing, not my estimate of the odds."
+ },
+ "spread_watch": [
+  {
+   "et": "07:21",
+   "OKTA": 0.557,
+   "BTCT": 0.926,
+   "LTRX": 0.629,
+   "armable": 0
+  },
+  {
+   "et": "07:55",
+   "OKTA": 0.565,
+   "BTCT": 0.939,
+   "armable": 0
+  }
+ ],
+ "cadence_decision_3": {
+  "time_et": "07:55",
+  "decision": "Premarket poll on the TOP name runs at ~5 min while its book is OUTSIDE the 0.50% cap; it switches to strict 1-minute the moment the book comes inside the cap, and unconditionally from 09:25.",
+  "resolves": "the tension between the 06:50 decision and my own 07:30 criticism of it",
+  "reasoning": "Day 16 states the rule precisely: the 1-minute poll must start the moment a TOP name is selected AND its book is tradeable. At 07:30 I criticised the 06:50 decision as a cadence failure, but the two cases differ. BTCT at 07:30 was TOP with a book that could flicker to one tick and had already produced four fires - polling was right. OKTA now is TOP with a 0.565% spread and EIGHT shares at the inside bid; a [TAKEABLE NOW] tag on it could not be armed at any point in the last hour. Polling it every minute would buy nothing but a longer ledger.",
+  "what_would_change_it": "any reading of OKTA <= 0.50% or BTCT at exactly one tick; both are checked every cycle",
+  "honesty_note": "This is a weaker claim than my 07:30 note implied. The 07:24 BTCT triple signal was a real cadence miss and is logged as one. What follows from it is that cadence must track the BOOK, not that 1-minute polling is unconditionally right."
  }
 }
