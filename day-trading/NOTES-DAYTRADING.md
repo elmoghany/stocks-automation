@@ -4794,3 +4794,37 @@ never deployed**. Days 8, 15 and 16 have all been single-holder. C37's per-day f
 assumes rotation through several tickets, so these days cannot reach it by construction.
 This is a property of the champion, not a defect — but it is now the *typical* outcome
 and deserves its own line in the campaign accounting rather than a per-day footnote.
+
+## HV RUN 2 (2026-08-27): THE RANDOM CONTROL WINS -- diagnosis complete
+  cfg      2yr      vs C37F     Y1       Y2    negm  vetoRate  days
+  HV000  -72,673        +0  -55,423  -17,250  18/23     -      445
+  HVA24  -25,983   +46,690  -12,014  -13,969  15/23    52%     445
+  HVN0   -19,653   +53,020   -6,538  -13,115  15/23     -      445  (no premarket)
+  HVN1    +5,307   +77,980   -2,367   +7,674  11/23    16%     445  (no pm + veto)
+  HVN2   -52,115   +20,558  -28,854  -23,261  14/23     -      439  (pm-ONLY control)
+  HVCS   +22,596   +95,269   -4,716  +27,312  14/23    86%     414  (RANDOM control)
+
+Two configs finally cross zero -- and the honest reading is that this
+KILLS the veto/ordering line of attack rather than validating it:
+ * HVN2 behaved (premarket-only is the worst zone, -$52k) so the
+   phase hypothesis is directionally right: premarket is where the
+   losses live.
+ * HVN1 (+$5,307) fails the both-years rule (Y1 -$2,367) -- not
+   adoptable under standing law even ignoring the control.
+ * THE SEEDED-RANDOM VETO (HVCS) RETURNS +$22,596 AND BEATS EVERY
+   INSTRUMENTED CONFIG. A control that vetoes at random, harder (86%),
+   outperforms the calibrated instruments by 4x.
+=> CONCLUSION, stated plainly: on the honest pool the C37 entry
+   ruleset has NEGATIVE PER-TRADE EXPECTANCY. Every "improvement"
+   found so far is just trading less, and the limit of that process is
+   not trading at all. No filter, veto, ordering rule or session-phase
+   restriction can rescue a negative-expectancy entry -- the S-campaign
+   sizing lesson in a new costume (there, leverage masqueraded as
+   alpha; here, abstention masquerades as edge).
+=> The search must move from FILTERING the existing entry signal to
+   finding whether ANY causal signal has predictive power on the
+   honest universe. Next: an IC study (alphalens-style) over causal
+   features -> forward returns, on the full pool, BEFORE any further
+   config sweeps. If no feature clears its control, the honest answer
+   is that this universe/ruleset family has no edge to find, and we
+   report that rather than sweeping until something passes by chance.
