@@ -106,8 +106,15 @@ to MCP-only monitoring plus Write-tool ledger updates — both stayed healthy al
   PANW, SNPS, TENB). Rotating among those would have been the same bet several times.
   **Open question: does the champion's backtest contain sector-cluster days, and does
   rotation help or hurt on them?**
-- **Veto ledger**: spread 3/3, depth 0/3, chase 0/3. The spread veto did not cost money —
-  BTCT was refused near 2.19 and closed at 2.06.
+- **Veto ledger: 2/3 = 66.7%** (spread 2, depth 0, chase 0) — three premarket arming
+  decisions, two vetoed, and the 08:25 OKTA arming that passed all four checks and became the
+  day's only trade. *First written as 3/3 = 100%; that counted the vetoes and forgot the
+  decision that succeeded.* **66.7% sits just above the V-series 50–65% optimum and far below
+  the 90–100% the campaign keeps recording** — the first premarket session not to refuse
+  everything. The cause is compositional: a $23B earnings gapper whose spread compressed from
+  1.829% (07:03) to 0.349% (08:24). Day 16 concluded compression is *time-of-day*; today adds
+  that it is also *name-quality*, i.e. the veto rate is largely a statement about what is in
+  the pool. Neither veto cost money — BTCT was refused near 2.19 and closed at 2.06.
 - **Tooling added**: `plan/bars_paste.py` (multi-symbol bar paste with a BOM guard and a
   trailing-10-traded-minute volume cap), `plan/posn.py` (one-shot position state that
   replays the intrabar stop from entry on *every* call, so a missed poll cannot step over

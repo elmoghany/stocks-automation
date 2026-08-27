@@ -1371,15 +1371,37 @@
  },
  "premarket_veto_rate": {
   "decisions": 3,
-  "vetoed": 3,
-  "rate_pct": 100.0,
+  "vetoed": 2,
+  "armed": 1,
+  "rate_pct": 66.7,
   "by_rule": {
-   "spread": 3,
+   "spread": 2,
    "depth": 0,
    "chase": 0
   },
-  "note": "3/3 premarket, matching the historical 90-100% the V-series flagged as too aggressive. But the tick analysis reframes it: BTCT's two vetoes were EXACTLY two ticks on a $2.14 stock, i.e. the cap measuring tick size, while OKTA's 0.557% was 88 ticks and a real liquidity statement. Depth and fill-arming refused nothing all day. The single arming that cleared all four checks made +$876.",
-  "did_the_veto_cost_money": "No. BTCT was refused at 07:15 with the stock near 2.19; it closed the session at 2.06. The spread veto was a save, not a cost, on the only name it refused."
+  "decisions_detail": [
+   {
+    "et": "07:03:23",
+    "symbol": "OKTA",
+    "outcome": "VETO",
+    "binding": "spread 1.829%"
+   },
+   {
+    "et": "07:15:23",
+    "symbol": "BTCT",
+    "outcome": "VETO",
+    "binding": "spread 0.943% (exactly 2 ticks)"
+   },
+   {
+    "et": "08:25:21",
+    "symbol": "OKTA",
+    "outcome": "ARMED",
+    "note": "spread 0.2665% L2 / 0.349% NBBO, depth 1056 vs 91, size cap 659 vs 91, fill-arming clean - all four checks passed"
+   }
+  ],
+  "CORRECTION": "First written as 3/3 = 100%. That was wrong: there were three premarket ARMING DECISIONS and only TWO were vetoed - the 08:25 OKTA arming passed every check and became the days only trade. Counting the vetoes but forgetting the decision that succeeded is precisely the bias that would make the veto rule look more aggressive than it is, and the veto rate is first-class campaign evidence. Corrected to 2/3 = 66.7%.",
+  "why_this_matters": "66.7% sits just above the V-series modelled optimum of 50-65% and FAR below the 90-100% premarket rate the campaign has been recording. This is the first premarket session that did not refuse everything. The reason is compositional, not a threshold change: the pool contained a $23B earnings gapper whose spread compressed from 1.829% at 07:03 to 0.349% by 08:24. Day 16 concluded spread compression is time-of-day rather than threshold; today adds that it is also NAME-QUALITY, and that the veto rate is largely a statement about what is in the pool.",
+  "did_the_veto_cost_money": "No. BTCT was refused at 07:15 near 2.19 and closed the session at 2.06. Both vetoes were saves."
  },
  "campaign": {
   "scored_days_before": 14,
@@ -1394,5 +1416,5 @@
   "vs_baseline_cumulative_per_day": 116.0,
   "note": "Best single day of the campaign. Cumulative live improves from -$112.95/day to -$47.00/day over 15 scored days, against a -$163/day honest backtest baseline - live now beats the honest backtest by $116/day. Still negative in absolute terms; one good day does not make an edge. Judge weeks, not days."
  },
- "verdict": "GREEN on P&L, RED on process. 1 ticket, OKTA +$876.33 (+5.88%), flat at the 15:00 flatten, zero real orders - the best single day of the campaign, +$1,039 better than the -$163/day honest baseline, and cumulative live improves from -$112.95/day to -$47.00/day over 15 scored days. But the day was won by an order armed at 08:27 and by a settlement rule, not by the session's attention: three self-inflicted shell outages cost 4h01m, swallowed the market open, and blew the 15:00 flatten deadline outright. Both legs of the trade are SETTLED from the tape rather than observed, with an honest span of roughly +$802 to +$883. The process findings are worth more than the P&L: the tick-size floor gives a mechanical candidate explanation for the premarket veto anomaly, and Day 16's L2-vs-NBBO divergence failed to reproduce and looks like a stale-comparison artifact."
+ "verdict": "GREEN on P&L, RED on process. 1 ticket, OKTA +$876.33 (+5.88%), flat at the 15:00 flatten, zero real orders - the best single day of the campaign, +$1,039 better than the -$163/day honest baseline, and cumulative live improves from -$112.95/day to -$47.00/day over 15 scored days. But the day was won by an order armed at 08:27 and by a settlement rule, not by the session's attention: three self-inflicted shell outages cost 4h01m, swallowed the market open, and blew the 15:00 flatten deadline outright. Both legs of the trade are SETTLED from the tape rather than observed, with an honest span of roughly +$802 to +$883. The premarket veto rate came in at 2/3 = 66.7%, the first session not to refuse everything premarket and the closest yet to the modelled 50-65% optimum. The process findings are worth more than the P&L: the tick-size floor gives a mechanical candidate explanation for the premarket veto anomaly, and Day 16's L2-vs-NBBO divergence failed to reproduce and looks like a stale-comparison artifact."
 }
