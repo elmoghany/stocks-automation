@@ -40,7 +40,7 @@
    "permission_mode_note": "Day-16 failure mode (acceptEdits auto-approves EDITS ONLY, denying python/git/MCP) did NOT recur. Session is fully capable, not merely live.",
    "verdict": "PROCEED - full protocol authority"
   },
-  "heartbeat_et": "09:32",
+  "heartbeat_et": "09:50",
   "scan_state_seed": "drop-lists seeded from Day-16 verdicts: 32 halal_fail, 30 inherited_fail, 2 cannot_verify, 2 spac. fake_gap DELIBERATELY LEFT EMPTY - it is a DAY-SCOPED artifact (no premarket prints), not a permanent verdict. Day 16 listed RPGL as fake_gap while RPGL is a halal PASS; inheriting that list would have silently excluded a tradeable name.",
   "scan_row_classification": "101 scan rows. 19 carry a non-empty Market cap; the other 82 have EMPTY Market cap AND empty Float and are leveraged/derivative ETFs+ETNs by name. Day-16 lesson applied: non-empty Market cap is SUFFICIENT for common stock - requiring a non-empty Float too is the filter that wrongly excluded NIPG/SMTC on Day 16. NIPG has an empty Float and was correctly kept this time.",
   "clock_correction": "Cycle-2 entries were first stamped 06:52 from an ESTIMATE of elapsed time; `date -u` then read 10:38Z = 06:38 ET, so the label ran ~14 min fast. Corrected to 06:38. Every later timestamp in this ledger is stamped from `date -u` at the moment of writing, never estimated. This is the clock rule (2026-08-14) failing in a NEW way: not TZ, but assuming wall-clock from token count.",
@@ -224,9 +224,10 @@
    "peak_since_entry": 169.11,
    "peak_et": "09:27",
    "max_adverse_since_entry": {
-    "px": 161.2026,
-    "et": "09:22",
-    "drawdown_pct": -1.62
+    "px": 156.5,
+    "et": "09:31",
+    "drawdown_pct": -4.49,
+    "note": "the 09:31 bar low. Hard stop 150.742 was never approached (3.82% below that low); even the tightened 10% trail at 152.20 held."
    },
    "gap_window_exit_replay": "No exit rule fired during the unmonitored window. Replayed bar by bar in time order over 09:12-09:28: hard stop 150.742 never approached (lowest print since entry 161.2026, 6.9% above it); 20% trail from a 169.11 peak sits at 135.29 and even the tightened 10% trail sits at 152.20, both far below every bar; scale-out at 204.8125 never reached. Bearish-pattern exits are LOOP-LAYER judgement calls and are deliberately NOT settled from hindsight - only the armed rules are.",
    "notes": "NO REAL ORDER. Paper ledger only. First fill of Day 17."
@@ -793,6 +794,14 @@
    "top": "OKTA",
    "action": "Trigger B stop-limit filled intrabar at 163.85 x 91 sh",
    "note": "discovered at 09:28 on recovery from the shell outage, not observed live"
+  },
+  {
+   "n": 11,
+   "time_et": "09:46",
+   "state": "HOLD-1m",
+   "phase": "regular",
+   "action": "position watch established; posn.py replays the intrabar stop from entry on every call so a missed poll cannot step over a breach",
+   "open_shape": "09:30 bar 167.59/159.56 on 500,030 sh; 09:31 low 156.50; recovered to 166.50 by 09:43"
   }
  ],
  "coverage_gaps": [
@@ -827,7 +836,23 @@
    "fix_applied": "1) never embed an escaped $ inside a double-quoted python -c that is chained to further shell commands; 2) never use `cd` in a compound command - use absolute paths and `git -C`; 3) treat PowerShell as the fallback shell when Bash stops responding, and verify the clock from MCP quote timestamps, which kept working throughout and are an independent clock source."
   }
  ],
- "position_log": [],
+ "position_log": [
+  {
+   "et": "09:46",
+   "last": 165.5485,
+   "pnl": 154.56,
+   "pnl_pct": 1.04,
+   "peak": 169.11,
+   "pressure10": 0.433,
+   "pressure30": 0.098,
+   "trail_width": "40%",
+   "trail": 101.466,
+   "hard_stop": 150.742,
+   "binding": "HARD STOP -8%",
+   "binding_distance_pct": 9.82,
+   "note": "first position read after recovering from the outage; open survived a -4.49% dip with no rule breached"
+  }
+ ],
  "lessons": [],
  "errors": [],
  "pnl_day": 0,
@@ -1059,5 +1084,13 @@
   "no_silent_fallback": "logged here per the 2026-08-06 rule: any unmet intent must be loud in the ledger, never a quiet workaround.",
   "actual_delivered": "~10 minutes, NOT the ~3 minutes declared at 08:28. Foreground wait loops in this environment do not return at the requested time - a loop asked to break at 12:34Z was killed at its 9-minute timeout still running, having started at 12:27Z. Each poll cycle therefore costs 6-9 minutes of wall clock regardless of the interval requested.",
   "correction_note": "Recording the DELIVERED cadence, not the intended one. Day 16 logged a cadence decision and delivered it; here the declared interval and the achieved interval differ by 3x for mechanical reasons, and a ledger that quoted the intention would overstate coverage. Same class of error as the 07:30 gap: the failure is not the slow cadence, it is claiming a fast one."
+ },
+ "orb": {
+  "OKTA": {
+   "high": 167.59,
+   "low": 156.5
+  },
+  "window": "09:30-09:34 ET",
+  "note": "a 11.09-point opening range on 844k shares in five minutes. Trigger A (ORB break) is moot for this ticket - Trigger B had already filled at 09:12."
  }
 }
