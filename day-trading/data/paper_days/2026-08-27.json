@@ -1,0 +1,56 @@
+{
+  "date": "2026-08-27",
+  "day_number": 17,
+  "protocol": "C37 sequential ticket rotation, paper only",
+  "mode": "PAPER - NO REAL ORDERS EVER",
+  "session_type": "headless launch by Windows Task Scheduler (\\Stocks\\C37MorningLaunch)",
+  "epoch": "honest-baseline (C37F, 2026-08-23): the $1,517/day C37E benchmark is RETIRED. Score vs break-even and vs -$163/day.",
+  "benchmark_per_day": -163,
+  "status": "SKELETON - session starting",
+  "counts_as_traded_day": false,
+  "config": {
+    "tickets": [15000, 15000, 15000, 15000, 15000, 15000, 10000],
+    "day_cap": 100000,
+    "one_position_at_a_time": true,
+    "entry_cutoff_et": "14:30",
+    "all_exits_by_et": "15:00",
+    "flatten_ladder_from_et": "14:57",
+    "scan_id": "5f132877-7730-4a18-9e72-b3f0d2c9df83",
+    "scan_filters": "Last>$2, %Change>10%, NO volume gate",
+    "halal_rule": "binary since 2026-08-22: only verdict PASS is armable; CANNOT-VERIFY is not tradeable"
+  },
+  "ops": {
+    "scheduler_launch_et": "06:20",
+    "launch_utc": "2026-08-27T10:20:36Z",
+    "clock": "ET computed explicitly as UTC-4; TZ env untrusted (clock rule 2026-08-14). Monitors armed on UTC.",
+    "capability_probe": {
+      "status": "PENDING - running immediately after this skeleton commit"
+    },
+    "heartbeat_et": "06:21"
+  },
+  "inherited_verdicts": {
+    "PASS": ["SMMT", "ADXN", "TH", "TTMI", "FVN", "OPTX", "RPGL", "ASST", "ABUS", "GLSI", "EXOZ", "BTCT", "CRML", "OESX", "MRAM"],
+    "FAIL": ["YYGH", "DAIC", "DUKR", "RDIB", "XPON", "SMTK", "SDOT", "PLAB", "BCAR", "ARKR", "GYRO", "BRNX", "GSIW", "RACC", "ANF", "RVSN", "LBGJ", "CRE", "SOGP", "EEIQ", "MIMI", "MSS", "STFS", "BZ", "ZJYL", "VSA", "OLOX", "FTCI", "NVNO", "XOS", "ZYME", "QMLS", "MSTR", "ZOOZ", "IPST", "SUGP", "JUNS", "NCTY", "YJ", "RPC", "SCTX", "BIVI", "HCWB", "LZM", "PMI", "AEMD", "SFBS", "TENX", "WLDS", "WVVI", "KURA", "SPAI", "NYAX", "RZLV", "RNAZ", "IMTX", "MEI", "MAIR", "AVXL", "CAPR", "EXYN", "TC"],
+    "CANNOT_VERIFY": ["USDE", "RFAI"],
+    "fake_gap": ["DUKR", "EUDA", "HUHU", "PTLE", "BNR", "GDEV", "ILAG", "OIO", "GYRO", "PTHS", "WSBK", "GURE", "PRHI", "RPGL"]
+  },
+  "crossed_set": [],
+  "trades": [],
+  "armed": [],
+  "candidates": {},
+  "vetoes": {
+    "spread": [],
+    "depth": [],
+    "chase": [],
+    "_note": "Three SEPARATE rates per the 2026-08-14 rule; binding_rule records which one refused each decision."
+  },
+  "book_observations": [],
+  "trigger_c": [],
+  "halal": {"PASS": [], "FAIL": [], "CANNOT_VERIFY": [], "fake_gap": []},
+  "cycles": [],
+  "coverage_gaps": [],
+  "position_log": [],
+  "lessons": [],
+  "errors": [],
+  "pnl_day": 0
+}
