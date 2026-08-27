@@ -42,7 +42,11 @@ def main():
 
     incoming = {}
     for raw in sys.stdin:
-        line = raw.strip()
+        # strip a UTF-8 BOM: files written by the agent's Write tool carry one,
+        # and without this the first row's symbol becomes "﻿OKTA" and is
+        # silently written to a SEPARATE csv -- a hole in the real symbol's bars
+        # that no assert would catch (Day 17, 2026-08-27).
+        line = raw.lstrip("﻿").strip()
         if not line or line.startswith("#"):
             continue
         parts = line.split()
