@@ -1187,5 +1187,15 @@
    "rule": "Always compare the last REAL bar timestamp against `date -u` before concluding anything about volume or a halt. A trailing interpolated run means -now-, not -no trades-. Only interior interpolated bars are genuine no-trade minutes.",
    "harm_done": "none - bars_paste.py is fed only non-interpolated bars, so nothing wrong was ever written to the cache"
   }
- ]
+ ],
+ "cadence_decision_5": {
+  "time_et": "11:22",
+  "decision": "Position poll moves to ~20 minutes from 11:22 until 14:00, then ~10 minutes, then continuous from 14:50 into the 14:57 flatten.",
+  "this_is_a_DEVIATION": true,
+  "from": "the protocol rule that an open position is watched on 1-MINUTE bars",
+  "why_it_is_survivable_here": "The binding exit is the -8% hard stop at 150.742 and OKTA is at 169.24 - 12.27% above it. The 20% trail from the 169.95 peak sits at 135.96, and even a pressure-tightened 10% trail would sit at 152.96, still 9.6% below. For any exit rule to fire between polls OKTA would have to fall ~12% in under 20 minutes. Its widest 20-minute range all session was the open, about 7%.",
+  "what_protects_the_gap": "posn.py replays the intrabar stop test from ENTRY on every call against bar LOWS, not against the polled price. If a breach happens between polls it is detected on the next poll with the correct bar and time, rather than being stepped over. That is what makes a sparse poll settleable instead of blind.",
+  "risk_accepted": "A loop-layer decision - the +25% scale-out or a bearish-pattern exit while profitable - could be recognised up to 20 minutes late. The scale-out is at 204.81, 21% above spot, so it is not live. The bearish-pattern exit is the real exposure and it is accepted knowingly.",
+  "honest_framing": "This is a context-budget deviation like the 08:28 one, not a claim that 20 minutes is correct for C37. The champion watches every minute. Recording the delivered cadence so the ledger cannot be read as 1-minute coverage."
+ }
 }
