@@ -40,7 +40,7 @@
    "permission_mode_note": "Day-16 failure mode (acceptEdits auto-approves EDITS ONLY, denying python/git/MCP) did NOT recur. Session is fully capable, not merely live.",
    "verdict": "PROCEED - full protocol authority"
   },
-  "heartbeat_et": "07:16",
+  "heartbeat_et": "07:22",
   "scan_state_seed": "drop-lists seeded from Day-16 verdicts: 32 halal_fail, 30 inherited_fail, 2 cannot_verify, 2 spac. fake_gap DELIBERATELY LEFT EMPTY - it is a DAY-SCOPED artifact (no premarket prints), not a permanent verdict. Day 16 listed RPGL as fake_gap while RPGL is a halal PASS; inheriting that list would have silently excluded a tradeable name.",
   "scan_row_classification": "101 scan rows. 19 carry a non-empty Market cap; the other 82 have EMPTY Market cap AND empty Float and are leveraged/derivative ETFs+ETNs by name. Day-16 lesson applied: non-empty Market cap is SUFFICIENT for common stock - requiring a non-empty Float too is the filter that wrongly excluded NIPG/SMTC on Day 16. NIPG has an empty Float and was correctly kept this time.",
   "clock_correction": "Cycle-2 entries were first stamped 06:52 from an ESTIMATE of elapsed time; `date -u` then read 10:38Z = 06:38 ET, so the label ran ~14 min fast. Corrected to 06:38. Every later timestamp in this ledger is stamped from `date -u` at the moment of writing, never estimated. This is the clock rule (2026-08-14) failing in a NEW way: not TZ, but assuming wall-clock from token count."
@@ -532,6 +532,21 @@
    "rank_change": "BTCT overtook OKTA - coil 0.927 -> 0.995 on a run from 2.04 to 2.19, pressure +0.24 -> +0.65",
    "outcome": "BTCT spread-vetoed 0.943%; OKTA also still wide",
    "ranker_caveat": "the rank command printed 'TOP = OKTA' because its armable-TOP line keys on halal_list.json membership and BTCT is absent from the list. The ORDERING (BTCT #1) is the ranking; BTCT's live screen returned PASS at 06:36, which is exactly how the protocol says absent names qualify. Recorded so the ledger does not read as if the command and I disagreed about the order - we did not."
+  },
+  {
+   "n": 6,
+   "time_et": "07:21",
+   "state": "FLAT-5m",
+   "phase": "premarket",
+   "spreads": {
+    "BTCT": 0.926,
+    "OKTA": 0.557,
+    "LTRX": 0.629
+   },
+   "armable": 0,
+   "top": "BTCT",
+   "outcome": "all three over the 0.50% cap; no arming",
+   "note": "OKTA has compressed 1.829% -> 0.557% since 07:03 and is now within a hair of the cap"
   }
  ],
  "coverage_gaps": [],
@@ -694,5 +709,21 @@
   "the_trap": "At 07:14:07 BTCT's NBBO read 2.18/2.19 = 0.459% (INSIDE the 0.50% cap). At 07:15:13 its L2 read 2.12/2.14 = 0.943% (OUTSIDE). That looks exactly like a 2x L2-vs-NBBO divergence and it straddled the cap, so it would have decided the entry. Re-quoting the NBBO at 07:15:23 returned 2.12/2.14 = 0.943% - IDENTICAL to the book. There was no divergence at all: the readings were 66 seconds apart on a name moving 2.5% per minute, and BTCT had simply pulled back from 2.19 to 2.14.",
   "implication_for_day16": "Day 16's TH observation - L2 2.13% vs NBBO 0.785%, a 2.7x gap - is timestamped '09:42-09:43', i.e. the two reads may ALSO have been up to a minute apart. That finding was recorded as a candidate MECHANICAL explanation for live's 90-100% premarket veto rate. It should be treated as UNPROVEN until someone reproduces it with reads under ~5 seconds apart on a name that is not moving.",
   "rule": "Compare spread sources only from reads taken within seconds of each other, and record the gap. A spread comparison across a 1-minute gap on a gapper measures price movement, not feed disagreement."
+ },
+ "finding_tick_size_floor": {
+  "discovered_et": "07:21",
+  "status": "NEW - structural, quantified, and testable against the existing veto ledger",
+  "claim": "The 0.50% thin-book cap interacts with the $0.01 minimum tick to make the veto MECHANICAL rather than a liquidity judgement on low-priced names. One tick over price P is a relative spread of 0.01/P. Solving 0.02/P <= 0.005 gives P >= $4.00: a name under $4 can NEVER show a two-tick market inside the cap, and must be quoted EXACTLY one tick wide to be armable. At P = $2.00 even a one-tick market is exactly AT the cap.",
+  "table": {
+   "2.00": "1 tick = 0.500% (at cap), 2 ticks = 1.000%",
+   "2.16": "1 tick = 0.463%, 2 ticks = 0.926%  <- BTCT today",
+   "3.00": "1 tick = 0.333%, 2 ticks = 0.667%",
+   "4.00": "1 tick = 0.250%, 2 ticks = 0.500%  <- break-even price",
+   "158.02": "1 tick = 0.006%, 2 ticks = 0.013% <- OKTA today"
+  },
+  "todays_evidence": "BTCT was vetoed at 0.926% and 0.943%. Both are EXACTLY two ticks. BTCT never showed a wide book in any normal sense - it showed a 2-cent market on a $2.16 stock. OKTA's 0.557% at 158.02 is 88 ticks wide and IS a genuine liquidity statement. Same rule, same session, measuring two completely different things.",
+  "why_it_matters": "The campaign's lead anomaly is that live vetoes 90-100% of premarket entries against a modelled 50-65% optimum, and that gap has been attributed to threshold miscalibration. This says a large part of it may be mechanical: the scan filters Last > $2 and the +10% gapper pool skews cheap, so a big share of candidates are structurally capped at 'perfect one-tick market or veto'. The V-series modelled the spread veto on a BAR-RANGE proxy, which has no tick floor at all - so the model could never have seen this.",
+  "testable_prediction": "Split the campaign's whole veto ledger by entry price at $4.00. If this is right, the veto rate below $4 should be far higher than above it, and sub-$4 vetoes should cluster at exact multiples of one tick rather than spreading smoothly. Day 16 is consistent so far: SMMT was armed at 14.89 (0.269%, ~4 ticks) while the cheap names were refused.",
+  "not_yet_a_recommendation": "This does NOT say loosen the cap. It says the cap is doing two different jobs and only one of them is the job it was designed for. Any recalibration should be priced per-tick or per-price-bucket, not as a single relative number. No rule changed mid-session."
  }
 }
