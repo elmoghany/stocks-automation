@@ -40,7 +40,7 @@
    "permission_mode_note": "Day-16 failure mode (acceptEdits auto-approves EDITS ONLY, denying python/git/MCP) did NOT recur. Session is fully capable, not merely live.",
    "verdict": "PROCEED - full protocol authority"
   },
-  "heartbeat_et": "07:04",
+  "heartbeat_et": "07:16",
   "scan_state_seed": "drop-lists seeded from Day-16 verdicts: 32 halal_fail, 30 inherited_fail, 2 cannot_verify, 2 spac. fake_gap DELIBERATELY LEFT EMPTY - it is a DAY-SCOPED artifact (no premarket prints), not a permanent verdict. Day 16 listed RPGL as fake_gap while RPGL is a halal PASS; inheriting that list would have silently excluded a tradeable name.",
   "scan_row_classification": "101 scan rows. 19 carry a non-empty Market cap; the other 82 have EMPTY Market cap AND empty Float and are leveraged/derivative ETFs+ETNs by name. Day-16 lesson applied: non-empty Market cap is SUFFICIENT for common stock - requiring a non-empty Float too is the filter that wrongly excluded NIPG/SMTC on Day 16. NIPG has an empty Float and was correctly kept this time.",
   "clock_correction": "Cycle-2 entries were first stamped 06:52 from an ESTIMATE of elapsed time; `date -u` then read 10:38Z = 06:38 ET, so the label ran ~14 min fast. Corrected to 06:38. Every later timestamp in this ledger is stamped from `date -u` at the moment of writing, never estimated. This is the clock rule (2026-08-14) failing in a NEW way: not TZ, but assuming wall-clock from token count."
@@ -240,6 +240,33 @@
     "last_below_trigger": true,
     "outcome": "NO ENTRY",
     "note": "TOP-ranked $23B name, refused on a 1.83% spread against the 0.50% cap. Depth was ample (796 sh resting to trigger+0.5% against a 91-share ticket) and the fill-arming check was clean (last 160.00 below the 163.85 trigger, so a stop-limit would be a legitimate forward stop). Spread is the only binding rule."
+   },
+   {
+    "n": 2,
+    "symbol": "BTCT",
+    "time_et": "07:15:23",
+    "phase": "premarket",
+    "spread_pct_L2": 0.943,
+    "spread_pct_NBBO": 0.943,
+    "bid": 2.12,
+    "ask": 2.14,
+    "inside_bid_size": 100,
+    "inside_ask_size": 1482,
+    "spread_would_block": true,
+    "depth_would_block": false,
+    "chase_would_block": false,
+    "binding_rule": "spread",
+    "trigger_b_level": 2.2,
+    "limit_cap": 2.211,
+    "cum_ask_to_limit": 10829,
+    "intended": 6849,
+    "depth_pct": 158.1,
+    "last_at_check": 2.14,
+    "last_below_trigger": true,
+    "size_cap_20pct_trailing10": 28430,
+    "size_cap_binding": false,
+    "outcome": "NO ENTRY",
+    "note": "BTCT took the #1 rank at 07:14 (coil 0.995, pressure +0.65) and is halal PASS by live screen, so this was a genuine armable candidate refused only by its book. Note the 8,580-share ask wall sitting exactly AT the 2.20 Trigger B level - per the L2 protocol a wall just above the trigger is a reason to expect a failed breakout, not to size up."
    }
   ],
   "depth": [],
@@ -327,6 +354,81 @@
    ],
    "verdict": "SPREAD VETO (1.829% vs 0.50% cap); depth and fill-arming both PASS",
    "note": "The inside is 8 shares bid against 50 offered - a $23B company quoted 3 dollars wide at 07:03. Real size does not appear until 164.00 (636 sh) on the ask and 157.00-155.00 on the bid. This is a premarket book, not an illiquidity property of the name."
+  },
+  {
+   "symbol": "BTCT",
+   "time_et": "07:15:13",
+   "phase": "premarket",
+   "bid": 2.12,
+   "ask": 2.14,
+   "spread_pct_L2": 0.943,
+   "spread_pct_NBBO": 0.943,
+   "ask_ladder_head": [
+    [
+     2.14,
+     1482
+    ],
+    [
+     2.15,
+     100
+    ],
+    [
+     2.16,
+     267
+    ],
+    [
+     2.17,
+     100
+    ],
+    [
+     2.18,
+     100
+    ],
+    [
+     2.19,
+     100
+    ],
+    [
+     2.2,
+     8580
+    ],
+    [
+     2.21,
+     100
+    ],
+    [
+     2.25,
+     6200
+    ]
+   ],
+   "bid_ladder_head": [
+    [
+     2.12,
+     100
+    ],
+    [
+     2.11,
+     10554
+    ],
+    [
+     2.1,
+     20
+    ],
+    [
+     2.08,
+     167
+    ],
+    [
+     2.05,
+     495
+    ],
+    [
+     1.99,
+     2000
+    ]
+   ],
+   "verdict": "SPREAD VETO 0.943%; depth PASS (10,829 vs 6,849), fill-arming PASS (last 2.14 < trigger 2.20)",
+   "note": "8,580 sh offered at 2.20 against a 10,554 sh bid wall at 2.11 - the name is coiled between two walls."
   }
  ],
  "trigger_c": [],
@@ -418,6 +520,18 @@
    ],
    "outcome": "OKTA spread-vetoed 1.829%",
    "note": "BTCT was initially EXCLUDED from the ranking for want of bars. Ranking on a partial universe is API-HYGIENE defect #1, so its 1-minute premarket was fetched before the ranking was trusted. It came back non-coiled (0.927) and sorted last - the same answer I would have guessed, but produced by the command rather than by hand."
+  },
+  {
+   "n": 5,
+   "time_et": "07:15",
+   "state": "FLAT-5m",
+   "phase": "premarket",
+   "rank": "3 crossed / 3 armable",
+   "top": "BTCT (rank #1, live-screen PASS)",
+   "armable": 3,
+   "rank_change": "BTCT overtook OKTA - coil 0.927 -> 0.995 on a run from 2.04 to 2.19, pressure +0.24 -> +0.65",
+   "outcome": "BTCT spread-vetoed 0.943%; OKTA also still wide",
+   "ranker_caveat": "the rank command printed 'TOP = OKTA' because its armable-TOP line keys on halal_list.json membership and BTCT is absent from the list. The ORDERING (BTCT #1) is the ranking; BTCT's live screen returned PASS at 06:36, which is exactly how the protocol says absent names qualify. Recorded so the ledger does not read as if the command and I disagreed about the order - we did not."
   }
  ],
  "coverage_gaps": [],
@@ -528,15 +642,57 @@
    "last_below_trigger": true,
    "outcome": "NO ENTRY",
    "note": "TOP-ranked $23B name, refused on a 1.83% spread against the 0.50% cap. Depth was ample (796 sh resting to trigger+0.5% against a 91-share ticket) and the fill-arming check was clean (last 160.00 below the 163.85 trigger, so a stop-limit would be a legitimate forward stop). Spread is the only binding rule."
+  },
+  {
+   "n": 2,
+   "symbol": "BTCT",
+   "time_et": "07:15:23",
+   "phase": "premarket",
+   "spread_pct_L2": 0.943,
+   "spread_pct_NBBO": 0.943,
+   "bid": 2.12,
+   "ask": 2.14,
+   "inside_bid_size": 100,
+   "inside_ask_size": 1482,
+   "spread_would_block": true,
+   "depth_would_block": false,
+   "chase_would_block": false,
+   "binding_rule": "spread",
+   "trigger_b_level": 2.2,
+   "limit_cap": 2.211,
+   "cum_ask_to_limit": 10829,
+   "intended": 6849,
+   "depth_pct": 158.1,
+   "last_at_check": 2.14,
+   "last_below_trigger": true,
+   "size_cap_20pct_trailing10": 28430,
+   "size_cap_binding": false,
+   "outcome": "NO ENTRY",
+   "note": "BTCT took the #1 rank at 07:14 (coil 0.995, pressure +0.65) and is halal PASS by live screen, so this was a genuine armable candidate refused only by its book. Note the 8,580-share ask wall sitting exactly AT the 2.20 Trigger B level - per the L2 protocol a wall just above the trigger is a reason to expect a failed breakout, not to size up."
   }
  ],
  "finding_L2_vs_NBBO_day17": {
-  "observed_et": "07:03:23",
-  "symbol": "OKTA",
-  "L2_inside": "159.09 / 162.00 = 1.829%",
-  "NBBO_quote": "159.09 / 162.00 = 1.829%",
-  "ratio": 1.0,
-  "significance": "Day 16 found get_equity_price_book quoting TH 2.7x WIDER than get_equity_quotes at the same second, and flagged it as a candidate MECHANICAL explanation for live's 90-100% premarket veto rate. Today's first paired reading shows the two sources IDENTICAL to the cent. One agreeing observation does not refute one disagreeing observation - it means the divergence is not universal and is probably name- or venue-specific rather than a systematic bias in the L2 endpoint.",
-  "action": "keep logging both numbers on every book observation; do not adjust the rule"
+  "status": "Day-16 finding NOT REPRODUCED, and a probable defect found in how it was measured",
+  "paired_readings_today": [
+   {
+    "symbol": "OKTA",
+    "et": "07:03:23",
+    "L2": 1.829,
+    "NBBO": 1.829,
+    "gap_seconds": 0,
+    "ratio": 1.0
+   },
+   {
+    "symbol": "BTCT",
+    "et": "07:15:13 book / 07:15:23 quote",
+    "L2": 0.943,
+    "NBBO": 0.943,
+    "gap_seconds": 10,
+    "ratio": 1.0
+   }
+  ],
+  "the_trap": "At 07:14:07 BTCT's NBBO read 2.18/2.19 = 0.459% (INSIDE the 0.50% cap). At 07:15:13 its L2 read 2.12/2.14 = 0.943% (OUTSIDE). That looks exactly like a 2x L2-vs-NBBO divergence and it straddled the cap, so it would have decided the entry. Re-quoting the NBBO at 07:15:23 returned 2.12/2.14 = 0.943% - IDENTICAL to the book. There was no divergence at all: the readings were 66 seconds apart on a name moving 2.5% per minute, and BTCT had simply pulled back from 2.19 to 2.14.",
+  "implication_for_day16": "Day 16's TH observation - L2 2.13% vs NBBO 0.785%, a 2.7x gap - is timestamped '09:42-09:43', i.e. the two reads may ALSO have been up to a minute apart. That finding was recorded as a candidate MECHANICAL explanation for live's 90-100% premarket veto rate. It should be treated as UNPROVEN until someone reproduces it with reads under ~5 seconds apart on a name that is not moving.",
+  "rule": "Compare spread sources only from reads taken within seconds of each other, and record the gap. A spread comparison across a 1-minute gap on a gapper measures price movement, not feed disagreement."
  }
 }
