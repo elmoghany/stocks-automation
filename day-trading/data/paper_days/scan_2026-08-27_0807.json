@@ -1,0 +1,237 @@
+{
+ "data": {
+  "result": {
+   "total_items": 95,
+   "results": [
+    {
+     "ticker": "WNW",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "% Change": "0.35883064516129026",
+      "Last": "3.3699",
+      "Net change": "0.8899",
+      "Name": "Meiwu Technology Company",
+      "Volume": "1.26e+07",
+      "Symbol": "WNW"
+     }
+    },
+    {
+     "ticker": "YAAS",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "% Change": "0.3055555555555556",
+      "Last": "3.29",
+      "Net change": "0.77",
+      "Name": "Youxin Technology",
+      "Volume": "2877.21",
+      "Symbol": "YAAS"
+     }
+    },
+    {
+     "ticker": "MIMI",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "% Change": "0.22788888888888884",
+      "Last": "2.2102",
+      "Net change": "0.4102",
+      "Name": "Mint Incorporation",
+      "Volume": "3.96e+06",
+      "Symbol": "MIMI"
+     }
+    },
+    {
+     "ticker": "NIPG",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "% Change": "0.22666666666666657",
+      "Last": "18.4",
+      "Net change": "3.4",
+      "Name": "NIP Group",
+      "Volume": "25104.2",
+      "Symbol": "NIPG"
+     }
+    },
+    {
+     "ticker": "BVC",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "% Change": "0.22506183017312437",
+      "Last": "14.86",
+      "Net change": "2.73",
+      "Name": "BitVentures Limited",
+      "Volume": "16104.1",
+      "Symbol": "BVC"
+     }
+    },
+    {
+     "ticker": "DAIC",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "% Change": "0.19611650485436888",
+      "Last": "6.16",
+      "Net change": "1.01",
+      "Name": "CID HoldCo, Inc.",
+      "Volume": "5.33e+07",
+      "Symbol": "DAIC"
+     }
+    },
+    {
+     "ticker": "BTCT",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "% Change": "0.18784530386740322",
+      "Last": "2.15",
+      "Net change": "0.34",
+      "Name": "BTC Digital",
+      "Volume": "6.68e+06",
+      "Symbol": "BTCT"
+     }
+    },
+    {
+     "ticker": "PAI",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "% Change": "0.17746005046257354",
+      "Last": "14",
+      "Net change": "2.11",
+      "Name": "Western Asset Income Fund",
+      "Volume": "22936.0",
+      "Symbol": "PAI"
+     }
+    },
+    {
+     "ticker": "OKTA",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "% Change": "0.17348608837970558",
+      "Last": "157.74",
+      "Net change": "23.32",
+      "Name": "Okta",
+      "Volume": "7.02e+06",
+      "Symbol": "OKTA"
+     }
+    },
+    {
+     "ticker": "CEV",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "% Change": "0.15313653136531366",
+      "Last": "12.5",
+      "Net change": "1.66",
+      "Name": "Eaton Vance California Municipal Income Trust",
+      "Volume": "14409.9",
+      "Symbol": "CEV"
+     }
+    },
+    {
+     "ticker": "GSIW",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "% Change": "0.15102040816326548",
+      "Last": "16.92",
+      "Net change": "2.22",
+      "Name": "Garden Stage Limited",
+      "Volume": "5948.05",
+      "Symbol": "GSIW"
+     }
+    },
+    {
+     "ticker": "NCEL",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "% Change": "0.15088757396449712",
+      "Last": "3.89",
+      "Net change": "0.51",
+      "Name": "NewcelX",
+      "Volume": "18830.4",
+      "Symbol": "NCEL"
+     }
+    },
+    {
+     "ticker": "MBUU",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "% Change": "0.14827327327327325",
+      "Last": "30.59",
+      "Net change": "3.95",
+      "Name": "Malibu Boats",
+      "Volume": "284245.4",
+      "Symbol": "MBUU"
+     }
+    },
+    {
+     "ticker": "LTRX",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "% Change": "0.13780918727915198",
+      "Last": "6.44",
+      "Net change": "0.78",
+      "Name": "Lantronix",
+      "Volume": "2.28e+06",
+      "Symbol": "LTRX"
+     }
+    },
+    {
+     "ticker": "RMT",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "% Change": "0.1283497884344147",
+      "Last": "16",
+      "Net change": "1.82",
+      "Name": "Royce Micro-Cap Trust",
+      "Volume": "69801.2",
+      "Symbol": "RMT"
+     }
+    },
+    {
+     "ticker": "RACC",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "% Change": "0.11818690084954937",
+      "Last": "24.6",
+      "Net change": "2.6001",
+      "Name": "Research Alliance Corp III",
+      "Volume": "32450.5",
+      "Symbol": "RACC"
+     }
+    },
+    {
+     "ticker": "CRM",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "% Change": "0.10660441591284889",
+      "Last": "227.54",
+      "Net change": "21.92",
+      "Name": "Salesforce",
+      "Volume": "1.48e+07",
+      "Symbol": "CRM"
+     }
+    },
+    {
+     "ticker": "AAPG",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "% Change": "0.10650887573964501",
+      "Last": "18.7",
+      "Net change": "1.8",
+      "Name": "Ascentage Pharma Group",
+      "Volume": "4862.9",
+      "Symbol": "AAPG"
+     }
+    },
+    {
+     "ticker": "MTLS",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "% Change": "0.10044977511244377",
+      "Last": "7.34",
+      "Net change": "0.67",
+      "Name": "Materialise",
+      "Volume": "87881.4",
+      "Symbol": "MTLS"
+     }
+    }
+   ]
+  }
+ }
+}

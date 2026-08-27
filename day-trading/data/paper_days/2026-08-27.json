@@ -40,7 +40,7 @@
    "permission_mode_note": "Day-16 failure mode (acceptEdits auto-approves EDITS ONLY, denying python/git/MCP) did NOT recur. Session is fully capable, not merely live.",
    "verdict": "PROCEED - full protocol authority"
   },
-  "heartbeat_et": "07:55",
+  "heartbeat_et": "08:10",
   "scan_state_seed": "drop-lists seeded from Day-16 verdicts: 32 halal_fail, 30 inherited_fail, 2 cannot_verify, 2 spac. fake_gap DELIBERATELY LEFT EMPTY - it is a DAY-SCOPED artifact (no premarket prints), not a permanent verdict. Day 16 listed RPGL as fake_gap while RPGL is a halal PASS; inheriting that list would have silently excluded a tradeable name.",
   "scan_row_classification": "101 scan rows. 19 carry a non-empty Market cap; the other 82 have EMPTY Market cap AND empty Float and are leveraged/derivative ETFs+ETNs by name. Day-16 lesson applied: non-empty Market cap is SUFFICIENT for common stock - requiring a non-empty Float too is the filter that wrongly excluded NIPG/SMTC on Day 16. NIPG has an empty Float and was correctly kept this time.",
   "clock_correction": "Cycle-2 entries were first stamped 06:52 from an ESTIMATE of elapsed time; `date -u` then read 10:38Z = 06:38 ET, so the label ran ~14 min fast. Corrected to 06:38. Every later timestamp in this ledger is stamped from `date -u` at the moment of writing, never estimated. This is the clock rule (2026-08-14) failing in a NEW way: not TZ, but assuming wall-clock from token count."
@@ -149,16 +149,20 @@
   ]
  },
  "crossed_set": [
-  "WNW",
-  "NIPG",
-  "BVC",
-  "OKTA",
-  "LTRX",
-  "BTCT",
-  "CRM",
-  "CISS",
   "AAPG",
-  "UCTT"
+  "BTCT",
+  "BVC",
+  "CISS",
+  "CRM",
+  "LTRX",
+  "MBUU",
+  "MTLS",
+  "NCEL",
+  "NIPG",
+  "OKTA",
+  "UCTT",
+  "WNW",
+  "YAAS"
  ],
  "trades": [],
  "armed": [],
@@ -482,16 +486,20 @@
   "PASS": [
    "OKTA",
    "LTRX",
-   "BTCT"
+   "BTCT",
+   "NCEL"
   ],
   "FAIL": [
-   "WNW",
-   "NIPG",
-   "CRM",
    "AAPG",
-   "UCTT",
    "BVC",
-   "CISS"
+   "CISS",
+   "CRM",
+   "MBUU",
+   "MTLS",
+   "NIPG",
+   "UCTT",
+   "WNW",
+   "YAAS"
   ],
   "CANNOT_VERIFY": [],
   "fake_gap": [
@@ -610,6 +618,28 @@
     "trail10vol": 215534
    },
    "note": "BTCT printed a new premarket high 2.25 at 07:17 on 120k/124k-share bars, then faded to 2.14"
+  },
+  {
+   "n": 8,
+   "time_et": "08:07",
+   "state": "FLAT-5m",
+   "phase": "premarket",
+   "scan_rows": 95,
+   "crossed_latched": 14,
+   "new": [
+    "YAAS",
+    "NCEL",
+    "MBUU",
+    "MTLS"
+   ],
+   "gone_from_scan_still_latched": [
+    "CISS",
+    "UCTT"
+   ],
+   "screened": "4 new names -> 1 PASS (NCEL), 3 FAIL (YAAS cash, MBUU loan, MTLS unverified aerospace)",
+   "top": "OKTA",
+   "armable_by_book": 0,
+   "drop_list_fix": "todays 7 FAIL verdicts added to scan_state halal_fail so latched FAILs stop resurfacing each sweep"
   }
  ],
  "coverage_gaps": [
@@ -662,6 +692,15 @@
     "carve_out": "loan 14.48 exceeds 10, combined 16.51 inside 20 - carve-out applies",
     "q2": "BTC Digital - cryptocurrency mining. Not a listed haram industry; inherited PASS from Day 16 honoured.",
     "note": "RH market cap 17.27M differs materially from the scanner's 30.81M column. The live RH cap was fetched and stored before screening, per MARKET CAP IS REQUIRED."
+   },
+   "NCEL": {
+    "loan_pct": 1.83,
+    "cash_pct": 11.36,
+    "combined": 13.19,
+    "on_halal_list": true,
+    "carve_out": "cash 11.36 over 10, combined 13.19 inside 20",
+    "q2": "NewCelX Ltd - Swiss biotech, cell-based and small-molecule therapies for neurodegenerative and metabolic disease. Permissible.",
+    "tradability_warning": "halal PASS but almost certainly untradeable: TOTAL premarket volume today is 1,085 shares and the 2-week average is 13,468/day. A $15,000 ticket is 3,856 shares - 3.5x everything that has traded today and 29% of an average full day. The 20%-of-trailing-10-minute cap will cut it to a token size. 52-week high 24.60 against 3.89 also marks it as a heavily diluted microcap."
    }
   },
   "FAIL": {
@@ -690,7 +729,10 @@
    "NIPG": "HARAM INDUSTRY (esports/entertainment) + loan 76.35",
    "CRM": "Salesforce, loan 25.4 / cash 7.18 - LOAN>10+COMBINED>20",
    "UCTT": "Ultra Clean, loan 18.63 / cash 6.14 - combined 24.77 > 20",
-   "AAPG": "Ascentage Pharma, loan 111.63 / cash 138.96"
+   "AAPG": "Ascentage Pharma, loan 111.63 / cash 138.96",
+   "YAAS": "Youxin Technology +30.6% - cash 21.9, CASH>10+COMBINED>20",
+   "MBUU": "Malibu Boats +14.8%, $522M - loan 29.66, LOAN>10+COMBINED>20. Boat maker, permissible business, refused on financing.",
+   "MTLS": "Materialise +10.0%, $382M - CANNOT-VERIFY revenue mix (aerospace). Binary rule since 2026-08-22: unverified IS the compliance verdict."
   },
   "_screened_et": "06:36"
  },

@@ -1,10 +1,10 @@
 {
  "candidates": {
   "WNW": {
-   "pct": 48.44,
-   "last": 3.6814,
+   "pct": 35.88,
+   "last": 3.3699,
    "prev_close": 2.48,
-   "vol": "1.26341578143e+07",
+   "vol": "1.26e+07",
    "name": "Meiwu Technology Company",
    "first_seen": "06:27"
   },
@@ -12,7 +12,7 @@
    "pct": 22.67,
    "last": 18.4,
    "prev_close": 15.0,
-   "vol": "25104.205465",
+   "vol": "25104.2",
    "name": "NIP Group",
    "first_seen": "06:27"
   },
@@ -20,39 +20,39 @@
    "pct": 22.51,
    "last": 14.86,
    "prev_close": 12.13,
-   "vol": "16104.1296",
+   "vol": "16104.1",
    "name": "BitVentures Limited",
    "first_seen": "06:27"
   },
   "OKTA": {
-   "pct": 20.64,
-   "last": 162.17,
+   "pct": 17.35,
+   "last": 157.74,
    "prev_close": 134.42,
-   "vol": "7.026682628859e+06",
+   "vol": "7.02e+06",
    "name": "Okta",
    "first_seen": "06:27"
   },
   "LTRX": {
-   "pct": 14.84,
-   "last": 6.5,
+   "pct": 13.78,
+   "last": 6.44,
    "prev_close": 5.66,
-   "vol": "2.287508452774e+06",
+   "vol": "2.28e+06",
    "name": "Lantronix",
    "first_seen": "06:27"
   },
   "BTCT": {
-   "pct": 14.36,
-   "last": 2.07,
+   "pct": 18.78,
+   "last": 2.15,
    "prev_close": 1.81,
-   "vol": "6.681496449445e+06",
+   "vol": "6.68e+06",
    "name": "BTC Digital",
    "first_seen": "06:27"
   },
   "CRM": {
-   "pct": 11.69,
-   "last": 229.65,
+   "pct": 10.66,
+   "last": 227.54,
    "prev_close": 205.62,
-   "vol": "1.4894022738853e+07",
+   "vol": "1.48e+07",
    "name": "Salesforce",
    "first_seen": "06:27"
   },
@@ -65,10 +65,10 @@
    "first_seen": "06:27"
   },
   "AAPG": {
-   "pct": 10.59,
-   "last": 18.69,
+   "pct": 10.65,
+   "last": 18.7,
    "prev_close": 16.9,
-   "vol": "4862.902546",
+   "vol": "4862.9",
    "name": "Ascentage Pharma Group",
    "first_seen": "06:27"
   },
@@ -79,6 +79,38 @@
    "vol": "462974.244399",
    "name": "Ultra Clean",
    "first_seen": "06:27"
+  },
+  "YAAS": {
+   "pct": 30.56,
+   "last": 3.29,
+   "prev_close": 2.52,
+   "vol": "2877.21",
+   "name": "Youxin Technology",
+   "first_seen": "08:07"
+  },
+  "NCEL": {
+   "pct": 15.09,
+   "last": 3.89,
+   "prev_close": 3.38,
+   "vol": "18830.4",
+   "name": "NewcelX",
+   "first_seen": "08:07"
+  },
+  "MBUU": {
+   "pct": 14.83,
+   "last": 30.59,
+   "prev_close": 26.64,
+   "vol": "284245.4",
+   "name": "Malibu Boats",
+   "first_seen": "08:07"
+  },
+  "MTLS": {
+   "pct": 10.04,
+   "last": 7.34,
+   "prev_close": 6.67,
+   "vol": "87881.4",
+   "name": "Materialise",
+   "first_seen": "08:07"
   }
  },
  "halal_fail": [
@@ -113,7 +145,14 @@
   "XPON",
   "YYGH",
   "ZJYL",
-  "ZYME"
+  "ZYME",
+  "WNW",
+  "NIPG",
+  "CRM",
+  "AAPG",
+  "UCTT",
+  "BVC",
+  "CISS"
  ],
  "fake_gap": [],
  "inherited_fail": [
