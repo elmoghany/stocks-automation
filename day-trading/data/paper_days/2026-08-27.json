@@ -953,5 +953,16 @@
   "reasoning": "Day 16 states the rule precisely: the 1-minute poll must start the moment a TOP name is selected AND its book is tradeable. At 07:30 I criticised the 06:50 decision as a cadence failure, but the two cases differ. BTCT at 07:30 was TOP with a book that could flicker to one tick and had already produced four fires - polling was right. OKTA now is TOP with a 0.565% spread and EIGHT shares at the inside bid; a [TAKEABLE NOW] tag on it could not be armed at any point in the last hour. Polling it every minute would buy nothing but a longer ledger.",
   "what_would_change_it": "any reading of OKTA <= 0.50% or BTCT at exactly one tick; both are checked every cycle",
   "honesty_note": "This is a weaker claim than my 07:30 note implied. The 07:24 BTCT triple signal was a real cadence miss and is logged as one. What follows from it is that cadence must track the BOOK, not that 1-minute polling is unconditionally right."
+ },
+ "cadence_decision_4": {
+  "time_et": "08:28",
+  "decision": "Poll OKTA Trigger C every ~3 minutes until 09:15, then strict 1-minute from 09:15 through the open and the morning.",
+  "this_is_a_DEVIATION": true,
+  "from": "the 07:55 rule, which said strict 1-minute the moment the TOP book comes inside the cap. OKTA came inside the cap at 08:24.",
+  "why": "Honest reason, stated rather than hidden: agent CONTEXT BUDGET. Each 1-minute poll costs roughly 1.5k tokens of bar data, and the session still has to cover 09:30-15:00 including position management and the EOD ledger. Strict 1-minute from 08:27 would spend ~95k tokens before the open on a name that is 3.9% below its armed trigger, drifting sideways on 100-2000 share minutes.",
+  "what_is_NOT_at_risk": "Trigger B is already ARMED and RESTING - it fills on its own if price touches 163.85, with intrabar semantics, and needs no polling at all. Trigger A does not exist until the 09:30-09:34 ORB window closes. So the ONLY thing this deviation can cost is a premarket Trigger C fire on OKTA.",
+  "risk_accepted": "A Trigger C signal on an OKTA 1-minute close between 08:28 and 09:15 could be read up to 3 minutes late and refused as STALE. That is a real cost and it is the same class of miss as the 07:24 BTCT triple signal. Recording it as a deliberate trade-off rather than discovering it in the postmortem.",
+  "why_this_window_is_the_cheap_one": "fix #9 says prefer exits and entries after 09:30 when discretionary, because premarket entries pay the ask on thin books. If a premarket Trigger C is going to be missed anywhere, the 45 minutes before the open on a name trading a few hundred shares a minute is the least costly place.",
+  "no_silent_fallback": "logged here per the 2026-08-06 rule: any unmet intent must be loud in the ledger, never a quiet workaround."
  }
 }
