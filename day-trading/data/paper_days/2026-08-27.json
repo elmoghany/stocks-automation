@@ -1,56 +1,256 @@
 {
-  "date": "2026-08-27",
-  "day_number": 17,
-  "protocol": "C37 sequential ticket rotation, paper only",
-  "mode": "PAPER - NO REAL ORDERS EVER",
-  "session_type": "headless launch by Windows Task Scheduler (\\Stocks\\C37MorningLaunch)",
-  "epoch": "honest-baseline (C37F, 2026-08-23): the $1,517/day C37E benchmark is RETIRED. Score vs break-even and vs -$163/day.",
-  "benchmark_per_day": -163,
-  "status": "SKELETON - session starting",
-  "counts_as_traded_day": false,
-  "config": {
-    "tickets": [15000, 15000, 15000, 15000, 15000, 15000, 10000],
-    "day_cap": 100000,
-    "one_position_at_a_time": true,
-    "entry_cutoff_et": "14:30",
-    "all_exits_by_et": "15:00",
-    "flatten_ladder_from_et": "14:57",
-    "scan_id": "5f132877-7730-4a18-9e72-b3f0d2c9df83",
-    "scan_filters": "Last>$2, %Change>10%, NO volume gate",
-    "halal_rule": "binary since 2026-08-22: only verdict PASS is armable; CANNOT-VERIFY is not tradeable"
+ "date": "2026-08-27",
+ "day_number": 17,
+ "protocol": "C37 sequential ticket rotation, paper only",
+ "mode": "PAPER - NO REAL ORDERS EVER",
+ "session_type": "headless launch by Windows Task Scheduler (\\Stocks\\C37MorningLaunch)",
+ "epoch": "honest-baseline (C37F, 2026-08-23): the $1,517/day C37E benchmark is RETIRED. Score vs break-even and vs -$163/day.",
+ "benchmark_per_day": -163,
+ "status": "PREMARKET - scanning, flat, 7 tickets available",
+ "counts_as_traded_day": false,
+ "config": {
+  "tickets": [
+   15000,
+   15000,
+   15000,
+   15000,
+   15000,
+   15000,
+   10000
+  ],
+  "day_cap": 100000,
+  "one_position_at_a_time": true,
+  "entry_cutoff_et": "14:30",
+  "all_exits_by_et": "15:00",
+  "flatten_ladder_from_et": "14:57",
+  "scan_id": "5f132877-7730-4a18-9e72-b3f0d2c9df83",
+  "scan_filters": "Last>$2, %Change>10%, NO volume gate",
+  "halal_rule": "binary since 2026-08-22: only verdict PASS is armable; CANNOT-VERIFY is not tradeable"
+ },
+ "ops": {
+  "scheduler_launch_et": "06:20",
+  "launch_utc": "2026-08-27T10:20:36Z",
+  "clock": "ET computed explicitly as UTC-4; TZ env untrusted (clock rule 2026-08-14). Monitors armed on UTC.",
+  "capability_probe": {
+   "status": "ALL GREEN",
+   "probe_et": "06:21",
+   "python": "OK - 3.12.0, `python -c print(1)` returned 1",
+   "git_write": "OK - skeleton committed 45696d7 before the probe ran; git status --short clean-exit",
+   "robinhood_mcp": "OK - get_equity_quotes SPY returned live premarket 769.07 @ 10:20:40Z, prior close 766.08",
+   "permission_mode_note": "Day-16 failure mode (acceptEdits auto-approves EDITS ONLY, denying python/git/MCP) did NOT recur. Session is fully capable, not merely live.",
+   "verdict": "PROCEED - full protocol authority"
   },
-  "ops": {
-    "scheduler_launch_et": "06:20",
-    "launch_utc": "2026-08-27T10:20:36Z",
-    "clock": "ET computed explicitly as UTC-4; TZ env untrusted (clock rule 2026-08-14). Monitors armed on UTC.",
-    "capability_probe": {
-      "status": "PENDING - running immediately after this skeleton commit"
-    },
-    "heartbeat_et": "06:21"
+  "heartbeat_et": "06:33",
+  "scan_state_seed": "drop-lists seeded from Day-16 verdicts: 32 halal_fail, 30 inherited_fail, 2 cannot_verify, 2 spac. fake_gap DELIBERATELY LEFT EMPTY - it is a DAY-SCOPED artifact (no premarket prints), not a permanent verdict. Day 16 listed RPGL as fake_gap while RPGL is a halal PASS; inheriting that list would have silently excluded a tradeable name.",
+  "scan_row_classification": "101 scan rows. 19 carry a non-empty Market cap; the other 82 have EMPTY Market cap AND empty Float and are leveraged/derivative ETFs+ETNs by name. Day-16 lesson applied: non-empty Market cap is SUFFICIENT for common stock - requiring a non-empty Float too is the filter that wrongly excluded NIPG/SMTC on Day 16. NIPG has an empty Float and was correctly kept this time."
+ },
+ "inherited_verdicts": {
+  "PASS": [
+   "SMMT",
+   "ADXN",
+   "TH",
+   "TTMI",
+   "FVN",
+   "OPTX",
+   "RPGL",
+   "ASST",
+   "ABUS",
+   "GLSI",
+   "EXOZ",
+   "BTCT",
+   "CRML",
+   "OESX",
+   "MRAM"
+  ],
+  "FAIL": [
+   "YYGH",
+   "DAIC",
+   "DUKR",
+   "RDIB",
+   "XPON",
+   "SMTK",
+   "SDOT",
+   "PLAB",
+   "BCAR",
+   "ARKR",
+   "GYRO",
+   "BRNX",
+   "GSIW",
+   "RACC",
+   "ANF",
+   "RVSN",
+   "LBGJ",
+   "CRE",
+   "SOGP",
+   "EEIQ",
+   "MIMI",
+   "MSS",
+   "STFS",
+   "BZ",
+   "ZJYL",
+   "VSA",
+   "OLOX",
+   "FTCI",
+   "NVNO",
+   "XOS",
+   "ZYME",
+   "QMLS",
+   "MSTR",
+   "ZOOZ",
+   "IPST",
+   "SUGP",
+   "JUNS",
+   "NCTY",
+   "YJ",
+   "RPC",
+   "SCTX",
+   "BIVI",
+   "HCWB",
+   "LZM",
+   "PMI",
+   "AEMD",
+   "SFBS",
+   "TENX",
+   "WLDS",
+   "WVVI",
+   "KURA",
+   "SPAI",
+   "NYAX",
+   "RZLV",
+   "RNAZ",
+   "IMTX",
+   "MEI",
+   "MAIR",
+   "AVXL",
+   "CAPR",
+   "EXYN",
+   "TC"
+  ],
+  "CANNOT_VERIFY": [
+   "USDE",
+   "RFAI"
+  ],
+  "fake_gap": [
+   "DUKR",
+   "EUDA",
+   "HUHU",
+   "PTLE",
+   "BNR",
+   "GDEV",
+   "ILAG",
+   "OIO",
+   "GYRO",
+   "PTHS",
+   "WSBK",
+   "GURE",
+   "PRHI",
+   "RPGL"
+  ]
+ },
+ "crossed_set": [
+  "WNW",
+  "NIPG",
+  "BVC",
+  "OKTA",
+  "LTRX",
+  "BTCT",
+  "CRM",
+  "CISS",
+  "AAPG",
+  "UCTT"
+ ],
+ "trades": [],
+ "armed": [],
+ "candidates": {
+  "armable_pool_ratios_PASS": {
+   "OKTA": {
+    "gain_pct": 20.64,
+    "last": 162.17,
+    "prev_close": 134.42,
+    "mcap": "2.336e10",
+    "loan_pct": 1.51,
+    "cash_pct": 9.53,
+    "combined": 11.04,
+    "note": "Okta - identity/access management software. On halal_list. EARNINGS GAP on a $23B name. This is the rare case where the Day-8 structural tension does NOT bind: the most liquid name on the board also passes the ratio gate."
+   },
+   "BVC": {
+    "gain_pct": 22.51,
+    "last": 14.86,
+    "prev_close": 12.13,
+    "mcap": "2.038e9",
+    "loan_pct": 0.0,
+    "cash_pct": 0.56,
+    "note": "BitVentures Limited - on halal_list, ratios clean. Question 2 (business) not yet verified."
+   },
+   "LTRX": {
+    "gain_pct": 14.84,
+    "last": 6.5,
+    "prev_close": 5.66,
+    "mcap": "2.529e8",
+    "loan_pct": 6.21,
+    "cash_pct": 8.66,
+    "combined": 14.87,
+    "note": "Lantronix - IoT/networking hardware. On halal_list."
+   }
   },
-  "inherited_verdicts": {
-    "PASS": ["SMMT", "ADXN", "TH", "TTMI", "FVN", "OPTX", "RPGL", "ASST", "ABUS", "GLSI", "EXOZ", "BTCT", "CRML", "OESX", "MRAM"],
-    "FAIL": ["YYGH", "DAIC", "DUKR", "RDIB", "XPON", "SMTK", "SDOT", "PLAB", "BCAR", "ARKR", "GYRO", "BRNX", "GSIW", "RACC", "ANF", "RVSN", "LBGJ", "CRE", "SOGP", "EEIQ", "MIMI", "MSS", "STFS", "BZ", "ZJYL", "VSA", "OLOX", "FTCI", "NVNO", "XOS", "ZYME", "QMLS", "MSTR", "ZOOZ", "IPST", "SUGP", "JUNS", "NCTY", "YJ", "RPC", "SCTX", "BIVI", "HCWB", "LZM", "PMI", "AEMD", "SFBS", "TENX", "WLDS", "WVVI", "KURA", "SPAI", "NYAX", "RZLV", "RNAZ", "IMTX", "MEI", "MAIR", "AVXL", "CAPR", "EXYN", "TC"],
-    "CANNOT_VERIFY": ["USDE", "RFAI"],
-    "fake_gap": ["DUKR", "EUDA", "HUHU", "PTLE", "BNR", "GDEV", "ILAG", "OIO", "GYRO", "PTHS", "WSBK", "GURE", "PRHI", "RPGL"]
+  "needs_live_screen": {
+   "BTCT": "absent from halal_universe - live screen at candidacy",
+   "CISS": "absent from universe; RH market cap reads 793,021 which is implausible - verify before screening"
   },
-  "crossed_set": [],
-  "trades": [],
-  "armed": [],
-  "candidates": {},
-  "vetoes": {
-    "spread": [],
-    "depth": [],
-    "chase": [],
-    "_note": "Three SEPARATE rates per the 2026-08-14 rule; binding_rule records which one refused each decision."
+  "ratio_FAIL_not_relitigated": {
+   "CRM": "Salesforce +11.69% at 229.65, $168B mcap - loan 25.4 / cash 7.18, LOAN>10+COMBINED>20. The single most tradeable book on the board, refused on financing ratios. Day-8 structural tension, again.",
+   "UCTT": "Ultra Clean +10.30%, $3.3B - loan 18.63 / cash 6.14, combined 24.77 > 20",
+   "AAPG": "Ascentage Pharma +10.59%, $1.57B - loan 111.63 / cash 138.96",
+   "NIPG": "NIP Group +22.67% - HARAM INDUSTRY (esports/entertainment) AND loan 76.35"
   },
-  "book_observations": [],
-  "trigger_c": [],
-  "halal": {"PASS": [], "FAIL": [], "CANNOT_VERIFY": [], "fake_gap": []},
-  "cycles": [],
-  "coverage_gaps": [],
-  "position_log": [],
-  "lessons": [],
-  "errors": [],
-  "pnl_day": 0
+  "ruling_FAIL": {
+   "WNW": "Meiwu Technology +48.44%, the day's biggest gapper - affirmative 2026-08-21 FAIL ruling: food e-commerce whose own product list includes alcohol, no <5% disclosure. Not re-litigated."
+  },
+  "dropped_mechanically": {
+   "funds": "PAI, CEV, RMT (closed-end funds) + 82 leveraged ETF/ETN rows",
+   "spac": "RACC",
+   "halal_fail_inherited": "MIMI, BRNX, GSIW, DAIC",
+   "inherited_fail": "YJ"
+  }
+ },
+ "vetoes": {
+  "spread": [],
+  "depth": [],
+  "chase": [],
+  "_note": "Three SEPARATE rates per the 2026-08-14 rule; binding_rule records which one refused each decision."
+ },
+ "book_observations": [],
+ "trigger_c": [],
+ "halal": {
+  "PASS": [],
+  "FAIL": [
+   "WNW",
+   "NIPG",
+   "CRM",
+   "AAPG",
+   "UCTT"
+  ],
+  "CANNOT_VERIFY": [],
+  "fake_gap": [],
+  "_note": "ratios-PASS names (OKTA/BVC/LTRX) are NOT yet verdict-PASS - question 2 runs at candidacy per SCAN ECONOMY rule b"
+ },
+ "cycles": [
+  {
+   "n": 1,
+   "time_et": "06:27",
+   "state": "FLAT-5m",
+   "phase": "premarket-early",
+   "scan_rows": 101,
+   "common_stock_rows": 19,
+   "crossed_latched": 10,
+   "ratios_pass": 3,
+   "top": "pending - pre-07:00, no 7AM bar yet for calm-gap",
+   "note": "first scan of the day, 3h03m before the open"
+  }
+ ],
+ "coverage_gaps": [],
+ "position_log": [],
+ "lessons": [],
+ "errors": [],
+ "pnl_day": 0
 }

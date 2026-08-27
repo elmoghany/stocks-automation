@@ -1,0 +1,159 @@
+{
+ "candidates": {
+  "WNW": {
+   "pct": 48.44,
+   "last": 3.6814,
+   "prev_close": 2.48,
+   "vol": "1.26341578143e+07",
+   "name": "Meiwu Technology Company",
+   "first_seen": "06:27"
+  },
+  "NIPG": {
+   "pct": 22.67,
+   "last": 18.4,
+   "prev_close": 15.0,
+   "vol": "25104.205465",
+   "name": "NIP Group",
+   "first_seen": "06:27"
+  },
+  "BVC": {
+   "pct": 22.51,
+   "last": 14.86,
+   "prev_close": 12.13,
+   "vol": "16104.1296",
+   "name": "BitVentures Limited",
+   "first_seen": "06:27"
+  },
+  "OKTA": {
+   "pct": 20.64,
+   "last": 162.17,
+   "prev_close": 134.42,
+   "vol": "7.026682628859e+06",
+   "name": "Okta",
+   "first_seen": "06:27"
+  },
+  "LTRX": {
+   "pct": 14.84,
+   "last": 6.5,
+   "prev_close": 5.66,
+   "vol": "2.287508452774e+06",
+   "name": "Lantronix",
+   "first_seen": "06:27"
+  },
+  "BTCT": {
+   "pct": 14.36,
+   "last": 2.07,
+   "prev_close": 1.81,
+   "vol": "6.681496449445e+06",
+   "name": "BTC Digital",
+   "first_seen": "06:27"
+  },
+  "CRM": {
+   "pct": 11.69,
+   "last": 229.65,
+   "prev_close": 205.62,
+   "vol": "1.4894022738853e+07",
+   "name": "Salesforce",
+   "first_seen": "06:27"
+  },
+  "CISS": {
+   "pct": 10.92,
+   "last": 3.25,
+   "prev_close": 2.93,
+   "vol": "914861.598513",
+   "name": "C3is Inc",
+   "first_seen": "06:27"
+  },
+  "AAPG": {
+   "pct": 10.59,
+   "last": 18.69,
+   "prev_close": 16.9,
+   "vol": "4862.902546",
+   "name": "Ascentage Pharma Group",
+   "first_seen": "06:27"
+  },
+  "UCTT": {
+   "pct": 10.3,
+   "last": 80.6097,
+   "prev_close": 73.08,
+   "vol": "462974.244399",
+   "name": "Ultra Clean",
+   "first_seen": "06:27"
+  }
+ },
+ "halal_fail": [
+  "ANF",
+  "ARKR",
+  "BCAR",
+  "BRNX",
+  "BZ",
+  "CRE",
+  "DAIC",
+  "DUKR",
+  "EEIQ",
+  "FTCI",
+  "GSIW",
+  "GYRO",
+  "LBGJ",
+  "MIMI",
+  "MSS",
+  "NVNO",
+  "OLOX",
+  "PLAB",
+  "QMLS",
+  "RACC",
+  "RDIB",
+  "RVSN",
+  "SDOT",
+  "SMTK",
+  "SOGP",
+  "STFS",
+  "VSA",
+  "XOS",
+  "XPON",
+  "YYGH",
+  "ZJYL",
+  "ZYME"
+ ],
+ "fake_gap": [],
+ "inherited_fail": [
+  "AEMD",
+  "AVXL",
+  "BIVI",
+  "CAPR",
+  "EXYN",
+  "HCWB",
+  "IMTX",
+  "IPST",
+  "JUNS",
+  "KURA",
+  "LZM",
+  "MAIR",
+  "MEI",
+  "MSTR",
+  "NCTY",
+  "NYAX",
+  "PMI",
+  "RNAZ",
+  "RPC",
+  "RZLV",
+  "SCTX",
+  "SFBS",
+  "SPAI",
+  "SUGP",
+  "TC",
+  "TENX",
+  "WLDS",
+  "WVVI",
+  "YJ",
+  "ZOOZ"
+ ],
+ "cannot_verify": [
+  "RFAI",
+  "USDE"
+ ],
+ "spac": [
+  "BCAR",
+  "RACC"
+ ]
+}
