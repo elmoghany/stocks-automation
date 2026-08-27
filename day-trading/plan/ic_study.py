@@ -1056,6 +1056,7 @@ def pick_study(df, feat, target, dtl, halal=None, tops=(1, 3),
         sub = sub[sub[halal_col] == halal]
     sub = sub[np.isfinite(sub[feat]) & np.isfinite(sub[target])]
     hi, lo, allm, n_days = {n: [] for n in tops}, [], [], 0
+    px, csp = [], []
     for _, g in sub.groupby("date", sort=False):
         if len(g) < MIN_NAMES_PER_DAY:
             continue
@@ -1066,13 +1067,67 @@ def pick_study(df, feat, target, dtl, halal=None, tops=(1, 3),
             hi[n].append(y[:n].mean())
         lo.append(y[-1])
         allm.append(y.mean())
+        px.append(float(o["base_px"].iloc[0]))
+        _cs = float(o["corwin_schultz"].iloc[0])
+        if np.isfinite(_cs):
+            csp.append(_cs)
     if not allm:
         return None
     r = {"n_days": n_days, "all_mean_pct": 100 * float(np.mean(allm)),
-         "bottom1_pct": 100 * float(np.mean(lo))}
+         "bottom1_pct": 100 * float(np.mean(lo)),
+         "top1_med_pct": 100 * float(np.median(hi[1])),
+         "top1_win": float(np.mean([x > 0 for x in hi[1]])),
+         "top1_px_med": float(np.median(px)) if px else float("nan"),
+         "top1_cs_med": float(np.median(csp)) if csp else float("nan")}
     for n in tops:
         r[f"top{n}_pct"] = 100 * float(np.mean(hi[n]))
     return r
+
+
+def band_study(df, feat, target, dtl, descending, bands, halal=None,
+               halal_col="halal"):
+    """pick_study repeated inside price bands.
+
+    The question this answers is the one that decides whether an IC is
+    money or scenery: a mean forward return of +10% on names trading at
+    $0.40 is a tick, and the spread eats it before we are filled. If
+    the edge only exists below $1 it is not an edge we can take."""
+    out = []
+    for lo_px, hi_px in bands:
+        sub = df[(df["base_px"] >= lo_px) & (df["base_px"] < hi_px)]
+        ps = pick_study(sub, feat, target, dtl, halal=halal,
+                        halal_col=halal_col, descending=descending)
+        if ps:
+            ps["band"] = (f"${lo_px:g}+" if hi_px == np.inf
+                          else f"${lo_px:g}-${hi_px:g}")
+            out.append(ps)
+    return out
+
+
+def collinearity(df, feats, dtl):
+    """Pooled Spearman between features on the rows at one decision
+    time. Answers 'how many independent findings is this?' -- highly
+    correlated features that all clear the bar are one discovery
+    counted many times."""
+    sub = df[df["dt"] == dtl]
+    cols = {}
+    for f in feats:
+        v = sub[f].to_numpy(np.float64)
+        cols[f] = np.where(np.isfinite(v), v, np.nan)
+    n = len(feats)
+    M = np.full((n, n), np.nan)
+    for i in range(n):
+        for j in range(i, n):
+            x, y = cols[feats[i]], cols[feats[j]]
+            m = np.isfinite(x) & np.isfinite(y)
+            if m.sum() < 100:
+                continue
+            a, b = _rank(x[m]), _rank(y[m])
+            sa, sb = a.std(), b.std()
+            c = (0.0 if sa == 0 or sb == 0 else
+                 float(((a - a.mean()) * (b - b.mean())).mean() / (sa * sb)))
+            M[i, j] = M[j, i] = c
+    return M
 
 
 def _intro(reuse=False):
@@ -1404,6 +1459,36 @@ def report(reuse=False):
               f"(`survives == True`)._")
     A("")
 
+    # ---------------- 1b. how many discoveries is that ---------------
+    if len(surv):
+        top_f = list(dict.fromkeys(
+            surv.sort_values("mean_ic", key=abs, ascending=False)
+                ["feature"]))[:10]
+        A("### How many independent findings is that?")
+        A("")
+        A("Far fewer than the cell count suggests. The features are "
+          "not independent -- most of them are three underlying "
+          "quantities wearing different clothes: **how far the name "
+          "has already run**, **how wide and volatile its tape is**, "
+          "and **how much it is trading**. Pooled Spearman "
+          "correlations between the strongest survivors, measured on "
+          "the 10:00 cross-sections:")
+        A("")
+        M = collinearity(df, top_f, "10:00")
+        A("| | " + " | ".join(f"{f[:12]}" for f in top_f) + " |")
+        A("|---|" + "--:|" * len(top_f))
+        for i, f in enumerate(top_f):
+            cells = ["--" if not np.isfinite(M[i, j])
+                     else f"{M[i, j]:+.2f}" for j in range(len(top_f))]
+            A(f"| **{f}** | " + " | ".join(cells) + " |")
+        A("")
+        A("Read the survivor count as **a handful of effects found "
+          "repeatedly**, not as dozens of separate discoveries. That "
+          "matters for what comes next: fitting a rule to eight "
+          "'independent' features that are really three would "
+          "overfit immediately.")
+        A("")
+
     # ---------------- 2. mean-IC matrices ---------------------------
     A("## 2. Mean IC by feature x decision time, per target")
     A("")
@@ -1664,6 +1749,40 @@ def report(reuse=False):
       "day's largest value, `low` = the smallest. It follows the sign "
       "of the measured IC, it is not fitted here.")
     A("")
+    A("### 7.1 Is it money or is it scenery? The price bands")
+    A("")
+    A("A mean forward return of +10% on a stock trading at $0.40 is "
+      "one or two ticks wide and the spread eats it before we are "
+      "filled; the same number at $8 is a trade. This repeats the "
+      "top-1 rule inside price bands, and adds the median (not just "
+      "the mean) day and the median price of the name it picked -- a "
+      "mean that comes from three lottery tickets and 441 flat days is "
+      "not something a cash account can spend.")
+    A("")
+    A("| feature | dt | universe | band | days | top-1 mean % | "
+      "top-1 MEDIAN % | top-1 win rate | median price picked | "
+      "random pick % |")
+    A("|---|---|---|---|--:|--:|--:|--:|--:|--:|")
+    bands = [(0, 1), (1, 3), (3, 10), (10, np.inf)]
+    for f, dtl, hi_is_good in [(r["feature"], r["dt"], r["mean_ic"] > 0)
+                               for r in top3[:2]]:
+        for dl in sorted({dtl, "10:00"}):
+            for uni, hl, hc in (("all", None, "halal"),
+                                ("halal-PIT", True, "halal")):
+                for ps in band_study(df, f, PRIMARY, dl, hi_is_good,
+                                     bands, halal=hl, halal_col=hc):
+                    if ps["n_days"] < 30:
+                        continue
+                    A(f"| {f} | {dl} | {uni} | {ps['band']} "
+                      f"| {ps['n_days']} | {ps['top1_pct']:+.3f} "
+                      f"| {ps['top1_med_pct']:+.3f} "
+                      f"| {ps['top1_win']:.2f} "
+                      f"| ${ps['top1_px_med']:.2f} "
+                      f"| {ps['all_mean_pct']:+.3f} |")
+    A("")
+    A("_Bands with fewer than 30 usable days are omitted: a rule that "
+      "only fires a handful of times a year cannot be measured here._")
+    A("")
     base_mu = 100 * float(np.nanmean(df["fwd_flat"]))
     base_md = 100 * float(np.nanmedian(df["fwd_flat"]))
     A("Reminder of the unconditional base rate on this pool: the mean "
@@ -1703,10 +1822,20 @@ def report(reuse=False):
           "output of the W-campaign is that number plus this null "
           "result, not another configuration.")
     else:
-        A(f"**{len(surv)} of {len(real)} feature-cells clear all "
-          f"{len(SURV)} bars, and they are not spread evenly: "
-          f"{surv['feature'].nunique()} distinct features are "
-          f"involved.** The list is in section 1.")
+        A(f"**Yes. {len(surv)} of {len(real)} feature-cells clear all "
+          f"{len(SURV)} bars, including the entry-lag control that "
+          f"exists specifically to kill bid-ask artefacts.** The list "
+          f"is in section 1 -- but read it with section 1's "
+          f"collinearity table: {surv['feature'].nunique()} feature "
+          f"names appear, and they are three or four underlying "
+          f"effects found over and over, not that many discoveries.")
+        A("")
+        A("This reverses the working assumption the campaign has been "
+          "operating under. The honest pool is **not** an "
+          "information-free universe in which only abstention helps. "
+          "It carries a large, stable, control-beating cross-sectional "
+          "signal. What has no edge is the *particular ruleset* that "
+          "was pointed at it.")
         A("")
         A("### What survives, and which way it points")
         A("")
@@ -1729,7 +1858,58 @@ def report(reuse=False):
             if len(shown) == 8:
                 break
         A("")
+        _d0 = real[(real["feature"] == top3[0]["feature"])
+                   & (real["target"] == PRIMARY)].sort_values("dt")
+        _dk = [(r["feature"], r["mean_ic"])
+               for _, r in _d0.iterrows()] or [("", 0.0)]
+        A("Every one of those lines lands on the earliest decision "
+          "time because the effect "
+          "is strongest in premarket and decays through the session -- "
+          "read the matrices in section 2 across a row: "
+          f"`{_dk[0][0]}` goes {_dk[0][1]:+.2f} ({DECISIONS[0]:%H:%M}) "
+          f"to {_dk[-1][1]:+.2f} ({DECISIONS[-1]:%H:%M}) against "
+          f"`{PRIMARY}`. The premarket cross-sections are also the "
+          "smallest and thinnest, so the strongest numbers sit on the "
+          "least tradeable tape. Section 7.1 re-measures at 10:00 "
+          "precisely because of that.")
+        A("")
         A(bounce)
+        A("")
+        A("### Is it money, or only a number?")
+        A("")
+        f0 = top3[0]["feature"]
+        d0 = top3[0]["mean_ic"] > 0
+        rows = band_study(df, f0, PRIMARY, "10:00", d0,
+                          [(3, np.inf)], halal=True)
+        rows_all = band_study(df, f0, PRIMARY, "10:00", d0,
+                              [(3, np.inf)])
+        if rows and rows_all:
+            bm, ba = rows[0], rows_all[0]
+            A(f"The hardest version of the question -- **{f0}** at "
+              f"**10:00 ET** (a liquid decision point, not a "
+              f"premarket one), restricted to **halal-PASS names above "
+              f"$3**, entering at the next print and holding to the "
+              f"15:00 flatten:")
+            A("")
+            A(f"* top-1 pick: **{bm['top1_pct']:+.2f}% mean, "
+              f"{bm['top1_med_pct']:+.2f}% median**, "
+              f"win rate {bm['top1_win']:.0%}, over {bm['n_days']} days, "
+              f"median price of the name picked "
+              f"**${bm['top1_px_med']:.2f}**")
+            A(f"* picking at random from the same names that day: "
+              f"**{bm['all_mean_pct']:+.2f}%**")
+            A(f"* the same rule with the halal gate removed: "
+              f"**{ba['top1_pct']:+.2f}% mean** over {ba['n_days']} "
+              f"days")
+            A("")
+            A("The median matters as much as the mean here: a positive "
+              "median with a win rate above half is a rule that works "
+              "on ordinary days, not one carried by a few lottery "
+              "tickets. The full band breakdown is section 7.1, and it "
+              "shows the edge is **not** confined to sub-dollar names "
+              "-- relative to a random pick it is largest in the "
+              "liquid bands, because that is where the random pick "
+              "does worst.")
         A("")
         A("### What this does NOT license")
         A("")
@@ -1744,7 +1924,17 @@ def report(reuse=False):
           "rest on hundreds of observations, not tens of thousands. "
           "Any rule adopted from here must be re-measured on the halal "
           "universe alone before it is believed.")
-        A("* **Nothing here rescues C37.** The champion’s ranker is "
+        A("* **The features are collinear.** Section 1's correlation "
+          "table shows `gap7` and `pm_gain` at +0.96, "
+          "`corwin_schultz` and `bar_range` at +0.80, `log_dvol` and "
+          "`amihud` at -0.93. Building a rule that treats them as "
+          "separate evidence would overfit on the first pass.")
+        A("* **This is one direction of a two-sided question.** The "
+          "study measures which names to PREFER. It says nothing "
+          "about when to exit, how to size, or whether the flatten is "
+          "the right horizon -- and the exit machinery is where the "
+          "R-campaign's P&L actually came from.")
+        A("* **Nothing here rescues C37.** The champion's ranker is "
           "measured directly as `c37_rank_score`; see the next "
           "subsection.")
         A("")
@@ -1784,6 +1974,46 @@ def report(reuse=False):
           f"{(c37p.mean() if len(c37p) else float('nan')):+.4f} on "
           f"`{PRIMARY}` with {n_c37} surviving cells.")
     A("")
+    A("### What to do next")
+    A("")
+    if len(surv):
+        A("In order, and none of it is another veto sweep:")
+        A("")
+        A("1. **Re-rank, do not re-filter.** The one change this study "
+          "actually licenses is replacing the C37 ordering key with "
+          f"its measured-best direction (`{top3[0]['feature']}`, "
+          f"{'highest' if top3[0]['mean_ic'] > 0 else 'lowest'} first) "
+          "and re-running the existing rotation harness unchanged. "
+          "That isolates the ranker from every other moving part, and "
+          "it is a one-line change to a config, not new machinery.")
+        A("2. **Measure it on the halal universe from the start.** "
+          "The all-names tables are the biggest sample but the wrong "
+          "population. Any number that has not been re-derived on "
+          "halal-PASS names only is not a number about our account.")
+        A("3. **Then, and only then, combine.** Two or three "
+          "uncorrelated effects (extension, spread/volatility, "
+          "participation) may add; eight collinear ones will not. "
+          "Any combination must be fitted on one half and confirmed "
+          "on the other, the split-half discipline section 5 already "
+          "applies to the singles.")
+        _c = rows[0]["top1_cs_med"] if rows else np.nan
+        _cost = float(_c) if np.isfinite(_c) else None
+        A("4. **Cost it honestly.** These are gross returns. The "
+          "names the rule actually picks in the hardest cut above "
+          + (f"carry a median Corwin-Schultz spread estimate of "
+             f"**{_cost:.2f}%**, so a round trip costs on the order "
+             f"of {_cost:.2f}% against a "
+             f"{rows[0]['top1_pct']:+.2f}% gross "
+             f"mean -- it survives, but with far less room than the "
+             f"gross number suggests, and that is before depth and "
+             f"impact. "
+             if _cost is not None else
+             "were not measured for spread here. ")
+          + "The live veto ledger's binding spreads run 0.3%-17%, "
+            "so the wide tail of this universe is uneconomic no "
+            "matter what the IC says -- which is an argument for "
+            "keeping a spread cap, not for keeping C37's ranker.")
+        A("")
     A("### What would change the answer further")
     A("")
     A("* A different *universe*. Everything here conditions on the "

@@ -4828,3 +4828,134 @@ KILLS the veto/ordering line of attack rather than validating it:
    config sweeps. If no feature clears its control, the honest answer
    is that this universe/ruleset family has no edge to find, and we
    report that rather than sweeping until something passes by chance.
+
+## IC STUDY (2026-08-27): THE POOL HAS A SIGNAL -- AND C37's RANKER IS POINTED AT IT BACKWARDS
+
+The HV Run 2 conclusion ("no filter can rescue a negative-expectancy entry")
+registered the right next step: stop tuning filters, ask whether ANY causal
+feature predicts forward returns on the honest universe. `plan/ic_study.py`
+answers it. Full writeup: `IC-STUDY-honest-pool.md`; every cell in
+`ic_study_all_ics.csv`.
+
+Scope: 108,464 symbol-days over 444 trading days (the FULL honest novol pool,
+nothing sampled) -> 240,439 (symbol, day, decision-time) rows at 07:30 / 08:30
+/ 09:35 / 10:00 / 10:30 / 11:30 ET, gated so a row exists only after that
+name's +10% cross has printed. 24 candidate features + `c37_rank_score` (the
+champion's own ordering key, rebuilt exactly as `rotation_sim.rank_at` sorts)
++ 2 negative controls + 1 bounce diagnostic, against 8 targets. 1,296 cells.
+
+### THE ANSWER IS YES -- 521 of 1,152 candidate cells clear all seven bars
+
+Bars, fixed before looking: tradeable target / bootstrap CI excludes 0 /
+BH q<0.05 over the whole 1,296-test family / beats BOTH controls in its own
+cell / same sign and magnitude across y2025 and year / |IC| >= 0.02 / survives
+the entry-lag control.
+
+  feature          mean IC vs fwd_flat_nx, 07:30 -> 11:30
+  gain_now         -0.241  -0.229  -0.182  -0.100  -0.061  -0.032
+  corwin_schultz   -0.199  -0.148  -0.160  -0.123  -0.091  -0.049
+  bar_range        -0.188  -0.153  -0.180  -0.123  -0.082  -0.045
+  c37_rank_score   -0.054  -0.071  -0.079  -0.033  -0.014  -0.009
+  ctl_tickerhash   -0.002  +0.002  -0.001  +0.002  +0.006  +0.005
+  ctl_random       +0.018  -0.007  -0.013  +0.004  -0.002  +0.006
+
+Direction: **prefer the LEAST extended, TIGHTEST, least-volatile crosser.**
+The controls behave exactly as controls should -- 16-18 of 30 cells agree in
+sign across halves, i.e. a coin. `gain_now` agrees 29 of 30.
+
+### THE RESULT IS NOT THE BID-ASK BOUNCE -- that was tested, not assumed
+
+Features are read off the decision bar and the naive target divides by THAT
+bar's close. Because a row exists only after a +10% UP cross, the decision
+print lands on the ask more often than chance, which depresses the measured
+return MORE for wider-spread names -- a mechanism that would manufacture
+exactly this result out of nothing. Three entry-lag targets re-base the return
+on a LATER print (`fwd_flat_nx` = first bar after the decision -- also the
+honest fill, since we cannot trade the bar we are deciding on).
+
+ * `close_pos` (where the decision bar's close sat in its own range -- an
+   instrument with zero knowledge of the future): |IC| 0.041 on the raw
+   target, 0.023 on the entry-lag target. That gap IS the artefact, isolated.
+ * Across all 144 feature x decision-time cells, re-basing shrinks total
+   |mean IC| by 5% and flips 3 signs. The `gain_now` decile-1 bucket moves
+   +9.50% -> +8.58%. The signal is not our own entry print.
+
+### IT SURVIVES INTO THE TRADEABLE CORNER
+
+Hardest cut -- `gain_now` LOWEST at 10:00 ET (not premarket), halal-PASS names
+only, above $3, entry at the next print, hold to the 15:00 flatten:
+
+  top-1 pick   +2.52% mean, +2.26% MEDIAN, 60% win rate, 432 days
+  random pick  -0.47%
+  median price of the name picked            $13.15
+  median Corwin-Schultz spread of that name   0.38%
+
+A positive MEDIAN with a 60% win rate is not three lottery tickets carrying
+441 flat days. Removing the halal gate barely moves it (+2.51%, 444 days).
+Relative to a random pick the edge is LARGEST in the liquid bands, because
+that is where the random pick does worst.
+
+### C37 DOES NOT RANK AT RANDOM -- IT RANKS BACKWARDS
+
+`c37_rank_score` (coiled group first, then descending 30-bar pressure, missing
+pressure tied-last) has mean IC **-0.0433** across the six decision times on
+`fwd_flat_nx`, strongest -0.0786 at 09:35 against a control bar of 0.0131,
+30/30 cells sign-stable across halves. The names the champion puts FIRST go on
+to do worse than the ones it puts LAST.
+
+This is a strictly stronger statement than "negative per-trade expectancy on
+the honest pool", and it relocates the fault: the loss is in the RANKER, not
+in the universe. The universe pays. The coiled-first / pressure-ordered rule
+is not a harmless tie-break -- it is standing on the wrong side of a real and
+large effect. HV Run 2's random-veto result now reads differently too: random
+beat the instruments because random at least stopped the ranker from choosing.
+
+### WHAT THIS DOES NOT LICENSE
+
+ * Not a backtest. Gross of spread, depth, impact and halts.
+ * The features are collinear (`gap7`~`pm_gain` +0.96, `corwin_schultz`~
+   `bar_range` +0.80, `log_dvol`~`amihud` -0.93). 24 surviving names are
+   three or four effects, not 24 discoveries. Combining them naively overfits.
+ * Strongest at 07:30, decaying all session -- i.e. the biggest numbers sit on
+   the thinnest tape. 10:00 is the honest reading.
+ * Says nothing about exits, sizing or horizon, and the R-campaign's P&L came
+   from the exit machinery.
+ * `peak60`/`peak_flat` were reported but EXCLUDED from the verdict:
+   max(High)/entry is an upper bound nobody can sell at and rises mechanically
+   with volatility and print count. Including them would have "found" 518
+   survivors made of nothing.
+
+### NEXT (in order, and none of it is another veto sweep)
+
+ 1. RE-RANK, DO NOT RE-FILTER. Swap the C37 ordering key for `gain_now`
+    ascending and re-run the rotation harness otherwise untouched. One config
+    line; isolates the ranker from every other moving part.
+ 2. Re-derive on halal-PASS names from the start -- the all-names tables are
+    the bigger sample and the wrong population.
+ 3. Only then combine, fitted on one half and confirmed on the other.
+ 4. Cost it: 0.38% median spread on the picked names against +2.52% gross.
+    Survives, with less room than the gross number suggests. Keep a spread
+    cap -- the wide tail is uneconomic regardless of IC.
+
+### CAUSALITY AND HYGIENE
+
+Asserted three ways, not assumed: the feature block never receives a bar after
+T (structural); every row asserts the prefix boundary and each
+`liquidity_estimators` call re-asserts its own, with 479 rows re-derived
+through `CausalView(df).upto(T)` and checked frame-for-frame; `--selftest`
+poisons every bar >= T and proves no feature moves, that the fast bar loader
+is index- and value-identical to `rotation_sim.bars_for`, and that the
+pressure statistic is bit-identical to `Candles.pressure`. Free internal
+check: `dist_sess_high_pct` is a monotone transform of `coil` and its rank IC
+comes back as exactly minus `coil`'s (max disagreement 3e-08).
+
+`halal_pt` was memoised and put in READ-ONLY mode for this study: unpatched it
+re-reads 3-4 JSON caches per call and, on the 55% of share-count lookups this
+pool misses, CALLS POLYGON AND WRITES THE ANSWER BACK. A timing probe run
+before that patch existed did write 43 files into `data/pt_shares`; the 3 that
+were `null` were deleted (a cached null is exactly the silent "cannot verify"
+the halal gate must not inherit from a research script), the 40 genuine share
+counts were left. Recorded rather than quietly fixed.
+
+Read-only analysis: `rotation_sim.py`, `day-trading.py`, `idgate.py`,
+`data_manifest.py` and every config are untouched.
