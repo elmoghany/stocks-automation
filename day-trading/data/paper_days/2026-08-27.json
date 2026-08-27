@@ -40,7 +40,7 @@
    "permission_mode_note": "Day-16 failure mode (acceptEdits auto-approves EDITS ONLY, denying python/git/MCP) did NOT recur. Session is fully capable, not merely live.",
    "verdict": "PROCEED - full protocol authority"
   },
-  "heartbeat_et": "06:33",
+  "heartbeat_et": "06:52",
   "scan_state_seed": "drop-lists seeded from Day-16 verdicts: 32 halal_fail, 30 inherited_fail, 2 cannot_verify, 2 spac. fake_gap DELIBERATELY LEFT EMPTY - it is a DAY-SCOPED artifact (no premarket prints), not a permanent verdict. Day 16 listed RPGL as fake_gap while RPGL is a halal PASS; inheriting that list would have silently excluded a tradeable name.",
   "scan_row_classification": "101 scan rows. 19 carry a non-empty Market cap; the other 82 have EMPTY Market cap AND empty Float and are leveraged/derivative ETFs+ETNs by name. Day-16 lesson applied: non-empty Market cap is SUFFICIENT for common stock - requiring a non-empty Float too is the filter that wrongly excluded NIPG/SMTC on Day 16. NIPG has an empty Float and was correctly kept this time."
  },
@@ -222,17 +222,25 @@
  "book_observations": [],
  "trigger_c": [],
  "halal": {
-  "PASS": [],
+  "PASS": [
+   "OKTA",
+   "LTRX",
+   "BTCT"
+  ],
   "FAIL": [
    "WNW",
    "NIPG",
    "CRM",
    "AAPG",
-   "UCTT"
+   "UCTT",
+   "BVC",
+   "CISS"
   ],
   "CANNOT_VERIFY": [],
-  "fake_gap": [],
-  "_note": "ratios-PASS names (OKTA/BVC/LTRX) are NOT yet verdict-PASS - question 2 runs at candidacy per SCAN ECONOMY rule b"
+  "fake_gap": [
+   "BVC"
+  ],
+  "_note": "Binary rule: only verdict PASS is armable."
  },
  "cycles": [
   {
@@ -246,11 +254,83 @@
    "ratios_pass": 3,
    "top": "pending - pre-07:00, no 7AM bar yet for calm-gap",
    "note": "first scan of the day, 3h03m before the open"
+  },
+  {
+   "n": 2,
+   "time_et": "06:52",
+   "state": "FLAT-5m",
+   "phase": "premarket",
+   "action": "halal gate resolved for the whole crossed set: 3 PASS (OKTA/LTRX/BTCT), 7 FAIL",
+   "armable": 3,
+   "top": "pending 07:00 - calm-gap needs the 7AM bar",
+   "note": "2 live screens run (BTCT, CISS) with RH market caps fetched and stored first"
   }
  ],
  "coverage_gaps": [],
  "position_log": [],
  "lessons": [],
  "errors": [],
- "pnl_day": 0
+ "pnl_day": 0,
+ "halal_detail": {
+  "PASS": {
+   "OKTA": {
+    "loan_pct": 1.76,
+    "cash_pct": 11.08,
+    "combined": 12.84,
+    "haram_pct": 0.75,
+    "on_halal_list": true,
+    "q2": "Okta - enterprise identity and access management SaaS (SSO/MFA). Permissible; no haram-adjacent revenue line. Interest income 0.75% of revenue, far under 5%.",
+    "carve_out": "cash 11.08 exceeds 10 but combined 12.84 is inside 20 - the ONE-SIDE-MAY-EXCEED rule doing its job",
+    "significance": "$23B market cap, +20.6% earnings gap, genuine premarket volume AND a halal PASS. The Day-8 structural tension (the liquid books are the levered ones) does NOT bind today."
+   },
+   "LTRX": {
+    "loan_pct": 6.68,
+    "cash_pct": 9.31,
+    "combined": 16.0,
+    "haram_pct": 0.0,
+    "on_halal_list": true,
+    "q2": "Lantronix - IoT / edge networking hardware. Permissible."
+   },
+   "BTCT": {
+    "loan_pct": 14.48,
+    "cash_pct": 2.03,
+    "combined": 16.51,
+    "haram_pct": 0.0,
+    "on_halal_list": false,
+    "live_screen": true,
+    "rh_market_cap": 17273318.7,
+    "carve_out": "loan 14.48 exceeds 10, combined 16.51 inside 20 - carve-out applies",
+    "q2": "BTC Digital - cryptocurrency mining. Not a listed haram industry; inherited PASS from Day 16 honoured.",
+    "note": "RH market cap 17.27M differs materially from the scanner's 30.81M column. The live RH cap was fetched and stored before screening, per MARKET CAP IS REQUIRED."
+   }
+  },
+  "FAIL": {
+   "BVC": {
+    "verdict": "FAIL",
+    "binding_question": 2,
+    "loan_pct": 0.0,
+    "cash_pct": 0.56,
+    "on_halal_list": true,
+    "reason": "INSURANCE. RH profile: 'offers a range of insurance products, including life insurance products such as individual whole life, term life, health insurance, and universal life insurance; annuity insurance products; and critical illness insurance products' plus client-referral services to external financial product partners. Sector Finance / Investment Managers.",
+    "significance": "THE ANGX PATTERN, CAUGHT PRE-ARMING. BVC is ON halal_list.json and its ratios are the cleanest of any name on the board (loan 0.00, cash 0.56). A question-1-only screen would have ranked it #2 by gain and armed an insurance company. Question 2 is the only thing that refused it.",
+    "also": "premarket-dark: RH fundamentals return volume 0 with high/low null, and 25/25 fetched minute bars are interpolated at a flat 12.10 against a scanner mark of 14.86. FAKE GAP as well as a halal FAIL - double refusal.",
+    "data_note": "scanner Market cap column read 2.038e9; live RH reads 1.019e8, a 20x disagreement. Another reason not to screen off scanner columns."
+   },
+   "CISS": {
+    "verdict": "FAIL",
+    "loan_pct": 0.19,
+    "cash_pct": 655.14,
+    "combined": 655.33,
+    "live_screen": true,
+    "rh_market_cap": 4161600.0,
+    "reason": "CASH>10+COMBINED>20",
+    "note": "C3is - Greek dry-bulk shipping. The BUSINESS is permissible; the ratios are not, by two orders of magnitude. 52-week high of 33,263.44 against a 3.25 price means serial reverse splits - a post-dilution shell whose cash dwarfs its market cap."
+   },
+   "WNW": "affirmative 2026-08-21 FAIL ruling - sells alcohol itself. Day's biggest gapper (+48.4%), not re-litigated.",
+   "NIPG": "HARAM INDUSTRY (esports/entertainment) + loan 76.35",
+   "CRM": "Salesforce, loan 25.4 / cash 7.18 - LOAN>10+COMBINED>20",
+   "UCTT": "Ultra Clean, loan 18.63 / cash 6.14 - combined 24.77 > 20",
+   "AAPG": "Ascentage Pharma, loan 111.63 / cash 138.96"
+  }
+ }
 }
