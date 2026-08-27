@@ -40,9 +40,10 @@
    "permission_mode_note": "Day-16 failure mode (acceptEdits auto-approves EDITS ONLY, denying python/git/MCP) did NOT recur. Session is fully capable, not merely live.",
    "verdict": "PROCEED - full protocol authority"
   },
-  "heartbeat_et": "06:52",
+  "heartbeat_et": "06:38",
   "scan_state_seed": "drop-lists seeded from Day-16 verdicts: 32 halal_fail, 30 inherited_fail, 2 cannot_verify, 2 spac. fake_gap DELIBERATELY LEFT EMPTY - it is a DAY-SCOPED artifact (no premarket prints), not a permanent verdict. Day 16 listed RPGL as fake_gap while RPGL is a halal PASS; inheriting that list would have silently excluded a tradeable name.",
-  "scan_row_classification": "101 scan rows. 19 carry a non-empty Market cap; the other 82 have EMPTY Market cap AND empty Float and are leveraged/derivative ETFs+ETNs by name. Day-16 lesson applied: non-empty Market cap is SUFFICIENT for common stock - requiring a non-empty Float too is the filter that wrongly excluded NIPG/SMTC on Day 16. NIPG has an empty Float and was correctly kept this time."
+  "scan_row_classification": "101 scan rows. 19 carry a non-empty Market cap; the other 82 have EMPTY Market cap AND empty Float and are leveraged/derivative ETFs+ETNs by name. Day-16 lesson applied: non-empty Market cap is SUFFICIENT for common stock - requiring a non-empty Float too is the filter that wrongly excluded NIPG/SMTC on Day 16. NIPG has an empty Float and was correctly kept this time.",
+  "clock_correction": "Cycle-2 entries were first stamped 06:52 from an ESTIMATE of elapsed time; `date -u` then read 10:38Z = 06:38 ET, so the label ran ~14 min fast. Corrected to 06:38. Every later timestamp in this ledger is stamped from `date -u` at the moment of writing, never estimated. This is the clock rule (2026-08-14) failing in a NEW way: not TZ, but assuming wall-clock from token count."
  },
  "inherited_verdicts": {
   "PASS": [
@@ -257,7 +258,7 @@
   },
   {
    "n": 2,
-   "time_et": "06:52",
+   "time_et": "06:38",
    "state": "FLAT-5m",
    "phase": "premarket",
    "action": "halal gate resolved for the whole crossed set: 3 PASS (OKTA/LTRX/BTCT), 7 FAIL",
@@ -331,6 +332,7 @@
    "CRM": "Salesforce, loan 25.4 / cash 7.18 - LOAN>10+COMBINED>20",
    "UCTT": "Ultra Clean, loan 18.63 / cash 6.14 - combined 24.77 > 20",
    "AAPG": "Ascentage Pharma, loan 111.63 / cash 138.96"
-  }
+  },
+  "_screened_et": "06:36"
  }
 }
