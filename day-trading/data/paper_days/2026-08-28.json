@@ -899,7 +899,7 @@
     "ERROR: thin book - TII 10:04 ET Trigger C hammer [TAKEABLE NOW]: 190 displayed shares to ask+0.3pct vs 4,732 intended (4.0pct). Entry refused despite a valid, fresh, in-set pattern signal and a passing spread."
   ],
   "lessons": [],
-  "pnl_day": 0,
+  "pnl_day": 0.0,
   "verdict": "IN PROGRESS",
   "cadence_decision": {
     "time_et": "06:53",
@@ -1055,5 +1055,17 @@
       "verdict": "0.0 pct - no chase veto fired today. Every arming candidate had last BELOW the ratchet trigger, so no stop was ever a disguised market order."
     },
     "why_counted_separately": "Day-9 ruling. A single blended rate would have read 5 of 12 decisions vetoed and hidden that spread and depth bound at different moments on the same name, and that fill-arming never bound at all."
+  },
+  "campaign": {
+    "scored_days_before": 15,
+    "cumulative_before": -704.97,
+    "per_day_before": -47.0,
+    "day18_pnl": 0.0,
+    "scored_days_now": 15,
+    "cumulative_now": -704.97,
+    "per_day_now": -47.0,
+    "honest_baseline_per_day": -163,
+    "vs_baseline_today": 163.0,
+    "note": "Day 18 was an ALL-VETO day: 0 tickets filled, P&L $0.00, counts_as_traded_day FALSE. The denominator is UNCHANGED at 15 scored days and cumulative stays -$704.97 / -$47.00 per day. A flat day is not a loss and must not be averaged in as one - C37 itself trades ~419 of ~432 days, so all-veto days are a modelled property of the champion. Against the -$163/day honest baseline, doing nothing was worth +$163 relative to what the backtest expects of an average day."
   }
 }

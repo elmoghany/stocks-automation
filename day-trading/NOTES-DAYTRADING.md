@@ -1,5 +1,166 @@
 # Penny Stocks Trading Notes
 
+## PAPER DAY 18 (2026-08-28) — all-veto day; the halal gate decided it, and two automated PASSes were haram
+
+**0 tickets filled, P&L $0.00, flat all day, zero real orders.** One order was
+ARMED (TII, 1,208 sh @ 3.2262) and never touched. **`counts_as_traded_day: false`
+— the denominator is unchanged at 15 scored days, cumulative stays −$704.97 /
+−$47.00 per day.** Full detail in `data/paper_days/2026-08-28.{json,md}`.
+
+Headless launch clean again; capability probe (python / git-write / MCP) all green
+at 06:20. Second consecutive session where the Day-16 `--allowedTools` fix held.
+
+**36 crossers. 32 failed halal. 4 passed. 3 of those 4 had no 7AM print.**
+
+### 1. The screen said PASS on two haram businesses. Both were caught by hand.
+
+This is the finding of the day, and it is a *compliance* finding, not a P&L one.
+
+* **ZSTK** — screen PASS (loan 1.96 / cash 1.88 / `haram_pct` 0.16). It is a
+  **cannabis producer** ("production of organic cannabis"; House of Brands
+  includes cannabis accessories). An intoxicant. RH labels it
+  *Health Technology / Pharmaceuticals: Other*.
+* **TP** — screen PASS, combined **exactly 20.00**, off **annual** statements.
+  Self-describes as *"powering the live entertainment industry"* — a dedicated
+  event-ticketing vertical with no sports/entertainment split disclosed.
+
+`haram_pct` is **interest income / revenue only**. The clincher: **AIIR, a
+shisha/hookah tobacco company** (15–25% tobacco by weight, brand Al Fakher, plus
+nicotine pouches), scored **`haram_pct` 0.03** and is labelled *Producer
+Manufacturing / Industrial Conglomerates*.
+
+**Three sector-label misses in one session** (ZSTK, AIIR, CRD.A insurance
+services). Blind spot #3 is not occasional — on this board it fired repeatedly,
+and only manually asking question 2 caught any of it. **The ANGX pattern was
+caught pre-arming for the second session running** (BVC yesterday, ZSTK + TP today).
+
+### 2. The two halal questions are genuinely independent — EROK proves it
+
+**EROK** was the *only* name to pass question 1 cleanly (loan 9.13, cash 0.13 —
+carve-out not even needed) and it **failed question 2**: interest income **6.33%**
+of revenue, over the binary 5% line. A just-IPO'd land company parking its
+proceeds while revenue ramps. Clean balance sheet, disqualifying income mix.
+
+Mirror image: **RFL** failed **both** independently — combined 22.79 *and*
+`haram_pct` **39.94**, one of the few times the interest-income metric was not
+blind and caught something outright.
+
+### 3. Blind-spot FAILs on implausible inputs
+
+* **YDES** — screen PASS with `loan_pct` **0.00** on **pb −0.811 (negative book)**.
+  Verbatim the documented case. **YDES is on `halal_list.json`** — the list alone
+  would have armed it.
+* **DXR** — all four ratios exactly `0.0`, `source: "info"` not `"quarterly"`.
+  The NO-FUNDAMENTALS signature; a refusal to evaluate, not a pass.
+
+Both recorded FAIL (unverified). Counter-example for calibration: **COPR** also has
+negative book (pb −6.56) but reports loan **3.85** / cash 0.27 — non-zero and
+internally consistent, so it was *distinguished* rather than swept into the same
+bucket. The rule is "loan_pct **0.00** + negative book", not "negative book".
+
+### 4. Spread and depth bound in every combination — on one name, in 42 minutes
+
+| Time | Spread | Depth |
+|---|---|---|
+| 10:01 | **FAIL** 0.631–0.945% | **FAIL** 875 sh (18.7%) |
+| 10:04 | **PASS** 0.313% (1 tick) | **FAIL** 190 sh (4.0%) |
+| 10:43 | **FAIL** 0.629% | **PASS** 3,406 sh (73.2%) |
+| 11:00 | **PASS** 0.313% | **PASS** 1,208 sh (26.0%) → **ARMED** |
+
+At 10:04 the spread was at its theoretical minimum *with a 7-share inside bid*.
+**A narrow spread is not evidence of liquidity.** Day 9 ruled these are different
+rules; today is the cleanest possible demonstration, and the binding rule was
+**depth** — which has never been modelled.
+
+**Veto rates (all post-open; ZERO premarket arming decisions occurred today, so
+the premarket rate is *undefined*, not 100%):**
+spread **60.0%** (5 decisions — **inside the 50–65% modelled band**),
+depth **50.0%** (4), fill-arming/chase **0.0%** (3).
+Caveat: n=5 on one symbol — an observation, not a calibration.
+
+**Tick-size floor confirmed on a second name** (Day-17 finding): at $3.17 one cent
+is 0.315%, so the 0.50% cap admits **at most a 1-tick spread**. Spread compliance
+on sub-$4 names is a near-binary test. For 2 ticks to fit, price must be ≥ $4.00.
+
+### 5. Trigger C: tags worked, cadence didn't — catch rate 1 of 7 (~14%)
+
+TII fired **7** champion buy_set signals; **exactly one** was read [TAKEABLE NOW]
+(10:04 hammer) and it was then depth-vetoed at 4.0%. The other six aged out at
+3–8 minutes against a 2-minute freshness window, because I polled at 5–8 minutes
+instead of the mandated **every minute**.
+
+**Not a tagging failure — a cadence failure, and it was mine.** It cost nothing
+today (depth was 4–19% of a ticket at every measurement, so the missed signals
+would have met the same refusal), but **on a name whose book could absorb a ticket
+it means discarding six of every seven legal Trigger C entries** — and Trigger C is
+one of only three legal entries. A true 1-minute poll costs ~500 tool calls across
+a session; that budget needs planning for, or `--max-age` widened deliberately and
+its fill-quality cost measured. Don't leave the gap implicit.
+
+### 6. gap7 completion ran three times and correctly returned nothing
+
+**TREO, COPR and BRAI** all ranked COILED and halal-clean but read CALM-GAP FAIL on
+a missing 7AM bar. Polygon (`shared.massive.minute_bars`) was queried for all three:
+COPR earliest print **09:30** (no premarket at all), TREO **07:24**, BRAI **04:36**
+but **zero** 07:00–07:05 bars. **No completion possible; CALM-GAP FAIL stands,
+confirmed on two independent feeds instead of assumed from one.**
+
+TREO's 07:24 print was **not** substituted for the 7AM bar — that would be
+improvising a substitute to loosen a conservative gate at the exact moment it
+blocks a trade.
+
+### 7. New defects worth fixing
+
+* **Foreign-filer currency mismatch (new).** BEKE returned `cash_pct` **213.64** on
+  a $21B mcap — impossible at PB 2.04. KE Holdings files in **RMB**; `halal_check`
+  divides an RMB numerator by a **USD** market cap, inflating ratios ~7×. Rescaled
+  it still FAILs (as do NA and BNR), so no verdict flips — but the bias can **only
+  produce false FAILs**, and it is a concrete mechanism for the known foreign-filer
+  residual. *Fix: convert statements to USD before taking ratios.*
+* **Scanner returned a CRYPTO row.** `TRUMP` / "OFFICIAL TRUMP",
+  `instrument_type: CRYPTO`, +10.76%. Not a fund, so `FUND_PAT`/`SPAC_PAT` cannot
+  catch it; excluded only because `instrument_type` was read by hand.
+  *Fix: add an explicit `instrument_type != EQUITY` drop with a counted tally to
+  `scan_sweep.py`.*
+* **`fail_reason` template mismatch.** `halal_check` returned *"unverified revenue
+  mix: **hospitality**"* for **PagerDuty**, a software company. Verdict right
+  (combined 78.89), stated reason wrong — that is how a right answer becomes
+  untrustworthy in an audit.
+* **RH 1-min vs 30-min highs disagree.** TII's 15:08Z high reads **3.210** on
+  1-minute bars but the 15:00–15:30Z 30-minute bar reports a period high of only
+  **3.1891**. An aggregate should be the max of its constituents. Both below the
+  trigger so no-fill is unaffected, but **a live stop test trusting the coarser
+  aggregation would under-detect intrabar touches.**
+* **EROK mcap disagreement** — scan column 6.52e+08 vs fundamentals 3.26e+09 (5×,
+  float-based vs shares-outstanding). At the scan value EROK's loan_pct reads ~45%
+  and it would have been refused *for the wrong reason*.
+* **EROK is a fake gap** — 26/33 bars interpolated, **four real prints, ~800 shares
+  all session**. The only question-1 pass was also untradeable.
+
+### 8. Process failure of mine, recorded
+
+Commit `d23a169` ran `git add day-trading/data/paper_days/` — a **directory, not
+paths** — and swept in six untracked files belonging to a parallel campaign
+session. Undone in the next commit via `git rm --cached` (files intact on disk,
+restored to untracked). `plan/day18_commit.sh` now stages an explicit,
+existence-checked list. Note `git add` is **atomic**: one missing path aborts the
+whole batch and stages nothing — which silently produced an empty commit once
+before I caught it.
+
+### 9. The honest read
+
+**The halal gate, not the entry logic, decided this session.** 32 of 36 crossers
+were refused on compliance before any market mechanic was consulted; of the 4
+survivors, 3 died on a missing 7AM print, and the last was armed correctly and
+simply never traded through its level. The liquid book was again the levered book
+(ESTC 22.54, UMC 414, GAP 111.8, CABO **2280.3**; SOLS and NABL both spinoffs,
+levered by construction) — **Day 8's structural tension again.**
+
+There is no process failure hiding in the P&L because there is no P&L. The two
+things worth carrying forward are the **Trigger C cadence budget** and the fact
+that **two automated PASSes today were haram businesses** — the screen cannot ask
+question 2, and on this board that mattered twice.
+
 ## PAPER DAY 17 (2026-08-27) — best P&L day of the campaign, worst ops day
 
 **1 ticket, OKTA +$876.33 (+5.88%), flat at the 15:00 flatten, zero real orders.**
