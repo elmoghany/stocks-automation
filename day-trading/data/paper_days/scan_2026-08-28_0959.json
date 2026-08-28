@@ -1,0 +1,141 @@
+{
+"data": {
+"result": {
+"total_items": 21,
+"results": [
+{
+"ticker": "AEMD",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.46078341013824897",
+"Last": "3.1699",
+"Name": "Aethlon Medical",
+"Volume": "3.221914148937e+07",
+"Symbol": "AEMD"
+}
+},
+{
+"ticker": "QNRX",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.41125121241513096",
+"Last": "7.275",
+"Name": "Quoin Pharmaceuticals",
+"Volume": "2.3793078131965e+07",
+"Symbol": "QNRX"
+}
+},
+{
+"ticker": "ESTC",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.24146166706472413",
+"Last": "103.96",
+"Name": "Elastic N.V.",
+"Volume": "2.759866755065e+06",
+"Symbol": "ESTC"
+}
+},
+{
+"ticker": "SOLS",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.18113241036563715",
+"Last": "66.545",
+"Name": "Solstice Advanced Materials",
+"Volume": "3.951806663817e+06",
+"Symbol": "SOLS"
+}
+},
+{
+"ticker": "SWVL",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.16601809954751143",
+"Last": "2.5769",
+"Name": "Swvl",
+"Volume": "435668.697459",
+"Symbol": "SWVL"
+}
+},
+{
+"ticker": "XPON",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1555834378920955",
+"Last": "9.21",
+"Name": "Expion Energy",
+"Volume": "1.436421997529e+06",
+"Symbol": "XPON"
+}
+},
+{
+"ticker": "GAP",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.14430014430014432",
+"Last": "23.79",
+"Name": "Gap",
+"Volume": "8.796925986944e+06",
+"Symbol": "GAP"
+}
+},
+{
+"ticker": "NABL",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.126",
+"Last": "4.4477",
+"Name": "N-able",
+"Volume": "696217.965584",
+"Symbol": "NABL"
+}
+},
+{
+"ticker": "TII",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12237762237762241",
+"Last": "3.21",
+"Name": "Titan Mining Corporation",
+"Volume": "148361.643777",
+"Symbol": "TII"
+}
+},
+{
+"ticker": "TP",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11576011157601117",
+"Last": "8",
+"Name": "Ticketplus Ltd.",
+"Volume": "5548.81101",
+"Symbol": "TP"
+}
+},
+{
+"ticker": "AIIR",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10964912280701754",
+"Last": "8.855",
+"Name": "Air Global PLC",
+"Volume": "2109.95504",
+"Symbol": "AIIR"
+}
+},
+{
+"ticker": "AFRM",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1054329590914957",
+"Last": "85.66",
+"Name": "Affirm",
+"Volume": "7.219128243053e+06",
+"Symbol": "AFRM"
+}
+}
+]
+}
+}
+}

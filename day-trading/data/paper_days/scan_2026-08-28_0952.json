@@ -1,0 +1,130 @@
+{
+"data": {
+"result": {
+"total_items": 20,
+"results": [
+{
+"ticker": "AEMD",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.4493087557603687",
+"Last": "3.145",
+"Name": "Aethlon Medical",
+"Volume": "2.9498865581272e+07",
+"Symbol": "AEMD"
+}
+},
+{
+"ticker": "QNRX",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.40289039767216295",
+"Last": "7.2319",
+"Name": "Quoin Pharmaceuticals",
+"Volume": "2.308629362433e+07",
+"Symbol": "QNRX"
+}
+},
+{
+"ticker": "ESTC",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.2459398137090996",
+"Last": "104.335",
+"Name": "Elastic N.V.",
+"Volume": "2.428044906163e+06",
+"Symbol": "ESTC"
+}
+},
+{
+"ticker": "SWVL",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1940723981900453",
+"Last": "2.6389",
+"Name": "Swvl",
+"Volume": "356230.488459",
+"Symbol": "SWVL"
+}
+},
+{
+"ticker": "SOLS",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1790912318068868",
+"Last": "66.43",
+"Name": "Solstice Advanced Materials",
+"Volume": "3.439216842595e+06",
+"Symbol": "SOLS"
+}
+},
+{
+"ticker": "GAP",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.14526214526214526",
+"Last": "23.81",
+"Name": "Gap",
+"Volume": "7.888768377467e+06",
+"Symbol": "GAP"
+}
+},
+{
+"ticker": "NABL",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.13129113924050637",
+"Last": "4.4686",
+"Name": "N-able",
+"Volume": "621935.239272",
+"Symbol": "NABL"
+}
+},
+{
+"ticker": "TP",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11576011157601117",
+"Last": "8",
+"Name": "Ticketplus Ltd.",
+"Volume": "5481.967672",
+"Symbol": "TP"
+}
+},
+{
+"ticker": "AIIR",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10964912280701754",
+"Last": "8.855",
+"Name": "Air Global PLC",
+"Volume": "2048.95504",
+"Symbol": "AIIR"
+}
+},
+{
+"ticker": "AFRM",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10749774164408309",
+"Last": "85.82",
+"Name": "Affirm",
+"Volume": "6.806697165901e+06",
+"Symbol": "AFRM"
+}
+},
+{
+"ticker": "LVLU",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10098709187547457",
+"Last": "14.5",
+"Name": "Lulu's Fashion Lounge",
+"Volume": "26119.907279",
+"Symbol": "LVLU"
+}
+}
+]
+}
+}
+}
