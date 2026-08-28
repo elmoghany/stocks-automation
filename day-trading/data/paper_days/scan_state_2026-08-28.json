@@ -1,18 +1,18 @@
 {
  "candidates": {
   "QNRX": {
-   "pct": 20.27,
-   "last": 6.2,
+   "pct": 22.21,
+   "last": 6.3,
    "prev_close": 5.155,
-   "vol": "2.7349350340401e+07",
+   "vol": "2.7939865762682e+07",
    "name": "Quoin Pharmaceuticals",
    "first_seen": "06:35"
   },
   "ESTC": {
-   "pct": 16.65,
-   "last": 97.685,
+   "pct": 18.16,
+   "last": 98.948,
    "prev_close": 83.74,
-   "vol": "5.018061928641e+06",
+   "vol": "5.682605928237e+06",
    "name": "Elastic N.V.",
    "first_seen": "06:35"
   },
@@ -33,10 +33,10 @@
    "first_seen": "06:35"
   },
   "GAP": {
-   "pct": 14.07,
-   "last": 23.715,
+   "pct": 13.01,
+   "last": 23.495,
    "prev_close": 20.79,
-   "vol": "1.4088920179046e+07",
+   "vol": "1.5595643744537e+07",
    "name": "Gap",
    "first_seen": "06:35"
   },
@@ -105,10 +105,10 @@
    "first_seen": "06:53"
   },
   "SOLS": {
-   "pct": 15.3,
-   "last": 64.96,
+   "pct": 14.91,
+   "last": 64.74,
    "prev_close": 56.34,
-   "vol": "7.628718405354e+06",
+   "vol": "9.161416708716e+06",
    "name": "Solstice Advanced Materials",
    "first_seen": "06:53"
   },
@@ -161,10 +161,10 @@
    "first_seen": "09:31"
   },
   "SWVL": {
-   "pct": 25.91,
-   "last": 2.7826,
+   "pct": 28.51,
+   "last": 2.84,
    "prev_close": 2.21,
-   "vol": "1.695963545398e+06",
+   "vol": "1.989204711069e+06",
    "name": "Swvl",
    "first_seen": "09:38"
   },
@@ -217,26 +217,26 @@
    "first_seen": "10:15"
   },
   "CABO": {
-   "pct": 11.36,
-   "last": 25.045,
+   "pct": 11.89,
+   "last": 25.165,
    "prev_close": 22.49,
-   "vol": "59467.664278",
+   "vol": "78152.139424",
    "name": "Cable One",
    "first_seen": "10:43"
   },
   "APMD": {
-   "pct": 12.33,
-   "last": 32.26,
+   "pct": 10.2,
+   "last": 31.65,
    "prev_close": 28.72,
-   "vol": "236457.356539",
+   "vol": "257390.785713",
    "name": "Apnimed, Inc.",
    "first_seen": "10:43"
   },
   "FEMY": {
-   "pct": 11.83,
-   "last": 3.12,
+   "pct": 12.9,
+   "last": 3.15,
    "prev_close": 2.79,
-   "vol": "139096.007702",
+   "vol": "230540.560856",
    "name": "Femasys",
    "first_seen": "11:17"
   },
@@ -247,6 +247,30 @@
    "vol": "167569.784012",
    "name": "WEBTOON Entertainment",
    "first_seen": "11:17"
+  },
+  "TREO": {
+   "pct": 11.63,
+   "last": 5.28,
+   "prev_close": 4.73,
+   "vol": "18538.016683",
+   "name": "Tactical Resources Corp",
+   "first_seen": "11:57"
+  },
+  "COPR": {
+   "pct": 10.44,
+   "last": 3.49,
+   "prev_close": 3.16,
+   "vol": "67264.422247",
+   "name": "Idaho Copper Corporation",
+   "first_seen": "11:57"
+  },
+  "BANL": {
+   "pct": 10.37,
+   "last": 14.79,
+   "prev_close": 13.4,
+   "vol": "18665.539423",
+   "name": "CBL International",
+   "first_seen": "11:57"
   }
  },
  "halal_fail": [],

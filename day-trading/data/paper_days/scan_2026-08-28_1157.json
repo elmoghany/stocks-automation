@@ -1,0 +1,141 @@
+{
+"data": {
+"result": {
+"total_items": 32,
+"results": [
+{
+"ticker": "SWVL",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.28506787330316735",
+"Last": "2.84",
+"Name": "Swvl",
+"Volume": "1.989204711069e+06",
+"Symbol": "SWVL"
+}
+},
+{
+"ticker": "AEMD",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.22580645161290333",
+"Last": "2.66",
+"Name": "Aethlon Medical",
+"Volume": "4.151607193881e+07",
+"Symbol": "AEMD"
+}
+},
+{
+"ticker": "QNRX",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.22211445198836072",
+"Last": "6.3",
+"Name": "Quoin Pharmaceuticals",
+"Volume": "2.7939865762682e+07",
+"Symbol": "QNRX"
+}
+},
+{
+"ticker": "ESTC",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.18160974444709815",
+"Last": "98.948",
+"Name": "Elastic N.V.",
+"Volume": "5.682605928237e+06",
+"Symbol": "ESTC"
+}
+},
+{
+"ticker": "SOLS",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.14909478168264095",
+"Last": "64.74",
+"Name": "Solstice Advanced Materials",
+"Volume": "9.161416708716e+06",
+"Symbol": "SOLS"
+}
+},
+{
+"ticker": "GAP",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1301106301106302",
+"Last": "23.495",
+"Name": "Gap",
+"Volume": "1.5595643744537e+07",
+"Symbol": "GAP"
+}
+},
+{
+"ticker": "FEMY",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12903225806451607",
+"Last": "3.15",
+"Name": "Femasys",
+"Volume": "230540.560856",
+"Symbol": "FEMY"
+}
+},
+{
+"ticker": "CABO",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1189417518897288",
+"Last": "25.165",
+"Name": "Cable One",
+"Volume": "78152.139424",
+"Symbol": "CABO"
+}
+},
+{
+"ticker": "TREO",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11627906976744182",
+"Last": "5.28",
+"Name": "Tactical Resources Corp",
+"Volume": "18538.016683",
+"Symbol": "TREO"
+}
+},
+{
+"ticker": "COPR",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10443037974683546",
+"Last": "3.49",
+"Name": "Idaho Copper Corporation",
+"Volume": "67264.422247",
+"Symbol": "COPR"
+}
+},
+{
+"ticker": "BANL",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.103731343283582",
+"Last": "14.79",
+"Name": "CBL International",
+"Volume": "18665.539423",
+"Symbol": "BANL"
+}
+},
+{
+"ticker": "APMD",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10201949860724234",
+"Last": "31.65",
+"Name": "Apnimed, Inc.",
+"Volume": "257390.785713",
+"Symbol": "APMD"
+}
+}
+]
+}
+}
+}

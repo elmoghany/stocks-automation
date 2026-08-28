@@ -75,10 +75,12 @@
     "AIIR",
     "APMD",
     "APUS",
+    "BANL",
     "BEKE",
     "BNR",
     "CABO",
     "CKX",
+    "COPR",
     "CRD.A",
     "DXR",
     "EROK",
@@ -98,6 +100,7 @@
     "TII",
     "TNON",
     "TP",
+    "TREO",
     "UMC",
     "WBTN",
     "YDES",
@@ -134,7 +137,15 @@
         "halt_check": "quote state = active, has_traded = true. NOTE: get_equity_tradability was NOT called because it requires an account_number that must come from the user and must never be defaulted from get_accounts - so the quote state field was used as the halt proxy. Logging the substitution rather than implying a full tradability check ran."
       },
       "protective_stop_on_fill": "max(entry x 0.92, peak x 0.60) = 2.9681 at a 3.2262 entry - to be placed the instant a fill prints, and never absent while the position is open.",
-      "status": "ARMED, AWAITING TOUCH. Fill requires an intrabar high >= 3.2262."
+      "status": "ARMED, AWAITING TOUCH. Fill requires an intrabar high >= 3.2262.",
+      "fill_watch": {
+        "as_of_et": "11:33",
+        "max_high_post_arm": 3.21,
+        "trigger": 3.2262,
+        "status": "NO TOUCH - closest approach 3.21 at 15:08Z, 0.50pct below the trigger",
+        "last": 3.15
+      },
+      "cancel_rule": "If unfilled at 14:30 ET the resting entry is CANCELLED - the entry cutoff forbids new tickets after 14:30, and a resting stop that fires at 14:45 would be a new ticket taken past the cutoff."
     }
   ],
   "cycles": [
@@ -374,13 +385,16 @@
   ],
   "halal": {
     "PASS": [
-      "TII"
+      "TII",
+      "TREO",
+      "COPR"
     ],
     "FAIL": [
       "AFRM",
       "AIIR",
       "APMD",
       "APUS",
+      "BANL",
       "BEKE",
       "BNR",
       "CABO",
@@ -433,7 +447,8 @@
       "CABO": "loan 2162.57 / cash 117.73 / combined 2280.30. Cable One - the most extreme financing FAIL of the campaign. Its debt is ~21x a market cap that has collapsed from a $180.74 52wk high to $24.88 (-86pct). Question 2 would ALSO have been doubtful (Sparklight cable television is entertainment distribution with no disclosed <5pct split, alongside permissible broadband), but the ratios settle it long before that matters.",
       "APMD": "loan 3.55 / cash 24.91 / combined 28.46. Apnimed, $1.32B clinical-stage sleep-apnea drug developer. Permissible business; refused because a pre-revenue biotech holding a large cash pile breaches CASH>10 + COMBINED>20. pb -3.76 (negative book) is a second flag, but the ratio FAIL is sufficient.",
       "FEMY": "loan 18.09 / cash 20.61 / combined 38.71. Femasys, $26.1M reproductive-healthcare device maker. Permissible business, refused on financing.",
-      "WBTN": "loan 1.37 / cash 40.70 / combined 42.07. WEBTOON Entertainment, $1.49B digital storytelling platform. Question 2 would ALSO be doubtful - a global comics/serialised-fiction platform is entertainment content, and no <5pct split is disclosed - but CASH>10 + COMBINED>20 settles it on question 1 first."
+      "WBTN": "loan 1.37 / cash 40.70 / combined 42.07. WEBTOON Entertainment, $1.49B digital storytelling platform. Question 2 would ALSO be doubtful - a global comics/serialised-fiction platform is entertainment content, and no <5pct split is disclosed - but CASH>10 + COMBINED>20 settles it on question 1 first.",
+      "BANL": "loan 6.68 / cash 39.94 / combined 46.62. CBL International, $31.3M marine-fuel bunkering (Kuala Lumpur). Permissible business, refused on cash ratio."
     },
     "haram_industry_FAIL": {
       "HYNE": "Hoyne Bancorp - BANK. Question 1 not even reached.",
@@ -514,6 +529,24 @@
         "q2": "Titan Mining Corp - acquisition, exploration, development and production of mineral properties; holds the Empire State Mine (zinc) in Northern New York. Extractive base-metals mining is not on the haram list, and zinc is a general-purpose industrial metal. No alcohol/gambling/tobacco/finance/entertainment line. Interest income 0.13pct of revenue, far under the 5pct binary threshold.",
         "blind_spot_checks": "Ran all three deliberately. (1) haram_pct blindness does not bite - mining has no alcohol/pork-style hidden revenue category. (2) Sector label CONSISTENT with the business for once: \"Non-Energy Minerals / Other Metals-Minerals\" matches the Empire State Mine description, unlike ZSTK and AIIR today. (3) pb_ratio +10.96, i.e. POSITIVE book value, so the negative-book implausibility trap that caught YDES does not apply.",
         "not_a_fake_gap": "Unlike EROK, TII has genuine RTH participation - 150,777 shares today and the 7AM bar is a REAL print (1,800 sh at 2.870), not interpolated."
+      },
+      "TREO": {
+        "loan_pct": 1.17,
+        "cash_pct": 1.16,
+        "combined": 2.33,
+        "haram_pct": 0.0,
+        "q2": "Tactical Resources Corp - mineral exploration and development (SAM and Lac Ducharme properties), Vancouver. Extractive minerals, not on the haram list. Pre-revenue, so the 5pct revenue test is vacuous rather than passed; the BUSINESS is permissible, which is what question 2 asks.",
+        "on_halal_list": false,
+        "note": "Absent from halal_universe.json, so it correctly took the live per-name screen rather than auto-rejection."
+      },
+      "COPR": {
+        "loan_pct": 3.85,
+        "cash_pct": 0.27,
+        "combined": 4.11,
+        "haram_pct": 0.0,
+        "q2": "Idaho Copper Corp - copper-molybdenum-silver exploration (CuMo project, Idaho). Base and precious metals, permissible.",
+        "on_halal_list": false,
+        "negative_book_check": "pb_ratio -6.56, i.e. negative book value. Deliberately compared against the YDES blind spot and judged DIFFERENT: the protocol names loan_pct EXACTLY 0.00 alongside negative book as the implausible-input signature. COPR reports loan 3.85 and cash 0.27 - non-zero, internally consistent with a distressed junior explorer carrying accrued liabilities. Not waved through; checked and distinguished."
       }
     }
   },
@@ -858,5 +891,28 @@
       "what_I_did": "Applied the veto as written and refused the entry. Reinterpreting a veto rule at the moment it blocks a trade is exactly the drift the parity audit exists to catch, and the honest move is to log the concern rather than act on it.",
       "suggested_work": "The V-series modelled the spread veto on a bar-range proxy for IMMEDIATE entries. It has never been tested for resting stops armed well above the market. That is a distinct case and may deserve a distinct threshold - or the veto may belong at fire time rather than arm time."
     }
+  },
+  "gap7_completion_attempt": {
+    "time_et": "12:05",
+    "symbols": [
+      "COPR",
+      "TREO"
+    ],
+    "why": "Both ranked COILED and halal-clean but read CALM-GAP FAIL because the rank command found NO 7AM bar (gap7 n/a) - the premarket-dark case where RH bars alone can produce a false conservative refusal.",
+    "action": "Ran the sanctioned completion path: shared.massive.minute_bars (Polygon), the backtest native feed, per the standing instruction to complete gap7 for RH-dark names and log it loudly.",
+    "result_COPR": "NO COMPLETION POSSIBLE. Polygon returned 29 bars for the day, earliest 09:30:00 ET. COPR did not trade premarket AT ALL on either feed.",
+    "result_TREO": "NO COMPLETION POSSIBLE. Polygon returned 18 bars, earliest 07:24:00 ET. TREO traded premarket but produced no 07:00 print.",
+    "verdict": "CALM-GAP FAIL STANDS for both, now confirmed on TWO INDEPENDENT FEEDS rather than assumed from one. This is the completion path working correctly and returning nothing to complete with.",
+    "substitute_refused": "TREOs 07:24 print was NOT substituted for the 7AM bar. The gate is specifically the 7AM gap; swapping in a later print would be improvising a substitute to loosen a conservative gate at the exact moment it blocks a trade. Refused on principle, and recorded rather than quietly done.",
+    "feed_calibration_note": "Using Polygon here does not violate feed-calibration fix #8: the calm-gap threshold is a BACKTEST-derived gate and the backtest own feed is Massive/Polygon, so completing gap7 from Polygon matches the threshold calibration. RH remains the feed for live entry/exit decisions."
+  },
+  "rank_output_1158": {
+    "as_of": "11:58",
+    "line1": "#1 TII  last 3.0801 gain 7.7  coil 0.955 press +0.47 gap7 +0.3 calm YES halal PASS  COILED",
+    "line2": "#2 COPR last 3.4900 gain 10.4 coil 0.989 press -0.61 gap7 n/a  calm NO  halal PASS  COILED; CALM-GAP FAIL",
+    "line3": "#3 TREO last 5.2800 gain 11.6 coil 0.973 press n/a   gap7 n/a  calm NO  NEEDS-SCREEN; pressure UNTRUSTED (<20k sh); CALM-GAP FAIL",
+    "summary": "3 crossed / 1 armable now   TOP = TII",
+    "stale_pick_rule": "The 10:00 stale-pick escape was honoured - this IS the re-rank. TII was not simply retained by inertia; it was re-ranked against two new halal-PASS names at 11:58 and remains TOP on the commands own ordering.",
+    "TREO_halal_note": "The command reads TREO as NEEDS-SCREEN because it is absent from halal_list.json. The live screen was run and returned PASS (loan 1.17 / cash 1.16). NEEDS-SCREEN is not a verdict; the live screen is. TREO is nonetheless unarmable on calm-gap."
   }
 }
