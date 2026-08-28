@@ -80,7 +80,9 @@
     "ESTC",
     "GAP",
     "HYNE",
+    "MODD",
     "NA",
+    "NABL",
     "QNRX",
     "SOLS",
     "UMC",
@@ -124,6 +126,31 @@
         "UMC"
       ],
       "note": "L2 price book VERIFIED WORKING PREMARKET (ESTC inside 100.37/100.74 = 0.368pct). Protocol had only ever verified L2 during RTH; premarket books are live, not empty."
+    },
+    {
+      "time_et": "07:09",
+      "state": "FLAT (premarket)",
+      "scan_rows": 65,
+      "dropped_funds": 45,
+      "crossed_latched": 14,
+      "ratios_pass": 0,
+      "armable": 0,
+      "new": [],
+      "note": "XPON +11.4% crossed but is on the inherited FAIL drop-list from 2026-08-27 - dropped mechanically, never re-entered the pool (API HYGIENE #2 working as intended)."
+    },
+    {
+      "time_et": "07:24",
+      "state": "FLAT (premarket)",
+      "scan_rows": 66,
+      "dropped_funds": 46,
+      "crossed_latched": 16,
+      "ratios_pass": 0,
+      "armable": 0,
+      "new": [
+        "MODD",
+        "NABL"
+      ],
+      "note": "16 crossers, 16 FAIL. Board is a clean illustration of the Day-8 structural tension: the four most liquid names (ESTC 5.3M, AFRM 9.5M, UMC 9.3M, SOLS 2.9M avg vol) are ALL refused on financing ratios, while every ratio-clean name is a sub-$50M microcap with no book."
     }
   ],
   "halal": {
@@ -138,7 +165,9 @@
       "ESTC",
       "GAP",
       "HYNE",
+      "MODD",
       "NA",
+      "NABL",
       "QNRX",
       "SOLS",
       "UMC",
@@ -157,7 +186,9 @@
       "NA": "loan 465.48 / cash 747.98 (live screen, was absent from universe)",
       "CKX": "cash 80.24 / combined 80.24, and haram_pct 19.34 (interest income) - fails BOTH questions",
       "SOLS": "loan 27.10 / cash 8.38 / combined 35.48. Solstice Advanced Materials, $8.95B Honeywell spinoff (refrigerants + electronic materials), +16.3pct, avg vol 2.2M. Business is permissible (specialty chemicals; sells INTO defense/semis, which the AMD principle allows). Refused purely on separation debt - a spinoff is levered by construction. Day-8 structural tension in its purest form: the second-most liquid book on the board, killed by financing.",
-      "APUS": "loan 161.98 / cash 42.13. $5.9M clinical-stage biotech, 7 employees."
+      "APUS": "loan 161.98 / cash 42.13. $5.9M clinical-stage biotech, 7 employees.",
+      "NABL": "loan 58.31 / cash 15.77 / combined 74.08. N-able, $747M MSP software (SolarWinds spinoff), avg vol 2.4M. Permissible business, refused on spinoff leverage - the SAME pattern as SOLS. Two separate spinoffs on one board, both liquid, both killed by separation debt.",
+      "MODD": "loan 1.31 / cash 23.21 / combined 24.52. Modular Medical, $29.9M insulin-pump developer. Note the carve-out was CORRECTLY not applied: one side may exceed 10 only if combined <= 20, and 24.52 > 20. Nearest miss of the day."
     },
     "haram_industry_FAIL": {
       "HYNE": "Hoyne Bancorp - BANK. Question 1 not even reached.",
