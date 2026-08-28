@@ -562,6 +562,22 @@
       "fired_at": "10:08",
       "tag": "STALE (3m old) -- DO NOT ENTER",
       "action": "NOT TAKEN"
+    },
+    {
+      "time_et": "10:29",
+      "symbol": "TII",
+      "pattern": "bullish_engulfing",
+      "fired_at": "10:21",
+      "tag": "STALE (8m old) -- DO NOT ENTER",
+      "action": "NOT TAKEN"
+    },
+    {
+      "time_et": "10:29",
+      "symbol": "TII",
+      "pattern": "morning_star",
+      "fired_at": "10:26",
+      "tag": "STALE (3m old) -- DO NOT ENTER",
+      "action": "NOT TAKEN"
     }
   ],
   "coverage_gaps": [],
@@ -572,6 +588,17 @@
       "last": 3.11,
       "gain_vs_prev_close_pct": 8.74,
       "note": "TII has FADED BELOW the +10pct threshold (3.110 vs prev close 2.86 = +8.74pct) after topping at 3.2262. It REMAINS ELIGIBLE - the +10pct cross is a day-long LATCH, not a live filter. This is parity divergence #2 in action: the scanner will drop TII, the champion does not."
+    },
+    {
+      "time_et": "10:21",
+      "symbol": "TII",
+      "last": 3.09,
+      "gain_pct": 8.0,
+      "coil": 0.958,
+      "press": 0.12,
+      "rank": "TOP, 1 armable",
+      "trigger_c": "no buy_set signal in last 8 bars",
+      "note": "Still COILED but only just (0.958 vs the 0.95 floor). Session high 3.2262; a Trigger A/B ratchet stop would sit 4.4pct above last - a long way, and the depth at that level was 122 shares at 10:04."
     }
   ],
   "errors": [
@@ -649,5 +676,13 @@
     "action": "Tightening the TII poll to ~2.5 minutes - the closest sustainable approximation - and logging the residual gap rather than hiding it.",
     "does_it_change_todays_outcome": "Almost certainly NOT, and this is checkable rather than a guess: displayed ask depth to the entry ceiling has been 190-875 shares against a ~4,700-share ticket (4-19pct of intended) at every measurement today. A fresher tag would have produced a takeable signal into a book that still fails the 25pct depth floor, so the entry would have been refused anyway. The cadence gap costs SIGNAL OBSERVATION, not - on this book - a fill.",
     "caveat": "That reasoning holds only while depth stays this thin. If the book deepens, cadence starts costing real entries."
+  },
+  "finding_trigger_c_catch_rate": {
+    "measurement": "TII has fired 7 distinct champion buy_set signals today (tweezer_bottom 09:52, hammer 10:03, hammer 10:04, tweezer_bottom 10:08, bullish_engulfing 10:21, morning_star 10:26, and the 10:03/10:04 pair read together). Exactly ONE was read while tagged [TAKEABLE NOW]: the 10:04 hammer.",
+    "catch_rate": "1 of 7 = ~14pct observed fresh, at a 5-8 minute poll cadence against a 2-minute freshness window.",
+    "diagnosis": "This is NOT a tagging failure - the tags are working exactly as designed, refusing every stale signal. It is a CADENCE failure, and it is mine. The protocol mandates every-minute polling of the current TOP name precisely because a 2-minute window cannot survive a 5-minute loop.",
+    "why_it_did_not_cost_money_today": "The one signal caught fresh was refused on depth (190 shares vs 4,732 intended), and depth has been 4-19pct of a full ticket at every measurement. So the six missed signals would have met the same refusal. The cadence gap cost OBSERVATIONS, not fills - today.",
+    "what_it_would_cost_on_a_liquid_name": "On a name whose book could absorb a ticket, a 14pct catch rate would mean discarding roughly six of every seven legal Trigger C entries. Trigger C is one of only THREE legal entries, so that is a large share of the entry surface silently going missing - the Day-8 tooling-gap finding reappearing as a cadence gap.",
+    "recommendation": "Either budget for a genuine 1-minute poll of the TOP name (2 tool calls/min while flat with a live candidate), or widen --max-age deliberately and measure the fill-quality cost. Do not leave the gap implicit."
   }
 }
