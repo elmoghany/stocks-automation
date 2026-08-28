@@ -1,16 +1,29 @@
 {
   "date": "2026-08-28",
+  "day_number": 18,
+  "protocol": "C37",
   "mode": "paper",
-  "config": "C37",
-  "session": "headless",
-  "launched_by": "Windows Task Scheduler \\Stocks\\C37MorningLaunch",
+  "session_type": "headless (Windows Task Scheduler \\Stocks\\C37MorningLaunch)",
+  "benchmark_per_day": {
+    "retired_c37e": 1517,
+    "honest_baseline": -163,
+    "note": "$1,517/traded day RETIRED per C37F 2026-08-23; score primarily vs the -$163/day honest baseline."
+  },
   "status": "OPEN",
-  "trades": [],
-  "pnl": 0,
   "counts_as_traded_day": false,
+  "config": {
+    "tickets": "flat $15,000, 7th/last $10,000, $100,000/day cap",
+    "one_position_at_a_time": true,
+    "entries_until": "14:30 ET",
+    "all_exits_by": "15:00 ET, flatten ladder from 14:57",
+    "real_orders": "NONE, EVER",
+    "halal_rule": "binary since 2026-08-22: only verdict PASS is armable; CANNOT-VERIFY is not tradeable",
+    "clock": "TZ env broken on this box; ET computed explicitly as UTC-4"
+  },
   "ops": {
     "skeleton_written": true,
     "skeleton_commit": "592e425",
+    "launcher_fix_confirmed": "Day-16 --allowedTools fix is live in launch_paper_day.ps1; this session has python + git-write + robinhood-MCP, unlike 2026-08-26.",
     "capability_probe": {
       "run_at_utc": "2026-08-28T10:20:48Z",
       "run_at_et": "2026-08-28T06:20:48",
@@ -22,8 +35,88 @@
         "detail": "get_equity_quotes SPY returned live quote; bid 770.87 / ask 770.93, venue_bid_time 2026-08-28T10:20:48Z (current, premarket)",
         "spy_prev_close": 771.10
       }
+    },
+    "trading_day_guard": "TRADING 2026-08-28 full (market_calendar.py) - not a half day",
+    "halal_list_age": "updated 2026-08-22, 5 days, 1330 symbols - AGE_OK (<35d)"
+  },
+  "inherited_verdicts": {
+    "_note": "Seeded into scan_state_2026-08-28.json drop-lists from 2026-08-27 verdicts. fake_gap deliberately RESET - a name dark premarket yesterday may trade today.",
+    "FAIL_count": 72,
+    "PASS_carried": ["SMMT", "ADXN", "TH", "TTMI", "FVN", "OPTX", "RPGL", "ASST", "ABUS", "GLSI", "EXOZ", "BTCT", "CRML", "OESX", "MRAM"],
+    "spac_carried": ["BCAR", "RACC"]
+  },
+  "crossed_set": ["QNRX", "ESTC", "NA", "HYNE", "GAP", "AFRM", "CKX", "YDES", "BNR", "CRD.A", "DXR", "UMC"],
+  "trades": [],
+  "armed": [],
+  "cycles": [
+    {
+      "time_et": "06:35",
+      "state": "FLAT-5m (premarket)",
+      "scan_rows": 60,
+      "dropped_funds": 43,
+      "dropped_spac": ["RACC"],
+      "dropped_inherited_fail": ["DUKR +69.1%", "AEMD +37.3%", "ARKR +12.7%", "GSIW +12.1%"],
+      "crossed_latched": 12,
+      "ratios_pass": 0,
+      "armable": 0,
+      "note": "Scan unusually fund-contaminated: 43 of 60 rows were leveraged/2x ETFs and ETNs (heavy 'Corgi 2x Daily' cohort). FUND_PAT caught all of them."
+    }
+  ],
+  "halal": {
+    "PASS": [],
+    "FAIL": ["QNRX", "ESTC", "NA", "HYNE", "GAP", "AFRM", "CKX", "YDES", "BNR", "CRD.A", "DXR", "UMC"],
+    "CANNOT_VERIFY": [],
+    "_note": "Binary rule: only verdict PASS is armable. ZERO armable names on the 06:35 board."
+  },
+  "halal_detail": {
+    "ratio_FAIL_real_not_relitigated": {
+      "QNRX": "cash 115.57 / combined >20 - CASH>10+COMBINED>20",
+      "GAP": "loan 76.87 / cash 34.89 - LOAN>10+COMBINED>20. Plain apparel retail is a permissible BUSINESS, but the financing gate binds hard (lease + revolver debt).",
+      "AFRM": "loan 34.66 - and question 2 independently FAILs: Affirm is a BNPL LENDER, haram own-business.",
+      "BNR": "loan 51.91 / cash 455.22",
+      "UMC": "loan 111.70 / cash 303.26. $46.7B semiconductor foundry - the most liquid book on the board, refused on financing. Day-8 structural tension again.",
+      "NA": "loan 465.48 / cash 747.98 (live screen, was absent from universe)",
+      "CKX": "cash 80.24 / combined 80.24, and haram_pct 19.34 (interest income) - fails BOTH questions"
+    },
+    "haram_industry_FAIL": {
+      "HYNE": "Hoyne Bancorp - BANK. Question 1 not even reached.",
+      "CRD.A": "Crawford & Company - claims management / TPA for insurance carriers. RH sector Finance, industry 'Insurance Brokers/Services'. Dedicated insurance-industry service, not a general-purpose product sold into a haram market, so the AMD principle does NOT rescue it. Same call as BVC on 2026-08-27. Ratios additionally UNVERIFIABLE (yfinance: 'possibly delisted; no price data' for the dotted ticker), and unverified is haram by rule."
+    },
+    "ESTC_stale_denominator_check": {
+      "verdict": "FAIL",
+      "loan_pct": 6.80,
+      "cash_pct": 15.74,
+      "combined": 22.54,
+      "reasoning": "Elastic N.V., $8.7B, +21.3% earnings gap - by far the most attractive book on the board. Universe verdict was combined 21.77 vs the 20 cap, close enough that a stale market-cap denominator could plausibly have flipped it, so it was explicitly re-checked rather than waved through. RH get_equity_fundamentals returns market_cap 8,704,940,480 with market_date 2026-08-27 - i.e. RH's mcap is PRIOR-CLOSE basis and is the same denominator the universe used. Live re-screen returns combined 22.54 > 20. FAIL stands.",
+      "principle": "Deliberately did NOT recompute mcap from the +21% premarket price to shrink the ratios. Using an intraday spike to push a name across the compliance line is motivated reasoning, and the gate's convention is a settled point-in-time mcap."
+    },
+    "blind_spot_FAILs_unverified": {
+      "YDES": {
+        "screen_said": "PASS (quarterly, loan 0.00, cash 2.19, haram 0)",
+        "our_verdict": "FAIL (unverified)",
+        "basis": "RH pb_ratio = -0.811, i.e. NEGATIVE BOOK VALUE, while the screen reports loan_pct exactly 0.00. This is verbatim the blind spot the protocol names: 'If a True rests on an implausible input - e.g. loan_pct 0.00 on a company with negative book value - record FAIL (unverified)'. YD Bio is a Feb-2024 de-SPAC microcap (52wk 25.00 -> 1.70 -> 4.34, 15 employees) - exactly the class that carries convertible / related-party notes the statements chain missed. YDES is ON halal_list.json, so the list alone would have armed it.",
+        "convertible_by": "an affirmative <5% / zero-debt evidence ruling in data/halal_rulings.json, dated with basis. Absence of evidence is never compliance."
+      },
+      "DXR": {
+        "screen_said": "PASS (loan 0.0, cash 0.0, combined 0.0, haram 0.0, source='info')",
+        "our_verdict": "FAIL (unverified)",
+        "basis": "ALL FOUR ratios are exactly zero and source is 'info', not 'quarterly' - the statements were never read. That is the 'NO FUNDAMENTALS DATA' signature, a REFUSAL TO EVALUATE, not a pass. Compounding it: RH industry is 'Investment Trusts/Mutual Funds' and Daxor is in substance a registered closed-end investment company holding a securities portfolio, so interest/dividend income is a live question-2 risk that a 0.0 haram_pct cannot possibly have answered.",
+        "also": "avg volume 2,552/day makes it untradeable under the 20%-of-10-min-volume rule regardless."
+      }
     }
   },
+  "liquidity_notes": {
+    "CKX": "prior session volume 380 shares, avg 3,345/day - untradeable by the sizing rule even if it had passed",
+    "DXR": "avg 2,552/day - untradeable",
+    "HYNE": "prior session 899 shares - untradeable"
+  },
+  "vetoes": {"spread": [], "depth": [], "fill_arming_chase": []},
+  "book_observations": [],
+  "trigger_c": [],
+  "coverage_gaps": [],
+  "position_log": [],
   "errors": [],
-  "notes": []
+  "lessons": [],
+  "pnl_day": 0,
+  "verdict": "IN PROGRESS"
 }
