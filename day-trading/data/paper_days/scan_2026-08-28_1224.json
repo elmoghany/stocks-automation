@@ -1,0 +1,130 @@
+{
+"data": {
+"result": {
+"total_items": 32,
+"results": [
+{
+"ticker": "SWVL",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.30312217194570146",
+"Last": "2.8799",
+"Name": "Swvl",
+"Volume": "2.529649513304e+06",
+"Symbol": "SWVL"
+}
+},
+{
+"ticker": "AEMD",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.2856682027649769",
+"Last": "2.7899",
+"Name": "Aethlon Medical",
+"Volume": "4.2057383788286e+07",
+"Symbol": "AEMD"
+}
+},
+{
+"ticker": "QNRX",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.21241513094083408",
+"Last": "6.25",
+"Name": "Quoin Pharmaceuticals",
+"Volume": "2.8236240397237e+07",
+"Symbol": "QNRX"
+}
+},
+{
+"ticker": "ESTC",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1787676140434679",
+"Last": "98.71",
+"Name": "Elastic N.V.",
+"Volume": "5.938628124334e+06",
+"Symbol": "ESTC"
+}
+},
+{
+"ticker": "SOLS",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.14217252396166116",
+"Last": "64.35",
+"Name": "Solstice Advanced Materials",
+"Volume": "9.977133570602e+06",
+"Symbol": "SOLS"
+}
+},
+{
+"ticker": "FEMY",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.13978494623655918",
+"Last": "3.18",
+"Name": "Femasys",
+"Volume": "247692.067656",
+"Symbol": "FEMY"
+}
+},
+{
+"ticker": "GAP",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12818662818662815",
+"Last": "23.455",
+"Name": "Gap",
+"Volume": "1.6301355628654e+07",
+"Symbol": "GAP"
+}
+},
+{
+"ticker": "BRAI",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12643678160919544",
+"Last": "5.88",
+"Name": "Braiin Limited",
+"Volume": "68222.825262",
+"Symbol": "BRAI"
+}
+},
+{
+"ticker": "CABO",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11960871498443759",
+"Last": "25.18",
+"Name": "Cable One",
+"Volume": "94602.42391",
+"Symbol": "CABO"
+}
+},
+{
+"ticker": "RFL",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11814345991561173",
+"Last": "2.65",
+"Name": "Rafael Holdings",
+"Volume": "210421.566472",
+"Symbol": "RFL"
+}
+},
+{
+"ticker": "TREO",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11627906976744182",
+"Last": "5.28",
+"Name": "Tactical Resources Corp",
+"Volume": "18913.275847",
+"Symbol": "TREO"
+}
+}
+]
+}
+}
+}

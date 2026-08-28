@@ -78,6 +78,7 @@
     "BANL",
     "BEKE",
     "BNR",
+    "BRAI",
     "CABO",
     "CKX",
     "COPR",
@@ -95,6 +96,7 @@
     "PD",
     "QNRX",
     "RADX",
+    "RFL",
     "SOLS",
     "SWVL",
     "TII",
@@ -139,11 +141,13 @@
       "protective_stop_on_fill": "max(entry x 0.92, peak x 0.60) = 2.9681 at a 3.2262 entry - to be placed the instant a fill prints, and never absent while the position is open.",
       "status": "ARMED, AWAITING TOUCH. Fill requires an intrabar high >= 3.2262.",
       "fill_watch": {
-        "as_of_et": "11:33",
+        "as_of_et": "12:08",
         "max_high_post_arm": 3.21,
         "trigger": 3.2262,
-        "status": "NO TOUCH - closest approach 3.21 at 15:08Z, 0.50pct below the trigger",
-        "last": 3.15
+        "status": "NO TOUCH",
+        "last": 3.045,
+        "gain_pct": 6.5,
+        "note": "TII has faded to 3.045 (+6.5pct), now 5.6pct below the 3.2262 trigger. Closest approach remains 3.21 at 15:08Z. Fill looks unlikely absent a sharp reversal."
       },
       "cancel_rule": "If unfilled at 14:30 ET the resting entry is CANCELLED - the entry cutoff forbids new tickets after 14:30, and a resting stop that fires at 14:45 would be a new ticket taken past the cutoff."
     }
@@ -387,7 +391,8 @@
     "PASS": [
       "TII",
       "TREO",
-      "COPR"
+      "COPR",
+      "BRAI"
     ],
     "FAIL": [
       "AFRM",
@@ -413,6 +418,7 @@
       "PD",
       "QNRX",
       "RADX",
+      "RFL",
       "SOLS",
       "SWVL",
       "TNON",
@@ -448,7 +454,8 @@
       "APMD": "loan 3.55 / cash 24.91 / combined 28.46. Apnimed, $1.32B clinical-stage sleep-apnea drug developer. Permissible business; refused because a pre-revenue biotech holding a large cash pile breaches CASH>10 + COMBINED>20. pb -3.76 (negative book) is a second flag, but the ratio FAIL is sufficient.",
       "FEMY": "loan 18.09 / cash 20.61 / combined 38.71. Femasys, $26.1M reproductive-healthcare device maker. Permissible business, refused on financing.",
       "WBTN": "loan 1.37 / cash 40.70 / combined 42.07. WEBTOON Entertainment, $1.49B digital storytelling platform. Question 2 would ALSO be doubtful - a global comics/serialised-fiction platform is entertainment content, and no <5pct split is disclosed - but CASH>10 + COMBINED>20 settles it on question 1 first.",
-      "BANL": "loan 6.68 / cash 39.94 / combined 46.62. CBL International, $31.3M marine-fuel bunkering (Kuala Lumpur). Permissible business, refused on cash ratio."
+      "BANL": "loan 6.68 / cash 39.94 / combined 46.62. CBL International, $31.3M marine-fuel bunkering (Kuala Lumpur). Permissible business, refused on cash ratio.",
+      "RFL": "cash 22.34 / combined 22.79 AND haram_pct 39.94. Rafael Holdings FAILS BOTH questions independently: the financing ratio breaches CASH>10+COMBINED>20, and interest income is 39.94pct of revenue - eight times the 5pct binary threshold. Segments are Healthcare, Infusion Technology and REAL ESTATE, i.e. in substance an investment holding company. One of the few names today where the interest-income metric was not blind - it caught this one outright."
     },
     "haram_industry_FAIL": {
       "HYNE": "Hoyne Bancorp - BANK. Question 1 not even reached.",
@@ -547,6 +554,16 @@
         "q2": "Idaho Copper Corp - copper-molybdenum-silver exploration (CuMo project, Idaho). Base and precious metals, permissible.",
         "on_halal_list": false,
         "negative_book_check": "pb_ratio -6.56, i.e. negative book value. Deliberately compared against the YDES blind spot and judged DIFFERENT: the protocol names loan_pct EXACTLY 0.00 alongside negative book as the implausible-input signature. COPR reports loan 3.85 and cash 0.27 - non-zero, internally consistent with a distressed junior explorer carrying accrued liabilities. Not waved through; checked and distinguished."
+      },
+      "BRAI": {
+        "loan_pct": 0.28,
+        "cash_pct": 0.35,
+        "combined": 0.64,
+        "haram_pct": 0.0,
+        "q2": "Braiin Ltd - Australian precision-agriculture technology platform (farm management software). Agtech software is permissible.",
+        "on_halal_list": false,
+        "implausibility_flag": "FLAGGED BUT NOT DISQUALIFYING. $1.21B market cap on FIVE employees, founded 2022, pb_ratio -12.09 (negative book), 52wk 32.99 -> 4.19 -> 5.88. The ratios are tiny largely because the DENOMINATOR is a $1.2B valuation attached to very little substance. Compared against the YDES blind spot and judged different: YDES reported loan_pct EXACTLY 0.00, whereas BRAI reports 0.28pct = ~$3.4M of debt and 0.35pct = ~$4.2M cash, which are plausible absolute figures for a small agtech. Recorded the concern rather than either burying it or over-refusing on it.",
+        "moot_anyway": "Unarmable on calm-gap regardless - see gap7_completion_attempt_2."
       }
     }
   },
@@ -823,7 +840,8 @@
       "gap": "scan_sweep.py filters on NAME patterns and drop-lists, but never checks instrument_type. Any non-EQUITY row that does not look like a fund by name passes straight through into the candidate pool.",
       "suggested_fix": "Add an explicit instrument_type != EQUITY drop to scan_sweep.py and count it in the dropped tally, the same way funds and SPACs are counted. Cheap, and it closes a category the name filters structurally cannot see.",
       "todays_impact": "None - TRUMP was excluded manually and never entered the candidate pool. Recording it as a latent defect, not an incident."
-    }
+    },
+    "fill_check_granularity": "The 12:08 no-touch confirmation used 5-MINUTE bars rather than 1-minute. Justified and logged: a 5-min high is the maximum of its 1-min constituents, so for a no-touch test the two are identical, and price was 4-5pct below the trigger. 1-minute bars remain the granularity used whenever price is near the trigger, per the bar-granularity policy for live same-day decisions."
   },
   "finding_EROK_fake_gap": {
     "detector": "all-interpolated-bars = fake gap (Paper Day 8 lesson #7)",
@@ -914,5 +932,18 @@
     "summary": "3 crossed / 1 armable now   TOP = TII",
     "stale_pick_rule": "The 10:00 stale-pick escape was honoured - this IS the re-rank. TII was not simply retained by inertia; it was re-ranked against two new halal-PASS names at 11:58 and remains TOP on the commands own ordering.",
     "TREO_halal_note": "The command reads TREO as NEEDS-SCREEN because it is absent from halal_list.json. The live screen was run and returned PASS (loan 1.17 / cash 1.16). NEEDS-SCREEN is not a verdict; the live screen is. TREO is nonetheless unarmable on calm-gap."
+  },
+  "gap7_completion_attempt_2": {
+    "time_et": "12:33",
+    "symbol": "BRAI",
+    "rh_evidence": "RH 11:00Z (07:00 ET) bar is interpolated with volume 0; first REAL RH print of the day is 14:00Z (10:00 ET) for 122 shares.",
+    "polygon_result": "34 bars, earliest 04:36:00 ET - so BRAI DID trade premarket, just not at 7AM. ZERO bars in the 07:00-07:05 window.",
+    "verdict": "NO COMPLETION POSSIBLE. CALM-GAP FAIL stands, confirmed on two feeds.",
+    "note": "This is a cleaner case than COPR/TREO: BRAI genuinely has premarket activity on Polygon, so the completion path was worth running and still returned nothing at the 7AM mark. The gate is the 7AM gap specifically, and no substitute print was used."
+  },
+  "armable_summary_1235": {
+    "halal_PASS": 4,
+    "armable_after_calm_gap": 1,
+    "detail": "TII, TREO, COPR and BRAI all pass BOTH halal questions. TREO, COPR and BRAI all fail CALM-GAP for the same reason - no 7AM print - and all three completion attempts against Polygon returned nothing. TII is the only name of 36 crossers that is both compliant and mechanically eligible."
   }
 }
