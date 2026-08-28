@@ -1,0 +1,196 @@
+{
+"data": {
+"result": {
+"total_items": 63,
+"results": [
+{
+"ticker": "DUKR",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.690909090909091",
+"Last": "9.3",
+"Name": "Duke Robotics Corp.",
+"Volume": "8030.2753",
+"Symbol": "DUKR"
+}
+},
+{
+"ticker": "QNRX",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.3967022308438409",
+"Last": "7.2",
+"Name": "Quoin Pharmaceuticals",
+"Volume": "33857.830332",
+"Symbol": "QNRX"
+}
+},
+{
+"ticker": "TNON",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.3962749003984064",
+"Last": "7.0093",
+"Name": "Tenon Medical",
+"Volume": "165532.256782",
+"Symbol": "TNON"
+}
+},
+{
+"ticker": "AEMD",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.35023041474654387",
+"Last": "2.93",
+"Name": "Aethlon Medical",
+"Volume": "1.6549921278175e+07",
+"Symbol": "AEMD"
+}
+},
+{
+"ticker": "BHV",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1914217633042097",
+"Last": "15",
+"Name": "BlackRock Virginia Municipal Bond Trust",
+"Volume": "3937.6338",
+"Symbol": "BHV"
+}
+},
+{
+"ticker": "GAP",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.18326118326118337",
+"Last": "24.6",
+"Name": "Gap",
+"Volume": "2.2902181636442e+07",
+"Symbol": "GAP"
+}
+},
+{
+"ticker": "HYNE",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.15142337976983644",
+"Last": "19.01",
+"Name": "Hoyne Bancorp",
+"Volume": "899.1472",
+"Symbol": "HYNE"
+}
+},
+{
+"ticker": "SOLS",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1448349307774227",
+"Last": "64.5",
+"Name": "Solstice Advanced Materials",
+"Volume": "2.919789108558e+06",
+"Symbol": "SOLS"
+}
+},
+{
+"ticker": "RACC",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.14418604651162797",
+"Last": "24.6",
+"Name": "Research Alliance Corp III",
+"Volume": "17978.282",
+"Symbol": "RACC"
+}
+},
+{
+"ticker": "AFRM",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.13175893663698554",
+"Last": "87.7",
+"Name": "Affirm",
+"Volume": "9.529801556633e+06",
+"Symbol": "AFRM"
+}
+},
+{
+"ticker": "CKX",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12676056338028166",
+"Last": "12",
+"Name": "CKX Lands",
+"Volume": "692.2065",
+"Symbol": "CKX"
+}
+},
+{
+"ticker": "YDES",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12144702842377254",
+"Last": "4.34",
+"Name": "YD Bio",
+"Volume": "27045.958549",
+"Symbol": "YDES"
+}
+},
+{
+"ticker": "GSIW",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12052980132450344",
+"Last": "16.92",
+"Name": "Garden Stage Limited",
+"Volume": "6829",
+"Symbol": "GSIW"
+}
+},
+{
+"ticker": "BNR",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11760999999999999",
+"Last": "11.1761",
+"Name": "Burning Rock Biotech",
+"Volume": "6340.89834",
+"Symbol": "BNR"
+}
+},
+{
+"ticker": "ARKR",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11363636363636356",
+"Last": "5.88",
+"Name": "Ark Restaurants",
+"Volume": "13766.317938",
+"Symbol": "ARKR"
+}
+},
+{
+"ticker": "CRD.A",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1094108645753634",
+"Last": "14.5",
+"Name": "Crawford & Company Class A",
+"Volume": "36017.0135",
+"Symbol": "CRD.A"
+}
+},
+{
+"ticker": "DXR",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10444674250258529",
+"Last": "10.68",
+"Name": "Daxor",
+"Volume": "13485",
+"Symbol": "DXR"
+}
+}
+]
+}
+}
+}
