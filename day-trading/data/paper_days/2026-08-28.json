@@ -1,0 +1,17 @@
+{
+  "date": "2026-08-28",
+  "mode": "paper",
+  "config": "C37",
+  "session": "headless",
+  "launched_by": "Windows Task Scheduler \\Stocks\\C37MorningLaunch",
+  "status": "OPEN",
+  "trades": [],
+  "pnl": 0,
+  "counts_as_traded_day": false,
+  "ops": {
+    "skeleton_written": true,
+    "capability_probe": null
+  },
+  "errors": [],
+  "notes": []
+}
