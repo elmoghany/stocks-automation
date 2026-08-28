@@ -474,6 +474,18 @@
         "cap_pct": 0.5,
         "verdict": "PASS - spread veto did NOT fire. Book had tightened to ONE tick (0.01 on a 3.165 mid) from three ticks at 10:01.",
         "tick_size_note": "0.316pct is exactly the 1-tick floor for a $3.17 stock. The 0.50pct cap admits 1 tick and nothing more on this name, so spread compliance here is binary - it passed only because the book was at its theoretical minimum width."
+      },
+      {
+        "time_et": "10:43",
+        "symbol": "TII",
+        "context": "Trigger A/B ratchet stop-buy at session high 3.2262, limit 3.2423",
+        "inside_bid": 3.15,
+        "inside_ask": 3.17,
+        "spread_pct": 0.633,
+        "cap_pct": 0.5,
+        "verdict": "SPREAD VETO - ENTRY REFUSED",
+        "ticks": 2,
+        "note": "Applied the rule exactly as written. Two ticks on a 3.16 mid is 0.633pct; the cap admits one tick (0.316pct) and no more on this name."
       }
     ],
     "depth": [
@@ -506,6 +518,19 @@
         "verdict": "DEPTH VETO - ENTRY REFUSED",
         "sizing_rule_not_binding": "20pct of the trailing 10 COMPLETED minutes (13:54-14:03 = 78,248 sh) allows 15,650 shares, so the champion sizing rule was nowhere near binding. Depth alone refused this.",
         "inside_bid_size": "7 shares at the inside bid - the book is a shell at the touch."
+      },
+      {
+        "time_et": "10:43",
+        "symbol": "TII",
+        "context": "same Trigger A/B stop-buy",
+        "trigger": 3.2262,
+        "limit_ceiling": 3.2423,
+        "cumulative_ask_size_to_ceiling": 3406,
+        "levels": "3.17x40, 3.18x136, 3.19x344, 3.20x228, 3.21x226, 3.22x222, 3.23x158, 3.24x2052",
+        "intended_shares": 4650,
+        "pct_of_intended": 73.2,
+        "verdict": "PASS (with ticket REDUCTION to 3,406 sh / ~$10,988) - depth did NOT veto. First time today the book could have absorbed a real ticket.",
+        "note": "The 3.24 level alone holds 2,052 shares. Depth improved because TII volume more than doubled (150,777 -> 360,648) between 10:04 and 10:43."
       }
     ],
     "fill_arming_chase": [
@@ -515,6 +540,13 @@
         "last": 3.1601,
         "trigger": 3.22,
         "verdict": "PASS - NOT a chase. Last is below the ratchet trigger, so a stop-limit here would be a legitimate forward stop, not a disguised market order. Recorded separately so it does not contaminate the spread-veto calibration."
+      },
+      {
+        "time_et": "10:43",
+        "symbol": "TII",
+        "last": 3.16,
+        "trigger": 3.2262,
+        "verdict": "PASS - clean forward stop, last is 2.1pct below the ratchet trigger."
       }
     ]
   },
@@ -578,6 +610,14 @@
       "fired_at": "10:26",
       "tag": "STALE (3m old) -- DO NOT ENTER",
       "action": "NOT TAKEN"
+    },
+    {
+      "time_et": "10:43",
+      "symbol": "TII",
+      "pattern": "macd_cross_up",
+      "fired_at": "10:38",
+      "tag": "STALE (5m old) -- DO NOT ENTER",
+      "action": "NOT TAKEN"
     }
   ],
   "coverage_gaps": [],
@@ -599,6 +639,17 @@
       "rank": "TOP, 1 armable",
       "trigger_c": "no buy_set signal in last 8 bars",
       "note": "Still COILED but only just (0.958 vs the 0.95 floor). Session high 3.2262; a Trigger A/B ratchet stop would sit 4.4pct above last - a long way, and the depth at that level was 122 shares at 10:04."
+    },
+    {
+      "time_et": "10:36",
+      "symbol": "TII",
+      "last": 3.1,
+      "gain_pct": 8.4,
+      "coil": 0.961,
+      "press": 0.01,
+      "rank": "TOP, 1 armable",
+      "trigger_c": "morning_star 10:26 STALE 10m",
+      "note": "TII printed FOUR consecutive interpolated bars 14:32-14:35Z - no trades at all for four minutes during regular hours. Pressure has collapsed to +0.01 (flat). The tape is drying up, which makes the depth veto MORE binding, not less: displayed size will not deepen on a book that has stopped trading."
     }
   ],
   "errors": [
@@ -666,7 +717,8 @@
   "finding_spread_and_depth_diverge": {
     "observation": "On the SAME name within three minutes, the two book vetoes swapped states. 10:01: spread FAIL (0.631-0.945pct) + depth FAIL (875 sh, 18.7pct). 10:04: spread PASS (0.316pct, one tick) + depth FAIL HARDER (190 sh, 4.0pct).",
     "why_it_matters": "Confirms the Day-9 ruling that these are different rules and must be counted separately - and strengthens it. Day 9 saw LPTH pass spread then fail depth four minutes later; today the same snapshot shows the book TIGHTENING at the touch while simultaneously getting THINNER. A narrow spread is not evidence of liquidity; here it was evidence of a 7-share bid and a 92-share ask.",
-    "calibration_consequence": "A single blended veto rate would have recorded todays TII as one veto and hidden which rule bound. The binding rule today was DEPTH, on both attempts, and depth has never been modelled - the 50-65pct V-series optimum speaks only to the spread veto."
+    "calibration_consequence": "A single blended veto rate would have recorded todays TII as one veto and hidden which rule bound. The binding rule today was DEPTH, on both attempts, and depth has never been modelled - the 50-65pct V-series optimum speaks only to the spread veto.",
+    "third_observation": "10:43 completed the matrix on ONE name in ONE session: 10:01 spread FAIL + depth FAIL; 10:04 spread PASS + depth FAIL; 10:43 spread FAIL + depth PASS. All three combinations observed within 42 minutes. No blended veto rate could represent this."
   },
   "cadence_decision_3": {
     "time_et": "10:11",
@@ -684,5 +736,13 @@
     "why_it_did_not_cost_money_today": "The one signal caught fresh was refused on depth (190 shares vs 4,732 intended), and depth has been 4-19pct of a full ticket at every measurement. So the six missed signals would have met the same refusal. The cadence gap cost OBSERVATIONS, not fills - today.",
     "what_it_would_cost_on_a_liquid_name": "On a name whose book could absorb a ticket, a 14pct catch rate would mean discarding roughly six of every seven legal Trigger C entries. Trigger C is one of only THREE legal entries, so that is a large share of the entry surface silently going missing - the Day-8 tooling-gap finding reappearing as a cadence gap.",
     "recommendation": "Either budget for a genuine 1-minute poll of the TOP name (2 tool calls/min while flat with a live candidate), or widen --max-age deliberately and measure the fill-quality cost. Do not leave the gap implicit."
+  },
+  "parity_notes": {
+    "spread_veto_applied_to_a_resting_stop_2pct_away": {
+      "what_happened": "At 10:43 the entry under consideration was a RESTING stop-buy at 3.2262, i.e. 2.1pct above the market. It was refused because the CURRENT touch spread was 0.633pct.",
+      "the_concern": "The protocol itself states the book \"CANNOT SEE THE TRIGGER MOMENT - a resting stop fires later, on a book unlike the one inspected at arming time.\" So vetoing a stop 2pct away on the touch spread measured now may be measuring the wrong book entirely. The spread that matters is the one at 3.2262, which is unobservable until the ratchet is hit.",
+      "what_I_did": "Applied the veto as written and refused the entry. Reinterpreting a veto rule at the moment it blocks a trade is exactly the drift the parity audit exists to catch, and the honest move is to log the concern rather than act on it.",
+      "suggested_work": "The V-series modelled the spread veto on a bar-range proxy for IMMEDIATE entries. It has never been tested for resting stops armed well above the market. That is a distinct case and may deserve a distinct threshold - or the veto may belong at fire time rather than arm time."
+    }
   }
 }
