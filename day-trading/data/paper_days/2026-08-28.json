@@ -102,7 +102,39 @@
     "ZSTK"
   ],
   "trades": [],
-  "armed": [],
+  "armed": [
+    {
+      "ticket": 1,
+      "symbol": "TII",
+      "armed_at_et": "11:00",
+      "order_type": "PAPER resting STOP-LIMIT BUY (no real order placed)",
+      "trigger": 3.2262,
+      "limit": 3.2423,
+      "limit_rule": "trigger x 1.005, the 0.5pct slippage cap",
+      "trigger_source": "Trigger A, ORB ratchet - the 5-min opening range high was 2.960 and was taken out long ago, so the ratchet sits at the RTH session high 3.2262 set on the 14:00Z bar.",
+      "shares": 1208,
+      "notional_at_trigger": 3897.25,
+      "ticket_reduction": {
+        "standard_ticket_dollars": 15000,
+        "standard_shares": 4649,
+        "armed_shares": 1208,
+        "reason": "DEPTH RULE - cumulative displayed ask size to the limit ceiling 3.2423 was 1,208 shares (3.20x150, 3.21x326, 3.22x422, 3.23x158, 3.24x152; the 3.26 level sits above the ceiling). Reduced to what the book can absorb.",
+        "pct_of_intended": 26.0,
+        "marginal_note": "This is 26.0pct against a 25pct skip floor - the entry qualified by 1.0 percentage point, or about 46 shares. Flagging the narrowness explicitly: a slightly thinner book would have been a SKIP, not a reduced ticket."
+      },
+      "gates_at_arming": {
+        "halal": "PASS - the only name of 29 crossers to pass both questions",
+        "eligibility": "price 3.195 >= 2; +10pct cross printed and latched; common stock; >=50 sessions; calm-gap +0.35pct; coil 0.986 COILED",
+        "fill_arming": "PASS - re-quoted immediately before arming at 15:00:29Z: last 3.195 and bid 3.190 are BOTH below the 3.2262 trigger, so this is a legitimate forward stop and not a disguised market order",
+        "spread_veto": "PASS - NBBO bid 3.190 / ask 3.200 = 0.313pct, one tick, inside the 0.50pct cap. L2 agreed exactly this time (bid 3.19 / ask 3.20), unlike 10:01 where L2 read one tick wider than NBBO.",
+        "depth_veto": "PASS with reduction - see ticket_reduction",
+        "sizing_20pct_rule": "NOT BINDING - trailing 10 completed minutes (14:42-14:51Z) traded 24,195 shares, so the 20pct cap allows 4,839. Armed size 1,208 is well inside it.",
+        "halt_check": "quote state = active, has_traded = true. NOTE: get_equity_tradability was NOT called because it requires an account_number that must come from the user and must never be defaulted from get_accounts - so the quote state field was used as the halt proxy. Logging the substitution rather than implying a full tradability check ran."
+      },
+      "protective_stop_on_fill": "max(entry x 0.92, peak x 0.60) = 2.9681 at a 3.2262 entry - to be placed the instant a fill prints, and never absent while the position is open.",
+      "status": "ARMED, AWAITING TOUCH. Fill requires an intrabar high >= 3.2262."
+    }
+  ],
   "cycles": [
     {
       "time_et": "06:35",
@@ -506,6 +538,18 @@
         "verdict": "SPREAD VETO - ENTRY REFUSED",
         "ticks": 2,
         "note": "Applied the rule exactly as written. Two ticks on a 3.16 mid is 0.633pct; the cap admits one tick (0.316pct) and no more on this name."
+      },
+      {
+        "time_et": "10:52",
+        "symbol": "TII",
+        "context": "Trigger A/B ratchet stop-buy at 3.2262 (session high unchanged), limit 3.2423",
+        "inside_bid": 3.17,
+        "inside_ask": 3.19,
+        "spread_pct": 0.629,
+        "cap_pct": 0.5,
+        "ticks": 2,
+        "verdict": "SPREAD VETO - ENTRY REFUSED",
+        "depth_same_instant": "PASS - 3,040 sh to the cap (65.4pct of a 4,650-share ticket). Depth has now passed twice running; spread has failed twice running. Spread is the binding rule on TII since 10:43."
       }
     ],
     "depth": [
@@ -670,6 +714,26 @@
       "rank": "TOP, 1 armable",
       "trigger_c": "morning_star 10:26 STALE 10m",
       "note": "TII printed FOUR consecutive interpolated bars 14:32-14:35Z - no trades at all for four minutes during regular hours. Pressure has collapsed to +0.01 (flat). The tape is drying up, which makes the depth veto MORE binding, not less: displayed size will not deepen on a book that has stopped trading."
+    },
+    {
+      "time_et": "10:53",
+      "symbol": "TII",
+      "last": 3.18,
+      "gain_pct": 11.2,
+      "coil": 0.986,
+      "press": -0.1,
+      "session_high": 3.2262,
+      "rank": "TOP, 1 armable",
+      "trigger_c": "none in last 8 bars",
+      "note": "TII grinding higher (3.18, +11.2pct) on real volume, coil 0.986. Trigger stays 3.2262; last is 1.45pct below it, so the forward stop remains legitimate. Waiting on a 1-tick spread."
+    },
+    {
+      "time_et": "11:00",
+      "symbol": "TII",
+      "event": "ARMED ticket 1",
+      "last": 3.195,
+      "trigger": 3.2262,
+      "shares": 1208
     }
   ],
   "errors": [
