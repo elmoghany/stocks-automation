@@ -72,21 +72,30 @@
   },
   "crossed_set": [
     "AFRM",
+    "AIIR",
     "APUS",
+    "BEKE",
     "BNR",
     "CKX",
     "CRD.A",
     "DXR",
+    "EROK",
     "ESTC",
     "GAP",
     "HYNE",
+    "LVLU",
     "MODD",
     "NA",
     "NABL",
     "QNRX",
     "SOLS",
+    "SWVL",
+    "TII",
+    "TNON",
+    "TP",
     "UMC",
-    "YDES"
+    "YDES",
+    "ZSTK"
   ],
   "trades": [],
   "armed": [],
@@ -151,30 +160,167 @@
         "NABL"
       ],
       "note": "16 crossers, 16 FAIL. Board is a clean illustration of the Day-8 structural tension: the four most liquid names (ESTC 5.3M, AFRM 9.5M, UMC 9.3M, SOLS 2.9M avg vol) are ALL refused on financing ratios, while every ratio-clean name is a sub-$50M microcap with no book."
+    },
+    {
+      "time_et": "07:40",
+      "state": "FLAT (premarket)",
+      "scan_rows": 66,
+      "dropped_funds": 47,
+      "crossed_latched": 17,
+      "ratios_pass": 0,
+      "armable": 0,
+      "new": [
+        "BEKE"
+      ],
+      "gone_from_scan_still_latched": [
+        "APUS",
+        "MODD"
+      ],
+      "note": "17 crossers, 17 FAIL. APUS and MODD faded off the scan but stay latched per the crossed-set rule."
+    },
+    {
+      "time_et": "07:56",
+      "state": "FLAT (premarket)",
+      "scan_rows": 67,
+      "dropped_funds": 46,
+      "crossed_latched": 17,
+      "ratios_pass": 0,
+      "armable": 0,
+      "new": [],
+      "note": "No new names; all 21 non-fund rows already in the crossed set. Sweep skipped this cycle (nothing to add to state); logged rather than silently dropped."
+    },
+    {
+      "time_et": "08:18",
+      "state": "FLAT (premarket)",
+      "scan_rows": 63,
+      "dropped_funds": 47,
+      "crossed_latched": 18,
+      "ratios_pass": 0,
+      "armable": 0,
+      "new": [
+        "TNON"
+      ],
+      "gone_from_scan_still_latched": [
+        "APUS",
+        "BEKE",
+        "ESTC",
+        "MODD",
+        "NA",
+        "NABL",
+        "UMC"
+      ],
+      "note": "Seven names faded off the scan at once (incl. ESTC and BEKE) - the LATCH keeps all seven eligible. This is exactly divergence #2 in the parity audit: the scanner is a snapshot, the champion treats the +10pct cross as permanent."
+    },
+    {
+      "time_et": "08:42",
+      "state": "FLAT (premarket)",
+      "scan_rows": 66,
+      "dropped_funds": 48,
+      "crossed_latched": 18,
+      "ratios_pass": 0,
+      "armable": 0,
+      "new": [],
+      "note": "No new names. ESTC re-appeared and STRENGTHENED to +25.10pct (104.755) - now the biggest liquid mover of the premarket and still halal-FAIL on combined 22.54. Tracking it as the cost-of-the-gate observation for the EOD."
+    },
+    {
+      "time_et": "09:12",
+      "state": "FLAT (pre-open)",
+      "scan_rows": 65,
+      "dropped_funds": 50,
+      "crossed_latched": 19,
+      "ratios_pass": 1,
+      "armable": 0,
+      "new": [
+        "EROK"
+      ],
+      "note": "First ratios_pass of the day (EROK), still not armable - fails question 2. ESTC now +25.94pct at 105.46, the strongest liquid mover of the session and still refused."
+    },
+    {
+      "time_et": "09:31",
+      "state": "FLAT (post-open, 5-min cadence resumed)",
+      "scan_rows": 23,
+      "dropped_funds": 16,
+      "crossed_latched": 20,
+      "ratios_pass": 2,
+      "armable": 0,
+      "new": [
+        "ZSTK"
+      ],
+      "note": "Post-open the fund cohort collapsed from ~48 rows to 16 as their %change reset - the leveraged-ETF contamination is a PREMARKET artefact. QNRX printed rvol 445x on 15.1M shares (vs 33.8k prior session) but is halal-FAIL on cash 115.57pct."
+    },
+    {
+      "time_et": "09:38",
+      "state": "FLAT (post-open)",
+      "scan_rows": 18,
+      "dropped_funds": 8,
+      "crossed_latched": 23,
+      "ratios_pass": 3,
+      "armable": 0,
+      "new": [
+        "SWVL",
+        "AIIR",
+        "TP"
+      ],
+      "note": "QNRX now +54.03pct on 18.7M shares, rvol 552x - the days runaway mover, and halal-FAIL on cash 115.57pct since the 06:35 screen."
+    },
+    {
+      "time_et": "09:52",
+      "state": "FLAT (post-open)",
+      "scan_rows": 20,
+      "dropped_funds": 9,
+      "crossed_latched": 24,
+      "ratios_pass": 3,
+      "armable": 0,
+      "new": [
+        "LVLU"
+      ]
+    },
+    {
+      "time_et": "09:59",
+      "state": "FLAT (post-open)",
+      "scan_rows": 21,
+      "dropped_funds": 9,
+      "crossed_latched": 25,
+      "ratios_pass": 4,
+      "armable": 1,
+      "new": [
+        "TII"
+      ],
+      "note": "TII is the first and only halal PASS of the session. Armable on compliance, then VETOED on both spread (0.631-0.945pct vs 0.50pct cap) and depth (875 vs 4,673 shares). Fill-arming was clean. Watching for a ratchet re-arm on a tighter book, the ANGX Day-8 pattern."
     }
   ],
   "halal": {
-    "PASS": [],
+    "PASS": [
+      "TII"
+    ],
     "FAIL": [
       "AFRM",
+      "AIIR",
       "APUS",
+      "BEKE",
       "BNR",
       "CKX",
       "CRD.A",
       "DXR",
+      "EROK",
       "ESTC",
       "GAP",
       "HYNE",
+      "LVLU",
       "MODD",
       "NA",
       "NABL",
       "QNRX",
       "SOLS",
+      "SWVL",
+      "TNON",
+      "TP",
       "UMC",
-      "YDES"
+      "YDES",
+      "ZSTK"
     ],
     "CANNOT_VERIFY": [],
-    "_note": "Binary rule: only verdict PASS is armable. ZERO armable names on the 06:35 board."
+    "_note": "Binary rule: only verdict PASS is armable. TII is the ONLY name of 25 crossers to pass BOTH halal questions."
   },
   "halal_detail": {
     "ratio_FAIL_real_not_relitigated": {
@@ -188,11 +334,16 @@
       "SOLS": "loan 27.10 / cash 8.38 / combined 35.48. Solstice Advanced Materials, $8.95B Honeywell spinoff (refrigerants + electronic materials), +16.3pct, avg vol 2.2M. Business is permissible (specialty chemicals; sells INTO defense/semis, which the AMD principle allows). Refused purely on separation debt - a spinoff is levered by construction. Day-8 structural tension in its purest form: the second-most liquid book on the board, killed by financing.",
       "APUS": "loan 161.98 / cash 42.13. $5.9M clinical-stage biotech, 7 employees.",
       "NABL": "loan 58.31 / cash 15.77 / combined 74.08. N-able, $747M MSP software (SolarWinds spinoff), avg vol 2.4M. Permissible business, refused on spinoff leverage - the SAME pattern as SOLS. Two separate spinoffs on one board, both liquid, both killed by separation debt.",
-      "MODD": "loan 1.31 / cash 23.21 / combined 24.52. Modular Medical, $29.9M insulin-pump developer. Note the carve-out was CORRECTLY not applied: one side may exceed 10 only if combined <= 20, and 24.52 > 20. Nearest miss of the day."
+      "MODD": "loan 1.31 / cash 23.21 / combined 24.52. Modular Medical, $29.9M insulin-pump developer. Note the carve-out was CORRECTLY not applied: one side may exceed 10 only if combined <= 20, and 24.52 > 20. Nearest miss of the day.",
+      "BEKE": "loan 77.27 / cash 213.64 / combined 290.91. KE Holdings (Beike), $21B Chinese housing-transaction platform, avg vol 4.4M. Question 2 is independently doubtful (the Emerging and Other Services segment explicitly includes a FINANCIAL SERVICE business, undisclosed share), but the ratios settle it first.",
+      "TNON": "loan 147.55 / cash 139.39 / combined 286.94. Tenon Medical, $3.3M SI-joint device maker, 26 employees, pb -0.34 (negative book). Ratios settle it before the negative-book blind spot needs invoking.",
+      "SWVL": "loan 3.22 / cash 18.98 / combined 22.19. Swvl Holdings, $25.7M Dubai mass-transit and shared-mobility operator. BUSINESS IS CLEANLY PERMISSIBLE (public transport) - refused only on financing, and only just: combined 22.19 against a 20 cap. Second-nearest miss of the day after MODD.",
+      "LVLU": "loan 70.93 / cash 17.87 / combined 88.80. Lulu's Fashion Lounge, $41.6M online womens apparel retailer. Plain retail is a permissible business (protocol says so explicitly) - refused purely on leverage. pb -25.12, i.e. deeply negative book value, so the ratio FAIL and the negative-book blind spot point the same way here."
     },
     "haram_industry_FAIL": {
       "HYNE": "Hoyne Bancorp - BANK. Question 1 not even reached.",
-      "CRD.A": "Crawford & Company - claims management / TPA for insurance carriers. RH sector Finance, industry 'Insurance Brokers/Services'. Dedicated insurance-industry service, not a general-purpose product sold into a haram market, so the AMD principle does NOT rescue it. Same call as BVC on 2026-08-27. Ratios additionally UNVERIFIABLE (yfinance: 'possibly delisted; no price data' for the dotted ticker), and unverified is haram by rule."
+      "CRD.A": "Crawford & Company - claims management / TPA for insurance carriers. RH sector Finance, industry 'Insurance Brokers/Services'. Dedicated insurance-industry service, not a general-purpose product sold into a haram market, so the AMD principle does NOT rescue it. Same call as BVC on 2026-08-27. Ratios additionally UNVERIFIABLE (yfinance: 'possibly delisted; no price data' for the dotted ticker), and unverified is haram by rule.",
+      "AIIR": "Air Global Plc - SHISHA / HOOKAH TOBACCO. RH description: \"branded flavored molasses (commonly known as hookah, shisha or mu assel), a tobacco-based mixture that is commonly around 15pct to 25pct tobacco by weight\", brands incl. Al Fakher, plus nicotine pouches and nicotine inhalation devices (OOKA, VANT, Crown Switch). TOBACCO is explicitly on the question-2 FAIL list. Ratios independently FAIL too (loan 27.86 / combined 36.16), so this one was never close - but note haram_pct read 0.03, i.e. the automated metric saw a tobacco company as 0.03pct haram. SECOND sector-label miss of the day: RH labels it \"Producer Manufacturing / Industrial Conglomerates\"."
     },
     "ESTC_stale_denominator_check": {
       "verdict": "FAIL",
@@ -214,6 +365,60 @@
         "our_verdict": "FAIL (unverified)",
         "basis": "ALL FOUR ratios are exactly zero and source is 'info', not 'quarterly' - the statements were never read. That is the 'NO FUNDAMENTALS DATA' signature, a REFUSAL TO EVALUATE, not a pass. Compounding it: RH industry is 'Investment Trusts/Mutual Funds' and Daxor is in substance a registered closed-end investment company holding a securities portfolio, so interest/dividend income is a live question-2 risk that a 0.0 haram_pct cannot possibly have answered.",
         "also": "avg volume 2,552/day makes it untradeable under the 20%-of-10-min-volume rule regardless."
+      },
+      "ZSTK": {
+        "screen_said": "PASS (quarterly, loan 1.96, cash 1.88, combined 3.85, haram_pct 0.16) - the ONLY automated PASS of the entire session",
+        "our_verdict": "FAIL (haram industry - intoxicant production)",
+        "basis": "ZeroStack Corp. RH description: \"engages in the production of organic CANNABIS and pharmaceutical-grade medical products\"; the House of Brands segment includes \"cannabis accessories and technology\". Cannabis is an intoxicant, the same category as the brewery/distillery/winery line in the question-2 FAIL list. The company OWN business is producing it.",
+        "why_the_screen_passed_it": "Verbatim blind spot #1 from the protocol: haram_pct is INTEREST INCOME / revenue only and is STRUCTURALLY BLIND to intoxicant revenue - the same reason a casual-dining chain scores ~0pct and RRGB was refused. Compounded by blind spot #3: the RH sector label is \"Health Technology / Pharmaceuticals: Other\", which reads as clean pharma and hides the actual business, exactly as AIFA poker venues were labelled Movies/Entertainment.",
+        "medical_cannabis_argument_considered_and_rejected": "A pure medical-cannabis pharma could arguably be permissible. ZSTK is not that: the description leads with organic cannabis production, sells consumer cannabis accessories, and discloses NO split between medical and recreational. Under the binary 5pct rule an unverifiable share is haram by rule - Restaurants/hotels/grocers/alcohol-adjacent names without <5pct disclosure are FAIL. Absence of evidence is never compliance.",
+        "significance": "THE MOST IMPORTANT CATCH OF THE DAY. Of 20 crossers, this is the ONLY one the automated screen would have armed. It is the ANGX pattern (Paper Day 8) caught PRE-arming for the second session running, after BVC on 2026-08-27 - and it is a NEW failure mode: BVC was insurance caught by reading the RH profile, ZSTK is an intoxicant hidden behind a pharma label. Question 2 was asked because the protocol requires asking it, not because anything in the numbers prompted it.",
+        "not_rescued_by_the_list": "ZSTK is NOT on halal_list.json and is ABSENT from halal_universe.json, so it correctly took the live per-name screen rather than auto-rejection. The list did not save us here; the manual question-2 read did.",
+        "convertible_by": "an affirmative ruling in data/halal_rulings.json evidencing recreational-cannabis revenue under 5pct, dated with basis.",
+        "liquidity_footnote": "Moot for sizing anyway: 5,255 shares traded today, rvol 0.03, against a 2.78M two-week average - the name is barely trading. But the refusal is on compliance, not liquidity."
+      }
+    },
+    "question2_FAIL_ratios_were_clean": {
+      "EROK": {
+        "verdict": "FAIL",
+        "binding_question": 2,
+        "loan_pct": 9.13,
+        "cash_pct": 0.13,
+        "combined": 9.25,
+        "haram_pct": 6.33,
+        "reason": "THE ONLY NAME ALL DAY TO PASS QUESTION 1. Financing is clean by a wide margin - loan 9.13 and cash 0.13 are both inside 10, so the carve-out was not even needed. It fails question 2 on the 5pct rule: interest income is 6.33pct of revenue, over the binary 5pct line.",
+        "business": "EagleRock Land LLC - surface land and resource management (water, caliche, topsoil, surface use rights) leased to crude and natural-gas producers in the Permian Basin. The BUSINESS is permissible: energy extraction is not on the haram list, and land/resource leasing is rental income. So this is not an industry refusal - it is purely the revenue-mix test.",
+        "why_the_interest_income": "Founded 2025-12-01 and newly listed (52wk range only spans 2026-05-13 to 2026-08-21). A just-IPOd company parks its proceeds while revenue ramps, so interest income is unusually large relative to a small revenue base. The 5pct rule catches that regardless of intent - it is binary by user ruling 2026-08-22.",
+        "significance": "Best-case demonstration that the two halal questions are INDEPENDENT. Every other refusal today was question 1 (financing) or a haram industry; EROK inverts it - clean balance sheet, disqualifying income mix. A screen that only asked question 1 would have armed this name, which is precisely the ANGX error from Paper Day 8."
+      },
+      "TP": {
+        "verdict": "FAIL",
+        "binding_question": 2,
+        "loan_pct": 15.96,
+        "cash_pct": 4.04,
+        "combined": 20.0,
+        "haram_pct": 0.08,
+        "source": "annual",
+        "screen_said": "PASS - the SECOND automated PASS of the session",
+        "reason": "Ticketplus Ltd. self-describes as \"powering the LIVE ENTERTAINMENT industry across Latin America\" - primary ticketing, access control, payments and analytics for promoters, venues, sports organizations and ticketing companies. Entertainment is on the question-2 FAIL list. This is a DEDICATED live-entertainment vertical platform, not a general-purpose product sold into that market, so the AMD principle does not rescue it. Some clients are sports organizations (permissible), but there is NO disclosure of the sports-vs-entertainment revenue split, and under the binary rule an unverifiable share is haram by rule.",
+        "question1_note": "Passed question 1 only via the carve-out and EXACTLY on the boundary: loan 15.96 exceeds 10, combined is 20.00 against a <=20 cap. It is also sourced from ANNUAL statements, not the most recent quarterly, so the figure that lands precisely on the line is also the stalest kind we accept. Had question 2 not settled it, that boundary+staleness combination would itself have warranted a CANNOT-VERIFY.",
+        "liquidity_footnote": "Untradeable regardless: reported FLOAT is 43,156 shares. A $15,000 ticket at $8.00 is 1,875 shares = 4.3pct of the entire float. The depth veto would have refused it outright.",
+        "significance": "Second name today that the automated screen would have armed, and the second saved by asking question 2 explicitly. Both of todays automated PASSes (ZSTK, TP) were haram businesses."
+      }
+    },
+    "PASS": {
+      "TII": {
+        "loan_pct": 8.4,
+        "cash_pct": 4.32,
+        "combined": 12.72,
+        "haram_pct": 0.13,
+        "source": "quarterly",
+        "on_halal_list": true,
+        "universe_agrees": "halal_universe.json independently rates TII halal=true (loan 9.94 / cash 5.11 from the offline build). Live screen and offline build agree - two independent confirmations.",
+        "q1": "Both sides inside 10 (loan 8.40, cash 4.32); the one-side carve-out was not even needed. Market cap present and sane ($319.8M), so no missing-denominator trap.",
+        "q2": "Titan Mining Corp - acquisition, exploration, development and production of mineral properties; holds the Empire State Mine (zinc) in Northern New York. Extractive base-metals mining is not on the haram list, and zinc is a general-purpose industrial metal. No alcohol/gambling/tobacco/finance/entertainment line. Interest income 0.13pct of revenue, far under the 5pct binary threshold.",
+        "blind_spot_checks": "Ran all three deliberately. (1) haram_pct blindness does not bite - mining has no alcohol/pork-style hidden revenue category. (2) Sector label CONSISTENT with the business for once: \"Non-Energy Minerals / Other Metals-Minerals\" matches the Empire State Mine description, unlike ZSTK and AIIR today. (3) pb_ratio +10.96, i.e. POSITIVE book value, so the negative-book implausibility trap that caught YDES does not apply.",
+        "not_a_fake_gap": "Unlike EROK, TII has genuine RTH participation - 150,777 shares today and the 7AM bar is a REAL print (1,800 sh at 2.870), not interpolated."
       }
     }
   },
@@ -223,15 +428,65 @@
     "HYNE": "prior session 899 shares - untradeable"
   },
   "vetoes": {
-    "spread": [],
-    "depth": [],
-    "fill_arming_chase": []
+    "spread": [
+      {
+        "time_et": "10:01",
+        "symbol": "TII",
+        "trigger_considered": 3.22,
+        "nbbo_bid": 3.16,
+        "nbbo_ask": 3.18,
+        "nbbo_spread_pct": 0.631,
+        "l2_inside_bid": 3.16,
+        "l2_inside_ask": 3.19,
+        "l2_spread_pct": 0.945,
+        "cap_pct": 0.5,
+        "verdict": "SPREAD VETO - both measures exceed the cap, so the refusal is robust to the L2-vs-NBBO disagreement",
+        "l2_vs_nbbo_note": "L2 inside ask 3.19 is one tick WIDER than the NBBO ask 3.18 - the same L2-vs-NBBO divergence recorded on Day 17. Used the stricter reading but noted both; the veto does not depend on which is right.",
+        "tick_size_floor": "At $3.17 one $0.01 tick is 0.315pct of price, so the 0.50pct cap admits AT MOST a 1-tick spread on this name. Observed 2 ticks (NBBO). Day-17 tick-size finding confirmed on a second name: for sub-$4 stocks the spread cap is a near-binary 1-tick test, which structurally inflates the premarket/low-price veto rate."
+      }
+    ],
+    "depth": [
+      {
+        "time_et": "10:01",
+        "symbol": "TII",
+        "intended_shares": 4673,
+        "intended_dollars": 15000,
+        "trigger": 3.22,
+        "depth_ceiling": 3.2361,
+        "cumulative_ask_size_to_ceiling": 875,
+        "levels": "3.19x192, 3.20x235, 3.21x226, 3.22x122, 3.23x100",
+        "pct_of_intended": 18.7,
+        "rule": "<25pct of intended -> SKIP and log ERROR: thin book",
+        "verdict": "DEPTH VETO - independent of the spread veto. 875 displayed shares against 4,673 wanted."
+      }
+    ],
+    "fill_arming_chase": [
+      {
+        "time_et": "10:01",
+        "symbol": "TII",
+        "last": 3.1601,
+        "trigger": 3.22,
+        "verdict": "PASS - NOT a chase. Last is below the ratchet trigger, so a stop-limit here would be a legitimate forward stop, not a disguised market order. Recorded separately so it does not contaminate the spread-veto calibration."
+      }
+    ]
   },
   "book_observations": [],
-  "trigger_c": [],
+  "trigger_c": [
+    {
+      "time_et": "10:00",
+      "symbol": "TII",
+      "pattern": "tweezer_bottom",
+      "fired_at": "09:52",
+      "tag": "STALE (8m old) -- DO NOT ENTER",
+      "action": "NOT TAKEN",
+      "note": "The tag did the refusing, not judgement. A pattern entry is valid only on the 1-minute close that produced it; at 8 minutes old this is exactly the Day-9 failure mode (7 fires / 0 takeable) that the freshness tag was built to prevent."
+    }
+  ],
   "coverage_gaps": [],
   "position_log": [],
-  "errors": [],
+  "errors": [
+    "ERROR: thin book - TII 10:01 ET, 875 displayed shares to trigger+0.5pct vs 4,673 intended (18.7pct). Entry skipped."
+  ],
   "lessons": [],
   "pnl_day": 0,
   "verdict": "IN PROGRESS",
@@ -241,5 +496,52 @@
     "reason": "Explicit, logged deviation - not a silent drift. With ZERO armable names and the +10pct cross being a LATCH, premarket discovery latency is very close to costless: a name found at 07:20 instead of 07:12 is still fully eligible, because the latch never expires. The only thing lost is the chance to arm early premarket, and premarket arming is nearly always spread-vetoed anyway (Day 7 blocked 100pct, Day 17 blocked 2/3). This follows the SCAN ECONOMY principle - look at the market only when it can act.",
     "constraint": "Real driver is the headless single-turn context budget: each run_scan response is ~8k tokens, and 5-min cadence from 06:40 to 14:30 would be ~95 scans. Spending it premarket would risk starving the 09:30-14:30 window that actually decides the day.",
     "reverts_to_5min": "IMMEDIATELY on (a) 09:25 ET, or (b) any name passing the halal gate, whichever is first."
+  },
+  "finding_foreign_filer_currency_mismatch": {
+    "seen_on": "BEKE 2026-08-28",
+    "observation": "cash_pct 213.64 on a $21B market cap is arithmetically implausible - a company does not hold 2.1x its market cap in cash while trading at PB 2.04.",
+    "mechanism": "KE Holdings files in RMB. halal_check takes the statement numerator in the FILING currency and divides by the RH market cap in USD. At ~7.1 RMB/USD that inflates every ratio by ~7x. Rescaled: loan ~10.9pct, cash ~30pct, combined ~41pct.",
+    "does_it_change_today": "NO. BEKE FAILs on both bases (combined ~41pct rescaled, still >20), so the verdict is robust and nothing was traded on it.",
+    "why_it_matters": "This is a SYSTEMATIC bias that can only ever produce FALSE FAILS, never false passes, for foreign filers reporting in a non-USD currency. It is a concrete mechanism for the known residual the protocol already flags ($29,908 of names strict refuses for want of a CIK / foreign-filer statements). Today it also touches NA (Nano Labs, Hangzhou, loan 465/cash 748) and BNR (Burning Rock, China, loan 51.9/cash 455) - both so far over the line that rescaling by ~7x still FAILs them (BNR cash ~64pct), so no verdict flips today either.",
+    "suggested_fix": "halal_check should convert statement figures to USD (or convert mcap to the filing currency) before taking ratios. Until then, treat a >100pct cash_pct on a large-cap foreign filer as a UNIT-MISMATCH SUSPECT rather than a meaningful number - and note it can only mask a would-be PASS, so no past FAIL needs re-opening for safety, only for completeness."
+  },
+  "data_hygiene": {
+    "EROK_mcap_disagreement": "Scan Market cap column read 6.52e+08 but get_equity_fundamentals returned 3.26e+09 (5x). Used the fundamentals value, which is the protocol source for the halal denominator. The scan column looks float-based (float 23.9M x ~27.6 = 6.6e8) while fundamentals uses shares outstanding 131.5M. Flagging because a 5x denominator error would swing every ratio: at the scan mcap, EROKs loan_pct would read ~45pct and it would have been refused on question 1 for the wrong reason."
+  },
+  "finding_EROK_fake_gap": {
+    "detector": "all-interpolated-bars = fake gap (Paper Day 8 lesson #7)",
+    "observation": "5-min extended bars 11:00Z-13:40Z: 26 of 33 bars carry interpolated=true and volume 0. EROK has printed FOUR real bars all session - 250 sh at 13:05Z, 250 at 13:30Z, 200 at 13:35Z, 100 at 13:40Z. Total ~800 shares.",
+    "implication": "EROKs +11.56pct headline is a stale mark on an almost untraded book, not a real gap. Its premarket \"high\" of 27.60 rests on a single 250-share print.",
+    "significance": "EROK was the ONLY name today to pass the halal financing test. It turns out to be a fake gap as well as a question-2 FAIL - so even a hypothetical compliance pass would have been vetoed on tradeability. Worth recording that the two independent filters agreed.",
+    "api_hygiene": "get_equity_historicals returned exactly the 4 requested symbols (ESTC, SOLS, GAP, EROK) - returned-set assert PASSED, no silent truncation."
+  },
+  "cadence_decision_2": {
+    "time_et": "09:48",
+    "decision": "Did NOT run a formal rank this session, and did NOT hand-rank.",
+    "reason": "The rank command is the only permitted ranker, but it needs data/rh_bars 1-MINUTE CSVs, and the bars pulled were 5-minute (correct granularity for the survey use, per the bar-granularity policy). Feeding 5-min bars to a 30-bar pressure calculation would silently produce a wrong ordering - a parity violation dressed up as compliance.",
+    "why_it_is_moot": "Ranking selects among ELIGIBLE names, and eligibility requires passing the halal gate. All 23 crossers are FAIL, so the eligible set is empty by construction and the ranking has nothing to order. Spending a 1-min bar fetch to rank an empty set would be theatre.",
+    "what_would_have_happened": "Explicitly NOT computed. Naming a counterfactual TOP by hand is exactly the Day-6 drift the protocol warns about (\"if a hand-ranking disagrees, the command is right\"), and with no ticket deployable it would be a hindsight statistic. The honest statement is: no armable candidate existed, so no pick was made.",
+    "note": "If any name passes the gate later today, a proper 1-min bar fetch + rank runs BEFORE anything is armed."
+  },
+  "eligibility_TII": {
+    "price": 3.21,
+    "price_ge_2": true,
+    "cross_printed": "+12.24pct, latched",
+    "sessions_ge_50": "yes - 52wk range dates back to 2025-09-08",
+    "gap7_11_00Z": 2.87,
+    "prev_close": 2.86,
+    "calm_gap_pct": 0.35,
+    "calm_gap_verdict": "PASS, far inside the 20pct cap",
+    "gap7_source": "REAL RH bar at 11:00Z with 1,800 shares - NOT interpolated, so NO Polygon/Massive completion was needed. Logged explicitly because the premarket-dark completion rule was on standby for this name.",
+    "premarket_high": 2.962,
+    "coil": 1.084,
+    "coil_verdict": "COILED (last exceeds premarket high)"
+  },
+  "rank_output": {
+    "as_of": "10:00",
+    "line": "#1 TII last 3.2100 gain 12.2 coil 0.997 press +0.54 gap7 +0.3 calm yes halal PASS COILED",
+    "summary": "1 crossed / 1 armable now   TOP = TII",
+    "coil_correction": "I hand-computed coil as 1.084 using the PREMARKET high (2.962). The command returns 0.997, which uses the SESSION high (3.22). The command is right and the hand figure is discarded - this is exactly the drift the protocol warns about (\"if a hand-ranking disagrees, the command is right\"). Recording the correction rather than quietly replacing the number.",
+    "note": "Rank was run on a properly-built 1-MINUTE CSV (29 real bars, interpolated skipped), not on the 5-minute survey bars."
   }
 }

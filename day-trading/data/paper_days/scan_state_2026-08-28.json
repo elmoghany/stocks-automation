@@ -1,24 +1,24 @@
 {
  "candidates": {
   "QNRX": {
-   "pct": 39.0,
-   "last": 7.1654,
+   "pct": 41.13,
+   "last": 7.275,
    "prev_close": 5.155,
-   "vol": "33857.830332",
+   "vol": "2.3793078131965e+07",
    "name": "Quoin Pharmaceuticals",
    "first_seen": "06:35"
   },
   "ESTC": {
-   "pct": 17.84,
-   "last": 98.6787,
+   "pct": 24.15,
+   "last": 103.96,
    "prev_close": 83.74,
-   "vol": "5.251348773367e+06",
+   "vol": "2.759866755065e+06",
    "name": "Elastic N.V.",
    "first_seen": "06:35"
   },
   "NA": {
-   "pct": 17.92,
-   "last": 2.5,
+   "pct": 17.03,
+   "last": 2.4811,
    "prev_close": 2.12,
    "vol": "245088.947209",
    "name": "Nano Labs Ltd",
@@ -33,18 +33,18 @@
    "first_seen": "06:35"
   },
   "GAP": {
-   "pct": 16.88,
-   "last": 24.3,
+   "pct": 14.43,
+   "last": 23.79,
    "prev_close": 20.79,
-   "vol": "2.2902181636442e+07",
+   "vol": "8.796925986944e+06",
    "name": "Gap",
    "first_seen": "06:35"
   },
   "AFRM": {
-   "pct": 14.21,
-   "last": 88.5,
+   "pct": 10.54,
+   "last": 85.66,
    "prev_close": 77.49,
-   "vol": "9.529801556633e+06",
+   "vol": "7.219128243053e+06",
    "name": "Affirm",
    "first_seen": "06:35"
   },
@@ -105,10 +105,10 @@
    "first_seen": "06:53"
   },
   "SOLS": {
-   "pct": 13.77,
-   "last": 64.1,
+   "pct": 18.11,
+   "last": 66.545,
    "prev_close": 56.34,
-   "vol": "2.919789108558e+06",
+   "vol": "3.951806663817e+06",
    "name": "Solstice Advanced Materials",
    "first_seen": "06:53"
   },
@@ -121,12 +121,84 @@
    "first_seen": "07:24"
   },
   "NABL": {
-   "pct": 11.9,
-   "last": 4.42,
+   "pct": 12.6,
+   "last": 4.4477,
    "prev_close": 3.95,
-   "vol": "1.96398260031e+06",
+   "vol": "696217.965584",
    "name": "N-able",
    "first_seen": "07:24"
+  },
+  "BEKE": {
+   "pct": 13.65,
+   "last": 20.15,
+   "prev_close": 17.73,
+   "vol": "3.340128954233e+06",
+   "name": "KE Holdings",
+   "first_seen": "07:40"
+  },
+  "TNON": {
+   "pct": 39.63,
+   "last": 7.0093,
+   "prev_close": 5.02,
+   "vol": "165532.256782",
+   "name": "Tenon Medical",
+   "first_seen": "08:18"
+  },
+  "EROK": {
+   "pct": 11.56,
+   "last": 27.6,
+   "prev_close": 24.74,
+   "vol": "75850.343871",
+   "name": "EagleRock Land",
+   "first_seen": "09:12"
+  },
+  "ZSTK": {
+   "pct": 12.41,
+   "last": 6.61,
+   "prev_close": 5.88,
+   "vol": "4965.164275",
+   "name": "ZeroStack Corp.",
+   "first_seen": "09:31"
+  },
+  "SWVL": {
+   "pct": 16.6,
+   "last": 2.5769,
+   "prev_close": 2.21,
+   "vol": "435668.697459",
+   "name": "Swvl",
+   "first_seen": "09:38"
+  },
+  "AIIR": {
+   "pct": 10.96,
+   "last": 8.855,
+   "prev_close": 7.98,
+   "vol": "2109.95504",
+   "name": "Air Global PLC",
+   "first_seen": "09:38"
+  },
+  "TP": {
+   "pct": 11.58,
+   "last": 8.0,
+   "prev_close": 7.17,
+   "vol": "5548.81101",
+   "name": "Ticketplus Ltd.",
+   "first_seen": "09:38"
+  },
+  "LVLU": {
+   "pct": 10.1,
+   "last": 14.5,
+   "prev_close": 13.17,
+   "vol": "26119.907279",
+   "name": "Lulu's Fashion Lounge",
+   "first_seen": "09:52"
+  },
+  "TII": {
+   "pct": 12.24,
+   "last": 3.21,
+   "prev_close": 2.86,
+   "vol": "148361.643777",
+   "name": "Titan Mining Corporation",
+   "first_seen": "09:59"
   }
  },
  "halal_fail": [],
