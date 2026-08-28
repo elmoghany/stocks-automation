@@ -1,0 +1,119 @@
+{
+"data": {
+"result": {
+"total_items": 21,
+"results": [
+{
+"ticker": "AEMD",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.3318433179723502",
+"Last": "2.8901",
+"Name": "Aethlon Medical",
+"Volume": "3.5745392201578e+07",
+"Symbol": "AEMD"
+}
+},
+{
+"ticker": "QNRX",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.3187390882638214",
+"Last": "6.7981",
+"Name": "Quoin Pharmaceuticals",
+"Volume": "2.5039721510349e+07",
+"Symbol": "QNRX"
+}
+},
+{
+"ticker": "SWVL",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.24434389140271495",
+"Last": "2.75",
+"Name": "Swvl",
+"Volume": "1.087970798746e+06",
+"Symbol": "SWVL"
+}
+},
+{
+"ticker": "XPON",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.2421455457967379",
+"Last": "9.8999",
+"Name": "Expion Energy",
+"Volume": "3.327453509745e+06",
+"Symbol": "XPON"
+}
+},
+{
+"ticker": "RADX",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.20420353982300887",
+"Last": "2.7215",
+"Name": "Radiopharm Theranostics",
+"Volume": "198341.3477",
+"Symbol": "RADX"
+}
+},
+{
+"ticker": "ESTC",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.18993312634344403",
+"Last": "99.645",
+"Name": "Elastic N.V.",
+"Volume": "3.551966708435e+06",
+"Symbol": "ESTC"
+}
+},
+{
+"ticker": "SOLS",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1709265175718849",
+"Last": "65.97",
+"Name": "Solstice Advanced Materials",
+"Volume": "5.082951822483e+06",
+"Symbol": "SOLS"
+}
+},
+{
+"ticker": "GAP",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.14814814814814825",
+"Last": "23.87",
+"Name": "Gap",
+"Volume": "1.0544138731264e+07",
+"Symbol": "GAP"
+}
+},
+{
+"ticker": "ZSTK",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12585034013605445",
+"Last": "6.62",
+"Name": "ZeroStack Corp.",
+"Volume": "43819.442125",
+"Symbol": "ZSTK"
+}
+},
+{
+"ticker": "PD",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1045130641330165",
+"Last": "13.95",
+"Name": "PagerDuty",
+"Volume": "637334.227711",
+"Symbol": "PD"
+}
+}
+]
+}
+}
+}

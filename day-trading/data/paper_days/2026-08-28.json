@@ -87,7 +87,9 @@
     "MODD",
     "NA",
     "NABL",
+    "PD",
     "QNRX",
+    "RADX",
     "SOLS",
     "SWVL",
     "TII",
@@ -287,6 +289,20 @@
         "TII"
       ],
       "note": "TII is the first and only halal PASS of the session. Armable on compliance, then VETOED on both spread (0.631-0.945pct vs 0.50pct cap) and depth (875 vs 4,673 shares). Fill-arming was clean. Watching for a ratchet re-arm on a tighter book, the ANGX Day-8 pattern."
+    },
+    {
+      "time_et": "10:15",
+      "state": "FLAT (post-open)",
+      "scan_rows": 21,
+      "dropped_funds": 11,
+      "crossed_latched": 27,
+      "ratios_pass": 4,
+      "armable": 1,
+      "new": [
+        "PD",
+        "RADX"
+      ],
+      "note": "TII dropped OFF the scan (faded to +8.2pct) but remains the day TOP and only armable name via the latch. 19 names now sit in the latched-but-off-scan set - the crossed-set rule is doing most of the discovery work this session."
     }
   ],
   "halal": {
@@ -310,7 +326,9 @@
       "MODD",
       "NA",
       "NABL",
+      "PD",
       "QNRX",
+      "RADX",
       "SOLS",
       "SWVL",
       "TNON",
@@ -338,7 +356,9 @@
       "BEKE": "loan 77.27 / cash 213.64 / combined 290.91. KE Holdings (Beike), $21B Chinese housing-transaction platform, avg vol 4.4M. Question 2 is independently doubtful (the Emerging and Other Services segment explicitly includes a FINANCIAL SERVICE business, undisclosed share), but the ratios settle it first.",
       "TNON": "loan 147.55 / cash 139.39 / combined 286.94. Tenon Medical, $3.3M SI-joint device maker, 26 employees, pb -0.34 (negative book). Ratios settle it before the negative-book blind spot needs invoking.",
       "SWVL": "loan 3.22 / cash 18.98 / combined 22.19. Swvl Holdings, $25.7M Dubai mass-transit and shared-mobility operator. BUSINESS IS CLEANLY PERMISSIBLE (public transport) - refused only on financing, and only just: combined 22.19 against a 20 cap. Second-nearest miss of the day after MODD.",
-      "LVLU": "loan 70.93 / cash 17.87 / combined 88.80. Lulu's Fashion Lounge, $41.6M online womens apparel retailer. Plain retail is a permissible business (protocol says so explicitly) - refused purely on leverage. pb -25.12, i.e. deeply negative book value, so the ratio FAIL and the negative-book blind spot point the same way here."
+      "LVLU": "loan 70.93 / cash 17.87 / combined 88.80. Lulu's Fashion Lounge, $41.6M online womens apparel retailer. Plain retail is a permissible business (protocol says so explicitly) - refused purely on leverage. pb -25.12, i.e. deeply negative book value, so the ratio FAIL and the negative-book blind spot point the same way here.",
+      "PD": "loan 38.01 / cash 40.88 / combined 78.89. PagerDuty, $1.09B incident-management SaaS. Permissible business, refused on financing.",
+      "RADX": "loan 0.00 / cash 92.60. Radiopharm Theranostics, $39M pre-clinical radiopharma (Carlton, Australia). Cash dwarfs mcap - typical clinical-stage microcap."
     },
     "haram_industry_FAIL": {
       "HYNE": "Hoyne Bancorp - BANK. Question 1 not even reached.",
@@ -577,7 +597,8 @@
     "suggested_fix": "halal_check should convert statement figures to USD (or convert mcap to the filing currency) before taking ratios. Until then, treat a >100pct cash_pct on a large-cap foreign filer as a UNIT-MISMATCH SUSPECT rather than a meaningful number - and note it can only mask a would-be PASS, so no past FAIL needs re-opening for safety, only for completeness."
   },
   "data_hygiene": {
-    "EROK_mcap_disagreement": "Scan Market cap column read 6.52e+08 but get_equity_fundamentals returned 3.26e+09 (5x). Used the fundamentals value, which is the protocol source for the halal denominator. The scan column looks float-based (float 23.9M x ~27.6 = 6.6e8) while fundamentals uses shares outstanding 131.5M. Flagging because a 5x denominator error would swing every ratio: at the scan mcap, EROKs loan_pct would read ~45pct and it would have been refused on question 1 for the wrong reason."
+    "EROK_mcap_disagreement": "Scan Market cap column read 6.52e+08 but get_equity_fundamentals returned 3.26e+09 (5x). Used the fundamentals value, which is the protocol source for the halal denominator. The scan column looks float-based (float 23.9M x ~27.6 = 6.6e8) while fundamentals uses shares outstanding 131.5M. Flagging because a 5x denominator error would swing every ratio: at the scan mcap, EROKs loan_pct would read ~45pct and it would have been refused on question 1 for the wrong reason.",
+    "PD_fail_reason_string_mismatch": "halal_check returned fail_reason 'FAIL (unverified revenue mix: hospitality)' for PagerDuty, a San Francisco incident-management software company with no hospitality line. The VERDICT is correct and independently supported (combined 78.89 vs a 20 cap), but the stated REASON is a mislabeled template. Flagging because a wrong reason string is how a right answer becomes untrustworthy later: anyone auditing this ledger would find 'hospitality' next to PD and reasonably doubt the whole screen. Verdict unaffected today; the reason-string generator should be checked."
   },
   "finding_EROK_fake_gap": {
     "detector": "all-interpolated-bars = fake gap (Paper Day 8 lesson #7)",
