@@ -10,7 +10,19 @@
   "counts_as_traded_day": false,
   "ops": {
     "skeleton_written": true,
-    "capability_probe": null
+    "skeleton_commit": "592e425",
+    "capability_probe": {
+      "run_at_utc": "2026-08-28T10:20:48Z",
+      "run_at_et": "2026-08-28T06:20:48",
+      "verdict": "ALL PASS - session is CAPABLE (not merely live)",
+      "python": {"result": "PASS", "detail": "python -c print(1) -> 1, exit 0"},
+      "git": {"result": "PASS", "detail": "git status --short exit 0; skeleton commit 592e425 succeeded"},
+      "mcp_market_data": {
+        "result": "PASS",
+        "detail": "get_equity_quotes SPY returned live quote; bid 770.87 / ask 770.93, venue_bid_time 2026-08-28T10:20:48Z (current, premarket)",
+        "spy_prev_close": 771.10
+      }
+    }
   },
   "errors": [],
   "notes": []
