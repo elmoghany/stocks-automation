@@ -1,18 +1,18 @@
 {
  "candidates": {
   "QNRX": {
-   "pct": 27.26,
-   "last": 6.56,
+   "pct": 20.27,
+   "last": 6.2,
    "prev_close": 5.155,
-   "vol": "2.6278064144523e+07",
+   "vol": "2.7349350340401e+07",
    "name": "Quoin Pharmaceuticals",
    "first_seen": "06:35"
   },
   "ESTC": {
-   "pct": 17.64,
-   "last": 98.515,
+   "pct": 16.65,
+   "last": 97.685,
    "prev_close": 83.74,
-   "vol": "4.46626719991e+06",
+   "vol": "5.018061928641e+06",
    "name": "Elastic N.V.",
    "first_seen": "06:35"
   },
@@ -33,10 +33,10 @@
    "first_seen": "06:35"
   },
   "GAP": {
-   "pct": 14.02,
-   "last": 23.705,
+   "pct": 14.07,
+   "last": 23.715,
    "prev_close": 20.79,
-   "vol": "1.2730846548576e+07",
+   "vol": "1.4088920179046e+07",
    "name": "Gap",
    "first_seen": "06:35"
   },
@@ -105,10 +105,10 @@
    "first_seen": "06:53"
   },
   "SOLS": {
-   "pct": 15.74,
-   "last": 65.2075,
+   "pct": 15.3,
+   "last": 64.96,
    "prev_close": 56.34,
-   "vol": "6.448964355998e+06",
+   "vol": "7.628718405354e+06",
    "name": "Solstice Advanced Materials",
    "first_seen": "06:53"
   },
@@ -161,10 +161,10 @@
    "first_seen": "09:31"
   },
   "SWVL": {
-   "pct": 24.91,
-   "last": 2.7606,
+   "pct": 25.91,
+   "last": 2.7826,
    "prev_close": 2.21,
-   "vol": "1.504578099831e+06",
+   "vol": "1.695963545398e+06",
    "name": "Swvl",
    "first_seen": "09:38"
   },
@@ -193,10 +193,10 @@
    "first_seen": "09:52"
   },
   "TII": {
-   "pct": 10.49,
-   "last": 3.16,
+   "pct": 10.84,
+   "last": 3.17,
    "prev_close": 2.86,
-   "vol": "360648.833343",
+   "vol": "459352.833343",
    "name": "Titan Mining Corporation",
    "first_seen": "09:59"
   },
@@ -204,7 +204,7 @@
    "pct": 10.62,
    "last": 2.5,
    "prev_close": 2.26,
-   "vol": "226279.267044",
+   "vol": "228122.267044",
    "name": "Radiopharm Theranostics",
    "first_seen": "10:15"
   },
@@ -217,20 +217,36 @@
    "first_seen": "10:15"
   },
   "CABO": {
-   "pct": 10.63,
-   "last": 24.88,
+   "pct": 11.36,
+   "last": 25.045,
    "prev_close": 22.49,
-   "vol": "39645.451822",
+   "vol": "59467.664278",
    "name": "Cable One",
    "first_seen": "10:43"
   },
   "APMD": {
-   "pct": 10.2,
-   "last": 31.65,
+   "pct": 12.33,
+   "last": 32.26,
    "prev_close": 28.72,
-   "vol": "147235.774608",
+   "vol": "236457.356539",
    "name": "Apnimed, Inc.",
    "first_seen": "10:43"
+  },
+  "FEMY": {
+   "pct": 11.83,
+   "last": 3.12,
+   "prev_close": 2.79,
+   "vol": "139096.007702",
+   "name": "Femasys",
+   "first_seen": "11:17"
+  },
+  "WBTN": {
+   "pct": 10.14,
+   "last": 10.97,
+   "prev_close": 9.96,
+   "vol": "167569.784012",
+   "name": "WEBTOON Entertainment",
+   "first_seen": "11:17"
   }
  },
  "halal_fail": [],

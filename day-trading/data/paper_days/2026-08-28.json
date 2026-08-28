@@ -83,6 +83,7 @@
     "DXR",
     "EROK",
     "ESTC",
+    "FEMY",
     "GAP",
     "HYNE",
     "LVLU",
@@ -98,6 +99,7 @@
     "TNON",
     "TP",
     "UMC",
+    "WBTN",
     "YDES",
     "ZSTK"
   ],
@@ -351,6 +353,23 @@
         "APMD"
       ],
       "note": "TII RE-CROSSED +10pct (3.16, +10.49pct) with volume up from 150,777 to 360,648 and rvol 1.47. Depth improved enough to clear the 25pct floor for the first time, but the spread widened back to 2 ticks and vetoed."
+    },
+    {
+      "time_et": "11:17",
+      "state": "FLAT with ticket 1 ARMED on TII",
+      "scan_rows": 28,
+      "dropped_funds": 12,
+      "crossed_latched": 31,
+      "ratios_pass": 5,
+      "armable": 1,
+      "new": [
+        "FEMY",
+        "WBTN"
+      ],
+      "non_equity_dropped": [
+        "TRUMP (instrument_type CRYPTO)"
+      ],
+      "note": "TII armed order still resting; max post-arm high 3.21 vs the 3.2262 trigger, no touch."
     }
   ],
   "halal": {
@@ -370,6 +389,7 @@
       "DXR",
       "EROK",
       "ESTC",
+      "FEMY",
       "GAP",
       "HYNE",
       "LVLU",
@@ -384,6 +404,7 @@
       "TNON",
       "TP",
       "UMC",
+      "WBTN",
       "YDES",
       "ZSTK"
     ],
@@ -410,7 +431,9 @@
       "PD": "loan 38.01 / cash 40.88 / combined 78.89. PagerDuty, $1.09B incident-management SaaS. Permissible business, refused on financing.",
       "RADX": "loan 0.00 / cash 92.60. Radiopharm Theranostics, $39M pre-clinical radiopharma (Carlton, Australia). Cash dwarfs mcap - typical clinical-stage microcap.",
       "CABO": "loan 2162.57 / cash 117.73 / combined 2280.30. Cable One - the most extreme financing FAIL of the campaign. Its debt is ~21x a market cap that has collapsed from a $180.74 52wk high to $24.88 (-86pct). Question 2 would ALSO have been doubtful (Sparklight cable television is entertainment distribution with no disclosed <5pct split, alongside permissible broadband), but the ratios settle it long before that matters.",
-      "APMD": "loan 3.55 / cash 24.91 / combined 28.46. Apnimed, $1.32B clinical-stage sleep-apnea drug developer. Permissible business; refused because a pre-revenue biotech holding a large cash pile breaches CASH>10 + COMBINED>20. pb -3.76 (negative book) is a second flag, but the ratio FAIL is sufficient."
+      "APMD": "loan 3.55 / cash 24.91 / combined 28.46. Apnimed, $1.32B clinical-stage sleep-apnea drug developer. Permissible business; refused because a pre-revenue biotech holding a large cash pile breaches CASH>10 + COMBINED>20. pb -3.76 (negative book) is a second flag, but the ratio FAIL is sufficient.",
+      "FEMY": "loan 18.09 / cash 20.61 / combined 38.71. Femasys, $26.1M reproductive-healthcare device maker. Permissible business, refused on financing.",
+      "WBTN": "loan 1.37 / cash 40.70 / combined 42.07. WEBTOON Entertainment, $1.49B digital storytelling platform. Question 2 would ALSO be doubtful - a global comics/serialised-fiction platform is entertainment content, and no <5pct split is disclosed - but CASH>10 + COMBINED>20 settles it on question 1 first."
     },
     "haram_industry_FAIL": {
       "HYNE": "Hoyne Bancorp - BANK. Question 1 not even reached.",
@@ -760,7 +783,14 @@
   },
   "data_hygiene": {
     "EROK_mcap_disagreement": "Scan Market cap column read 6.52e+08 but get_equity_fundamentals returned 3.26e+09 (5x). Used the fundamentals value, which is the protocol source for the halal denominator. The scan column looks float-based (float 23.9M x ~27.6 = 6.6e8) while fundamentals uses shares outstanding 131.5M. Flagging because a 5x denominator error would swing every ratio: at the scan mcap, EROKs loan_pct would read ~45pct and it would have been refused on question 1 for the wrong reason.",
-    "PD_fail_reason_string_mismatch": "halal_check returned fail_reason 'FAIL (unverified revenue mix: hospitality)' for PagerDuty, a San Francisco incident-management software company with no hospitality line. The VERDICT is correct and independently supported (combined 78.89 vs a 20 cap), but the stated REASON is a mislabeled template. Flagging because a wrong reason string is how a right answer becomes untrustworthy later: anyone auditing this ledger would find 'hospitality' next to PD and reasonably doubt the whole screen. Verdict unaffected today; the reason-string generator should be checked."
+    "PD_fail_reason_string_mismatch": "halal_check returned fail_reason 'FAIL (unverified revenue mix: hospitality)' for PagerDuty, a San Francisco incident-management software company with no hospitality line. The VERDICT is correct and independently supported (combined 78.89 vs a 20 cap), but the stated REASON is a mislabeled template. Flagging because a wrong reason string is how a right answer becomes untrustworthy later: anyone auditing this ledger would find 'hospitality' next to PD and reasonably doubt the whole screen. Verdict unaffected today; the reason-string generator should be checked.",
+    "TRUMP_crypto_in_equity_scan": {
+      "observation": "The 11:17 scan returned a row with ticker TRUMP, name \"OFFICIAL TRUMP\", and instrument_type CRYPTO - at +10.76pct on 1.44M volume.",
+      "why_it_matters": "C37 eligibility requires COMMON STOCK. A crypto token is not eligible, and it is not a fund either, so the FUND_PAT / SPAC_PAT name filters in scan_sweep.py would NOT have dropped it. It only got excluded because instrument_type was read by hand.",
+      "gap": "scan_sweep.py filters on NAME patterns and drop-lists, but never checks instrument_type. Any non-EQUITY row that does not look like a fund by name passes straight through into the candidate pool.",
+      "suggested_fix": "Add an explicit instrument_type != EQUITY drop to scan_sweep.py and count it in the dropped tally, the same way funds and SPACs are counted. Cheap, and it closes a category the name filters structurally cannot see.",
+      "todays_impact": "None - TRUMP was excluded manually and never entered the candidate pool. Recording it as a latent defect, not an incident."
+    }
   },
   "finding_EROK_fake_gap": {
     "detector": "all-interpolated-bars = fake gap (Paper Day 8 lesson #7)",

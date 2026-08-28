@@ -1,0 +1,174 @@
+{
+"data": {
+"result": {
+"total_items": 27,
+"results": [
+{
+"ticker": "AEMD",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.2764976958525346",
+"Last": "2.77",
+"Name": "Aethlon Medical",
+"Volume": "4.0214620626368e+07",
+"Symbol": "AEMD"
+}
+},
+{
+"ticker": "SWVL",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.2590950226244344",
+"Last": "2.7826",
+"Name": "Swvl",
+"Volume": "1.695963545398e+06",
+"Symbol": "SWVL"
+}
+},
+{
+"ticker": "QNRX",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.20271580989330745",
+"Last": "6.2",
+"Name": "Quoin Pharmaceuticals",
+"Volume": "2.7349350340401e+07",
+"Symbol": "QNRX"
+}
+},
+{
+"ticker": "ESTC",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.16652734654884174",
+"Last": "97.685",
+"Name": "Elastic N.V.",
+"Volume": "5.018061928641e+06",
+"Symbol": "ESTC"
+}
+},
+{
+"ticker": "SCTX",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.15932732316227471",
+"Last": "33.435",
+"Name": "Scribe Therapeutics",
+"Volume": "94581.310464",
+"Symbol": "SCTX"
+}
+},
+{
+"ticker": "SOLS",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.15299964501242438",
+"Last": "64.96",
+"Name": "Solstice Advanced Materials",
+"Volume": "7.628718405354e+06",
+"Symbol": "SOLS"
+}
+},
+{
+"ticker": "GAP",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.14069264069264073",
+"Last": "23.715",
+"Name": "Gap",
+"Volume": "1.4088920179046e+07",
+"Symbol": "GAP"
+}
+},
+{
+"ticker": "APMD",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12325905292479106",
+"Last": "32.26",
+"Name": "Apnimed, Inc.",
+"Volume": "236457.356539",
+"Symbol": "APMD"
+}
+},
+{
+"ticker": "FEMY",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11827956989247314",
+"Last": "3.12",
+"Name": "Femasys",
+"Volume": "139096.007702",
+"Symbol": "FEMY"
+}
+},
+{
+"ticker": "XPON",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11731493099121702",
+"Last": "8.905",
+"Name": "Expion Energy",
+"Volume": "7.06530615882e+06",
+"Symbol": "XPON"
+}
+},
+{
+"ticker": "CABO",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11360604713205885",
+"Last": "25.045",
+"Name": "Cable One",
+"Volume": "59467.664278",
+"Symbol": "CABO"
+}
+},
+{
+"ticker": "TII",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10839160839160841",
+"Last": "3.17",
+"Name": "Titan Mining Corporation",
+"Volume": "459352.833343",
+"Symbol": "TII"
+}
+},
+{
+"ticker": "RADX",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10619469026548684",
+"Last": "2.5",
+"Name": "Radiopharm Theranostics",
+"Volume": "228122.267044",
+"Symbol": "RADX"
+}
+},
+{
+"ticker": "FTCI",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10288065843621398",
+"Last": "2.68",
+"Name": "FTC Solar",
+"Volume": "289052.140505",
+"Symbol": "FTCI"
+}
+},
+{
+"ticker": "WBTN",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10140562248995981",
+"Last": "10.97",
+"Name": "WEBTOON Entertainment",
+"Volume": "167569.784012",
+"Symbol": "WBTN"
+}
+}
+]
+}
+}
+}
