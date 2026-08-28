@@ -9,7 +9,7 @@
     "honest_baseline": -163,
     "note": "$1,517/traded day RETIRED per C37F 2026-08-23; score primarily vs the -$163/day honest baseline."
   },
-  "status": "FLAT - no position at any point today",
+  "status": "CLOSED",
   "counts_as_traded_day": false,
   "config": {
     "tickets": "flat $15,000, 7th/last $10,000, $100,000/day cap",
@@ -1067,5 +1067,28 @@
     "honest_baseline_per_day": -163,
     "vs_baseline_today": 163.0,
     "note": "Day 18 was an ALL-VETO day: 0 tickets filled, P&L $0.00, counts_as_traded_day FALSE. The denominator is UNCHANGED at 15 scored days and cumulative stays -$704.97 / -$47.00 per day. A flat day is not a loss and must not be averaged in as one - C37 itself trades ~419 of ~432 days, so all-veto days are a modelled property of the champion. Against the -$163/day honest baseline, doing nothing was worth +$163 relative to what the backtest expects of an average day."
+  },
+  "close_out": {
+    "session_closed_et": "15:01",
+    "final_state": "FLAT - no position held at any point today",
+    "tickets_filled": 0,
+    "trades": 0,
+    "pnl_day": 0.0,
+    "real_orders_placed": 0,
+    "flatten_ladder_1457": "NOT INVOKED - no position existed, so there was nothing to flatten. The 14:57/14:59 ladder had no work to do.",
+    "outage_rules": "NOT INVOKED - continuous monitoring 06:20-15:01 ET, zero coverage gaps.",
+    "tii_final": {
+      "last": 3.055,
+      "time_et": "15:01:37",
+      "gain_vs_prev_close_pct": 6.82,
+      "trigger_never_touched": 3.2262,
+      "session_high": 3.2262,
+      "note": "TII closed at 3.055, +6.82pct on the day, having peaked at 3.2262 at 10:00 ET before the order was armed at 11:00."
+    },
+    "counterfactual_clearly_labelled_hindsight": {
+      "what": "Had the 3.2262 stop filled and been held to a 15:00 flatten near 3.055, the ticket would have lost roughly (3.055-3.2262)/3.2262 = -5.31pct on 1,208 shares = about -$207 before costs.",
+      "status": "HINDSIGHT ONLY. This is NOT credited, NOT counted, and does NOT make the no-fill a good decision - the order was armed correctly on the gates as they stood at 11:00 and simply was not touched. Recorded because it runs AGAINST self-flattery: the days non-event was financially favourable, and saying so is the honest direction to err.",
+      "why_it_is_allowed": "The prohibition is on crediting hindsight ENTRIES. This credits nothing; it prices an order that genuinely existed and genuinely did not fill."
+    }
   }
 }

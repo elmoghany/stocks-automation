@@ -10,7 +10,7 @@ ARMED (TII, 1,208 sh @ 3.2262) and never touched. **`counts_as_traded_day: false
 Headless launch clean again; capability probe (python / git-write / MCP) all green
 at 06:20. Second consecutive session where the Day-16 `--allowedTools` fix held.
 
-**36 crossers. 32 failed halal. 4 passed. 3 of those 4 had no 7AM print.**
+**39 crossers. 35 failed halal. 4 passed. 3 of those 4 had no 7AM print.**
 
 ### 1. The screen said PASS on two haram businesses. Both were caught by hand.
 
@@ -149,7 +149,7 @@ before I caught it.
 
 ### 9. The honest read
 
-**The halal gate, not the entry logic, decided this session.** 32 of 36 crossers
+**The halal gate, not the entry logic, decided this session.** 35 of 39 crossers
 were refused on compliance before any market mechanic was consulted; of the 4
 survivors, 3 died on a missing 7AM print, and the last was armed correctly and
 simply never traded through its level. The liquid book was again the levered book
