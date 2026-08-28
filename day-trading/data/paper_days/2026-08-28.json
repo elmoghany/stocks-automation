@@ -623,6 +623,18 @@
         "ticks": 2,
         "verdict": "SPREAD VETO - ENTRY REFUSED",
         "depth_same_instant": "PASS - 3,040 sh to the cap (65.4pct of a 4,650-share ticket). Depth has now passed twice running; spread has failed twice running. Spread is the binding rule on TII since 10:43."
+      },
+      {
+        "time_et": "11:00",
+        "symbol": "TII",
+        "context": "ARMING ticket 1 - Trigger A ratchet stop-buy at 3.2262",
+        "inside_bid": 3.19,
+        "inside_ask": 3.2,
+        "spread_pct": 0.313,
+        "cap_pct": 0.5,
+        "ticks": 1,
+        "verdict": "PASS - entry ARMED",
+        "note": "NBBO and L2 agreed exactly at this snapshot."
       }
     ],
     "depth": [
@@ -668,6 +680,17 @@
         "pct_of_intended": 73.2,
         "verdict": "PASS (with ticket REDUCTION to 3,406 sh / ~$10,988) - depth did NOT veto. First time today the book could have absorbed a real ticket.",
         "note": "The 3.24 level alone holds 2,052 shares. Depth improved because TII volume more than doubled (150,777 -> 360,648) between 10:04 and 10:43."
+      },
+      {
+        "time_et": "11:00",
+        "symbol": "TII",
+        "context": "ARMING ticket 1",
+        "trigger": 3.2262,
+        "limit_ceiling": 3.2423,
+        "cumulative_ask_size_to_ceiling": 1208,
+        "intended_shares": 4649,
+        "pct_of_intended": 26.0,
+        "verdict": "PASS with ticket REDUCTION to 1,208 sh - entry ARMED"
       }
     ],
     "fill_arming_chase": [
@@ -684,6 +707,14 @@
         "last": 3.16,
         "trigger": 3.2262,
         "verdict": "PASS - clean forward stop, last is 2.1pct below the ratchet trigger."
+      },
+      {
+        "time_et": "11:00",
+        "symbol": "TII",
+        "last": 3.195,
+        "bid": 3.19,
+        "trigger": 3.2262,
+        "verdict": "PASS - re-quoted immediately before arming; last AND bid both below the trigger, so the stop was a legitimate forward stop. Entry ARMED."
       }
     ]
   },
@@ -945,5 +976,30 @@
     "halal_PASS": 4,
     "armable_after_calm_gap": 1,
     "detail": "TII, TREO, COPR and BRAI all pass BOTH halal questions. TREO, COPR and BRAI all fail CALM-GAP for the same reason - no 7AM print - and all three completion attempts against Polygon returned nothing. TII is the only name of 36 crossers that is both compliant and mechanically eligible."
+  },
+  "veto_rates": {
+    "_scope": "ALL veto decisions today were POST-OPEN. There were ZERO premarket arming decisions because no name passed the halal gate before 09:30 - so todays premarket veto rate is UNDEFINED, not 100pct. That distinction matters: Day 7 recorded 90-100pct premarket and Day 17 recorded 2/3, and today contributes no premarket observation at all.",
+    "spread": {
+      "decisions": 5,
+      "vetoed": 3,
+      "rate_pct": 60.0,
+      "modelled_optimum": "50-65pct",
+      "verdict": "IN BAND at 60.0 pct - the 0.50pct cap looks correctly calibrated post-open on this name.",
+      "caveat": "n=5, all on ONE symbol. A rate from a single name is an observation, not a calibration."
+    },
+    "depth": {
+      "decisions": 4,
+      "vetoed": 2,
+      "rate_pct": 50.0,
+      "modelled_optimum": "NEVER MODELLED - the V-series 50-65pct band speaks to the SPREAD veto only",
+      "verdict": "50.0 pct. Depth was the binding rule on both early attempts and the reason the eventual ticket was cut 74pct."
+    },
+    "fill_arming_chase": {
+      "decisions": 3,
+      "vetoed": 0,
+      "rate_pct": 0.0,
+      "verdict": "0.0 pct - no chase veto fired today. Every arming candidate had last BELOW the ratchet trigger, so no stop was ever a disguised market order."
+    },
+    "why_counted_separately": "Day-9 ruling. A single blended rate would have read 5 of 12 decisions vetoed and hidden that spread and depth bound at different moments on the same name, and that fill-arming never bound at all."
   }
 }
