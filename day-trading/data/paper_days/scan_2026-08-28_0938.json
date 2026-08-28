@@ -1,0 +1,119 @@
+{
+"data": {
+"result": {
+"total_items": 18,
+"results": [
+{
+"ticker": "QNRX",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.5402521823472357",
+"Last": "7.94",
+"Name": "Quoin Pharmaceuticals",
+"Volume": "1.869724274486e+07",
+"Symbol": "QNRX"
+}
+},
+{
+"ticker": "AEMD",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.39861751152073743",
+"Last": "3.035",
+"Name": "Aethlon Medical",
+"Volume": "2.156467836855e+07",
+"Symbol": "AEMD"
+}
+},
+{
+"ticker": "ESTC",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.23722235490804885",
+"Last": "103.605",
+"Name": "Elastic N.V.",
+"Volume": "1.477310674211e+06",
+"Symbol": "ESTC"
+}
+},
+{
+"ticker": "GAP",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.18855218855218864",
+"Last": "24.71",
+"Name": "Gap",
+"Volume": "4.53250358308e+06",
+"Symbol": "GAP"
+}
+},
+{
+"ticker": "SOLS",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1737664181753637",
+"Last": "66.13",
+"Name": "Solstice Advanced Materials",
+"Volume": "2.088400865676e+06",
+"Symbol": "SOLS"
+}
+},
+{
+"ticker": "SWVL",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.17375565610859725",
+"Last": "2.594",
+"Name": "Swvl",
+"Volume": "121058.689376",
+"Symbol": "SWVL"
+}
+},
+{
+"ticker": "AFRM",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.15718157181571826",
+"Last": "89.67",
+"Name": "Affirm",
+"Volume": "4.516326854509e+06",
+"Symbol": "AFRM"
+}
+},
+{
+"ticker": "AIIR",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12406015037593987",
+"Last": "8.97",
+"Name": "Air Global PLC",
+"Volume": "1596.825057",
+"Symbol": "AIIR"
+}
+},
+{
+"ticker": "TP",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11576011157601117",
+"Last": "8",
+"Name": "Ticketplus Ltd.",
+"Volume": "5004.784316",
+"Symbol": "TP"
+}
+},
+{
+"ticker": "NABL",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10126582278480999",
+"Last": "4.35",
+"Name": "N-able",
+"Volume": "421079.366659",
+"Symbol": "NABL"
+}
+}
+]
+}
+}
+}
