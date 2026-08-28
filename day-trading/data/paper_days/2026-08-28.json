@@ -518,10 +518,42 @@
       "in_champion_buy_set": true,
       "action": "EVALUATED INSIDE THE FRESHNESS WINDOW, THEN VETOED ON DEPTH",
       "note": "First [TAKEABLE NOW] Trigger C of the campaign to be acted on within its window. Loop ordering was correct per the Day-13 rule: fetch bars -> append -> run trigger -> READ TAG -> then quote the book. No wait was inserted between the trigger call and reading its tag."
+    },
+    {
+      "time_et": "10:11",
+      "symbol": "TII",
+      "pattern": "hammer",
+      "fired_at": "10:03",
+      "tag": "STALE (8m old) -- DO NOT ENTER",
+      "action": "NOT TAKEN"
+    },
+    {
+      "time_et": "10:11",
+      "symbol": "TII",
+      "pattern": "hammer",
+      "fired_at": "10:04",
+      "tag": "STALE (7m old) -- DO NOT ENTER",
+      "action": "NOT TAKEN"
+    },
+    {
+      "time_et": "10:11",
+      "symbol": "TII",
+      "pattern": "tweezer_bottom",
+      "fired_at": "10:08",
+      "tag": "STALE (3m old) -- DO NOT ENTER",
+      "action": "NOT TAKEN"
     }
   ],
   "coverage_gaps": [],
-  "position_log": [],
+  "position_log": [
+    {
+      "time_et": "10:11",
+      "symbol": "TII",
+      "last": 3.11,
+      "gain_vs_prev_close_pct": 8.74,
+      "note": "TII has FADED BELOW the +10pct threshold (3.110 vs prev close 2.86 = +8.74pct) after topping at 3.2262. It REMAINS ELIGIBLE - the +10pct cross is a day-long LATCH, not a live filter. This is parity divergence #2 in action: the scanner will drop TII, the champion does not."
+    }
+  ],
   "errors": [
     "ERROR: thin book - TII 10:01 ET, 875 displayed shares to trigger+0.5pct vs 4,673 intended (18.7pct). Entry skipped.",
     "ERROR: thin book - TII 10:04 ET Trigger C hammer [TAKEABLE NOW]: 190 displayed shares to ask+0.3pct vs 4,732 intended (4.0pct). Entry refused despite a valid, fresh, in-set pattern signal and a passing spread."
@@ -587,5 +619,14 @@
     "observation": "On the SAME name within three minutes, the two book vetoes swapped states. 10:01: spread FAIL (0.631-0.945pct) + depth FAIL (875 sh, 18.7pct). 10:04: spread PASS (0.316pct, one tick) + depth FAIL HARDER (190 sh, 4.0pct).",
     "why_it_matters": "Confirms the Day-9 ruling that these are different rules and must be counted separately - and strengthens it. Day 9 saw LPTH pass spread then fail depth four minutes later; today the same snapshot shows the book TIGHTENING at the touch while simultaneously getting THINNER. A narrow spread is not evidence of liquidity; here it was evidence of a 7-share bid and a 92-share ask.",
     "calibration_consequence": "A single blended veto rate would have recorded todays TII as one veto and hidden which rule bound. The binding rule today was DEPTH, on both attempts, and depth has never been modelled - the 50-65pct V-series optimum speaks only to the spread veto."
+  },
+  "cadence_decision_3": {
+    "time_et": "10:11",
+    "deviation": "TII Trigger C poll ran at ~5-minute intervals, NOT the every-minute cadence the protocol mandates for the current TOP name.",
+    "cost_measured": "A tweezer_bottom fired on the 10:08 close and was already 3m old when read at 10:11 - i.e. it aged out unseen. That is precisely the Day-9 failure the freshness tag exists to expose (7 fires / 0 takeable), and it recurred today because of MY cadence, not the tags.",
+    "honest_scale": "Every-minute polling costs 2 tool calls per minute (bars fetch + append/trigger). Across the remaining 09:30-14:30 window that is ~500 calls, which this single-turn headless session cannot sustain alongside the scan loop.",
+    "action": "Tightening the TII poll to ~2.5 minutes - the closest sustainable approximation - and logging the residual gap rather than hiding it.",
+    "does_it_change_todays_outcome": "Almost certainly NOT, and this is checkable rather than a guess: displayed ask depth to the entry ceiling has been 190-875 shares against a ~4,700-share ticket (4-19pct of intended) at every measurement today. A fresher tag would have produced a takeable signal into a book that still fails the 25pct depth floor, so the entry would have been refused anyway. The cadence gap costs SIGNAL OBSERVATION, not - on this book - a fill.",
+    "caveat": "That reasoning holds only while depth stays this thin. If the book deepens, cadence starts costing real entries."
   }
 }
