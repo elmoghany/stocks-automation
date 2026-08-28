@@ -1,0 +1,229 @@
+{
+"data": {
+"result": {
+"total_items": 66,
+"results": [
+{
+"ticker": "DUKR",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.690909090909091",
+"Last": "9.3",
+"Name": "Duke Robotics Corp.",
+"Volume": "8030.2753",
+"Symbol": "DUKR"
+}
+},
+{
+"ticker": "QNRX",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.4213191076624636",
+"Last": "7.3269",
+"Name": "Quoin Pharmaceuticals",
+"Volume": "33857.830332",
+"Symbol": "QNRX"
+}
+},
+{
+"ticker": "AEMD",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.40539170506912453",
+"Last": "3.0497",
+"Name": "Aethlon Medical",
+"Volume": "1.6549921278175e+07",
+"Symbol": "AEMD"
+}
+},
+{
+"ticker": "BHV",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1914217633042097",
+"Last": "15",
+"Name": "BlackRock Virginia Municipal Bond Trust",
+"Volume": "3937.6338",
+"Symbol": "BHV"
+}
+},
+{
+"ticker": "ESTC",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.17187604490088385",
+"Last": "98.1329",
+"Name": "Elastic N.V.",
+"Volume": "5.251348773367e+06",
+"Symbol": "ESTC"
+}
+},
+{
+"ticker": "NA",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.17033018867924526",
+"Last": "2.4811",
+"Name": "Nano Labs Ltd",
+"Volume": "245088.947209",
+"Symbol": "NA"
+}
+},
+{
+"ticker": "HYNE",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.15142337976983644",
+"Last": "19.01",
+"Name": "Hoyne Bancorp",
+"Volume": "899.1472",
+"Symbol": "HYNE"
+}
+},
+{
+"ticker": "SOLS",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.14927227547035846",
+"Last": "64.75",
+"Name": "Solstice Advanced Materials",
+"Volume": "2.919789108558e+06",
+"Symbol": "SOLS"
+}
+},
+{
+"ticker": "GAP",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1444107744107745",
+"Last": "23.7923",
+"Name": "Gap",
+"Volume": "2.2902181636442e+07",
+"Symbol": "GAP"
+}
+},
+{
+"ticker": "RACC",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.14418604651162797",
+"Last": "24.6",
+"Name": "Research Alliance Corp III",
+"Volume": "17978.282",
+"Symbol": "RACC"
+}
+},
+{
+"ticker": "BEKE",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1364918217710095",
+"Last": "20.15",
+"Name": "KE Holdings",
+"Volume": "3.340128954233e+06",
+"Symbol": "BEKE"
+}
+},
+{
+"ticker": "AFRM",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1302103497225449",
+"Last": "87.58",
+"Name": "Affirm",
+"Volume": "9.529801556633e+06",
+"Symbol": "AFRM"
+}
+},
+{
+"ticker": "CKX",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12676056338028166",
+"Last": "12",
+"Name": "CKX Lands",
+"Volume": "692.2065",
+"Symbol": "CKX"
+}
+},
+{
+"ticker": "YDES",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12144702842377254",
+"Last": "4.34",
+"Name": "YD Bio",
+"Volume": "27045.958549",
+"Symbol": "YDES"
+}
+},
+{
+"ticker": "GSIW",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12052980132450344",
+"Last": "16.92",
+"Name": "Garden Stage Limited",
+"Volume": "6829",
+"Symbol": "GSIW"
+}
+},
+{
+"ticker": "BNR",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11760999999999999",
+"Last": "11.1761",
+"Name": "Burning Rock Biotech",
+"Volume": "6340.89834",
+"Symbol": "BNR"
+}
+},
+{
+"ticker": "CRD.A",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1094108645753634",
+"Last": "14.5",
+"Name": "Crawford & Company Class A",
+"Volume": "36017.0135",
+"Symbol": "CRD.A"
+}
+},
+{
+"ticker": "NABL",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1037974683544304",
+"Last": "4.36",
+"Name": "N-able",
+"Volume": "1.96398260031e+06",
+"Symbol": "NABL"
+}
+},
+{
+"ticker": "UMC",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10120608285264812",
+"Last": "21",
+"Name": "United Microelectronics",
+"Volume": "9.261377835227e+06",
+"Symbol": "UMC"
+}
+},
+{
+"ticker": "DXR",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10444674250258529",
+"Last": "10.68",
+"Name": "Daxor",
+"Volume": "13485",
+"Symbol": "DXR"
+}
+}
+]
+}
+}
+}
