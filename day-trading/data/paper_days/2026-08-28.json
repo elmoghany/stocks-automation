@@ -9,7 +9,7 @@
     "honest_baseline": -163,
     "note": "$1,517/traded day RETIRED per C37F 2026-08-23; score primarily vs the -$163/day honest baseline."
   },
-  "status": "OPEN",
+  "status": "FLAT - no position at any point today",
   "counts_as_traded_day": false,
   "config": {
     "tickets": "flat $15,000, 7th/last $10,000, $100,000/day cap",
@@ -142,7 +142,7 @@
         "halt_check": "quote state = active, has_traded = true. NOTE: get_equity_tradability was NOT called because it requires an account_number that must come from the user and must never be defaulted from get_accounts - so the quote state field was used as the halt proxy. Logging the substitution rather than implying a full tradability check ran."
       },
       "protective_stop_on_fill": "max(entry x 0.92, peak x 0.60) = 2.9681 at a 3.2262 entry - to be placed the instant a fill prints, and never absent while the position is open.",
-      "status": "ARMED, AWAITING TOUCH. Fill requires an intrabar high >= 3.2262.",
+      "status": "CANCELLED UNFILLED at 14:30 ET entry cutoff",
       "fill_watch": {
         "as_of_et": "12:08",
         "max_high_post_arm": 3.21,
@@ -152,7 +152,18 @@
         "gain_pct": 6.5,
         "note": "TII has faded to 3.045 (+6.5pct), now 5.6pct below the 3.2262 trigger. Closest approach remains 3.21 at 15:08Z. Fill looks unlikely absent a sharp reversal."
       },
-      "cancel_rule": "If unfilled at 14:30 ET the resting entry is CANCELLED - the entry cutoff forbids new tickets after 14:30, and a resting stop that fires at 14:45 would be a new ticket taken past the cutoff."
+      "cancel_rule": "If unfilled at 14:30 ET the resting entry is CANCELLED - the entry cutoff forbids new tickets after 14:30, and a resting stop that fires at 14:45 would be a new ticket taken past the cutoff.",
+      "final_fill_check": {
+        "trigger": 3.2262,
+        "max_high_post_arm_1min": 3.21,
+        "max_high_post_arm_30min_agg": 3.1891,
+        "closest_approach": "3.21 at 15:08Z (10:08 ET) - 0.50pct below the trigger",
+        "result": "NO FILL. Price never touched 3.2262 in the 3h30m the order rested.",
+        "granularity_discrepancy": "RH 1-MINUTE bars report a 15:08Z high of 3.210, but the 30-MINUTE aggregation covering 15:00-15:30Z reports a period high of only 3.1891. An aggregated bar should be the max of its constituents, so these disagree. Cited the HIGHER 1-min figure because it is the conservative choice for asserting no-fill: a higher high makes a stop-BUY fill MORE likely, and it still fell 0.50pct short. Verdict unaffected either way. Flagged as a data-hygiene defect worth checking - a live stop test that trusted the 30-min aggregation would under-detect intrabar touches.",
+        "intrabar_semantic": "Tested against each bar HIGH, not against polled price, per the paper-sim resting-order semantic."
+      },
+      "cancelled_at_et": "14:30",
+      "cancel_reason": "Entry cutoff. New tickets are forbidden after 14:30, and a resting stop left armed could fire at 14:45 - that would be a new ticket taken past the deadline. Cancelling is the protocol-correct action, not an optional tidy-up."
     }
   ],
   "cycles": [
@@ -874,6 +885,13 @@
       "last": 3.195,
       "trigger": 3.2262,
       "shares": 1208
+    },
+    {
+      "time_et": "14:30",
+      "symbol": "TII",
+      "event": "CANCELLED unfilled resting entry at the cutoff",
+      "last": 3.065,
+      "trigger": 3.2262
     }
   ],
   "errors": [
