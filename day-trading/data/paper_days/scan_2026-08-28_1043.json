@@ -1,0 +1,163 @@
+{
+"data": {
+"result": {
+"total_items": 25,
+"results": [
+{
+"ticker": "QNRX",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.27255092143549936",
+"Last": "6.56",
+"Name": "Quoin Pharmaceuticals",
+"Volume": "2.6278064144523e+07",
+"Symbol": "QNRX"
+}
+},
+{
+"ticker": "SWVL",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.24914027149321277",
+"Last": "2.7606",
+"Name": "Swvl",
+"Volume": "1.504578099831e+06",
+"Symbol": "SWVL"
+}
+},
+{
+"ticker": "AEMD",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.22350230414746539",
+"Last": "2.655",
+"Name": "Aethlon Medical",
+"Volume": "3.8212089903226e+07",
+"Symbol": "AEMD"
+}
+},
+{
+"ticker": "ESTC",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1764389777883927",
+"Last": "98.515",
+"Name": "Elastic N.V.",
+"Volume": "4.46626719991e+06",
+"Symbol": "ESTC"
+}
+},
+{
+"ticker": "SOLS",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.15739261625843082",
+"Last": "65.2075",
+"Name": "Solstice Advanced Materials",
+"Volume": "6.448964355998e+06",
+"Symbol": "SOLS"
+}
+},
+{
+"ticker": "GAP",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.14021164021164018",
+"Last": "23.705",
+"Name": "Gap",
+"Volume": "1.2730846548576e+07",
+"Symbol": "GAP"
+}
+},
+{
+"ticker": "LVLU",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.13895216400911162",
+"Last": "15",
+"Name": "Lulu's Fashion Lounge",
+"Volume": "89027.806248",
+"Symbol": "LVLU"
+}
+},
+{
+"ticker": "SCTX",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11823855755894591",
+"Last": "32.25",
+"Name": "Scribe Therapeutics",
+"Volume": "58079.495774",
+"Symbol": "SCTX"
+}
+},
+{
+"ticker": "XPON",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1166875784190716",
+"Last": "8.9",
+"Name": "Expion Energy",
+"Volume": "6.643085918125e+06",
+"Symbol": "XPON"
+}
+},
+{
+"ticker": "CABO",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10626945309026237",
+"Last": "24.88",
+"Name": "Cable One",
+"Volume": "39645.451822",
+"Symbol": "CABO"
+}
+},
+{
+"ticker": "RADX",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10619469026548684",
+"Last": "2.5",
+"Name": "Radiopharm Theranostics",
+"Volume": "226279.267044",
+"Symbol": "RADX"
+}
+},
+{
+"ticker": "PD",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10570071258907356",
+"Last": "13.965",
+"Name": "PagerDuty",
+"Volume": "940841.781886",
+"Symbol": "PD"
+}
+},
+{
+"ticker": "TII",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10489510489510499",
+"Last": "3.16",
+"Name": "Titan Mining Corporation",
+"Volume": "360648.833343",
+"Symbol": "TII"
+}
+},
+{
+"ticker": "APMD",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10201949860724234",
+"Last": "31.65",
+"Name": "Apnimed, Inc.",
+"Volume": "147235.774608",
+"Symbol": "APMD"
+}
+}
+]
+}
+}
+}

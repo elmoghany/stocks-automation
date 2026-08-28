@@ -73,9 +73,11 @@
   "crossed_set": [
     "AFRM",
     "AIIR",
+    "APMD",
     "APUS",
     "BEKE",
     "BNR",
+    "CABO",
     "CKX",
     "CRD.A",
     "DXR",
@@ -303,6 +305,20 @@
         "RADX"
       ],
       "note": "TII dropped OFF the scan (faded to +8.2pct) but remains the day TOP and only armable name via the latch. 19 names now sit in the latched-but-off-scan set - the crossed-set rule is doing most of the discovery work this session."
+    },
+    {
+      "time_et": "10:43",
+      "state": "FLAT (post-open)",
+      "scan_rows": 25,
+      "dropped_funds": 11,
+      "crossed_latched": 29,
+      "ratios_pass": 5,
+      "armable": 1,
+      "new": [
+        "CABO",
+        "APMD"
+      ],
+      "note": "TII RE-CROSSED +10pct (3.16, +10.49pct) with volume up from 150,777 to 360,648 and rvol 1.47. Depth improved enough to clear the 25pct floor for the first time, but the spread widened back to 2 ticks and vetoed."
     }
   ],
   "halal": {
@@ -312,9 +328,11 @@
     "FAIL": [
       "AFRM",
       "AIIR",
+      "APMD",
       "APUS",
       "BEKE",
       "BNR",
+      "CABO",
       "CKX",
       "CRD.A",
       "DXR",
@@ -358,7 +376,9 @@
       "SWVL": "loan 3.22 / cash 18.98 / combined 22.19. Swvl Holdings, $25.7M Dubai mass-transit and shared-mobility operator. BUSINESS IS CLEANLY PERMISSIBLE (public transport) - refused only on financing, and only just: combined 22.19 against a 20 cap. Second-nearest miss of the day after MODD.",
       "LVLU": "loan 70.93 / cash 17.87 / combined 88.80. Lulu's Fashion Lounge, $41.6M online womens apparel retailer. Plain retail is a permissible business (protocol says so explicitly) - refused purely on leverage. pb -25.12, i.e. deeply negative book value, so the ratio FAIL and the negative-book blind spot point the same way here.",
       "PD": "loan 38.01 / cash 40.88 / combined 78.89. PagerDuty, $1.09B incident-management SaaS. Permissible business, refused on financing.",
-      "RADX": "loan 0.00 / cash 92.60. Radiopharm Theranostics, $39M pre-clinical radiopharma (Carlton, Australia). Cash dwarfs mcap - typical clinical-stage microcap."
+      "RADX": "loan 0.00 / cash 92.60. Radiopharm Theranostics, $39M pre-clinical radiopharma (Carlton, Australia). Cash dwarfs mcap - typical clinical-stage microcap.",
+      "CABO": "loan 2162.57 / cash 117.73 / combined 2280.30. Cable One - the most extreme financing FAIL of the campaign. Its debt is ~21x a market cap that has collapsed from a $180.74 52wk high to $24.88 (-86pct). Question 2 would ALSO have been doubtful (Sparklight cable television is entertainment distribution with no disclosed <5pct split, alongside permissible broadband), but the ratios settle it long before that matters.",
+      "APMD": "loan 3.55 / cash 24.91 / combined 28.46. Apnimed, $1.32B clinical-stage sleep-apnea drug developer. Permissible business; refused because a pre-revenue biotech holding a large cash pile breaches CASH>10 + COMBINED>20. pb -3.76 (negative book) is a second flag, but the ratio FAIL is sufficient."
     },
     "haram_industry_FAIL": {
       "HYNE": "Hoyne Bancorp - BANK. Question 1 not even reached.",
