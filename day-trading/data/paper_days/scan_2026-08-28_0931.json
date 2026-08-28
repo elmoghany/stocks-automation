@@ -1,0 +1,86 @@
+{
+"data": {
+"result": {
+"total_items": 23,
+"results": [
+{
+"ticker": "QNRX",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.4219010669253152",
+"Last": "7.3299",
+"Name": "Quoin Pharmaceuticals",
+"Volume": "1.5085873686887e+07",
+"Symbol": "QNRX"
+}
+},
+{
+"ticker": "AEMD",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.3732718894009217",
+"Last": "2.98",
+"Name": "Aethlon Medical",
+"Volume": "1.9037621511938e+07",
+"Symbol": "AEMD"
+}
+},
+{
+"ticker": "ESTC",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.26450919512777654",
+"Last": "105.89",
+"Name": "Elastic N.V.",
+"Volume": "510729.533445",
+"Symbol": "ESTC"
+}
+},
+{
+"ticker": "GAP",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.21452621452621456",
+"Last": "25.25",
+"Name": "Gap",
+"Volume": "1.614413352082e+06",
+"Symbol": "GAP"
+}
+},
+{
+"ticker": "SOLS",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.16364927227547033",
+"Last": "65.56",
+"Name": "Solstice Advanced Materials",
+"Volume": "1.220112286264e+06",
+"Symbol": "SOLS"
+}
+},
+{
+"ticker": "AFRM",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1548586914440573",
+"Last": "89.49",
+"Name": "Affirm",
+"Volume": "2.30839024755e+06",
+"Symbol": "AFRM"
+}
+},
+{
+"ticker": "ZSTK",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12414965986394565",
+"Last": "6.61",
+"Name": "ZeroStack Corp.",
+"Volume": "4965.164275",
+"Symbol": "ZSTK"
+}
+}
+]
+}
+}
+}
