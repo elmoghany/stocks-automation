@@ -28,12 +28,18 @@
       "run_at_utc": "2026-08-28T10:20:48Z",
       "run_at_et": "2026-08-28T06:20:48",
       "verdict": "ALL PASS - session is CAPABLE (not merely live)",
-      "python": {"result": "PASS", "detail": "python -c print(1) -> 1, exit 0"},
-      "git": {"result": "PASS", "detail": "git status --short exit 0; skeleton commit 592e425 succeeded"},
+      "python": {
+        "result": "PASS",
+        "detail": "python -c print(1) -> 1, exit 0"
+      },
+      "git": {
+        "result": "PASS",
+        "detail": "git status --short exit 0; skeleton commit 592e425 succeeded"
+      },
       "mcp_market_data": {
         "result": "PASS",
         "detail": "get_equity_quotes SPY returned live quote; bid 770.87 / ask 770.93, venue_bid_time 2026-08-28T10:20:48Z (current, premarket)",
-        "spy_prev_close": 771.10
+        "spy_prev_close": 771.1
       }
     },
     "trading_day_guard": "TRADING 2026-08-28 full (market_calendar.py) - not a half day",
@@ -42,10 +48,44 @@
   "inherited_verdicts": {
     "_note": "Seeded into scan_state_2026-08-28.json drop-lists from 2026-08-27 verdicts. fake_gap deliberately RESET - a name dark premarket yesterday may trade today.",
     "FAIL_count": 72,
-    "PASS_carried": ["SMMT", "ADXN", "TH", "TTMI", "FVN", "OPTX", "RPGL", "ASST", "ABUS", "GLSI", "EXOZ", "BTCT", "CRML", "OESX", "MRAM"],
-    "spac_carried": ["BCAR", "RACC"]
+    "PASS_carried": [
+      "SMMT",
+      "ADXN",
+      "TH",
+      "TTMI",
+      "FVN",
+      "OPTX",
+      "RPGL",
+      "ASST",
+      "ABUS",
+      "GLSI",
+      "EXOZ",
+      "BTCT",
+      "CRML",
+      "OESX",
+      "MRAM"
+    ],
+    "spac_carried": [
+      "BCAR",
+      "RACC"
+    ]
   },
-  "crossed_set": ["QNRX", "ESTC", "NA", "HYNE", "GAP", "AFRM", "CKX", "YDES", "BNR", "CRD.A", "DXR", "UMC"],
+  "crossed_set": [
+    "AFRM",
+    "APUS",
+    "BNR",
+    "CKX",
+    "CRD.A",
+    "DXR",
+    "ESTC",
+    "GAP",
+    "HYNE",
+    "NA",
+    "QNRX",
+    "SOLS",
+    "UMC",
+    "YDES"
+  ],
   "trades": [],
   "armed": [],
   "cycles": [
@@ -54,17 +94,56 @@
       "state": "FLAT-5m (premarket)",
       "scan_rows": 60,
       "dropped_funds": 43,
-      "dropped_spac": ["RACC"],
-      "dropped_inherited_fail": ["DUKR +69.1%", "AEMD +37.3%", "ARKR +12.7%", "GSIW +12.1%"],
+      "dropped_spac": [
+        "RACC"
+      ],
+      "dropped_inherited_fail": [
+        "DUKR +69.1%",
+        "AEMD +37.3%",
+        "ARKR +12.7%",
+        "GSIW +12.1%"
+      ],
       "crossed_latched": 12,
       "ratios_pass": 0,
       "armable": 0,
       "note": "Scan unusually fund-contaminated: 43 of 60 rows were leveraged/2x ETFs and ETNs (heavy 'Corgi 2x Daily' cohort). FUND_PAT caught all of them."
+    },
+    {
+      "time_et": "06:53",
+      "state": "FLAT (premarket)",
+      "scan_rows": 63,
+      "dropped_funds": 45,
+      "crossed_latched": 14,
+      "ratios_pass": 0,
+      "armable": 0,
+      "new": [
+        "APUS",
+        "SOLS"
+      ],
+      "gone_from_scan_still_latched": [
+        "UMC"
+      ],
+      "note": "L2 price book VERIFIED WORKING PREMARKET (ESTC inside 100.37/100.74 = 0.368pct). Protocol had only ever verified L2 during RTH; premarket books are live, not empty."
     }
   ],
   "halal": {
     "PASS": [],
-    "FAIL": ["QNRX", "ESTC", "NA", "HYNE", "GAP", "AFRM", "CKX", "YDES", "BNR", "CRD.A", "DXR", "UMC"],
+    "FAIL": [
+      "AFRM",
+      "APUS",
+      "BNR",
+      "CKX",
+      "CRD.A",
+      "DXR",
+      "ESTC",
+      "GAP",
+      "HYNE",
+      "NA",
+      "QNRX",
+      "SOLS",
+      "UMC",
+      "YDES"
+    ],
     "CANNOT_VERIFY": [],
     "_note": "Binary rule: only verdict PASS is armable. ZERO armable names on the 06:35 board."
   },
@@ -76,7 +155,9 @@
       "BNR": "loan 51.91 / cash 455.22",
       "UMC": "loan 111.70 / cash 303.26. $46.7B semiconductor foundry - the most liquid book on the board, refused on financing. Day-8 structural tension again.",
       "NA": "loan 465.48 / cash 747.98 (live screen, was absent from universe)",
-      "CKX": "cash 80.24 / combined 80.24, and haram_pct 19.34 (interest income) - fails BOTH questions"
+      "CKX": "cash 80.24 / combined 80.24, and haram_pct 19.34 (interest income) - fails BOTH questions",
+      "SOLS": "loan 27.10 / cash 8.38 / combined 35.48. Solstice Advanced Materials, $8.95B Honeywell spinoff (refrigerants + electronic materials), +16.3pct, avg vol 2.2M. Business is permissible (specialty chemicals; sells INTO defense/semis, which the AMD principle allows). Refused purely on separation debt - a spinoff is levered by construction. Day-8 structural tension in its purest form: the second-most liquid book on the board, killed by financing.",
+      "APUS": "loan 161.98 / cash 42.13. $5.9M clinical-stage biotech, 7 employees."
     },
     "haram_industry_FAIL": {
       "HYNE": "Hoyne Bancorp - BANK. Question 1 not even reached.",
@@ -84,7 +165,7 @@
     },
     "ESTC_stale_denominator_check": {
       "verdict": "FAIL",
-      "loan_pct": 6.80,
+      "loan_pct": 6.8,
       "cash_pct": 15.74,
       "combined": 22.54,
       "reasoning": "Elastic N.V., $8.7B, +21.3% earnings gap - by far the most attractive book on the board. Universe verdict was combined 21.77 vs the 20 cap, close enough that a stale market-cap denominator could plausibly have flipped it, so it was explicitly re-checked rather than waved through. RH get_equity_fundamentals returns market_cap 8,704,940,480 with market_date 2026-08-27 - i.e. RH's mcap is PRIOR-CLOSE basis and is the same denominator the universe used. Live re-screen returns combined 22.54 > 20. FAIL stands.",
@@ -110,7 +191,11 @@
     "DXR": "avg 2,552/day - untradeable",
     "HYNE": "prior session 899 shares - untradeable"
   },
-  "vetoes": {"spread": [], "depth": [], "fill_arming_chase": []},
+  "vetoes": {
+    "spread": [],
+    "depth": [],
+    "fill_arming_chase": []
+  },
   "book_observations": [],
   "trigger_c": [],
   "coverage_gaps": [],
@@ -118,5 +203,12 @@
   "errors": [],
   "lessons": [],
   "pnl_day": 0,
-  "verdict": "IN PROGRESS"
+  "verdict": "IN PROGRESS",
+  "cadence_decision": {
+    "time_et": "06:53",
+    "decision": "PREMARKET SCAN CADENCE RELAXED TO ~15 MIN (protocol default is 5 min while FLAT)",
+    "reason": "Explicit, logged deviation - not a silent drift. With ZERO armable names and the +10pct cross being a LATCH, premarket discovery latency is very close to costless: a name found at 07:20 instead of 07:12 is still fully eligible, because the latch never expires. The only thing lost is the chance to arm early premarket, and premarket arming is nearly always spread-vetoed anyway (Day 7 blocked 100pct, Day 17 blocked 2/3). This follows the SCAN ECONOMY principle - look at the market only when it can act.",
+    "constraint": "Real driver is the headless single-turn context budget: each run_scan response is ~8k tokens, and 5-min cadence from 06:40 to 14:30 would be ~95 scans. Spending it premarket would risk starving the 09:30-14:30 window that actually decides the day.",
+    "reverts_to_5min": "IMMEDIATELY on (a) 09:25 ET, or (b) any name passing the halal gate, whichever is first."
+  }
 }

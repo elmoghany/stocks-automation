@@ -1,24 +1,24 @@
 {
  "candidates": {
   "QNRX": {
-   "pct": 42.19,
-   "last": 7.33,
+   "pct": 28.03,
+   "last": 6.6,
    "prev_close": 5.155,
    "vol": "33857.830332",
    "name": "Quoin Pharmaceuticals",
    "first_seen": "06:35"
   },
   "ESTC": {
-   "pct": 21.26,
-   "last": 101.54,
+   "pct": 20.07,
+   "last": 100.55,
    "prev_close": 83.74,
    "vol": "5.251348773367e+06",
    "name": "Elastic N.V.",
    "first_seen": "06:35"
   },
   "NA": {
-   "pct": 16.03,
-   "last": 2.4598,
+   "pct": 18.4,
+   "last": 2.51,
    "prev_close": 2.12,
    "vol": "245088.947209",
    "name": "Nano Labs Ltd",
@@ -33,16 +33,16 @@
    "first_seen": "06:35"
   },
   "GAP": {
-   "pct": 13.82,
-   "last": 23.6636,
+   "pct": 13.85,
+   "last": 23.67,
    "prev_close": 20.79,
    "vol": "2.2902181636442e+07",
    "name": "Gap",
    "first_seen": "06:35"
   },
   "AFRM": {
-   "pct": 12.72,
-   "last": 87.35,
+   "pct": 12.92,
+   "last": 87.5,
    "prev_close": 77.49,
    "vol": "9.529801556633e+06",
    "name": "Affirm",
@@ -95,6 +95,22 @@
    "vol": "9.261377835227e+06",
    "name": "United Microelectronics",
    "first_seen": "06:35"
+  },
+  "APUS": {
+   "pct": 21.27,
+   "last": 4.79,
+   "prev_close": 3.95,
+   "vol": "172292.497566",
+   "name": "Apimeds Pharmaceuticals US",
+   "first_seen": "06:53"
+  },
+  "SOLS": {
+   "pct": 16.26,
+   "last": 65.5,
+   "prev_close": 56.34,
+   "vol": "2.919789108558e+06",
+   "name": "Solstice Advanced Materials",
+   "first_seen": "06:53"
   }
  },
  "halal_fail": [],
