@@ -1,18 +1,18 @@
 {
  "candidates": {
   "QNRX": {
-   "pct": 21.24,
-   "last": 6.25,
+   "pct": 27.04,
+   "last": 6.5491,
    "prev_close": 5.155,
-   "vol": "2.8236240397237e+07",
+   "vol": "2.900985600914e+07",
    "name": "Quoin Pharmaceuticals",
    "first_seen": "06:35"
   },
   "ESTC": {
-   "pct": 17.88,
-   "last": 98.71,
+   "pct": 16.64,
+   "last": 97.675,
    "prev_close": 83.74,
-   "vol": "5.938628124334e+06",
+   "vol": "6.442840676484e+06",
    "name": "Elastic N.V.",
    "first_seen": "06:35"
   },
@@ -33,10 +33,10 @@
    "first_seen": "06:35"
   },
   "GAP": {
-   "pct": 12.82,
-   "last": 23.455,
+   "pct": 13.18,
+   "last": 23.53,
    "prev_close": 20.79,
-   "vol": "1.6301355628654e+07",
+   "vol": "1.7463357762649e+07",
    "name": "Gap",
    "first_seen": "06:35"
   },
@@ -105,10 +105,10 @@
    "first_seen": "06:53"
   },
   "SOLS": {
-   "pct": 14.22,
-   "last": 64.35,
+   "pct": 12.62,
+   "last": 63.4525,
    "prev_close": 56.34,
-   "vol": "9.977133570602e+06",
+   "vol": "1.1562180708196e+07",
    "name": "Solstice Advanced Materials",
    "first_seen": "06:53"
   },
@@ -161,10 +161,10 @@
    "first_seen": "09:31"
   },
   "SWVL": {
-   "pct": 30.31,
-   "last": 2.8799,
+   "pct": 29.87,
+   "last": 2.8702,
    "prev_close": 2.21,
-   "vol": "2.529649513304e+06",
+   "vol": "3.323269863905e+06",
    "name": "Swvl",
    "first_seen": "09:38"
   },
@@ -217,10 +217,10 @@
    "first_seen": "10:15"
   },
   "CABO": {
-   "pct": 11.96,
-   "last": 25.18,
+   "pct": 10.94,
+   "last": 24.95,
    "prev_close": 22.49,
-   "vol": "94602.42391",
+   "vol": "114649.307414",
    "name": "Cable One",
    "first_seen": "10:43"
   },
@@ -233,10 +233,10 @@
    "first_seen": "10:43"
   },
   "FEMY": {
-   "pct": 13.98,
-   "last": 3.18,
+   "pct": 15.95,
+   "last": 3.235,
    "prev_close": 2.79,
-   "vol": "247692.067656",
+   "vol": "361121.617374",
    "name": "Femasys",
    "first_seen": "11:17"
   },
@@ -265,28 +265,52 @@
    "first_seen": "11:57"
   },
   "BANL": {
-   "pct": 10.37,
-   "last": 14.79,
+   "pct": 11.19,
+   "last": 14.9,
    "prev_close": 13.4,
-   "vol": "18665.539423",
+   "vol": "27075.760406",
    "name": "CBL International",
    "first_seen": "11:57"
   },
   "BRAI": {
-   "pct": 12.64,
-   "last": 5.88,
+   "pct": 10.82,
+   "last": 5.785,
    "prev_close": 5.22,
-   "vol": "68222.825262",
+   "vol": "87073.25406",
    "name": "Braiin Limited",
    "first_seen": "12:24"
   },
   "RFL": {
-   "pct": 11.81,
-   "last": 2.65,
+   "pct": 10.55,
+   "last": 2.62,
    "prev_close": 2.37,
-   "vol": "210421.566472",
+   "vol": "245820.860454",
    "name": "Rafael Holdings",
    "first_seen": "12:24"
+  },
+  "JELD": {
+   "pct": 12.79,
+   "last": 2.4588,
+   "prev_close": 2.18,
+   "vol": "1.175018583693e+06",
+   "name": "Jeld-Wen",
+   "first_seen": "13:23"
+  },
+  "GURE": {
+   "pct": 10.23,
+   "last": 3.77,
+   "prev_close": 3.42,
+   "vol": "3816.0205",
+   "name": "Gulf Resources",
+   "first_seen": "13:23"
+  },
+  "TJGC": {
+   "pct": 10.08,
+   "last": 8.74,
+   "prev_close": 7.94,
+   "vol": "294886.843",
+   "name": "TJGC Group Limited Class A",
+   "first_seen": "13:23"
   }
  },
  "halal_fail": [],
@@ -368,6 +392,7 @@
  "cannot_verify": [],
  "spac": [
   "BCAR",
-  "RACC"
+  "RACC",
+  "RFAI"
  ]
 }

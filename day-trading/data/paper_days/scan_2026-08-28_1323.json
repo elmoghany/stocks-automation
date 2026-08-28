@@ -1,0 +1,174 @@
+{
+"data": {
+"result": {
+"total_items": 38,
+"results": [
+{
+"ticker": "SWVL",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.2987330316742082",
+"Last": "2.8702",
+"Name": "Swvl",
+"Volume": "3.323269863905e+06",
+"Symbol": "SWVL"
+}
+},
+{
+"ticker": "QNRX",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.27043646944713867",
+"Last": "6.5491",
+"Name": "Quoin Pharmaceuticals",
+"Volume": "2.900985600914e+07",
+"Symbol": "QNRX"
+}
+},
+{
+"ticker": "AEMD",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.25576036866359453",
+"Last": "2.725",
+"Name": "Aethlon Medical",
+"Volume": "4.3204069380353e+07",
+"Symbol": "AEMD"
+}
+},
+{
+"ticker": "ESTC",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.16640792930499168",
+"Last": "97.675",
+"Name": "Elastic N.V.",
+"Volume": "6.442840676484e+06",
+"Symbol": "ESTC"
+}
+},
+{
+"ticker": "FEMY",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1594982078853046",
+"Last": "3.235",
+"Name": "Femasys",
+"Volume": "361121.617374",
+"Symbol": "FEMY"
+}
+},
+{
+"ticker": "GAP",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1317941317941319",
+"Last": "23.53",
+"Name": "Gap",
+"Volume": "1.7463357762649e+07",
+"Symbol": "GAP"
+}
+},
+{
+"ticker": "JELD",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1278899082568807",
+"Last": "2.4588",
+"Name": "Jeld-Wen",
+"Volume": "1.175018583693e+06",
+"Symbol": "JELD"
+}
+},
+{
+"ticker": "SOLS",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12624245651402194",
+"Last": "63.4525",
+"Name": "Solstice Advanced Materials",
+"Volume": "1.1562180708196e+07",
+"Symbol": "SOLS"
+}
+},
+{
+"ticker": "BANL",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11194029850746269",
+"Last": "14.9",
+"Name": "CBL International",
+"Volume": "27075.760406",
+"Symbol": "BANL"
+}
+},
+{
+"ticker": "CABO",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1093819475322366",
+"Last": "24.95",
+"Name": "Cable One",
+"Volume": "114649.307414",
+"Symbol": "CABO"
+}
+},
+{
+"ticker": "BRAI",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10823754789272039",
+"Last": "5.785",
+"Name": "Braiin Limited",
+"Volume": "87073.25406",
+"Symbol": "BRAI"
+}
+},
+{
+"ticker": "RFAI",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10559723023658385",
+"Last": "57.48",
+"Name": "RF Acquisition Corp II",
+"Volume": "45201.147349",
+"Symbol": "RFAI"
+}
+},
+{
+"ticker": "RFL",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10548523206751054",
+"Last": "2.62",
+"Name": "Rafael Holdings",
+"Volume": "245820.860454",
+"Symbol": "RFL"
+}
+},
+{
+"ticker": "GURE",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10233918128654973",
+"Last": "3.77",
+"Name": "Gulf Resources",
+"Volume": "3816.0205",
+"Symbol": "GURE"
+}
+},
+{
+"ticker": "TJGC",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1007556675062972",
+"Last": "8.74",
+"Name": "TJGC Group Limited Class A",
+"Volume": "294886.843",
+"Symbol": "TJGC"
+}
+}
+]
+}
+}
+}

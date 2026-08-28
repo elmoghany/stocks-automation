@@ -88,7 +88,9 @@
     "ESTC",
     "FEMY",
     "GAP",
+    "GURE",
     "HYNE",
+    "JELD",
     "LVLU",
     "MODD",
     "NA",
@@ -100,6 +102,7 @@
     "SOLS",
     "SWVL",
     "TII",
+    "TJGC",
     "TNON",
     "TP",
     "TREO",
@@ -385,6 +388,24 @@
         "TRUMP (instrument_type CRYPTO)"
       ],
       "note": "TII armed order still resting; max post-arm high 3.21 vs the 3.2262 trigger, no touch."
+    },
+    {
+      "time_et": "13:23",
+      "state": "FLAT with ticket 1 ARMED on TII",
+      "scan_rows": 38,
+      "dropped_funds": 23,
+      "crossed_latched": 39,
+      "ratios_pass": 6,
+      "armable": 1,
+      "new": [
+        "JELD",
+        "GURE",
+        "TJGC"
+      ],
+      "dropped_spac": [
+        "RFAI"
+      ],
+      "note": "RFAI (RF Acquisition Corp II) correctly auto-dropped by SPAC_PAT. TII armed order still resting, no touch."
     }
   ],
   "halal": {
@@ -410,7 +431,9 @@
       "ESTC",
       "FEMY",
       "GAP",
+      "GURE",
       "HYNE",
+      "JELD",
       "LVLU",
       "MODD",
       "NA",
@@ -421,6 +444,7 @@
       "RFL",
       "SOLS",
       "SWVL",
+      "TJGC",
       "TNON",
       "TP",
       "UMC",
@@ -455,7 +479,9 @@
       "FEMY": "loan 18.09 / cash 20.61 / combined 38.71. Femasys, $26.1M reproductive-healthcare device maker. Permissible business, refused on financing.",
       "WBTN": "loan 1.37 / cash 40.70 / combined 42.07. WEBTOON Entertainment, $1.49B digital storytelling platform. Question 2 would ALSO be doubtful - a global comics/serialised-fiction platform is entertainment content, and no <5pct split is disclosed - but CASH>10 + COMBINED>20 settles it on question 1 first.",
       "BANL": "loan 6.68 / cash 39.94 / combined 46.62. CBL International, $31.3M marine-fuel bunkering (Kuala Lumpur). Permissible business, refused on cash ratio.",
-      "RFL": "cash 22.34 / combined 22.79 AND haram_pct 39.94. Rafael Holdings FAILS BOTH questions independently: the financing ratio breaches CASH>10+COMBINED>20, and interest income is 39.94pct of revenue - eight times the 5pct binary threshold. Segments are Healthcare, Infusion Technology and REAL ESTATE, i.e. in substance an investment holding company. One of the few names today where the interest-income metric was not blind - it caught this one outright."
+      "RFL": "cash 22.34 / combined 22.79 AND haram_pct 39.94. Rafael Holdings FAILS BOTH questions independently: the financing ratio breaches CASH>10+COMBINED>20, and interest income is 39.94pct of revenue - eight times the 5pct binary threshold. Segments are Healthcare, Infusion Technology and REAL ESTATE, i.e. in substance an investment holding company. One of the few names today where the interest-income metric was not blind - it caught this one outright.",
+      "JELD": "loan 672.24 / cash 26.82 / combined 699.06. JELD-WEN, $213M doors and windows manufacturer, 13,900 employees, pb -7.91. Permissible business (building products), refused on a debt load ~6.7x market cap.",
+      "TJGC": "loan 18.27 / cash 2.94 / combined 21.21. TJGC Group, $88M Hong Kong advertising services. NEAREST MISS OF THE DAY after MODD: the carve-out allows one side over 10 only if combined <= 20, and combined is 21.21 - refused by 1.21 percentage points."
     },
     "haram_industry_FAIL": {
       "HYNE": "Hoyne Bancorp - BANK. Question 1 not even reached.",
@@ -564,6 +590,16 @@
         "on_halal_list": false,
         "implausibility_flag": "FLAGGED BUT NOT DISQUALIFYING. $1.21B market cap on FIVE employees, founded 2022, pb_ratio -12.09 (negative book), 52wk 32.99 -> 4.19 -> 5.88. The ratios are tiny largely because the DENOMINATOR is a $1.2B valuation attached to very little substance. Compared against the YDES blind spot and judged different: YDES reported loan_pct EXACTLY 0.00, whereas BRAI reports 0.28pct = ~$3.4M of debt and 0.35pct = ~$4.2M cash, which are plausible absolute figures for a small agtech. Recorded the concern rather than either burying it or over-refusing on it.",
         "moot_anyway": "Unarmable on calm-gap regardless - see gap7_completion_attempt_2."
+      }
+    },
+    "ruling_scope_check": {
+      "GURE": {
+        "ratios": "loan 117.91 / cash 85.13 / combined 203.03 -> FAIL on question 1",
+        "existing_ruling": "data/halal_rulings.json carries a PASS ruling for GURE dated 2026-08-21: \"false association -- bromine/crude-salt chemical producer; food and beverage is an industry its salt is sold INTO\", haram_share_est 0.",
+        "the_check": "That ruling is scoped to QUESTION 2 - it clears a false haram-industry association. GUREs failure is on QUESTION 1, the financing ratios. A question-2 ruling must NOT rescue a question-1 failure, and halal_check correctly still returned verdict FAIL with the ruling attached.",
+        "verdict": "FAIL stands. Verified rather than assumed - a dated PASS ruling sitting in the output is exactly the kind of thing that could wave a name through if read carelessly.",
+        "currency_note": "GURE is a Shandong-based filer, so the foreign-filer RMB/USD mismatch applies. Rescaling by ~7.1x gives loan ~16.6 and combined ~28.6 - still FAIL on both counts, so the verdict survives the correction.",
+        "exchange_flag": "RH financial_status_indicator CC5 = \"Noncompliant\" - an exchange-compliance/delisting flag, noted for the record."
       }
     }
   },
