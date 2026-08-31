@@ -14,6 +14,16 @@ from pathlib import Path
 
 DIR = Path(__file__).resolve().parent.parent
 SPAC_PAT = re.compile(r"acquisition|blank.?check|capital investment corp|research alliance", re.I)
+# NON-COMMON-STOCK (added 2026-08-31, Day 19). EOSEW "Eos Energy Enterprises,
+# Inc. Warrant" crossed +18.2% and reached the candidate list: it is neither a
+# fund nor a SPAC, so nothing dropped it, yet C37 eligibility requires COMMON
+# STOCK. Warrants/rights/units also break the ranker's assumptions (their
+# prev_close and coil are derivative of the underlying, not their own tape).
+# Preferreds and notes are included for the same reason, and are additionally
+# fixed-income in substance, which is a live halal question of its own.
+NONCOMMON_PAT = re.compile(
+    r"\bwarrants?\b|\brights?\b|\bunits?\b|\bpreferred\b|\bpfd\b|\bdepositary\b"
+    r"|\bdebenture|\bnotes? due\b|\bsubordinated\b", re.I)
 FUND_PAT = re.compile(
     r"ETF|ETN|\bfund\b|\btrust\b|ishares|proshares|direxion|vanguard|invesco|franklin|spdr"
     r"|microsectors|leverage shares|defiance|graniteshares|tradr |corgi |themes|tidal"
@@ -33,7 +43,7 @@ def main():
     res = data.get("result", data)
     rows = res.get("results") or []
     total = res.get("total_items")
-    dropped = {k: [] for k in ("fund", "spac", "halal_fail", "fake_gap", "inherited_fail", "cannot_verify")}
+    dropped = {k: [] for k in ("fund", "noncommon", "spac", "halal_fail", "fake_gap", "inherited_fail", "cannot_verify")}
     cands, unhealthy = {}, []
 
     for r in rows:
@@ -49,6 +59,8 @@ def main():
 
         if FUND_PAT.search(name):
             dropped["fund"].append(sym); continue
+        if NONCOMMON_PAT.search(name):
+            dropped["noncommon"].append(f"{sym} {pct:+.1f}%"); continue
         if sym in st["spac"] or SPAC_PAT.search(name):
             if sym not in st["spac"]:
                 st["spac"].append(sym)

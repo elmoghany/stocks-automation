@@ -48,11 +48,57 @@
   },
   "trades": [],
   "armed": [],
-  "cycles": [],
+  "cycles": [
+    {
+      "time_et": "06:31",
+      "state": "FLAT-5m (premarket)",
+      "scan_rows": 89,
+      "dropped_funds": 69,
+      "dropped_spac": [
+        "RACC",
+        "ALF"
+      ],
+      "dropped_inherited_fail": [
+        "DUKR +65.5%",
+        "BRNX +16.2%",
+        "MODD +13.6%"
+      ],
+      "crossed_latched": 15,
+      "ratios_pass": 1,
+      "armable": 1,
+      "top": "NEOV",
+      "new": [
+        "AEHL",
+        "ANPA",
+        "BESS",
+        "BLRX",
+        "CNTB",
+        "CTW",
+        "DCOY",
+        "EDRY",
+        "EOSEW",
+        "HVT.A",
+        "NCRA",
+        "NEOV",
+        "SY",
+        "WETO",
+        "YDDL"
+      ],
+      "note": "First cycle. Scan fund-contaminated again: 69 of 89 rows were leveraged/2x ETFs and ETNs (the Corgi 2x Daily cohort, same as Day 18). FUND_PAT caught all 69. Five names returned ZERO real premarket bars against 145 interpolated (BESS, CTW, EDRY, ANPA, HVT.A) - the Day-8 fake-gap signature; their scan %Change is a stale mark, and the ranker excluded all five as NO BARS.",
+      "calm_gap_caveat": "Ranked as-of 06:40, BEFORE the 07:00 ET bar exists, so gap7 fell back to the latest print and equalled gain% for every name. The calm verdicts in this cycle are provisional; the first authoritative calm-gap read is the 07:00+ cycle."
+    }
+  ],
   "halal": {
-    "PASS": [],
-    "FAIL": [],
-    "CANNOT_VERIFY": []
+    "PASS": [
+      "NEOV"
+    ],
+    "FAIL": [
+      "BLRX",
+      "CNTB",
+      "SY"
+    ],
+    "CANNOT_VERIFY": [],
+    "_note": "Binary rule: only verdict PASS is armable. Screened lazily at candidacy per SCAN ECONOMY (b): the top-3 by rank plus the current TOP, not every crosser."
   },
   "vetoes": {
     "spread": [],
@@ -64,5 +110,72 @@
   "pnl": {
     "realized": 0.0,
     "trades": 0
-  }
+  },
+  "halal_detail": {
+    "NEOV": {
+      "verdict": "PASS",
+      "loan_pct": 0.74,
+      "cash_pct": 5.84,
+      "combined": 6.58,
+      "haram_pct": 0.71,
+      "source": "quarterly",
+      "on_halal_list": true,
+      "q1": "Both sides inside 10 (loan 0.74, cash 5.84); the one-side carve-out was not needed. Market cap present and sane ($196.6M from RH), so no missing-denominator trap.",
+      "q2": "NeoVolta Inc - battery energy-storage systems for residential, commercial and utility use, domestic manufacturing, Poway CA, 17 employees, founded 2018. Manufacturing electrical equipment is not on the haram list (no alcohol / gambling / bank / tobacco / adult / pork / entertainment line). Interest income 0.71pct of revenue, far under the 5pct binary threshold.",
+      "blind_spot_checks": "Ran all three deliberately. (1) haram_pct interest-only blindness does not bite: battery manufacturing has no hidden alcohol/pork-style revenue category. (2) Sector label CONSISTENT with the business - 'Producer Manufacturing / Electrical Products' matches battery storage, unlike ZSTK (cannabis labelled pharma) and AIIR (tobacco labelled Industrial Conglomerates) on Day 18. (3) pb_ratio +6.43, i.e. POSITIVE book value, and loan_pct 0.74 is non-zero - so the YDES implausible-input signature (loan exactly 0.00 alongside negative book) does not apply.",
+      "defense_adjacency_considered": "Energy storage can be sold into defense/microgrid applications. Even where it is, the AMD principle governs: a general-purpose product sold INTO a defense market is permissible; only PURE defense/aerospace is refused. NeoVolta's described core is residential/commercial/utility storage, i.e. general-purpose. Not a refusal.",
+      "liquidity_note": "avg volume 1.14M/2wk, 1.52M/30d - genuinely liquid for this class, unlike most halal PASSes this campaign. Float 48.9M."
+    },
+    "CNTB": {
+      "verdict": "FAIL",
+      "loan_pct": 0.5,
+      "cash_pct": 32.93,
+      "combined": 33.42,
+      "haram_pct": 38.46,
+      "source": "quarterly",
+      "binding": "BOTH questions independently",
+      "detail": "Connect Biopharma, $139.8M clinical-stage biopharma (rademikibart, an anti-IL-4-receptor-alpha antibody for asthma and COPD), San Diego, 64 employees. The BUSINESS is permissible - pharmaceuticals are not on the haram list. It fails question 1 on CASH>10 + COMBINED>20 (cash 32.93), the classic pre-revenue-biotech-holding-a-cash-pile signature. It ALSO fails question 2 outright: interest income is 38.46pct of revenue, nearly eight times the 5pct binary line - the same structure as EROK on Day 18, where a company with little revenue and a large cash pile earns most of its income as interest."
+    },
+    "BLRX": {
+      "verdict": "FAIL",
+      "loan_pct": 72.63,
+      "cash_pct": 138.96,
+      "combined": 211.6,
+      "haram_pct": 10.9,
+      "source": "quarterly",
+      "binding": "BOTH questions independently",
+      "detail": "BioLineRx, $12.5M clinical-stage oncology biopharma (motixafortide / BL-8040, AGI-134), Modi'in Israel, 24 employees. Permissible business, refused on a debt and cash load that dwarfs a collapsed $12.5M market cap - combined 211.6 against a 20 cap. Interest income 10.9pct of revenue also breaches the 5pct rule independently."
+    },
+    "SY": {
+      "verdict": "FAIL",
+      "loan_pct": 156.6,
+      "cash_pct": 328.28,
+      "combined": 484.88,
+      "haram_pct": 0.22,
+      "source": "quarterly",
+      "binding": 1,
+      "detail": "So-Young International, $242.9M Chinese medical-aesthetic service platform (content, UGC social community, and online reservation for aesthetic treatments), Beijing, 2,348 employees. Question 1 settles it: loan 156.6 / cash 328.28 / combined 484.88, roughly 4.8x market cap.",
+      "question2_not_reached_but_noted": "Had the ratios been clean, question 2 would have needed real work: the company is part content/social-media platform and part healthcare booking, and a UGC content platform sits close to the entertainment line with no disclosed revenue split. Recording that it was NOT adjudicated rather than implying it passed.",
+      "currency_note": "Beijing-based filer, so the foreign-filer RMB/USD denominator mismatch could apply. Even rescaling by ~7.1x leaves loan ~22 and combined ~68 - still FAIL on both counts, so the verdict survives the correction."
+    }
+  },
+  "findings": [
+    {
+      "id": "noncommon-stock-detector-gap",
+      "found_at_et": "06:45",
+      "severity": "real discovery defect, fixed in-session",
+      "what": "EOSEW - 'Eos Energy Enterprises, Inc. Warrant' - crossed +18.18% at 3.25 and landed in the candidate pool as an ordinary name. It is neither a fund nor a SPAC, so neither FUND_PAT nor SPAC_PAT dropped it, yet C37 eligibility requires COMMON STOCK. Nothing in the pipeline was checking that.",
+      "why_it_matters": "Two independent failures, not one. (1) Eligibility: a warrant is not common stock and was never tradeable under the protocol. (2) The ranker would have mis-measured it anyway - a warrant's prev_close, coil and premarket high are derivative of the underlying's tape, so its gain%, coil and 30-bar pressure are not comparable to a common-stock crosser's, and it would have competed for the TOP slot on numbers that mean something different.",
+      "fix": "Added NONCOMMON_PAT to plan/scan_sweep.py with its own 'noncommon' drop bucket, covering warrants, rights, units, preferreds/depositary shares, debentures and notes. Verified on the 06:31 dump: EOSEW now drops mechanically and the candidate count fell 15 -> 14. Preferreds are included for the same eligibility reason and are additionally fixed-income in substance, which is a live halal question of its own.",
+      "why_mechanical": "The alternative was to remember to exclude EOSEW by hand on every cycle for the rest of the day. That is precisely the hand-ranking drift the rank command exists to prevent, so the fix belongs in the tool, not in my attention."
+    },
+    {
+      "id": "fake-gap-cohort-5-names",
+      "found_at_et": "06:40",
+      "what": "BESS, CTW, EDRY, ANPA and HVT.A each returned 145 INTERPOLATED bars and ZERO real ones from get_equity_historicals - they had not traded premarket at all, so their scan %Change is a stale mark rather than a live move.",
+      "detector": "The Day-8 all-interpolated-bars detector, working exactly as designed. rh_bars_ingest.py skipped every bar and the ranker excluded all five as 'NO BARS (fetch first)'.",
+      "note": "HVT.A is doubly untradeable: 2,004 shares in the prior session against the 20pct-of-10-min-volume sizing rule. It is also a dotted Class-A ticker, the same shape as CRD.A on Day 18 whose ratios were UNVERIFIABLE in yfinance.",
+      "caveat": "fake_gap was deliberately RESET at seeding rather than inherited - a name dark premarket yesterday may trade today - so these five are not permanently dropped. They are excluded for want of bars, and a real print later today puts them back in the pool."
+    }
+  ]
 }
