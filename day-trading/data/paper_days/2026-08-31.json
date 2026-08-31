@@ -1,0 +1,49 @@
+{
+  "date": "2026-08-31",
+  "day_number": 19,
+  "protocol": "C37",
+  "mode": "paper",
+  "session_type": "headless (Windows Task Scheduler \\Stocks\\C37MorningLaunch)",
+  "benchmark_per_day": {
+    "retired_c37e": 1517,
+    "honest_baseline": -163,
+    "note": "$1,517/traded day RETIRED per C37F 2026-08-23; score primarily vs the -$163/day honest baseline."
+  },
+  "status": "SKELETON",
+  "counts_as_traded_day": false,
+  "config": {
+    "tickets": "flat $15,000, 7th/last $10,000, $100,000/day cap",
+    "one_position_at_a_time": true,
+    "entries_until": "14:30 ET",
+    "all_exits_by": "15:00 ET, flatten ladder from 14:57",
+    "real_orders": "NONE, EVER",
+    "halal_rule": "binary since 2026-08-22: only verdict PASS is armable; CANNOT-VERIFY is not tradeable",
+    "clock": "TZ env broken on this box; ET computed explicitly as UTC-4"
+  },
+  "ops": {
+    "skeleton_written": true,
+    "skeleton_written_at_utc": "2026-08-31T10:22:00Z",
+    "skeleton_written_at_et": "2026-08-31T06:22:00",
+    "skeleton_commit": null,
+    "capability_probe": null
+  },
+  "trades": [],
+  "armed": [],
+  "cycles": [],
+  "halal": {
+    "PASS": [],
+    "FAIL": [],
+    "CANNOT_VERIFY": []
+  },
+  "vetoes": {
+    "spread": [],
+    "depth": [],
+    "fill_arming_chase": []
+  },
+  "trigger_c": [],
+  "errors": [],
+  "pnl": {
+    "realized": 0.0,
+    "trades": 0
+  }
+}
