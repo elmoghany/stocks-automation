@@ -1,5 +1,165 @@
 # Penny Stocks Trading Notes
 
+## PAPER DAY 19 (2026-08-31) — NEOV −$15.85, and the exit sweep that flipped the sign
+
+**1 ticket, NEOV 1,150 sh @ 4.2126 → 4.1988, −$15.85, flat at the 14:58 flatten,
+zero real orders.** `counts_as_traded_day: true`. **Cumulative −$704.97 →
+−$720.82 over 16 scored days = −$45.05/day** (was −$47.00 over 15). Against the
+−$163/day honest baseline live is **ahead by $117.95/day ($1,887.18 total)**.
+Full detail in `data/paper_days/2026-08-31.{json,md}`.
+
+Headless launch clean; capability probe (python / git-write / MCP) all green at
+06:23. **Fourth consecutive session the Day-16 `--allowedTools` fix has held.**
+
+### 1. The exit ladder sweep flipped the sign of the day
+
+`paper_watch` booked the flatten at the 14:58 bar close of 4.2304 → **+$20.47**.
+Modelled honestly as a **sweep of displayed bid depth** (200 @ 4.22, 99 @ 4.21,
+216 @ 4.20, 635 @ 4.19) the exit VWAP is 4.1988 → **−$15.85**.
+
+**$36.32 of self-flattery on ONE reduced $4,844 ticket, and it was the
+difference between a green day and a red one.** Day 8 measured the same effect
+at $75 on a $13k ticket. The rule earns its place again: *book the sweep, record
+the single price only as a bracket.*
+(Caveat recorded in the ledger: the exit fired on the 14:58 bar but the bid
+ladder was snapshotted at 15:00:20, so the sweep is a close post-hoc estimate.)
+
+### 2. A one-tick spread veto is now measurable as a COST, not a save
+
+Three Trigger C signals fired on NEOV inside nine minutes. Only the third was
+executable, and **the vetoes admitted the last and highest of the cluster**:
+
+| Time | Pattern | Spread | Depth | Outcome |
+|---|---|---|---|---|
+| 09:36 | `morning_star` | 0.734% (3 ticks) | 112% — fine | **SPREAD VETO by ONE tick** |
+| 09:41 | `tweezer_bottom` | **0.484% L2** (passed) / 0.726% NBBO | **161 sh = 4.4%** | **DEPTH VETO** |
+| 09:44 | `bullish_engulfing` | 0.476% L2 | 1,150 sh = 32.3% | **TAKEN @ 4.2126** |
+
+At $4.10 one tick is 0.244%, so the 0.50% cap admits **exactly two ticks**. The
+09:38 book showed three. Depth at that instant would have supported the *full*
+$15,000 ticket at a 4.1123 cap — and since every position exits at the same
+14:58 flatten, that entry was simply **~$0.10/share better** (≈ +$115 on the
+same 1,150 shares; more on an un-reduced ticket).
+
+**First spread veto in the campaign that scores as a cost.** Log it beside Day
+8's three saves rather than quietly dropping it — post-open spread ran **60% (3
+of 5)**, finally *inside* the modelled 50–65% band.
+
+Related and unresolved: **fill realism was −2.20%, the worst of the campaign**
+(bought 4.2126, +60s mark 4.12; NEOV printed 4.24 within 90s then reversed to
+3.92 by 09:50). All three signals came from one vertical 15-minute impulse. If
+the vetoes systematically refuse the cheap members of a signal cluster and admit
+the expensive one, that is **adverse selection the backtest cannot see** — the
+sim has no spread or depth veto at all. One observation. Watch it.
+
+### 3. All three veto rules bound on one name inside 20 minutes
+
+Spread (09:38, 09:39, 09:40), depth (09:43), chase (09:45). The clearest
+demonstration yet that they are **independent rules** requiring separate counts.
+
+**Process point:** at 09:45 `armcheck` computed *fill-arming PASS* from the last
+**bar close** (4.1300) — already stale. The live **re-quote** showed 4.175 and
+turned that PASS into a chase veto. A session trusting the bar-close figure
+would have armed a disguised market order: the Day-5 LFST error exactly.
+
+**Veto-counting convention adopted:** a decision = a fresh Trigger C, or a
+ratchet level that *moves*. Re-checking an unchanged level is monitoring. Without
+this the "rate" measures polling frequency, not the strategy's refusal rate.
+
+### 4. Two discovery defects found; one fixed in-session
+
+**(a) Warrants were never excluded — FIXED.** `EOSEW` ("Eos Energy Enterprises,
+Inc. **Warrant**") crossed +18.18% and reached the candidate pool. Neither
+`FUND_PAT` nor `SPAC_PAT` catches a warrant, yet eligibility requires **common
+stock**. Two failures: it was never tradeable, *and* the ranker would have
+mis-measured it — a warrant's prev_close/coil/premarket-high are derivative of
+the underlying's tape, so it would have competed for TOP on incomparable
+numbers. Added `NONCOMMON_PAT` to `plan/scan_sweep.py` (warrants, rights, units,
+preferreds, debentures) with its own drop bucket. Fixed **in the tool, not in my
+attention**.
+
+**(b) The scanner's `Last` is a stale mark for premarket-dark names — NOT fixed.**
+Four names latched on crosses that **never printed**: CTW "+12.40%" (no trades,
+flat 2.55 → actually **−1.2%**), CNTB "+12.09%" (real +4.0%), EDRY "+13.45%"
+(real +5.2%), CVR "+17.19%" (zero trades). The latch exists because the champion
+treats a +10% cross as permanent **once printed**. This silently enlarges the
+live universe — the mirror of parity-audit divergence #2. Cost nothing today
+(all excluded as NO BARS) and the ranker independently confirmed it, refusing
+EDRY with *"+10% cross has NOT printed yet"*. **Deliberately not purged** —
+dropping a latched name is under-discovery. Recommended fix: gate the latch on a
+real print. Reviewed patch, not a mid-session edit.
+
+### 5. Cost of the gate — the sharpest instance of the campaign
+
+**The three biggest movers of the session were all refused, and so was the only
+liquid one.**
+
+* **WETO +106.8%** — loan 373.26 / combined 450.88 on a $6.18M cap. Also calm-gap FAIL.
+* **AEHL +84.7%** — combined 59.77; calm-gap FAIL at +91%.
+* **NCRA +39.2%** — cash 120.58. **It was the day's TOP-RANKED name at 07:05**
+  (COILED 0.964, best pressure of the session +0.34). The halal gate was the
+  *only* thing that refused it.
+* **SAIC +13.1%** — $5.32B, 431k avg daily volume, 52-week-high breakout. By an
+  order of magnitude **the most liquid and tightest book to cross all day**, and
+  the only one whose book could absorb a full $15,000 ticket with no depth
+  question. Refused **twice over**: leverage (combined 52.3) *and* business.
+
+  **The SAIC question-2 reasoning, because it generalises:** the AMD principle
+  rescues a *general-purpose product sold into* defence; it does **not** rescue a
+  *dedicated vertical supplier* to it. SAIC exists to build and run systems for
+  DoD and the intelligence community. Same call as CRD.A (insurance TPA) and TP
+  (event ticketing) on Day 18.
+
+Every name the strategy could actually trade today was a sub-$200M microcap.
+
+### 6. Blind spot #3 fires for the third session running
+
+**PAVS** — registered name *Paranovus **Entertainment** Technology Ltd*; RH label
+*Health Technology / Pharmaceuticals: Other* — **the identical label string that
+hid ZSTK's cannabis production on Day 18**. Its RH description discloses no
+business at all, only two segment code-names ("Bomie", "Wookoo"). Would have been
+FAIL (unverified) had the ratios not settled it first (combined 200.67).
+**RH sector labels have now mislabelled a haram or unverifiable business on three
+consecutive sessions** (ZSTK cannabis, AIIR shisha tobacco, PAVS entertainment).
+
+### 7. Feed findings
+
+* **Polygon is ~15 min delayed on this tier.** At 07:54 its tape ended at 07:38
+  for *both* controls. **Always run a control symbol before concluding anything
+  from an empty market-data response** — MOVE's empty result read like a broken
+  feed and was neither.
+* **gap7 completion attempted on MOVE and correctly NOT applied.** MOVE (Corvex,
+  $316M AI/GPU cloud) ranked **first** on coil and the best pressure of the day
+  (+0.35), halal PASS on both questions — and had no 07:00 bar. Polygon had none
+  either, because **MOVE's first print of the day was 07:45 ET**. The
+  CALM-GAP FAIL is *real*, not a data artefact. **Structural consequence worth a
+  decision: because gap7 is anchored to a fixed clock time, a name that starts
+  trading after 07:00 can never acquire one and is unarmable all session** no
+  matter how it trades.
+* **RH vs Polygon disagree 1.76% on NEOV's premarket high — and that high IS the
+  Trigger B level** (RH 4.0500 on an 11,753-share bar vs Polygon 3.9800). Used RH
+  per bar policy and feed-calibration fix #8. The ~4× premarket *volume*
+  divergence was known; a divergence in the **entry trigger itself** was not.
+* **Leveraged-ETF contamination is a PREMARKET artefact — confirmed on a second
+  session.** 83–94 scan rows with ~70 fund rows premarket; **30 rows with 12
+  funds by 11:17.** It resolves itself at 09:30.
+
+### 8. Honest framing
+
+Single-holder day: one ticket, 5h12m, **$95,155 of the $100k budget idle by
+construction** under the one-position rule. C37's per-day figures assume rotation
+through several tickets, so a quiet single holder cannot reach them by
+construction. **Judge on process, not P&L.** Process was clean: every gate checked
+on live data, three veto categories each binding, honest ladder-swept fills on
+*both* sides, a protective stop live and correct for the entire hold (never hit —
+post-entry low 3.9102 vs stop 3.8756, within 0.9%), and **no coverage gaps**
+06:20–15:00.
+
+Scan cadence deviated deliberately: ~20 min premarket instead of 5 (headless
+single-turn wall-clock budget + the ~90–100% premarket veto rate), tightening to
+5 min at the open and to a HOLD cadence in position. **Direction of bias:
+under-discovery of late-premarket crossers.**
+
 ## PAPER DAY 18 (2026-08-28) — all-veto day; the halal gate decided it, and two automated PASSes were haram
 
 **0 tickets filled, P&L $0.00, flat all day, zero real orders.** One order was
