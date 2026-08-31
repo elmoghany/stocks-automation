@@ -347,6 +347,26 @@
       "cost_of_the_gate": "This is the Day-8 structural tension at its sharpest this campaign. The one name today whose book would have absorbed a full $15,000 ticket with no depth question at all is refused twice, while the only armable name is a $196M microcap.",
       "board_going_into_the_open": "19 latched crossers. 10 halal FAIL, 2 SPAC, 1 warrant, 66 funds. Three question-1 PASSes: NEOV (armable), YDDL (calm-gap FAIL +61.8pct), MOVE (no 07:00 bar, calm-gap unavailable all session). NEOV is the sole candidate for ticket 1.",
       "aehl_watch": "AEHL has come back to 6.54, +84.7pct - the day's largest mover throughout, halal FAIL on leverage and calm-gap FAIL at +91pct. Tracking it for the EOD cost-of-the-gate line, not as a candidate."
+    },
+    {
+      "time_et": "11:00",
+      "state": "IN POSITION - ticket 1 held on NEOV (HOLD-20m cadence, no ranking duty)",
+      "cadence_state": "HOLD. Per SCAN ECONOMY rule 2 the full 5-minute rank is suspended while a position is open; the 1-minute position watch owns the cadence and must never be starved (API HYGIENE #3). Logged per rule 5 so the cadence change is visible in the ledger rather than inferred later.",
+      "position": {
+        "entry": 4.2126,
+        "shares": 1150,
+        "last": 3.96,
+        "peak_since_entry": 4.24,
+        "open_pnl": -290,
+        "open_pnl_pct": -6.0,
+        "resting_stop": 3.8756,
+        "trail": "20pct of peak = 3.39, currently SLACK - the resting stop at 3.8756 is the binding level",
+        "distance_to_stop_pct": 2.1
+      },
+      "trail_law_observed_working": "The pressure-modulated trail has moved three times as specified: widened to 40pct (2.54) on pressure +0.40 at 10:17, tightened to 10pct (3.82) on pressure -0.58 at 10:44, and back to 20pct (3.39) on pressure +0.02 now. At no point did it become the binding exit - the -8pct resting stop at 3.8756 has been the operative level for the whole hold.",
+      "shape_of_the_hold": "NEOV spiked to 4.24 within 90 seconds of the entry, reversed to 3.92 by 09:50, and has since traded a 3.95-4.13 range for over an hour. The position has been underwater the entire time, ranging from -$97 to -$331.",
+      "no_second_ticket": "ONE POSITION AT A TIME. Tickets 2-7 cannot deploy while NEOV is held, so $95,155 of the $100,000 daily budget is idle by construction. This is the Day-8 single-holder pattern again and it means the day should be judged on process, not on P&L.",
+      "watcher_health": "paper_watch running as background task btcmunasi, fed fresh Robinhood bars every 2-7 minutes. Every bar is replayed in order and tested against its LOW for the resting stop, so a slower feed cadence costs awareness latency but does NOT degrade the settled record."
     }
   ],
   "halal": {
