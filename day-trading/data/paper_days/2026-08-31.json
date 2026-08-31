@@ -10,7 +10,7 @@
     "note": "$1,517/traded day RETIRED per C37F 2026-08-23; score primarily vs the -$163/day honest baseline."
   },
   "status": "SKELETON",
-  "counts_as_traded_day": false,
+  "counts_as_traded_day": true,
   "config": {
     "tickets": "flat $15,000, 7th/last $10,000, $100,000/day cap",
     "one_position_at_a_time": true,
@@ -53,7 +53,53 @@
       "honesty_note": "This deviation makes the premarket half of the day a LOWER-discovery process than the champion's. Direction of bias is under-discovery of late-premarket crossers, not over-trading."
     }
   },
-  "trades": [],
+  "trades": [
+    {
+      "ticket": 1,
+      "symbol": "NEOV",
+      "side": "BUY",
+      "status": "FILLED (PAPER - no real order was placed anywhere)",
+      "entry_time_et": "09:45:52",
+      "entry_time_utc": "2026-08-31T13:45:52Z",
+      "trigger": "Trigger C - bullish_engulfing on the 09:44 one-minute close, read [TAKEABLE NOW] at 09:45. In the champion's eight-member buy_set.",
+      "entry_style": "pattern -> marketable limit at ask + 0.3pct. Ceiling 4.21 x 1.003 = 4.2226; limit placed at 4.22, tick-aligned and inside the ceiling.",
+      "shares": 1150,
+      "fill_vwap": 4.2126,
+      "notional": 4844.5,
+      "fill_model": {
+        "method": "LADDER SWEEP against displayed depth, per the Day-8 lesson that booking the inside-ask price is self-flattery worth $75 on a single $13k ticket.",
+        "levels_taken": "850 @ 4.21 = $3,578.50, then 300 @ 4.22 = $1,266.00",
+        "vwap": 4.2126,
+        "optimistic_bracket": "4.2100 (all 1,150 at the inside ask) = $4,841.50, i.e. $3.00 better",
+        "note": "The optimistic single-price figure is recorded only as a bracket, never as the booked fill."
+      },
+      "ticket_reduction": {
+        "standard_ticket_dollars": 15000,
+        "standard_shares": 3562,
+        "armed_shares": 1150,
+        "pct_of_intended": 32.3,
+        "reason": "DEPTH RULE - cumulative displayed ask size to the 4.2226 ceiling was 1,150 shares (4.21x850, 4.22x300; the 4.23 level sits above the ceiling). Reduced to what the book could absorb inside the slippage cap.",
+        "margin_note": "32.3pct against a 25pct skip floor - the entry qualified by 7.3 percentage points, or about 260 shares. Not as narrow as Day 18's TII at 26.0pct, but still a reduced ticket rather than a full one.",
+        "capital_deployed": "$4,844.50 of a $15,000 ticket and of a $100,000 daily budget."
+      },
+      "gates_at_entry": {
+        "halal": "PASS - NEOV is the only name of 19 crossers to pass BOTH halal questions and remain armable. loan 0.74 / cash 5.84 / combined 6.58, haram 0.71, quarterly.",
+        "eligibility": "price 4.21 >= $2; +10pct cross printed and latched; common stock; >=50 sessions; calm-gap +10.8pct (well inside the 20pct cap, and independently confirmed on Polygon at +10.78pct); coil 1.0000, fully COILED.",
+        "spread_veto": "PASS - L2 inside 4.19 / 4.21 = 0.4762pct, inside the 0.50pct cap. NBBO at the same moment was 4.22 / 4.23 = 0.2367pct, a single tick. BOTH measures pass, so unlike the 09:43 evaluation nothing turns on the L2-vs-NBBO divergence here.",
+        "depth_veto": "PASS with reduction - see ticket_reduction.",
+        "sizing_20pct_rule": "NOT BINDING - the trailing 10 completed minutes allowed 144,314 shares against 3,562 intended.",
+        "chase_check": "N/A by construction. The chase rule governs STOP orders whose trigger is already met; a pattern entry is a marketable limit sent on the signal bar's close, which is what the protocol prescribes. Recorded explicitly so the ledger does not imply a stop was armed.",
+        "halt_check": "quote state = active, has_traded = true. get_equity_tradability was NOT called because it requires an account_number that must come from the user and must never be defaulted from get_accounts, so the quote state field was used as the halt proxy. Logging the substitution rather than implying a full tradability check ran."
+      },
+      "protective_stop_on_fill": {
+        "level": 3.8756,
+        "rule": "max(entry x 0.92, peak x 0.60) = max(4.2126 x 0.92, 4.23 x 0.60) = max(3.8756, 2.5380)",
+        "status": "PLACED as a resting paper stop-limit the instant the fill printed. Never absent while the position is open; to be re-placed upward as the peak rises."
+      },
+      "trail_law_at_entry": "20pct from peak, tightening to 10pct when 10-bar pressure <= -0.3 and widening to 40pct when >= +0.3. Hard stop -8pct. Bank 1/3 at +25pct unless pressure >= +0.3. Wick guard. All exits by 15:00 with the flatten ladder from 14:57.",
+      "why_this_one_and_not_the_two_earlier_signals": "Three Trigger C signals fired on NEOV this morning. 09:36 morning_star was spread-vetoed by ONE TICK (0.734pct vs the 0.50pct cap). 09:41 tweezer_bottom passed spread on L2 but was depth-vetoed at 4.4pct of intended. 09:44 bullish_engulfing is the first to clear both at once - the book tightened to two ticks AND kept 1,150 shares inside the ceiling."
+    }
+  ],
   "armed": [],
   "cycles": [
     {
@@ -471,6 +517,21 @@
         "verdict": "PASS - NOT a chase. Last 3.87 and bid 3.76 are BOTH below the 4.0500 trigger, so a stop-limit here would be a legitimate forward stop rather than a disguised market order.",
         "note": "Recorded separately from the spread veto so it does not contaminate the spread-threshold calibration (Day-8 lesson #4). The entry was refused on spread, NOT on chase.",
         "trigger_provenance": "The 4.0500 level is the high of the 08:00Z bar - the FIRST premarket minute - which traded 11,753 shares. Checked deliberately rather than assumed: a session high set by a one-lot print at 04:00 ET would be a poor trigger, but this one rests on real size."
+      },
+      {
+        "time_et": "09:45",
+        "phase": "post-open",
+        "symbol": "NEOV",
+        "context": "TRIGGER A ratchet at the 4.1500 session high",
+        "last_bar_close": 4.13,
+        "live_last_trade": 4.175,
+        "bid": 4.17,
+        "trigger": 4.15,
+        "verdict": "CHASE VETO - ENTRY REFUSED. Live last 4.175 and bid 4.170 are BOTH at or above the 4.1500 trigger, so the stop conversion is live NOW. Arming it would be placing a market order that sweeps the top, which is exactly the Day-5 LFST error the fill-arming rule exists to prevent.",
+        "re_quote_caught_it": "IMPORTANT PROCESS POINT: armcheck computed 'fill-arming PASS' from the last BAR CLOSE of 4.1300, which was already stale. The live re-quote showed 4.175. The rule says re-quote IMMEDIATELY before arming, and doing so is what turned a PASS into a veto. A session that trusted the bar-close figure would have armed a disguised market order.",
+        "marketable_limit_alternative_also_refused": "Step 2 of the fill-arming rule allows substituting a marketable limit capped at trigger + 0.5pct = 4.1708. The live ask was 4.19, above that ceiling, so the book could not fill inside the cap. The rule's own instruction in that case is to treat it as a veto and wait for the next 1-minute bar.",
+        "spread_at_the_same_instant": "PASS - NBBO 4.17 / 4.19 = 0.478pct, INSIDE the 0.50pct cap for the first time on the consolidated quote today. Recording that explicitly: spread was NOT the binding rule here. The chase rule was.",
+        "three_rules_have_now_each_bound_once": "Spread refused 07:25, 09:38, 09:39 and 09:40; depth refused 09:43; chase refuses now. All three veto categories have bound on the SAME NAME within 20 minutes, which is the clearest demonstration this campaign has produced that they are independent rules and must be counted separately."
       }
     ]
   },
