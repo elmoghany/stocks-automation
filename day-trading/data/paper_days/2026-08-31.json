@@ -9,7 +9,7 @@
     "honest_baseline": -163,
     "note": "$1,517/traded day RETIRED per C37F 2026-08-23; score primarily vs the -$163/day honest baseline."
   },
-  "status": "SKELETON",
+  "status": "OPEN - ticket 1 held on NEOV",
   "counts_as_traded_day": true,
   "config": {
     "tickets": "flat $15,000, 7th/last $10,000, $100,000/day cap",
@@ -783,5 +783,16 @@
       "direction_of_bias": "RH's higher premarket high makes our Trigger B STRICTER than a Polygon-based one would be, so this cuts toward fewer entries, not toward flattering fills.",
       "relation_to_prior_finding": "This is the price-level cousin of the known ~4x premarket VOLUME disagreement between the two feeds (WDFC 2026-07-10). Volume divergence was already documented; a divergence in the HIGH - which is an entry trigger, not a statistic - had not been."
     }
-  ]
+  ],
+  "fill_realism": {
+    "entry_vwap": 4.2126,
+    "mark_60s_later": 4.12,
+    "mark_source": "close of the 09:46 one-minute bar, the first full bar after the 09:45:52 fill",
+    "fill_vs_mark_pct": -2.2,
+    "direction": "UNFAVOURABLE - the fill was 2.20pct WORSE than the +60-second mark. We bought into the last tick of the impulse and the name immediately gave it back.",
+    "why_it_happened": "The bullish_engulfing signal fired on the 09:44 close at 4.1799 and the entry was sent on the next available quote at 4.21. In the 90 seconds after the fill NEOV printed its session high 4.24 and then reversed hard to 3.92 - a 7.5pct round trip inside four minutes. The pattern marked a local top rather than a continuation.",
+    "campaign_context": "This is the largest unfavourable fill-realism reading recorded so far. Prior data points: LZ 2026-08-06 +1.7pct favourable, LFST 2026-08-10 -1.6pct (the chase that produced the fill-arming rule), ANGX 2026-08-13 +0.12pct favourable. Running record is now 2 favourable, 2 unfavourable, and today's is the worst.",
+    "is_this_a_process_failure": "No - and it is important not to relabel a bad outcome as a rule violation. The fill-arming rule governs STOPS with already-met triggers; this was a pattern entry, which the protocol explicitly instructs to send as a marketable limit on the signal bar's close. Every gate was checked and passed on live data. The trade was taken correctly and went against us immediately, which is a different thing from being taken wrongly.",
+    "what_it_does_suggest": "Worth carrying into the campaign review: all three of today's Trigger C signals fired during a single vertical 15-minute impulse (09:36, 09:41, 09:44), and the one we could actually execute was the last of them - i.e. the latest and highest. The two earlier, cheaper signals were refused by spread and depth. If that ordering is systematic rather than coincidence, the veto rules may be selecting the WORST member of a signal cluster, which would be a genuine adverse-selection effect the backtest cannot see."
+  }
 }
