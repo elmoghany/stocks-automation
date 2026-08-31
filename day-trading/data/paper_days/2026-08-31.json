@@ -265,6 +265,42 @@
       "note": "PAVS (Paranovus) crossed and FAILED on ratios (combined 200.67). Its real interest is as the THIRD sector-label mismatch of the campaign: a company whose registered name is 'Entertainment Technology' carries the RH label 'Health Technology / Pharmaceuticals: Other' - the identical label string that hid ZSTK's cannabis production on Day 18.",
       "neov_pressure_deteriorating": "NEOV 30-bar pressure has fallen steadily all premarket: +0.32 at 07:24, -0.29 at 07:52, -0.50 now. Price 3.7501 (+12.3pct), coil 0.926, still calm and still the only armable name - but sellers have had control of the tape for over an hour. Under the champion's own trail law a -0.50 pressure state would tighten a trail to 10pct; as an ENTRY signal it argues against chasing this name into the open.",
       "board_is_thinning": "Only 3 names now carry real bars AND survive the halal gate, and 2 of those 3 fail calm-gap. The 18-name latched crossed set has collapsed to a single armable candidate."
+    },
+    {
+      "time_et": "09:11",
+      "state": "FLAT (pre-open)",
+      "scan_rows": 83,
+      "scan_rows_transcribed": 17,
+      "dropped_funds": 66,
+      "dropped_noncommon": [
+        "EOSEW +18.2%"
+      ],
+      "dropped_spac": [
+        "RACC",
+        "ALF"
+      ],
+      "dropped_halal_fail": [
+        "AEHL +84.7%",
+        "NCRA +24.3%",
+        "WETO +21.0%",
+        "CVR +17.2%",
+        "SY +11.7%"
+      ],
+      "dropped_inherited_fail": [
+        "BRNX +15.9%",
+        "CKX +12.6%"
+      ],
+      "crossed_latched": 19,
+      "ratios_pass": 3,
+      "armable": 1,
+      "top": "NEOV",
+      "new": [
+        "SAIC"
+      ],
+      "note": "SAIC crossed - a $5.32B government IT and engineering contractor at a 52-week high, 431k average daily volume, by far the most liquid name to cross all day. It FAILS BOTH halal questions independently: leverage (loan 50.25, combined 52.3) and business (dedicated defence/intelligence services, which the AMD principle does not rescue).",
+      "cost_of_the_gate": "This is the Day-8 structural tension at its sharpest this campaign. The one name today whose book would have absorbed a full $15,000 ticket with no depth question at all is refused twice, while the only armable name is a $196M microcap.",
+      "board_going_into_the_open": "19 latched crossers. 10 halal FAIL, 2 SPAC, 1 warrant, 66 funds. Three question-1 PASSes: NEOV (armable), YDDL (calm-gap FAIL +61.8pct), MOVE (no 07:00 bar, calm-gap unavailable all session). NEOV is the sole candidate for ticket 1.",
+      "aehl_watch": "AEHL has come back to 6.54, +84.7pct - the day's largest mover throughout, halal FAIL on leverage and calm-gap FAIL at +91pct. Tracking it for the EOD cost-of-the-gate line, not as a candidate."
     }
   ],
   "halal": {
@@ -280,6 +316,7 @@
       "CVR",
       "NCRA",
       "PAVS",
+      "SAIC",
       "SY",
       "WETO",
       "YARW"
@@ -510,6 +547,21 @@
       "detail": "Yarrow Bioscience, $98.8M clinical-stage biotech developing YB-101, an antibody therapy for Graves disease and thyroid eye disease, New Haven CT, 10 employees, founded October 2025. Permissible business (pharmaceuticals). Refused on question 1: a pre-revenue biotech sitting on cash worth 26.68pct of its market cap breaches CASH>10 + COMBINED>20. The one-side carve-out cannot help - it requires combined <= 20 and combined is 26.68.",
       "zero_loan_check": "loan_pct is EXACTLY 0.00, which is the input that triggers the YDES implausibility test. Checked and DISTINGUISHED: YDES paired a 0.00 loan with NEGATIVE book value (pb -0.811), which is internally contradictory. YARW reports pb_ratio +1.12, i.e. positive book - a debt-free clinical-stage biotech that raised equity and holds the proceeds is entirely plausible with zero debt. Not an implausible input, and it FAILS on the cash side regardless.",
       "third_biotech_of_the_day_refused_the_same_way": "CNTB (cash 32.93), YARW (cash 26.68) and APMD on Day 18 (cash 24.91) are the same structural refusal: a pre-revenue drug developer holding a large cash pile relative to a small market cap. The gate is not making a judgement about biotech; the arithmetic of cash/mcap simply lands above 10 for this whole class."
+    },
+    "SAIC": {
+      "verdict": "FAIL",
+      "binding": "BOTH questions independently",
+      "loan_pct": 50.25,
+      "cash_pct": 2.05,
+      "combined": 52.3,
+      "haram_pct": 0.43,
+      "source": "quarterly",
+      "q1": "FAIL. loan 50.25 with combined 52.3 against a 20 cap. The cash side is clean at 2.05 - this is an ordinary investment-grade corporate balance sheet, and the ratio test refuses it precisely because a real operating company carries real debt.",
+      "q2": "FAIL. Science Applications International Corp provides technical, engineering and enterprise IT services for large complex GOVERNMENT projects. Its own description names its key customers as the Department of Defense (first), NASA, State, Justice, Homeland Security and 'several sensitive intelligence community agencies'. 23,000 employees, Reston VA, founded 1969.",
+      "amd_principle_considered_and_rejected": "This is the decisive reasoning, so it is recorded in full. The AMD principle rescues a GENERAL-PURPOSE product sold INTO a defence market; it does not rescue a DEDICATED vertical supplier to that market. SAIC does not sell a general-purpose product that defence happens to buy - it exists to build and operate systems FOR the defence and intelligence community, and essentially all of its revenue is US government contracting. That is the same call already made twice in this campaign: CRD.A on Day 18 (dedicated insurance-industry claims service, not rescued) and TP on Day 18 (dedicated live-entertainment ticketing platform, not rescued).",
+      "civil_agencies_do_not_save_it": "NASA, State and Justice work is permissible in itself, so the company is not 100pct defence. But under the BINARY 5pct rule the haram share must be shown to be UNDER 5pct, and there is no disclosure splitting defence/intelligence revenue out - it is plainly the main line, not a 5pct remainder. Absence of evidence is never compliance.",
+      "significance": "THE COST-OF-THE-GATE OBSERVATION OF THE DAY, and the sharpest instance of the Day-8 structural tension so far this campaign. SAIC is a $5.32B company with 431k average daily volume and a 52-week-high breakout - by an order of magnitude the most liquid and tightest-book name to cross +10pct today, and the only one whose book could have absorbed a full $15,000 ticket without any depth concern at all. It is refused twice over. Every name the strategy can actually trade today is a sub-$200M microcap.",
+      "note_on_ordering": "Both refusals are independent and either alone is sufficient. Recording both rather than stopping at the first, because the question-2 reasoning is the one that would generalise to a future SAIC-like name whose leverage happened to be clean."
     }
   },
   "findings": [
