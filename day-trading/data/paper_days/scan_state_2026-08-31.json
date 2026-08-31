@@ -1,8 +1,8 @@
 {
  "candidates": {
   "YDDL": {
-   "pct": 43.65,
-   "last": 2.3703,
+   "pct": 42.42,
+   "last": 2.35,
    "prev_close": 1.65,
    "vol": "2745525.37",
    "name": "One and One Green Technologies",
@@ -65,8 +65,8 @@
    "first_seen": "06:31"
   },
   "NEOV": {
-   "pct": 14.67,
-   "last": 3.83,
+   "pct": 12.28,
+   "last": 3.7501,
    "prev_close": 3.34,
    "vol": "452678.101986",
    "name": "NeoVolta",
@@ -129,12 +129,20 @@
    "first_seen": "07:24"
   },
   "MOVE": {
-   "pct": 23.93,
-   "last": 14.24,
+   "pct": 37.68,
+   "last": 15.82,
    "prev_close": 11.49,
    "vol": "58715.767192",
    "name": "Corvex, Inc.",
    "first_seen": "07:51"
+  },
+  "PAVS": {
+   "pct": 10.42,
+   "last": 5.3,
+   "prev_close": 4.8,
+   "vol": "33541.263465",
+   "name": "Paranovus",
+   "first_seen": "08:29"
   }
  },
  "halal_fail": [
@@ -143,6 +151,7 @@
   "CNTB",
   "CVR",
   "NCRA",
+  "PAVS",
   "SY",
   "WETO",
   "YARW"

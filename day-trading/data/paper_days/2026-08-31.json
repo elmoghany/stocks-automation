@@ -230,6 +230,41 @@
       "gap7_completion": "ATTEMPTED on MOVE per the standing instruction and correctly NOT applied - Polygon has no 7AM bar either because the stock had not begun trading. Logged loudly in findings. The same probe cross-confirmed NEOV's gap7 at +10.78pct on Polygon vs +10.8pct on RH.",
       "five_halal_fails_dropped_mechanically": "The drop-list is now carrying most of the discovery load: five of today's own FAILs plus three inherited ones were refused without a single re-screen this cycle.",
       "neov_state": "NEOV eased to 3.80 (+13.8pct), coil 0.938, pressure turned NEGATIVE at -0.29 from +0.32 twenty-five minutes earlier. Still the only armable name; still spread-vetoed premarket."
+    },
+    {
+      "time_et": "08:29",
+      "state": "FLAT (premarket)",
+      "scan_rows": 85,
+      "scan_rows_transcribed": 17,
+      "dropped_funds": 68,
+      "dropped_noncommon": [
+        "EOSEW +18.2%"
+      ],
+      "dropped_spac": [
+        "RACC",
+        "ALF"
+      ],
+      "dropped_halal_fail": [
+        "AEHL +69.5%",
+        "WETO +28.5%",
+        "NCRA +22.8%",
+        "CVR +17.2%",
+        "BLRX +10.8%"
+      ],
+      "dropped_inherited_fail": [
+        "BRNX +13.9%",
+        "CKX +12.6%"
+      ],
+      "crossed_latched": 18,
+      "ratios_pass": 3,
+      "armable": 1,
+      "top": "NEOV",
+      "new": [
+        "PAVS"
+      ],
+      "note": "PAVS (Paranovus) crossed and FAILED on ratios (combined 200.67). Its real interest is as the THIRD sector-label mismatch of the campaign: a company whose registered name is 'Entertainment Technology' carries the RH label 'Health Technology / Pharmaceuticals: Other' - the identical label string that hid ZSTK's cannabis production on Day 18.",
+      "neov_pressure_deteriorating": "NEOV 30-bar pressure has fallen steadily all premarket: +0.32 at 07:24, -0.29 at 07:52, -0.50 now. Price 3.7501 (+12.3pct), coil 0.926, still calm and still the only armable name - but sellers have had control of the tape for over an hour. Under the champion's own trail law a -0.50 pressure state would tighten a trail to 10pct; as an ENTRY signal it argues against chasing this name into the open.",
+      "board_is_thinning": "Only 3 names now carry real bars AND survive the halal gate, and 2 of those 3 fail calm-gap. The 18-name latched crossed set has collapsed to a single armable candidate."
     }
   ],
   "halal": {
@@ -244,8 +279,10 @@
       "CNTB",
       "CVR",
       "NCRA",
+      "PAVS",
       "SY",
-      "WETO"
+      "WETO",
+      "YARW"
     ],
     "CANNOT_VERIFY": [],
     "_note": "Binary rule: only verdict PASS is armable. Three question-1 PASSes today, but only NEOV is ARMABLE: YDDL fails calm-gap at +61.8pct and MOVE has no 07:00 bar at all so its calm-gap is unavailable for the whole session. Screened lazily at candidacy per SCAN ECONOMY (b); all FAILs written into scan_state halal_fail so they cannot re-enter the pool (API HYGIENE #2)."
@@ -443,6 +480,36 @@
         "structural_consequence": "Because gap7 is anchored to a fixed 07:00 clock time, a name that STARTS trading after 07:00 can never acquire one. MOVE is therefore unarmable for the whole day no matter how it trades - it was +23.9pct at 07:51 and +34.6pct three minutes later, on 22,417 shares in a single minute, and none of that can make it eligible.",
         "is_this_right": "Following the tool rather than arguing with it, per the standing rule that the rank command wins over hand judgement. But flagging it as a genuine structural question for review: the calm-gap gate exists to refuse names that have ALREADY RUN too far by 7AM, and a name that had not yet traded at 7AM is a different case from one that gapped 60pct by then. Today it costs nothing to be strict; on another day it could refuse a clean late-opening name."
       }
+    },
+    "PAVS": {
+      "verdict": "FAIL",
+      "loan_pct": 74.55,
+      "cash_pct": 126.12,
+      "combined": 200.67,
+      "haram_pct": 0.0,
+      "source": "quarterly",
+      "binding": 1,
+      "detail": "Paranovus Entertainment Technology Ltd, $4.13M holding company operating through segments named 'Bomie' and 'Wookoo', New York NY, 29 employees. Question 1 settles it outright: loan 74.55 and cash 126.12 give combined 200.67 against a 20 cap, roughly 2x market cap on each side.",
+      "question2_would_also_have_refused_it": {
+        "verdict_if_reached": "FAIL (unverified)",
+        "why": "THIRD SECTOR-LABEL MISMATCH OF THE CAMPAIGN. The company's own registered name is 'Paranovus ENTERTAINMENT Technology Ltd' while RH labels it 'Health Technology / Pharmaceuticals: Other'. Entertainment is on the question-2 FAIL list, and the label points the opposite way.",
+        "opacity": "The RH description discloses NO business at all - just 'a holding company which operates through its wholly owned subsidiaries... segments: Bomie and Wookoo'. Two segment code-names and nothing else. There is no basis on which to evidence that haram revenue is under 5pct, and under the binary rule an unverifiable share is haram by rule. Absence of evidence is never compliance.",
+        "pattern": "Same shape as ZSTK (cannabis production labelled 'Health Technology / Pharmaceuticals: Other' - the IDENTICAL label string) and AIIR (shisha tobacco labelled 'Producer Manufacturing / Industrial Conglomerates') on Day 18. Blind spot #3 has now fired three sessions running, and twice under that exact pharma label.",
+        "note": "Recorded as would-have-refused rather than as the binding reason: the ratios settle it first, and claiming a question-2 refusal we did not need would overstate what the gate actually did."
+      },
+      "reverse_split_note": "52-week high 148,800.00 against a 3.76 low, pb_ratio 0.001457, 857,138 shares outstanding - an extremely heavily reverse-split shell. avg_volume_2_weeks 32,747 vs avg_volume_30_days 1,620,890."
+    },
+    "YARW": {
+      "verdict": "FAIL",
+      "loan_pct": 0.0,
+      "cash_pct": 26.68,
+      "combined": 26.68,
+      "haram_pct": 0.0,
+      "source": "quarterly",
+      "binding": 1,
+      "detail": "Yarrow Bioscience, $98.8M clinical-stage biotech developing YB-101, an antibody therapy for Graves disease and thyroid eye disease, New Haven CT, 10 employees, founded October 2025. Permissible business (pharmaceuticals). Refused on question 1: a pre-revenue biotech sitting on cash worth 26.68pct of its market cap breaches CASH>10 + COMBINED>20. The one-side carve-out cannot help - it requires combined <= 20 and combined is 26.68.",
+      "zero_loan_check": "loan_pct is EXACTLY 0.00, which is the input that triggers the YDES implausibility test. Checked and DISTINGUISHED: YDES paired a 0.00 loan with NEGATIVE book value (pb -0.811), which is internally contradictory. YARW reports pb_ratio +1.12, i.e. positive book - a debt-free clinical-stage biotech that raised equity and holds the proceeds is entirely plausible with zero debt. Not an implausible input, and it FAILS on the cash side regardless.",
+      "third_biotech_of_the_day_refused_the_same_way": "CNTB (cash 32.93), YARW (cash 26.68) and APMD on Day 18 (cash 24.91) are the same structural refusal: a pre-revenue drug developer holding a large cash pile relative to a small market cap. The gate is not making a judgement about biotech; the arithmetic of cash/mcap simply lands above 10 for this whole class."
     }
   },
   "findings": [
