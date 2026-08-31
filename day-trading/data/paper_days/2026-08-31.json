@@ -367,6 +367,43 @@
       "shape_of_the_hold": "NEOV spiked to 4.24 within 90 seconds of the entry, reversed to 3.92 by 09:50, and has since traded a 3.95-4.13 range for over an hour. The position has been underwater the entire time, ranging from -$97 to -$331.",
       "no_second_ticket": "ONE POSITION AT A TIME. Tickets 2-7 cannot deploy while NEOV is held, so $95,155 of the $100,000 daily budget is idle by construction. This is the Day-8 single-holder pattern again and it means the day should be judged on process, not on P&L.",
       "watcher_health": "paper_watch running as background task btcmunasi, fed fresh Robinhood bars every 2-7 minutes. Every bar is replayed in order and tested against its LOW for the resting stop, so a slower feed cadence costs awareness latency but does NOT degrade the settled record."
+    },
+    {
+      "time_et": "11:17",
+      "state": "IN POSITION on NEOV - light bench refresh only, no rank duty",
+      "scan_rows": 30,
+      "scan_rows_transcribed": 18,
+      "dropped_funds": 12,
+      "dropped_spac": [
+        "HVII"
+      ],
+      "dropped_halal_fail": [
+        "WETO +106.8%",
+        "AEHL +75.1%",
+        "NCRA +39.2%",
+        "SY +20.8%"
+      ],
+      "dropped_inherited_fail": [
+        "STFS +16.6%",
+        "BRNX +10.5%",
+        "BIVI +10.2%"
+      ],
+      "crossed_latched": 27,
+      "new": [
+        "DPRO",
+        "GFUZ",
+        "GOAI",
+        "GPRK",
+        "LEXX",
+        "PDC",
+        "TITN",
+        "WFF"
+      ],
+      "FUND_COHORT_COLLAPSED": "The scan fell from 83 rows at 09:11 to 30 now, and the leveraged-ETF cohort from 66 to 12. This confirms the Day-18 observation on a second session: the Corgi/Tradr/Leverage-Shares contamination is a PREMARKET ARTEFACT of how those funds mark %Change before the open, not a persistent feature of the scan. It resolves itself at 09:30.",
+      "WETO_is_now_the_days_story": "Wetour Robotics is +106.8pct at 11.83 on 26.96M shares and rvol 11.4 - it has more than DOUBLED, and it is a halal FAIL on financing (loan 373.26 / combined 450.88 against a $6.18M market cap). It was also calm-gap FAIL at +25.3pct this morning, so it was refused twice over. AEHL +75.1pct and NCRA +39.2pct are the same story.",
+      "cost_of_the_gate_running_tally": "The three biggest movers of the session - WETO +106.8pct, AEHL +75.1pct, NCRA +39.2pct - are ALL halal FAILs, and the most liquid crosser of the day (SAIC, $5.32B) failed both questions. The one name the gate allowed is down 6pct.",
+      "eight_new_crossers_not_screened": "DPRO, GFUZ, GOAI, GPRK, LEXX, PDC, TITN, WFF are latched but deliberately NOT screened - halal screening is lazy, at the moment of candidacy, and the one-position rule means none of them can be armed while NEOV is held. They are recorded so the post-exit re-rank starts warm, which is exactly what the bench is for.",
+      "note_for_any_post_exit_rerank": "PDC (Perpetuals.com) would need a careful question-2 read before it could ever be armed - the name points at perpetual futures, which would be a financial-derivatives business rather than a permissible operating one. Flagged now so it is not waved through in a hurry later."
     }
   ],
   "halal": {

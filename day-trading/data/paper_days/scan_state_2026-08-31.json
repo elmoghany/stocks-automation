@@ -1,10 +1,10 @@
 {
  "candidates": {
   "YDDL": {
-   "pct": 46.06,
-   "last": 2.41,
+   "pct": 26.66,
+   "last": 2.0899,
    "prev_close": 1.65,
-   "vol": "2745525.37",
+   "vol": "29284843.797921",
    "name": "One and One Green Technologies",
    "first_seen": "06:31"
   },
@@ -65,10 +65,10 @@
    "first_seen": "06:31"
   },
   "NEOV": {
-   "pct": 15.87,
-   "last": 3.87,
+   "pct": 18.15,
+   "last": 3.9462,
    "prev_close": 3.34,
-   "vol": "452678.101986",
+   "vol": "5742598.478264",
    "name": "NeoVolta",
    "first_seen": "06:31"
   },
@@ -151,6 +151,70 @@
    "vol": "849499.628444",
    "name": "Science Applications International Corpo",
    "first_seen": "09:11"
+  },
+  "WFF": {
+   "pct": 20.94,
+   "last": 2.0801,
+   "prev_close": 1.72,
+   "vol": "5048061.627643",
+   "name": "WF Holding Limited",
+   "first_seen": "11:17"
+  },
+  "DPRO": {
+   "pct": 16.8,
+   "last": 5.215,
+   "prev_close": 4.465,
+   "vol": "4397488.398837",
+   "name": "Draganfly",
+   "first_seen": "11:17"
+  },
+  "LEXX": {
+   "pct": 15.94,
+   "last": 12.0,
+   "prev_close": 10.35,
+   "vol": "62030.310814",
+   "name": "Lexaria Bioscience",
+   "first_seen": "11:17"
+  },
+  "GPRK": {
+   "pct": 12.92,
+   "last": 11.1,
+   "prev_close": 9.83,
+   "vol": "974660.148333",
+   "name": "GeoPark",
+   "first_seen": "11:17"
+  },
+  "GOAI": {
+   "pct": 12.56,
+   "last": 2.33,
+   "prev_close": 2.07,
+   "vol": "112655.548239",
+   "name": "Eva Live Inc",
+   "first_seen": "11:17"
+  },
+  "GFUZ": {
+   "pct": 12.45,
+   "last": 7.905,
+   "prev_close": 7.03,
+   "vol": "106021.244148",
+   "name": "General Fusion Group",
+   "first_seen": "11:17"
+  },
+  "TITN": {
+   "pct": 12.15,
+   "last": 20.03,
+   "prev_close": 17.86,
+   "vol": "255011.20823",
+   "name": "Titan Machinery",
+   "first_seen": "11:17"
+  },
+  "PDC": {
+   "pct": 11.7,
+   "last": 3.15,
+   "prev_close": 2.82,
+   "vol": "12918.399403",
+   "name": "Perpetuals.com",
+   "first_seen": "11:17"
   }
  },
  "halal_fail": [
@@ -280,6 +344,7 @@
   "BCAR",
   "RACC",
   "RFAI",
-  "ALF"
+  "ALF",
+  "HVII"
  ]
 }
