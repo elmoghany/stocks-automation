@@ -24,8 +24,27 @@
     "skeleton_written": true,
     "skeleton_written_at_utc": "2026-08-31T10:22:00Z",
     "skeleton_written_at_et": "2026-08-31T06:22:00",
-    "skeleton_commit": null,
-    "capability_probe": null
+    "skeleton_commit": "9499aeb",
+    "capability_probe": {
+      "run_at_utc": "2026-08-31T10:23:00Z",
+      "run_at_et": "2026-08-31T06:23:00",
+      "verdict": "ALL PASS - session is CAPABLE (not merely live)",
+      "python": {
+        "result": "PASS",
+        "detail": "python -c print(1) -> 1, exit 0"
+      },
+      "git": {
+        "result": "PASS",
+        "detail": "git status --short exit 0; skeleton commit 9499aeb succeeded (write path proven, not just read)"
+      },
+      "mcp_market_data": {
+        "result": "PASS",
+        "detail": "get_equity_quotes SPY returned a live premarket quote; bid 768.03 / ask 768.08, venue_bid_time 2026-08-31T10:21:01Z (current), state=active, has_traded=true",
+        "spy_prev_close": 769.35,
+        "spy_premarket_last": 767.893
+      },
+      "day16_trap_note": "Day-16 (2026-08-26) passed the launcher's 720s liveness check while being unable to run python, commit, or fetch market data, because --permission-mode acceptEdits auto-approves EDITS ONLY. The --allowedTools fix is confirmed live again today: all three non-edit capabilities work."
+    }
   },
   "trades": [],
   "armed": [],
