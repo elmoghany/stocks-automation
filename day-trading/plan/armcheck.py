@@ -33,6 +33,19 @@ def main():
         sys.exit(f"ERROR: no cached bars for {sym}")
     rows.sort()
 
+    # Trigger B level = the PREMARKET high (bars strictly before 13:30Z / 09:30 ET).
+    # Trigger A level = the 5-minute opening-range high (13:30-13:34Z inclusive),
+    # then ratcheted to the RTH session high once the ORB has been taken out.
+    pre = [r for r in rows if r[0].hour * 60 + r[0].minute < 13 * 60 + 30]
+    rth = [r for r in rows if r[0].hour * 60 + r[0].minute >= 13 * 60 + 30]
+    orb = [r for r in rth if r[0].hour * 60 + r[0].minute < 13 * 60 + 35]
+    if orb:
+        orb_hi = max(r[2] for r in orb)
+        rth_hi = max(r[2] for r in rth)
+        print(f"  ORB high (5m)   {orb_hi:.4f}   from {len(orb)} bars 13:30-13:34Z")
+        print(f"  RTH session hi  {rth_hi:.4f}   -> Trigger A ratchet level")
+        print(f"  premarket high  {max(r[2] for r in pre):.4f}   -> Trigger B level")
+
     hi = max(r[2] for r in rows)
     hi_t = [r[0] for r in rows if r[2] == hi][0]
     last = rows[-1][4]
