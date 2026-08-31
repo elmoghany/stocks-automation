@@ -397,6 +397,27 @@
         "fill_arming": "PASS - last 4.0450 is 2.3pct below the 4.1400 ratchet trigger, a clean forward stop.",
         "tick_size_arithmetic": "At $4.07 one tick is 0.246pct, so the 0.50pct cap admits exactly TWO ticks (0.491pct). NEOV has now shown 3, 4, 4 and 3 ticks across four consecutive evaluations - it keeps sitting one tick outside the cap.",
         "veto_counting_convention_ADOPTED_HERE": "A veto DECISION is counted when (a) a fresh Trigger C prints, or (b) the ratchet level MOVES, i.e. whenever there is a genuinely new level to arm. Re-checking an unchanged level is MONITORING and is not counted again. Without this the veto rate would measure my polling frequency rather than the strategy's refusal rate, which would corrupt exactly the calibration the parity audit needs."
+      },
+      {
+        "time_et": "09:43",
+        "phase": "post-open",
+        "symbol": "NEOV",
+        "context": "TRIGGER C - tweezer_bottom printed on the 09:41 one-minute close, read [TAKEABLE NOW] at 09:43. Pattern entry style is a marketable limit at ask + 0.3pct = 4.14 x 1.003 = 4.1524.",
+        "l2_inside_bid": 4.12,
+        "l2_inside_ask": 4.14,
+        "l2_spread_pct": 0.4843,
+        "nbbo_bid": 4.12,
+        "nbbo_ask": 4.15,
+        "nbbo_spread_pct": 0.7255,
+        "cap_pct": 0.5,
+        "verdict": "SPREAD PASSED on the L2 measure - the FIRST spread pass of the session. The entry was refused by DEPTH instead; see the depth ledger for the same timestamp.",
+        "L2_vs_NBBO_DIVERGENCE_WAS_DECISION_CHANGING": {
+          "what": "L2 read 4.12 / 4.14 = TWO ticks = 0.4843pct, inside the cap. The NBBO at the same moment read 4.12 / 4.15 = THREE ticks = 0.7255pct, outside it. The two measures disagree by a full tick and land on OPPOSITE sides of the 0.50pct threshold.",
+          "why_this_one_is_different": "Day 17 and Day 18 both recorded L2 reading WIDER than NBBO, and in each case the stricter reading was used and the veto did not depend on which was right. Today L2 reads TIGHTER, so for the first time the divergence would have decided the trade rather than merely coloured it.",
+          "which_measure_governs": "The rule as written is explicit - 'skip if the L2 spread exceeds the 0.5pct cap' - so L2 is the specified measure and 0.4843pct is a PASS. Recording that ruling rather than quietly taking whichever number suited.",
+          "honesty_note": "Flagging the discomfort openly: 0.4843pct clears a 0.50pct cap by a 3pct margin, on a measure that disagreed with the consolidated quote by a full tick. Had depth not refused this entry independently, this would have been a genuinely marginal arming resting on a contested measurement, and it should be reviewed before a live session relies on it.",
+          "moot_today": "Depth refused the entry outright, so nothing turned on the ruling this time."
+        }
       }
     ],
     "depth": [
@@ -416,6 +437,27 @@
         "why_logged_anyway": "Depth and spread are DIFFERENT RULES (Day-9 LPTH lesson) and must be counted separately. Today they disagree: the book is deep enough but priced 15 ticks wide. Recording the PASS is what keeps the depth-veto rate honest - if only failures were logged the depth denominator would be wrong.",
         "sizing_20pct_rule": "NOT BINDING - trailing 10 completed minutes (11:12-11:23Z) traded 29,369 shares, so the 20pct cap allows 5,873. Intended 3,703 is well inside it.",
         "premarket_liquidity_note": "NEOV traded 237,866 real shares across 108 premarket minutes - genuinely active, not a fake gap. Unusual for a halal PASS in this campaign, where the passing names are usually the illiquid ones."
+      },
+      {
+        "time_et": "09:43",
+        "phase": "post-open",
+        "symbol": "NEOV",
+        "context": "TRIGGER C tweezer_bottom, [TAKEABLE NOW], marketable limit at ask + 0.3pct",
+        "entry_style": "pattern -> marketable limit",
+        "ask": 4.14,
+        "limit_ceiling": 4.15242,
+        "cumulative_ask_size_to_ceiling": 161,
+        "levels": "4.14x161 ONLY - the next ask level is 4.16, which sits above the 4.15242 ceiling",
+        "intended_shares": 3623,
+        "intended_dollars": 15000,
+        "pct_of_intended": 4.4,
+        "rule": "<25pct of intended -> SKIP and log ERROR: thin book",
+        "verdict": "DEPTH VETO - ENTRY REFUSED. ERROR: thin book.",
+        "significance": "FIRST DEPTH VETO OF THE SESSION, and the first time today that spread and depth disagreed. Every earlier depth check today PASSED comfortably (104.6pct, 110.9pct, 112.0pct) while spread refused; here the book finally tightened to two ticks and simultaneously hollowed out at the touch. 161 shares against 3,623 wanted is 4.4pct - the book could fill 1/23rd of the ticket inside the slippage cap.",
+        "why_the_two_rules_disagree_here": "A two-tick spread says the touch is tight; 161 shares says there is nothing behind it. The 4.16 level held 900 shares and 4.17 held 51,700 - the liquidity exists, it just sits ABOVE the 0.3pct marketable-limit ceiling. Buying through it would mean paying more than the cap allows, which is precisely what the ceiling exists to prevent.",
+        "precedent": "Almost an exact repeat of Day 18's 10:04 TII depth veto - 190 shares, 4.0pct of intended, next level above the ceiling. Two sessions running, the same shape: a tight quote on a shell of a book.",
+        "sizing_20pct_rule_not_binding": "The trailing 10 completed minutes allowed 116,109 shares, so the champion's volume-based sizing rule was nowhere near binding. Depth alone refused this entry.",
+        "counted_separately": "Logged in the DEPTH bucket, not the spread bucket. Day-9 lesson: a single blended veto rate would hide that spread passed and depth refused."
       }
     ],
     "fill_arming_chase": [
