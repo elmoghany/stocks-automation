@@ -86,19 +86,80 @@
       ],
       "note": "First cycle. Scan fund-contaminated again: 69 of 89 rows were leveraged/2x ETFs and ETNs (the Corgi 2x Daily cohort, same as Day 18). FUND_PAT caught all 69. Five names returned ZERO real premarket bars against 145 interpolated (BESS, CTW, EDRY, ANPA, HVT.A) - the Day-8 fake-gap signature; their scan %Change is a stale mark, and the ranker excluded all five as NO BARS.",
       "calm_gap_caveat": "Ranked as-of 06:40, BEFORE the 07:00 ET bar exists, so gap7 fell back to the latest print and equalled gain% for every name. The calm verdicts in this cycle are provisional; the first authoritative calm-gap read is the 07:00+ cycle."
+    },
+    {
+      "time_et": "06:50",
+      "state": "FLAT (premarket)",
+      "scan_rows": 94,
+      "dropped_funds": 72,
+      "dropped_noncommon": [
+        "EOSEW +18.2%"
+      ],
+      "dropped_spac": [
+        "RACC",
+        "ALF"
+      ],
+      "dropped_inherited_fail": [
+        "DUKR +65.5%",
+        "BRNX +17.0%",
+        "MODD +13.6%",
+        "CKX +12.6%"
+      ],
+      "crossed_latched": 15,
+      "ratios_pass": 1,
+      "armable": 1,
+      "top": "NEOV",
+      "new": [
+        "CVR"
+      ],
+      "note": "Only one new crosser, CVR (Chicago Rivet & Machine, +17.19pct). CKX reappeared and was dropped mechanically off the inherited-FAIL list from Day 18 - API HYGIENE #2 working as intended. EOSEW now drops through the new noncommon bucket instead of reaching the pool."
+    },
+    {
+      "time_et": "07:05",
+      "state": "FLAT (premarket) - first authoritative calm-gap read",
+      "scan_rows": "n/a (rank cycle on the 06:50 crossed set, with the real 07:00 ET bar now present)",
+      "crossed_latched": 15,
+      "crossed_with_real_bars": 8,
+      "ratios_pass": 2,
+      "armable": 1,
+      "top": "NEOV",
+      "rank_order": [
+        "NCRA 0.964 coil / press +0.34",
+        "BLRX 0.980 / n-a",
+        "NEOV 0.924 / +0.17",
+        "YDDL 0.631 / +0.15",
+        "AEHL 0.935 / +0.06",
+        "SY 0.797 / -0.19",
+        "WETO 0.911 / -0.24",
+        "CNTB 0.928 / n-a"
+      ],
+      "screens_run": [
+        "NCRA",
+        "CVR",
+        "AEHL",
+        "YDDL",
+        "WETO"
+      ],
+      "note": "The 7AM bar reshuffled the board: NCRA took rank 1 on a genuine +27.5pct move with COILED 0.964 and the best pressure of the session (+0.34), and was refused by the halal gate alone (cash 120.58pct of a $3.97M post-reverse-split market cap). YDDL became the session's second halal PASS but is unarmable on a +61.8pct calm gap. NEOV remains the only ARMABLE name: halal PASS on both questions, calm +10.8pct, coil 0.924.",
+      "cost_of_the_gate": "AEHL is the day's real story so far - +89.5pct on heavy genuine premarket volume (212,039 shares in the 11:00Z minute) and refused twice over, on financing (combined 59.77) and on calm-gap (+91.0pct)."
     }
   ],
   "halal": {
     "PASS": [
-      "NEOV"
+      "NEOV",
+      "YDDL"
     ],
     "FAIL": [
+      "AEHL",
       "BLRX",
       "CNTB",
-      "SY"
+      "CVR",
+      "NCRA",
+      "SY",
+      "WETO"
     ],
     "CANNOT_VERIFY": [],
-    "_note": "Binary rule: only verdict PASS is armable. Screened lazily at candidacy per SCAN ECONOMY (b): the top-3 by rank plus the current TOP, not every crosser."
+    "_note": "Binary rule: only verdict PASS is armable. Screened lazily at candidacy per SCAN ECONOMY (b). All seven FAILs were written into scan_state_2026-08-31.json halal_fail so they cannot re-enter the pool on a later sweep (API HYGIENE #2)."
   },
   "vetoes": {
     "spread": [],
@@ -157,6 +218,67 @@
       "detail": "So-Young International, $242.9M Chinese medical-aesthetic service platform (content, UGC social community, and online reservation for aesthetic treatments), Beijing, 2,348 employees. Question 1 settles it: loan 156.6 / cash 328.28 / combined 484.88, roughly 4.8x market cap.",
       "question2_not_reached_but_noted": "Had the ratios been clean, question 2 would have needed real work: the company is part content/social-media platform and part healthcare booking, and a UGC content platform sits close to the entertainment line with no disclosed revenue split. Recording that it was NOT adjudicated rather than implying it passed.",
       "currency_note": "Beijing-based filer, so the foreign-filer RMB/USD denominator mismatch could apply. Even rescaling by ~7.1x leaves loan ~22 and combined ~68 - still FAIL on both counts, so the verdict survives the correction."
+    },
+    "YDDL": {
+      "verdict": "PASS",
+      "loan_pct": 4.4,
+      "cash_pct": 1.07,
+      "combined": 5.47,
+      "haram_pct": 0.0,
+      "source": "quarterly",
+      "on_halal_list": false,
+      "armable": false,
+      "why_not_armable": "CALM-GAP FAIL. gap7 is +61.8pct against a 20pct cap (35pct grace applies only to the top-ranked name, and YDDL ranks 4th). Compliance is clean; the entry gate refuses it.",
+      "q1": "Both sides inside 10 (loan 4.40, cash 1.07); carve-out not needed. Market cap present and sane ($89.6M).",
+      "q2": "One & One Green Technologies - recycling, production and trading of recycled scrap metals (copper alloy ingot, recycled aluminium, tin, zinc, iron, plastic beads), Bulacan, Philippines, 90 employees. Metals recycling is not on the haram list. Interest income 0.00pct of revenue.",
+      "blind_spot_checks": "(1) haram_pct interest-only blindness does not bite - scrap-metal recycling has no hidden alcohol/pork revenue line. (2) Sector label 'Industrial Services / Environmental Services' is CONSISTENT with the described recycling business. (3) pb_ratio +2.14 (positive book) and loan 4.40 is non-zero, so the YDES implausible-input signature does not apply. Notably pe_ratio is +7.32, i.e. actually profitable - rare in this cohort.",
+      "flag_recorded_not_disqualifying": "Founded 2024-04-17, so the company is ~16 months old. C37 eligibility requires >=50 sessions of history; its 52-week range spans 2026-04-07 to 2026-08-28, which clears that, and the ranker did not exclude it on session count. Recording the youth as context rather than a refusal."
+    },
+    "NCRA": {
+      "verdict": "FAIL",
+      "loan_pct": 0.57,
+      "cash_pct": 120.58,
+      "combined": 121.15,
+      "haram_pct": 0.0,
+      "source": "quarterly",
+      "binding": 1,
+      "detail": "Nocera Inc, $3.97M aquaculture consulting and management business (design, build and manage fish-farming projects), New Taipei City, Taiwan, 20 employees. THE BUSINESS IS CLEANLY PERMISSIBLE - fish farming carries no pork or intoxicant exposure and aquaculture is not on the haram list. Refused purely on financing: cash is 120.58pct of a $3.97M market cap. This was the DAY'S TOP-RANKED NAME at 07:05 (COILED 0.964, pressure +0.34, calm via the 35pct top grace) and the halal gate is the only thing that refused it.",
+      "denominator_note": "avg_volume_2_weeks 261k against avg_volume_30_days 6.53M, plus a 52-week range of 72.00 down to 1.30, is the signature of a recent reverse split. A tiny post-split market cap is exactly the small-denominator effect the protocol names as the single largest determinant of what we can trade."
+    },
+    "CVR": {
+      "verdict": "FAIL",
+      "loan_pct": 19.07,
+      "cash_pct": 7.79,
+      "combined": 26.86,
+      "haram_pct": 0.0,
+      "source": "quarterly",
+      "binding": 1,
+      "detail": "Chicago Rivet & Machine, $9.89M rivet and cold-formed-fastener manufacturer, Warrenville IL, 158 employees, founded 1920. Permissible business (metal fabrication). NEAREST MISS OF THE SESSION SO FAR: the carve-out allows one side over 10 only if combined stays <= 20, and combined is 26.86 - refused by 6.86 percentage points. cash 7.79 is inside 10; the loan side at 19.07 is what breaks it.",
+      "moot_anyway": "Untradeable regardless - avg volume 1,445/day (2wk) and ZERO real premarket bars today, so both the 20pct-of-10-min-volume sizing rule and the fake-gap detector would have refused it."
+    },
+    "AEHL": {
+      "verdict": "FAIL",
+      "loan_pct": 51.88,
+      "cash_pct": 7.9,
+      "combined": 59.77,
+      "haram_pct": 0.0,
+      "source": "quarterly",
+      "binding": 1,
+      "detail": "Antelope Enterprise Holdings, $13.3M ceramic-tile manufacturer (Hengda/HDL, TOERTO, WULIQIAO brands), Chengdu China, 40 employees. Permissible business (building products), refused on leverage: loan 51.88 with combined 59.77.",
+      "significance": "THE BIGGEST MOVER OF THE PREMARKET - +89.5pct at 6.71 on genuinely heavy real volume (212,039 shares in the 11:00Z minute alone, high 7.09). It is refused twice over: halal FAIL on financing, and CALM-GAP FAIL at +91.0pct against the 20pct cap. This is the cost-of-the-gate observation of the session so far.",
+      "question2_not_reached": "RH describes ceramics only. Recording that question 2 was not adjudicated rather than implying it passed - the ratios settle it first.",
+      "reverse_split_note": "52-week high 808.39 against a 2.98 low is a heavily reverse-split chart; pb_ratio 0.033."
+    },
+    "WETO": {
+      "verdict": "FAIL",
+      "loan_pct": 373.26,
+      "cash_pct": 77.62,
+      "combined": 450.88,
+      "haram_pct": 0.0,
+      "source": "quarterly",
+      "binding": 1,
+      "detail": "Wetour Robotics, $6.18M mobility-solutions holding company - shuttle, chartered bus, packaged tour and itinerary-management services, Hangzhou China, 30 employees. The BUSINESS is permissible (passenger transport, the same call as SWVL on Day 18). Refused on a debt load 3.7x market cap. Also CALM-GAP FAIL at +25.3pct.",
+      "packaged_tour_note": "Packaged tours sit near the leisure/entertainment line, but transport and itinerary management are the described core and the ratios settle it long before that question needs answering."
     }
   },
   "findings": [
@@ -176,6 +298,22 @@
       "detector": "The Day-8 all-interpolated-bars detector, working exactly as designed. rh_bars_ingest.py skipped every bar and the ranker excluded all five as 'NO BARS (fetch first)'.",
       "note": "HVT.A is doubly untradeable: 2,004 shares in the prior session against the 20pct-of-10-min-volume sizing rule. It is also a dotted Class-A ticker, the same shape as CRD.A on Day 18 whose ratios were UNVERIFIABLE in yfinance.",
       "caveat": "fake_gap was deliberately RESET at seeding rather than inherited - a name dark premarket yesterday may trade today - so these five are not permanently dropped. They are excluded for want of bars, and a real print later today puts them back in the pool."
+    },
+    {
+      "id": "scanner-last-is-a-stale-mark-for-premarket-dark-names",
+      "found_at_et": "07:05",
+      "severity": "discovery-integrity defect - inflates the crossed set with crosses that never printed",
+      "what": "For names with no premarket tape, the scanner's 'Last' column is an indicative/stale mark rather than a traded price, so its %Change describes a move that did not happen. Four cases today, each verified against the real 1-minute bars:",
+      "evidence": {
+        "CTW": "scan Last 2.90 vs prev_close 2.58 = +12.40pct. Real tape: no trades at all, flat interpolated series at 2.55. Against 2.58 that is -1.2pct - the name is DOWN, not up 12pct.",
+        "CNTB": "scan Last 2.4995 = +12.09pct. Real tape: one print at 11:00Z, 1,000 shares at 2.32 = +4.0pct vs prev_close 2.23. Never crossed +10pct.",
+        "EDRY": "scan Last 57.15 = +13.45pct. Real tape: one print at 11:00Z, 155 shares at 53.00 = +5.2pct vs prev_close 50.375. Never crossed +10pct.",
+        "CVR": "scan Last 12.00 = +17.19pct. Real tape: zero trades, flat interpolated at 10.04. Never crossed +10pct."
+      },
+      "why_it_matters": "The crossed-set LATCH exists because the champion treats a +10pct cross as permanent once it has PRINTED. These four never printed one. Latching them makes the live universe larger than the champion's in a way that is invisible in the ledger - the exact mirror of divergence #2 in the parity audit, which corrects the opposite error (under-discovery when a real crosser fades off the snapshot).",
+      "did_it_cost_anything_today": "No. All four were excluded downstream anyway - the ranker refused them as NO BARS or too-few-bars, so none could have been armed. The defect is currently masked by the fake-gap detector rather than handled on its own terms.",
+      "handling": "Deliberately did NOT purge them from the crossed set. Dropping a latched name is under-discovery, and fake_gap is reset daily precisely because a name dark at 07:00 may trade later - if any of these prints a genuine +10pct cross during RTH it becomes eligible on its own tape. They stay latched but unarmable, and the ranker keeps refusing them until real bars exist.",
+      "recommended_followup": "The clean fix is to gate the LATCH on a real print rather than on the scanner's %Change: only add a name to the crossed set once its own bars show a >=+10pct trade vs prev_close. That is a change to the discovery contract, so it belongs in a reviewed patch rather than a mid-session edit - logged here rather than done today."
     }
   ]
 }
