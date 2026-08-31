@@ -1,8 +1,8 @@
 {
  "candidates": {
   "YDDL": {
-   "pct": 69.07,
-   "last": 2.7897,
+   "pct": 49.09,
+   "last": 2.46,
    "prev_close": 1.65,
    "vol": "2745525.37",
    "name": "One and One Green Technologies",
@@ -65,8 +65,8 @@
    "first_seen": "06:31"
   },
   "NEOV": {
-   "pct": 11.98,
-   "last": 3.74,
+   "pct": 15.87,
+   "last": 3.87,
    "prev_close": 3.34,
    "vol": "452678.101986",
    "name": "NeoVolta",
@@ -119,6 +119,14 @@
    "vol": "3833.4139",
    "name": "Chicago Rivet & Machine",
    "first_seen": "06:50"
+  },
+  "YARW": {
+   "pct": 13.57,
+   "last": 42.02,
+   "prev_close": 37.0,
+   "vol": "39378.144717",
+   "name": "Yarrow Bioscience",
+   "first_seen": "07:24"
   }
  },
  "halal_fail": [
@@ -128,7 +136,8 @@
   "CVR",
   "NCRA",
   "SY",
-  "WETO"
+  "WETO",
+  "YARW"
  ],
  "fake_gap": [],
  "inherited_fail": [

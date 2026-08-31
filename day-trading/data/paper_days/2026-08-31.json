@@ -44,6 +44,13 @@
         "spy_premarket_last": 767.893
       },
       "day16_trap_note": "Day-16 (2026-08-26) passed the launcher's 720s liveness check while being unable to run python, commit, or fetch market data, because --permission-mode acceptEdits auto-approves EDITS ONLY. The --allowedTools fix is confirmed live again today: all three non-edit capabilities work."
+    },
+    "scan_cadence": {
+      "premarket": "~20 minutes, NOT the protocol's 5 minutes. Logged as a deliberate deviation per SCAN ECONOMY rule 5 rather than left to be inferred.",
+      "reason": "Two constraints bind. (1) HEADLESS SINGLE-TURN: the whole day runs inside one turn, so every tool call spends wall clock that the 09:30-14:30 tradeable window needs; a true 5-minute premarket cadence from 06:30 is ~36 cycles and would consume the session. (2) Premarket entries are structurally near-impossible anyway - the parity audit records a ~90-100pct premarket spread-veto rate, and the Day-17/18 tick-size finding makes the 0.50pct cap a near-binary 1-tick test on sub-$4 names.",
+      "post_open": "Tighten to the protocol 5-minute cadence from 09:25 while FLAT with tickets remaining, because 09:30 collapses spreads and that is where entries actually become possible.",
+      "in_position": "Drop scan duty to a ~20-minute light bench refresh; the 1-minute position watch owns the cadence and must never be starved (API HYGIENE #3).",
+      "honesty_note": "This deviation makes the premarket half of the day a LOWER-discovery process than the champion's. Direction of bias is under-discovery of late-premarket crossers, not over-trading."
     }
   },
   "trades": [],
@@ -142,6 +149,50 @@
       ],
       "note": "The 7AM bar reshuffled the board: NCRA took rank 1 on a genuine +27.5pct move with COILED 0.964 and the best pressure of the session (+0.34), and was refused by the halal gate alone (cash 120.58pct of a $3.97M post-reverse-split market cap). YDDL became the session's second halal PASS but is unarmable on a +61.8pct calm gap. NEOV remains the only ARMABLE name: halal PASS on both questions, calm +10.8pct, coil 0.924.",
       "cost_of_the_gate": "AEHL is the day's real story so far - +89.5pct on heavy genuine premarket volume (212,039 shares in the 11:00Z minute) and refused twice over, on financing (combined 59.77) and on calm-gap (+91.0pct)."
+    },
+    {
+      "time_et": "07:24",
+      "state": "FLAT (premarket)",
+      "scan_rows": 88,
+      "scan_rows_transcribed": 18,
+      "transcription_abbreviation": "From this cycle on, only NON-FUND rows are transcribed into the sweep TSV; the leveraged-ETF/ETN cohort (70 rows here) is counted and dropped at transcription instead of being re-typed every cycle. Recording this honestly as a HAND step: the risk it introduces is omitting a real stock I mistook for a fund, so the rule I applied is 'when in any doubt, transcribe it and let FUND_PAT decide'. The fund roster has been identical across all three sweeps today.",
+      "dropped_funds": 70,
+      "dropped_noncommon": [
+        "EOSEW +18.2%"
+      ],
+      "dropped_spac": [
+        "RACC",
+        "ALF"
+      ],
+      "dropped_halal_fail": [
+        "AEHL +74.6%",
+        "WETO +29.5%",
+        "NCRA +25.4%",
+        "CVR +17.2%"
+      ],
+      "dropped_inherited_fail": [
+        "DUKR +65.5%",
+        "BRNX +15.9%",
+        "CKX +12.6%",
+        "MODD +12.4%"
+      ],
+      "crossed_latched": 16,
+      "ratios_pass": 2,
+      "armable": 1,
+      "top": "NEOV",
+      "new": [
+        "YARW"
+      ],
+      "gone_from_scan_still_latched": [
+        "BESS",
+        "BLRX",
+        "CNTB",
+        "EDRY",
+        "SY"
+      ],
+      "note": "Today's own halal FAILs now drop MECHANICALLY - AEHL, WETO, NCRA and CVR were all refused by the drop-list rather than re-screened, which is API HYGIENE #2 closing properly for the first time this session (the list was empty until 07:05). YARW (Yarrow Bioscience) crossed and FAILED on cash 26.68pct.",
+      "ranker_validated_the_stale_mark_finding": "EDRY now carries 3 real bars and the ranker excluded it with '+10pct cross has NOT printed yet' - an independent mechanical confirmation of the 07:05 finding that the scanner's %Change for premarket-dark names describes a move that never happened.",
+      "entry_evaluated": "NEOV Trigger B at 4.0500. SPREAD VETO (3.911pct vs 0.50pct cap). Depth PASSED at 104.6pct of intended with no reduction; fill-arming PASSED. First entry decision of the day."
     }
   ],
   "halal": {
@@ -162,9 +213,58 @@
     "_note": "Binary rule: only verdict PASS is armable. Screened lazily at candidacy per SCAN ECONOMY (b). All seven FAILs were written into scan_state_2026-08-31.json halal_fail so they cannot re-enter the pool on a later sweep (API HYGIENE #2)."
   },
   "vetoes": {
-    "spread": [],
-    "depth": [],
-    "fill_arming_chase": []
+    "spread": [
+      {
+        "time_et": "07:25",
+        "phase": "premarket",
+        "symbol": "NEOV",
+        "context": "Trigger B premarket-high stop-buy at the session high 4.0500, limit 4.0702 (trigger x 1.005)",
+        "nbbo_bid": 3.76,
+        "nbbo_ask": 3.91,
+        "mid": 3.835,
+        "spread_abs": 0.15,
+        "spread_pct": 3.911,
+        "cap_pct": 0.5,
+        "ticks": 15,
+        "verdict": "SPREAD VETO - ENTRY REFUSED",
+        "margin": "Not marginal in any sense: 3.911pct is 7.8x the 0.50pct cap. This is not a borderline call that calibration could flip.",
+        "l2_vs_nbbo": "AGREED exactly this time - L2 inside bid 3.76 (100 sh) and inside ask 3.91 (200 sh) match the NBBO. No repeat of the L2-wider-than-NBBO divergence seen on Day 17 and at 10:01 on Day 18.",
+        "tick_size_floor": "At $3.91 one $0.01 tick is 0.256pct of price, so the 0.50pct cap admits at most ONE tick on this name (two ticks would be 0.512pct, already over). Observed 15 ticks. The Day-17/18 tick-size finding holds on a third name.",
+        "note": "This is the premarket spread reality the parity audit describes - live refuses essentially every premarket entry while the sim just pays a 50bps haircut and takes the trade. Counted in the PREMARKET veto bucket, kept separate from post-open."
+      }
+    ],
+    "depth": [
+      {
+        "time_et": "07:25",
+        "phase": "premarket",
+        "symbol": "NEOV",
+        "context": "same Trigger B stop-buy at 4.0500, limit ceiling 4.0702",
+        "trigger": 4.05,
+        "limit_ceiling": 4.0702,
+        "intended_shares": 3703,
+        "intended_dollars": 15000,
+        "cumulative_ask_size_to_ceiling": 3875,
+        "levels": "3.91x200, 3.92x100, 3.94x80, 3.97x120, 3.98x1500, 3.99x325, 4.00x100, 4.02x1000, 4.03x100, 4.06x350 (the 4.08 level sits above the 4.0702 ceiling)",
+        "pct_of_intended": 104.6,
+        "verdict": "PASS - depth did NOT veto, and needed NO ticket reduction. The book could absorb the full $15,000 ticket inside the slippage cap.",
+        "why_logged_anyway": "Depth and spread are DIFFERENT RULES (Day-9 LPTH lesson) and must be counted separately. Today they disagree: the book is deep enough but priced 15 ticks wide. Recording the PASS is what keeps the depth-veto rate honest - if only failures were logged the depth denominator would be wrong.",
+        "sizing_20pct_rule": "NOT BINDING - trailing 10 completed minutes (11:12-11:23Z) traded 29,369 shares, so the 20pct cap allows 5,873. Intended 3,703 is well inside it.",
+        "premarket_liquidity_note": "NEOV traded 237,866 real shares across 108 premarket minutes - genuinely active, not a fake gap. Unusual for a halal PASS in this campaign, where the passing names are usually the illiquid ones."
+      }
+    ],
+    "fill_arming_chase": [
+      {
+        "time_et": "07:25",
+        "phase": "premarket",
+        "symbol": "NEOV",
+        "last": 3.87,
+        "bid": 3.76,
+        "trigger": 4.05,
+        "verdict": "PASS - NOT a chase. Last 3.87 and bid 3.76 are BOTH below the 4.0500 trigger, so a stop-limit here would be a legitimate forward stop rather than a disguised market order.",
+        "note": "Recorded separately from the spread veto so it does not contaminate the spread-threshold calibration (Day-8 lesson #4). The entry was refused on spread, NOT on chase.",
+        "trigger_provenance": "The 4.0500 level is the high of the 08:00Z bar - the FIRST premarket minute - which traded 11,753 shares. Checked deliberately rather than assumed: a session high set by a one-lot print at 04:00 ET would be a poor trigger, but this one rests on real size."
+      }
+    ]
   },
   "trigger_c": [],
   "errors": [],
