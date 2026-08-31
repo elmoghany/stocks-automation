@@ -1,8 +1,8 @@
 {
  "candidates": {
   "YDDL": {
-   "pct": 49.09,
-   "last": 2.46,
+   "pct": 43.65,
+   "last": 2.3703,
    "prev_close": 1.65,
    "vol": "2745525.37",
    "name": "One and One Green Technologies",
@@ -65,8 +65,8 @@
    "first_seen": "06:31"
   },
   "NEOV": {
-   "pct": 15.87,
-   "last": 3.87,
+   "pct": 14.67,
+   "last": 3.83,
    "prev_close": 3.34,
    "vol": "452678.101986",
    "name": "NeoVolta",
@@ -127,6 +127,14 @@
    "vol": "39378.144717",
    "name": "Yarrow Bioscience",
    "first_seen": "07:24"
+  },
+  "MOVE": {
+   "pct": 23.93,
+   "last": 14.24,
+   "prev_close": 11.49,
+   "vol": "58715.767192",
+   "name": "Corvex, Inc.",
+   "first_seen": "07:51"
   }
  },
  "halal_fail": [

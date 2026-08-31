@@ -193,12 +193,50 @@
       "note": "Today's own halal FAILs now drop MECHANICALLY - AEHL, WETO, NCRA and CVR were all refused by the drop-list rather than re-screened, which is API HYGIENE #2 closing properly for the first time this session (the list was empty until 07:05). YARW (Yarrow Bioscience) crossed and FAILED on cash 26.68pct.",
       "ranker_validated_the_stale_mark_finding": "EDRY now carries 3 real bars and the ranker excluded it with '+10pct cross has NOT printed yet' - an independent mechanical confirmation of the 07:05 finding that the scanner's %Change for premarket-dark names describes a move that never happened.",
       "entry_evaluated": "NEOV Trigger B at 4.0500. SPREAD VETO (3.911pct vs 0.50pct cap). Depth PASSED at 104.6pct of intended with no reduction; fill-arming PASSED. First entry decision of the day."
+    },
+    {
+      "time_et": "07:51",
+      "state": "FLAT (premarket)",
+      "scan_rows": 86,
+      "scan_rows_transcribed": 17,
+      "dropped_funds": 69,
+      "dropped_noncommon": [
+        "EOSEW +18.2%"
+      ],
+      "dropped_spac": [
+        "RACC",
+        "ALF"
+      ],
+      "dropped_halal_fail": [
+        "AEHL +68.9%",
+        "WETO +26.0%",
+        "CVR +17.2%",
+        "NCRA +16.4%",
+        "SY +11.7%"
+      ],
+      "dropped_inherited_fail": [
+        "DUKR +65.5%",
+        "BRNX +13.6%",
+        "CKX +12.6%"
+      ],
+      "crossed_latched": 17,
+      "ratios_pass": 3,
+      "armable": 1,
+      "top": "NEOV",
+      "new": [
+        "MOVE"
+      ],
+      "note": "MOVE (Corvex) crossed and is the most interesting name of the premarket: a $315.6M AI/GPU-cloud operator, halal PASS on question 1 (loan 5.33 / cash 9.29 / combined 14.62) and permissible on question 2. It ranked FIRST on coil 0.926 and the best pressure of the day (+0.35) - and is unarmable anyway because it did not start trading until 07:45 ET and so has no 07:00 bar to compute calm-gap from.",
+      "gap7_completion": "ATTEMPTED on MOVE per the standing instruction and correctly NOT applied - Polygon has no 7AM bar either because the stock had not begun trading. Logged loudly in findings. The same probe cross-confirmed NEOV's gap7 at +10.78pct on Polygon vs +10.8pct on RH.",
+      "five_halal_fails_dropped_mechanically": "The drop-list is now carrying most of the discovery load: five of today's own FAILs plus three inherited ones were refused without a single re-screen this cycle.",
+      "neov_state": "NEOV eased to 3.80 (+13.8pct), coil 0.938, pressure turned NEGATIVE at -0.29 from +0.32 twenty-five minutes earlier. Still the only armable name; still spread-vetoed premarket."
     }
   ],
   "halal": {
     "PASS": [
       "NEOV",
-      "YDDL"
+      "YDDL",
+      "MOVE"
     ],
     "FAIL": [
       "AEHL",
@@ -210,7 +248,7 @@
       "WETO"
     ],
     "CANNOT_VERIFY": [],
-    "_note": "Binary rule: only verdict PASS is armable. Screened lazily at candidacy per SCAN ECONOMY (b). All seven FAILs were written into scan_state_2026-08-31.json halal_fail so they cannot re-enter the pool on a later sweep (API HYGIENE #2)."
+    "_note": "Binary rule: only verdict PASS is armable. Three question-1 PASSes today, but only NEOV is ARMABLE: YDDL fails calm-gap at +61.8pct and MOVE has no 07:00 bar at all so its calm-gap is unavailable for the whole session. Screened lazily at candidacy per SCAN ECONOMY (b); all FAILs written into scan_state halal_fail so they cannot re-enter the pool (API HYGIENE #2)."
   },
   "vetoes": {
     "spread": [
@@ -379,6 +417,32 @@
       "binding": 1,
       "detail": "Wetour Robotics, $6.18M mobility-solutions holding company - shuttle, chartered bus, packaged tour and itinerary-management services, Hangzhou China, 30 employees. The BUSINESS is permissible (passenger transport, the same call as SWVL on Day 18). Refused on a debt load 3.7x market cap. Also CALM-GAP FAIL at +25.3pct.",
       "packaged_tour_note": "Packaged tours sit near the leisure/entertainment line, but transport and itinerary management are the described core and the ratios settle it long before that question needs answering."
+    },
+    "MOVE": {
+      "verdict": "PASS on question 1; question 2 permissible; NOT ARMABLE on calm-gap for the whole session",
+      "loan_pct": 5.33,
+      "cash_pct": 9.29,
+      "combined": 14.62,
+      "haram_pct": 0.98,
+      "source": "quarterly",
+      "on_halal_list": false,
+      "q1": "Both sides inside 10 (loan 5.33, cash 9.29); the carve-out was not needed. Market cap present and sane ($315.6M from RH).",
+      "q2": "Corvex Inc - AI cloud computing, GPU-accelerated infrastructure for AI workloads (GPU clusters, confidential computing, inference-as-a-service), Arlington VA, 38 employees, founded Oct 2024. Compute infrastructure is not on the haram list. Interest income 0.98pct of revenue, well under the 5pct line.",
+      "federal_and_sovereign_note": "The description names 'federal and sovereign solutions' among its customers. This does NOT refuse the name: the AMD principle is explicit that selling a general-purpose product INTO defence or government markets is permissible, and only a PURE defence/aerospace business fails. GPU compute is general-purpose by construction.",
+      "blind_spot_checks": "(1) haram_pct interest-only blindness does not bite - cloud compute has no hidden alcohol/pork revenue line. (2) Sector label 'Technology Services / Data Processing Services' is CONSISTENT with the described GPU-cloud business, unlike the ZSTK and AIIR mislabels. (3) NEGATIVE BOOK VALUE - see below.",
+      "negative_book_flag_UNRESOLVED_but_moot": {
+        "observation": "pb_ratio -6.0978, i.e. deeply negative book value, against a reported loan_pct of only 5.33 (~$16.8M of debt on a $315.6M cap) and cash_pct 9.29 (~$29.3M).",
+        "why_it_is_suspicious_here_specifically": "A GPU-cloud operator finances its fleet. If a material part of that sits in finance/operating LEASE obligations rather than in the 'loans' line the screen reads, loan_pct would understate real leverage - and deeply negative book value is exactly the symptom that pattern produces. This is a sharper concern than generic negative book, because the business model predicts the specific liability the screen might miss.",
+        "compared_to_precedent": "Distinguished from YDES (the protocol's named implausible-input case) because YDES reported loan_pct EXACTLY 0.00; MOVE reports 5.33 and 9.29, both non-zero. That matches the COPR/BRAI precedent from Day 18, where negative book with plausible non-zero ratios was FLAGGED BUT NOT DISQUALIFYING.",
+        "status": "NOT RESOLVED, and deliberately not resolved, because it cannot change any decision today - see calm_gap below. Recording it as an open question rather than either burying it or over-refusing on it.",
+        "what_would_be_required": "If MOVE ever becomes armable, this must be settled BEFORE arming by reading the actual balance sheet for lease/finance obligations, not waved through on the quarterly screen's loans line."
+      },
+      "calm_gap": {
+        "verdict": "FAIL - and permanently, for the entire session",
+        "reason": "MOVE's first real print of 2026-08-31 was 11:45Z = 07:45 ET. There is no 07:00 ET bar on Robinhood or on Polygon, so gap7 is n/a, and the ranker fails conservative on a missing gap7 by design.",
+        "structural_consequence": "Because gap7 is anchored to a fixed 07:00 clock time, a name that STARTS trading after 07:00 can never acquire one. MOVE is therefore unarmable for the whole day no matter how it trades - it was +23.9pct at 07:51 and +34.6pct three minutes later, on 22,417 shares in a single minute, and none of that can make it eligible.",
+        "is_this_right": "Following the tool rather than arguing with it, per the standing rule that the rank command wins over hand judgement. But flagging it as a genuine structural question for review: the calm-gap gate exists to refuse names that have ALREADY RUN too far by 7AM, and a name that had not yet traded at 7AM is a different case from one that gapped 60pct by then. Today it costs nothing to be strict; on another day it could refuse a clean late-opening name."
+      }
     }
   },
   "findings": [
@@ -414,6 +478,34 @@
       "did_it_cost_anything_today": "No. All four were excluded downstream anyway - the ranker refused them as NO BARS or too-few-bars, so none could have been armed. The defect is currently masked by the fake-gap detector rather than handled on its own terms.",
       "handling": "Deliberately did NOT purge them from the crossed set. Dropping a latched name is under-discovery, and fake_gap is reset daily precisely because a name dark at 07:00 may trade later - if any of these prints a genuine +10pct cross during RTH it becomes eligible on its own tape. They stay latched but unarmable, and the ranker keeps refusing them until real bars exist.",
       "recommended_followup": "The clean fix is to gate the LATCH on a real print rather than on the scanner's %Change: only add a name to the crossed set once its own bars show a >=+10pct trade vs prev_close. That is a change to the discovery contract, so it belongs in a reviewed patch rather than a mid-session edit - logged here rather than done today."
+    },
+    {
+      "id": "gap7-completion-attempted-MOVE-correctly-not-rescued",
+      "found_at_et": "07:54",
+      "loud_log": "GAP7 COMPLETION ATTEMPTED AND DELIBERATELY NOT APPLIED - MOVE.",
+      "trigger_for_the_attempt": "The ranker put MOVE at rank 1 (coil 0.926, pressure +0.35, halal PASS) but read gap7 = n/a and therefore CALM-GAP FAIL. That is the standing instruction's exact case: an RH-premarket-dark name failing for a DATA reason rather than a market reason, which must be completed from shared.massive.minute_bars (Polygon) rather than silently accepted.",
+      "what_the_completion_found": "Polygon returned ZERO bars for MOVE on 2026-08-31. Control probes on the same call path returned full tapes for SPY (148 bars) and NEOV (142 bars), so the feed was healthy and the empty result is about MOVE, not about Polygon.",
+      "the_actual_explanation": "MOVE's FIRST REAL PRINT OF THE DAY was 11:45Z = 07:45 ET (721 shares at 11.97-14.00). It did not trade at 07:00 ET on Robinhood OR on Polygon. There is no 7AM bar to complete because the stock had not started trading yet.",
+      "verdict": "CALM-GAP FAIL STANDS, and it is REAL rather than a data artefact. The completion tool did its job by refusing to manufacture a gap7 that never existed. Recording the attempt loudly, as required, precisely because the honest outcome here was 'no rescue'.",
+      "secondary_check": "Even taken at its first print, MOVE would be +4.2pct (11.97 vs prev_close 11.49) - but its CURRENT gain is +34.6pct and rising fast (16.71 high inside six minutes), so the name is running away from the gate, not sitting quietly under it.",
+      "cross_validation_bonus": "The same probe independently confirmed NEOV's gap7: Polygon's 07:00 ET close 3.7001 vs prev_close 3.34 = +10.78pct, against RH's +10.8pct. Two independent feeds agreeing on the gate input for the day's only armable name is worth more than the MOVE result."
+    },
+    {
+      "id": "polygon-tape-is-about-15-minutes-delayed-on-this-tier",
+      "found_at_et": "07:54",
+      "what": "At 07:54 ET the Polygon minute tape ended at 07:38 ET for BOTH control symbols (SPY last=07:38, NEOV last=07:38). That is a consistent ~15-16 minute lag, not a per-symbol gap.",
+      "why_it_matters": "It bounds what the gap7-completion tool can do. Polygon can complete a 07:00 ET gap for any name checked after roughly 07:15, which covers the intended use. It CANNOT be used to adjudicate anything inside the last ~15 minutes - and a name that starts trading inside that window (exactly MOVE today) will look like 'no data' when it is really 'not yet delivered'.",
+      "consequence_avoided": "Without the SPY/NEOV controls, MOVE's empty Polygon result would have read as a broken feed or as evidence the stock was dark all morning. It was neither. Always run a control symbol before drawing a conclusion from an empty market-data response.",
+      "unchanged": "This does not affect live decisions, which are made on RH bars by bar policy. Polygon is used here only to answer a historical yes/no about a 07:00 print."
+    },
+    {
+      "id": "rh-vs-polygon-disagree-on-NEOV-premarket-high-by-1.76pct",
+      "found_at_et": "07:55",
+      "what": "Robinhood reports NEOV's premarket high as 4.0500, set on the 08:00Z (04:00 ET) bar with 11,753 shares. Polygon reports the premarket high over the same 04:00-07:38 ET window as 3.9800. A 1.76pct disagreement on the same symbol, same session, same minute.",
+      "why_it_matters": "The premarket high IS the Trigger B entry level. Using Polygon's 3.98 instead of RH's 4.05 would have set a trigger 1.76pct lower - materially more likely to fill, on a name where the entry decision was live this morning. That is a decision-changing feed difference, not a cosmetic one.",
+      "what_was_done": "Used RH's 4.0500. Bar policy is explicit that live decisions are made on Robinhood bars, and feed-calibration fix #8 forbids mixing a threshold derived on one feed with data from another. The trigger recorded in the veto ledger is the RH one.",
+      "direction_of_bias": "RH's higher premarket high makes our Trigger B STRICTER than a Polygon-based one would be, so this cuts toward fewer entries, not toward flattering fills.",
+      "relation_to_prior_finding": "This is the price-level cousin of the known ~4x premarket VOLUME disagreement between the two feeds (WDFC 2026-07-10). Volume divergence was already documented; a divergence in the HIGH - which is an entry trigger, not a statistic - had not been."
     }
   ]
 }
