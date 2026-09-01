@@ -114,7 +114,35 @@
     "EMPD": {"q1": "not reached", "q2": "CANNOT-VERIFY -> FAIL by the binary rule", "reason": "Empery Digital. RH's description reads 'design and development of electric outdoor power sports vehicles ... electric two and four-wheel motorcycles and utility terrain vehicles' -- which is the LEGACY business, not the company the name describes. The description field is stale relative to a corporate rename/pivot, so RH is telling two different stories about the same issuer and neither can be trusted for a revenue-mix judgement.", "note": "Recorded as CANNOT-VERIFY, which under the 2026-08-22 binary ruling IS a FAIL -- absence of evidence is never compliance. Convertible only by an affirmative <5% evidence ruling in halal_rulings.json. This is a NEW instance of the known 'RH labels are unreliable' blind spot: previously it was the SECTOR field that lied (AZ makes shopping carts, labelled Financial Conglomerates); here it is the DESCRIPTION field, which appears not to be refreshed after a pivot. Descriptions are what this session has been using to answer question 2 all day, so this is a caveat on the whole day's q2 work, not just on EMPD."},
     "ARCT": {"q1": "FAIL", "loan_pct": 4.94, "cash_pct": 41.23, "combined": 46.17, "haram_pct": 51.68, "reason": "CASH>10+COMBINED>20", "note": "Arcturus Therapeutics -- q2 PASSES (mRNA vaccines and rare-disease medicines). The best-shaped late crosser of the day: genuinely flat through premarket, first real print 07:52, then 49k shares at the bell and a steady climb to +10.7% on real per-minute volume. Fails on BOTH grounds -- debt is only 4.94% but the cash pile is 41% of market cap, and interest income is 51.68% of revenue. This is the clinical-stage-biotech shape: almost no product revenue, so treasury income dominates the income statement."}
   },
-  "trades": [],
+  "trades": [
+    {
+      "ticket": 1,
+      "sym": "MMED",
+      "side": "long",
+      "REAL_ORDER": false,
+      "entry_et": "11:46",
+      "entry_bar_utc": "2026-09-01T15:46:00Z",
+      "entry_price": 22.6199,
+      "shares": 663,
+      "notional": 14997.0,
+      "trigger": "B -- session-high stop-buy at 22.6199, armed 11:44",
+      "fill_semantic": "The 11:46 bar high was 22.625, which takes out the 22.6199 stop intrabar. The 22.7330 limit was never breached (bar high 22.625 < 22.733), so a fill AT the trigger is realistic and matches the simulator's convention of filling breaks at the trigger. This is exactly what the fill-arming rule is there to preserve.",
+      "fill_realism": {
+        "assumed_fill": 22.6199,
+        "mark_plus_60s": 22.605,
+        "mark_bar_utc": "2026-09-01T15:47:00Z close",
+        "delta_pct": -0.066,
+        "reading": "We paid 0.066% MORE than the price 60 seconds later -- essentially neutral, and the best entry-fill realism of the campaign so far. Contrast Day 19's NEOV at -2.20% and Day 5's LFST at -1.6%. The difference is the book: 1,699 shares resting inside the 0.5% cap instead of 3."
+      },
+      "protective_stop": {
+        "level": 20.8103,
+        "basis": "max(entry x 0.92, peak x 0.60) = max(20.8103, 13.575)",
+        "placed_et": "11:46",
+        "note": "Resting from the instant of fill and never absent while the position is open. The loop-layer 20% trail from the 22.625 peak sits at 18.10, which is looser, so the -8% hard stop is what binds initially."
+      },
+      "status": "OPEN"
+    }
+  ],
   "armed": [
     {
       "ticket": 1,
