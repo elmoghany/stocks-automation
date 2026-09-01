@@ -1,18 +1,93 @@
 {
   "date": "2026-09-01",
+  "day_number": 20,
+  "protocol": "C37",
   "mode": "paper",
-  "config": "C37",
-  "session": "headless",
-  "launched_by": "Windows Task Scheduler \\Stocks\\C37MorningLaunch",
-  "skeleton_written_et": "06:20",
+  "session_type": "headless (Windows Task Scheduler \\Stocks\\C37MorningLaunch)",
+  "benchmark_per_day": 1517,
+  "honest_baseline_per_day": -163,
   "status": "OPEN",
-  "trades": [],
+  "counts_as_traded_day": false,
+  "config": "C37",
   "ops": {
+    "skeleton_written_et": "06:20",
+    "session_start_et": "06:20",
+    "start_on_time": true,
+    "start_note": "Launched 06:20 ET, 20 min ahead of the 06:40 target. No coverage gap at the front of the session.",
     "capability_probe": {
-      "status": "PENDING"
-    }
+      "status": "PASS",
+      "run_et": "06:21",
+      "probe_1_python": {"cmd": "python -c print(1)", "result": "1", "exit": 0, "verdict": "PASS"},
+      "probe_2_git": {"cmd": "git status --short + git commit", "result": "skeleton committed 895930a", "exit": 0, "verdict": "PASS"},
+      "probe_3_mcp": {"cmd": "get_equity_quotes SPY", "result": "SPY last_non_reg 762.67 @10:19:06Z, prev_close 767.05", "verdict": "PASS"},
+      "note": "All three PASS -- full capability (python, git write, live market MCP). Contrast Day 16, which passed the launcher's liveness check while unable to do any of the three. No PERMISSION_BLOCKED flag needed."
+    },
+    "trading_day_guard": "TRADING 2026-09-01 full (market_calendar.py exit 0). Not a half day.",
+    "halal_list": {
+      "updated": "2026-08-22",
+      "age_days": 9.3,
+      "n_symbols": 1330,
+      "stale_gate": "PASS (post-2026-08-13 screen epoch, age < 35d)",
+      "snapshot": "data/paper_days/halal_list_SNAPSHOT_2026-09-01.json"
+    },
+    "monthly_halal_refresh": {
+      "status": "RUNNING DURING THE SESSION",
+      "detail": "Today is the 1st, so \\Stocks\\HalalUniverseRefresh fired at 06:10 ET (PID 13684) and is re-screening 10,761 symbols with an ETA of ~230 min, i.e. it lands around 10:00 ET -- mid-session.",
+      "hazard": "halal_list.json is re-read by the rank command on EVERY invocation, so a mid-session rewrite would silently change the gate under a live session. It is also the file that decides what is armable.",
+      "mitigation": "Snapshotted halal_list.json at 06:26 ET before the refresh could land. If the file changes mid-session the session takes the INTERSECTION of old and new PASS sets (strictly conservative) and logs the diff loudly rather than silently adopting either list.",
+      "action_owed": "First-trading-morning-of-the-month duty: check the log, backfill needs_mcap names, COMMIT the refreshed lists once the run completes."
+    },
+    "premarket_tape": {
+      "spy_prev_close": 767.05,
+      "spy_premarket_0620et": 762.67,
+      "spy_premarket_pct": -0.57,
+      "read": "SPY -0.57% premarket -- soft risk tone into the open."
+    },
+    "scan_state_seed": "seeded 06:31 ET from scan_state_2026-08-31: 117 inherited_fail, 5 spac, 0 fake_gap. A halal FAIL is never re-litigated."
   },
+  "tooling_added_today": [
+    "plan/seed_scan_state.py -- seeds a day's drop-lists from the prior session's verdicts (was a hand step before).",
+    "plan/live_halal.py -- runs question 1 (financing ratios) via day-trading.halal_check with the RH market cap, and states loudly in its own output that question 2 (the binary 5% business-line rule) is NOT mechanised and is still owed before arming.",
+    "plan/record_halal.py -- writes the day's verdicts into scan_state so a FAIL cannot re-enter the pool."
+  ],
+  "cycles": [
+    {
+      "et": "06:34",
+      "state": "FLAT-5m",
+      "scan_rows": 76,
+      "candidates": 9,
+      "dropped": {"fund": 61, "noncommon": 1, "spac": 1, "inherited_fail": 4},
+      "note": "ETF contamination confirmed on a THIRD session: 61 of 76 rows were funds (Corgi 2x Daily ETFs and friends). Dropped noncommon EOSEW (warrant, +10.5%), spac RACC. The two biggest movers on the whole scan -- DUKR +115.7% and WETO +39.8% -- are both prior-day halal FAILs and were refused without re-litigation.",
+      "candidate_list": ["SSM", "FRVO", "CLRO", "HVT.A", "LABT", "MB", "CTW", "INBS", "EXOZ"]
+    },
+    {
+      "et": "06:44",
+      "state": "FLAT-5m",
+      "action": "bars + rank",
+      "bars_batch": "9 symbols, 1 call, returned-set assert PASSED (no truncation)",
+      "fake_gap_detector": "CTW, EXOZ, HVT.A returned 0 real bars and 144 interpolated -- they have not traded premarket at all, so their headline scan %Change is a STALE MARK, not a printed +10% cross. CLRO and MB had 1 real bar each. Held as NOT-YET-CROSSED rather than permanently dropped: a genuine cross can still print after 09:30.",
+      "rank_top": "none -- 4 crossed / 0 armable",
+      "rank_detail": "1 FRVO +18.9% coil 0.964 press +0.04 calm-yes; 2 INBS +7.9% coil 0.953 press untrusted; 3 SSM +49.6% CALM-GAP FAIL; 4 LABT +16.4% coil 0.898"
+    }
+  ],
+  "halal": {
+    "PASS": ["SSM"],
+    "FAIL": ["FRVO", "INBS", "LABT"],
+    "CANNOT_VERIFY": [],
+    "_note": "Binary rule: only verdict PASS is armable. Screened lazily at candidacy per SCAN ECONOMY (b). SSM passes BOTH questions -- q1 loan 10.76% / cash 3.65% / combined 14.40% (the one-side-over-10-with-combined-under-20 exception, exactly the HLIT/ANGX zone), q2 solar-powered mobility, a permissible line with haram_pct 0.00 -- but it is NOT armable today because its 7AM calm-gap is +49.6%, far past the 20% gate and past even the 35% top-name grace."
+  },
+  "halal_detail": {
+    "FRVO": {"q1": "FAIL", "loan_pct": 6.58, "cash_pct": 6.19, "combined": 12.77, "haram_pct": 1153.69, "reason": "HARAM>=5%", "note": "Fervo Energy, geothermal power -- the BUSINESS LINE is permissible (q2 would pass), but interest income is 11.5x revenue: a large post-IPO cash pile earning interest against minimal operating revenue. The 5% rule is binary and this is 1153%. Refused. This is the rank-1 name of the morning."},
+    "INBS": {"q1": "FAIL", "loan_pct": 25.65, "cash_pct": 95.24, "combined": 120.89, "reason": "LOAN>10+COMBINED>20"},
+    "LABT": {"q1": "FAIL", "loan_pct": 29.53, "cash_pct": 0.2, "combined": 29.73, "reason": "LOAN>10+COMBINED>20"},
+    "SSM": {"q1": "PASS", "loan_pct": 10.76, "cash_pct": 3.65, "combined": 14.4, "haram_pct": 0.0, "q2": "PASS -- Sono Group NV, solar-powered mobility applications. Not alcohol/gambling/finance/tobacco/defense/adult/pork/entertainment.", "armable": false, "blocked_by": "calm-gap +49.6%"}
+  },
+  "trades": [],
+  "armed": [],
+  "vetoes": {"spread": [], "depth": [], "chase_fill_arming": []},
+  "trigger_c": [],
   "errors": [],
-  "pnl": 0,
-  "counts_as_traded_day": false
+  "findings": [],
+  "fill_realism": [],
+  "pnl": 0
 }
