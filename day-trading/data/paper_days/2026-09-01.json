@@ -72,9 +72,20 @@
       "rank_detail": "1 FRVO +18.9% coil 0.964 press +0.04 calm-yes; 2 INBS +7.9% coil 0.953 press untrusted; 3 SSM +49.6% CALM-GAP FAIL; 4 LABT +16.4% coil 0.898"
     }
   ],
+  "gap7_completion": {
+    "et": "07:53",
+    "tool": "plan/complete_gap7.py (new today)",
+    "rationale": "The calm-gap gate reads the 07:00 ET price from RH bars, and RH only emits a bar for a minute in which the name actually traded. A name that is merely QUIET at 07:00 therefore has no bar, and the ranker -- which fails conservative by design -- reports CALM-GAP FAIL. That is the right default for a missing input but it is not a statement about the gap: it disqualifies a name for being illiquid at 07:00 rather than for gapping too hard. Day 19 lost MOVE exactly this way.",
+    "feed_discipline": "Parity fix #8 forbids carrying a threshold across feeds because premarket VOLUME differs ~4x between RH and Polygon. That argument is about volume. The calm gap is a PRICE RATIO against the prior close and the feeds agree to the cent -- confirmed here: Polygon's last AMCI print at/before 07:00 is 06:45 at 4.4083, byte-identical to RH's 06:45 bar. Nothing was written into the RH bar CSVs; the completion is a ledger fact, not a merged bar.",
+    "results": {
+      "AMCI": {"gap7_pct": 10.21, "px": 4.4083, "prev_close": 4.0, "source_bar": "06:45 ET (last at/before 07:00)", "verdict": "CALM (<=20%)"},
+      "CLRO": {"gap7_pct": 7.1, "px": 5.58, "prev_close": 5.21, "source_bar": "06:51 ET (last at/before 07:00)", "verdict": "CALM (<=20%)"},
+      "EXOZ": {"gap7_pct": null, "verdict": "NO POLYGON BARS EITHER -- genuinely untraded, gap7 unavailable, CALM-GAP stays FAIL. Honest refusal, not a tooling artefact."}
+    }
+  },
   "halal": {
-    "PASS": ["SSM", "AMCI", "EXOZ"],
-    "FAIL": ["FRVO", "INBS", "LABT", "PXS", "HVT.A", "MB", "CTW"],
+    "PASS": ["SSM", "AMCI", "EXOZ", "CLRO"],
+    "FAIL": ["FRVO", "INBS", "LABT", "PXS", "HVT.A", "MB", "CTW", "PRLD"],
     "CANNOT_VERIFY": [],
     "_note": "Binary rule: only verdict PASS is armable. 10 names screened by 07:07, 3 PASS / 7 FAIL. SSM passes both questions -- q1 loan 10.76% / cash 3.65% / combined 14.40% (the one-side-over-10-with-combined-under-20 exception, exactly the HLIT/ANGX zone), q2 solar-powered mobility -- but is NOT armable: its 7AM calm-gap is +52.6%, past the 20% gate and past even the 35% top-name grace. The two LIVE hopes are AMCI and EXOZ, both clean on both questions; neither has a premarket tape yet.",
     "structural_note": "7 of 10 refused, and the refusals are not random -- they are the Day-8 finding again. PXS (a vessel owner, loan 152.9%), HVT.A (a store lessee, combined 78.7%) and INBS (combined 120.9%) fail because capital-intensive and lease-heavy businesses are debt-financed by construction. FRVO fails the opposite way: a large post-IPO cash pile throws off interest income 11.5x its revenue. The names that survive the ratio test tend to be small, cash-funded and thinly traded -- which is exactly the population the spread and depth vetoes then refuse."
