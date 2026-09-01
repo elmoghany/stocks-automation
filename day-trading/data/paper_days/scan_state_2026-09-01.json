@@ -1,8 +1,8 @@
 {
  "candidates": {
   "SSM": {
-   "pct": 37.31,
-   "last": 3.68,
+   "pct": 44.22,
+   "last": 3.865,
    "prev_close": 2.68,
    "vol": "7.502866259333e+06",
    "name": "Sono Group N.V.",
@@ -73,10 +73,10 @@
    "first_seen": "06:34"
   },
   "FLYE": {
-   "pct": 50.74,
-   "last": 2.05,
+   "pct": 48.53,
+   "last": 2.02,
    "prev_close": 1.36,
-   "vol": "23293.9821",
+   "vol": "32447753.69266",
    "name": "Fly-E Group",
    "first_seen": "07:03"
   },
@@ -167,9 +167,18 @@
    "vol": "1624519.921644",
    "name": "Comstock Resources",
    "first_seen": "09:33"
+  },
+  "ARCT": {
+   "pct": 10.3,
+   "last": 16.28,
+   "prev_close": 14.76,
+   "vol": "429787.832595",
+   "name": "Arcturus Therapeutics Holdings",
+   "first_seen": "10:10"
   }
  },
  "halal_fail": [
+  "ARCT",
   "BIAF",
   "CRK",
   "CTW",
