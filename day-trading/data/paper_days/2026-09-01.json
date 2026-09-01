@@ -73,16 +73,23 @@
     }
   ],
   "halal": {
-    "PASS": ["SSM"],
-    "FAIL": ["FRVO", "INBS", "LABT"],
+    "PASS": ["SSM", "AMCI", "EXOZ"],
+    "FAIL": ["FRVO", "INBS", "LABT", "PXS", "HVT.A", "MB", "CTW"],
     "CANNOT_VERIFY": [],
-    "_note": "Binary rule: only verdict PASS is armable. Screened lazily at candidacy per SCAN ECONOMY (b). SSM passes BOTH questions -- q1 loan 10.76% / cash 3.65% / combined 14.40% (the one-side-over-10-with-combined-under-20 exception, exactly the HLIT/ANGX zone), q2 solar-powered mobility, a permissible line with haram_pct 0.00 -- but it is NOT armable today because its 7AM calm-gap is +49.6%, far past the 20% gate and past even the 35% top-name grace."
+    "_note": "Binary rule: only verdict PASS is armable. 10 names screened by 07:07, 3 PASS / 7 FAIL. SSM passes both questions -- q1 loan 10.76% / cash 3.65% / combined 14.40% (the one-side-over-10-with-combined-under-20 exception, exactly the HLIT/ANGX zone), q2 solar-powered mobility -- but is NOT armable: its 7AM calm-gap is +52.6%, past the 20% gate and past even the 35% top-name grace. The two LIVE hopes are AMCI and EXOZ, both clean on both questions; neither has a premarket tape yet.",
+    "structural_note": "7 of 10 refused, and the refusals are not random -- they are the Day-8 finding again. PXS (a vessel owner, loan 152.9%), HVT.A (a store lessee, combined 78.7%) and INBS (combined 120.9%) fail because capital-intensive and lease-heavy businesses are debt-financed by construction. FRVO fails the opposite way: a large post-IPO cash pile throws off interest income 11.5x its revenue. The names that survive the ratio test tend to be small, cash-funded and thinly traded -- which is exactly the population the spread and depth vetoes then refuse."
   },
   "halal_detail": {
     "FRVO": {"q1": "FAIL", "loan_pct": 6.58, "cash_pct": 6.19, "combined": 12.77, "haram_pct": 1153.69, "reason": "HARAM>=5%", "note": "Fervo Energy, geothermal power -- the BUSINESS LINE is permissible (q2 would pass), but interest income is 11.5x revenue: a large post-IPO cash pile earning interest against minimal operating revenue. The 5% rule is binary and this is 1153%. Refused. This is the rank-1 name of the morning."},
     "INBS": {"q1": "FAIL", "loan_pct": 25.65, "cash_pct": 95.24, "combined": 120.89, "reason": "LOAN>10+COMBINED>20"},
     "LABT": {"q1": "FAIL", "loan_pct": 29.53, "cash_pct": 0.2, "combined": 29.73, "reason": "LOAN>10+COMBINED>20"},
-    "SSM": {"q1": "PASS", "loan_pct": 10.76, "cash_pct": 3.65, "combined": 14.4, "haram_pct": 0.0, "q2": "PASS -- Sono Group NV, solar-powered mobility applications. Not alcohol/gambling/finance/tobacco/defense/adult/pork/entertainment.", "armable": false, "blocked_by": "calm-gap +49.6%"}
+    "SSM": {"q1": "PASS", "loan_pct": 10.76, "cash_pct": 3.65, "combined": 14.4, "haram_pct": 0.0, "q2": "PASS -- Sono Group NV, solar-powered mobility applications. Not alcohol/gambling/finance/tobacco/defense/adult/pork/entertainment.", "armable": false, "blocked_by": "calm-gap +52.6%"},
+    "PXS": {"q1": "FAIL", "loan_pct": 152.93, "cash_pct": 97.64, "combined": 250.58, "reason": "LOAN>10+COMBINED>20", "note": "Pyxis Tankers -- q2 would PASS (marine transport of refined products is a permissible service), but a vessel-owning shipper is debt-financed by construction. Was the de-facto rank-1 at 07:04 because the two names above it were calm-gap blocked."},
+    "HVT.A": {"q1": "FAIL", "loan_pct": 54.2, "cash_pct": 24.5, "combined": 78.69, "haram_pct": 0.12, "reason": "LOAN>10+COMBINED>20", "note": "Haverty Furniture -- q2 PASSES on the plain-retail rule. Failed q1 on lease-heavy leverage. FIRST screened via a yfinance SUBSTITUTION: see tooling note on dot-class tickers."},
+    "MB": {"q1": "not reached", "q2": "FAIL", "reason": "MasterBeef Group runs Taiwanese grill / bento / noodle restaurants (Anping Grill, Chubby Bento, Bao Pot); RH industry is literally 'Restaurants'. The rule is explicit that restaurants without an affirmative <5% disclosure are FAIL, and unverified is haram by rule. No q1 needed -- a q2 FAIL is dispositive."},
+    "CTW": {"q1": "not reached", "q2": "FAIL", "reason": "CTW is a web-based GAMING platform distributing browser games in Japan. Not a casino, so the gambling keyword does not fire -- but browser-game platforms monetise heavily through gacha mechanics, which are gambling in substance, and there is no disclosure putting that under 5%. Unverified is haram by rule. This is the AIFA blind spot in a new costume: the sector label reads 'Packaged Software'."},
+    "AMCI": {"q1": "PASS", "loan_pct": 0.11, "cash_pct": 7.39, "combined": 7.5, "haram_pct": 0.6, "q2": "PASS -- AMC Robotics, AI-enabled warehouse automation and security robotics. General-purpose robotics sold into commercial markets; the AMD principle covers selling into security/defense buyers, and this is not pure defense.", "armable_pending": "needs a printed cross, a calm gap, coil and a tradeable book"},
+    "EXOZ": {"q1": "PASS", "loan_pct": 1.86, "cash_pct": 2.31, "combined": 4.18, "haram_pct": 0.0, "q2": "PASS -- eXoZymes, development-stage synthetic biochemistry. Cleanest ratios of the day.", "armable_pending": "no premarket tape at all -- 0 real bars, 184 interpolated"}
   },
   "trades": [],
   "armed": [],

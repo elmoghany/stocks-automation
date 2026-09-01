@@ -1,8 +1,8 @@
 {
  "candidates": {
   "SSM": {
-   "pct": 51.12,
-   "last": 4.05,
+   "pct": 52.24,
+   "last": 4.08,
    "prev_close": 2.68,
    "vol": "7.502866259333e+06",
    "name": "Sono Group N.V.",
@@ -71,12 +71,40 @@
    "vol": "840.7463",
    "name": "eXoZymes Inc.",
    "first_seen": "06:34"
+  },
+  "FLYE": {
+   "pct": 60.44,
+   "last": 2.182,
+   "prev_close": 1.36,
+   "vol": "23293.9821",
+   "name": "Fly-E Group",
+   "first_seen": "07:03"
+  },
+  "AMCI": {
+   "pct": 10.21,
+   "last": 4.4083,
+   "prev_close": 4.0,
+   "vol": "62914.092041",
+   "name": "AMC Robotics",
+   "first_seen": "07:03"
+  },
+  "PXS": {
+   "pct": 10.07,
+   "last": 5.9,
+   "prev_close": 5.36,
+   "vol": "726450.905742",
+   "name": "Pyxis Tankers",
+   "first_seen": "07:03"
   }
  },
  "halal_fail": [
+  "CTW",
   "FRVO",
+  "HVT.A",
   "INBS",
-  "LABT"
+  "LABT",
+  "MB",
+  "PXS"
  ],
  "fake_gap": [],
  "inherited_fail": [

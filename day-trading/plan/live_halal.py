@@ -41,11 +41,34 @@ def main():
             print(f"{sym:<7} REFUSE-TO-EVALUATE: no RH market cap cached. "
                   f"Run update_rh_fundamentals.py {sym} MCAP SECTOR INDUSTRY")
             continue
-        try:
-            r = dt.halal_check(sym, mcap=float(mcap))
-        except Exception as e:
-            print(f"{sym:<7} ERROR {type(e).__name__}: {e}")
+        # DOT-CLASS TICKERS (2026-09-01, Day 20). Robinhood says "HVT.A";
+        # yfinance 404s on that and wants "HVT-A". Left unhandled the name
+        # reads NO FUNDAMENTALS DATA -- a refusal to evaluate that looks
+        # exactly like a compliance failure in the ledger. Try the dash
+        # form, then the bare root ticker. The root is the SAME ISSUER with
+        # ONE consolidated balance sheet, which is the right input for the
+        # ratio test, but it is a substitution and is logged as one.
+        attempts = [sym]
+        if "." in sym:
+            attempts.append(sym.replace(".", "-"))
+            attempts.append(sym.split(".")[0])
+        r, used = None, None
+        for cand in attempts:
+            try:
+                rr = dt.halal_check(cand, mcap=float(mcap))
+            except Exception as e:
+                print(f"{sym:<7} ERROR on {cand}: {type(e).__name__}: {e}")
+                continue
+            if "NO FUNDAMENTALS DATA" not in (rr.get("fail_reason") or ""):
+                r, used = rr, cand
+                break
+            r, used = r or rr, used or cand
+        if r is None:
             continue
+        if used != sym:
+            print(f"{sym:<7} NOTE: yfinance could not resolve '{sym}'; "
+                  f"statements taken from '{used}' (same issuer, one "
+                  f"consolidated balance sheet). SUBSTITUTION -- record it.")
         got = {k: r.get(k) for k in FIELDS}
         pct = lambda k: ("n/a" if got.get(k) is None
                          else f"{float(got[k]):.2f}")
