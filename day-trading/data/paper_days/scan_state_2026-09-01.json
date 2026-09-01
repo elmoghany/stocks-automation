@@ -1,8 +1,8 @@
 {
  "candidates": {
   "SSM": {
-   "pct": 52.24,
-   "last": 4.08,
+   "pct": 50.75,
+   "last": 4.04,
    "prev_close": 2.68,
    "vol": "7.502866259333e+06",
    "name": "Sono Group N.V.",
@@ -73,8 +73,8 @@
    "first_seen": "06:34"
   },
   "FLYE": {
-   "pct": 60.44,
-   "last": 2.182,
+   "pct": 50.74,
+   "last": 2.05,
    "prev_close": 1.36,
    "vol": "23293.9821",
    "name": "Fly-E Group",
@@ -95,6 +95,14 @@
    "vol": "726450.905742",
    "name": "Pyxis Tankers",
    "first_seen": "07:03"
+  },
+  "PRLD": {
+   "pct": 12.32,
+   "last": 6.29,
+   "prev_close": 5.6,
+   "vol": "737667.399962",
+   "name": "Prelude Therapeutics",
+   "first_seen": "07:24"
   }
  },
  "halal_fail": [
@@ -104,6 +112,7 @@
   "INBS",
   "LABT",
   "MB",
+  "PRLD",
   "PXS"
  ],
  "fake_gap": [],
@@ -234,5 +243,16 @@
   "RACC",
   "RFAI"
  ],
- "_seed": "seeded 2026-09-01 from scan_state_2026-08-31 (inherited_fail + halal_fail + cannot_verify)"
+ "_seed": "seeded 2026-09-01 from scan_state_2026-08-31 (inherited_fail + halal_fail + cannot_verify)",
+ "_purged": [
+  {
+   "purged": [
+    "ANPA",
+    "DCOY",
+    "NEOV",
+    "YDDL"
+   ],
+   "reason": "cross-day scan_dump filename collision -- these never crossed +10% today"
+  }
+ ]
 }

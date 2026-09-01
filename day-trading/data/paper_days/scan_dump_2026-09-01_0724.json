@@ -1,0 +1,895 @@
+{
+"data": {
+"result": {
+"scan_id": "5f132877-7730-4a18-9e72-b3f0d2c9df83",
+"total_items": 73,
+"results": [
+{
+"ticker": "ACLZ",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "1.8312726000000001",
+"Last": "26.86",
+"Name": "Corgi ACLS 2x Daily ETF",
+"Volume": "12",
+"Symbol": "ACLZ"
+}
+},
+{
+"ticker": "AMEM",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "1.1110576",
+"Last": "53",
+"Name": "Amana Developing World ETF",
+"Volume": "4657.0004",
+"Symbol": "AMEM"
+}
+},
+{
+"ticker": "GEVC",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.8846837999999999",
+"Last": "31.03",
+"Name": "Corgi GEV 2x Daily ETF",
+"Volume": "135.824439",
+"Symbol": "GEVC"
+}
+},
+{
+"ticker": "ONTX",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.7827615",
+"Last": "25.66",
+"Name": "Corgi ONTO 2x Daily ETF",
+"Volume": "2878.5521",
+"Symbol": "ONTX"
+}
+},
+{
+"ticker": "UCTX",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.7007739",
+"Last": "9.89",
+"Name": "Corgi UCTT 2x Daily ETF",
+"Volume": "5201.8857",
+"Symbol": "UCTX"
+}
+},
+{
+"ticker": "LWLX",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.5807131",
+"Last": "20.26",
+"Name": "Tradr 2X Long LWLG Daily ETF",
+"Volume": "2380",
+"Symbol": "LWLX"
+}
+},
+{
+"ticker": "SSM",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.5074627",
+"Last": "4.04",
+"Market cap": "3.925755e+06",
+"Name": "Sono Group N.V.",
+"Volume": "7.502866259333e+06",
+"Symbol": "SSM"
+}
+},
+{
+"ticker": "FLYE",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"Symbol": "FLYE",
+"Name": "Fly-E Group",
+"% Change": "0.5073529",
+"Last": "2.05",
+"Volume": "23293.9821"
+}
+},
+{
+"ticker": "DRVR",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.4795281",
+"Last": "37.87",
+"Name": "Amplify S&P 500 Dividend Drivers ETF",
+"Volume": "813.6458",
+"Symbol": "DRVR"
+}
+},
+{
+"ticker": "AIQD",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.4577328",
+"Last": "67.92",
+"Name": "MicroSectors -3x Short Artificial Intelligence (AI) ETNs",
+"Volume": "420.1",
+"Symbol": "AIQD"
+}
+},
+{
+"ticker": "CTEX",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.4295218",
+"Last": "44.91",
+"Name": "ProShares S&P Kensho Cleantech ETF",
+"Volume": "933.3778",
+"Symbol": "CTEX"
+}
+},
+{
+"ticker": "SSMG",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.4260508",
+"Last": "36.45",
+"Name": "Virtus Silvant Small/Mid Growth ETF",
+"Volume": "30.845",
+"Symbol": "SSMG"
+}
+},
+{
+"ticker": "HIMC",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.4036392",
+"Last": "21.9",
+"Name": "Corgi HIMS 2x Daily ETF",
+"Volume": "46",
+"Symbol": "HIMC"
+}
+},
+{
+"ticker": "HFSP",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.401427",
+"Last": "18.66",
+"Name": "Tidal Trust III TradersAI Large Cap Equity & Cash ETF",
+"Volume": "13",
+"Symbol": "HFSP"
+}
+},
+{
+"ticker": "CAMC",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.3988691",
+"Last": "19",
+"Name": "Corgi CAMT 2x Daily ETF",
+"Volume": "7",
+"Symbol": "CAMC"
+}
+},
+{
+"ticker": "WETO",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.3813869",
+"Last": "7.57",
+"Market cap": "5.927905e+06",
+"Name": "Wetour Robotics",
+"Volume": "4.2328679183634e+07",
+"Symbol": "WETO"
+}
+},
+{
+"ticker": "HBTC",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.3694878",
+"Last": "29",
+"Name": "Fortuna Hedged Bitcoin ETF",
+"Volume": "22.2175",
+"Symbol": "HBTC"
+}
+},
+{
+"ticker": "MHX",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.3693329",
+"Last": "23",
+"Name": "Corgi MARA 2x Daily ETF",
+"Volume": "64",
+"Symbol": "MHX"
+}
+},
+{
+"ticker": "XQTM",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.3579487",
+"Last": "18.08",
+"Name": "Corgi Quantum Computing 2x Daily ETF",
+"Volume": "110.367547",
+"Symbol": "XQTM"
+}
+},
+{
+"ticker": "MPWC",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.33488799999999996",
+"Last": "27.82",
+"Name": "Corgi MPWR 2x Daily ETF",
+"Volume": "68.047",
+"Symbol": "MPWC"
+}
+},
+{
+"ticker": "NBIC",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.2786422",
+"Last": "21.35",
+"Name": "Corgi NBIS 2x Daily ETF",
+"Volume": "3885.282887",
+"Symbol": "NBIC"
+}
+},
+{
+"ticker": "KEYX",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.27170269999999996",
+"Last": "25.05",
+"Name": "Corgi KEYS 2x Daily ETF",
+"Volume": "110",
+"Symbol": "KEYX"
+}
+},
+{
+"ticker": "TSEU",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.261085",
+"Last": "16.24",
+"Name": "Tradr 2X Long TSEM Daily ETF",
+"Volume": "592.5681",
+"Symbol": "TSEU"
+}
+},
+{
+"ticker": "MRAX",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.2522325",
+"Last": "30.78",
+"Name": "Tradr 2X Long MRAM Daily ETF",
+"Volume": "2911",
+"Symbol": "MRAX"
+}
+},
+{
+"ticker": "JOBC",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.2407388",
+"Last": "21",
+"Name": "Corgi JOBY 2x Daily ETF",
+"Volume": "46.0513",
+"Symbol": "JOBC"
+}
+},
+{
+"ticker": "XEY",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.23725829999999998",
+"Last": "24.64",
+"Name": "GraniteShares YieldBOOST Ether ETF",
+"Volume": "49.7665",
+"Symbol": "XEY"
+}
+},
+{
+"ticker": "CRD",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.2282665",
+"Last": "24.04",
+"Name": "Corgi CRDO 2x Daily ETF",
+"Volume": "386.3004",
+"Symbol": "CRD"
+}
+},
+{
+"ticker": "CRWC",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.2246734",
+"Last": "42.19",
+"Name": "Corgi CRWD 2x Daily ETF",
+"Volume": "17332.221507",
+"Symbol": "CRWC"
+}
+},
+{
+"ticker": "MEMY",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.221345",
+"Last": "20.56",
+"Name": "Tuttle Capital Meme Stock Income Blast ETF",
+"Volume": "84.4404",
+"Symbol": "MEMY"
+}
+},
+{
+"ticker": "MNSX",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.2068973",
+"Last": "27.99",
+"Name": "Corgi MNST 2x Daily ETF",
+"Volume": "19",
+"Symbol": "MNSX"
+}
+},
+{
+"ticker": "LRNX",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.20433869999999998",
+"Last": "30.19",
+"Name": "Corgi LRN 2x Daily ETF",
+"Volume": "10",
+"Symbol": "LRNX"
+}
+},
+{
+"ticker": "FBYY",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1986786",
+"Last": "12.7",
+"Name": "GraniteShares YieldBOOST META ETF",
+"Volume": "85.143922",
+"Symbol": "FBYY"
+}
+},
+{
+"ticker": "ACHX",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.194081",
+"Last": "39",
+"Name": "Corgi ACHR 2x Daily ETF",
+"Volume": "52",
+"Symbol": "ACHX"
+}
+},
+{
+"ticker": "FOMG",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1875191",
+"Last": "5.45",
+"Name": "Leverage Shares 2X Long FORM Daily ETF",
+"Volume": "2688.1",
+"Symbol": "FOMG"
+}
+},
+{
+"ticker": "RACC",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.18554220000000002",
+"Last": "24.6",
+"Market cap": "1.88794476e+08",
+"Name": "Research Alliance Corp III",
+"Volume": "19804.618",
+"Symbol": "RACC"
+}
+},
+{
+"ticker": "OCNL",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1773695",
+"Last": "21.88",
+"Name": "T-REX 2X Long DOCN Daily Target ETF",
+"Volume": "50.0969",
+"Symbol": "OCNL"
+}
+},
+{
+"ticker": "UPGR",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1724504",
+"Last": "27.14",
+"Name": "DBX ETF Trust Xtrackers US Green Infrastructure Select Equity ETF",
+"Volume": "75.1864",
+"Symbol": "UPGR"
+}
+},
+{
+"ticker": "HVT.A",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.17216120000000001",
+"Last": "32",
+"Market cap": "4.25274479e+08",
+"Name": "Haverty Furniture",
+"Volume": "16718.066634",
+"Symbol": "HVT.A"
+}
+},
+{
+"ticker": "MWHS",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.16847829999999997",
+"Last": "21.5",
+"Name": "Skylar Electricity Futures ETF",
+"Volume": "4542",
+"Symbol": "MWHS"
+}
+},
+{
+"ticker": "LABT",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.168",
+"Last": "2.92",
+"Market cap": "5.92422e+06",
+"Name": "Lakewood-Amedex Biotherapeutics Inc",
+"Volume": "1.3655103387609e+07",
+"Symbol": "LABT"
+}
+},
+{
+"ticker": "BWOW",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1665078",
+"Last": "15.91",
+"Name": "Bitwise Dogecoin ETF",
+"Volume": "1402.397919",
+"Symbol": "BWOW"
+}
+},
+{
+"ticker": "BABC",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1533752",
+"Last": "29.2",
+"Name": "Corgi BABA 2x Daily ETF",
+"Volume": "18.0006",
+"Symbol": "BABC"
+}
+},
+{
+"ticker": "ISHP",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1520636",
+"Last": "41.96",
+"Name": "First Trust Exchange-Traded Fund VI First Trust S-Network E-Commerce ETF",
+"Volume": "19.9861",
+"Symbol": "ISHP"
+}
+},
+{
+"ticker": "KEYG",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1470328",
+"Last": "12.95",
+"Name": "Leverage Shares 2X Long KEYS Daily ETF",
+"Volume": "1084.510646",
+"Symbol": "KEYG"
+}
+},
+{
+"ticker": "FRVO",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.14564370000000001",
+"Last": "17.62",
+"Market cap": "4.533458e+09",
+"Name": "Fervo Energy",
+"Volume": "4.507018719743e+06",
+"Symbol": "FRVO"
+}
+},
+{
+"ticker": "CVR",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1455847",
+"Last": "12",
+"Market cap": "1.0120232e+07",
+"Name": "Chicago Rivet & Machine",
+"Volume": "3117.4538",
+"Symbol": "CVR"
+}
+},
+{
+"ticker": "RMBC",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1452244",
+"Last": "11.5",
+"Name": "Corgi RMBS 2x Daily ETF",
+"Volume": "83",
+"Symbol": "RMBC"
+}
+},
+{
+"ticker": "KPRO",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1435074",
+"Last": "30.45",
+"Name": "KraneShares 100% KWEB Defined Outcome January 2027 ETF",
+"Volume": "17.0781",
+"Symbol": "KPRO"
+}
+},
+{
+"ticker": "UXI",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1411735",
+"Last": "64.14",
+"Name": "ProShares Ultra Industrials",
+"Volume": "2966.367909",
+"Symbol": "UXI"
+}
+},
+{
+"ticker": "XSPC",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1368359",
+"Last": "23.8",
+"Name": "Tidal Trust IV VegaShares SpaceX & Beyond Earth ETF",
+"Volume": "1373.993",
+"Symbol": "XSPC"
+}
+},
+{
+"ticker": "DIPR",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1318915",
+"Last": "25.08",
+"Name": "Corgi Space & Satellite Communications ETF",
+"Volume": "808.5882",
+"Symbol": "DIPR"
+}
+},
+{
+"ticker": "CKX",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12775330000000001",
+"Last": "12.8",
+"Market cap": "2.3303014e+07",
+"Name": "CKX Lands",
+"Volume": "3248.2065",
+"Symbol": "CKX"
+}
+},
+{
+"ticker": "ENTL",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12426040000000001",
+"Last": "7.6",
+"Name": "Leverage Shares 2X Long ENTG Daily ETF",
+"Volume": "2565.3316",
+"Symbol": "ENTL"
+}
+},
+{
+"ticker": "COHC",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12416079999999999",
+"Last": "15.64",
+"Name": "Corgi COHR 2x Daily ETF",
+"Volume": "378.583492",
+"Symbol": "COHC"
+}
+},
+{
+"ticker": "PRLD",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"Symbol": "PRLD",
+"Name": "Prelude Therapeutics",
+"% Change": "0.1232143",
+"Last": "6.29",
+"Volume": "737667.399962"
+}
+},
+{
+"ticker": "RKNG",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1231302",
+"Last": "25.22",
+"Name": "ETF Series Solutions Defiance Retail Kings ETF",
+"Volume": "816.8145",
+"Symbol": "RKNG"
+}
+},
+{
+"ticker": "CCFE",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12178190000000001",
+"Last": "29.05",
+"Name": "EA Series Trust Concourse Capital Focused Equity ETF",
+"Volume": "11.038",
+"Symbol": "CCFE"
+}
+},
+{
+"ticker": "STLU",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1195619",
+"Last": "18.4",
+"Name": "2x Stellar ETF",
+"Volume": "68050.4225",
+"Symbol": "STLU"
+}
+},
+{
+"ticker": "RIVC",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1177182",
+"Last": "22.725",
+"Name": "Corgi RIVN 2x Daily ETF",
+"Volume": "14",
+"Symbol": "RIVC"
+}
+},
+{
+"ticker": "INBS",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"Symbol": "INBS",
+"Name": "Intelligent Bio Solutions",
+"% Change": "0.11662499999999999",
+"Last": "2.6799",
+"Volume": "24045.418124"
+}
+},
+{
+"ticker": "BFJL",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1138627",
+"Last": "20.69",
+"Name": "FT Vest Bitcoin Strategy Floor15 ETF - July",
+"Volume": "8.053",
+"Symbol": "BFJL"
+}
+},
+{
+"ticker": "AMKX",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1133971",
+"Last": "10.12",
+"Name": "Corgi AMKR 2x Daily ETF",
+"Volume": "3985.2146",
+"Symbol": "AMKX"
+}
+},
+{
+"ticker": "AFIX",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1094811",
+"Last": "27",
+"Name": "Allspring Broad Market Core Bond ETF",
+"Volume": "2047.556382",
+"Symbol": "AFIX"
+}
+},
+{
+"ticker": "FRUT",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1075164",
+"Last": "27.9",
+"Name": "Yorkville America MANGOS Plus Index ETF",
+"Volume": "4088.7141",
+"Symbol": "FRUT"
+}
+},
+{
+"ticker": "EXOZ",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1069837",
+"Last": "7.45",
+"Market cap": "6.2463546e+07",
+"Name": "eXoZymes Inc.",
+"Volume": "840.7463",
+"Symbol": "EXOZ"
+}
+},
+{
+"ticker": "LRCC",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10631410000000001",
+"Last": "18.45",
+"Name": "Corgi LRCX 2x Daily ETF",
+"Volume": "376",
+"Symbol": "LRCC"
+}
+},
+{
+"ticker": "EOSEW",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10544219999999999",
+"Last": "3.25",
+"Name": "Eos Energy Enterprises, Inc. Warrant",
+"Volume": "6116",
+"Symbol": "EOSEW"
+}
+},
+{
+"ticker": "TXXS",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1050195",
+"Last": "23.32",
+"Name": "21Shares 2x Long Sui ETF",
+"Volume": "5368.986036",
+"Symbol": "TXXS"
+}
+},
+{
+"ticker": "SPAQ",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1050024",
+"Last": "103.71",
+"Name": "Listed Funds Trust Horizon Kinetics SPAC Active ETF",
+"Volume": "34.4084",
+"Symbol": "SPAQ"
+}
+},
+{
+"ticker": "VIAG",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10473470000000001",
+"Last": "10.53",
+"Name": "Leverage Shares 2X Long VIAV Daily ETF",
+"Volume": "449.2567",
+"Symbol": "VIAG"
+}
+},
+{
+"ticker": "TAWN",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1013879",
+"Last": "29.98",
+"Name": "MicroSectors 3x Long Taiwan ETNs",
+"Volume": "752",
+"Symbol": "TAWN"
+}
+},
+{
+"ticker": "SDUR",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10091739999999999",
+"Last": "27.6",
+"Name": "Aristotle Short Term Income ETF",
+"Volume": "810.0399",
+"Symbol": "SDUR"
+}
+},
+{
+"ticker": "SUPP",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1002529",
+"Last": "86.58",
+"Name": "TCW Transform Supply Chain ETF",
+"Volume": "573.435001",
+"Symbol": "SUPP"
+}
+}
+]
+}
+}
+}

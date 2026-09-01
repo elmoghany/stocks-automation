@@ -95,7 +95,18 @@
   "armed": [],
   "vetoes": {"spread": [], "depth": [], "chase_fill_arming": []},
   "trigger_c": [],
-  "errors": [],
+  "errors": [
+    {
+      "et": "07:24",
+      "severity": "HIGH -- silent data corruption, caught in-session",
+      "title": "Cross-day scan_dump filename collision injected FOUR of yesterday's symbols into today's crossed set",
+      "what_happened": "Dumps were named scan_dump_{HHMM}.json with no date. Day 19 left scan_dump_0724.json (and 0631/0650/0751/0829/0911/1117) in the same directory. At 07:24 the delta-build correctly REFUSED (INBS had fallen off the 07:03 base and no name was supplied) and therefore wrote nothing -- but the sweep that followed read the pre-existing scan_dump_0724.json, which was 2026-08-31's tape, and reported YDDL +49.09%, NEOV +15.87%, ANPA +10.80% and DCOY +10.69% as NEW crossers while marking all twelve of today's real candidates GONE.",
+      "why_it_matters": "The crossed set is a LATCH -- once a name is in it, it stays eligible until 14:30 -- so this is not self-correcting. Four names whose +10% cross never printed today would have sat in the pool as tradeable candidates for the rest of the session. NEOV in particular was yesterday's actual traded name, so it would have looked entirely plausible on a re-rank.",
+      "how_it_was_caught": "The sweep printed 'rows=18/18' when the live scan had just returned 73, and the dropped-fund count fell to 0. A scan that is 95 percent ETFs cannot suddenly have no funds in it.",
+      "fix_applied": "1) plan/purge_candidates.py written and run -- the four phantoms removed, candidates back to the correct 12, with the reason recorded inside scan_state itself. 2) All of today's dumps renamed to scan_dump_{DATE}_{HHMM}.json, so the namespace can no longer collide across sessions. Day 19's files were left untouched.",
+      "residual_risk": "Two failure modes combined here and only the first is now fixed: the filename collision, and the fact that a FAILED delta-build leaves a stale file in place that the NEXT command happily consumes. scan_sweep.py should refuse a dump whose mtime is not from the date it is being swept for -- that is a one-line guard and it would have caught this independently of naming."
+    }
+  ],
   "findings": [],
   "fill_realism": [],
   "pnl": 0

@@ -32,6 +32,24 @@ FUND_PAT = re.compile(
 
 def main():
     dump, date, hhmm = sys.argv[1:4]
+
+    # STALE-DUMP GUARD (2026-09-01, Day 20). Dumps used to be named
+    # scan_dump_{HHMM}.json with no date, so a session could -- and did --
+    # sweep the PREVIOUS day's file of the same name and latch four of
+    # yesterday's symbols into today's crossed set as NEW. Filenames are
+    # date-scoped now, but naming is a convention and conventions slip;
+    # this guard is independent of it. A dump last written on a different
+    # calendar day than the one being swept is refused outright, because
+    # the crossed set is a latch and a phantom entry never self-corrects.
+    from datetime import date as _date
+    mt = _date.fromtimestamp(Path(dump).stat().st_mtime).isoformat()
+    if mt != date:
+        print(f"ERROR: REFUSING STALE DUMP. {Path(dump).name} was last "
+              f"written {mt} but is being swept as {date}. This is the "
+              f"cross-day collision that injected 2026-08-31 symbols into "
+              f"2026-09-01's latched crossed set. Re-fetch the scan.")
+        return 1
+
     sp = DIR / "data" / "paper_days" / f"scan_state_{date}.json"
     st = json.load(open(sp)) if sp.exists() else {
         "candidates": {},
