@@ -130,7 +130,18 @@
     ],
     "rates": {"spread": "1/1 = 100%", "depth": "1/1 = 100%", "chase": "1/1 = 100%", "any_rule": "1/1 = 100%"}
   },
-  "trigger_c": [],
+  "trigger_c": [
+    {
+      "et": "11:26",
+      "sym": "TBN",
+      "signal": "macd_cross_up",
+      "signal_et": "11:11",
+      "tag": "STALE (15m old) -- DO NOT ENTER",
+      "taken": false,
+      "why_not_a_miss": "The tag refused it, which is correct, but the deeper reason it was never takeable is that at 11:11 TBN was 41.4779 = +9.5% against a +10% threshold of 41.668. Its +10% cross did not print until the 11:16 bar at 41.83. A Trigger C signal on a name that has not yet crossed is not a legal entry under C37 at all -- eligibility requires the cross to have ALREADY printed. So this is not a polling failure and not a missed trade; it is a signal that fired while the name was still ineligible.",
+      "cadence_honesty": "TBN was not the TOP name at 11:11 -- it was not on the scan yet. It first appeared as a NEW crosser in the 11:18 sweep and was screened and ranked TOP at 11:20-11:22. The 1-minute TOP-name poll therefore could not have been running on it. Cadence actually run while flat today was ~15-20 min for the full scan, not the protocol's 5, which is a real deviation and is logged as such."
+    }
+  ],
   "errors": [
     {
       "et": "07:24",
