@@ -36,7 +36,28 @@ def main():
     rows = base["data"]["result"]["results"]
     by_tk = {r["ticker"].upper(): r for r in rows}
 
-    out_rows, carried_vol, new_tk, errors = [], [], [], []
+    # PERSISTENT NAME REGISTRY (2026-09-01, Day 20). Tickers drop off the
+    # scan and come back an hour later -- UNI, BMNZ, VACI and CRCD all did
+    # it today. Each time, the ticker is absent from the immediately
+    # preceding dump and the run aborts asking for a name that WAS supplied
+    # earlier in the session. Names are immutable per ticker, so cache them
+    # for the day. This never guesses: it only remembers what was already
+    # given, and an unseen ticker still hard-fails.
+    reg_p = Path(base_p).parent / "ticker_names.json"
+    registry = {}
+    if reg_p.exists():
+        try:
+            registry = json.load(open(reg_p, encoding="utf-8"))
+        except Exception as e:
+            print(f"WARNING: name registry unreadable ({e}) -- continuing "
+                  f"without it", file=sys.stderr)
+    for tk, r in by_tk.items():
+        nm = (r.get("columns") or {}).get("Name")
+        if nm:
+            registry.setdefault(tk, {})["name"] = nm
+            registry[tk]["type"] = r.get("instrument_type", "EQUITY")
+
+    out_rows, carried_vol, new_tk, errors, recalled = [], [], [], [], []
     for spec in specs:
         parts = spec.split(":")
         if len(parts) < 3:
@@ -47,12 +68,17 @@ def main():
         name = ":".join(parts[4:]) if len(parts) > 4 else None
 
         prev = by_tk.get(tk)
+        remembered = registry.get(tk)
+        if prev is None and not name and remembered:
+            name = f"!{remembered.get('type', 'EQUITY')}!{remembered['name']}"
+            recalled.append(tk)
         if prev is None and not name:
-            errors.append(f"{tk}: not in base dump and no NAME supplied -- "
-                          f"refusing to guess (name drives fund/SPAC/"
-                          f"non-common classification)")
+            errors.append(f"{tk}: not in base dump, not in the day's name "
+                          f"registry, and no NAME supplied -- refusing to "
+                          f"guess (name drives fund/SPAC/non-common "
+                          f"classification)")
             continue
-        if prev is None:
+        if prev is None and tk not in recalled:
             new_tk.append(tk)
 
         # instrument_type is carried from the base, or taken from a
@@ -90,10 +116,20 @@ def main():
         "total_items": len(out_rows),
         "results": out_rows}}}, open(out_p, "w"), indent=0)
 
+    for r in out_rows:
+        nm = (r.get("columns") or {}).get("Name")
+        if nm:
+            registry.setdefault(r["ticker"], {})["name"] = nm
+            registry[r["ticker"]]["type"] = r.get("instrument_type", "EQUITY")
+    json.dump(registry, open(reg_p, "w"), indent=0, sort_keys=True)
+
     dropped = sorted(set(by_tk) - {r["ticker"] for r in out_rows})
     print(f"wrote {len(out_rows)} rows -> {Path(out_p).name}")
     if new_tk:
         print(f"  NEW tickers (name supplied): {new_tk}")
+    if recalled:
+        print(f"  name recalled from the day's registry (returned to the "
+              f"scan after dropping off): {recalled}")
     if dropped:
         print(f"  dropped (off the scan): {dropped}")
     if carried_vol:

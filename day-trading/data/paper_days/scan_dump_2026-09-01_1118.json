@@ -1,0 +1,321 @@
+{
+"data": {
+"result": {
+"scan_id": "5f132877-7730-4a18-9e72-b3f0d2c9df83",
+"total_items": 26,
+"results": [
+{
+"ticker": "RDAC",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"Symbol": "RDAC",
+"Name": "Rising Dragon Acquisition Corp.",
+"% Change": "0.8176535",
+"Last": "8.2885",
+"Volume": "4161804.642153"
+}
+},
+{
+"ticker": "SSM",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.4067164",
+"Last": "3.77",
+"Market cap": "3.925755e+06",
+"Name": "Sono Group N.V.",
+"Volume": "7.502866259333e+06",
+"Symbol": "SSM"
+}
+},
+{
+"ticker": "BIAF",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"Symbol": "BIAF",
+"Name": "bioAffinity Technologies",
+"% Change": "0.3991228",
+"Last": "6.38",
+"Volume": "36617.262848"
+}
+},
+{
+"ticker": "FRVO",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.2262679",
+"Last": "18.86",
+"Market cap": "4.533458e+09",
+"Name": "Fervo Energy",
+"Volume": "4.507018719743e+06",
+"Symbol": "FRVO"
+}
+},
+{
+"ticker": "PXS",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"Symbol": "PXS",
+"Name": "Pyxis Tankers",
+"% Change": "0.1954291",
+"Last": "6.4075",
+"Volume": "286835.504633"
+}
+},
+{
+"ticker": "HIMC",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.17098120000000003",
+"Last": "18.27",
+"Name": "Corgi HIMS 2x Daily ETF",
+"Volume": "46",
+"Symbol": "HIMC"
+}
+},
+{
+"ticker": "CAMC",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1640064",
+"Last": "15.81",
+"Name": "Corgi CAMT 2x Daily ETF",
+"Volume": "7",
+"Symbol": "CAMC"
+}
+},
+{
+"ticker": "GWAV",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"Symbol": "GWAV",
+"Name": "Greenwave Technology Solutions",
+"% Change": "0.1530612",
+"Last": "5.65",
+"Volume": "20005.631303"
+}
+},
+{
+"ticker": "HFSP",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1528351",
+"Last": "15.35",
+"Name": "Tidal Trust III TradersAI Large Cap Equity & Cash ETF",
+"Volume": "13",
+"Symbol": "HFSP"
+}
+},
+{
+"ticker": "EMPD",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"Symbol": "EMPD",
+"Name": "Empery Digital",
+"% Change": "0.1521739",
+"Last": "3.71",
+"Volume": "409691.317696"
+}
+},
+{
+"ticker": "RDIB",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"Symbol": "RDIB",
+"Name": "Reading International",
+"% Change": "0.1410662",
+"Last": "17.2301",
+"Volume": "33842.7456"
+}
+},
+{
+"ticker": "WKHS",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"Symbol": "WKHS",
+"Name": "Workhorse",
+"% Change": "0.1341399",
+"Last": "3.8901",
+"Volume": "94133.442731"
+}
+},
+{
+"ticker": "DAIC",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"Symbol": "DAIC",
+"Name": "CID HoldCo, Inc.",
+"% Change": "0.1322701",
+"Last": "3.9403",
+"Volume": "3546164.412809"
+}
+},
+{
+"ticker": "AXTQ",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"Symbol": "AXTQ",
+"Name": "Tradr 2X Short AXTI Daily ETF",
+"% Change": "0.1320421",
+"Last": "60.7001",
+"Volume": "10923.420254"
+}
+},
+{
+"ticker": "JOBC",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1225732",
+"Last": "19",
+"Name": "Corgi JOBY 2x Daily ETF",
+"Volume": "46.0513",
+"Symbol": "JOBC"
+}
+},
+{
+"ticker": "MHX",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12047150000000001",
+"Last": "18.82",
+"Name": "Corgi MARA 2x Daily ETF",
+"Volume": "64",
+"Symbol": "MHX"
+}
+},
+{
+"ticker": "GOTU",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"Symbol": "GOTU",
+"Name": "Gaotu Techedu Inc. American Depositary Shares three of which representing two Class A Ordinary Shares",
+"% Change": "0.11780099999999999",
+"Last": "2.135",
+"Volume": "446656.928894"
+}
+},
+{
+"ticker": "RIVC",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1177182",
+"Last": "22.725",
+"Name": "Corgi RIVN 2x Daily ETF",
+"Volume": "14",
+"Symbol": "RIVC"
+}
+},
+{
+"ticker": "BMNZ",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"Symbol": "BMNZ",
+"Name": "Defiance Daily Target 2X Short BMNR ETF",
+"% Change": "0.1156522",
+"Last": "6.415"
+}
+},
+{
+"ticker": "EO",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"Symbol": "EO",
+"Name": "Corgi EOSE 2x Daily ETF",
+"% Change": "0.111885",
+"Last": "6.545",
+"Volume": "0"
+}
+},
+{
+"ticker": "LITZ",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"Symbol": "LITZ",
+"Name": "Tradr 2X Short LITE Daily ETF",
+"% Change": "0.1039923",
+"Last": "8.6001",
+"Volume": "901810.296635"
+}
+},
+{
+"ticker": "VACI",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"Symbol": "VACI",
+"Name": "Viking Acquisition Corp. I",
+"% Change": "0.10371079999999999",
+"Last": "11.6"
+}
+},
+{
+"ticker": "SWVL",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"Symbol": "SWVL",
+"Name": "Swvl",
+"% Change": "0.1030928",
+"Last": "3.21",
+"Volume": "156034.856495"
+}
+},
+{
+"ticker": "TBN",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"Symbol": "TBN",
+"Name": "Tamboran Resources",
+"% Change": "0.1029567",
+"Last": "41.78",
+"Volume": "85722.81305"
+}
+},
+{
+"ticker": "ACLZ",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10046490000000001",
+"Last": "10.44",
+"Name": "Corgi ACLS 2x Daily ETF",
+"Volume": "12",
+"Symbol": "ACLZ"
+}
+},
+{
+"ticker": "CRCD",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"Symbol": "CRCD",
+"Name": "T-REX 2X Inverse CRCL Daily Target ETF",
+"% Change": "0.1003721",
+"Last": "2.3658"
+}
+}
+]
+}
+}
+}

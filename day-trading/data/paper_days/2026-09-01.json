@@ -84,7 +84,7 @@
     }
   },
   "halal": {
-    "PASS": ["SSM", "AMCI", "EXOZ", "CLRO"],
+    "PASS": ["SSM", "AMCI", "EXOZ", "CLRO", "TBN"],
     "FAIL": ["FRVO", "INBS", "LABT", "PXS", "HVT.A", "MB", "CTW", "PRLD", "SST", "BIAF", "YEXT", "DAIO", "CRK", "ARCT", "KG", "GAME", "CNXC", "WKHS", "SXTC"],
     "CANNOT_VERIFY": ["EMPD"],
     "_note": "Binary rule: only verdict PASS is armable. 10 names screened by 07:07, 3 PASS / 7 FAIL. SSM passes both questions -- q1 loan 10.76% / cash 3.65% / combined 14.40% (the one-side-over-10-with-combined-under-20 exception, exactly the HLIT/ANGX zone), q2 solar-powered mobility -- but is NOT armable: its 7AM calm-gap is +52.6%, past the 20% gate and past even the 35% top-name grace. The two LIVE hopes are AMCI and EXOZ, both clean on both questions; neither has a premarket tape yet.",
@@ -110,12 +110,26 @@
     "CNXC": {"q1": "FAIL", "loan_pct": 225.37, "cash_pct": 12.56, "combined": 237.94, "haram_pct": 0.69, "reason": "LOAN>10+COMBINED>20", "note": "Concentrix -- q2 PASSES (customer-experience/BPO services, 455,000 employees). The largest name to cross all day at 2.03B market cap with 556k shares traded. Carries the Webhelp acquisition debt at 225% of market cap."},
     "WKHS": {"q1": "FAIL", "loan_pct": 102.64, "cash_pct": 1.44, "combined": 104.07, "haram_pct": 2.04, "reason": "LOAN>10+COMBINED>20", "note": "Workhorse Group, battery-electric trucks -- q2 PASSES."},
     "SXTC": {"q1": "FAIL", "loan_pct": 29.26, "cash_pct": 735.35, "combined": 764.6, "haram_pct": 0.0, "reason": "LOAN>10+COMBINED>20", "note": "China SXT Pharmaceuticals, traditional Chinese medicine -- q2 PASSES. Cash is 7.4x its own market cap and the 52-week high is 83,758.80 against a 2.90 last, i.e. serial reverse splits. A shell in substance."},
+    "TBN": {"q1": "PASS", "loan_pct": 4.85, "cash_pct": 6.05, "combined": 10.9, "haram_pct": 0.0, "q2": "PASS -- Tamboran Resources, natural-gas exploration and production in the Beetaloo Basin. Energy production is a permissible line, same judgement applied to CRK.", "gap7_pct": 1.72, "gap7_source": "Polygon completion, 06:33 print, 351 sh cumulative to 07:00 -- flagged thin by the size guard, but CORROBORATED here: TBN also opened regular hours at 40.36 (+6.5%) and rose from there on 85k real shares, so the 'flat at 07:00' conclusion does not rest on the single lot the way AMCI's +10.21% did.", "rank": 1, "coil": 1.0, "pressure": 0.06, "gain_pct": 10.43, "mcap": 1458043712, "armable_on_gates": true, "traded": false, "blocked_by": "spread 1.174% + depth 3 shares + fill-arming (coil 1.000)", "note": "THE ONLY NAME ALL DAY TO CLEAR EVERY SELECTION GATE -- halal on both questions, calm-gap +1.72%, COILED at coil 1.000, positive pressure, 1.46B market cap, rank 1. It was refused purely at the book. This is the cleanest illustration the campaign has yet produced of where C37 actually loses live: not in the ranking, in the ladder."},
     "EMPD": {"q1": "not reached", "q2": "CANNOT-VERIFY -> FAIL by the binary rule", "reason": "Empery Digital. RH's description reads 'design and development of electric outdoor power sports vehicles ... electric two and four-wheel motorcycles and utility terrain vehicles' -- which is the LEGACY business, not the company the name describes. The description field is stale relative to a corporate rename/pivot, so RH is telling two different stories about the same issuer and neither can be trusted for a revenue-mix judgement.", "note": "Recorded as CANNOT-VERIFY, which under the 2026-08-22 binary ruling IS a FAIL -- absence of evidence is never compliance. Convertible only by an affirmative <5% evidence ruling in halal_rulings.json. This is a NEW instance of the known 'RH labels are unreliable' blind spot: previously it was the SECTOR field that lied (AZ makes shopping carts, labelled Financial Conglomerates); here it is the DESCRIPTION field, which appears not to be refreshed after a pivot. Descriptions are what this session has been using to answer question 2 all day, so this is a caveat on the whole day's q2 work, not just on EMPD."},
     "ARCT": {"q1": "FAIL", "loan_pct": 4.94, "cash_pct": 41.23, "combined": 46.17, "haram_pct": 51.68, "reason": "CASH>10+COMBINED>20", "note": "Arcturus Therapeutics -- q2 PASSES (mRNA vaccines and rare-disease medicines). The best-shaped late crosser of the day: genuinely flat through premarket, first real print 07:52, then 49k shares at the bell and a steady climb to +10.7% on real per-minute volume. Fails on BOTH grounds -- debt is only 4.94% but the cash pile is 41% of market cap, and interest income is 51.68% of revenue. This is the clinical-stage-biotech shape: almost no product revenue, so treasury income dominates the income statement."}
   },
   "trades": [],
   "armed": [],
-  "vetoes": {"spread": [], "depth": [], "chase_fill_arming": []},
+  "vetoes": {
+    "_accounting_note": "Counted as THREE SEPARATE RULES per the 2026-08-14 finding. A blended rate hides which rule is binding, and the modelled 50-65% optimum from the V-series speaks to the SPREAD veto only -- the depth and chase vetoes have never been modelled. The denominator is ENTRY DECISIONS REACHED, i.e. names that cleared halal, calm-gap, coil and rank and were actually taken to the book. Names refused earlier (halal, calm-gap, fake gap) are NOT veto decisions and must not inflate the denominator.",
+    "decisions_reached": 1,
+    "spread": [
+      {"et": "11:21", "sym": "TBN", "bid": 41.49, "ask": 41.98, "spread_pct": 1.174, "cap_pct": 0.5, "verdict": "VETO", "note": "2.3x the cap."}
+    ],
+    "depth": [
+      {"et": "11:21", "sym": "TBN", "intended_shares": 357, "ticket_usd": 15000, "trigger_plus_half_pct": 42.19, "cumulative_ask_size_within_cap": 3, "pct_of_intended": 0.8, "skip_threshold_pct": 25, "verdict": "VETO", "note": "Inside ask was ONE share, next level TWO. The whole displayed ask side up to 42.19 held 3 shares against 357 needed. Sweeping 357 would have to reach 42.62 (1+2+100+500=603 cumulative), a modelled VWAP near 42.54, i.e. ~1.33% worse than the inside ask. A genuine save against the naive fill-at-the-ask assumption."}
+    ],
+    "chase_fill_arming": [
+      {"et": "11:21", "sym": "TBN", "coil": 1.0, "last": 41.83, "verdict": "VETO", "note": "coil 1.000 means last EQUALS the session high, so a stop-buy at the session high has its trigger already met and would convert to a market order into the 1-share book above. This is the Day-5 LFST failure exactly. Per the fill-arming rule the alternative is a marketable limit capped at trigger+0.5% = 42.19, which the book cannot fill (3 shares) -- so the fallback is also a veto, not an entry."}
+    ],
+    "rates": {"spread": "1/1 = 100%", "depth": "1/1 = 100%", "chase": "1/1 = 100%", "any_rule": "1/1 = 100%"}
+  },
   "trigger_c": [],
   "errors": [
     {
