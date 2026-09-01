@@ -107,7 +107,17 @@
       "residual_risk": "Two failure modes combined here and only the first is now fixed: the filename collision, and the fact that a FAILED delta-build leaves a stale file in place that the NEXT command happily consumes. scan_sweep.py should refuse a dump whose mtime is not from the date it is being swept for -- that is a one-line guard and it would have caught this independently of naming."
     }
   ],
-  "findings": [],
+  "findings": [
+    {
+      "id": 1,
+      "et": "07:44",
+      "title": "The scan can return CRYPTO rows, and every existing filter classifies by NAME only",
+      "detail": "UNI 'Uniswap' arrived at +11.95% with instrument_type CRYPTO. scan_sweep's three drop patterns (FUND_PAT, NONCOMMON_PAT, SPAC_PAT) all match on the Name string, and no name regex will ever catch a coin -- 'Uniswap' looks exactly like a small-cap operating company. The row would have entered the crossed set as a common-stock candidate.",
+      "why_instrument_type_works_here": "The tool guide warns that instrument_type is useless for screening because EQUITY covers stocks AND funds alike -- which is true, and is why fund detection has to be name-based. But that argument is one-directional: a value that is NOT EQUITY is decisive. CRYPTO is never common stock.",
+      "fix": "scan_sweep.py now drops any row whose instrument_type != EQUITY into a new 'nonequity' bucket. dump_from_delta.py was also fixed in the same breath: it hardcoded instrument_type EQUITY on every row it wrote, which would have silently relabelled the coin as an equity and walked it straight past the new guard. It now carries the type from the base dump or takes a !TYPE! prefix.",
+      "lineage": "Third contamination class found in three sessions: Day 19 found warrants (EOSEW), earlier sessions found leveraged ETFs and SPACs, today crypto. The pattern is that the saved scan filters on price and %change ONLY, so every non-common-stock instrument RH lists is free to appear."
+    }
+  ],
   "fill_realism": [],
   "pnl": 0
 }

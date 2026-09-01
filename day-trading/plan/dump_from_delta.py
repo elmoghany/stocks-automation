@@ -55,6 +55,15 @@ def main():
         if prev is None:
             new_tk.append(tk)
 
+        # instrument_type is carried from the base, or taken from a
+        # "!TYPE!" prefix on the name for a new row. It must NOT be
+        # hardcoded to EQUITY: scan_sweep drops non-EQUITY rows (the
+        # 2026-09-01 UNI/Uniswap CRYPTO case), and silently relabelling a
+        # coin as EQUITY here would walk it straight past that guard.
+        itype = (prev or {}).get("instrument_type") or "EQUITY"
+        if name and name.startswith("!"):
+            itype, _, name = name[1:].partition("!")
+
         cols = dict((prev or {}).get("columns") or {})
         cols["Symbol"] = tk
         if name:
@@ -68,7 +77,7 @@ def main():
             cols["Volume"] = vol_s
         out_rows.append({"ticker": tk,
                          "instrument_id": (prev or {}).get("instrument_id", ""),
-                         "instrument_type": "EQUITY",
+                         "instrument_type": itype,
                          "columns": cols})
 
     if errors:

@@ -61,13 +61,26 @@ def main():
     res = data.get("result", data)
     rows = res.get("results") or []
     total = res.get("total_items")
-    dropped = {k: [] for k in ("fund", "noncommon", "spac", "halal_fail", "fake_gap", "inherited_fail", "cannot_verify")}
+    dropped = {k: [] for k in ("fund", "noncommon", "nonequity", "spac", "halal_fail", "fake_gap", "inherited_fail", "cannot_verify")}
     cands, unhealthy = {}, []
 
     for r in rows:
         cols = r.get("columns") or {}
         sym = (r.get("ticker") or cols.get("Symbol") or "").upper()
         name = str(cols.get("Name") or "")
+
+        # NON-EQUITY ROWS (added 2026-09-01, Day 20). The scan returned UNI
+        # "Uniswap" with instrument_type CRYPTO at 07:44. Every other filter
+        # here classifies by NAME, and no name regex will ever catch a coin
+        # -- but instrument_type does, and unlike the EQUITY value (which is
+        # useless because it covers stocks AND funds alike) a non-EQUITY
+        # value is decisive. C37 trades COMMON STOCK; a crypto row is not
+        # eligible, has no prev_close or coil in the ranker's sense, and
+        # cannot be halal-screened as an issuer.
+        itype = str(r.get("instrument_type") or "EQUITY").upper()
+        if itype != "EQUITY":
+            dropped["nonequity"].append(f"{sym} [{itype}]")
+            continue
         try:
             pct = float(cols.get("% Change")) * 100.0
             last = float(cols.get("Last"))
