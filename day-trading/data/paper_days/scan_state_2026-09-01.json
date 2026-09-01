@@ -1,8 +1,8 @@
 {
  "candidates": {
   "SSM": {
-   "pct": 49.3,
-   "last": 4.0012,
+   "pct": 47.76,
+   "last": 3.96,
    "prev_close": 2.68,
    "vol": "7.502866259333e+06",
    "name": "Sono Group N.V.",
@@ -103,9 +103,34 @@
    "vol": "737667.399962",
    "name": "Prelude Therapeutics",
    "first_seen": "07:24"
+  },
+  "BIAF": {
+   "pct": 59.65,
+   "last": 7.28,
+   "prev_close": 4.56,
+   "vol": "36617.262848",
+   "name": "bioAffinity Technologies",
+   "first_seen": "08:13"
+  },
+  "ILAG": {
+   "pct": 19.32,
+   "last": 3.52,
+   "prev_close": 2.95,
+   "vol": "672",
+   "name": "Intelligent Living Application Group",
+   "first_seen": "08:13"
+  },
+  "SST": {
+   "pct": 13.84,
+   "last": 2.55,
+   "prev_close": 2.24,
+   "vol": "9173412.884316",
+   "name": "System1",
+   "first_seen": "08:13"
   }
  },
  "halal_fail": [
+  "BIAF",
   "CTW",
   "FRVO",
   "HVT.A",
@@ -113,7 +138,8 @@
   "LABT",
   "MB",
   "PRLD",
-  "PXS"
+  "PXS",
+  "SST"
  ],
  "fake_gap": [],
  "inherited_fail": [
