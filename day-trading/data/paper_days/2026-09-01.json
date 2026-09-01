@@ -35,7 +35,18 @@
       "detail": "Today is the 1st, so \\Stocks\\HalalUniverseRefresh fired at 06:10 ET (PID 13684) and is re-screening 10,761 symbols with an ETA of ~230 min, i.e. it lands around 10:00 ET -- mid-session.",
       "hazard": "halal_list.json is re-read by the rank command on EVERY invocation, so a mid-session rewrite would silently change the gate under a live session. It is also the file that decides what is armable.",
       "mitigation": "Snapshotted halal_list.json at 06:26 ET before the refresh could land. If the file changes mid-session the session takes the INTERSECTION of old and new PASS sets (strictly conservative) and logs the diff loudly rather than silently adopting either list.",
-      "action_owed": "First-trading-morning-of-the-month duty: check the log, backfill needs_mcap names, COMMIT the refreshed lists once the run completes."
+      "action_owed": "First-trading-morning-of-the-month duty: check the log, backfill needs_mcap names, COMMIT the refreshed lists once the run completes.",
+      "outcome": {
+        "completed_et": "11:42:22",
+        "landed_mid_session": true,
+        "timing": "It landed TWO MINUTES before the MMED arm at 11:44 -- the single most consequential decision of the day sat right on top of the swap.",
+        "list_change": {"old_updated": "2026-08-22", "old_n": 1330, "new_updated": "2026-09-01", "new_n": 1260, "added": 44, "removed": 114},
+        "did_it_change_any_decision": "NO -- verified explicitly against the 06:26 snapshot. MMED and TBN are on BOTH lists, so the two names that actually reached an arming decision were unaffected, and the conservative intersection rule adopted at 06:26 would have returned the same answer. SSM was ADDED by the refresh (absent from the old list) but was calm-gap blocked at +52.6% all day and was independently live-screened PASS anyway. AMCI, EXOZ and CLRO are on both.",
+        "why_it_was_safe_regardless": "Every halal verdict today came from a LIVE screen (plan/live_halal.py running halal_check against the RH market cap and filed statements) plus a hand-judged question 2. halal_list.json only decides PASS-vs-NEEDS-SCREEN in the ranker's display column; it was never the basis for arming. The snapshot existed to make that provable rather than assumed.",
+        "coverage": "1,260 of 10,761 screened halal (11.7%) -- by source quarterly 1,182 / info 69 / annual 6 / external-ruling 3.",
+        "still_owed": "6,064 names are UNVERIFIABLE pending an RH market-cap backfill (data/needs_mcap.json). That is a bulk job, not a session task, and it is NOT done. Until it is, absence from halal_list.json continues to mean 'no verdict', which is why the live per-name screen remains mandatory at candidacy.",
+        "commit_duty_conflict": "The skill instructs 'COMMIT the refreshed lists' on the first trading morning of the month. That is NOT POSSIBLE as written: .gitignore line 33 excludes day-trading/data/* (with data/paper_days re-included), so halal_list.json, halal_universe.json, needs_mcap.json and halal_refresh.log are all deliberately untracked. They were NOT force-added -- a 2.3 MB universe file and an explicit repo exclusion are not something a headless session should override on its own initiative. What IS committed is data/paper_days/halal_list_SNAPSHOT_2026-09-01.json, the pre-refresh list captured at 06:26, which is the artefact that actually makes today's arming decisions auditable. FOR THE HUMAN: either amend the skill to drop the commit instruction, or add a .gitignore exception for halal_list.json specifically (small, and the only one of the four with real audit value)."
+      }
     },
     "premarket_tape": {
       "spy_prev_close": 767.05,
