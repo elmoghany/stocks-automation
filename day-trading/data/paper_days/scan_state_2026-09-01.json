@@ -1,8 +1,8 @@
 {
  "candidates": {
   "SSM": {
-   "pct": 40.67,
-   "last": 3.77,
+   "pct": 47.01,
+   "last": 3.94,
    "prev_close": 2.68,
    "vol": "7.502866259333e+06",
    "name": "Sono Group N.V.",
@@ -225,8 +225,8 @@
    "first_seen": "10:53"
   },
   "GWAV": {
-   "pct": 15.31,
-   "last": 5.65,
+   "pct": 16.53,
+   "last": 5.71,
    "prev_close": 4.9,
    "vol": "20005.631303",
    "name": "Greenwave Technology Solutions",
@@ -239,6 +239,14 @@
    "vol": "85722.81305",
    "name": "Tamboran Resources",
    "first_seen": "11:18"
+  },
+  "MMED": {
+   "pct": 11.35,
+   "last": 22.56,
+   "prev_close": 20.26,
+   "vol": "1950407.084896",
+   "name": "MiniMed Group",
+   "first_seen": "11:41"
   }
  },
  "halal_fail": [

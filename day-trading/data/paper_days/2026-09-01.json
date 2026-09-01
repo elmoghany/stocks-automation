@@ -115,7 +115,47 @@
     "ARCT": {"q1": "FAIL", "loan_pct": 4.94, "cash_pct": 41.23, "combined": 46.17, "haram_pct": 51.68, "reason": "CASH>10+COMBINED>20", "note": "Arcturus Therapeutics -- q2 PASSES (mRNA vaccines and rare-disease medicines). The best-shaped late crosser of the day: genuinely flat through premarket, first real print 07:52, then 49k shares at the bell and a steady climb to +10.7% on real per-minute volume. Fails on BOTH grounds -- debt is only 4.94% but the cash pile is 41% of market cap, and interest income is 51.68% of revenue. This is the clinical-stage-biotech shape: almost no product revenue, so treasury income dominates the income statement."}
   },
   "trades": [],
-  "armed": [],
+  "armed": [
+    {
+      "ticket": 1,
+      "sym": "MMED",
+      "armed_et": "11:44",
+      "trigger_type": "B -- session-high stop-buy (the ORB ratchet at the current session high)",
+      "stop_trigger": 22.6199,
+      "limit": 22.733,
+      "limit_basis": "trigger x 1.005, the same 0.5% cap as the thin-book veto",
+      "shares": 663,
+      "notional_at_trigger": 14997.0,
+      "prev_close": 20.26,
+      "REAL_ORDER": false,
+      "paper_only": "NO REAL ORDERS EVER -- this is a paper arm recorded in the ledger.",
+      "gates_at_arming": {
+        "halal": "PASS both questions -- loan 2.29 / cash 4.70 / combined 6.98 / haram 0.00; insulin pumps, CGM and diabetes-management devices",
+        "rank": 1,
+        "coil": 0.997,
+        "pressure": 0.29,
+        "gap7_pct": -2.3,
+        "calm_gap": "CALM -- and note the sign: MMED was DOWN 2.3% at 07:00 and did its entire +11% during regular hours. A textbook late crosser, exactly the shape calm-gap is built to admit.",
+        "gain_pct_at_arming": 10.66,
+        "price_ge_2": true,
+        "sessions_ge_50": "yes -- 52-week low is dated 2026-05-15, so it was trading then; ~74 sessions to today",
+        "common_stock": true
+      },
+      "veto_checks_at_arming": {
+        "fill_arming": "PASS -- re-quoted immediately before arming. Last 22.42 is BELOW the 22.6199 trigger, so the stop is a genuine forward trigger and not an already-met market order. This is the check that failed on TBN at 11:21 (coil 1.000) and on LFST on Day 5.",
+        "spread": "PASS -- bid 22.39 / ask 22.49 = 0.446%, inside the 0.5% cap. Earlier in the same minute it was 0.089%, the tightest book of the entire session.",
+        "depth": "PASS -- cumulative displayed ask size from the inside ask up to trigger x1.005 (22.733) is 1,699 shares (1@22.59, 100@22.60, 332@22.61, 675@22.62, 18@22.63, 300@22.65, 2@22.68, 271@22.73) against 663 needed. First name all day whose book could absorb a full ticket inside the cap.",
+        "size_cap": "NOT BINDING -- trailing 10 COMPLETED minutes (15:31Z-15:40Z) hold 116,442 shares; 20% = 23,288, far above 663. Causal: the in-progress minute is excluded.",
+        "halt": "state=active, has_traded=true. NOTE: get_equity_tradability was deliberately NOT called -- it requires an account_number, and a headless paper session must not touch account endpoints. The quote's state field is the halt signal used instead; recording the substitution."
+      },
+      "protective_stop_on_fill": {
+        "level": 20.8103,
+        "basis": "max(entry x 0.92, peak x 0.60) -- the -8% disaster backstop, to be placed the instant the entry fills and re-placed upward as the peak rises",
+        "computed_on": "assumed fill at the 22.6199 trigger"
+      },
+      "status": "ARMED -- waiting for the trigger"
+    }
+  ],
   "vetoes": {
     "_accounting_note": "Counted as THREE SEPARATE RULES per the 2026-08-14 finding. A blended rate hides which rule is binding, and the modelled 50-65% optimum from the V-series speaks to the SPREAD veto only -- the depth and chase vetoes have never been modelled. The denominator is ENTRY DECISIONS REACHED, i.e. names that cleared halal, calm-gap, coil and rank and were actually taken to the book. Names refused earlier (halal, calm-gap, fake gap) are NOT veto decisions and must not inflate the denominator.",
     "decisions_reached": 1,
