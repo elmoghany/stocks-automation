@@ -61,7 +61,9 @@
       "candidate_list": ["SSM", "FRVO", "CLRO", "HVT.A", "LABT", "MB", "CTW", "INBS", "EXOZ"]
     },
     {
-      "et": "06:44",
+      "et": "06:26",
+      "as_of_label_used": "06:44",
+      "clock_note": "OPS DEFECT (self-caught 06:31): the session was estimating elapsed ET from the number of tool calls rather than reading the clock, and had drifted ~45 min AHEAD of real time -- it believed it was 07:16 when it was 06:30. Causally harmless here (the ranker only reads bars that exist, and --as-of 06:44 simply admitted every cached bar), but it mislabels the ledger and would have been dangerous near the 14:30 entry cutoff and the 14:57 flatten. Corrected rule for the rest of the session: read the clock immediately before any --as-of, arming, or cutoff decision, never estimate it. This is the CLOCK RULE's cousin -- TZ env is broken AND elapsed time cannot be eyeballed.",
       "state": "FLAT-5m",
       "action": "bars + rank",
       "bars_batch": "9 symbols, 1 call, returned-set assert PASSED (no truncation)",
