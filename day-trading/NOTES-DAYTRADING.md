@@ -1,5 +1,130 @@
 # Penny Stocks Trading Notes
 
+## PAPER DAY 20 (2026-09-01) — MMED +$73.00, and a cross-day collision that would have latched four ghosts
+
+**1 ticket, MMED 663 sh @ 22.6199 → 22.73, +$73.00, flat at the 14:57 flatten,
+zero real orders.** `counts_as_traded_day: true`. **Cumulative −$720.82 →
+−$647.82 over 17 scored days = −$38.11/day** (was −$45.05 over 16). Against the
+−$163/day honest baseline live is **ahead by $124.89/day ($2,123.18 total)**.
+Full detail in `data/paper_days/2026-09-01.{json,md}`.
+
+Headless launch clean, 06:20 start; capability probe (python / git-write / MCP)
+all green at 06:21. **Fifth consecutive session the Day-16 fix has held.**
+
+### The day in one line
+The halal gate refused **21 of 27** screened names, and it refused specifically the
+liquid ones. One survivor had a tradeable book. It won.
+
+### The refusals run through two opposite doors
+This is Day 8's structural finding, now on a much larger sample:
+* **Leveraged operators fail on debt** — CNXC 238% combined (Webhelp acquisition
+  debt, 2.03B cap, the largest name to cross all day), SST 1465%, PXS 251% (a
+  vessel owner), CRK 69% (a Haynesville E&P), WKHS 104%, HVT.A 79% (store leases).
+* **Cash-rich pre-revenue names fail on deposits and interest-income share** —
+  ARCT cash 41% / haram 51.7%, FRVO haram 1153%, PRLD 22.2%, DAIO 25.1%, SXTC
+  holding cash worth 7.4× its own market cap.
+What survives is a narrow middle, and four of the five survivors were too thin to
+trade. Only MMED was both permissible and liquid.
+
+Two question-2 refusals invisible from the ticker: **KG "Kestrel Group"** is a
+property/casualty **reinsurer** (here the RH *sector* label caught it — the mirror
+of the AZ blind spot); **GAME "GameSquare"** is esports media, sector label
+literally `Miscellaneous`.
+
+### The trade, and why it was armable when nothing else was
+gap7 **−2.3%** — MMED was *down* at 07:00 and did its entire +11% in regular hours.
+A textbook late crosser, exactly the shape calm-gap exists to admit. Rank 1, coil
+0.997, pressure +0.29, 6.34B cap.
+
+Three arming checks that had failed on TBN 23 minutes earlier all passed here:
+fill-arming (last 22.42 below the 22.6199 trigger → a forward stop, vs TBN's coil
+1.000 sitting *at* its high), spread (0.446%, and 0.089% minutes earlier, vs TBN's
+1.174%), and depth (**1,699 shares** inside the 0.5% cap against 663 needed, vs
+**TBN's 3**).
+
+**Fill realism was the best of the campaign on both sides.** Entry −0.066% (Day 19
+NEOV was −2.20%, Day 5 LFST −1.6%). Exit: the modelled ladder sweep and the naive
+inside-bid price **coincided** at 22.73, because the inside bid held 1,273 shares
+against a 663-share ticket. On Day 8 the naive figure flattered ANGX by $75.43 on
+one ticket; today the rule cost nothing but made the guarantee auditable.
+
+### Ops defect worth more than the $73: cross-day dump collision (HIGH)
+Dumps were named `scan_dump_{HHMM}.json` with **no date**. At 07:24 the delta build
+correctly refused and wrote nothing — so the sweep read the *pre-existing*
+`scan_dump_0724.json`, which was **Day 19's tape**, and reported YDDL/NEOV/ANPA/DCOY
+as NEW crossers while marking all twelve of today's real candidates GONE.
+
+**Not self-correcting**: the crossed set is a LATCH, so four names whose +10% cross
+never printed today would have sat in the pool as tradeable candidates until 14:30.
+NEOV was yesterday's actual traded name and would have looked entirely plausible on
+a re-rank. Caught only because the sweep printed `rows=18/18` against a live scan of
+73 with `dropped funds=0` — a scan that is 95% ETFs cannot have no funds in it.
+
+Fixed three ways: phantoms purged with the reason recorded inside `scan_state`;
+filenames date-scoped; and **`scan_sweep.py` now refuses any dump whose mtime date
+differs from the date being swept**, which catches this independently of naming.
+Verified in both directions.
+
+### Other defects found and fixed in-session
+* **Clock drift** — the session was estimating ET from tool-call count and had
+  drifted ~45 min *ahead* of real time (believed 07:16 at 06:30). Harmless causally,
+  dangerous near the 14:30 cutoff. `plan/wait_until.py` now makes every wait
+  clock-driven, auditable and hard-capped at 480 s.
+* **The scan returned a CRYPTO row** (UNI "Uniswap", +11.95%). All existing drop
+  patterns match on *Name* and no regex catches a coin. `instrument_type` is useless
+  for screening *in the EQUITY direction* — but a **non-EQUITY value is decisive**.
+  Now dropped. `dump_from_delta.py` was fixed in the same breath: it hardcoded
+  `EQUITY` on every row and would have walked the coin past the new guard. Fourth
+  contamination class in four sessions.
+* **yfinance 404s on dot-class tickers** — HVT.A read `NO FUNDAMENTALS DATA`, a
+  refusal-to-evaluate indistinguishable from a compliance FAIL in the ledger.
+  `live_halal.py` now falls back to the dash form then the root and logs the
+  substitution; HVT.A then resolved to a real FAIL at 78.7%.
+
+### Finding: premarket marks on micro-caps are not prices
+All four halal-clean names collapsed below +10% within three minutes of the open.
+AMCI opened 4.04 against a 4.00 close (+1.0%) after showing +10.21% premarket;
+CLRO opened *exactly at* its prior close. **AMCI's entire premarket gain rested on
+one 200-share print** at 06:45, CLRO's on 121 shares — the very prints used to
+complete their gap7 from Polygon. The completion was methodologically sound (feeds
+agreed to the cent) but a price is only as real as the size behind it.
+**`complete_gap7.py` now reports size on the sourcing bar and cumulative to 07:00,
+and warns below 1,000 shares.** Re-checked under the new guard, TBN's thin gap was
+corroborated by its regular-hours open; AMCI's was not.
+
+Also: **ETF contamination confirmed a premarket artefact on a fourth session** (76
+rows premarket, 61 funds → 31 rows at the bell). **Calm-gap measures the 7 AM gap,
+not the day's move** — BIAF passed at gap7 −1.3% while already +67.7% on the day.
+**RH's description field can be stale after a corporate pivot** — EMPD is described
+as an electric-powersports maker, which is the legacy business; recorded
+CANNOT-VERIFY → FAIL. Previously the *sector* field lied; here the *description*
+did, and descriptions answered question 2 all day.
+
+### Process honesty
+Flat-state scan cadence ran **~15–20 min against the protocol's 5** — a real
+deviation, logged as one; post-open it is why TBN surfaced at 11:18 rather than
+~11:15. Trigger C: MMED had no buy_set signal; TBN's `macd_cross_up` at 11:11 was
+tagged STALE and refused, and was never legal anyway (TBN was +9.5%, below its own
++10% threshold, which did not print until 11:16). Halt check substituted — 
+`get_equity_tradability` needs an `account_number` and a headless paper session must
+not touch account endpoints, so the quote's `state=active` was used and recorded as a
+substitution. The monthly halal refresh ran through the session (first of the month);
+`halal_list.json` was snapshotted at 06:26 and did not in fact change during trading
+hours. **$85,003 of the $100,000 budget never deployed** — not the one-position rule
+and not a slow holder, the gate.
+
+### Verdict
+Green and clean: every gate did its job, the one name that passed all of them was the
+one name with a real book, and it paid. But judge it as **process, not edge** — one
+ticket cannot reach a benchmark that assumes rotation, and the reason it was one
+ticket is 21 refusals out of 27.
+
+New tooling: `plan/wait_until.py`, `plan/live_halal.py`, `plan/record_halal.py`,
+`plan/seed_scan_state.py`, `plan/purge_candidates.py`, `plan/dump_from_delta.py`,
+`plan/seed_name_registry.py`, `plan/complete_gap7.py`, `plan/campaign_tally.py`.
+
+---
+
 ## PAPER DAY 19 (2026-08-31) — NEOV −$15.85, and the exit sweep that flipped the sign
 
 **1 ticket, NEOV 1,150 sh @ 4.2126 → 4.1988, −$15.85, flat at the 14:58 flatten,
@@ -5489,3 +5614,4 @@ been tracking the honest baseline, not underperforming a real edge.
 Its vetoes are consistent with the abstention finding. The honest
 per-day target for ONE position with exits is ~-$163; for one position
 without exits ~+$188.
+

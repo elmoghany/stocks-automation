@@ -6,8 +6,8 @@
   "session_type": "headless (Windows Task Scheduler \\Stocks\\C37MorningLaunch)",
   "benchmark_per_day": 1517,
   "honest_baseline_per_day": -163,
-  "status": "OPEN",
-  "counts_as_traded_day": false,
+  "status": "CLOSED",
+  "counts_as_traded_day": true,
   "config": "C37",
   "ops": {
     "skeleton_written_et": "06:20",
@@ -84,8 +84,9 @@
     }
   },
   "halal": {
-    "PASS": ["SSM", "AMCI", "EXOZ", "CLRO", "TBN"],
-    "FAIL": ["FRVO", "INBS", "LABT", "PXS", "HVT.A", "MB", "CTW", "PRLD", "SST", "BIAF", "YEXT", "DAIO", "CRK", "ARCT", "KG", "GAME", "CNXC", "WKHS", "SXTC"],
+    "PASS": ["SSM", "AMCI", "EXOZ", "CLRO", "TBN", "MMED"],
+    "FAIL": ["FRVO", "INBS", "LABT", "PXS", "HVT.A", "MB", "CTW", "PRLD", "SST", "BIAF", "YEXT", "DAIO", "CRK", "ARCT", "KG", "GAME", "CNXC", "WKHS", "SXTC", "GWAV", "EMPD"],
+    "totals": {"screened": 27, "pass": 6, "fail": 21, "note": "EMPD is counted in FAIL via CANNOT_VERIFY -- unverified is haram by the 2026-08-22 binary rule, so it is a refusal, not a separate bucket."},
     "CANNOT_VERIFY": ["EMPD"],
     "_note": "Binary rule: only verdict PASS is armable. 10 names screened by 07:07, 3 PASS / 7 FAIL. SSM passes both questions -- q1 loan 10.76% / cash 3.65% / combined 14.40% (the one-side-over-10-with-combined-under-20 exception, exactly the HLIT/ANGX zone), q2 solar-powered mobility -- but is NOT armable: its 7AM calm-gap is +52.6%, past the 20% gate and past even the 35% top-name grace. The two LIVE hopes are AMCI and EXOZ, both clean on both questions; neither has a premarket tape yet.",
     "structural_note": "7 of 10 refused, and the refusals are not random -- they are the Day-8 finding again. PXS (a vessel owner, loan 152.9%), HVT.A (a store lessee, combined 78.7%) and INBS (combined 120.9%) fail because capital-intensive and lease-heavy businesses are debt-financed by construction. FRVO fails the opposite way: a large post-IPO cash pile throws off interest income 11.5x its revenue. The names that survive the ratio test tend to be small, cash-funded and thinly traded -- which is exactly the population the spread and depth vetoes then refuse."
@@ -140,7 +141,27 @@
         "placed_et": "11:46",
         "note": "Resting from the instant of fill and never absent while the position is open. The loop-layer 20% trail from the 22.625 peak sits at 18.10, which is looser, so the -8% hard stop is what binds initially."
       },
-      "status": "OPEN"
+      "exit_et": "14:57",
+      "exit_price": 22.73,
+      "exit_reason": "15:00 FLATTEN LADDER, first rung (14:57 at bid -1%)",
+      "exit_modelling": {
+        "method": "Ladder sweep against displayed bid depth, per the Day-8 rule that an exit must never be booked at the naive inside-bid price.",
+        "inside_bid": 22.73,
+        "inside_bid_size": 1273,
+        "shares_sold": 663,
+        "levels_consumed": "ONE -- the inside bid alone held 1,273 shares against 663 needed, so the entire ticket clears at 22.73 without walking the ladder.",
+        "sweep_vwap": 22.73,
+        "optimistic_single_price": 22.73,
+        "bracket": "Sweep VWAP and the optimistic single price COINCIDE here, which is unusual and worth stating plainly: on Day 8, ANGX swept 4.28 -> 4.24 and the naive figure flattered P&L by $75.43 on a $13k ticket. The difference is the same book quality that let the entry fill at the trigger -- MMED is a 6.3B name with real two-sided depth, not a microcap.",
+        "limit_used": "marketable limit at bid x 0.99 = 22.5027 as the price cap; it is marketable against a 22.73 bid, so the fill is at the bid, not the cap."
+      },
+      "pnl": 73.0,
+      "pnl_pct": 0.487,
+      "hold_minutes": 191,
+      "peak": 22.64,
+      "peak_open_pnl": 13.3,
+      "trough_open_pnl": -272.0,
+      "status": "CLOSED -- flat at 14:57, well inside the 15:00 deadline"
     }
   ],
   "armed": [
@@ -242,6 +263,46 @@
       "lineage": "Third contamination class found in three sessions: Day 19 found warrants (EOSEW), earlier sessions found leveraged ETFs and SPACs, today crypto. The pattern is that the saved scan filters on price and %change ONLY, so every non-common-stock instrument RH lists is free to appear."
     }
   ],
-  "fill_realism": [],
-  "pnl": 0
+  "fill_realism": [
+    {
+      "sym": "MMED",
+      "side": "entry",
+      "assumed_fill": 22.6199,
+      "mark_plus_60s": 22.605,
+      "delta_pct": -0.066,
+      "note": "Best entry-fill realism of the campaign. Day 19 NEOV was -2.20%, Day 5 LFST -1.6%. The whole difference is displayed depth inside the 0.5% cap: 1,699 shares here against TBN's 3 earlier the same morning."
+    },
+    {
+      "sym": "MMED",
+      "side": "exit",
+      "modelled_sweep_vwap": 22.73,
+      "naive_inside_bid": 22.73,
+      "self_flattery": 0.0,
+      "note": "Zero self-flattery, because the inside bid held 1,273 shares against a 663-share ticket so the sweep never left the top level. Compare Day 8's ANGX, where booking the naive inside bid would have recorded +$45.60 instead of -$29.83, a $75.43 fiction on one ticket. The exit-depth rule cost nothing today but is what makes that guarantee auditable rather than lucky."
+    }
+  ],
+  "eod": {
+    "closed_et": "14:57",
+    "flat_by_1500": true,
+    "tickets_taken": 1,
+    "tickets_available": 7,
+    "capital_deployed": 14997.0,
+    "capital_budget": 100000.0,
+    "capital_idle": 85003.0,
+    "pnl": 73.0,
+    "cumulative_before": -720.82,
+    "cumulative_after": -647.82,
+    "scored_days": 17,
+    "per_day": -38.11,
+    "per_day_before": -45.05,
+    "honest_baseline_per_day": -163.0,
+    "ahead_of_baseline_total": 2123.18,
+    "ahead_of_baseline_per_day": 124.89,
+    "cumulative_note": "Chained from Day 19's recorded cumulative_after (-720.82 over 16 scored days), which is the campaign's authoritative running figure. plan/campaign_tally.py, written today, independently reproduces the intra-August chain exactly -- its running sum through 2026-08-13 equals that file's own cumulative_after of -257.57 -- but it only sees data/paper_days/YYYY-MM-DD.json from 2026-08-10 onward and therefore MISSES the pre-08-10 sessions scored under the older data/paper path. Its standalone total (-677.64 / 14 traded days) is consequently NOT the campaign figure and must not be quoted as one.",
+    "vs_benchmark_1517": -1444.0,
+    "vs_honest_baseline_neg163": 236.0,
+    "verdict": "A green day, and a rare one: +$73.00 on a single ticket, beating the -$163 honest one-position-with-exits baseline by $236 and the campaign's own -$107/day running average by $180. But it is a PROCESS result, not an edge result -- one ticket cannot reach a benchmark that assumes rotation through several.",
+    "why_only_one_ticket": "Not the one-position rule this time, and not a slow holder -- it is the halal gate. 27 names were screened and 21 refused. Of the six survivors, five were untradeable (SSM calm-gap blocked at +52.6%, EXOZ never traded on either feed, AMCI and CLRO collapsed below +10% at the bell on single-lot premarket marks, TBN triple-vetoed at the book). MMED was the only name all day that was both permissible and liquid."
+  },
+  "pnl": 73.0
 }
