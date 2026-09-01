@@ -60,6 +60,8 @@ def main():
         bar = at7.iloc[-1]
         ts = at7.index[-1]
         px = float(bar["Close"])
+        vol = float(bar.get("Volume") or 0)
+        cum = float(at7["Volume"].sum())
         gap = (px / pc - 1.0) * 100.0
         exact = "EXACT 07:00 bar" if ts.time() == SEVEN else \
                 f"last print at/before 07:00 ({ts:%H:%M} ET)"
@@ -70,6 +72,16 @@ def main():
               f"close {pc:.4f})  [{exact}]  -> {verdict}")
         print(f"          COMPLETED FROM POLYGON -- RH had no 07:00 bar. "
               f"Record this substitution in the day ledger.")
+        # SIZE BEHIND THE PRINT (added 2026-09-01 same session, after the
+        # open falsified both of the day's completions). A gap is only as
+        # real as the size that set it: AMCI's completed +10.21% rested on
+        # a single 200-share trade and was gone by 09:30:30. Report the
+        # size so a completion can never read as a solid quote.
+        print(f"          SIZE {vol:,.0f} sh on that bar, {cum:,.0f} sh "
+              f"cumulative to 07:00."
+              + ("  *** WARNING: fewer than 1,000 shares set this gap -- "
+                 "treat it as a single-lot mark, NOT a market price. ***"
+                 if cum < 1000 else ""))
     return 0
 
 

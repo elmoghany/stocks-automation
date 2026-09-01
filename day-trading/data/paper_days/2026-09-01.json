@@ -123,6 +123,15 @@
   ],
   "findings": [
     {
+      "id": 2,
+      "et": "09:33",
+      "title": "Every halal-clean name's premarket gain evaporated at the opening bell -- the marks were thin-tape artefacts",
+      "detail": "The four names that survived the halal gate all collapsed below +10% within three minutes of the open. AMCI opened 4.04 against a 4.00 prior close (+1.0%) after showing +10.21% premarket; CLRO opened exactly at its 5.21 prior close after +7.10%; EXOZ printed +7.3% on 105 shares; ILAG did not trade at all.",
+      "why": "AMCI's entire premarket +10.21% rested on ONE 200-share print at 06:45, and CLRO's +7.10% on 121 shares at 06:51. Those are the same prints this session used to complete their gap7 from Polygon. The completion was methodologically right -- the feeds agreed to the cent -- but a price is only as meaningful as the size behind it, and 200 shares is not a market.",
+      "implication": "The gap7 completion tool should report the SIZE behind the print it uses, not just the price. A gap7 sourced from a 200-share trade and one sourced from a 200,000-share trade are not the same evidence, and today the distinction was the whole story: both completed names were, in substance, untraded.",
+      "second_order": "This also explains the halal paradox from the other side. The names that pass the ratio test are small and cash-funded, which is exactly the population whose premarket prints are single-lot noise. So the survivors are not merely wide -- some of them are not really trading at all."
+    },
+    {
       "id": 1,
       "et": "07:44",
       "title": "The scan can return CRYPTO rows, and every existing filter classifies by NAME only",

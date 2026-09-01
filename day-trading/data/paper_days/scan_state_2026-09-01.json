@@ -1,8 +1,8 @@
 {
  "candidates": {
   "SSM": {
-   "pct": 36.94,
-   "last": 3.67,
+   "pct": 37.31,
+   "last": 3.68,
    "prev_close": 2.68,
    "vol": "7.502866259333e+06",
    "name": "Sono Group N.V.",
@@ -143,10 +143,35 @@
    "vol": "23924.8433",
    "name": "Data I/O",
    "first_seen": "08:47"
+  },
+  "BGIN": {
+   "pct": 11.52,
+   "last": 2.13,
+   "prev_close": 1.91,
+   "vol": "926.5556",
+   "name": "Bgin Blockchain Limited",
+   "first_seen": "09:33"
+  },
+  "FCUV": {
+   "pct": 10.05,
+   "last": 10.84,
+   "prev_close": 9.85,
+   "vol": "987.169405",
+   "name": "Focus Universal",
+   "first_seen": "09:33"
+  },
+  "CRK": {
+   "pct": 10.01,
+   "last": 15.875,
+   "prev_close": 14.43,
+   "vol": "1624519.921644",
+   "name": "Comstock Resources",
+   "first_seen": "09:33"
   }
  },
  "halal_fail": [
   "BIAF",
+  "CRK",
   "CTW",
   "DAIO",
   "FRVO",
