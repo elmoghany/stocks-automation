@@ -1,8 +1,8 @@
 {
  "candidates": {
   "SSM": {
-   "pct": 46.49,
-   "last": 3.926,
+   "pct": 49.07,
+   "last": 3.995,
    "prev_close": 2.68,
    "vol": "7.502866259333e+06",
    "name": "Sono Group N.V.",
@@ -215,6 +215,14 @@
    "vol": "2265",
    "name": "Kestrel Group",
    "first_seen": "10:27"
+  },
+  "EMPD": {
+   "pct": 10.56,
+   "last": 3.56,
+   "prev_close": 3.22,
+   "vol": "409691.317696",
+   "name": "Empery Digital",
+   "first_seen": "10:53"
   }
  },
  "halal_fail": [
@@ -224,6 +232,7 @@
   "CRK",
   "CTW",
   "DAIO",
+  "EMPD",
   "FRVO",
   "GAME",
   "HVT.A",
@@ -358,7 +367,9 @@
   "ZSTK",
   "ZYME"
  ],
- "cannot_verify": [],
+ "cannot_verify": [
+  "EMPD"
+ ],
  "spac": [
   "ALF",
   "BCAR",
