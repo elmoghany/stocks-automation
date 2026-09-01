@@ -85,7 +85,7 @@
   },
   "halal": {
     "PASS": ["SSM", "AMCI", "EXOZ", "CLRO"],
-    "FAIL": ["FRVO", "INBS", "LABT", "PXS", "HVT.A", "MB", "CTW", "PRLD", "SST", "BIAF"],
+    "FAIL": ["FRVO", "INBS", "LABT", "PXS", "HVT.A", "MB", "CTW", "PRLD", "SST", "BIAF", "YEXT", "DAIO"],
     "CANNOT_VERIFY": [],
     "_note": "Binary rule: only verdict PASS is armable. 10 names screened by 07:07, 3 PASS / 7 FAIL. SSM passes both questions -- q1 loan 10.76% / cash 3.65% / combined 14.40% (the one-side-over-10-with-combined-under-20 exception, exactly the HLIT/ANGX zone), q2 solar-powered mobility -- but is NOT armable: its 7AM calm-gap is +52.6%, past the 20% gate and past even the 35% top-name grace. The two LIVE hopes are AMCI and EXOZ, both clean on both questions; neither has a premarket tape yet.",
     "structural_note": "7 of 10 refused, and the refusals are not random -- they are the Day-8 finding again. PXS (a vessel owner, loan 152.9%), HVT.A (a store lessee, combined 78.7%) and INBS (combined 120.9%) fail because capital-intensive and lease-heavy businesses are debt-financed by construction. FRVO fails the opposite way: a large post-IPO cash pile throws off interest income 11.5x its revenue. The names that survive the ratio test tend to be small, cash-funded and thinly traded -- which is exactly the population the spread and depth vetoes then refuse."

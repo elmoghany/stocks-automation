@@ -1,8 +1,8 @@
 {
  "candidates": {
   "SSM": {
-   "pct": 47.76,
-   "last": 3.96,
+   "pct": 36.94,
+   "last": 3.67,
    "prev_close": 2.68,
    "vol": "7.502866259333e+06",
    "name": "Sono Group N.V.",
@@ -127,11 +127,28 @@
    "vol": "9173412.884316",
    "name": "System1",
    "first_seen": "08:13"
+  },
+  "YEXT": {
+   "pct": 11.08,
+   "last": 7.52,
+   "prev_close": 6.77,
+   "vol": "1314411.359045",
+   "name": "Yext",
+   "first_seen": "08:47"
+  },
+  "DAIO": {
+   "pct": 10.47,
+   "last": 3.1927,
+   "prev_close": 2.89,
+   "vol": "23924.8433",
+   "name": "Data I/O",
+   "first_seen": "08:47"
   }
  },
  "halal_fail": [
   "BIAF",
   "CTW",
+  "DAIO",
   "FRVO",
   "HVT.A",
   "INBS",
@@ -139,7 +156,8 @@
   "MB",
   "PRLD",
   "PXS",
-  "SST"
+  "SST",
+  "YEXT"
  ],
  "fake_gap": [],
  "inherited_fail": [
