@@ -1,0 +1,18 @@
+{
+  "permissions": {
+    "deny": [
+      "mcp__robinhood-trading__place_equity_order",
+      "mcp__robinhood-trading__place_option_order",
+      "mcp__robinhood-trading__place_crypto_order",
+      "mcp__robinhood-trading__review_equity_order",
+      "mcp__robinhood-trading__review_option_order",
+      "mcp__robinhood-trading__preview_crypto_order",
+      "mcp__robinhood-trading__cancel_equity_order",
+      "mcp__robinhood-trading__cancel_option_order",
+      "mcp__robinhood-trading__cancel_crypto_order",
+      "mcp__robinhood-trading__exercise_option",
+      "mcp__robinhood-trading__cancel_option_exercise"
+    ]
+  },
+  "_why": "NO REAL ORDERS EVER (paper campaign, 2026-09-01). Deny beats any --allowedTools grant in plan/launch_paper_day.ps1; a headless session cannot write this file, so the guard is tamper-proof against itself."
+}
