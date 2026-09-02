@@ -59,6 +59,27 @@ def _load_types():
     return _types
 
 
+_types_mtime = [0.0]
+
+
+def _reload_siblings():
+    """On a miss, pick up types that sibling shards cached since our
+    last read (cheap: one stat; reload only when the file changed)."""
+    try:
+        m = TYPES_F.stat().st_mtime
+    except OSError:
+        return
+    if m <= _types_mtime[0]:
+        return
+    _types_mtime[0] = m
+    try:
+        cur = json.loads(TYPES_F.read_text())
+    except Exception:
+        return
+    for k, v in cur.items():
+        _types.setdefault(k, v)
+
+
 def _save_types():
     """Merge-on-write: re-read siblings' additions, then atomic replace."""
     global _types_dirty
@@ -103,6 +124,9 @@ def ticker_type(sym, date=None):
     `date` is tried before giving up with "?"."""
     global _types_dirty
     t = _load_types()
+    if sym in t:
+        return t[sym]
+    _reload_siblings()          # parallel shards fill the same cache
     if sym in t:
         return t[sym]
     from shared import massive
