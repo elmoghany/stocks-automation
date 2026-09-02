@@ -369,6 +369,12 @@
       "state": "HOLD-20m",
       "position": "GTLB t3 open @ 51.32; 51.5-51.8, open P&L +$60..+$140; pressure ~0; hard stop 47.214.",
       "bench_1158": "scan 52 rows, 15 candidates. NEW: FTH (Faeth Therapeutics, 38.43 +11.4%, 131k sh). OABI running +20.6% (5.36, 2.2M sh) -- still blocked by no 7AM print. Cycle cadence honesty: each hold loop is now ~2.5-4 min wall clock (bars call ~1-2 min as the spilled file grows past 500 KB); the watcher itself ticks every 30 s off the CSV, so exit fidelity is unaffected."
+    },
+    {
+      "et": "12:06-12:24",
+      "state": "HOLD-20m",
+      "position": "GTLB t3 open @ 51.32; slid 51.8 -> 50.65 (12:19), open P&L -$170..-$130; pressure -0.1..-0.3; hard stop 47.214. Bars-call latency fixed by narrowing the request window to 15:00Z (the spilled file had grown past 500 KB and the fetch was taking 5-7 min).",
+      "bench_1217": "scan 58 rows, 19 candidates. NEW: LMB (Limbach, 588M, 430k avg vol, HVAC/plumbing contractor -- permissible line, q1 to screen at candidacy), CCG (insurance -> FAIL, recorded), SVRE (SaverOne, 362M 'cap' on 124M shares at 3.03 -- Israeli ADR, tiny volume). OABI +19.3% on 2.7M sh, still no 7AM print. TRAX back on the scan +10.7%."
     }
   ],
   "halal": {
@@ -388,7 +394,8 @@
       "BRR",
       "MNTK",
       "ASTS",
-      "ALMS"
+      "ALMS",
+      "CCG"
     ],
     "CANNOT_VERIFY": []
   },
@@ -546,6 +553,11 @@
       "mcap": 1411043772,
       "screened_et": "10:17",
       "note": "Alumis, clinical-stage autoimmune biotech: cash 37% of cap and interest income 77% of (tiny) revenue -- the ARCT shape from Day 20."
+    },
+    "CCG": {
+      "q1": "not reached",
+      "q2": "FAIL",
+      "reason": "Cheche Group -- 'insurance transaction services' platform in China. Insurance is enumerated haram; dispositive. RH label 'Packaged Software' lied again."
     }
   },
   "trades": [
