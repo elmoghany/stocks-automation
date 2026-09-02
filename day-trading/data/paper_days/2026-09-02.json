@@ -317,6 +317,16 @@
       "et": "10:19",
       "state": "FILL -> HOLD-20m",
       "event": "GTLB ticket 3: 291 sh @ 51.32 = $14,934.12 on a fresh Trigger C. Deployed today $44,594.92 of $100,000; 4 tickets left ($15k x3 + $10k). TRAX fired the same macd_cross_up at 10:17 but its book was 1.7% wide (veto stands)."
+    },
+    {
+      "et": "10:19 bench",
+      "scan_rows": 51,
+      "candidates": 14,
+      "new": [
+        "IRD (Opus Genetics, 353M, 929k avg vol, P/B -24)",
+        "MLGO (52M)"
+      ],
+      "note": "caps cached; screens deferred (holding)."
     }
   ],
   "halal": {
@@ -602,7 +612,14 @@
         "placed_et": "10:19",
         "note": "watcher-owned (c37)"
       },
-      "status": "OPEN"
+      "status": "OPEN",
+      "fill_realism": {
+        "assumed_fill": 51.32,
+        "mark_plus_60s": 51.76,
+        "mark_bar_utc": "2026-09-02T14:20:00Z close",
+        "delta_pct": 0.86,
+        "sim_convention_bracket": "the 10:17 signal-bar close was 51.38; the sweep fill 51.32 is 0.12% better than the simulator's fill-at-close convention"
+      }
     }
   ],
   "armed": [
@@ -1016,6 +1033,14 @@
       "bar_low": 435.1,
       "bar_close": 435.12,
       "note": "stop-level fill inside a 140k-share down bar; bracket to the close is -$41."
+    },
+    {
+      "sym": "GTLB",
+      "side": "entry (ticket 3)",
+      "assumed_fill": 51.32,
+      "mark_plus_60s": 51.76,
+      "delta_pct": 0.86,
+      "note": "Post-open Trigger C on a 0.10% book with 1,600 displayed shares inside the +0.3% limit -- the fill is a sweep VWAP, not an assumption."
     }
   ],
   "pnl": -2312.56,

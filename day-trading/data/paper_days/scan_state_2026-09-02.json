@@ -1,10 +1,10 @@
 {
  "candidates": {
   "JLHL": {
-   "pct": 27.05,
-   "last": 7.14,
+   "pct": 29.18,
+   "last": 7.26,
    "prev_close": 5.62,
-   "vol": "9.544083598353e+06",
+   "vol": "9.811600506679e+06",
    "name": "Julong Holding Limited",
    "first_seen": "06:23"
   },
@@ -33,10 +33,10 @@
    "first_seen": "06:23"
   },
   "GTLB": {
-   "pct": 14.33,
-   "last": 51.55,
+   "pct": 13.84,
+   "last": 51.33,
    "prev_close": 45.09,
-   "vol": "1.0570863337826e+07",
+   "vol": "1.1096064270692e+07",
    "name": "GitLab",
    "first_seen": "06:23"
   },
@@ -113,10 +113,10 @@
    "first_seen": "07:06"
   },
   "PPBT": {
-   "pct": 39.76,
-   "last": 2.32,
+   "pct": 48.19,
+   "last": 2.46,
    "prev_close": 1.66,
-   "vol": "5.4378446756393e+07",
+   "vol": "5.7218609371258e+07",
    "name": "Purple Biotech",
    "first_seen": "07:36"
   },
@@ -225,10 +225,10 @@
    "first_seen": "09:33"
   },
   "TRAX": {
-   "pct": 12.63,
-   "last": 46.37,
+   "pct": 10.78,
+   "last": 45.61,
    "prev_close": 41.17,
-   "vol": "307517.097329",
+   "vol": "312509.507515",
    "name": "First Tracks Biotherapeutics",
    "first_seen": "09:33"
   },
@@ -249,10 +249,10 @@
    "first_seen": "09:33"
   },
   "OABI": {
-   "pct": 14.87,
-   "last": 5.1002,
+   "pct": 13.18,
+   "last": 5.025,
    "prev_close": 4.44,
-   "vol": "947356.047982",
+   "vol": "996645.246934",
    "name": "OmniAb",
    "first_seen": "09:45"
   },
@@ -265,26 +265,26 @@
    "first_seen": "09:45"
   },
   "RNXT": {
-   "pct": 13.27,
-   "last": 2.39,
+   "pct": 13.74,
+   "last": 2.4,
    "prev_close": 2.11,
-   "vol": "885124.274446",
+   "vol": "936024.880319",
    "name": "RenovoRx",
    "first_seen": "09:45"
   },
   "XTLB": {
-   "pct": 12.5,
-   "last": 2.61,
+   "pct": 12.72,
+   "last": 2.615,
    "prev_close": 2.32,
-   "vol": "12461.624837",
+   "vol": "14606.624837",
    "name": "XTL Biopharmaceuticals",
    "first_seen": "10:00"
   },
   "SCWO": {
-   "pct": 11.97,
-   "last": 3.2247,
+   "pct": 11.11,
+   "last": 3.2,
    "prev_close": 2.88,
-   "vol": "51473.885107",
+   "vol": "53730.030925",
    "name": "374Water",
    "first_seen": "10:00"
   },
@@ -297,10 +297,10 @@
    "first_seen": "10:00"
   },
   "TITN": {
-   "pct": 14.34,
-   "last": 23.485,
+   "pct": 14.22,
+   "last": 23.46,
    "prev_close": 20.54,
-   "vol": "83756.616532",
+   "vol": "104054.865269",
    "name": "Titan Machinery",
    "first_seen": "10:00"
   },
@@ -313,10 +313,10 @@
    "first_seen": "10:00"
   },
   "NDRA": {
-   "pct": 18.6,
-   "last": 6.25,
+   "pct": 22.01,
+   "last": 6.43,
    "prev_close": 5.27,
-   "vol": "21264.0935",
+   "vol": "39608.956125",
    "name": "ENDRA Life Sciences",
    "first_seen": "10:12"
   },
@@ -329,10 +329,10 @@
    "first_seen": "10:12"
   },
   "EPRX": {
-   "pct": 10.88,
-   "last": 7.03,
+   "pct": 11.51,
+   "last": 7.07,
    "prev_close": 6.34,
-   "vol": "135227.012316",
+   "vol": "145179.012316",
    "name": "Eupraxia",
    "first_seen": "10:12"
   },
@@ -343,6 +343,22 @@
    "vol": "6.599801409464e+06",
    "name": "AST SpaceMobile",
    "first_seen": "10:12"
+  },
+  "MLGO": {
+   "pct": 10.5,
+   "last": 4.21,
+   "prev_close": 3.81,
+   "vol": "18415.284504",
+   "name": "MicroAlgo, Inc. Class A",
+   "first_seen": "10:19"
+  },
+  "IRD": {
+   "pct": 10.44,
+   "last": 4.23,
+   "prev_close": 3.83,
+   "vol": "286697.915401",
+   "name": "Opus Genetics",
+   "first_seen": "10:19"
   }
  },
  "halal_fail": [
