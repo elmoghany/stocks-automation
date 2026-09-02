@@ -62,6 +62,49 @@
    "exit_time": "2026-09-02T10:12:00-04:00",
    "booked_at": "2026-09-02T10:13:23.381876-04:00",
    "exit_parity": null
+  },
+  {
+   "sym": "GTLB",
+   "ticket": 3,
+   "date": "2026-09-02",
+   "mode": "c37",
+   "entry": 51.32,
+   "shares_initial": 291,
+   "entry_bar_utc": "2026-09-02T14:19:00Z",
+   "prev_close": 45.09,
+   "exit_kind": "ladder",
+   "fills": [
+    {
+     "kind": "rung1",
+     "time": "14:50",
+     "shares": 291,
+     "px": 49.4105,
+     "src": "quote"
+    }
+   ],
+   "vwap": 49.4105,
+   "shares_exited": 291,
+   "scale_out": null,
+   "banked": 0.0,
+   "pnl": -555.66,
+   "peak": 53.27,
+   "rungs": [
+    {
+     "k": 0,
+     "time": "14:50",
+     "shares": 291,
+     "limit": 49.2127,
+     "fill": 49.4105,
+     "bid": 49.46,
+     "bid_src": "quote",
+     "status": "FILLED",
+     "note": "confirmed by bar 14:50"
+    }
+   ],
+   "deployed": 14934.12,
+   "exit_time": "14:50",
+   "booked_at": "2026-09-02T14:51:57.702127-04:00",
+   "exit_parity": null
   }
  ]
 }

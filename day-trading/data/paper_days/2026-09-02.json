@@ -414,6 +414,11 @@
       "et": "13:24-13:34",
       "state": "HOLD-20m",
       "position": "GTLB t3 open @ 51.32; 49.53-50.00, open P&L -$390..-$510; pressure ~0; hard stop 47.214. 56 min to the 14:30 entry cutoff; if GTLB is still open at 14:30 it rides to the ladder."
+    },
+    {
+      "et": "14:45-14:52",
+      "state": "LADDER",
+      "event": "14:45 quotes file started (bid/ask from get_equity_quotes every minute). 14:50:20 LADDER-1 291 sh pending; 14:51:57 EXIT-FLATTEN GTLB vwap 49.4105 x291 = -$555.66. BOOK EMPTY. Entry cutoff 14:30 had passed during the host stall, so no ticket 4 was ever evaluated; 4 tickets ($55k) undeployed."
     }
   ],
   "halal": {
@@ -711,14 +716,33 @@
         "placed_et": "10:19",
         "note": "watcher-owned (c37)"
       },
-      "status": "OPEN",
+      "status": "CLOSED -- flat 14:50 via the ladder, 10 min inside the 15:00 deadline",
       "fill_realism": {
         "assumed_fill": 51.32,
         "mark_plus_60s": 51.76,
         "mark_bar_utc": "2026-09-02T14:20:00Z close",
         "delta_pct": 0.86,
         "sim_convention_bracket": "the 10:17 signal-bar close was 51.38; the sweep fill 51.32 is 0.12% better than the simulator's fill-at-close convention"
-      }
+      },
+      "exit_et": "14:50",
+      "exit_bar_utc": "2026-09-02T18:50:00Z",
+      "exit_price": 49.4105,
+      "exit_reason": "15:00 FLATTEN LADDER, first rung (14:50): watcher-owned. Rung 1 sized the whole ticket (291 sh <= 20% of trailing-10 volume), limit = bid x 0.995 = 49.2127, fill = bid x 0.999 = 49.4105 off the live quote (bid 49.46 at 14:50:04), confirmed when the 14:50 bar's low (49.355) held above the limit. Booked 14:51:57.",
+      "exit_modelling": {
+        "method": "watcher ladder: quote-file bid x 0.999 with the limit as a floor; rung PENDING until the next completed bar confirms low >= limit",
+        "inside_bid_at_rung": 49.46,
+        "sweep_vwap": 49.4105,
+        "optimistic_single_price": 49.46,
+        "self_flattery_avoided": 14.41,
+        "bar_1450": "o 49.47 h 49.569 l 49.355 c 49.355 v 16,252",
+        "bracket": "49.355 (bar low) to 49.46 (naive inside bid); booked 49.4105."
+      },
+      "pnl": -555.66,
+      "pnl_pct": -3.72,
+      "hold_minutes": 271,
+      "peak": 53.27,
+      "peak_open_pnl": 567.45,
+      "trough_open_pnl": -622.74
     }
   ],
   "armed": [
@@ -1140,9 +1164,17 @@
       "mark_plus_60s": 51.76,
       "delta_pct": 0.86,
       "note": "Post-open Trigger C on a 0.10% book with 1,600 displayed shares inside the +0.3% limit -- the fill is a sweep VWAP, not an assumption."
+    },
+    {
+      "sym": "GTLB",
+      "side": "exit (ticket 3, ladder)",
+      "modelled_sweep_vwap": 49.4105,
+      "naive_inside_bid": 49.46,
+      "self_flattery": 14.41,
+      "note": "Ladder fill = bid x 0.999 per the watcher's rule; the naive inside-bid figure would have flattered P&L by $14.41. exit_parity vs the 14:59 close x 0.999 is written by the watcher once the 14:59 bar lands."
     }
   ],
-  "pnl": -2312.56,
+  "pnl": -2868.22,
   "watcher": {
     "started_et": "08:15:10",
     "mode": "c37",
