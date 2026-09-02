@@ -5778,3 +5778,287 @@ NOT touched here (other owners): day-trading.py, rotation_sim, market_calendar,
 wait_until, the skill, the launcher, the prompt -- the prompt still says
 "paper_watch as foreground one-shots" and the skill still describes the
 by-hand exit; both need the --book / --open / quotes_{date}.json wording.
+
+## HARNESS CORRECTION (2026-09-01): "HOLD-TO-FLATTEN" WAS PRESSURE-TRAILED
+Source: read-only audit of plan/rotation_sim.py + day-trading.py, 2026-09-01
+(cited verbatim below); implemented as commits b055bf7 / e5e33a7 / 7a8b68a.
+
+THE DEFECT. Every XH/XP/K/KR config set sim_extra trail_pct=999,
+stop_pct=99, scale_out_at=None, pressure_exit=None, sell_mode=
+"target_stop_only" to "remove all exits". But SIMKW (rotation_sim.py,
+built from px.BASE_SIM + Z104's registry sim) carries
+pressure_trail=(10, 0.3, 0.3, 10, 40), and sim_extra never overrode it.
+day-trading.py's trail branch then re-arms a 10%-from-peak trail
+whenever 10-bar pressure <= -0.3 (40% when >= +0.3), and trail_pct=999
+is simply ignored while the pressure reading exists. Exit-reason
+decomposition of K6S AS RUN: 'stop' (that trail) +$24,275 over 219 exits
+vs window-close flatten -$5,535 over 264 exits. With pressure_trail=None
+on 130 days: K6S -$136,028, XHB -$43,449, KR6S -$165,517. "Hold" never
+held.
+
+ALSO FOUND BY THE AUDIT (all fixed this round):
+  * every random control shared the seed f"rc60-{date}-{ticket_i}"
+    (one shuffle, presented as "the" control);
+  * the control arm received the 35% gap allowance on a RANDOM name
+    (gates_ok(r, i==0) after the shuffle) while the ranked arm gave it
+    to its top name -- asymmetric;
+  * totals were compared across 1x vs 6x capital (HOLD1 vs K6);
+  * penny_ax11b_massive.halal_pt fell back to the STATIC present-day
+    VER verdict BEFORE the HALAL_STRICT refusal when shares/prev_close
+    were missing (~55% of share lookups), and shares_asof cached by
+    MONTH (first query answers the whole month, including earlier
+    dates); transport failures were cached as null (761/14,634 files);
+  * pool contamination: 287 rows are NASDAQ test symbols (^Z[A-Z]ZZT$)
+    and 45 gain>=250% rows open >3x prev_close on their first bar
+    (reverse-split artifacts: WW 156x, DTC 120x, AIM 63x, WOLF 15x,
+    CYCC 17x).
+
+THE FIX (rotation_sim.py):
+  * EXIT_KWARGS whitelist (25 names, every exit-side kwarg of
+    simulate_trades). Configs now carry an explicit `exit_mode`:
+    EXIT_HOLD = every exit kwarg None except sell_mode=
+    "target_stop_only", trail_pct=999, stop_pct=99 (flatten only);
+    EXIT_PTRAIL = HOLD + pressure_trail=(10, 0.3, 0.3, 10, 40) -- what
+    the mislabeled configs actually ran. build_simkw() resolves SIMKW
+    -> exit_mode -> sim_extra and ASSERTS the full set; the resolved
+    exit kwargs are printed at run start. The old
+    `assert SIMKW.get("trail_pct")` (which passed on the very
+    inheritance that caused the bug) is gone.
+  * run() prints exit-reason counts and P&L per reason per label; a
+    HOLD config asserts that only "window-close" ever printed.
+  * Fair columns: deployed (sum shares x entry; shares inverted from
+    pnl/(exit-entry) with a budget cap -- an ESTIMATE, the engine does
+    not export shares), ret_on_deployed_pct, pnl_per_ticket, tickets,
+    best_day (+date), worst_day, total_ex_best, negm_ex_best.
+  * Seeded controls: ROTREP replicate enters the seed
+    (rc60-{date}-{ticket}-{rep}); results keyed {cfg}#r{rep}; 30
+    replicates run in ONE process (rank order and per-(symbol,
+    entry_start, budget) sims memoized per day -- they do not depend on
+    the shuffle).
+  * Symmetric gap allowance: the 35% limit goes to the RANKED top
+    symbol in both arms (remembered before the shuffle).
+  * ROTTRADES=1 dumps every leg; ROTLABELS selects the pool label.
+  * Registered: HOLD1, HOLD6, PTRAIL1, PTRAIL6 (all 10bps/side),
+    RHOLD6, RPTRAIL6. C37F untouched as the identity.
+
+## RETRACTION (2026-09-01): the 2026-08-27 exit conclusions
+The W-CAMPAIGN VERDICT of 2026-08-27 ("THE HONEST CEILING") and the
+XH/XP/K/KR entries it rests on stated that (a) "every exit mechanism we
+own is negative-value on honest data", (b) XHB "+ remove ALL exits
++83,759", and (c) K6S +301,927 was "THE HONEST NUMBER" with ~18% of it
+attributed to ranking. Those numbers were measured on MISLABELED
+configs: none of them held to the flatten; all of them ran the
+inherited 10%/40% pressure trail, and the 'stop' exits of that trail
+were the profit. The labels "hold-to-flatten", "exits isolated", and
+"remove ALL exits" in the 08-27 entries are therefore wrong, and the
+decomposition built on them (drift 82% / ranking 18%) is void. The
+corrected labels and numbers are in CORRECTED LADDER below and
+supersede every XH*/XP*/K*/KR* row. The 08-27 IC-study and IR-series
+findings (ranking direction) are not affected by this defect: they do
+not depend on the exit machinery.
+
+## HALAL-LEAK EPOCH 2026-09-01 (penny_ax11b_massive.py, HALAL_STRICT only)
+Under HALAL_STRICT (the environment every ladder run uses):
+  * missing shares or prev_close -> REFUSE. No fallback to the
+    present-day rules_ytd.json verdict.
+  * shares_asof cache keyed by the EXACT as-of date
+    (data/pt_shares/{sym}_{date}.json). Old month files stay on disk,
+    unread by this path; nothing migrated.
+  * api() distinguishes transport failure ({} -> never cached, retried)
+    from a 404 (a real "no reference row" answer, cached as null).
+    Writes are atomic (parallel shards share the directory).
+The non-strict path keeps the month key and the VER fallback ON
+PURPOSE: it is the identity chain (S095 / Z104 in plan/idgate.py), and
+the repo's rule is that new semantics live behind a flag so the gates
+stay EXACT by construction. idgate 2026-09-01 after the change:
+S095 year +513,965 / y2025 +649,573 EXACT; Z104 year -29,460 / y2025 -1,872 EXACT (identity chain: ALL EXACT, 23:48).
+The strict-path shift is measured on C37F (identity (a) below).
+
+## POOL HYGIENE (plan/pool_hygiene.py, POOL_HYGIENE=1, default OFF)
+Three filters inside rotation_sim.day_candidates: (1) ^Z[A-Z]ZZT$ test
+symbols; (2) first bar Open / prev_close outside [0.5, 2.0] (split /
+relist artifacts -- e.g. SXTC 2025-08-01 opened 18,720 vs prev_close
+234, ratio 80x; NXTT 99x); (3) Massive reference `type` not in
+{CS, ADRC} -- ETF/ETN/ETS/FUND/ETV and one OS row are dropped
+(UVXY, VXX, UVIX, SMCZ, CONI ... were in the "gapper" pool). Types are
+cached per symbol in data/massive/ticker_types.json (as-of-date
+fallback for delisted names; unknown is KEPT). Every drop is logged
+with its ratio/type to data/massive/pool_hygiene_dropped.json
+(per-shard files merged with --merge). shared/massive.ticker_details()
+is the one function added to shared/ for this.
+Merged drop log over the ladder: 16,959 drops over the two-year + August pools: 15,553 by type (ETF 13,284, ETS 896, ETN 480, ETV 354, PFD 261, OS 107, FUND 105, SP 28), 1,406 by first-open/prev_close ratio (1,307 of them >3x: YYAI 94, NXTT 83, SUGP 80, ELPW 78, IPW 73, BTOG 72 ...), 0 test symbols at this stage -- the 336 ^Z[A-Z]ZZT$ pool rows have no bar files (all EMPTY), so day_candidates never saw them; the regex guards the pool-build path.
+
+## CORRECTED LADDER (run 2026-09-01 22:54 -> 2026-09-02 01:40): NOTHING SURVIVES
+Environment for every row: HALAL_STRICT=1 PT_FILED=1 ROTTRADES=1
+MASSIVE_TH_INTERVAL=0.25, plan/rotation_sim.py @ b055bf7..92b68fb,
+shards data/massive/rotation_results_hl_*.json, trade dumps
+data/massive/rotation_trades_*_hl_*.json, phantom audit
+data/massive/phantom_fill_audit.json. Logs C:/tmp/hl/*.log.
+
+IDENTITY (a):
+  * PRE-change code, same env (shard hl_id0, launched 22:54 before any
+    edit): C37F -55,423 / -17,250 = -72,673 EXACT. The environment
+    reproduces the benchmark.
+  * POST-change, POOL_HYGIENE=0 (shard hl_ida): C37F -58,886 / -22,167
+    = -81,053. NOT equal to -72,673: step 4 shifted it, as the plan
+    anticipated. Recorded as "C37F-hl" (halal-leak epoch 2026-09-01).
+    The delta is the strict gate refusing what the present-day VER
+    verdict used to wave through (both years lower), exactly the
+    direction a closed leak should move. Steps 1-3 alone are
+    byte-neutral by construction (SIMKW+{} == SIMKW; is_top ==
+    (i == 0) without a shuffle); the shift is step 4 only.
+  * POST-change, POOL_HYGIENE=1 (shard hl_c37): C37F -54,538 / -22,167
+    = -76,705. Hygiene moves Y1 by +4,348 and Y2 by 0: the names it
+    drops are almost all names the gates already refused (ETFs have no
+    industry -> strict refuse; split artifacts fail gap7).
+
+THE TABLE (both years, 445 traded days; deployed = sum shares x entry,
+shares estimated; REPRICED = phantom fills re-booked at the exit bar's
+Open, see PHANTOM FILLS below; percentiles are the rank of the ranked
+config inside its 30-replicate random control distribution):
+
+  config      total       Y1        Y2      tkts  deployed  ret%   $/tkt  negm  maxDD   best_day  worst_day  ex_best   phantom  REPRICED  rep$/tkt
+  C37F-hl    -81,053   -58,886   -22,167   2149   28.7M   -0.28    -38  16/23  67,139  +11,667   -5,096    -92,720     49    -107,969    -50
+  C37F-hyg   -76,705   -54,538   -22,167   2150   28.7M   -0.27    -36  16/23  65,665  +11,667   -5,096    -88,372     49    -103,621    -48
+  HOLD1         -903   -14,387   +13,484    448    5.3M   -0.02     -2  12/23  31,963  +26,832  -13,425    -27,735      0        -903     -2
+  HOLD6     -129,691  -122,186    -7,505   1515   16.6M   -0.78    -86  16/23 123,205  +31,280  -12,556   -160,971      0    -129,691    -86
+  PTRAIL1    +59,463   +53,427    +6,036    826   10.6M   +0.56    +72   9/23  33,073  +16,654   -7,537    +42,809    132     -69,593    -84
+  PTRAIL6   +238,913   +95,973  +142,940   1807   20.5M   +1.16   +132   7/23  28,545  +20,995   -7,328   +217,918    315     -69,965    -39
+  exits: C37F bearish 1301/+476k, stop 566/-497k, scale-out 23/+23k, window-close 282/-84k
+         HOLD1 window-close 448/-903 (ONLY -- asserted)   HOLD6 window-close 1515/-129,691 (ONLY)
+         PTRAIL1 stop(trail) 390/-16k, window-close 436/+76k   PTRAIL6 stop(trail) 867/+197k, window-close 940/+42k
+
+  RANDOM CONTROLS (same machinery, same 10bps, same symmetric gap allowance, seeds rc60-{date}-{ticket}-{rep}):
+  RHOLD6   n=15*  total median -180,018 [-248,351 .. -124,488]  ex_best median -205,792  $/tkt median -119  negm median 17/23
+     HOLD6:  total pctile 93 | ex_best pctile 93 | Y1 pctile 100 | Y2 pctile 73 | $/tkt pctile 93 | REPRICED pctile 93
+  RPTRAIL6 n=30   total median +243,400 [+198,876 .. +323,750]  ex_best median +222,610  $/tkt median +138  negm median 7.5/23
+                  REPRICED median -77,712 [-134,707 .. -14,893]
+     PTRAIL6: total pctile 43 | ex_best pctile 43 | Y1 pctile 57 | Y2 pctile 30 | $/tkt pctile 33 | REPRICED pctile 57
+  (* RHOLD6 reps 15-29 crashed at y2025 150/194 on a Windows EACCES
+  reading a shares-cache file mid-replace by a sibling; fixed in
+  92b68fb and relaunched 01:25 -- appended below when landed.)
+
+PHANTOM FILLS (found by the $-best-day audit, quantified over every dump):
+  A non-flatten exit booked ABOVE the exit bar's High never traded. The
+  engine (day-trading.py trail branch) fills a trail/stop AT THE STOP
+  LEVEL whenever the bar's low is below it -- including when the bar
+  gapped clean below the stop, in which case the fill price is
+  fiction. With trail_pct=999 + pressure_trail, the trail arms at
+  peak x 0.90 where peak can be a single bad print; thin premarket
+  tape then reopens far below and the engine books the difference as
+  profit. Counted with the strict definition exit > High(exit bar):
+    PTRAIL6  315 legs, engine +238,913 -> REPRICED -69,965 (delta -308,877)
+    PTRAIL1  132 legs, engine  +59,463 -> REPRICED -69,593 (delta -129,056)
+    RPTRAIL6 (30 reps) engine median +243,400 -> REPRICED median -77,712
+    C37F-hl   49 legs, engine  -81,053 -> REPRICED -107,969 (delta  -26,917)
+    HOLD*/RHOLD6: 0 legs (nothing but the flatten can fire)
+  Repricing = fill at the exit bar's Open (first print after the gap),
+  same shares, same 10bps, rotation clock unchanged. It is a bound, not
+  a simulation: the freed ticket's later use is left as the engine
+  chose it. The proper fix is in day-trading.py's stop fill (fill at
+  min(stop, Open) when the bar opens below the stop -- the halt_aware
+  path already does exactly this for halts) and belongs to that file's
+  owner; NOT changed this round. wick_guard=3.0 (Z104's setting) would
+  NOT have caught the top case (TWG print 20.0 vs neighbouring closes
+  9.0 = 2.2x), so it is the fill model, not the peak guard.
+
+VERDICT (plain language):
+  1. Does PTRAIL beat HOLD? On the engine's numbers yes, by a mile
+     (+238,913 vs -129,691 at 6 concurrent; +59,463 vs -903
+     sequential). REPRICED, no: PTRAIL6 -69,965 and PTRAIL1 -69,593
+     are both worse than HOLD1's -903 and only better than HOLD6
+     because a trail exit frees the ticket sooner. The pressure trail's
+     entire apparent profit is the phantom-fill artifact; its real
+     exits (the ones that traded) sum to a loss.
+  2. Does PTRAIL6 beat its random control robustly? NO. Percentile 43
+     on total, 43 ex-best, 33 per ticket, 57 repriced; Y1 57 / Y2 30.
+     The ranking is indistinguishable from a shuffle under identical
+     machinery and costs. (The 08-27 "ranking contributes 18%"
+     decomposition was an artifact of one seed + asymmetric gap
+     allowance.)
+  3. Does HOLD6 beat its random control? At the 93rd percentile of 15
+     replicates (Y1 100th), so the ranking does pick better holders
+     than a shuffle -- but every one of them loses money: HOLD6
+     -129,691, control median -180,018. "Buy a +10% gapper and hold to
+     15:00" is negative-drift, not a beta harvest; the 08-27 XHB/XHR
+     "drift available to random selection" reading was the pressure
+     trail's phantom fills, not drift.
+  4. Does anything beat C37F per ticket? HOLD1 (-2/ticket vs C37F's
+     -38 engine / -50 repriced) and it does so by trading 448 tickets
+     instead of 2,149 -- i.e. by doing almost nothing. Its Y2 is
+     positive (+13,484) and Y1 negative (-14,387); ex-best -27,735,
+     negm 12/23. It is the least-bad row, not an edge. Nothing in the
+     ladder is positive on repriced fills. C37F itself is -107,969
+     repriced: the champion's own stop/trail fills carry 49 phantom
+     legs worth +26,917.
+  5. So the corrected ladder finds: the exits were never "eating the
+     signal"; there is no signal to eat. The honest per-day figure for
+     the live one-position ruleset stays ~-$163/day (C37F -72,673 /
+     445d, pre-leak-close) to ~-$182/day (C37F-hl), and the live paper
+     campaign has been tracking it.
+
+## $-BEST-DAY AUDIT: PTRAIL6 2025-09-11 (+$20,995 engine)
+Trades that day (all six concurrent tickets, in P&L order):
+  TWG  ticket 3  07:07 @6.70 -> 08:31 @17.91 "stop +11.30"  +$20,705  1,850 sh (~$12.4k)
+       prev_close 5.02, first bar 04:01 open 5.15 (ratio 1.026: no split),
+       recorded day gain 24.5%, day vol 2.74M, rvol 28.8, hist_n 60.
+       The hold spans 82 bars; max CLOSE 9.00, median close 6.675; ONE
+       bar, 08:14, prints O9.8 H20.0 L9.0 C9.0 V7,677. That $20 print
+       sets peak=20.0 -> pressure trail 10% -> stop 18.0; the 08:31 bar
+       is O6.56 H6.56 L6.53 C6.53 and the engine "fills" at 17.91 --
+       2.7x above anything that traded. Repriced at the 08:31 open:
+       -$271. No halt: the only gaps are 2-minute holes of an
+       illiquid premarket tape (07:03, 08:34). 14:50-15:00 bar volumes
+       [658, 295, 511, 473, 100] vs 1,850 shares = 3.9x the median
+       bar -- even a real flatten would have been the tape.
+       Point-in-time halal: PASS (strict, filed quarterlies; shares
+       as-of 746,696 -> mcap ~$3.7M at 5.02; industry clean).
+  WFF  ticket 2  07:04 @5.38 -> 08:10 @6.63 "stop +1.28"  +$3,450  2,775 sh
+       same mechanism: 08:08 bar O5.65 H7.40 C5.75 (one print), stop
+       at 6.66, 08:10 bar H5.80 -> booked 6.63. Repriced at open 5.80:
+       +$1,150. 14:5x volumes [469, 200, 221, 234, 864, 549, 54, 40]
+       vs 2,775 sh = 12x the median bar. Halal PASS (shares 25.19M).
+  IPDN ticket 1  08:02 @3.37 -> 08:03 @3.02 "stop -0.34"  -$1,590  4,505 sh (real: the 08:02 bar H3.52 L2.65 covers the stop)
+  OPAD ticket 4  07:05 @44.36 -> 10:14 @41.40 "stop -2.96"  -$977  326 sh (real)
+  DC   ticket 0  09:33 @5.06 -> 14:59 @4.86 window-close  -$594  2,898 sh (real)
+  Day repriced: about -$2,280. The best day of the best config is a
+  fill artifact on a $3.7M-cap name whose 15:00 tape could not have
+  absorbed the position. The next best days (2025-06-11 +20,680 HSDT
+  "stop +46.90" booked 96.71 vs bar high 93.0; 2024-11-29 +17,373;
+  2026-01-20 +17,305) carry the same signature.
+
+## AUGUST 2026 OUT-OF-SAMPLE (first true OOS row; 22 sessions 08-03..09-01)
+Pool: data/massive/gappers_novol_aug2026.json built with the unchanged
+discover_novol rule from grouped_daily (6,126 rows; 5,179 with
+hist_n>=50); bars backfilled with backfill_m1_full.fetch_one (4,820
+got / 6 EMPTY / 0 fail, 4.2 min). POOL_HYGIENE=1 dropped 1,528 rows
+here (1,461 by type -- the August pool is 28% leveraged ETFs/ETNs --
+and 67 split/relist ratios). ROTLABELS=aug2026.
+  config       total  days  tkts  deployed  $/tkt  maxDD  best_day  ex_best  phantom  REPRICED
+  C37F        +4,397    22   101    1.4M     +44   5,695   +4,040     +357      1     +3,731
+  HOLD6       +6,193    22    51    0.7M    +121   6,954   +8,787   -2,594      0     +6,193
+  PTRAIL6    +10,004    22    72    1.0M    +139   8,387   +6,852   +3,152     11     -3,598
+  RPTRAIL6 n=30 median +11,358 [+7,543 .. +13,840]; REPRICED median -2,245 [-6,060 .. +238]
+     PTRAIL6@aug: total pctile 20 | ex_best pctile 60 | $/tkt pctile 20 | REPRICED pctile 20
+August was a kind month for gappers (every row positive on engine
+fills, C37F included), the ranked PTRAIL6 sits at the 20th percentile
+of its own random control, and its repriced number is negative. One
+month; reported, not concluded.
+
+## OPS / FILES (2026-09-01 -> 02)
+Changed: plan/rotation_sim.py (harness), plan/penny_ax11b_massive.py
+(halal leaks, Windows-safe cache), plan/pool_hygiene.py (new),
+shared/massive.py (ticker_details only), plan/idgate.py (note),
+NOTES-DAYTRADING.md (these sections). Commits b055bf7 e5e33a7 7a8b68a
+aeb7a8d ae67422 edb6f04 92b68fb. Runs: 14 shards on 4 cores; two
+Windows-specific crashes (os.replace / read of a cache file while a
+sibling had it open) fixed with retry-and-skip; C37F-hyg and RHOLD6
+reps 15-29 relaunched from their shard names. Data added:
+gappers_novol_aug2026.json, 4,826 August m1 files, ticker_types.json
+(4,286 symbols), pt_shares/{sym}_{date}.json (strict path),
+pool_hygiene_dropped*.json, rotation_results_hl_*.json,
+rotation_trades_*_hl_*.json, phantom_fill_audit.json.
+FOR THE ENGINE OWNER (day-trading.py, not edited this round): the
+trail/stop fill must be min(stop, bar Open) when the bar opens below
+the stop; until then every trail-bearing backtest in this repo carries
+phantom fills (C37F: 49 legs, +26,917).
