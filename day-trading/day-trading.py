@@ -346,6 +346,34 @@ class Candles:
             out.append("macd_cross_down")       # MACD crosses below signal
         return out
 
+    def vwap_from(self, anchor):
+        """MX-series (2026-09-02): cumulative session VWAP from the FIRST
+        bar whose clock time >= anchor (typical price x volume / volume).
+        NaN before the anchor and while no volume has printed. Bar i's
+        value uses bars <= i only (causal on completed bars)."""
+        out = np.full(self.n, np.nan)
+        times = self.index.time
+        start = next((k for k in range(self.n) if times[k] >= anchor), None)
+        if start is None:
+            return out
+        tp = (self.h + self.l + self.c) / 3.0
+        pv = np.cumsum((tp * self.v)[start:])
+        vv = np.cumsum(self.v[start:])
+        with np.errstate(divide="ignore", invalid="ignore"):
+            out[start:] = np.where(vv > 0, pv / vv, np.nan)
+        return out
+
+    def rsi_n(self, period):
+        """Wilder RSI over `period` bars of 1-min closes (the constructor's
+        RSI-14 is the period=14 case, returned as-is)."""
+        if int(period) == 14:
+            return self.rsi
+        closes = pd.Series(self.c)
+        delta = closes.diff()
+        gain = delta.clip(lower=0).ewm(alpha=1 / period, adjust=False).mean()
+        loss = (-delta).clip(lower=0).ewm(alpha=1 / period, adjust=False).mean()
+        return (100 - 100 / (1 + gain / loss)).values
+
     def volume_confirmed(self, i: int) -> bool:
         """Momentum volume reversal: bar i's volume >= ENTRY_VOL_MULT x the
         trailing VOL_AVG_BARS average. No volume data -> pass (best effort)."""
@@ -1278,7 +1306,12 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     seq_size: tuple | None = None,
                     day_state_size: tuple | None = None,
                     daily_deploy_cap: float | None = None,
-                    entry_ticket_schedule: tuple | None = None) -> list[dict]:
+                    entry_ticket_schedule: tuple | None = None,
+                    entry_mode: str = "triggers",
+                    vwap_exit: bool | None = None,
+                    rsi_exit: tuple | None = None,
+                    macd_exit: bool | None = None,
+                    rand_exit: tuple | None = None) -> list[dict]:
     """Run the entry/exit state machine over 1-min bars of a single day.
 
     State machine:
@@ -1289,6 +1322,27 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                  or bearish candlestick while profitable
     """
     cd = Candles(df1m)
+    # ---- MX-series (2026-09-02): mean-reversion entry + TA sell triggers.
+    # entry_mode="market_at_start": buy at the OPEN of the first bar whose
+    #   time >= entry_start (one entry per window; the trigger machinery
+    #   -- ORB, PMH-break, dip-reversal patterns -- is bypassed). Price
+    #   band applies; the +10% rule 3 does NOT (the candidate is a
+    #   crossed gapper that may have pulled back -- that is the point).
+    # vwap_exit: sell at the close of the first post-entry bar that
+    #   closes below session VWAP after a post-entry bar closed above it
+    #   (VWAP anchored 09:30; premarket entries anchor at 07:00).
+    # rsi_exit=(period, level): RSI crosses DOWN through level.
+    # macd_exit: MACD(12,26,9) line crosses below its signal.
+    # rand_exit=(max_hold_min, tag): CONTROL -- exit at the close of the
+    #   first bar >= entry + U{1..max_hold_min} minutes (seeded by tag +
+    #   entry bar + fill price).
+    # All default off => byte-identical to the pre-MX engine.
+    assert entry_mode in ("triggers", "market_at_start"), entry_mode
+    mas_done = False
+    _vw = None            # VWAP array for the open position
+    vwap_above = False    # a post-entry bar has closed above VWAP
+    _rsi_x = cd.rsi_n(rsi_exit[0]) if rsi_exit else None
+    rand_hold = None      # minutes, drawn at entry (rand_exit control)
 
     def _vol_base(i):
         """Trailing volume the liquidity cap sizes against.
@@ -1550,8 +1604,10 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
         o = cd.o[i]
         if kind == "stop":
             px = min(px, o)
-        else:
+        elif kind == "limit":
             px = max(px, o)
+        # kind == "close": a market sell at the bar's close -- a print that
+        # traded; clamp only (MX-series TA exits route through here)
         return max(cd.l[i], min(cd.h[i], px))
 
     def _pressure_gates_ok(i, px, patterns_entry=False):
@@ -1596,6 +1652,60 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                          or cd.index[i].time() < entry_cutoff)
                         and (entry_start is None
                              or cd.index[i].time() >= entry_start))
+
+        # ---- MX-series: MARKET-AT-START entry (bypasses every trigger)
+        if entry_mode == "market_at_start" and state != "LONG":
+            if (not mas_done and entries_open
+                    and (max_trades is None or len(trades) < max_trades)):
+                fill = cd.o[i]
+                if (PRICE_MIN <= fill <= PRICE_MAX and _halt_gap(i) < 5
+                        and _pressure_gates_ok(i, fill)
+                        and (ema_ok is None or (i > 0 and ema_ok[i - 1]))):
+                    buy_budget = _cap_budget(budget_cur * _size_mult(i))
+                    if buy_budget is None:
+                        mas_done = True        # day's cash exhausted
+                        continue
+                    sh = int(buy_budget // fill)
+                    if max_vol_frac:
+                        vbase = _vol_base(i)
+                        if vbase > 0:
+                            sh = min(sh, int(vbase * max_vol_frac))
+                    if sh >= 1:
+                        shares = sh
+                        entry = _fill_buy(fill, i) * (1 + slip)
+                        floor_px = entry * (1 - (stop_pct or 5) / 100)
+                        risk0 = max(entry - floor_px, entry * 0.001)
+                        deployed += shares * entry
+                        entries_done[0] += 1
+                        entry_i = i
+                        peak = entry
+                        _pk_pending.clear()
+                        entry_trig = "market-at-start"
+                        entry_pressure = cd.pressure(i - 1, 10, 0)
+                        scaled = scaled2 = added = False
+                        if atr_trail:
+                            dyn_trail = _atr_pct(i, *atr_trail)
+                        if atr_stop:
+                            dyn_stop = _atr_pct(i, *atr_stop)
+                        if vwap_exit:
+                            _anchor = (dtime(9, 30) if cd.index[i].time()
+                                       >= dtime(9, 30) else dtime(7, 0))
+                            _vw = cd.vwap_from(_anchor)
+                            vwap_above = False
+                        if rand_exit is not None:
+                            import random as _rnd
+                            _r = _rnd.Random(f"{rand_exit[1]}|{cd.index[i]}|"
+                                             f"{fill:.4f}")
+                            rand_hold = _r.randint(1, int(rand_exit[0]))
+                        state = "LONG"
+                        mas_done = True
+                        if verbose:
+                            ts = cd.index[i].strftime("%m-%d %H:%M")
+                            print(f"  BUY  {ts}  @{entry:.2f}  ({shares} sh "
+                                  f"= ${shares * entry:,.0f})  "
+                                  f"pattern=market-at-start")
+                        continue
+            continue                       # no trigger machinery in MAS mode
 
         # ORB entry: allowed from any flat state (extra_break_high adds a
         # second one-shot stop-buy level, e.g. the premarket high)
@@ -2033,6 +2143,43 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                 if (pp is not None and pp <= -pt
                         and (pmode == "always" or price > entry)):
                     exit_px, reason = price, f"pressure-flip {pp:+.2f}"
+            # ---- MX-series TA sell triggers: evaluated on the COMPLETED
+            # bar i (i > entry_i), filled at bar i's close via _sell_fill.
+            if exit_px is None and i > entry_i and (
+                    vwap_exit or rsi_exit or macd_exit
+                    or rand_exit is not None):
+                if vwap_exit and _vw is None:
+                    # trigger-mode entry: anchor decided at first LONG bar
+                    _anchor = (dtime(9, 30) if cd.index[entry_i].time()
+                               >= dtime(9, 30) else dtime(7, 0))
+                    _vw = cd.vwap_from(_anchor)
+                    vwap_above = False
+                if vwap_exit and _vw is not None:
+                    if (i - 1 >= entry_i and not np.isnan(_vw[i - 1])
+                            and cd.c[i - 1] > _vw[i - 1]):
+                        vwap_above = True
+                    if (vwap_above and not np.isnan(_vw[i])
+                            and cd.c[i] < _vw[i]):
+                        exit_px = _sell_fill(price, i, "close")
+                        reason = f"vwap-cross {_vw[i]:.2f}"
+                if exit_px is None and rsi_exit:
+                    _lvl = float(rsi_exit[1])
+                    r0, r1 = _rsi_x[i - 1], _rsi_x[i]
+                    if not np.isnan(r0) and r0 > _lvl >= r1:
+                        exit_px = _sell_fill(price, i, "close")
+                        reason = f"rsi-cross {int(rsi_exit[0])}/{_lvl:g}"
+                if exit_px is None and macd_exit:
+                    m0 = cd.macd[i - 1] - cd.macd_sig[i - 1]
+                    m1 = cd.macd[i] - cd.macd_sig[i]
+                    if not np.isnan(m0) and m0 >= 0 > m1:
+                        exit_px = _sell_fill(price, i, "close")
+                        reason = "macd-cross"
+                if (exit_px is None and rand_exit is not None
+                        and rand_hold is not None
+                        and (cd.index[i] - cd.index[entry_i]).total_seconds()
+                        >= rand_hold * 60):
+                    exit_px = _sell_fill(price, i, "close")
+                    reason = f"rand-exit {rand_hold}m"
             if exit_px is not None:
                 exit_px = _fill_sell(exit_px, i)   # premarket exits pay too
                 pnl = (exit_px * (1 - slip) - entry) * shares
