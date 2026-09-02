@@ -339,6 +339,12 @@
       "state": "HOLD-20m",
       "position": "GTLB t3 open @ 51.32; dipped to 50.55 (10:38), back to 51.33; open P&L -$192..+$3; pressure -0.27..+0.54; hard stop 47.214.",
       "bench_1046": "scan 49 rows, 14 candidates. NEW: AHCO (AdaptHealth, 824M, 2.4M avg vol, home medical equipment -- an LBO-style balance sheet, q1 will need the screen if it reaches candidacy). Cap cached."
+    },
+    {
+      "et": "10:50-11:03",
+      "state": "HOLD-20m",
+      "position": "GTLB t3 open @ 51.32; broke out 10:59-11:01 to 52.35 on 178k/153k/111k-share bars; open P&L +$259 (bar 11:00); pressure +0.56 -> the 40% leg widens; hard stop 47.214 still binds.",
+      "bench_1100": "scan 45 rows, 13 candidates, no new crossers. Bench unchanged: TRAX/RNXT (PASS, book-vetoed), DAKT (PASS, latched, +6%), everything else halal FAIL, no-7AM-print, or a sub-$50M microcap."
     }
   ],
   "halal": {
