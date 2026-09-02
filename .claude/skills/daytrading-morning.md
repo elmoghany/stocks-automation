@@ -6,14 +6,39 @@ description: C37 halal day-trading session — sequential ticket rotation, one p
 # background; nothing there overrides this section.
 
 Champion: **C37** sequential ticket rotation.
-**Benchmark (2026-08-14 final): ~$1,517 per traded day** — C37E,
-$635,759/2yr over 419 days, measured under the LIVE halal gate
-(HALAL_STRICT=1) with the EDGAR filed-date fundamentals cache
-(PT_FILED=1). Negative months 1/22. The last honest residual vs the
-old-gate $1,541 figure is $29,908 of names strict refuses for want of
-a CIK / foreign-filer statements — treat [$1,517, $1,541] as the band
-and $1,517 as the number to quote. ~3% of former traded days drop out
-(419 vs 432), so an occasional all-veto day remains normal.
+**Benchmark (2026-08-27 FINAL — the honest ones): score the day
+against −$163/traded day, not against any positive number.**
+
+The $1,517/day figure is RETIRED and was never real: minute bars had
+been fetched only to full-day-gain depth, so the backtest chose from a
+hindsight-curated sliver of the universe. On the full-coverage pool
+(108,991 bar files) C37's own rules — one position, our exits — return
+**−$72,673 over 445 traded days = −$163/day, 18 of 23 months negative**
+(config C37F). That is the honest expectation for what we trade live.
+
+Reference points from the W-campaign (`NOTES-DAYTRADING.md`), all
+full-coverage, live halal gate, EDGAR filed-date cache:
+| config | what it is | 2yr | per day |
+|---|---|---|---|
+| C37F | today's live ruleset | −72,673 | **−$163** |
+| XHB | same, but NO stop/trail/scale-out | +83,759 | +$188 |
+| K6S | 6 concurrent + no exits + 10bps costs | +301,927 | +$679 |
+| KR6S | random-6 control, same costs | +246,159 | +$553 |
+
+Read those honestly: **every exit mechanism we own subtracts value on
+the honest pool** (the −8% stop and 20% trail were fitted to a cache
+whose survivors ran +100–300%), and **82% of the K6S number is a
+gapper-wide intraday drift** a random pick captures — the ranking's
+real contribution is the 23% it beats its own control by, in both
+years, with lower drawdown. K6S is NOT adoptable live: it needs six
+concurrent positions (against the one-position cash rule) and carries
+no stop-loss.
+
+PRACTICAL CONSEQUENCE FOR A LIVE SESSION: a no-trade day is a
+NO-LOSS day, not a missed opportunity — under the current ruleset the
+modelled edge is negative, so the halal gate and the book vetoes
+refusing everything is a good outcome, not a failure. Report P&L
+against −$163/day and against break-even; never against $1,517.
 Judge weeks, not days.
 (History: $1,956/day was a hindsight pool cut, fixed 2026-08-13;
 $1,541/day was the corrected pool but the WRONG halal gate, fixed
