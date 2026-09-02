@@ -149,6 +149,33 @@
       "spread_check": "GTLB 07:15 bid 53.60 / ask 54.60 = 1.85% -- veto stands (widening: 0.93 -> 0.84 -> 1.60 -> 1.85%)",
       "trigger_c": "nothing fresh (07:08 cluster now 7m stale)",
       "tooling": "plan/cyc.py (new): one call = ingest + rank + trigger-on-TOP + heartbeat"
+    },
+    {
+      "et": "07:21",
+      "state": "FLAT-5m",
+      "scan_rows": 93,
+      "candidates": 11,
+      "rank_top": "GTLB -- 4 crossed / 1 armable",
+      "rank_detail": "1 GTLB +21.5% coil 0.982 press -0.55 calm PASS; 2 CANF +36.5% coil 0.911; 3 JLHL calm-gap FAIL; 4 UPC HARAM",
+      "spread_check": "GTLB 07:21 bid 54.32 / ask 55.00 = 1.25% -- veto stands. Last 54.77, approaching the 55.80 premarket high (Trigger B level)."
+    },
+    {
+      "et": "07:26",
+      "state": "FLAT-5m",
+      "scan_rows": 93,
+      "candidates": 11,
+      "rank_top": "GTLB -- 4 crossed / 1 armable",
+      "rank_detail": "1 GTLB +21.4% coil 0.981 press -0.52 calm PASS; 2 CANF +28.3% coil 0.856; 3 JLHL calm-gap FAIL; 4 UPC HARAM",
+      "spread_check": "GTLB 07:25 bid 54.45 / ask 54.78 = 0.61% -- narrowing but still over the cap. Trailing-10 completed-minute volume 15,425 sh -> 20% cap 3,085 sh vs 268 needed (not binding).",
+      "trigger_c": "07:23 tweezer_bottom STALE by read time (07:29)."
+    },
+    {
+      "et": "07:31",
+      "state": "FLAT-5m",
+      "scan_rows": 94,
+      "candidates": 11,
+      "rank_top": "GTLB",
+      "spread_check": "GTLB 07:31 L2 inside bid 54.63 x1 / ask 54.88 x5 = 0.46% -- INSIDE the 0.5% cap for the first time this session (0.93 -> 0.84 -> 1.60 -> 1.85 -> 1.25 -> 0.61 -> 0.46%). Quote agrees (54.63/54.88). Decision reached -> ARM."
     }
   ],
   "halal": {
@@ -202,9 +229,49 @@
     }
   },
   "trades": [],
-  "armed": [],
+  "armed": [
+    {
+      "ticket": 1,
+      "sym": "GTLB",
+      "armed_et": "07:33",
+      "trigger_type": "B -- premarket-high stop-buy (premarket high 55.80 printed 04:28 ET; ratchets up with any new session high)",
+      "stop_trigger": 55.8,
+      "limit": 56.079,
+      "limit_basis": "trigger x 1.005",
+      "shares": 268,
+      "notional_at_trigger": 14954.4,
+      "prev_close": 45.09,
+      "REAL_ORDER": false,
+      "paper_only": "NO REAL ORDERS EVER -- paper arm recorded in the ledger.",
+      "gates_at_arming": {
+        "halal": "PASS both questions (loan 0.00 / cash 17.82 / combined 17.82 / haram 1.13; DevSecOps software)",
+        "rank": 1,
+        "coil": 0.981,
+        "pressure": -0.52,
+        "gap7_pct": 19.5,
+        "calm_gap": "CALM (<=20%; 35% top-name grace also available)",
+        "gain_pct_at_arming": 21.4,
+        "price_ge_2": true,
+        "sessions_ge_50": "yes -- listed since Oct 2021",
+        "common_stock": true
+      },
+      "veto_checks_at_arming": {
+        "fill_arming": "PASS -- last 54.71 below the 55.80 trigger",
+        "spread": "PASS -- 0.46% (54.63/54.88), first pass of the session",
+        "depth": "PASS -- 2,326 displayed ask shares between the trigger and the +0.5% cap vs 268 needed",
+        "size_cap": "NOT BINDING -- trailing 10 completed minutes ~15k sh, 20% ~3k vs 268",
+        "halt": "quote state=active, has_traded=true (get_equity_tradability NOT called: it requires an account number and this is a headless paper session)"
+      },
+      "fill_semantics": "Paper resting stop-limit: fills INTRABAR on the first completed 1-min bar whose HIGH >= 55.80, at the trigger (bar open <= trigger) or at the bar OPEN if 55.80 < open <= 56.079 (gap-through inside the cap); NO FILL if the bar opens above 56.079 (limit skipped) -- then the ratchet re-arms at the new session high per the fill-arming rule.",
+      "protective_stop_on_fill": {
+        "level": 51.336,
+        "basis": "max(entry x 0.92, peak x 0.60) on an assumed 55.80 fill; re-placed upward as the peak rises"
+      },
+      "status": "ARMED -- waiting for the trigger"
+    }
+  ],
   "vetoes": {
-    "decisions_reached": 1,
+    "decisions_reached": 2,
     "spread": [
       {
         "et": "07:02",
@@ -218,6 +285,18 @@
         "cap_pct": 0.5,
         "verdict": "VETO",
         "note": "GTLB cleared halal (both questions), calm-gap, coil and rank 1 and was taken to the book at 07:02: inside bid 53.50 x4 / inside ask 54.00 x44 = 0.93%, 1.9x the cap. Depth is NOT the problem (displayed asks from 54.00 up to 56.08 = trigger 55.80 x1.005 sum to ~4,000 shares against 269 needed). Re-evaluate every cycle; premarket books on a 7.6B name normally collapse to a few cents at 09:30."
+      },
+      {
+        "et": "07:31",
+        "sym": "GTLB",
+        "phase": "premarket",
+        "bid": 54.63,
+        "bid_size": 1,
+        "ask": 54.88,
+        "ask_size": 5,
+        "spread_pct": 0.46,
+        "cap_pct": 0.5,
+        "verdict": "PASS"
       }
     ],
     "depth": [
@@ -231,6 +310,18 @@
         "cumulative_ask_size_within_cap": 4021,
         "pct_of_intended": 1500,
         "verdict": "PASS"
+      },
+      {
+        "et": "07:31",
+        "sym": "GTLB",
+        "intended_shares": 268,
+        "ticket_usd": 15000,
+        "trigger": 55.8,
+        "trigger_plus_half_pct": 56.079,
+        "cumulative_ask_size_trigger_to_cap": 2326,
+        "levels": "55.85x1, 55.90x215, 55.94x100, 55.95x25, 55.97x100, 55.99x10, 56.00x1875",
+        "pct_of_intended": 868,
+        "verdict": "PASS"
       }
     ],
     "chase_fill_arming": [
@@ -241,8 +332,22 @@
         "trigger": 55.8,
         "verdict": "PASS",
         "note": "last 53.88 < 55.80 premarket-high trigger -- a genuine forward stop, no chase."
+      },
+      {
+        "et": "07:31",
+        "sym": "GTLB",
+        "last": 54.71,
+        "trigger": 55.8,
+        "verdict": "PASS",
+        "note": "last 54.71 < 55.80 -- genuine forward stop (coil 0.981, not 1.000)."
       }
-    ]
+    ],
+    "rates": {
+      "note": "premarket so far",
+      "spread": "1 veto / 2 decisions = 50% (both GTLB, 07:02 veto / 07:31 pass)",
+      "depth": "0/2",
+      "chase": "0/2"
+    }
   },
   "trigger_c": [
     {
@@ -255,6 +360,16 @@
       "taken": false,
       "why_not": "Two independent refusals: (1) the premarket book was 0.84-0.93% wide at 07:02-07:06, over the 0.5% cap, so the entry would have been spread-vetoed at arming regardless; (2) the read happened 6 minutes after the 07:04 close because the cycle (delegated scan + batched bars + rank) takes ~4 min -- the tag's own 2-min freshness window had lapsed at wall-clock time even though the --as-of run stamped it fresh. The `trigger` command's own WARNING line ('as-of 07:06 vs wall clock 07:10 -- tags may be stale') caught this. Rule applied: never enter on a signal whose freshness is only nominal.",
       "also": "bullish_engulfing at the 07:00 close, already STALE at the 07:06 as-of."
+    },
+    {
+      "et": "07:24",
+      "sym": "GTLB",
+      "signal": "bullish_engulfing",
+      "signal_et": "07:20",
+      "tag_as_of_0721": "TAKEABLE NOW (0m since close)",
+      "wall_clock_at_read": "07:24 -- 4 min after the close",
+      "taken": false,
+      "why_not": "Spread 1.25% at 07:21 (2.5x cap) -- vetoed at arming regardless. And the read lag (delegated scan + batched bars + rank = ~3 min) again exceeded the 2-min freshness window at wall-clock time. Premarket Trigger C on a spread-vetoed name is structurally untakeable; the 1-minute single-name poll is reserved for after 09:30 when the book can pass."
     }
   ],
   "coverage_gaps": [],

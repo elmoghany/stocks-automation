@@ -26,14 +26,35 @@ def run(cmd):
 def main():
     args = sys.argv[1:]
     force_top = None
+    stop_spec = None
     if "--top" in args:
         i = args.index("--top"); force_top = args[i + 1]; del args[i:i + 2]
+    if "--stop" in args:
+        # --stop SYM:LEVEL:AFTER_UTC_ISO  -- report any COMPLETED bar after the
+        # arm time whose HIGH >= LEVEL (paper resting stop-buy, intrabar fill)
+        i = args.index("--stop"); stop_spec = args[i + 1]; del args[i:i + 2]
     dump, asof, *specs = args
     date = datetime.now(ET).strftime("%Y-%m-%d")
     syms = [s.split(":")[0] for s in specs]
     out = run([sys.executable, "plan/rh_bars_ingest.py", dump, date] + syms)
     lines = [l for l in out.splitlines() if " 0 bars total" not in l]
     print("\n".join(lines))
+    if stop_spec:
+        import csv
+        ssym, slevel, safter = stop_spec.split(":", 2)
+        slevel = float(slevel)
+        p = DIR / "data" / "rh_bars" / f"{ssym}_{date}.csv"
+        rows = list(csv.DictReader(open(p))) if p.exists() else []
+        hits = [r for r in rows if r["begins_at"] > safter and float(r["high"]) >= slevel]
+        if hits:
+            r = hits[0]
+            print(f"STOP-HIT {ssym} {r['begins_at']} o={r['open']} h={r['high']} "
+                  f"l={r['low']} c={r['close']} v={r['volume']} (level {slevel})")
+        else:
+            last = rows[-1] if rows else None
+            print(f"stop {ssym} {slevel} NOT hit; last bar "
+                  f"{last['begins_at'] if last else '-'} c={last['close'] if last else '-'} "
+                  f"h={last['high'] if last else '-'}")
     rk = run([sys.executable, "day-trading.py", "rank"] + specs + ["--as-of", asof])
     top = force_top
     for l in rk.splitlines():
