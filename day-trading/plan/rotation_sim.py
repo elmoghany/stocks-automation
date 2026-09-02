@@ -1189,13 +1189,16 @@ def out_dd(daily):
 
 
 def _shares_est(x, budget, slip):
-    """Shares behind one trade leg. The engine does not export shares;
-    it sizes int(budget // entry) capped by the volume fraction and
-    reports pnl = (exit*(1-slip) - entry) * shares with entry/exit/pnl
-    rounded to cents. Invert that where the move is large enough to
-    make the cents-rounding negligible, else fall back to the budget
-    size. Used only for the `deployed` fairness column (an estimate,
-    labelled as such in NOTES), never for P&L."""
+    """Shares behind one trade leg. FILL-MODEL EPOCH 2026-09-02: the
+    engine now exports `shares` on every trade dict, so `deployed` is
+    exact. The inversion below is kept only for dumps produced by the
+    pre-epoch engine (no `shares` key): it sizes int(budget // entry)
+    capped by the volume fraction and inverts pnl = (exit*(1-slip) -
+    entry) * shares where the move is large enough to make the cents-
+    rounding negligible, else falls back to the budget size. Used only
+    for the `deployed` fairness column, never for P&L."""
+    if x.get("shares"):
+        return int(x["shares"])
     entry, exit_, pnl = x.get("entry") or 0, x.get("exit") or 0, x["pnl"]
     cap = int(budget // entry) if entry > 0 else 0
     den = exit_ * (1 - slip) - entry

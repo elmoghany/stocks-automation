@@ -1467,26 +1467,92 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
             return False
         return True
 
-    def _hi(i):
-        """High of bar i, wick-guarded (X319): a lone spike whose high
-        exceeds wick_guard x the neighboring closes is ignored for
-        peak/scale-out/trail tracking (CIIT one-bar 50x lesson).
+    # ---- FILL-MODEL EPOCH 2026-09-02 (the $-best-day audit) ----
+    # Two defects found by the audit of the corrected ladder's best
+    # days (NOTES "PHANTOM FILLS", TWG 2025-09-11):
+    #  (1) a stop/trail was filled AT THE STOP LEVEL whenever the bar's
+    #      low was below it, even when the bar OPENED below it -- the
+    #      fill was fiction whenever the tape gapped through the stop
+    #      (315 legs / +$308,877 of PTRAIL6's apparent profit). Fixed in
+    #      _sell_fill(): a stop fills at min(stop, Open), a limit at
+    #      max(level, Open), and every sell is clamped to [Low, High].
+    #  (2) the peak that arms the trail could be a single bad print
+    #      (TWG H=20.0 on V=7,677 between 9.0 closes; the 3x wick guard
+    #      does not catch a 2.2x spike). Fixed in _peak_update(): a
+    #      bar's High is PROVISIONAL until the FOLLOWING bar has printed
+    #      -- it is dropped as an isolated print if it exceeds 1.5x
+    #      max(prev close, next close) on below-median volume, and it
+    #      only enters the peak once a subsequent bar's High has come
+    #      within 50% of it. Strictly causal: bar i's High is used by
+    #      the trail from bar i+1 at the earliest (proof:
+    #      plan/fillmodel_test.py poison test).
+    _pk_pending = []        # [(bar j, candidate high)] awaiting bar j+1
 
-        KNOWN TRADE-OFFS (accepted, C21 adopted with this definition
-        at exactly $0.00 backtest delta):
-        - uses the NEXT bar's close as one of the references (1 bar of
-          hindsight); live equivalent = confirm spikes with a 1-bar
-          delay before trusting them. Only ever CAPS peaks, never
-          raises them, so it cannot add phantom profit.
-        - LOWS are not guarded: a phantom one-bar low can still hit
-          the stop, but the fill is at the stop level (not the wick),
-          so damage is bounded to a normal stop-out."""
-        h = cd.h[i]
+    def _wick_cap(j, ref_closes):
+        """X319 wick guard, now CAUSAL: cap a candidate high at
+        wick_guard x the max of the closes handed in (all already
+        printed when this is evaluated). Only ever CAPS, never raises."""
+        h = cd.h[j]
         if wick_guard is None:
             return h
-        ref = max(cd.c[i], cd.c[i - 1] if i > 0 else cd.c[i],
-                  cd.c[i + 1] if i + 1 < cd.n else cd.c[i])
-        return min(h, ref * wick_guard)
+        return min(h, max(ref_closes) * wick_guard)
+
+    def _hi_now(i):
+        """High of bar i for SAME-BAR limit triggers (scale-out): wick-
+        capped against closes known at bar i (no next-close peek)."""
+        return _wick_cap(i, [cd.c[i], cd.c[i - 1] if i > 0 else cd.c[i]])
+
+    def _isolated_print(j, i):
+        """Bar j's High is an isolated print if it exceeds 1.5x the
+        surrounding closes (bar j-1 and the following bar i) on below-
+        median volume of the trailing 10 bars. Evaluated at bar i=j+1."""
+        ref = max(cd.c[j - 1] if j > 0 else cd.c[j], cd.c[i])
+        if cd.h[j] <= ref * 1.5:
+            return False
+        win = cd.v[max(0, j - 10):j]
+        if len(win) == 0:
+            return False
+        med = sorted(win)[len(win) // 2]
+        return cd.v[j] < med
+
+    def _peak_update(i, peak):
+        """Advance the trail's peak using only bars <= i-1 as confirmed
+        highs. Bar i-1's High becomes a candidate here (its next bar,
+        i, has now printed); every pending candidate is admitted when
+        some bar's High since it came within 50% of it, or dropped if
+        the isolated-print test fails on its following bar. Bar i's own
+        High is queued for evaluation at i+1 and does NOT move the peak
+        at bar i (this is the one-bar confirmation delay live already
+        pays before trusting a spike)."""
+        keep = []
+        for j, h in _pk_pending:
+            if i == j + 1:
+                if _isolated_print(j, i):
+                    continue                      # bad print: ignored
+                h = _wick_cap(j, [cd.c[j], cd.c[j - 1] if j > 0 else
+                                  cd.c[j], cd.c[i]])
+            if h <= peak:
+                continue                          # moot
+            if cd.h[i] >= 0.5 * h:
+                peak = h                          # confirmed by bar i
+            else:
+                keep.append((j, h))               # still unconfirmed
+        _pk_pending[:] = keep
+        _pk_pending.append((i, cd.h[i]))
+        return peak
+
+    def _sell_fill(px, i, kind):
+        """Honest sell fill inside bar i. kind='stop': a stop at px
+        fills at min(px, Open) -- nothing trades above the open of a
+        bar that opened below the stop. kind='limit': a resting sell at
+        px fills at max(px, Open) (a gap UP through the limit fills at
+        the open, symmetric). Both clamped to the bar's [Low, High]."""
+        o = cd.o[i]
+        if kind == "stop":
+            px = min(px, o)
+        else:
+            px = max(px, o)
+        return max(cd.l[i], min(cd.h[i], px))
 
     def _pressure_gates_ok(i, px, patterns_entry=False):
         """Entry-side pressure gates; use bars <= i-1 only (fills are
@@ -1635,6 +1701,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     entries_done[0] += 1
                     entry_i = i
                     peak = entry
+                    _pk_pending.clear()
                     entry_trig = pat
                     entry_pressure = cd.pressure(i - 1, 10, 0)
                     scaled = scaled2 = added = False
@@ -1745,6 +1812,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                 risk0 = max(entry - floor_px, entry * 0.001)
                 state = "LONG"
                 peak = entry
+                _pk_pending.clear()
                 entry_trig = pats[0]
                 entry_pressure = cd.pressure(i - 1, 10, 0)
                 scaled = scaled2 = added = False
@@ -1768,7 +1836,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
             if trail_pct is not None or dyn_trail is not None:
                 # trailing exit: ride the runner, sell on trail% retrace
                 # from the highest price since entry (no fixed target)
-                peak = max(peak, _hi(i))
+                peak = _peak_update(i, peak)
                 # half-then-add: second half deployed once price confirms
                 if (add_at is not None and not added
                         and cd.h[i] >= entry * (1 + add_at / 100)):
@@ -1784,7 +1852,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     added = True
                 # AX06 scale-out ladder: bank a fraction at +scale_out_at%
                 if (scale_out_at is not None and not scaled
-                        and _hi(i) >= entry * (1 + scale_out_at / 100)):
+                        and _hi_now(i) >= entry * (1 + scale_out_at / 100)):
                     # X310/X311: pressure-conditioned banking -- when
                     # buyers dominate, skip or soften the scale-out
                     _pp = None
@@ -1806,8 +1874,9 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                                 and _pp is not None
                                 and _pp >= scale_out_frac_pressure[0]):
                             eff_frac = scale_out_frac_pressure[1]
-                        px = _fill_sell(
-                            entry * (1 + scale_out_at / 100), i) * (1 - slip)
+                        px = _fill_sell(_sell_fill(
+                            entry * (1 + scale_out_at / 100), i, "limit"),
+                            i) * (1 - slip)
                         part = int(shares * eff_frac)
                     if part >= 1:
                         pnl_part = (px - entry) * part
@@ -1817,6 +1886,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                                        "exit": round(px, 2),
                                        "reason": f"scale-out +{scale_out_at}%",
                                        "pnl": round(pnl_part, 2),
+                                       "shares": part,
                                        "trig": entry_trig,
                                        "p_entry": entry_pressure,
                                        "peak_pct": round((peak / entry - 1) * 100, 1)})
@@ -1827,8 +1897,9 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                 # optional second tier (X062)
                 if (scale_out_2 is not None and not scaled2
                         and cd.h[i] >= entry * (1 + scale_out_2[0] / 100)):
-                    px = _fill_sell(
-                        entry * (1 + scale_out_2[0] / 100), i) * (1 - slip)
+                    px = _fill_sell(_sell_fill(
+                        entry * (1 + scale_out_2[0] / 100), i, "limit"),
+                        i) * (1 - slip)
                     part = int(shares * scale_out_2[1])
                     if part >= 1:
                         pnl_part = (px - entry) * part
@@ -1837,7 +1908,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                                        "exit_time": cd.index[i],
                                        "exit": round(px, 2),
                                        "reason": f"scale-out2 +{scale_out_2[0]}%",
-                                       "pnl": round(pnl_part, 2)})
+                                       "pnl": round(pnl_part, 2),
+                                       "shares": part})
                         shares -= part
                         if compound:
                             budget_cur += pnl_part
@@ -1929,9 +2001,19 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                 exit_px = cd.o[i]
                 reason = f"stop halt-reopen {cd.o[i] - entry:+.2f}"
             if exit_px is None and cd.l[i] <= stop:
-                exit_px, reason = stop, f"stop {stop - entry:+.2f}"
+                # fill-model epoch 2026-09-02: min(stop, Open), clamped
+                # to the bar -- a gap through the stop fills at the open
+                exit_px = _sell_fill(stop, i, "stop")
+                reason = f"stop {exit_px - entry:+.2f}"
             elif exit_px is None and cd.h[i] >= target_lo:
-                exit_px = min(target_hi, cd.h[i])
+                # limit at target_lo: a gap UP fills at the open
+                # (symmetric); inside the bar the legacy band fill
+                # min(target_hi, High) is kept
+                if cd.o[i] >= target_lo:
+                    exit_px = _sell_fill(target_lo, i, "limit")
+                else:
+                    exit_px = _sell_fill(min(target_hi, cd.h[i]), i,
+                                         "limit")
                 reason = f"target +{exit_px - entry:.2f}"
             elif sell_mode != "target_stop_only":
                 bears = cd.bearish_patterns(i) + cd.indicator_bearish(i)
@@ -1958,6 +2040,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     "entry_time": cd.index[entry_i], "entry": round(entry, 2),
                     "exit_time": cd.index[i], "exit": round(exit_px, 2),
                     "reason": reason, "pnl": round(pnl, 2),
+                    "shares": shares,
                     "trig": entry_trig, "p_entry": entry_pressure,
                     "peak_pct": round((peak / entry - 1) * 100, 1),
                 })
@@ -1980,6 +2063,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
             "entry_time": cd.index[entry_i], "entry": round(entry, 2),
             "exit_time": cd.index[cd.n - 1], "exit": round(exit_px, 2),
             "reason": "window-close flatten", "pnl": round(pnl, 2),
+            "shares": shares,
             "trig": entry_trig, "p_entry": entry_pressure,
             "peak_pct": round((peak / entry - 1) * 100, 1),
         })
