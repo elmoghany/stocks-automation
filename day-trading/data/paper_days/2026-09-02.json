@@ -289,6 +289,12 @@
       "state": "HOLD-20m",
       "position": "DELL open; V-shaped: 451.50 low (09:35) -> 478.53 high (09:44); open P&L -$516 -> +$4 (bar 09:42) -> ~+$115. Hard stop 436.448 binds.",
       "bench_0945": "scan 42 rows, 10 candidates. NEW: OABI (OmniAb, 737M, 1.7M avg vol, antibody-discovery platform -- liquid, halal to be screened at candidacy), MOVE (Corvex, 392M, AI GPU cloud, P/B -6.8 -- the name Day 19 lost to a missing 7AM bar), RNXT (RenovoRx, 106M). Caps cached. DAKT off the scan again (latched)."
+    },
+    {
+      "et": "09:47-10:01",
+      "state": "HOLD-20m",
+      "position": "DELL open; rolled over from the 483.94 peak (09:46) to 447.57 (09:57 low); open P&L +$173 -> -$615 (bar 09:56) -> ~-$700. Pressure -0.29 at 09:56, on the edge of the 10% leg (483.94 x 0.9 = 435.5, below the 436.448 hard stop, so hard binds either way).",
+      "bench_1000": "scan 43 rows, 11 candidates. NEW: TITN (Titan Machinery, 532M, equipment dealer -- floorplan financing makes q1 a likely FAIL, and it sells 'finance and insurance products' in Australia), SCWO (57M), XTLB (11M), EHLD (30M shipping), SIND (2.66B silver exploration, 9.5k sh -- 'market cap' vs 35M float suggests a thin listing). Caps cached; screens deferred to candidacy. Tradeable-looking bench for rotation: OABI (737M, 1.7M avg vol, +14.6%), TRAX (1.65B), MOVE (392M), MNTK (291M), DAKT (PASS, latched)."
     }
   ],
   "halal": {

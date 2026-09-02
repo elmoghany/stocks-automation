@@ -1,10 +1,10 @@
 {
  "candidates": {
   "JLHL": {
-   "pct": 31.32,
-   "last": 7.38,
+   "pct": 22.95,
+   "last": 6.91,
    "prev_close": 5.62,
-   "vol": "8.884683301693e+06",
+   "vol": "9.399474750552e+06",
    "name": "Julong Holding Limited",
    "first_seen": "06:23"
   },
@@ -33,10 +33,10 @@
    "first_seen": "06:23"
   },
   "GTLB": {
-   "pct": 12.64,
-   "last": 50.79,
+   "pct": 14.59,
+   "last": 51.67,
    "prev_close": 45.09,
-   "vol": "7.342907341576e+06",
+   "vol": "9.421477510454e+06",
    "name": "GitLab",
    "first_seen": "06:23"
   },
@@ -113,10 +113,10 @@
    "first_seen": "07:06"
   },
   "PPBT": {
-   "pct": 43.37,
-   "last": 2.38,
+   "pct": 36.75,
+   "last": 2.27,
    "prev_close": 1.66,
-   "vol": "4.770334727591e+07",
+   "vol": "5.2301969562937e+07",
    "name": "Purple Biotech",
    "first_seen": "07:36"
   },
@@ -217,10 +217,10 @@
    "first_seen": "09:26"
   },
   "MNTK": {
-   "pct": 16.48,
-   "last": 2.05,
+   "pct": 17.05,
+   "last": 2.06,
    "prev_close": 1.76,
-   "vol": "185028.26609",
+   "vol": "354312.538495",
    "name": "Montauk Renewables",
    "first_seen": "09:33"
   },
@@ -249,10 +249,10 @@
    "first_seen": "09:33"
   },
   "OABI": {
-   "pct": 14.14,
-   "last": 5.0679,
+   "pct": 14.64,
+   "last": 5.09,
    "prev_close": 4.44,
-   "vol": "402935.255168",
+   "vol": "568608.606365",
    "name": "OmniAb",
    "first_seen": "09:45"
   },
@@ -265,12 +265,52 @@
    "first_seen": "09:45"
   },
   "RNXT": {
-   "pct": 11.37,
-   "last": 2.35,
+   "pct": 12.13,
+   "last": 2.3659,
    "prev_close": 2.11,
-   "vol": "423060.657645",
+   "vol": "775383.956762",
    "name": "RenovoRx",
    "first_seen": "09:45"
+  },
+  "XTLB": {
+   "pct": 12.07,
+   "last": 2.6,
+   "prev_close": 2.32,
+   "vol": "11749.624837",
+   "name": "XTL Biopharmaceuticals",
+   "first_seen": "10:00"
+  },
+  "SCWO": {
+   "pct": 11.85,
+   "last": 3.2213,
+   "prev_close": 2.88,
+   "vol": "32182.225504",
+   "name": "374Water",
+   "first_seen": "10:00"
+  },
+  "EHLD": {
+   "pct": 11.46,
+   "last": 10.7,
+   "prev_close": 9.6,
+   "vol": "5409.78106",
+   "name": "Euroholdings",
+   "first_seen": "10:00"
+  },
+  "TITN": {
+   "pct": 10.61,
+   "last": 22.72,
+   "prev_close": 20.54,
+   "vol": "49401.574173",
+   "name": "Titan Machinery",
+   "first_seen": "10:00"
+  },
+  "SIND": {
+   "pct": 10.17,
+   "last": 16.9,
+   "prev_close": 15.34,
+   "vol": "9686.779999",
+   "name": "Sinda Ltd.",
+   "first_seen": "10:00"
   }
  },
  "halal_fail": [
