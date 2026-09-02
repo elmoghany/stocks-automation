@@ -60,6 +60,18 @@ EXPECT = {
     # from 420,935).
     ("Z104", "year"): -29_460,
     ("Z104", "y2025"): -1_872,
+    # HALAL-LEAK EPOCH 2026-09-01 (plan/penny_ax11b_massive.py): under
+    # HALAL_STRICT the shares cache is keyed by the exact as-of date
+    # and missing shares/prev_close REFUSE instead of falling back to
+    # the present-day VER verdict; api() no longer caches transport
+    # failures as null. These gates run NON-strict (the legacy month
+    # key + VER fallback are kept for exactly this chain), so they are
+    # unaffected BY CONSTRUCTION -- verified 2026-09-01 23:48:
+    # S095 +513,965 / +649,573 EXACT, Z104 -29,460 / -1,872 EXACT,
+    # "identity chain: ALL EXACT". The strict-path shift is measured on
+    # the rotation chain instead: C37F (HALAL_STRICT=1 PT_FILED=1,
+    # POOL_HYGIENE=0) pre-change -72,673 -> post-change value recorded
+    # as "C37F-hl" in NOTES-DAYTRADING.md (2026-09-01).
 }
 
 # Frozen historical expectations on the PRE-backfill file set (the
