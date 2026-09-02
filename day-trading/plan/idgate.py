@@ -14,6 +14,14 @@ EXPECTATION HISTORY (every re-baseline gets a dated note):
   * Z104 y2025 420,935 -> 417,040 on 2026-08-14: compliance epoch
     (user haram-industry rulings flowed into the legacy gate's word
     list). NOT mechanical drift.
+  * FILL-MODEL EPOCH 2026-09-02: simulate_trades fills a stop at
+    min(stop, Open) clamped to the bar, a limit at max(level, Open),
+    and confirms a trail peak only on the following bar (causal).
+    S095 513,965 / 649,573 -> 453,477 / 655,566 ; Z104 -29,460 /
+    -1,872 -> -31,415 / -6,132. Both gates carry stops; the
+    re-baseline is dated in EXPECT below and in NOTES. --prepool
+    (EXPECT_PRE) is frozen at the PRE-epoch engine and now needs
+    `git show a190a72^:day-trading/day-trading.py` to reproduce.
   * C37E (rotation chain) is gated by plan/rotation_sim.py runs, not
     here; post-backfill its causal pool grows the same way (C37F is
     its full-coverage successor -- identical params + env, new data).
@@ -44,8 +52,8 @@ massive._TH_INTERVAL = 0.25          # paid tier (verified 2026-08-20)
 
 EXPECT = {
     # (gate, label): exact expected total
-    ("S095", "year"): 513_965,
-    ("S095", "y2025"): 649_573,
+    # (S095 pre-fill-model-epoch: 513_965 / 649_573 -- see the
+    # 2026-09-02 note below; the live values are at the end of the dict)
     # COVERAGE EPOCH 2026-08-22 (the full-breadth m1 backfill):
     # Z104's causal_cut pool grew ~13x and both years COLLAPSED --
     # year +225,646 -> -29,460 ; y2025 +417,040 -> -1,872.
@@ -58,8 +66,31 @@ EXPECT = {
     # Pre-coverage-epoch values (for --prepool): year 225,646 /
     # y2025 417,040 (itself the 2026-08-14 compliance re-baseline
     # from 420,935).
-    ("Z104", "year"): -29_460,
-    ("Z104", "y2025"): -1_872,
+    # FILL-MODEL EPOCH 2026-09-02 (day-trading.py simulate_trades, the
+    # $-best-day audit): a stop/trail now fills at min(stop, Open)
+    # clamped to the bar (a gap through the stop fills at the open,
+    # not at the stop level); a limit/target at max(level, Open); the
+    # trail's peak is a bar's High only once the FOLLOWING bar has
+    # printed (isolated-print + within-50% confirmation, strictly
+    # causal; the X319 wick guard's next-close peek is gone); scale-
+    # outs use the same fill rule. Both gates carry stops, so both
+    # moved; HOLD-only configs are byte-identical (checked on the
+    # rotation ladder: HOLD1/HOLD6/RHOLD6 unchanged to the dollar).
+    # Pre-epoch values, measured 2026-09-01 23:48 under the halal-leak
+    # epoch: S095 +513,965 / +649,573 ; Z104 -29,460 / -1,872.
+    # Post-epoch (2026-09-02 02:13 run, /c/tmp/fm/idgate.log):
+    #   S095 year +513,965 -> +453,477  (-60,488)
+    #   S095 y2025 +649,573 -> +655,566 (+5,993)
+    #   Z104 year  -29,460 -> -31,415   (-1,955)
+    #   Z104 y2025  -1,872 -> -6,132     (-4,260)
+    # This is a RE-BASELINE, not a break: plan/fillmodel_test.py proves
+    # the new fills lie inside the bar and the peak is causal
+    # (0/4,420 poison breaches); the old values are reproducible only
+    # on the pre-epoch engine (git a190a72^).
+    ("S095", "year"): 453_477,
+    ("S095", "y2025"): 655_566,
+    ("Z104", "year"): -31_415,
+    ("Z104", "y2025"): -6_132,
     # HALAL-LEAK EPOCH 2026-09-01 (plan/penny_ax11b_massive.py): under
     # HALAL_STRICT the shares cache is keyed by the exact as-of date
     # and missing shares/prev_close REFUSE instead of falling back to
@@ -76,7 +107,9 @@ EXPECT = {
 
 # Frozen historical expectations on the PRE-backfill file set (the
 # --prepool replay). These never change again: they are the last
-# numbers measured on the coverage-biased cache (2026-08-14 epoch).
+# numbers measured on the coverage-biased cache (2026-08-14 epoch)
+# AND on the pre-fill-model engine (before a190a72, 2026-09-02): a
+# --prepool replay on the current engine will not reproduce them.
 EXPECT_PRE = {
     ("S095", "year"): 513_965,
     ("S095", "y2025"): 649_573,

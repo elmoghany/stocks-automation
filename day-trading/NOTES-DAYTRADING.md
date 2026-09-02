@@ -6062,3 +6062,69 @@ FOR THE ENGINE OWNER (day-trading.py, not edited this round): the
 trail/stop fill must be min(stop, bar Open) when the bar opens below
 the stop; until then every trail-bearing backtest in this repo carries
 phantom fills (C37F: 49 legs, +26,917).
+
+## FILL-MODEL EPOCH 2026-09-02 (engine fix, commit a190a72): STEP 1
+The engine owner's answer to the $-best-day audit above. Three changes
+inside day-trading.py::simulate_trades, nothing outside it (cmd_rank /
+cmd_trigger / halal_check / paper_watch / skill / launcher untouched):
+  1. GAP-THROUGH FILLS. A stop or trail that is hit inside bar i fills
+     at min(stop, Open[i]) -- nothing sells above the open of a bar
+     that opened below the stop; a limit/target fills at max(level,
+     Open[i]) (a gap UP through the limit fills at the open,
+     symmetric; inside the bar the legacy min(target_hi, High) band
+     fill is kept); EVERY sell is clamped to the bar's [Low, High].
+     Scale-out fills go through the same rule. The window-close
+     flatten is unchanged (last bar close). The halt-reopen path
+     (fix #7) already did this for halts; it is now the general rule.
+  2. CAUSAL BAD-PRINT PEAK GUARD. The trail's peak no longer takes a
+     bar's High on the bar itself. Bar i's High is queued as a
+     candidate; at bar i+1 it is (a) DROPPED as an isolated print if
+     High[i] > 1.5 x max(Close[i-1], Close[i+1]) AND Volume[i] is
+     below the median of the trailing 10 bars, else (b) wick-capped
+     (X319, wick_guard x max of the three closes, all printed by
+     then), and (c) ADMITTED to the peak only once some later bar's
+     High has come within 50% of it (High[k] >= 0.5 x cand); until
+     then it stays pending. So bar i's High reaches the trail from bar
+     i+1 at the earliest -- the one-bar confirmation delay live
+     already pays before trusting a spike -- and the old _hi()'s
+     next-close peek (documented as accepted hindsight) is gone by
+     construction. Same-bar scale-out triggers use _hi_now(i), wick-
+     capped against Close[i], Close[i-1] only.
+     TWG 2025-09-11 replay (PTRAIL kwargs): OLD 07:07 @6.70 -> 08:31
+     @17.91 "stop +11.30" +$20,705, peak 198.5%. NEW 07:07 @6.70 ->
+     08:31 @6.53 "stop -0.14" -$332, peak 28.8% (the 20.0 print never
+     enters the peak: no later High reached 10.0).
+  3. SHARES EXPORTED. Every trade dict carries `shares` (scale-out
+     rows carry the part sold); plan/rotation_sim.py's `deployed`
+     column uses it and only falls back to the pnl inversion for
+     pre-epoch dumps.
+PROOF: plan/fillmodel_test.py (run: HALAL_STRICT=1 PT_FILED=1
+POOL_HYGIENE=1 python plan/fillmodel_test.py --old <git a190a72^
+snapshot>). Synthetic ORB tape: gap-down stop fills 4.00 (the open,
+stop was 4.69), gap-up target fills 6.50 (the open), inside-bar stop
+fills 4.69 (at the stop, unchanged). The 13 audited phantom days
+(TWG/WFF/HSDT/BTCT/BTCS/PCSA/NAMM/BNAI/VRME/AIHS/PHOE/SKYQ/CYN)
+replayed: 13 non-flatten legs, 0 above the bar High. Shares/pnl
+identity holds to the cent. CAUSALITY, liquidity_estimators.py
+pattern: 8 real days x 2 kwarg sets (PTRAIL, C37F-inherited) x every
+3rd cut from entry+1 x two poison values (9e9 and 1e-9 on OHLCV at and
+after the cut): every trade CLOSED BEFORE the cut is byte-identical --
+0/4,420 breaches. (The pre-fix engine also scores 0/4,420 on these
+days: its next-close peek only ever RAISED a wick cap when the
+following close was the max of the three, which never bit here; the
+peek is removed regardless.)
+IDENTITY CHAIN RE-BASELINED (plan/idgate.py, run 02:13-03:20 under 15
+concurrent shards; /c/tmp/fm/idgate.log). Both gates carry stops, so
+both moved; the old values stay in idgate.py's dated note:
+  S095 year   +513,965 -> +453,477  (-60,488)
+  S095 y2025  +649,573 -> +655,566  (+5,993)
+  Z104 year    -29,460 ->  -31,415  (-1,955)
+  Z104 y2025    -1,872 ->   -6,132  (-4,260)
+Direction check: S095 (walk-8 by full-day gain, big movers, 1-min
+stops) loses the most -- the config whose stops most often sat inside
+premarket gaps. HOLD-only configs are byte-identical under the new
+engine (HOLD1/HOLD6/RHOLD6 matched the corrected ladder to the dollar
+at every checkpoint; the aug2026 rows are equal), which is the
+mechanical proof that only stop/trail/target/scale-out fills moved.
+EXPECT_PRE (--prepool) is frozen at the pre-epoch engine and now
+needs the a190a72^ engine to reproduce (noted in idgate.py).
