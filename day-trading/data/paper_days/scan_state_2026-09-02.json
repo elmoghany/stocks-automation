@@ -1,16 +1,16 @@
 {
  "candidates": {
   "JLHL": {
-   "pct": 22.24,
-   "last": 6.87,
+   "pct": 19.57,
+   "last": 6.72,
    "prev_close": 5.62,
    "vol": "99482.965074",
    "name": "Julong Holding Limited",
    "first_seen": "06:23"
   },
   "UPC": {
-   "pct": 15.46,
-   "last": 4.93,
+   "pct": 14.54,
+   "last": 4.8908,
    "prev_close": 4.27,
    "vol": "1.5757157766e+06",
    "name": "Universe Pharmaceuticals",
@@ -33,8 +33,8 @@
    "first_seen": "06:23"
   },
   "GTLB": {
-   "pct": 21.86,
-   "last": 54.9458,
+   "pct": 20.47,
+   "last": 54.32,
    "prev_close": 45.09,
    "vol": "1.0855885963333e+07",
    "name": "GitLab",
@@ -97,8 +97,8 @@
    "first_seen": "07:01"
   },
   "CANF": {
-   "pct": 19.76,
-   "last": 3.94,
+   "pct": 19.66,
+   "last": 3.9369,
    "prev_close": 3.29,
    "vol": "16314.6861",
    "name": "Can-Fite BioPharma",
@@ -111,10 +111,35 @@
    "vol": "3783.211408",
    "name": "Erayak Power Solution",
    "first_seen": "07:06"
+  },
+  "PPBT": {
+   "pct": 30.12,
+   "last": 2.16,
+   "prev_close": 1.66,
+   "vol": "59999.696",
+   "name": "Purple Biotech",
+   "first_seen": "07:36"
+  },
+  "KIDZ": {
+   "pct": 20.25,
+   "last": 4.87,
+   "prev_close": 4.05,
+   "vol": "76472.867768",
+   "name": "KIDZ AI Inc. Class B",
+   "first_seen": "07:36"
+  },
+  "LHSW": {
+   "pct": 10.07,
+   "last": 3.17,
+   "prev_close": 2.88,
+   "vol": "473418.396148",
+   "name": "Lianhe Sowell International Group",
+   "first_seen": "07:46"
   }
  },
  "halal_fail": [
   "FBLA",
+  "LHSW",
   "RAYA"
  ],
  "fake_gap": [],

@@ -176,6 +176,45 @@
       "candidates": 11,
       "rank_top": "GTLB",
       "spread_check": "GTLB 07:31 L2 inside bid 54.63 x1 / ask 54.88 x5 = 0.46% -- INSIDE the 0.5% cap for the first time this session (0.93 -> 0.84 -> 1.60 -> 1.85 -> 1.25 -> 0.61 -> 0.46%). Quote agrees (54.63/54.88). Decision reached -> ARM."
+    },
+    {
+      "et": "07:36",
+      "state": "FLAT-5m (ARMED GTLB 55.80)",
+      "scan_rows": 94,
+      "candidates": 11,
+      "new": [
+        "PPBT",
+        "KIDZ"
+      ],
+      "gone_still_latched": [
+        "CHRN",
+        "FBLA",
+        "MGRT",
+        "PRHI",
+        "RAYA"
+      ],
+      "note": "PPBT (Purple Biotech, 10.6M cap, prev close 1.66 -- under the $2 floor yesterday, 2.26 now) and KIDZ (KIDZ AI / Classover, 3.5M cap, 52-week high 21,900 vs 4.27 = serial reverse splits). GTLB spread 07:38 quote 54.82/54.99 = 0.31%, tightening. Stop 55.80 not hit; last bar 07:33 h 54.82."
+    },
+    {
+      "et": "07:46-07:49",
+      "state": "FLAT-1m poll (ARMED GTLB 55.80)",
+      "scan_rows": 93,
+      "candidates": 11,
+      "new": [
+        "LHSW"
+      ],
+      "rank_top": "GTLB -- 7 crossed / 1 armable",
+      "rank_detail": "1 GTLB +20.9% coil 0.977 press -0.21 calm PASS; 2 LHSW coil 1.000 calm +8.0 -> live-screened FAIL; 3 UPC HARAM; 4 JLHL / 5 PPBT / 6 KIDZ calm-gap FAIL; 7 CANF coil 0.789",
+      "stop": "55.80 not hit; GTLB drifting 54.40-54.50 under the premarket high."
+    },
+    {
+      "et": "07:51-07:59",
+      "state": "FLAT-1m poll (ARMED GTLB 55.80)",
+      "scans": "07:51 (93 rows, 10 cands), 07:56 (94 rows, 10 cands) -- no new crossers",
+      "rank_top": "GTLB every cycle (coil 0.970-0.977, press -0.04 to -0.29, +20.1..20.9%)",
+      "stop": "55.80 not hit; GTLB drifting DOWN 54.50 -> 54.15 -> 54.20. Quote 07:57 bid 54.18 / ask 54.50 = 0.59% (widened again from 0.31%).",
+      "trigger_c": "none fresh since the 07:43 morning_star.",
+      "loop": "corrected ordering: bars -> cyc.py read, then a separate wait call."
     }
   ],
   "halal": {
@@ -185,7 +224,8 @@
     "FAIL": [
       "UPC",
       "FBLA",
-      "RAYA"
+      "RAYA",
+      "LHSW"
     ],
     "CANNOT_VERIFY": []
   },
@@ -226,6 +266,18 @@
       "mcap": 2383645,
       "screened_et": "07:14",
       "note": "Erayak Power Solution -- q2 would PASS (power-solution products, manufacturing/wholesale/retail), but a 2.4M-cap shell after serial reverse splits (52-week high 180.84 vs 2.50) carries debt at 5x its own market cap. Reached candidacy at rank 2 on THREE real bars with coil 1.000 and untrusted pressure. Refused; recorded in scan_state so it never re-enters."
+    },
+    "LHSW": {
+      "q1": "FAIL",
+      "loan_pct": 33.31,
+      "cash_pct": 0.91,
+      "combined": 34.21,
+      "haram_pct": 0,
+      "reason": "LOAN>10+COMBINED>20",
+      "source": "quarterly",
+      "mcap": 10003221,
+      "screened_et": "07:49",
+      "note": "Lianhe Sowell (Shenzhen electronics trading + software, 10M cap). Reached candidacy at rank 2 on coil 1.000 / calm +8.0% with untrusted pressure. Fails financing at 33% loans/mcap. q2 would pass (electronics/software), moot."
     }
   },
   "trades": [],
@@ -370,10 +422,27 @@
       "wall_clock_at_read": "07:24 -- 4 min after the close",
       "taken": false,
       "why_not": "Spread 1.25% at 07:21 (2.5x cap) -- vetoed at arming regardless. And the read lag (delegated scan + batched bars + rank = ~3 min) again exceeded the 2-min freshness window at wall-clock time. Premarket Trigger C on a spread-vetoed name is structurally untakeable; the 1-minute single-name poll is reserved for after 09:30 when the book can pass."
+    },
+    {
+      "et": "07:47",
+      "sym": "GTLB",
+      "signal": "morning_star",
+      "signal_et": "07:43",
+      "tag_at_read_0745": "TAKEABLE NOW (1m since close) -- genuinely fresh at 07:45:19 wall clock",
+      "taken": false,
+      "why_not": "OPS DEFECT (self-inflicted, logged as an error): the cycle command chained `wait_until 07:47` AFTER the trigger call in the same tool call, so the TAKEABLE tag printed at 07:45:19 was not READ until 07:47:00 -- 4 min after the 07:43 close, outside the 2-min freshness window. This is exactly the Day-13 loop-ordering defect (2026-08-21) recurring: 'the read is the time-critical step; the wait is never allowed between the trigger call and reading its output'. Not entered: a stale tag is a refusal by rule, not by judgement. GTLB was otherwise armable at the moment (spread 0.31% at 07:38, halal PASS, calm, rank 1).",
+      "fix": "from this point every cycle is bars -> cyc.py (read) as one step and the pacing wait as a SEPARATE later tool call."
     }
   ],
   "coverage_gaps": [],
-  "errors": [],
+  "errors": [
+    {
+      "et": "07:47",
+      "severity": "MEDIUM -- process, cost a legal Trigger C entry on the day's only armable name",
+      "title": "Pacing wait chained after the trigger read (Day-13 defect recurrence)",
+      "detail": "See trigger_c[07:47]. The morning_star at the 07:43 close was fresh when printed (07:45:19) and stale when read (07:47:00) because the wait sat inside the same command. Corrected immediately."
+    }
+  ],
   "findings": [],
   "fill_realism": [],
   "pnl": 0.0
