@@ -101,7 +101,96 @@ SIMKW.update(px.BYID["Z104"]["sim"])
 for _k in ("entry_ticket_schedule", "daily_deploy_cap", "budget"):
     SIMKW.pop(_k, None)
 SIMKW.update(verbose=False, max_trades=1, daily_deploy_cap=None)
-assert SIMKW.get("trail_pct"), "trail machinery missing -- refuse to run"
+
+# ---- EXIT-KWARG WHITELIST (2026-09-01, harness correction) ----
+# AUDIT FINDING (read-only audit 2026-09-01, cited in NOTES): every
+# XH/XP/K/KR config set trail_pct=999, stop_pct=99 to "remove all
+# exits", but SIMKW inherits Z104's pressure_trail=(10, 0.3, 0.3, 10,
+# 40), which sim_extra never overrode; day-trading.py re-arms a 10%
+# trail from peak when 10-bar pressure <= -0.3 (40% when >= +0.3).
+# So "hold-to-flatten" configs were in fact pressure-trailed; K6S's
+# 'stop' exits were +$24,275 over 219 exits vs window-close -$5,535
+# over 264. The 2026-08-27 "every exit subtracts" conclusion was
+# measured on mislabeled configs (RETRACTION in NOTES 2026-09-01).
+# FIX: every exit-related kwarg is listed here; a config that names an
+# `exit_mode` gets the FULL set resolved explicitly (asserted), so no
+# exit machinery can ever be inherited silently again. `dyn_trail` /
+# `dyn_stop` are locals of simulate_trades (derived from atr_trail /
+# atr_stop), not kwargs, hence covered via those two.
+EXIT_KWARGS = (
+    "trail_pct", "stop_pct", "pressure_trail", "atr_trail", "atr_stop",
+    "breakeven_at", "struct_stop_bars", "time_stop_min",
+    "time_stop_progress", "time_stop_pressure", "time_stop_pressure_inv",
+    "scale_out_at", "scale_out_2", "scale_out_frac",
+    "scale_out_pressure_skip", "scale_out_frac_pressure", "bank_all_at",
+    "pressure_exit", "sell_mode", "target_pct", "target_r", "wick_guard",
+    "trail_widen_at", "tighten_at_r", "monster_mode",
+)
+# EXIT_HOLD: flatten only. Every exit kwarg None except the three the
+# engine needs to stay in its trail branch without ever firing: stop
+# 99% below entry, trail 99.9% below peak, no pattern exits. The ONLY
+# exit that can print is "window-close flatten".
+EXIT_HOLD = {k: None for k in EXIT_KWARGS}
+EXIT_HOLD.update(sell_mode="target_stop_only", trail_pct=999, stop_pct=99)
+# EXIT_PTRAIL: HOLD + the pressure-modulated trail that the mislabeled
+# K/XH configs were actually running (10% from peak on selling
+# pressure, 40% on buying pressure). This is what "K6S as run" was.
+EXIT_PTRAIL = dict(EXIT_HOLD, pressure_trail=(10, 0.3, 0.3, 10, 40))
+EXIT_MODES = {"HOLD": EXIT_HOLD, "PTRAIL": EXIT_PTRAIL}
+
+
+def build_simkw(cfg_id, cfg, echo=True):
+    """Resolve a config's effective simulate_trades kwargs.
+
+    Order: SIMKW (Z104 machinery) -> exit_mode block (if any) ->
+    sim_extra (explicit per-config overrides). For any config carrying
+    `exit_mode`, ASSERT the whole EXIT_KWARGS set is explicitly present
+    and equals the mode's values unless sim_extra overrode it. Prints
+    the resolved exit kwargs at run start so the label and the
+    machinery can be checked against each other by eye."""
+    kw = dict(SIMKW)
+    em = cfg.get("exit_mode")
+    extra = cfg.get("sim_extra") or {}
+    if em:
+        if em not in EXIT_MODES:
+            raise ValueError(f"{cfg_id}: unknown exit_mode {em!r}")
+        kw.update(EXIT_MODES[em])
+    kw.update(extra)
+    if em:
+        missing = [k for k in EXIT_KWARGS if k not in kw]
+        assert not missing, f"{cfg_id}: exit kwargs unresolved: {missing}"
+        for k in EXIT_KWARGS:
+            want = extra[k] if k in extra else EXIT_MODES[em][k]
+            assert kw[k] == want, (
+                f"{cfg_id}: exit kwarg {k} = {kw[k]!r}, expected {want!r}")
+    if echo:
+        shown = {k: kw.get(k) for k in EXIT_KWARGS if kw.get(k) is not None}
+        print(f"  exit kwargs [{cfg_id}] mode={em or 'inherited'}: "
+              f"{shown}", flush=True)
+        if em == "HOLD":
+            assert shown == {"trail_pct": 999, "stop_pct": 99,
+                             "sell_mode": "target_stop_only"}, shown
+    return kw
+
+
+def exit_category(reason):
+    """Bucket an engine exit reason string for the per-label report."""
+    r = (reason or "").lower()
+    if r.startswith("window-close"):
+        return "window-close"
+    if r.startswith("stop"):
+        return "stop"
+    if r.startswith("target"):
+        return "target/bank"
+    if r.startswith("scale-out"):
+        return "scale-out"
+    if r.startswith("bearish"):
+        return "bearish"
+    if r.startswith("pressure-flip"):
+        return "pressure-flip"
+    if r.startswith("time-stop"):
+        return "time-stop"
+    return "other"
 
 CFGS = {
     "R020": dict(desc="full rotation, re-pick every freed ticket"),
@@ -522,6 +611,34 @@ CFGS = {
     "C37F": dict(desc="C37 on the FULL-coverage pool (post-backfill "
                       "benchmark)",
                  entry_cutoff=dtime(14, 30), escape=dtime(10, 0)),
+    # ---- CORRECTED LADDER (2026-09-01): exit modes RESOLVED, not
+    # inherited. HOLD = flatten only (window-close is the only exit
+    # that can print; asserted at run end). PTRAIL = HOLD + the
+    # pressure-modulated trail that the mislabeled XH/K configs were
+    # actually running. All four ranked configs carry 10bps/side
+    # slippage; the R* controls are random picks under IDENTICAL
+    # machinery, costs, AND gap allowance (symmetric is_top), keyed
+    # by ROTREP replicate. C37F stays untouched as the identity.
+    "HOLD1": dict(desc="rank + HOLD-to-flatten, sequential, 10bps",
+                  entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                  slip=0.001, exit_mode="HOLD"),
+    "HOLD6": dict(desc="rank + HOLD-to-flatten, 6 concurrent, 10bps",
+                  entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                  slip=0.001, exit_mode="HOLD", topk=6),
+    "PTRAIL1": dict(desc="rank + pressure-trail (10/40 from peak), "
+                         "sequential, 10bps",
+                    entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                    slip=0.001, exit_mode="PTRAIL"),
+    "PTRAIL6": dict(desc="rank + pressure-trail, 6 concurrent, 10bps",
+                    entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                    slip=0.001, exit_mode="PTRAIL", topk=6),
+    "RHOLD6": dict(desc="CONTROL: RANDOM 6 + HOLD, 10bps (ROTREP seeds)",
+                   entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                   slip=0.001, exit_mode="HOLD", topk=6, rand=True),
+    "RPTRAIL6": dict(desc="CONTROL: RANDOM 6 + pressure-trail, 10bps "
+                          "(ROTREP seeds)",
+                     entry_cutoff=dtime(14, 30), escape=dtime(10, 0),
+                     slip=0.001, exit_mode="PTRAIL", topk=6, rand=True),
     # ---- T-series (2026-08-13): STALL RELEASE UNDER ROTATION ----
     # Hold-time study (797 legs): winners median 15m, LOSERS median 8m,
     # 78% of all profit lands in the 10-30m band, sub-10m trades LOSE in
@@ -671,7 +788,27 @@ def day_candidates(cs, date, dfs, top=16, causal_pool=True):
         pmh = pc * (1 + pm["pm_high_gain"] / 100) if pm else None
         out.append({"c": c, "df": df, "pc": pc, "cross": cross,
                     "gap7": gap7, "halal": None, "pmh": pmh})
+    # POOL HYGIENE (2026-09-01): test symbols, split/relist artifacts
+    # and non-equity types dropped -- see plan/pool_hygiene.py. OPT-IN
+    # via POOL_HYGIENE=1; default OFF keeps C37F's -72,673 identity.
+    if POOL_HYGIENE:
+        out = _hygiene().clean(out, date)
     return out
+
+
+POOL_HYGIENE = _os.environ.get("POOL_HYGIENE") == "1"
+_HYG = []
+
+
+def _hygiene():
+    if not _HYG:
+        spec = importlib.util.spec_from_file_location(
+            "pool_hygiene", ROOT / "plan/pool_hygiene.py")
+        m = importlib.util.module_from_spec(spec)
+        sys.modules["pool_hygiene"] = m
+        spec.loader.exec_module(m)
+        _HYG.append(m)
+    return _HYG[0]
 
 
 def rank_at(cands, t, top=None, fc=None):
@@ -811,7 +948,19 @@ def _shuffled_proxy(df, ts, lookback, date, sym, k):
     return spread_proxy(df, w.index[j], lookback)
 
 
-def run_day(cands, date, cfg, stats=None, fc=None):
+def _memo_sim(memo, key, fn):
+    """Per-day memo for simulate_trades calls. The ranking at time t and
+    a ticket's simulation on (symbol, entry_start, budget) do not depend
+    on the random replicate, so 30 replicates share them. Returned
+    trade dicts are COPIES (callers tag them with ticket/symbol)."""
+    if memo is None:
+        return fn()
+    if key not in memo:
+        memo[key] = fn()
+    return [dict(x) for x in memo[key]]
+
+
+def run_day(cands, date, cfg, stats=None, fc=None, rep=None, memo=None):
     _RANK_MODE[0] = cfg.get("rank_mode")
     entry_open = cfg.get("entry_open", dtime(7, 0))
     cutoff = cfg.get("entry_cutoff", dtime(12, 0))
@@ -820,14 +969,37 @@ def run_day(cands, date, cfg, stats=None, fc=None):
     t = entry_open
     ticket_i = 0
     last_sym, last_pnl = None, 0.0
+    # Effective engine kwargs, resolved ONCE per config (exit whitelist
+    # applied); callers that bypass run() get the same resolution.
+    base_kw = cfg.get("_simkw")
+    if base_kw is None:
+        base_kw = build_simkw(cfg.get("_id", "?"), cfg, echo=False)
+        cfg["_simkw"] = base_kw
+    # Random controls: replicate index (ROTREP, default 0) enters the
+    # seed, so 30 replicates are 30 different shuffles, not one.
+    if rep is None:
+        rep = int((_os.environ.get("ROTREP", "0") or "0").split("-")[0]
+                  .split(",")[0])
     while ticket_i < len(TICKETS):
         if t >= cutoff:
             break
-        # pick at time t
-        pool = rank_at(cands, t, cfg.get("top"), fc)
+        # pick at time t (rank order memoized per day: it is the same
+        # for every replicate; the list is copied before any shuffle)
+        rk = ("rank", t, cfg.get("top"))
+        if memo is not None and rk in memo:
+            pool = list(memo[rk])
+        else:
+            pool = rank_at(cands, t, cfg.get("top"), fc)
+            if memo is not None:
+                memo[rk] = list(pool)
+        # SYMMETRIC GAP ALLOWANCE (2026-09-01): the 35% gap7 limit
+        # belongs to the RANKED top name. Remember it BEFORE any shuffle
+        # so the random arm gets the same allowance on the same symbol
+        # (previously the control got it on a random name).
+        ranked_top = pool[0]["c"]["symbol"] if pool else None
         if cfg.get("rand"):
             import random as _rnd
-            _rnd.Random(f"rc60-{date}-{ticket_i}").shuffle(pool)
+            _rnd.Random(f"rc60-{date}-{ticket_i}-{rep}").shuffle(pool)
         pick = None
         if not rotate and last_sym is not None:
             pick = next((r for r in pool
@@ -837,8 +1009,8 @@ def run_day(cands, date, cfg, stats=None, fc=None):
             pick = next((r for r in pool
                          if r["c"]["symbol"] == last_sym), None)
         if pick is None:
-            for i, r in enumerate(pool):
-                if gates_ok(r, i == 0):
+            for r in pool:
+                if gates_ok(r, r["c"]["symbol"] == ranked_top):
                     pick = r
                     break
         if pick is None:
@@ -854,10 +1026,10 @@ def run_day(cands, date, cfg, stats=None, fc=None):
         topk = cfg.get("topk")
         if topk:
             picks = []
-            for i, r in enumerate(pool):
+            for r in pool:
                 if len(picks) >= topk or ticket_i + len(picks) >= len(TICKETS):
                     break
-                if gates_ok(r, i == 0):
+                if gates_ok(r, r["c"]["symbol"] == ranked_top):
                     picks.append(r)
             if not picks:
                 t = _step(t)
@@ -870,15 +1042,17 @@ def run_day(cands, date, cfg, stats=None, fc=None):
                          & (dfk.index.time < EXIT_END)]
                 if len(wk) < 20:
                     continue
-                kwk = dict(SIMKW)
-                kwk.update(cfg.get("sim_extra") or {})
+                kwk = dict(base_kw)
                 if cfg.get("slip"):
                     kwk["slippage_bps"] = cfg["slip"] * 1e4
                 if r.get("pmh"):
                     kwk["extra_break_high"] = r["pmh"]
-                trk = dt.simulate_trades(
-                    wk, prev_close=r["pc"], budget=TICKETS[ticket_i],
-                    entry_start=max(t, r["cross"]), **kwk)
+                _es, _bud = max(t, r["cross"]), TICKETS[ticket_i]
+                trk = _memo_sim(
+                    memo, ("sim", r["c"]["symbol"], _es, _bud),
+                    lambda: dt.simulate_trades(
+                        wk, prev_close=r["pc"], budget=_bud,
+                        entry_start=_es, **kwk))
                 trk = [x for x in trk if x.get("entry_time") is not None]
                 if not trk:
                     continue
@@ -902,16 +1076,18 @@ def run_day(cands, date, cfg, stats=None, fc=None):
             t = _step(t)
             continue
         esc = cfg.get("escape")
-        kw = dict(SIMKW)
-        kw.update(cfg.get("sim_extra") or {})
+        kw = dict(base_kw)
         if cfg.get("slip"):
             kw["slippage_bps"] = cfg["slip"] * 1e4   # engine kwarg name
         if pick.get("pmh"):
             kw["extra_break_high"] = pick["pmh"]   # champion parity:
             # the premarket-high stop-buy travels OUTSIDE the sim dict
-        tr = dt.simulate_trades(
-            w, prev_close=pick["pc"], budget=TICKETS[ticket_i],
-            entry_start=max(t, pick["cross"]), **kw)
+        _es, _bud = max(t, pick["cross"]), TICKETS[ticket_i]
+        tr = _memo_sim(
+            memo, ("sim", pick["c"]["symbol"], _es, _bud),
+            lambda: dt.simulate_trades(
+                w, prev_close=pick["pc"], budget=_bud,
+                entry_start=_es, **kw))
         tr = [x for x in tr if x.get("entry_time") is not None]
         if not tr:
             # never triggered: stale-pick escape re-ranks at esc, else
@@ -1012,15 +1188,70 @@ def out_dd(daily):
     return dd
 
 
+def _shares_est(x, budget, slip):
+    """Shares behind one trade leg. The engine does not export shares;
+    it sizes int(budget // entry) capped by the volume fraction and
+    reports pnl = (exit*(1-slip) - entry) * shares with entry/exit/pnl
+    rounded to cents. Invert that where the move is large enough to
+    make the cents-rounding negligible, else fall back to the budget
+    size. Used only for the `deployed` fairness column (an estimate,
+    labelled as such in NOTES), never for P&L."""
+    entry, exit_, pnl = x.get("entry") or 0, x.get("exit") or 0, x["pnl"]
+    cap = int(budget // entry) if entry > 0 else 0
+    den = exit_ * (1 - slip) - entry
+    if abs(den) >= 0.03 and pnl:
+        est = int(round(pnl / den))
+        if 0 < est <= cap * 1.02 + 1:
+            return est
+    return cap
+
+
+# Labels the ladder runs on. ROTLABELS overrides (comma list), e.g.
+# ROTLABELS=aug2026 for the out-of-sample August pool
+# (data/massive/gappers_novol_aug2026.json).
+LABELS = tuple((_os.environ.get("ROTLABELS") or "year,y2025").split(","))
+DUMP_TRADES = _os.environ.get("ROTTRADES") == "1"
+
+
+def _reps_from_env(cfg):
+    """ROTREP: '7' | '0-29' | '0,3,5' -> replicate list (random configs
+    only; ranked configs run once with rep=None)."""
+    if not cfg.get("rand"):
+        return [None]
+    s = _os.environ.get("ROTREP", "0") or "0"
+    reps = []
+    for part in s.split(","):
+        if "-" in part:
+            a, b = part.split("-")
+            reps += list(range(int(a), int(b) + 1))
+        else:
+            reps.append(int(part))
+    return reps
+
+
 def run(cfg_id, max_days=None):
     cfg = CFGS[cfg_id]
+    cfg["_id"] = cfg_id
     print(f"{cfg_id}: {cfg['desc']}", flush=True)
-    out = {}
-    for lab in ("year", "y2025"):
+    cfg["_simkw"] = build_simkw(cfg_id, cfg, echo=True)
+    reps = _reps_from_env(cfg)
+    if reps != [None]:
+        print(f"  replicates: {reps}", flush=True)
+    slip = cfg.get("slip") or 0.0
+
+    def key_of(rep):
+        # Random controls are keyed by replicate so 30 seeds coexist in
+        # one shard file; ranked configs keep their plain id.
+        return cfg_id if rep is None else f"{cfg_id}#r{rep}"
+
+    out = {rep: {} for rep in reps}
+    dump = {rep: [] for rep in reps}
+    for lab in LABELS:
         byday = px.load_by_day(lab, 50, "novol")
-        stats = {}
-        total, days, monthly = 0.0, 0, defaultdict(float)
-        daily = []          # per-traded-day P&L, for drawdown/exposure
+        st = {rep: dict(stats={}, total=0.0, days=0,
+                        monthly=defaultdict(float), daily=[],
+                        reasons=defaultdict(lambda: [0, 0.0]),
+                        deployed=0.0, tickets=0) for rep in reps}
         items = sorted(byday.items())
         if max_days:
             items = items[:max_days]
@@ -1032,56 +1263,139 @@ def run(cfg_id, max_days=None):
             if not cands:
                 continue
             fc = _featcache_for(date) if USE_FEATCACHE else None
-            tr = run_day(cands, date, cfg, stats, fc)
-            if tr:
+            memo = {}      # rank order + sims shared across replicates
+            for rep in reps:
+                s = st[rep]
+                tr = run_day(cands, date, cfg, s["stats"], fc,
+                             rep=rep, memo=memo)
+                if not tr:
+                    continue
                 p = sum(x["pnl"] for x in tr)
-                total += p
-                days += 1
-                monthly[date[:7]] += p
-                daily.append((date, p, len({x.get("ticket")
-                                            for x in tr})))
+                s["total"] += p
+                s["days"] += 1
+                s["monthly"][date[:7]] += p
+                tk = {x.get("ticket") for x in tr}
+                s["tickets"] += len(tk)
+                s["daily"].append((date, p, len(tk)))
+                for x in tr:
+                    cat = exit_category(x.get("reason"))
+                    s["reasons"][cat][0] += 1
+                    s["reasons"][cat][1] += x["pnl"]
+                    sh = _shares_est(x, TICKETS[x.get("ticket", 0)], slip)
+                    s["deployed"] += sh * (x.get("entry") or 0)
+                    if DUMP_TRADES:
+                        dump[rep].append({
+                            "label": lab, "date": date,
+                            "symbol": x.get("symbol"),
+                            "ticket": x.get("ticket"),
+                            "entry_time": str(x.get("entry_time")),
+                            "entry": x.get("entry"),
+                            "exit_time": str(x.get("exit_time")),
+                            "exit": x.get("exit"),
+                            "reason": x.get("reason"), "pnl": x["pnl"],
+                            "shares": sh, "peak_pct": x.get("peak_pct")})
             if n % 50 == 0:
+                s0 = st[reps[0]]
                 print(f"  ..{lab} {n}/{len(items)} "
-                      f"({days}d ${total:+,.0f})", flush=True)
-        negm = sum(1 for v in monthly.values() if v < 0)
-        print(f" {cfg_id} {lab:<6} {days:>4}d ${total:>+12,.0f} "
-              f"{negm}/{len(monthly)}  maxDD ${out_dd(daily):>9,.0f}  "
-              f"[{cfg['desc']}]", flush=True)
-        vch, vvt = stats.get("checked", 0), stats.get("vetoed", 0)
-        if vch:
-            print(f"   veto: {vvt}/{vch} entries blocked "
-                  f"({100*vvt/vch:.1f}%)", flush=True)
-        # RISK COLUMNS (2026-08-13). Total P&L and negative months alone
-        # cannot distinguish edge from leverage -- the S-campaign learned
-        # that when pressure-scaled sizing "won" purely by deploying more
-        # capital. Drawdown and ticket usage make that visible.
-        eq = pk = dd = 0.0
-        for _, pnl, _ in daily:
-            eq += pnl
-            pk = max(pk, eq)
-            dd = max(dd, pk - eq)
-        wins = sum(1 for _, pnl, _ in daily if pnl > 0)
-        tks = [t for _, _, t in daily]
-        out[lab] = {"total": round(total), "days": days, "negm": negm,
-                    "nmonths": len(monthly),
-                    "veto_checked": vch, "veto_blocked": vvt,
-                    "max_dd": round(dd),
-                    "max_dd_pct_of_peak": (round(100 * dd / pk, 1)
-                                           if pk > 0 else None),
-                    "win_days_pct": (round(100 * wins / len(daily), 1)
-                                     if daily else None),
-                    "worst_day": round(min((p for _, p, _ in daily),
-                                           default=0)),
-                    "best_day": round(max((p for _, p, _ in daily),
-                                          default=0)),
-                    "tickets_per_day_avg": (round(sum(tks) / len(tks), 2)
-                                            if tks else None),
-                    "monthly": {k: round(v) for k, v in
-                                sorted(monthly.items())}}
+                      f"({s0['days']}d ${s0['total']:+,.0f})", flush=True)
+        for rep in reps:
+            s = st[rep]
+            total, days, monthly, daily = (s["total"], s["days"],
+                                           s["monthly"], s["daily"])
+            reasons, deployed, tickets = (s["reasons"], s["deployed"],
+                                          s["tickets"])
+            res_key = key_of(rep)
+            negm = sum(1 for v in monthly.values() if v < 0)
+            print(f" {res_key} {lab:<6} {days:>4}d ${total:>+12,.0f} "
+                  f"{negm}/{len(monthly)}  maxDD ${out_dd(daily):>9,.0f}  "
+                  f"[{cfg['desc']}]", flush=True)
+            # EXIT-REASON DECOMPOSITION (2026-09-01): a HOLD config must
+            # show window-close ONLY. Anything else = an exit leaked in.
+            rline = "  ".join(f"{k}:{v[0]}/${v[1]:+,.0f}"
+                              for k, v in sorted(reasons.items()))
+            print(f"   exits [{res_key} {lab}]: {rline}", flush=True)
+            if cfg.get("exit_mode") == "HOLD":
+                assert set(reasons) <= {"window-close"}, (
+                    f"{cfg_id}: HOLD config printed non-flatten exits: "
+                    f"{dict(reasons)}")
+            vch = s["stats"].get("checked", 0)
+            vvt = s["stats"].get("vetoed", 0)
+            if vch:
+                print(f"   veto: {vvt}/{vch} entries blocked "
+                      f"({100*vvt/vch:.1f}%)", flush=True)
+            # RISK COLUMNS (2026-08-13). Total P&L and negative months
+            # alone cannot distinguish edge from leverage -- the
+            # S-campaign learned that when pressure-scaled sizing "won"
+            # purely by deploying more capital.
+            eq = pk = dd = 0.0
+            for _, pnl, _ in daily:
+                eq += pnl
+                pk = max(pk, eq)
+                dd = max(dd, pk - eq)
+            wins = sum(1 for _, pnl, _ in daily if pnl > 0)
+            tks = [t for _, _, t in daily]
+            # FAIR-COMPARISON COLUMNS (2026-09-01): totals were compared
+            # across 1x vs 6x capital. Return on deployed capital and
+            # P&L per ticket are the like-for-like numbers; ex-best
+            # strips the single largest day so one outlier cannot carry
+            # a verdict.
+            best = max(daily, key=lambda d: d[1], default=None)
+            best_day = round(best[1]) if best else 0
+            worst_day = round(min((p for _, p, _ in daily), default=0))
+            m_ex = dict(monthly)
+            if best:
+                m_ex[best[0][:7]] -= best[1]
+            negm_ex_best = sum(1 for v in m_ex.values() if v < 0)
+            fair = {"deployed": round(deployed), "tickets": tickets,
+                    "ret_on_deployed_pct": (round(100 * total / deployed, 3)
+                                            if deployed else None),
+                    "pnl_per_ticket": (round(total / tickets, 1)
+                                       if tickets else None),
+                    "best_day": best_day,
+                    "best_day_date": best[0] if best else None,
+                    "worst_day": worst_day,
+                    "total_ex_best": round(total - (best[1] if best else 0)),
+                    "negm_ex_best": negm_ex_best}
+            print(f"   fair  [{res_key} {lab}]: tickets {tickets} deployed "
+                  f"${deployed:,.0f} ret {fair['ret_on_deployed_pct']}% "
+                  f"per_ticket ${fair['pnl_per_ticket']} best {best_day:+,} "
+                  f"({fair['best_day_date']}) worst {worst_day:+,} "
+                  f"ex_best {fair['total_ex_best']:+,} negm_ex_best "
+                  f"{negm_ex_best}/{len(monthly)}", flush=True)
+            out[rep][lab] = {
+                "total": round(total), "days": days, "negm": negm,
+                "nmonths": len(monthly),
+                "veto_checked": vch, "veto_blocked": vvt,
+                "max_dd": round(dd),
+                "max_dd_pct_of_peak": (round(100 * dd / pk, 1)
+                                       if pk > 0 else None),
+                "win_days_pct": (round(100 * wins / len(daily), 1)
+                                 if daily else None),
+                "tickets_per_day_avg": (round(sum(tks) / len(tks), 2)
+                                        if tks else None),
+                **fair,
+                "exit_reasons": {k: {"n": v[0], "pnl": round(v[1])}
+                                 for k, v in sorted(reasons.items())},
+                "monthly": {k: round(v) for k, v in
+                            sorted(monthly.items())}}
     res = json.loads(RES_F.read_text()) if RES_F.exists() else {}
-    res[cfg_id] = {"desc": cfg["desc"], **out}
+    for rep in reps:
+        res[key_of(rep)] = {
+            "desc": cfg["desc"], "rep": rep,
+            "exit_mode": cfg.get("exit_mode"),
+            "pool_hygiene": POOL_HYGIENE,
+            "halal_strict": _os.environ.get("HALAL_STRICT") == "1",
+            "labels": list(LABELS), **out[rep]}
     RES_F.write_text(json.dumps(res, indent=1))
-    return out
+    if DUMP_TRADES:
+        for rep in reps:
+            tf = ROOT / ("data/massive/rotation_trades_"
+                         f"{key_of(rep).replace('#', '-')}_"
+                         f"{_SHARD or 'main'}.json")
+            tf.write_text(json.dumps(dump[rep]))
+            print(f"  trades -> {tf.name} ({len(dump[rep])} legs)",
+                  flush=True)
+    return out[reps[0]] if len(reps) == 1 else out
 
 
 if __name__ == "__main__":
