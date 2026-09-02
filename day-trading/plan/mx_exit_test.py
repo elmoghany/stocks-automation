@@ -5,7 +5,8 @@ fillmodel_test.py-style: synthetic tapes with a KNOWN expected bar, then
 the poison (causality) harness on real days. Exits non-zero on failure.
 
   1. market_at_start: the entry is the OPEN of the first bar whose time
-     >= entry_start (+10bps), tagged 'market-at-start'; nothing else
+     is STRICTLY AFTER entry_start (the decision bar is complete; the
+     fill is the next print, +10bps), tagged 'market-at-start'; nothing else
      fires; with no TA rule the only exit is the window-close flatten;
      entry_cutoff / max_trades are honoured; identity: with
      entry_mode='triggers' the tape's ORB entry is unchanged.
@@ -69,17 +70,25 @@ def t_market_at_start():
     tr = dt.simulate_trades(df, budget=BUD, **BASE)
     assert len(tr) == 1, tr
     t = tr[0]
-    i0 = _i(df, 10, 0)
+    i0 = _i(df, 10, 1)        # decision bar 10:00 is complete; next print
     assert t["entry_time"] == df.index[i0], t
+    assert dt.simulate_trades(df, budget=BUD,
+                              **dict(BASE, entry_cutoff=dtime(10, 1))) == []
     assert abs(t["entry"] - round(df["Open"].iloc[i0] * (1 + SLIP), 2)) < 1e-9, t
     assert t["trig"] == "market-at-start" and t["reason"] == "window-close flatten", t
     assert t["exit_time"] == df.index[-1], t
     # entry_cutoff before entry_start -> no entry at all
     assert dt.simulate_trades(df, budget=BUD, **dict(BASE, entry_cutoff=dtime(9, 0))) == []
-    # halt-aware: a 5-min tape gap right at 10:00 defers the entry
+    # DECISION-BAR LEAK GATE: bar 10:00 (the decision bar) is poisoned
+    # with an absurd open/close; the fill must be untouched (next print)
+    dfp = df.copy()
+    dfp.iloc[_i(df, 10, 0), [0, 1, 2, 3]] = [1.0, 1.0, 1.0, 1.0]
+    trp = dt.simulate_trades(dfp, budget=BUD, **BASE)
+    assert trp and trp[0]["entry_time"] == df.index[i0] and         abs(trp[0]["entry"] - t["entry"]) < 1e-9, ("decision bar leaked", trp)
+    # halt-aware: a 5-min tape gap right after 10:00 defers the entry
     dfh = df.drop(df.index[i0:i0 + 5])
     trh = dt.simulate_trades(dfh, budget=BUD, **dict(BASE, halt_aware=True))
-    assert trh and trh[0]["entry_time"].time() == dtime(10, 6), trh
+    assert trh and trh[0]["entry_time"].time() == dtime(10, 7), trh
     # identity: triggers mode on the same tape is untouched by entry_mode
     kw_trig = dict(BASE, entry_mode="triggers", orb=True, orb_bars=3)
     a = dt.simulate_trades(df, budget=BUD, **kw_trig)
@@ -88,7 +97,7 @@ def t_market_at_start():
     assert a == b, (a, b)
     print(f"  market_at_start: entry {t['entry_time']:%H:%M} @{t['entry']} "
           f"(open {df['Open'].iloc[i0]}), flatten {t['exit_time']:%H:%M}, "
-          f"halt-deferred entry 10:06  OK")
+          f"halt-deferred entry 10:07  OK")
 
 
 def _vwap(df, anchor=dtime(9, 30)):

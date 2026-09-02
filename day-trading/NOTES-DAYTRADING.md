@@ -6564,3 +6564,27 @@ STAGE-1 READ (controls still running -- nothing here is a verdict yet):
     negative for B/VB -- sign-consistent with the two years; but August
     was kind to every hold (HOLD1 +225/tkt), so only the aug random
     control (running) can say whether the ranking added anything there.
+
+## MX-SERIES RETRACTION + RE-RUN (2026-09-02 16:35): the stage-1 rows above are LEAKY -- withdrawn
+Caught on the first stage-2 rows (MXB 09:35: +61k..+85k/year, negm 1-3/12,
+implausible next to MXA). Cause: the rotation ranking at clock time t reads
+bars with time <= t -- the decision bar t is COMPLETE (close, high, the +10%
+crossing) -- and the new market_at_start path then filled at the OPEN of that
+same bar t (entry_start=t, engine test `time >= entry_start`). A name whose
+crossing printed inside bar t was bought at bar t's open, before its spike.
+That is a one-bar look-ahead unique to the new entry path (the trigger path
+fills inside bar t on a break of a level known before it; unchanged).
+FIX (day-trading.py): market_at_start fills at the open of the first bar
+STRICTLY AFTER entry_start -- the decision bar is complete, the fill is the
+next print (the IC study's fwd_flat_nx convention). plan/mx_exit_test.py
+now carries a decision-bar poison gate (bar t's OHLC set to 1.0: the fill
+must be unchanged) and re-passes (entry 10:01 for a 10:00 decision; halt
+deferral 10:07; 0/2,990 poison breaches). Every MX result produced before
+this fix (stage 1 table, aug2026 rows, partial controls) is withdrawn; the
+files were moved to /c/tmp/mx/leaky/ and are not in data/massive. Nothing
+outside the MX path changed: C37F/HOLD1 dumps remain byte-identical.
+Re-run launched 16:35 with the accelerated harness (rank/price memo shared
+across a batch; pressure skipped in gain rank modes -- both pure caches,
+checkpoints identical to the dollar): shards mx_r1 (MXA 1030/1100), mx_r2
+(MXA 1130/1200), mx_r3 (MXB, MTA, K3), mx_oos1 (aug2026 for all ranked).
+Controls follow once the ranked rows land.

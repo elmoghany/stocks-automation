@@ -1324,7 +1324,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
     cd = Candles(df1m)
     # ---- MX-series (2026-09-02): mean-reversion entry + TA sell triggers.
     # entry_mode="market_at_start": buy at the OPEN of the first bar whose
-    #   time >= entry_start (one entry per window; the trigger machinery
+    #   time is STRICTLY AFTER entry_start -- the decision bar is complete
+    #   and the fill is the next print (one entry per window; the trigger machinery
     #   -- ORB, PMH-break, dip-reversal patterns -- is bypassed). Price
     #   band applies; the +10% rule 3 does NOT (the candidate is a
     #   crossed gapper that may have pulled back -- that is the point).
@@ -1654,8 +1655,17 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                              or cd.index[i].time() >= entry_start))
 
         # ---- MX-series: MARKET-AT-START entry (bypasses every trigger)
+        # LEAK FIX (2026-09-02, caught on the first MXB rows): the
+        # rotation ranking at clock time t reads bars <= t, i.e. the
+        # DECISION BAR t is complete (its close, high and the +10%
+        # crossing are known). The fill must therefore be the open of
+        # the first bar STRICTLY AFTER entry_start -- the IC study's
+        # "next print" -- never bar t's own open. Strict inequality
+        # here; the trigger path keeps its >= (unchanged machinery).
         if entry_mode == "market_at_start" and state != "LONG":
             if (not mas_done and entries_open
+                    and (entry_start is None
+                         or cd.index[i].time() > entry_start)
                     and (max_trades is None or len(trades) < max_trades)):
                 fill = cd.o[i]
                 if (PRICE_MIN <= fill <= PRICE_MAX and _halt_gap(i) < 5
