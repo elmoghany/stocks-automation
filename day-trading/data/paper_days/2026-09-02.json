@@ -240,6 +240,19 @@
       "position": "GTLB 268 @ 55.80 open; watcher ticks every 30 s; open P&L ranged +$105 (08:17, bar h 56.50) to -$76 (08:28); pressure went negative (-0.3 to -0.5) from 08:26 so the 10% trail leg is the live one, but from the 56.50 peak that is 50.85 < the 51.336 hard stop, so the hard stop binds.",
       "bench_0831": "scan 93 rows, 9 candidates, no new crossers. DAKT fell off the scan (+9.7% on bars) but stays latched -- it is the only halal-PASS bench name. JLHL +26.9% calm-gap FAIL; PPBT 2.04 (price floor) calm FAIL; CANF coil <0.95.",
       "note": "premarket book on GTLB stayed thin: 150-2,300 sh/min bars 08:20-08:35."
+    },
+    {
+      "et": "08:35-08:53",
+      "state": "HOLD-20m",
+      "position": "GTLB open; peak 56.63 (08:42), open P&L +$110..+$200; pressure negative most of the window (-0.2 to -0.5) so the 10% leg is live but the hard stop 51.336 still binds.",
+      "bench_0850": "scan 93 rows, 10 candidates. NEW: CALC (CalciMedica, 2.20, prev close 2.00, +10.0% exactly -- price floor and cross both marginal). PPBT ran to +62% (2.69). ODDITY: the 08:50 scan listed GTLB as GONE while it traded 56.30 = +24.9% -- the scan's %Change column is not a reliable cross signal minute to minute; the latch keeps it eligible, and it is the open position anyway."
+    },
+    {
+      "et": "08:53-09:11",
+      "state": "HOLD-20m",
+      "position": "GTLB open; ran 56.25 -> 57.29 (09:07 peak), open P&L +$120 -> +$367 at 09:06; pressure flipped positive (+0.25..+0.82) from 09:00, so the 40% leg widens the trail; hard stop 51.336 binds.",
+      "bench_0908": "scan 90 rows, 9 candidates. NEW: ERNA (Ernexa Therapeutics, 7.1M cap, +12.9%, 4.91; 5 employees; 52-week high 71.50 vs 4.91 = reverse-split shell). PPBT faded 62% -> 41%. The scan keeps dropping and re-adding GTLB/DAKT/CANF/CALC on the %Change column -- all latched.",
+      "bench_note": "No bench name is both halal-PASS and liquid except DAKT (latched, ~+9-10%, coil 0.99, PASS)."
     }
   ],
   "halal": {

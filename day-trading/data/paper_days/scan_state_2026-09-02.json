@@ -9,8 +9,8 @@
    "first_seen": "06:23"
   },
   "UPC": {
-   "pct": 14.75,
-   "last": 4.9,
+   "pct": 18.27,
+   "last": 5.05,
    "prev_close": 4.27,
    "vol": "1.5757157766e+06",
    "name": "Universe Pharmaceuticals",
@@ -33,8 +33,8 @@
    "first_seen": "06:23"
   },
   "GTLB": {
-   "pct": 23.67,
-   "last": 55.7636,
+   "pct": 26.86,
+   "last": 57.2,
    "prev_close": 45.09,
    "vol": "1.0855885963333e+07",
    "name": "GitLab",
@@ -60,7 +60,7 @@
    "pct": 13.71,
    "last": 3.98,
    "prev_close": 3.5,
-   "vol": "90433.7519",
+   "vol": "180867.5038",
    "name": "BioStem Technologies",
    "first_seen": "06:23"
   },
@@ -97,8 +97,8 @@
    "first_seen": "07:01"
   },
   "CANF": {
-   "pct": 21.42,
-   "last": 3.9946,
+   "pct": 20.06,
+   "last": 3.95,
    "prev_close": 3.29,
    "vol": "16314.6861",
    "name": "Can-Fite BioPharma",
@@ -113,8 +113,8 @@
    "first_seen": "07:06"
   },
   "PPBT": {
-   "pct": 22.89,
-   "last": 2.04,
+   "pct": 40.84,
+   "last": 2.338,
    "prev_close": 1.66,
    "vol": "59999.696",
    "name": "Purple Biotech",
@@ -151,6 +151,22 @@
    "vol": "525131.448174",
    "name": "Daktronics",
    "first_seen": "08:11"
+  },
+  "CALC": {
+   "pct": 10.0,
+   "last": 2.2,
+   "prev_close": 2.0,
+   "vol": "141355.143468",
+   "name": "CalciMedica, Inc.",
+   "first_seen": "08:50"
+  },
+  "ERNA": {
+   "pct": 12.87,
+   "last": 4.91,
+   "prev_close": 4.35,
+   "vol": "29517.4391",
+   "name": "Ernexa Therapeutics",
+   "first_seen": "09:08"
   }
  },
  "halal_fail": [
