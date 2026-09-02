@@ -5647,3 +5647,73 @@ order tool; calendar ERROR is loud in launcher and watchdog; the watchdog
 checks the SESSION_ALIVE heartbeat and a WATCH_ALIVE heartbeat when position
 files are open, and fires a second time at 14:45; the launcher honors its own
 LAUNCHED flag against a double fire.
+
+=====================================================================
+2026-09-01 (post-close) -- LIVE-TOOL FIXES (approved plan Part 3,
+Commits 2+3). Two commits, e4c743c (A) and the one carrying this note
+(B). Every fix listed with where it lives.
+
+COMMIT A -- DST / calendar (plan/):
+ * market_calendar.py:74 close_time(d) -- 13:00 on the listed half
+   days, 16:00 otherwise; raises on ERROR / NO-TRADE.
+ * market_calendar.py:84 session_times(d) -> {close, exit_end,
+   entry_cutoff, cross_cap, ladder}. Full day 16:00/15:00/14:30/14:00
+   + [14:50,14:55,14:58,14:59]; half day 13:00/13:00/12:00/11:30 +
+   [12:50,12:55,12:58,12:59]. main prints a second "SESSION ..." line;
+   line 1 (TRADING/NO-TRADE/ERROR) is byte-identical -- the launcher
+   greps it.
+ * wait_until.py:22 and bars_csv_to_json.py:24: the fixed -4h offsets
+   are gone; ET = ZoneInfo("America/New_York"), UTC printed via
+   astimezone. Both would have been an hour wrong from 2026-11-01.
+ * armcheck.py:20-22,48-50: bars converted to ET; premarket = t <
+   09:30 ET, ORB = 09:30 <= t < 09:35 ET (was 13:30Z/13:35Z fixed);
+   labels in ET.
+ Verified: synthetic 2026-11-02 clock -> UTC-5; `market_calendar.py
+ 2026-11-27` -> half + 12:50 ladder; 2028 / Thanksgiving raise; a
+ CRML CSV date-shifted to 2026-11-02 puts 14:30Z in RTH (ORB built
+ from 5 bars 09:30-09:34 ET) while the same UTC minutes on 08-25 read
+ 13:30Z as the open.
+
+COMMIT B -- day-trading.py rank / trigger / halal_check + live_halal:
+ * halal_check :759 `no_statements`; :761-773 mcap<=0 WITH statements
+   -> FAIL "MARKET CAP MISSING" (never the B-no-financials branch);
+   :774-789 no statements -> the haram-industry keyword screen runs
+   FIRST (hoisted into _industry_hits :635, also used at :833) and a
+   hit is FAIL "industry screen, final regardless of any ruling"
+   BEFORE any B-no-financials PASS ruling is honoured. Probed with
+   fake tickers: casino label + B-PASS ruling -> FAIL; clean + B-PASS
+   -> PASS external-ruling; statements + mcap 0 -> MARKET CAP MISSING.
+ * cmd_rank :2694-2740 list-age gate: halal_list.json `updated` older
+   than HALAL_LIST_MAX_AGE_DAYS (=35, :617) or unparseable -> ERROR
+   line, every name NEEDS-SCREEN (same treatment as the SCREEN_EPOCH
+   gate). :2787 per-name _halal_ruling: a FAIL ruling prints
+   "FAIL (ruling)" and is excluded from armable. :2740,:2772 cross
+   cap -- the +10% must PRINT on a bar <= 14:00 (rank_at parity); a
+   later cross reads "crossed after 14:00 -- not eligible" (:2847).
+   :2784 gap7 from the full-day frame (bars <= 07:00), as the sim.
+   :2817 --json adds `armable` + `n_armable` (calm AND PASS AND not
+   ruled FAIL).
+ * cmd_trigger :2921 CLOSED bars only (time < as-of); :2946 age from
+   bar CLOSE (begins_at + 1 min), TAKEABLE iff age < --max-age;
+   :2899 --as-of more than 3 min from the zoneinfo wall clock (or a
+   non-today --date) prints "WARNING: as-of HH:MM vs wall clock HH:MM
+   -- tags may be stale"; :2896 banner "trigger scores patterns only
+   -- halal / +10% cross / calm-gap / book are NOT checked here".
+ * plan/live_halal.py:52 check_json + :88 --json -> {SYM: halal_check}
+   for all args in one process (REFUSE-TO-EVALUATE recorded as a
+   verdict; dot-class substitution under `substituted_from`).
+ Verified: `rank --help` OK; import clean; `rank RFAI:88.44 --date
+ 2026-08-21 --as-of 10:00` -> "FAIL (ruling); HARAM by user ruling --
+ NOT armable", n_armable 0; DFSC 2026-08-14 pc 2.85 as-of 15:30 ->
+ "crossed after 14:00 -- not eligible"; stub list 18 days old with the
+ limit patched to 10 -> ERROR + NEEDS-SCREEN, unpatched -> PASS;
+ `trigger CRML ABCL --date 2026-08-25 --as-of 09:40` -> banner +
+ wall-clock WARNING, ages now "Nm since close"; live_halal --json
+ AMD HLIT NOPE.X -> one JSON object.
+ 13-NAME PROBE IDENTICAL before/after: AMD/HLIT/SWKS/ASST/MRVL PASS;
+ LMT/NFLX/SAM/CMG/RRGB/RETO/NDLS FAIL. NOTE: KO reads PASS in BOTH
+ runs (the plan's expectation listed it as FAIL) -- the screen has no
+ rule that fails Coca-Cola and there is no KO ruling; left untouched,
+ flagged for the user.
+ NOT done here (other owners): rotation_sim, penny_ax11b_massive,
+ paper_watch, the skill, the launcher, the prompt.

@@ -612,6 +612,9 @@ def _kw_hits(words, text):
 
 
 HALAL_RULINGS_FILE = _DIR / "data/halal_rulings.json"
+# cmd_rank refuses a halal_list.json whose `updated` is older than this
+# (2026-09-01 live-tool fixes; the universe is a monthly refresh).
+HALAL_LIST_MAX_AGE_DAYS = 35
 
 
 def _halal_ruling(symbol: str) -> dict | None:
@@ -627,6 +630,42 @@ def _halal_ruling(symbol: str) -> dict | None:
         return r if isinstance(r, dict) else None
     except Exception:
         return None
+
+
+def _industry_hits(symbol: str, t) -> tuple[list, str, str]:
+    """The haram-industry keyword screen, hoisted (2026-09-01 live-tool
+    fixes) so halal_check can run it on the NO-FINANCIALS path too -- an
+    external B-no-financials PASS ruling must never outrank a name whose
+    own label/summary says brewer/casino/pork.
+
+    Returns (hits, ind, text): `hits` are the matched terms, `ind` the
+    sector/industry label string, `text` the full label+name+summary
+    blob the ambiguous / revenue-sensitive screens run over.
+
+    Paper Day 8 showed RH sector labels are unreliable (AZ, a
+    shopping-cart maker, is tagged "Financial Conglomerates"), so the
+    NAME and BUSINESS SUMMARY are screened too, not just the label --
+    AIFA runs poker venues under a label that never says gambling.
+    Label-only terms are checked against the sector/industry label;
+    high-confidence phrases anywhere. Both word-boundary matched."""
+    rh = load_rh_fundamentals().get(symbol.upper())
+    ind = f"{(rh or {}).get('sector', '')} {(rh or {}).get('industry', '')}"
+    text = ind
+    try:
+        info = t.info or {}
+        if not ind.strip():
+            ind = f"{info.get('sector', '')} {info.get('industry', '')}"
+        text = " ".join([
+            ind,
+            str(info.get("sector", "")), str(info.get("industry", "")),
+            str(info.get("shortName", "")), str(info.get("longName", "")),
+            str(info.get("longBusinessSummary", "")),
+        ])
+    except Exception:
+        pass
+    hits = (_kw_hits(HARAM_PRIMARY_LABEL, ind)
+            + _kw_hits(HARAM_PRIMARY_ANY, text))
+    return hits, ind, text
 
 
 def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
@@ -717,8 +756,39 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
     # "no data" was silently indistinguishable from "verified permissible"
     # -- the worst possible failure for a gate whose whole job is to
     # refuse. Absence of evidence must never read as compliance.
-    if mcap <= 0 or (total_debt == 0 and cash_total == 0
-                     and total_rev == 0):
+    no_statements = (total_debt == 0 and cash_total == 0 and total_rev == 0)
+    if mcap <= 0 and not no_statements:
+        # MARKET CAP MISSING (2026-09-01 live-tool fixes). Statements
+        # exist, so this is NOT the no-financials case and must never
+        # ride the B-no-financials ruling branch below: the 10/10/20
+        # ratios simply cannot be computed without a denominator. Refuse
+        # loudly; the fix is update_rh_fundamentals.py, not a ruling.
+        return {
+            "verdict": "FAIL",
+            "loan_pct": None, "cash_pct": None, "combined": None,
+            "haram_pct": None, "halal": False,
+            "source": src,
+            "fail_reason": ("MARKET CAP MISSING -- statements exist "
+                            "but the 10/10/20 ratios have no denominator; "
+                            "refusing (not a compliance failure). Cache "
+                            "the RH market cap and re-run."),
+        }
+    if no_statements:
+        # INDUSTRY SCREEN FIRST (2026-09-01 live-tool fixes). A name with
+        # no statements can still carry a brewer/casino/pork label or
+        # summary; that is a hard FAIL on every path and must be checked
+        # BEFORE any external PASS ruling is honoured below.
+        hits, _ind, _text = _industry_hits(symbol, t)
+        if hits:
+            return {
+                "verdict": "FAIL",
+                "loan_pct": None, "cash_pct": None, "combined": None,
+                "haram_pct": None, "halal": False,
+                "source": src,
+                "fail_reason": (f"HARAM INDUSTRY ({', '.join(hits[:3])}) "
+                                f"-- industry screen, final regardless "
+                                f"of any ruling"),
+            }
         # USER EXCEPTION (2026-08-22): "the only exception for my halal
         # rules: the stocks that are not verifiable because we could not
         # find its finances. then for these use zoya and etc." -- when NO
@@ -758,29 +828,9 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
     combined_ok = combined <= 20
     haram_ok = haram_pct < 5
 
-    # Industry screen. Paper Day 8 showed RH sector labels are unreliable
-    # (AZ, a shopping-cart maker, is tagged "Financial Conglomerates"), so
-    # we screen the NAME and BUSINESS SUMMARY too, not just the label --
-    # AIFA runs poker venues under a label that never says gambling.
-    rh = load_rh_fundamentals().get(symbol.upper())
-    ind = f"{(rh or {}).get('sector', '')} {(rh or {}).get('industry', '')}"
-    text = ind
-    try:
-        info = t.info or {}
-        if not ind.strip():
-            ind = f"{info.get('sector', '')} {info.get('industry', '')}"
-        text = " ".join([
-            ind,
-            str(info.get("sector", "")), str(info.get("industry", "")),
-            str(info.get("shortName", "")), str(info.get("longName", "")),
-            str(info.get("longBusinessSummary", "")),
-        ])
-    except Exception:
-        pass
-    # Label-only terms are checked against the sector/industry label;
-    # high-confidence phrases anywhere. Both word-boundary matched.
-    hits = (_kw_hits(HARAM_PRIMARY_LABEL, ind)
-            + _kw_hits(HARAM_PRIMARY_ANY, text))
+    # Industry screen (label + name + business summary; see
+    # _industry_hits for why the label alone is not trusted).
+    hits, ind, text = _industry_hits(symbol, t)
     industry_ok = not hits
     # haram_pct measures INTEREST INCOME ONLY. For revenue-sensitive
     # businesses that number cannot see alcohol/pork/gaming revenue, so a
@@ -2641,8 +2691,15 @@ def cmd_rank(pairs, as_of=None, date=None, top=None, as_json=False,
     # Enforced here rather than in the protocol text, because a rule that
     # depends on an agent noticing a date is a rule that will be missed.
     SCREEN_EPOCH = "2026-08-13"
+    # LIST-AGE GATE (2026-09-01 live-tool fixes). The universe is a
+    # monthly refresh (plan/refresh_halal_universe.cmd); balance sheets
+    # and market caps move, so a list older than 35 days is evidence of
+    # nothing. Same treatment as the epoch gate: every name reads
+    # NEEDS-SCREEN until the list is rebuilt.
+    MAX_LIST_AGE_DAYS = HALAL_LIST_MAX_AGE_DAYS
     halal = set()
     stale = None
+    aged = None
     hf = _DIR / "data/halal_list.json"
     if hf.exists():
         try:
@@ -2651,7 +2708,16 @@ def cmd_rank(pairs, as_of=None, date=None, top=None, as_json=False,
             if _upd < SCREEN_EPOCH:
                 stale = _upd or "unknown"
             else:
-                halal = set(_hl.get("symbols", []))
+                try:
+                    _age = (et_now.date()
+                            - _dt.strptime(_upd[:10], "%Y-%m-%d").date()
+                            ).days
+                except ValueError:
+                    _age = None
+                if _age is None or _age > MAX_LIST_AGE_DAYS:
+                    aged = (_upd or "unknown", _age)
+                else:
+                    halal = set(_hl.get("symbols", []))
         except Exception as e:
             print(f"ERROR: halal_list.json unreadable ({e}) -- every name "
                   f"will read NEEDS-SCREEN; do NOT treat that as PASS")
@@ -2662,6 +2728,16 @@ def cmd_rank(pairs, as_of=None, date=None, top=None, as_json=False,
               f"list: every name reads NEEDS-SCREEN and MUST be live-"
               f"screened before arming. Rebuild with "
               f"plan/build_halal_universe.py --refresh.")
+    if aged:
+        print(f"ERROR: halal_list.json `updated` is {aged[0]} "
+              f"({'unparseable' if aged[1] is None else f'{aged[1]} days old'}"
+              f"), older than the {MAX_LIST_AGE_DAYS}-day limit. Ignoring "
+              f"the list: every name reads NEEDS-SCREEN and MUST be live-"
+              f"screened before arming. Rebuild with "
+              f"plan/build_halal_universe.py --refresh.")
+    # A FAIL ruling in data/halal_rulings.json is final on every path
+    # (2026-08-22 doctrine); the list is never allowed to out-vote it.
+    CROSS_CAP = dtime(14, 0)          # rotation_sim.rank_at parity
 
     rows = []
     for spec in pairs:
@@ -2690,19 +2766,35 @@ def cmd_rank(pairs, as_of=None, date=None, top=None, as_json=False,
             continue
         last = float(w["Close"].iloc[-1])
         hi = float(w["High"].max())
-        crossed = bool(hi >= 1.10 * pc)
+        # CROSS CAP (2026-09-01 live-tool fixes, rotation_sim.rank_at
+        # parity): the +10% cross must PRINT on a bar <= 14:00. A name
+        # whose first +10% bar is later is not a candidate at all.
+        hi_cap = float(w[w.index.time <= CROSS_CAP]["High"].max()) \
+            if len(w[w.index.time <= CROSS_CAP]) else 0.0
+        crossed = bool(hi_cap >= 1.10 * pc)
+        late_cross = (not crossed) and bool(hi >= 1.10 * pc)
         coil = (last / hi) if hi > 0 else 0.0
         prs = None
         if len(w) >= 5:
             prs = Candles(w).pressure(len(w) - 1, 30, 20_000)
-        w7 = w[w.index.time <= dtime(7, 0)]
+        # gap7 from the FULL-DAY frame (bars <= 07:00), as the sim does
+        # (rotation_sim cands: `w7 = df[df.index.time <= dtime(7, 0)]`),
+        # not from the as-of-truncated window. Live, the cache only ever
+        # holds bars up to now, so this stays causal.
+        w7 = df[df.index.time <= dtime(7, 0)]
         gap7 = ((float(w7["Close"].iloc[-1]) / pc - 1) * 100
                 if len(w7) else None)
+        # RULING OVERLAY: a FAIL ruling is final, list membership or not.
+        _rul = _halal_ruling(sym)
+        if isinstance(_rul, dict) and _rul.get("verdict") == "FAIL":
+            hv = "FAIL (ruling)"
+        else:
+            hv = "PASS" if sym in halal else "NEEDS-SCREEN"
         rows.append(dict(sym=sym, pc=pc, last=last, hi=hi, crossed=crossed,
+                         late_cross=late_cross,
                          coil=coil, prs=prs, gap7=gap7,
                          gain=(last / pc - 1) * 100,
-                         halal=("PASS" if sym in halal else "NEEDS-SCREEN"),
-                         err=None))
+                         halal=hv, err=None))
 
     ok = [r for r in rows if not r["err"] and r["crossed"]]
     ok.sort(key=lambda r: (0 if r["coil"] >= 0.95 else 1,
@@ -2714,11 +2806,16 @@ def cmd_rank(pairs, as_of=None, date=None, top=None, as_json=False,
         r["gaplim"] = lim
     if top:
         ok = ok[:top]
+    # armable = calm AND on the trusted list AND not ruled FAIL. A
+    # NEEDS-SCREEN name is NOT armable until live_halal.py passes it.
+    actionable = [r for r in ok if r["calm"] and r["halal"] == "PASS"]
 
     if as_json:
         print(json.dumps({"date": date, "as_of": str(cutoff),
                           "ranked": ok, "other": [r for r in rows
-                                                  if r not in ok]},
+                                                  if r not in ok],
+                          "armable": [r["sym"] for r in actionable],
+                          "n_armable": len(actionable)},
                          default=str))
         return
 
@@ -2736,7 +2833,9 @@ def cmd_rank(pairs, as_of=None, date=None, top=None, as_json=False,
             note.append("pressure UNTRUSTED (<20k sh)")
         if not r["calm"]:
             note.append(f"CALM-GAP FAIL (>{r['gaplim']:.0f}%)")
-        if r["halal"] != "PASS":
+        if r["halal"] == "FAIL (ruling)":
+            note.append("HARAM by user ruling -- NOT armable")
+        elif r["halal"] != "PASS":
             note.append("live screen REQUIRED before arming")
         print(f"  {i:<3}{r['sym']:<7}{r['last']:>9.4f}{r['gain']:>8.1f}"
               f"{r['coil']:>7.3f}{pr:>8}{g7:>8}  "
@@ -2744,9 +2843,10 @@ def cmd_rank(pairs, as_of=None, date=None, top=None, as_json=False,
               f"{'; '.join(note)}")
     skipped = [r for r in rows if r["err"] or not r.get("crossed")]
     for r in skipped:
-        why = r["err"] or "+10% cross has NOT printed yet"
+        why = r["err"] or (
+            f"crossed after {CROSS_CAP:%H:%M} -- not eligible"
+            if r.get("late_cross") else "+10% cross has NOT printed yet")
         print(f"  --  {r['sym']:<7} excluded: {why}")
-    actionable = [r for r in ok if r["calm"] and r["halal"] == "PASS"]
     print(f"\n  {len(ok)} crossed / {len(actionable)} armable now"
           + (f"   TOP = {actionable[0]['sym']}" if actionable else
              "   TOP = none (nothing passes every gate)"))
@@ -2772,7 +2872,15 @@ def cmd_trigger(symbols, as_of=None, date=None, bars=8, bars_dir=None,
     entries simply did not exist. This reads the same cached RH 1-minute
     bars `rank` uses and scores only the buy_set.
 
-    Causal: bars after --as-of are never read.
+    Causal: only CLOSED bars are read -- a 1-minute bar stamped HH:MM
+    closes at HH:MM+1, so the bar stamped as-of itself is still forming
+    and is excluded (2026-09-01 live-tool fixes). Signal age is measured
+    from that CLOSE, and a signal is TAKEABLE only while age <
+    max_age_min.
+
+    Scope: this scores PATTERNS ONLY. Halal, the +10% cross, the calm
+    gap and the book are `rank` / live_halal / the arming checklist --
+    a TAKEABLE tag here is one gate of several, never a green light.
     """
     from datetime import datetime as _dt
     et_now = _dt.now(ET)
@@ -2784,7 +2892,23 @@ def cmd_trigger(symbols, as_of=None, date=None, bars=8, bars_dir=None,
         cutoff = et_now.time()
 
     print(f"TRIGGER C  {date} as-of {cutoff}  (champion buy_set only; "
-          f"last {bars} bars)")
+          f"last {bars} bars; CLOSED bars only)")
+    print("  trigger scores patterns only -- halal / +10% cross / "
+          "calm-gap / book are NOT checked here")
+    if as_of:
+        # WALL-CLOCK DRIFT WARNING: --as-of exists for replay, but a live
+        # session that passes a stale HH:MM gets stale TAKEABLE tags.
+        # Compare against the real ET clock (zoneinfo; the TZ env var is
+        # broken on this box) and say so when they disagree by >3 min.
+        _wall = et_now.replace(second=0, microsecond=0)
+        _asof = _wall.replace(hour=cutoff.hour, minute=cutoff.minute)
+        _drift = abs((_asof - _wall).total_seconds()) / 60
+        if _drift > 3 or date != et_now.strftime("%Y-%m-%d"):
+            print(f"  WARNING: as-of {cutoff:%H:%M} vs wall clock "
+                  f"{et_now:%H:%M} ET"
+                  + ("" if date == et_now.strftime("%Y-%m-%d")
+                     else f" (date {date} != today)")
+                  + " -- tags may be stale")
     any_fired = False
     for sym in symbols:
         sym = sym.upper()
@@ -2794,9 +2918,9 @@ def cmd_trigger(symbols, as_of=None, date=None, bars=8, bars_dir=None,
             print(f"  {sym:<7} NO BARS (fetch first)")
             continue
         df = df[df.index.strftime("%Y-%m-%d") == date]
-        w = df[df.index.time <= cutoff]
+        w = df[df.index.time < cutoff]          # closed bars only
         if len(w) < 6:
-            print(f"  {sym:<7} only {len(w)} bars <= {cutoff}")
+            print(f"  {sym:<7} only {len(w)} closed bars < {cutoff}")
             continue
         cd = Candles(w)
         fired = []
@@ -2817,14 +2941,16 @@ def cmd_trigger(symbols, as_of=None, date=None, bars=8, bars_dir=None,
             # because a 5-min rank loop made every signal 1-5 min stale.
             # Enforced here so a stale signal cannot be mistaken for an
             # entry -- the tag does the refusing, not agent discipline.
+            # Age runs from the bar's CLOSE (begins_at + 1 min), which
+            # is when the pattern actually became known.
+            bar_close = ts.replace(tzinfo=None) + timedelta(minutes=1)
             age = (_dt.combine(_dt.strptime(date, "%Y-%m-%d").date(),
-                               cutoff) - ts.replace(tzinfo=None)
-                   ).total_seconds() / 60
-            if age <= max_age_min:
-                tag = "TAKEABLE NOW"
+                               cutoff) - bar_close).total_seconds() / 60
+            if age < max_age_min:
+                tag = f"TAKEABLE NOW ({age:.0f}m since close)"
             else:
-                tag = (f"STALE ({age:.0f}m old) -- DO NOT ENTER; wait "
-                       f"for a fresh signal")
+                tag = (f"STALE ({age:.0f}m since close) -- DO NOT ENTER; "
+                       f"wait for a fresh signal")
             note = (f"   (ignored, not in buy_set: {', '.join(excl)})"
                     if excl else "")
             print(f"  {sym:<7} {ts.strftime('%H:%M')}  "

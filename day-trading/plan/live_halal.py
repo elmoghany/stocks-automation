@@ -1,6 +1,13 @@
 """Live halal screen for a scan hit missing from halal_universe.json.
 
 Usage:  python plan/live_halal.py SYM [SYM ...]
+        python plan/live_halal.py --json SYM [SYM ...]   # one JSON object
+
+--json (2026-09-01 live-tool fixes) prints {SYM: halal_check(SYM)} for
+every argument from ONE process (one day-trading.py import, one yfinance
+session) instead of the per-name text report; a name with no cached RH
+market cap gets {"verdict": "REFUSE-TO-EVALUATE", ...} and a dot-class
+substitution is recorded under "substituted_from".
 
 This is QUESTION 1 ONLY -- the financing test (loans/mcap, deposits/mcap,
 combined, plus the interest-income keyword screen), run by calling
@@ -32,9 +39,58 @@ FIELDS = ("halal", "verdict", "loan_pct", "cash_pct", "combined",
           "haram_pct", "fail_reason", "source", "mcap")
 
 
+def _candidates(sym):
+    """yfinance ticker spellings to try, dot-class first (see the note
+    in main)."""
+    attempts = [sym]
+    if "." in sym:
+        attempts.append(sym.replace(".", "-"))
+        attempts.append(sym.split(".")[0])
+    return attempts
+
+
+def check_json(syms, rh):
+    """--json: {SYM: halal_check result} for every symbol, one process."""
+    out = {}
+    for sym in syms:
+        mcap = (rh.get(sym) or {}).get("market_cap")
+        if not mcap:
+            out[sym] = {"verdict": "REFUSE-TO-EVALUATE", "halal": False,
+                        "fail_reason": "no RH market cap cached -- run "
+                                       "update_rh_fundamentals.py first",
+                        "source": "none", "mcap": None}
+            continue
+        r, used = None, None
+        for cand in _candidates(sym):
+            try:
+                rr = dt.halal_check(cand, mcap=float(mcap))
+            except Exception as e:
+                rr = {"verdict": "ERROR", "halal": False,
+                      "fail_reason": f"{type(e).__name__}: {e}",
+                      "source": "none"}
+            if "NO FUNDAMENTALS DATA" not in (rr.get("fail_reason") or ""):
+                r, used = rr, cand
+                break
+            r, used = r or rr, used or cand
+        r = dict(r or {})
+        r.setdefault("verdict", "PASS" if r.get("halal") else "FAIL")
+        r["mcap"] = float(mcap)
+        if used != sym:
+            r["substituted_from"] = used
+        r["q2_note"] = ("question 2 (business line / 5% rule) NOT "
+                        "answered by this tool -- judge it before arming")
+        out[sym] = r
+    return out
+
+
 def main():
-    syms = [s.upper() for s in sys.argv[1:]]
+    argv = sys.argv[1:]
+    as_json = "--json" in argv
+    syms = [s.upper() for s in argv if not s.startswith("--")]
     rh = json.loads(RH_F.read_text()) if RH_F.exists() else {}
+    if as_json:
+        print(json.dumps(check_json(syms, rh), default=str))
+        return
     for sym in syms:
         mcap = (rh.get(sym) or {}).get("market_cap")
         if not mcap:
@@ -48,12 +104,8 @@ def main():
         # form, then the bare root ticker. The root is the SAME ISSUER with
         # ONE consolidated balance sheet, which is the right input for the
         # ratio test, but it is a substitution and is logged as one.
-        attempts = [sym]
-        if "." in sym:
-            attempts.append(sym.replace(".", "-"))
-            attempts.append(sym.split(".")[0])
         r, used = None, None
-        for cand in attempts:
+        for cand in _candidates(sym):
             try:
                 rr = dt.halal_check(cand, mcap=float(mcap))
             except Exception as e:
