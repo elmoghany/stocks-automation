@@ -1,0 +1,32 @@
+{
+  "date": "2026-09-02",
+  "day_number": 21,
+  "protocol": "C37",
+  "mode": "paper",
+  "session_type": "headless (Windows Task Scheduler \\Stocks\\C37MorningLaunch)",
+  "benchmark_per_day": 1517,
+  "honest_baseline_per_day": -163,
+  "status": "OPEN",
+  "counts_as_traded_day": false,
+  "config": "C37",
+  "ops": {
+    "skeleton_written_et": "06:21",
+    "session_start_et": "06:20",
+    "start_on_time": true,
+    "start_note": "Launched 06:20 ET, 20 min ahead of the 06:40 target. No coverage gap at the front of the session.",
+    "trading_day_guard": "TRADING 2026-09-02 full (market_calendar.py). SESSION close=16:00 exit_end=15:00 entry_cutoff=14:30 cross_cap=14:00 ladder=14:50,14:55,14:58,14:59",
+    "capability_probe": {"status": "PENDING"}
+  },
+  "cycles": [],
+  "halal": {"PASS": [], "FAIL": [], "CANNOT_VERIFY": []},
+  "halal_detail": {},
+  "trades": [],
+  "armed": [],
+  "vetoes": {"decisions_reached": 0, "spread": [], "depth": [], "chase_fill_arming": []},
+  "trigger_c": [],
+  "coverage_gaps": [],
+  "errors": [],
+  "findings": [],
+  "fill_realism": [],
+  "pnl": 0.0
+}
