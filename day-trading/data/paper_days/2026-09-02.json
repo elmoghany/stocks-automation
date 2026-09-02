@@ -363,6 +363,12 @@
       "state": "HOLD-20m",
       "position": "GTLB t3 open @ 51.32; 51.2-51.95 range, open P&L -$6..+$128; pressure ~0 to +0.34; hard stop 47.214 binds again (pressure back above -0.3).",
       "bench_1144": "scan 51 rows, 16 candidates. NEW: PTN (Palatin, 23M cap, 1.6M float, 12.83 -- Vyleesi (HSDD drug): a pharmaceutical, permissible line, but a 23M-cap with 68k avg vol), RPAY (Repay Holdings, 340M, payment processing -- a fintech service, not lending; q1 has the converts; screen only at candidacy). Caps cached."
+    },
+    {
+      "et": "11:52-12:06",
+      "state": "HOLD-20m",
+      "position": "GTLB t3 open @ 51.32; 51.5-51.8, open P&L +$60..+$140; pressure ~0; hard stop 47.214.",
+      "bench_1158": "scan 52 rows, 15 candidates. NEW: FTH (Faeth Therapeutics, 38.43 +11.4%, 131k sh). OABI running +20.6% (5.36, 2.2M sh) -- still blocked by no 7AM print. Cycle cadence honesty: each hold loop is now ~2.5-4 min wall clock (bars call ~1-2 min as the spilled file grows past 500 KB); the watcher itself ticks every 30 s off the CSV, so exit fidelity is unaffected."
     }
   ],
   "halal": {
