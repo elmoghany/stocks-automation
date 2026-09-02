@@ -31,6 +31,37 @@
    "exit_time": "2026-09-02T09:31:00-04:00",
    "booked_at": "2026-09-02T09:32:18.645307-04:00",
    "exit_parity": null
+  },
+  {
+   "sym": "DELL",
+   "ticket": 2,
+   "date": "2026-09-02",
+   "mode": "c37",
+   "entry": 474.4,
+   "shares_initial": 31,
+   "entry_bar_utc": "2026-09-02T13:33:00Z",
+   "prev_close": 425.0,
+   "exit_kind": "exit-stop",
+   "fills": [
+    {
+     "kind": "EXIT-STOP",
+     "time": "2026-09-02T10:12:00-04:00",
+     "shares": 31,
+     "px": 436.448,
+     "src": "stop level"
+    }
+   ],
+   "vwap": 436.448,
+   "shares_exited": 31,
+   "scale_out": null,
+   "banked": 0.0,
+   "pnl": -1176.51,
+   "peak": 483.9396,
+   "rungs": [],
+   "deployed": 14706.4,
+   "exit_time": "2026-09-02T10:12:00-04:00",
+   "booked_at": "2026-09-02T10:13:23.381876-04:00",
+   "exit_parity": null
   }
  ]
 }

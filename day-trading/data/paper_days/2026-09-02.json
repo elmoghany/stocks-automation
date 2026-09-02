@@ -295,13 +295,32 @@
       "state": "HOLD-20m",
       "position": "DELL open; rolled over from the 483.94 peak (09:46) to 447.57 (09:57 low); open P&L +$173 -> -$615 (bar 09:56) -> ~-$700. Pressure -0.29 at 09:56, on the edge of the 10% leg (483.94 x 0.9 = 435.5, below the 436.448 hard stop, so hard binds either way).",
       "bench_1000": "scan 43 rows, 11 candidates. NEW: TITN (Titan Machinery, 532M, equipment dealer -- floorplan financing makes q1 a likely FAIL, and it sells 'finance and insurance products' in Australia), SCWO (57M), XTLB (11M), EHLD (30M shipping), SIND (2.66B silver exploration, 9.5k sh -- 'market cap' vs 35M float suggests a thin listing). Caps cached; screens deferred to candidacy. Tradeable-looking bench for rotation: OABI (737M, 1.7M avg vol, +14.6%), TRAX (1.65B), MOVE (392M), MNTK (291M), DAKT (PASS, latched)."
+    },
+    {
+      "et": "10:12-10:13",
+      "state": "EXIT -> EXIT-RERANK",
+      "event": "DELL hard stop: 10:11 bar l 439.50, 10:12 bar l 435.10 <= 436.448 -> EXIT-STOP @ 436.448 x31 = -$1,176.51. Day P&L now -$2,312.56 on two tickets, both stopped within 80 minutes of entry on earnings gappers that reversed at/after the open.",
+      "rerank_1013": "TOP = DAKT (only armable: +6.1% coil 0.951 press -0.11 PASS calm). TITN/TRAX/RNXT/OABI/MNTK/SCWO/MOVE all read CALM-GAP FAIL with gap7 n/a = NO 07:00 BAR (premarket-dark, the Day-19 MOVE artefact) -> completing gap7 from Polygon before treating any of them as blocked. GTLB #9 (+14.0%, coil 0.897), DELL #10 (+2.4%)."
+    },
+    {
+      "et": "10:16",
+      "state": "EXIT-RERANK (flat, 5 tickets left)",
+      "rank_detail": "1 EPRX +10.4% coil 0.986 (no 7AM print -> FAIL, not screened); 2 TITN +13.8% coil 0.990 (no 7AM print -> FAIL); 3 TRAX +11.4% coil 0.956 PASS calm(completed) -> SPREAD VETO 1.73%; 4 ASTS +10.9% coil 0.997 press +0.06 gap7 -0.6 calm NEEDS-SCREEN; 5 ALMS +11.2% coil 0.978 gap7 +1.9 calm NEEDS-SCREEN; 6 RNXT PASS calm(completed) -> SPREAD VETO 0.85%; 7 OABI (no 7AM print); 8 MOVE -0.4% coil 0.869; 9 GTLB +13.0% coil 0.889; 10 DAKT +5.9% coil 0.949 (just below coiled) -- DAKT book 20.47/20.54 = 0.34% PASS but it is 10th.",
+      "action": "ASTS and ALMS are at candidacy (top-3 of the calm-and-priced set, coiled) -> live screens."
+    },
+    {
+      "et": "10:17",
+      "state": "FLAT-1m poll",
+      "armable_after_screens": "TRAX (vetoed at the book, re-check each minute), RNXT (penny-spread veto by construction), then GTLB (#9, +13.0%, coil 0.889, PASS, book 0.1%) and DAKT (#10, +5.9%, coil 0.949, PASS, 0.34%). Effective TOP for Trigger C polling = GTLB; Trigger B for GTLB sits at the 57.29 session high (12% away) and the ORB high at 55.55, so only Trigger C is a realistic path. TRAX outranks GTLB the moment its spread passes."
     }
   ],
   "halal": {
     "PASS": [
       "GTLB",
       "DAKT",
-      "DELL"
+      "DELL",
+      "TRAX",
+      "RNXT"
     ],
     "FAIL": [
       "UPC",
@@ -309,7 +328,10 @@
       "RAYA",
       "LHSW",
       "EOSE",
-      "BRR"
+      "BRR",
+      "MNTK",
+      "ASTS",
+      "ALMS"
     ],
     "CANNOT_VERIFY": []
   },
@@ -406,6 +428,67 @@
       "negative_book_note": "P/B -196 (negative book from the VMware spin/buybacks). The blind-spot rule fires on an IMPLAUSIBLE input like loan_pct 0.00; here loans are 11.33% of a 275B cap = ~$31B, matching Dell's reported debt, so the ratios are real.",
       "q2": "PASS -- IT hardware (servers, storage, PCs). Dell Financial Services is a captive lease/finance arm, but interest income is 0.05% of revenue, far under the 5% line; the business is permissible.",
       "verdict": "PASS -- armable"
+    },
+    "TRAX": {
+      "q1": "PASS",
+      "loan_pct": 0.0,
+      "cash_pct": 17.35,
+      "combined": 17.35,
+      "haram_pct": 0,
+      "source": "quarterly",
+      "mcap": 1650764947,
+      "screened_et": "10:16",
+      "loan_zero_sanity": "P/B +8.6, positive book; a clinical-stage biotech with no debt and ~$290M cash on a 1.65B cap is the normal shape -- plausible.",
+      "q2": "PASS -- First Tracks Biotherapeutics (ex-AnaptysBio), clinical-stage immunology (rosnilimab, ANB033). Permissible line.",
+      "verdict": "PASS -- armable"
+    },
+    "RNXT": {
+      "q1": "PASS",
+      "loan_pct": 0.18,
+      "cash_pct": 11.64,
+      "combined": 11.82,
+      "haram_pct": 2.0,
+      "source": "quarterly",
+      "mcap": 106171680,
+      "screened_et": "10:16",
+      "q2": "PASS -- RenovoRx, targeted chemotherapy delivery platform. Permissible.",
+      "verdict": "PASS -- armable on halal (106M cap, 1.2M avg vol, 2.38)"
+    },
+    "MNTK": {
+      "q1": "FAIL",
+      "loan_pct": 54.06,
+      "cash_pct": 5.42,
+      "combined": 59.48,
+      "haram_pct": 0.71,
+      "reason": "LOAN>10+COMBINED>20",
+      "source": "quarterly",
+      "mcap": 290674848,
+      "screened_et": "10:16",
+      "note": "Montauk Renewables -- q2 would PASS (renewable natural gas). Term loans at 54% of a 291M cap."
+    },
+    "ASTS": {
+      "q1": "FAIL",
+      "loan_pct": 12.43,
+      "cash_pct": 12.58,
+      "combined": 25.01,
+      "haram_pct": 45.81,
+      "reason": "LOAN>10+COMBINED>20 (and interest income 45.8% of revenue -- pre-revenue satellite builder living on its cash pile)",
+      "source": "quarterly",
+      "mcap": 24073900659,
+      "screened_et": "10:17",
+      "note": "AST SpaceMobile, 24B cap, 8.9M sh/day -- the most liquid name to cross all day after DELL, coil 0.997, gap7 -0.6 (flat at 07:00, a textbook late crosser). Refused on both q1 legs. q2 would PASS (telecom). Day-8 finding again."
+    },
+    "ALMS": {
+      "q1": "FAIL",
+      "loan_pct": 2.53,
+      "cash_pct": 37.06,
+      "combined": 39.59,
+      "haram_pct": 76.81,
+      "reason": "CASH>10+COMBINED>20",
+      "source": "quarterly",
+      "mcap": 1411043772,
+      "screened_et": "10:17",
+      "note": "Alumis, clinical-stage autoimmune biotech: cash 37% of cap and interest income 77% of (tiny) revenue -- the ARCT shape from Day 20."
     }
   },
   "trades": [
@@ -478,7 +561,23 @@
         "placed_et": "09:33",
         "note": "Watcher-owned (c37): -8% hard, 20/10/40 pressure trail, bank 1/3 at +25%, 14:50-14:59 ladder."
       },
-      "status": "OPEN"
+      "status": "CLOSED -- hard-stopped 10:12",
+      "exit_et": "10:12",
+      "exit_bar_utc": "2026-09-02T14:12:00Z",
+      "exit_price": 436.448,
+      "exit_reason": "EXIT-STOP -- the -8% hard stop (474.40 x 0.92 = 436.448); the 10:12 bar's LOW 435.10 took it out intrabar. Booked by the watcher at 10:13:23 at the stop level.",
+      "exit_modelling": {
+        "method": "watcher stop-level fill (intrabar)",
+        "stop_level": 436.448,
+        "bar_1012": "o 439.52 h 439.74 l 435.10 c 435.12 v 139,638",
+        "bracket": "booked 436.448; the bar traded down through the level on 140k shares and closed 435.12, so a real stop-limit at bid-1% would have filled 435.1-436.4; pessimistic 435.12 = -$1,217."
+      },
+      "pnl": -1176.51,
+      "pnl_pct": -8.0,
+      "hold_minutes": 39,
+      "peak": 483.94,
+      "peak_open_pnl": 295.74,
+      "trough_open_pnl": -1176.51
     }
   ],
   "armed": [
@@ -562,7 +661,7 @@
     }
   ],
   "vetoes": {
-    "decisions_reached": 5,
+    "decisions_reached": 7,
     "spread": [
       {
         "et": "07:02",
@@ -626,6 +725,32 @@
         "spread_pct": 0.17,
         "cap_pct": 0.5,
         "verdict": "PASS"
+      },
+      {
+        "et": "10:16",
+        "sym": "TRAX",
+        "phase": "post-open",
+        "bid": 45.61,
+        "bid_size": 136,
+        "ask": 46.4,
+        "ask_size": 6,
+        "spread_pct": 1.73,
+        "cap_pct": 0.5,
+        "verdict": "VETO",
+        "note": "Effective TOP after the gap7 completion (rank 3 behind two names with no 7AM print). Halal PASS both questions. 3.5x the cap; 6 shares at the inside ask."
+      },
+      {
+        "et": "10:16",
+        "sym": "RNXT",
+        "phase": "post-open",
+        "bid": 2.35,
+        "bid_size": 310,
+        "ask": 2.37,
+        "ask_size": 800,
+        "spread_pct": 0.85,
+        "cap_pct": 0.5,
+        "verdict": "VETO",
+        "note": "Halal PASS, completed gap calm. A $2.37 stock cannot be inside a 0.5% cap with a penny spread (1 tick = 0.42%); two ticks = veto by construction."
       }
     ],
     "depth": [
@@ -702,10 +827,10 @@
       }
     ],
     "rates": {
-      "note": "through 09:33",
-      "spread": "3 vetoes / 5 decisions = 60% (premarket 3/4 = 75%, post-open 0/1)",
-      "depth": "0 skip / 1 reduce / 5",
-      "chase": "0/5"
+      "note": "through 10:16",
+      "spread": "5 vetoes / 7 decisions = 71% (premarket 3/4, post-open 2/3)",
+      "depth": "0 skip / 1 reduce / 7",
+      "chase": "0/7"
     }
   },
   "trigger_c": [
@@ -803,14 +928,66 @@
       "mark_plus_60s": 466.38,
       "delta_pct": -1.72,
       "note": "Post-open session-high stop-buy at 09:33 on a 275B name with a 0.17% book. Realism was not a book problem -- the book was deep -- it was TIMING: the trigger printed inside an opening-minutes spike and the next bar gave it all back. Same shape as GTLB's 09:30-09:31 flush."
+    },
+    {
+      "sym": "DELL",
+      "side": "exit",
+      "modelled_fill": 436.448,
+      "bar_low": 435.1,
+      "bar_close": 435.12,
+      "note": "stop-level fill inside a 140k-share down bar; bracket to the close is -$41."
     }
   ],
-  "pnl": -1136.05,
+  "pnl": -2312.56,
   "watcher": {
     "started_et": "08:15:10",
     "mode": "c37",
     "cmd": "python -u plan/paper_watch.py --book >> data/paper/watch_2026-09-02.log",
     "first_tick": "[08:15:10] TICK GTLB 56.1080 (bar 08:13) peak 56.1700 stop 51.3360 [HARD] P +0.11 open P&L $+82.54 OPEN",
     "feed": "batched get_equity_historicals every minute -> rh_bars_ingest.py writes data/rh_bars/GTLB_2026-09-02.csv, which the watcher reads directly"
+  },
+  "gap7_completion": {
+    "et": "10:15",
+    "tool": "plan/complete_gap7.py",
+    "results": {
+      "TRAX": {
+        "gap7_pct": 0.0,
+        "px": 41.17,
+        "prev_close": 41.17,
+        "source_bar": "05:48 ET, 508 sh (WARNED single-lot)",
+        "verdict": "CALM -- and CORROBORATED: TRAX opened regular hours at 44.57 = +8.3%, so 'flat at 07:00' does not rest on the lot alone (the TBN reasoning from Day 20)."
+      },
+      "MOVE": {
+        "gap7_pct": -6.09,
+        "px": 12.03,
+        "prev_close": 12.81,
+        "source_bar": "04:32 ET, 792 sh cumulative (WARNED)",
+        "verdict": "CALM; corroborated by a 12.29 regular open (-4.1%)."
+      },
+      "RNXT": {
+        "gap7_pct": 0.95,
+        "px": 2.13,
+        "prev_close": 2.11,
+        "source_bar": "06:47 ET, 5,268 sh cumulative",
+        "verdict": "CALM (size adequate)"
+      },
+      "MNTK": {
+        "gap7_pct": 1.7,
+        "verdict": "CALM (150 sh, warned) -- moot, halal FAIL"
+      },
+      "SCWO": {
+        "gap7_pct": 0.0,
+        "verdict": "CALM (800 sh, warned)"
+      },
+      "OABI": {
+        "gap7_pct": null,
+        "verdict": "NO Polygon print at/before 07:00 (first 07:03) -- CALM-GAP stays FAIL. Honest refusal; OABI (737M, 1.7M avg vol, halal-list PASS, 0.2% spread) is the day's best-looking book and is blocked by a missing 7AM print."
+      },
+      "TITN": {
+        "gap7_pct": null,
+        "verdict": "NO Polygon print at/before 07:00 (first 07:27) -- stays FAIL."
+      }
+    },
+    "note": "Ledger facts only; RH bar CSVs untouched. The rank command will keep printing CALM-GAP FAIL for these names because it reads RH bars; the session applies the completed verdicts by hand ON TOP of the ranker's ORDER (never re-ordering)."
   }
 }
