@@ -6,8 +6,12 @@ description: C37 halal day-trading session — sequential ticket rotation, one p
 # background; nothing there overrides this section.
 
 Champion: **C37** sequential ticket rotation.
-**Benchmark (2026-08-27 FINAL — the honest ones): score the day
-against −$163/traded day, not against any positive number.**
+**Benchmark (fill-model epoch 2026-09-02): score the day against
+−$272/traded day (C37F-fm: C37's own rules, full-coverage pool, pool
+hygiene, realistic gap-through fills — −$121,234 over 445 days, 17/23
+negative months), and against break-even. Earlier figures (−$163, −$182)
+were flattered by a stop-fill defect that booked exits at levels the exit
+bar never traded (fixed 2026-09-02, plan/fillmodel_test.py).**
 
 **CORRECTION 2026-09-01 (read before quoting any row below).** A simulator
 audit found that every XH/XP/K row in the table was run with a hidden
@@ -20,7 +24,7 @@ turns (≤ −0.3 / ≥ +0.3), with no hard stop, no base trail, no scale-out, n
 pattern exits, concurrent tickets. The K/XH rows are being re-measured under
 their true names (HOLD vs PTRAIL, with seeded control replicates, per-ticket
 and ex-best-day columns, and a hygiene-cleaned pool). Until that table lands,
-the live ruleset stays C37 and the only benchmark to quote is −$163/day.
+the live ruleset stays C37 (user decision 2026-09-02) and the only benchmark to quote is −$272/day.
 Live scoreboard: 17 scored days through 2026-09-01 at −$38/day — ahead of the
 honest baseline.
 
