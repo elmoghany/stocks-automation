@@ -1,10 +1,10 @@
 {
  "candidates": {
   "JLHL": {
-   "pct": 30.77,
-   "last": 7.3491,
+   "pct": 19.22,
+   "last": 6.7,
    "prev_close": 5.62,
-   "vol": "1.0283863897736e+07",
+   "vol": "1.0650297534899e+07",
    "name": "Julong Holding Limited",
    "first_seen": "06:23"
   },
@@ -33,10 +33,10 @@
    "first_seen": "06:23"
   },
   "GTLB": {
-   "pct": 13.74,
-   "last": 51.285,
+   "pct": 13.45,
+   "last": 51.1535,
    "prev_close": 45.09,
-   "vol": "1.1911178377183e+07",
+   "vol": "1.2696736013208e+07",
    "name": "GitLab",
    "first_seen": "06:23"
   },
@@ -113,10 +113,10 @@
    "first_seen": "07:06"
   },
   "PPBT": {
-   "pct": 38.55,
-   "last": 2.3,
+   "pct": 32.53,
+   "last": 2.2,
    "prev_close": 1.66,
-   "vol": "6.0769495592418e+07",
+   "vol": "6.2533379550321e+07",
    "name": "Purple Biotech",
    "first_seen": "07:36"
   },
@@ -153,10 +153,10 @@
    "first_seen": "08:11"
   },
   "CALC": {
-   "pct": 10.0,
-   "last": 2.2,
+   "pct": 10.75,
+   "last": 2.215,
    "prev_close": 2.0,
-   "vol": "141355.143468",
+   "vol": "41691.086393",
    "name": "CalciMedica, Inc.",
    "first_seen": "08:50"
   },
@@ -249,10 +249,10 @@
    "first_seen": "09:33"
   },
   "OABI": {
-   "pct": 11.26,
-   "last": 4.94,
+   "pct": 11.37,
+   "last": 4.945,
    "prev_close": 4.44,
-   "vol": "1.141210686494e+06",
+   "vol": "1.185126238086e+06",
    "name": "OmniAb",
    "first_seen": "09:45"
   },
@@ -265,26 +265,26 @@
    "first_seen": "09:45"
   },
   "RNXT": {
-   "pct": 13.74,
-   "last": 2.4,
+   "pct": 11.85,
+   "last": 2.36,
    "prev_close": 2.11,
-   "vol": "936024.880319",
+   "vol": "1.333439856378e+06",
    "name": "RenovoRx",
    "first_seen": "09:45"
   },
   "XTLB": {
-   "pct": 15.95,
-   "last": 2.69,
+   "pct": 12.59,
+   "last": 2.612,
    "prev_close": 2.32,
-   "vol": "18278.624837",
+   "vol": "18387.624837",
    "name": "XTL Biopharmaceuticals",
    "first_seen": "10:00"
   },
   "SCWO": {
-   "pct": 13.81,
-   "last": 3.2777,
+   "pct": 11.46,
+   "last": 3.21,
    "prev_close": 2.88,
-   "vol": "61143.441559",
+   "vol": "67195.580165",
    "name": "374Water",
    "first_seen": "10:00"
   },
@@ -297,10 +297,10 @@
    "first_seen": "10:00"
   },
   "TITN": {
-   "pct": 13.29,
-   "last": 23.27,
+   "pct": 13.34,
+   "last": 23.28,
    "prev_close": 20.54,
-   "vol": "129998.817098",
+   "vol": "143162.142263",
    "name": "Titan Machinery",
    "first_seen": "10:00"
   },
@@ -313,10 +313,10 @@
    "first_seen": "10:00"
   },
   "NDRA": {
-   "pct": 23.06,
-   "last": 6.485,
+   "pct": 23.15,
+   "last": 6.49,
    "prev_close": 5.27,
-   "vol": "55284.019588",
+   "vol": "58315.262213",
    "name": "ENDRA Life Sciences",
    "first_seen": "10:12"
   },
@@ -332,7 +332,7 @@
    "pct": 11.51,
    "last": 7.07,
    "prev_close": 6.34,
-   "vol": "155504.012316",
+   "vol": "182419.213778",
    "name": "Eupraxia",
    "first_seen": "10:12"
   },
@@ -353,20 +353,28 @@
    "first_seen": "10:19"
   },
   "IRD": {
-   "pct": 10.7,
-   "last": 4.24,
+   "pct": 10.05,
+   "last": 4.215,
    "prev_close": 3.83,
-   "vol": "376974.080555",
+   "vol": "476799.948971",
    "name": "Opus Genetics",
    "first_seen": "10:19"
   },
   "AIN": {
-   "pct": 10.91,
-   "last": 60.26,
+   "pct": 10.82,
+   "last": 60.21,
    "prev_close": 54.33,
-   "vol": "74368.899579",
+   "vol": "87996.380126",
    "name": "Albany International",
    "first_seen": "10:32"
+  },
+  "AHCO": {
+   "pct": 10.16,
+   "last": 6.07,
+   "prev_close": 5.51,
+   "vol": "617310.932045",
+   "name": "AdaptHealth",
+   "first_seen": "10:46"
   }
  },
  "halal_fail": [
