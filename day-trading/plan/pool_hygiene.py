@@ -71,8 +71,28 @@ def _save_types():
     cur.update(_types)
     tmp = TYPES_F.with_name(f"{TYPES_F.name}.{os.getpid()}.tmp")
     tmp.write_text(json.dumps(cur, sort_keys=True))
-    os.replace(tmp, TYPES_F)
+    _replace_retry(tmp, TYPES_F)
     _types_dirty = 0
+
+
+def _replace_retry(tmp, dst, tries=6):
+    """Windows: os.replace fails with WinError 5 while a sibling process
+    has `dst` open for reading. Retry briefly; on persistent failure
+    drop the temp file and keep going -- the cache is an accelerator,
+    losing one flush costs a refetch, never a wrong number."""
+    for i in range(tries):
+        try:
+            os.replace(tmp, dst)
+            return True
+        except PermissionError:
+            time.sleep(0.2 * (i + 1))
+    try:
+        tmp.unlink()
+    except OSError:
+        pass
+    print(f"  hygiene: could not replace {dst.name} (busy); skipped",
+          flush=True)
+    return False
 
 
 def ticker_type(sym, date=None):
@@ -117,7 +137,7 @@ def flush():
     if _drops:
         tmp = DROP_F.with_name(f"{DROP_F.name}.{os.getpid()}.tmp")
         tmp.write_text(json.dumps(_drops, indent=0))
-        os.replace(tmp, DROP_F)
+        _replace_retry(tmp, DROP_F)
 
 
 import atexit

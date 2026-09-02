@@ -68,9 +68,19 @@ def api(url):
 def _write_atomic(f, obj):
     """Parallel shards share these caches; never leave a torn file."""
     import os
+    import time
     tmp = f.with_name(f"{f.name}.{os.getpid()}.tmp")
     tmp.write_text(json.dumps(obj))
-    os.replace(tmp, f)
+    for i in range(6):
+        try:
+            os.replace(tmp, f)
+            return
+        except PermissionError:      # Windows: sibling has f open
+            time.sleep(0.2 * (i + 1))
+    try:
+        tmp.unlink()                 # give up: sibling wrote the same value
+    except OSError:
+        pass
 
 
 def get(sym, date):
