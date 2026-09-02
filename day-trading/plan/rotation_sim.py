@@ -35,6 +35,7 @@ from collections import defaultdict
 from datetime import time as dtime
 from pathlib import Path
 
+import numpy as _np
 import pandas as pd
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -934,14 +935,16 @@ def rank_at(cands, t, top=None, fc=None):
             _last, _hi, coil, prs = hit
             last = _last
         else:
-            w = r["df"][r["df"].index.time <= t]
+            w = r["df"][_times(r) <= t]
             if len(w) < 3:
                 continue
             last = float(w["Close"].iloc[-1])
             hi = float(w["High"].max())
             coil = last / hi if hi > 0 else 0
             prs = None
-            if len(w) >= 5:
+            if len(w) >= 5 and not _RANK_MODE[0]:
+                # pressure only feeds the champion key; the MX gain
+                # modes never read it (pure accelerator, identity-safe)
                 cd = dt.Candles(w)
                 prs = cd.pressure(cd.n - 1, 30, 20_000)
         # IR-series (2026-08-27): the IC study found the champion's own
@@ -1094,13 +1097,16 @@ def run_day(cands, date, cfg, stats=None, fc=None, rep=None, memo=None):
             break
         # pick at time t (rank order memoized per day: it is the same
         # for every replicate; the list is copied before any shuffle)
-        rk = ("rank", t, cfg.get("top"))
-        if memo is not None and rk in memo:
-            pool = list(memo[rk])
+        # rank order and prices at t are config-independent given the
+        # rank mode: run_many hands every config a shared sub-memo
+        rk = ("rank", t, cfg.get("top"), cfg.get("rank_mode"))
+        store = (memo.get("_shared", memo) if memo is not None else None)
+        if store is not None and rk in store:
+            pool = list(store[rk])
         else:
             pool = rank_at(cands, t, cfg.get("top"), fc)
-            if memo is not None:
-                memo[rk] = list(pool)
+            if store is not None:
+                store[rk] = list(pool)
         # SYMMETRIC GAP ALLOWANCE (2026-09-01): the 35% gap7 limit
         # belongs to the RANKED top name. Remember it BEFORE any shuffle
         # so the random arm gets the same allowance on the same symbol
@@ -1109,7 +1115,15 @@ def run_day(cands, date, cfg, stats=None, fc=None, rep=None, memo=None):
         # Applied BEFORE the shuffle so the random control draws from
         # the same eligible set.
         if min_px is not None:
-            pool = [r for r in pool if _px_at(r, t) >= min_px]
+            # prices at t are replicate-independent: memoized per day
+            pk = ("px", t)
+            if store is not None and pk in store:
+                pxs = store[pk]
+            else:
+                pxs = {r["c"]["symbol"]: _px_at(r, t) for r in pool}
+                if store is not None:
+                    store[pk] = pxs
+            pool = [r for r in pool if pxs[r["c"]["symbol"]] >= min_px]
         ranked_top = pool[0]["c"]["symbol"] if pool else None
         if cfg.get("rand"):
             import random as _rnd
@@ -1289,10 +1303,18 @@ def run_day(cands, date, cfg, stats=None, fc=None, rep=None, memo=None):
     return trades
 
 
+def _times(r):
+    """Per-candidate cache of the bar clock times (pure accelerator)."""
+    tt = r.get("_tt")
+    if tt is None:
+        tt = r["_tt"] = r["df"].index.time
+    return tt
+
+
 def _px_at(r, t):
     """Last close at or before clock time t (causal), 0 if no bar yet."""
-    w = r["df"][r["df"].index.time <= t]
-    return float(w["Close"].iloc[-1]) if len(w) else 0.0
+    idx = _np.nonzero(_times(r) <= t)[0]
+    return float(r["df"]["Close"].values[idx[-1]]) if len(idx) else 0.0
 
 
 def _rand_exit_kw(cfg, kw, rep):
@@ -1525,9 +1547,10 @@ def run_many(cfg_ids, max_days=None):
             if not cands:
                 continue
             fc = _featcache_for(date) if USE_FEATCACHE else None
+            shared = {}        # rank order / prices at t, across configs
             for cid, cfg in cfgs.items():
                 slip = cfg.get("slip") or 0.0
-                memo = {}      # rank order + sims shared across replicates
+                memo = {"_shared": shared}   # sims shared across replicates
                 for rep in reps[cid]:
                     s = st[cid][rep]
                     tr = run_day(cands, date, cfg, s["stats"], fc,
