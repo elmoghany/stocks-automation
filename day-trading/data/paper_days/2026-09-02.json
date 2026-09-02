@@ -345,6 +345,12 @@
       "state": "HOLD-20m",
       "position": "GTLB t3 open @ 51.32; broke out 10:59-11:01 to 52.35 on 178k/153k/111k-share bars; open P&L +$259 (bar 11:00); pressure +0.56 -> the 40% leg widens; hard stop 47.214 still binds.",
       "bench_1100": "scan 45 rows, 13 candidates, no new crossers. Bench unchanged: TRAX/RNXT (PASS, book-vetoed), DAKT (PASS, latched, +6%), everything else halal FAIL, no-7AM-print, or a sub-$50M microcap."
+    },
+    {
+      "et": "11:03-11:24",
+      "state": "HOLD-20m",
+      "position": "GTLB t3 open @ 51.32; ran to 53.27 (11:15) on 116k; open P&L peaked +$538 (bar 11:15), now ~+$367-400 at 52.6-52.8; pressure fading to ~0. Hard stop 47.214 binds (20% trail from 53.27 = 42.6).",
+      "bench_1116": "scan 51 rows, 14 candidates. NEW: FCUV (Focus Universal, 9M cap, 52-week high 210 vs 12.85 -- shell). MOVE re-crossed at +11.0% (14.22; completed gap7 -6.1% calm, halal-list PASS, 392M, 835k avg vol) -- the best halal-clean bench name if GTLB exits before 14:30."
     }
   ],
   "halal": {
