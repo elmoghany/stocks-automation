@@ -85,6 +85,11 @@ def t_market_at_start():
     dfp.iloc[_i(df, 10, 0), [0, 1, 2, 3]] = [1.0, 1.0, 1.0, 1.0]
     trp = dt.simulate_trades(dfp, budget=BUD, **BASE)
     assert trp and trp[0]["entry_time"] == df.index[i0] and         abs(trp[0]["entry"] - t["entry"]) < 1e-9, ("decision bar leaked", trp)
+    # liquidity-strict sizing: shares <= 50% of the PREVIOUS bar's volume
+    dfl = df.copy()
+    dfl.iloc[_i(df, 10, 0), df.columns.get_loc("Volume")] = 400.0
+    trl = dt.simulate_trades(dfl, budget=BUD, **dict(BASE, prev_bar_vol_cap=0.5))
+    assert trl and trl[0]["shares"] == 200 and trl[0]["entry_time"] == df.index[i0], trl
     # halt-aware: a 5-min tape gap right after 10:00 defers the entry
     dfh = df.drop(df.index[i0:i0 + 5])
     trh = dt.simulate_trades(dfh, budget=BUD, **dict(BASE, halt_aware=True))

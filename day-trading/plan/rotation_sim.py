@@ -823,6 +823,13 @@ def _mx_cfgs():
                                                 + base["desc"])
                     out[cid + "-K3"] = dict(base, topk=3,
                                             desc="k=3 concurrent: " + base["desc"])
+                    # LIQUIDITY-STRICT: shares also <= 50% of the previous
+                    # bar's volume (the last completed print), causal
+                    out[cid + "-L"] = dict(base,
+                                           sim_extra=dict(extra,
+                                                          prev_bar_vol_cap=0.5),
+                                           desc="liquidity-strict (<=50% prev-bar vol): "
+                                                + base["desc"])
     return out
 
 

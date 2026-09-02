@@ -1311,7 +1311,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     vwap_exit: bool | None = None,
                     rsi_exit: tuple | None = None,
                     macd_exit: bool | None = None,
-                    rand_exit: tuple | None = None) -> list[dict]:
+                    rand_exit: tuple | None = None,
+                    prev_bar_vol_cap: float | None = None) -> list[dict]:
     """Run the entry/exit state machine over 1-min bars of a single day.
 
     State machine:
@@ -1337,6 +1338,11 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
     # rand_exit=(max_hold_min, tag): CONTROL -- exit at the close of the
     #   first bar >= entry + U{1..max_hold_min} minutes (seeded by tag +
     #   entry bar + fill price).
+    # prev_bar_vol_cap=f: LIQUIDITY-STRICT sizing for market_at_start --
+    #   shares also capped at f x the volume of the bar BEFORE the fill
+    #   (the last completed print; causal). The standard 20%-of-10-bar
+    #   cap lets an open-of-bar fill exceed the whole bar's volume on a
+    #   thin tape (audit 2026-09-02: median participation 1.2x).
     # All default off => byte-identical to the pre-MX engine.
     assert entry_mode in ("triggers", "market_at_start"), entry_mode
     mas_done = False
@@ -1680,6 +1686,8 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                         vbase = _vol_base(i)
                         if vbase > 0:
                             sh = min(sh, int(vbase * max_vol_frac))
+                    if prev_bar_vol_cap is not None and i > 0:
+                        sh = min(sh, int(cd.v[i - 1] * prev_bar_vol_cap))
                     if sh >= 1:
                         shares = sh
                         entry = _fill_buy(fill, i) * (1 + slip)
