@@ -381,6 +381,12 @@
       "state": "HOLD-20m",
       "position": "GTLB t3 open @ 51.32; 50.7-51.1 range, open P&L ~-$130..-$160; pressure ~0; hard stop 47.214.",
       "bench_1233": "scan 59 rows, 17 candidates, no new crossers. OABI +22% (3.1M sh), TRAX +12.6% (619k), MOVE +14%, IRD +14.6%. Bench for a post-exit re-rank is unchanged in substance: OABI blocked (no 7AM print), TRAX/RNXT book-vetoed at last check, MOVE/LMB/IRD/FTH need screens at candidacy."
+    },
+    {
+      "et": "12:39-12:50",
+      "state": "HOLD-20m",
+      "position": "GTLB t3 open @ 51.32; 50.55-51.05, open P&L ~-$150..-$200; pressure ~0; hard stop 47.214.",
+      "bench_1246": "scan 62 rows, 21 candidates. NEW: CURR (fintech/remittance -> FAIL, recorded), SAIH (bitcoin mining, 46M cap -- q2 would need the crypto-mining judgement; 20k avg vol, moot), SORA (luxury watch wholesaler, 57M, 6k sh). Caps cached. TRAX +13.9% (639k sh), MOVE +14.6%, OABI +21.3% (3.3M sh, no 7AM print)."
     }
   ],
   "halal": {
@@ -401,7 +407,8 @@
       "MNTK",
       "ASTS",
       "ALMS",
-      "CCG"
+      "CCG",
+      "CURR"
     ],
     "CANNOT_VERIFY": []
   },
@@ -564,6 +571,11 @@
       "q1": "not reached",
       "q2": "FAIL",
       "reason": "Cheche Group -- 'insurance transaction services' platform in China. Insurance is enumerated haram; dispositive. RH label 'Packaged Software' lied again."
+    },
+    "CURR": {
+      "q1": "not reached",
+      "q2": "FAIL",
+      "reason": "Currenc Group -- RH sector 'Finance / Regional Banks'; remittance/payment services (Tranglo) plus airtime trading, P/B -45. Financial services with no revenue-mix disclosure available here: unverified is haram by rule."
     }
   },
   "trades": [
