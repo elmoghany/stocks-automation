@@ -1,18 +1,18 @@
 {
  "candidates": {
   "JLHL": {
-   "pct": 18.95,
-   "last": 6.685,
+   "pct": 20.11,
+   "last": 6.75,
    "prev_close": 5.62,
-   "vol": "1.1163352851289e+07",
+   "vol": "1.121290752317e+07",
    "name": "Julong Holding Limited",
    "first_seen": "06:23"
   },
   "UPC": {
-   "pct": 11.71,
-   "last": 4.77,
+   "pct": 10.24,
+   "last": 4.7072,
    "prev_close": 4.27,
-   "vol": "3.992963684137e+06",
+   "vol": "4.014388181717e+06",
    "name": "Universe Pharmaceuticals",
    "first_seen": "06:23"
   },
@@ -33,10 +33,10 @@
    "first_seen": "06:23"
   },
   "GTLB": {
-   "pct": 12.73,
-   "last": 50.83,
+   "pct": 12.6,
+   "last": 50.77,
    "prev_close": 45.09,
-   "vol": "1.9113133496695e+07",
+   "vol": "1.9551228368108e+07",
    "name": "GitLab",
    "first_seen": "06:23"
   },
@@ -113,10 +113,10 @@
    "first_seen": "07:06"
   },
   "PPBT": {
-   "pct": 34.04,
-   "last": 2.225,
+   "pct": 36.15,
+   "last": 2.2601,
    "prev_close": 1.66,
-   "vol": "6.7299598482966e+07",
+   "vol": "6.7665370009106e+07",
    "name": "Purple Biotech",
    "first_seen": "07:36"
   },
@@ -225,10 +225,10 @@
    "first_seen": "09:33"
   },
   "TRAX": {
-   "pct": 10.69,
-   "last": 45.57,
+   "pct": 12.57,
+   "last": 46.345,
    "prev_close": 41.17,
-   "vol": "566411.286131",
+   "vol": "619242.833169",
    "name": "First Tracks Biotherapeutics",
    "first_seen": "09:33"
   },
@@ -249,26 +249,26 @@
    "first_seen": "09:33"
   },
   "OABI": {
-   "pct": 19.26,
-   "last": 5.295,
+   "pct": 22.18,
+   "last": 5.425,
    "prev_close": 4.44,
-   "vol": "2.713398506187e+06",
+   "vol": "3.11776264605e+06",
    "name": "OmniAb",
    "first_seen": "09:45"
   },
   "MOVE": {
-   "pct": 12.1,
-   "last": 14.36,
+   "pct": 13.97,
+   "last": 14.6,
    "prev_close": 12.81,
-   "vol": "271829.077887",
+   "vol": "277824.446512",
    "name": "Corvex, Inc.",
    "first_seen": "09:45"
   },
   "RNXT": {
-   "pct": 12.8,
-   "last": 2.38,
+   "pct": 13.19,
+   "last": 2.3884,
    "prev_close": 2.11,
-   "vol": "1.749017727882e+06",
+   "vol": "1.822652384981e+06",
    "name": "RenovoRx",
    "first_seen": "09:45"
   },
@@ -297,10 +297,10 @@
    "first_seen": "10:00"
   },
   "TITN": {
-   "pct": 11.49,
-   "last": 22.9,
+   "pct": 10.03,
+   "last": 22.6,
    "prev_close": 20.54,
-   "vol": "256951.204902",
+   "vol": "268398.599522",
    "name": "Titan Machinery",
    "first_seen": "10:00"
   },
@@ -313,10 +313,10 @@
    "first_seen": "10:00"
   },
   "NDRA": {
-   "pct": 18.41,
-   "last": 6.24,
+   "pct": 23.53,
+   "last": 6.51,
    "prev_close": 5.27,
-   "vol": "92421.427095",
+   "vol": "95611.246686",
    "name": "ENDRA Life Sciences",
    "first_seen": "10:12"
   },
@@ -353,34 +353,34 @@
    "first_seen": "10:19"
   },
   "IRD": {
-   "pct": 13.32,
-   "last": 4.34,
+   "pct": 14.62,
+   "last": 4.39,
    "prev_close": 3.83,
-   "vol": "1.506518003649e+06",
+   "vol": "1.607205220637e+06",
    "name": "Opus Genetics",
    "first_seen": "10:19"
   },
   "AIN": {
-   "pct": 10.79,
-   "last": 60.19,
+   "pct": 10.19,
+   "last": 59.865,
    "prev_close": 54.33,
-   "vol": "127411.203287",
+   "vol": "132081.681312",
    "name": "Albany International",
    "first_seen": "10:32"
   },
   "AHCO": {
-   "pct": 10.62,
-   "last": 6.095,
+   "pct": 10.8,
+   "last": 6.105,
    "prev_close": 5.51,
-   "vol": "1.351123119375e+06",
+   "vol": "1.407106868993e+06",
    "name": "AdaptHealth",
    "first_seen": "10:46"
   },
   "FCUV": {
-   "pct": 24.23,
-   "last": 14.1,
+   "pct": 28.68,
+   "last": 14.605,
    "prev_close": 11.35,
-   "vol": "260858.57456",
+   "vol": "295124.658924",
    "name": "Focus Universal",
    "first_seen": "11:16"
   },
@@ -393,18 +393,18 @@
    "first_seen": "11:44"
   },
   "RPAY": {
-   "pct": 10.4,
-   "last": 3.875,
+   "pct": 10.54,
+   "last": 3.88,
    "prev_close": 3.51,
-   "vol": "324159.493282",
+   "vol": "351917.507232",
    "name": "Repay",
    "first_seen": "11:44"
   },
   "FTH": {
-   "pct": 15.44,
-   "last": 39.84,
+   "pct": 11.82,
+   "last": 38.59,
    "prev_close": 34.51,
-   "vol": "162696.120015",
+   "vol": "255776.959071",
    "name": "Faeth Therapeutics",
    "first_seen": "11:58"
   },
@@ -417,10 +417,10 @@
    "first_seen": "12:17"
   },
   "SVRE": {
-   "pct": 13.48,
-   "last": 3.03,
+   "pct": 12.36,
+   "last": 3.0,
    "prev_close": 2.67,
-   "vol": "63504.594255",
+   "vol": "65965.594255",
    "name": "SaverOne",
    "first_seen": "12:17"
   },
