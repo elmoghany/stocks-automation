@@ -56,7 +56,14 @@ def launch(argv):
     if reps:
         env["ROTREP"] = reps
     if hold:
-        env["MXHOLD"] = str(hold)
+        # "N" (all configs) or "CFG=N,CFG=N" (per-config MXHOLD_<cfg>)
+        if "=" in hold:
+            for part in hold.split(","):
+                c, n = part.split("=")
+                env[f"MXHOLD_{c}"] = n
+            env.setdefault("MXHOLD", "0")
+        else:
+            env["MXHOLD"] = str(hold)
     LOG.mkdir(parents=True, exist_ok=True)
     cmd = [sys.executable, str(ROOT / "plan/rotation_sim.py")] + cfgs
     if days:
@@ -162,7 +169,7 @@ def table(argv):
         P(f"{'':>9} exits: " + "  ".join(
             f"{a}:{b[0]}/${b[1]:+,}" for a, b in sorted(o["exits"].items())))
     # ---- adjacency grid: $/ticket by exit rule x window, per entry family
-    for fam in sorted({k[:4] for k in ranked if k[:2] in ("MX", "MT")}):
+    for fam in sorted({k[:3] for k in ranked if k[:2] in ("MX", "MT")}):
         P("")
         P(f"ADJACENCY {fam} ($/ticket both years; tickets in brackets)")
         P(" ".join(f"{h:>16}" for h in ("exit",) + WINS))

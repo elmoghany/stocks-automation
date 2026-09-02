@@ -6372,3 +6372,118 @@ ex_best; inverted control loses; adjacency coherent across the four
 windows (no isolated spike); aug2026 sign-consistent; and, for a TA
 rule specifically, beats the -S shuffled-exit control's median. If
 nothing passes, report so and name the closest miss.
+
+## MX-SERIES STAGE 1 LANDED (2026-09-02 13:34): the 32 E1/10:00 configs + the C37F identity row
+Environment as pre-registered; shards mx_s1a..d (/c/tmp/mx/*.log), results
+data/massive/rotation_results_mx_s1*.json, dumps rotation_trades_*_mx_s1*.json.
+IDENTITY: C37F inside the MX batch = -79,386 / -41,848 / 2,148 tickets / -56 per
+ticket = C37F-fm to the dollar (and C37F/HOLD1/PTRAIL1 old-vs-new on 80 days
+were byte-identical incl. trade dumps). The MX machinery is inert when off.
+
+TABLE (both years, 445 candidate days; $/tkt = P&L per $15k ticket; hold_m = mean
+minutes held):
+   config     total        Y1        Y2      days      tkts     $/tkt    $/t Y1    $/t Y2      negm     maxDD      best     worst   ex_best    hold_m
+     C37F  -121,234   -79,386   -41,848       445      2148       -56       -66       -44     17/23    88,564   +11,667   -11,382  -132,901        60
+ MXA1030B    -5,192      -694    -4,498       417       417       -12        -3       -26     13/23     8,817    +3,839    -1,792    -9,031         8
+ MXA1030H   +17,514   +14,086    +3,428       417       417       +42       +58       +19      9/23     6,944    +3,839    -3,185   +13,675        28
+ MXA1030M      +424    +1,723    -1,299       417       417        +1        +7        -7     13/23    11,335    +3,839    -3,193    -3,415        20
+ MXA1030P   +13,879    +9,903    +3,976       417       417       +33       +41       +23      9/23     8,320    +2,967    -3,185   +10,912        25
+ MXA1030R   +14,942   +12,877    +2,065       417       417       +36       +53       +12     10/23     6,875    +3,839    -3,185   +11,103        26
+ MXA1030T   +23,383   +12,782   +10,601       417       417       +56       +53       +60      8/23     8,211    +1,607    -3,185   +21,776        23
+ MXA1030V      +717    +1,787    -1,070       417       417        +2        +7        -6     13/23    13,337    +3,839    -3,185    -3,122        21
+MXA1030VB    -9,252    -4,802    -4,450       417       417       -22       -20       -25     14/23     9,961    +3,839    -1,792   -13,091         7
+ MXA1100B   -54,762   -32,125   -22,637       436      1338       -41       -41       -41     21/23    32,125    +3,622    -2,522   -58,384         9
+ MXA1100H   +35,723   +12,813   +22,910       436       436       +82       +52      +122      9/23    16,036    +3,760    -5,784   +31,963        57
+ MXA1100M   -28,391   -14,445   -13,946       436       665       -43       -38       -50     18/23    21,348    +2,995    -5,784   -31,386        27
+ MXA1100P   +28,030   +12,413   +15,617       436       491       +57       +43       +77      9/23    13,732    +3,760    -5,784   +24,270        49
+ MXA1100R   +21,587   +13,614    +7,973       436       478       +45       +51       +38     11/23    11,478    +3,760    -5,784   +17,827        49
+ MXA1100T   +19,033   +10,886    +8,147       436       553       +34       +35       +34      5/23    15,999    +2,205    -5,784   +16,828        40
+ MXA1100V    -4,067   -16,250   +12,183       436       629        -6       -45       +46     12/23    28,474    +3,352    -5,784    -7,419        34
+MXA1100VB   -64,293   -41,011   -23,282       436      1410       -46       -50       -40     22/23    41,011    +3,622    -2,522   -67,915         8
+ MXA1130B   -92,154   -48,518   -43,636       443      2145       -43       -39       -49     21/23    49,070    +3,733    -4,084   -95,887         9
+ MXA1130H   +45,439   +19,417   +26,022       443       443      +103       +78      +135      9/23    18,210    +5,713    -7,552   +39,726        85
+ MXA1130M   -52,541   -21,727   -30,814       443      1028       -51       -38       -68     16/23    31,590    +4,773    -7,299   -57,314        28
+ MXA1130P   +36,640   +10,977   +25,663       443       536       +68       +34      +119     10/23    19,792    +5,713    -7,552   +30,927        70
+ MXA1130R   +28,056   +16,540   +11,516       443       548       +51       +54       +48      9/23    16,072    +4,125    -7,552   +23,931        65
+ MXA1130T   +16,995    +1,139   +15,856       443       658       +26        +3       +54      9/23    25,892    +2,341    -7,552   +14,654        54
+ MXA1130V   -14,048   -20,011    +5,963       443       798       -18       -43       +18     14/23    31,263    +5,241    -7,552   -19,289        43
+MXA1130VB  -102,580   -57,029   -45,551       443      2278       -45       -43       -48     23/23    57,029    +3,733    -4,084  -106,313         8
+ MXA1200B  -111,808   -59,075   -52,733       443      2483       -45       -41       -50     22/23    59,075    +3,609    -6,266  -115,417        10
+ MXA1200H   +55,045   +24,564   +30,481       443       444      +124       +98      +158      9/23    18,791    +5,293    -9,432   +49,752       115
+ MXA1200M   -63,827   -33,492   -30,335       443      1369       -47       -43       -51     16/23    38,774    +3,929    -9,432   -67,756        29
+ MXA1200P   +32,295   +10,301   +21,994       443       569       +57       +30       +98     10/23    20,184    +5,293    -8,552   +27,002        89
+ MXA1200R   +25,392   +17,470    +7,922       443       615       +41       +51       +29      9/23    17,981    +3,940    -9,432   +21,452        79
+ MXA1200T   +22,876    +9,209   +13,667       443       722       +32       +23       +42      9/23    24,202    +2,901    -7,964   +19,975        67
+ MXA1200V   -21,701   -28,333    +6,632       443       900       -24       -55       +17     13/23    33,074    +7,793    -9,432   -29,494        53
+MXA1200VB  -126,456   -68,779   -57,677       443      2586       -49       -46       -53     22/23    68,779    +3,609    -6,266  -130,065         9
+
+ADJACENCY (E1 10:00 entry, $/ticket, both years; tickets in brackets):
+ADJACENCY MXA ($/ticket both years; tickets in brackets)
+            exit             1030             1100             1130             1200
+               H        +42 [417]        +82 [436]       +103 [443]       +124 [444]
+               V         +2 [417]         -6 [629]        -18 [798]        -24 [900]
+               R        +36 [417]        +45 [478]        +51 [548]        +41 [615]
+               M         +1 [417]        -43 [665]       -51 [1028]       -47 [1369]
+               B        -12 [417]       -41 [1338]       -43 [2145]       -45 [2483]
+               P        +33 [417]        +57 [491]        +68 [536]        +57 [569]
+              VB        -22 [417]       -46 [1410]       -45 [2278]       -49 [2586]
+               T        +56 [417]        +34 [553]        +26 [658]        +32 [722]
+
+
+AUGUST 2026 OUT-OF-SAMPLE (ranked rows; random controls pending):
+  MXA1030B     total -320 days 18 tkts 18 $/tkt -18 ex_best -1,054
+  MXA1030H     total +5,108 days 18 tkts 18 $/tkt +284 ex_best +964
+  MXA1030M     total +3,514 days 18 tkts 18 $/tkt +195 ex_best -375
+  MXA1030P     total +5,108 days 18 tkts 18 $/tkt +284 ex_best +964
+  MXA1030R     total +5,802 days 18 tkts 18 $/tkt +322 ex_best +1,249
+  MXA1030T     total +1,026 days 18 tkts 18 $/tkt +57 ex_best +291
+  MXA1030V     total +778 days 18 tkts 18 $/tkt +43 ex_best -782
+  MXA1030VB    total -388 days 18 tkts 18 $/tkt -22 ex_best -1,122
+  MXA1100B     total -980 days 19 tkts 71 $/tkt -14 ex_best -3,998
+  MXA1100H     total +14,004 days 19 tkts 19 $/tkt +737 ex_best +4,889
+  MXA1100M     total +7,315 days 19 tkts 31 $/tkt +236 ex_best +2,871
+  MXA1100P     total +14,060 days 19 tkts 19 $/tkt +740 ex_best +4,945
+  MXA1100R     total +11,448 days 19 tkts 25 $/tkt +458 ex_best +3,954
+  MXA1100T     total +7,207 days 19 tkts 30 $/tkt +240 ex_best +2,288
+  MXA1100V     total +3,648 days 19 tkts 32 $/tkt +114 ex_best -207
+  MXA1100VB    total -1,183 days 19 tkts 75 $/tkt -16 ex_best -4,201
+  MXA1130B     total -133 days 19 tkts 107 $/tkt -1 ex_best -4,996
+  MXA1130H     total +16,293 days 19 tkts 19 $/tkt +858 ex_best +7,567
+  MXA1130M     total +12,778 days 19 tkts 42 $/tkt +304 ex_best +4,890
+  MXA1130P     total +15,483 days 19 tkts 22 $/tkt +704 ex_best +6,757
+  MXA1130R     total +12,630 days 19 tkts 29 $/tkt +436 ex_best +3,992
+  MXA1130T     total +8,859 days 19 tkts 37 $/tkt +239 ex_best +2,715
+  MXA1130V     total +8,596 days 19 tkts 40 $/tkt +215 ex_best +4,699
+  MXA1130VB    total -647 days 19 tkts 110 $/tkt -6 ex_best -5,510
+  MXA1200B     total -2,791 days 21 tkts 120 $/tkt -23 ex_best -7,654
+  MXA1200H     total +16,479 days 21 tkts 21 $/tkt +785 ex_best +7,425
+  MXA1200M     total +8,862 days 21 tkts 64 $/tkt +138 ex_best +3,545
+  MXA1200P     total +12,442 days 21 tkts 27 $/tkt +461 ex_best +5,487
+  MXA1200R     total +9,551 days 21 tkts 34 $/tkt +281 ex_best +3,602
+  MXA1200T     total +8,969 days 21 tkts 40 $/tkt +224 ex_best +2,825
+  MXA1200V     total +6,960 days 21 tkts 45 $/tkt +155 ex_best +3,227
+  MXA1200VB    total -3,478 days 21 tkts 121 $/tkt -29 ex_best -8,341
+
+STAGE-1 READ (controls still running -- nothing here is a verdict yet):
+  * H (time-flatten only) is positive in BOTH years at EVERY window and
+    MONOTONE in exit_end: +42 -> +82 -> +103 -> +124 $/ticket (Y1 +58/
+    +52/+78/+98, Y2 +19/+122/+135/+158), negm 9/23 at every window,
+    maxDD 7-19k on a $15k ticket. This is the pre-registered prior for
+    the IC corner, in the predicted direction and order.
+  * EVERY TA sell trigger is worse than H at its own window from 11:00
+    on. VWAP (V), MACD (M), bearish patterns (B) and VWAP+bearish (VB)
+    turn the trade NEGATIVE (-6..-49/tkt): they sell the drift early
+    and re-pick, so tickets multiply (up to 2,586) and each re-pick pays
+    the 20 bps again. RSI(14,70) (R: +36..+51) and the pressure flip
+    (P: +33..+68) keep most of it but never beat H. The +5% target (T)
+    is the one rule that beats H at 10:30 (+56 vs +42) and is the ONLY
+    rule with Y1 ~ Y2 there; it loses to H from 11:00 on.
+  * Best 2 exit rules by $/tkt summed over the 4 windows: H (351) and P
+    (215); then R (173), T (148). Stage 2 (E1/09:35 and E2 triggers)
+    runs H and P; stage 3 controls run on H and P at all 4 windows
+    (-R x30, -I, -S x30 with MXHOLD = 2 x mean hold), plus -R/-I on
+    MXA1030T; k=3 on MXA1200H/1130H/1100H.
+  * aug2026 is positive for every H/P/R/T row (+57..+858/tkt) and
+    negative for B/VB -- sign-consistent with the two years; but August
+    was kind to every hold (HOLD1 +225/tkt), so only the aug random
+    control (running) can say whether the ranking added anything there.

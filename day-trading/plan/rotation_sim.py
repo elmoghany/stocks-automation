@@ -1301,7 +1301,8 @@ def _rand_exit_kw(cfg, kw, rep):
     Returns the memo-key suffix (the sim now depends on the replicate)."""
     if not cfg.get("rand_exit"):
         return ()
-    hold = int(_os.environ["MXHOLD"])
+    hold = int(_os.environ.get(f"MXHOLD_{cfg.get('_id')}")
+               or _os.environ["MXHOLD"])     # per-config override first
     kw["rand_exit"] = (hold, f"mxs-{rep}")
     return ("rx", hold, rep)
 
