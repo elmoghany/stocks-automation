@@ -233,6 +233,13 @@
       "state": "FILL -> HOLD-20m",
       "event": "GTLB stop 55.80 hit on the 08:13 bar (o 55.6241 h 56.17 l 55.6241 c 56.108 v 7256). Ticket 1 filled 268 sh @ 55.80 = $14,954.40. Watcher opened; cadence switches to HOLD (position watch owns the 1-min bars; light bench every ~20 min; full re-rank at exit).",
       "bench_at_fill": "2 GTLB (now +24.4% coil 0.999), 3 DAKT +9.7% coil 0.988 gap7 +1.6 PASS (live q1 PASS loan 1.5 / cash 14.08 / combined 15.58 + 2026-08-22 external ruling PASS) -- DAKT has NOT yet printed its +10% cross on the bars (9.7%); latched from the scan at +10.59%. EOSE #1 by coil but halal FAIL."
+    },
+    {
+      "et": "08:15-08:35",
+      "state": "HOLD-20m",
+      "position": "GTLB 268 @ 55.80 open; watcher ticks every 30 s; open P&L ranged +$105 (08:17, bar h 56.50) to -$76 (08:28); pressure went negative (-0.3 to -0.5) from 08:26 so the 10% trail leg is the live one, but from the 56.50 peak that is 50.85 < the 51.336 hard stop, so the hard stop binds.",
+      "bench_0831": "scan 93 rows, 9 candidates, no new crossers. DAKT fell off the scan (+9.7% on bars) but stays latched -- it is the only halal-PASS bench name. JLHL +26.9% calm-gap FAIL; PPBT 2.04 (price floor) calm FAIL; CANF coil <0.95.",
+      "note": "premarket book on GTLB stayed thin: 150-2,300 sh/min bars 08:20-08:35."
     }
   ],
   "halal": {
@@ -340,8 +347,10 @@
       "fill_semantic": "The 08:13 bar opened 55.6241 (below the trigger), printed a high of 56.17 and closed 56.108 on 7,256 shares. The stop triggered intrabar with the open below it, so the fill is booked AT the trigger (55.80), the simulator's convention for breaks. Bracket: the bar closed ABOVE the 56.079 limit, so a real stop-limit that saw the print jump 55.79 -> 56.10 in one tick could have filled at the limit or been skipped; pessimistic fill 56.079 (-0.5%), optimistic/booked 55.80.",
       "fill_realism": {
         "assumed_fill": 55.8,
-        "mark_plus_60s": null,
-        "note": "filled in on the 08:14 bar close"
+        "mark_plus_60s": 56.19,
+        "mark_bar_utc": "2026-09-02T12:14:00Z close",
+        "delta_pct": 0.69,
+        "reading": "We paid 0.69% LESS than the price 60 seconds later -- favourable, the breakout kept going (08:14 bar h 56.50 on 17,377 sh). Bracket note: at the pessimistic 56.079 limit fill the delta is still +0.20%."
       },
       "protective_stop": {
         "level": 51.336,
@@ -570,6 +579,22 @@
     }
   ],
   "findings": [],
-  "fill_realism": [],
-  "pnl": 0.0
+  "fill_realism": [
+    {
+      "sym": "GTLB",
+      "side": "entry",
+      "assumed_fill": 55.8,
+      "mark_plus_60s": 56.19,
+      "delta_pct": 0.69,
+      "note": "Premarket stop-buy through the premarket high on a 7.6B name. Favourable because the break continued; the book was 1.28% wide at the last read before the fill, so a real order would have paid somewhere between the trigger and the limit."
+    }
+  ],
+  "pnl": 0.0,
+  "watcher": {
+    "started_et": "08:15:10",
+    "mode": "c37",
+    "cmd": "python -u plan/paper_watch.py --book >> data/paper/watch_2026-09-02.log",
+    "first_tick": "[08:15:10] TICK GTLB 56.1080 (bar 08:13) peak 56.1700 stop 51.3360 [HARD] P +0.11 open P&L $+82.54 OPEN",
+    "feed": "batched get_equity_historicals every minute -> rh_bars_ingest.py writes data/rh_bars/GTLB_2026-09-02.csv, which the watcher reads directly"
+  }
 }
