@@ -1,10 +1,10 @@
 {
  "candidates": {
   "JLHL": {
-   "pct": 27.58,
-   "last": 7.17,
+   "pct": 31.32,
+   "last": 7.38,
    "prev_close": 5.62,
-   "vol": "99482.965074",
+   "vol": "8.884683301693e+06",
    "name": "Julong Holding Limited",
    "first_seen": "06:23"
   },
@@ -33,10 +33,10 @@
    "first_seen": "06:23"
   },
   "GTLB": {
-   "pct": 22.2,
-   "last": 55.1,
+   "pct": 12.64,
+   "last": 50.79,
    "prev_close": 45.09,
-   "vol": "1.0855885963333e+07",
+   "vol": "7.342907341576e+06",
    "name": "GitLab",
    "first_seen": "06:23"
   },
@@ -113,10 +113,10 @@
    "first_seen": "07:06"
   },
   "PPBT": {
-   "pct": 42.17,
-   "last": 2.36,
+   "pct": 43.37,
+   "last": 2.38,
    "prev_close": 1.66,
-   "vol": "59999.696",
+   "vol": "4.770334727591e+07",
    "name": "Purple Biotech",
    "first_seen": "07:36"
   },
@@ -145,10 +145,10 @@
    "first_seen": "08:01"
   },
   "DAKT": {
-   "pct": 10.59,
-   "last": 21.4109,
+   "pct": 10.69,
+   "last": 21.43,
    "prev_close": 19.36,
-   "vol": "525131.448174",
+   "vol": "217964.915685",
    "name": "Daktronics",
    "first_seen": "08:11"
   },
@@ -201,10 +201,10 @@
    "first_seen": "09:26"
   },
   "DELL": {
-   "pct": 10.19,
-   "last": 468.3,
+   "pct": 12.67,
+   "last": 478.835,
    "prev_close": 425.0,
-   "vol": "1.5967961337793e+07",
+   "vol": "6.321461159789e+06",
    "name": "Dell",
    "first_seen": "09:26"
   },
@@ -215,6 +215,62 @@
    "vol": "814299.405521",
    "name": "ProCap Financial",
    "first_seen": "09:26"
+  },
+  "MNTK": {
+   "pct": 16.48,
+   "last": 2.05,
+   "prev_close": 1.76,
+   "vol": "185028.26609",
+   "name": "Montauk Renewables",
+   "first_seen": "09:33"
+  },
+  "TRAX": {
+   "pct": 12.92,
+   "last": 46.49,
+   "prev_close": 41.17,
+   "vol": "126313.600597",
+   "name": "First Tracks Biotherapeutics",
+   "first_seen": "09:33"
+  },
+  "SPPL": {
+   "pct": 14.43,
+   "last": 2.3,
+   "prev_close": 2.01,
+   "vol": "19388.9121",
+   "name": "SIMPPLE LTD.",
+   "first_seen": "09:33"
+  },
+  "WATR": {
+   "pct": 12.15,
+   "last": 2.4,
+   "prev_close": 2.14,
+   "vol": "3560.7642",
+   "name": "Air Water Ventures",
+   "first_seen": "09:33"
+  },
+  "OABI": {
+   "pct": 14.14,
+   "last": 5.0679,
+   "prev_close": 4.44,
+   "vol": "402935.255168",
+   "name": "OmniAb",
+   "first_seen": "09:45"
+  },
+  "MOVE": {
+   "pct": 12.74,
+   "last": 14.4426,
+   "prev_close": 12.81,
+   "vol": "66012.77288",
+   "name": "Corvex, Inc.",
+   "first_seen": "09:45"
+  },
+  "RNXT": {
+   "pct": 11.37,
+   "last": 2.35,
+   "prev_close": 2.11,
+   "vol": "423060.657645",
+   "name": "RenovoRx",
+   "first_seen": "09:45"
   }
  },
  "halal_fail": [

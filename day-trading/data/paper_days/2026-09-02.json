@@ -277,6 +277,18 @@
       "et": "09:33",
       "state": "FILL -> HOLD-20m",
       "event": "DELL stop 474.40 hit on the 09:33 bar. Ticket 2 filled 31 sh @ 474.40 = $14,706.40. Cumulative deployed today $29,660.80 of $100,000; tickets left 5 ($15k x4 + $10k). Trigger C also fired on the same 09:33 close (macd_cross_up, TAKEABLE NOW at the 09:34:21 read) -- moot, the stop-buy had already taken the ticket on the same bar."
+    },
+    {
+      "et": "09:33-09:37",
+      "state": "HOLD-20m",
+      "position": "DELL 31 @ 474.40 open. 09:34 bar 473.76 -> 465.19; 09:35 bar l 451.50 c 453.47 on 196k; 09:36 c 457.75. Open P&L ~ -$250 (watcher, bar 09:34) heading to ~ -$520. Hard stop 436.448 binds (10% leg from 474.77 = 427.3 is looser).",
+      "bench_0933": "post-open scan collapsed to 39 rows (the ETF stale marks refresh at the open): 8 candidates. NEW: MNTK (Montauk Renewables, 291M, RNG -- permissible line, 2.02 at the price floor), TRAX (First Tracks Biotherapeutics, 1.65B, 47.25 +14.8%, 553k avg vol -- a liquid biotech; clinical-stage so the cash/interest ratios are the risk), SPPL (22M), WATR (76M, Abu Dhabi water, 3 employees). DAKT back on the scan at +10.69%. Caps cached; screens deferred to candidacy."
+    },
+    {
+      "et": "09:37-09:47",
+      "state": "HOLD-20m",
+      "position": "DELL open; V-shaped: 451.50 low (09:35) -> 478.53 high (09:44); open P&L -$516 -> +$4 (bar 09:42) -> ~+$115. Hard stop 436.448 binds.",
+      "bench_0945": "scan 42 rows, 10 candidates. NEW: OABI (OmniAb, 737M, 1.7M avg vol, antibody-discovery platform -- liquid, halal to be screened at candidacy), MOVE (Corvex, 392M, AI GPU cloud, P/B -6.8 -- the name Day 19 lost to a missing 7AM bar), RNXT (RenovoRx, 106M). Caps cached. DAKT off the scan again (latched)."
     }
   ],
   "halal": {
@@ -449,8 +461,10 @@
       "fill_semantic": "The 09:33 bar opened 469.50 (below the trigger), printed a high of 474.77 and closed 473.13 on 140,388 shares. Booked AT the trigger per the simulator's convention. HONESTY NOTE: the arm was placed mid-bar at 09:33:16 with the L2 ask already at 474.74 (bid 473.94), so a real stop order would most likely have triggered within seconds and filled near 474.74 -- the bracket is 474.40 (booked) to 474.77 (bar high), a 0.08% band; not adjusted.",
       "fill_realism": {
         "assumed_fill": 474.4,
-        "mark_plus_60s": null,
-        "note": "filled in on the 09:34 bar close"
+        "mark_plus_60s": 466.38,
+        "mark_bar_utc": "2026-09-02T13:34:00Z close",
+        "delta_pct": -1.72,
+        "reading": "We paid 1.72% MORE than the price 60 seconds later -- the worst entry-fill realism of the campaign so far (Day 19 NEOV -2.20% is the only comparable). The 09:34 bar reversed from 473.76 to 465.19 on 129k shares: a session-high stop-buy in the third minute after the open on an earnings gapper bought the top of a 1-minute spike."
       },
       "protective_stop": {
         "level": 436.448,
@@ -775,6 +789,14 @@
       "bar_low": 50.28,
       "bar_close": 50.89,
       "self_flattery_est": "0 to -$180 depending on where inside 50.28-51.56 a real stop-limit filled; recorded as a bracket, not adjusted."
+    },
+    {
+      "sym": "DELL",
+      "side": "entry",
+      "assumed_fill": 474.4,
+      "mark_plus_60s": 466.38,
+      "delta_pct": -1.72,
+      "note": "Post-open session-high stop-buy at 09:33 on a 275B name with a 0.17% book. Realism was not a book problem -- the book was deep -- it was TIMING: the trigger printed inside an opening-minutes spike and the next bar gave it all back. Same shape as GTLB's 09:30-09:31 flush."
     }
   ],
   "pnl": -1136.05,
