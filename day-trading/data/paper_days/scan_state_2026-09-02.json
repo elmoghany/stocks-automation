@@ -1,18 +1,18 @@
 {
  "candidates": {
   "JLHL": {
-   "pct": 17.97,
-   "last": 6.6297,
+   "pct": 15.12,
+   "last": 6.47,
    "prev_close": 5.62,
-   "vol": "1.1272103501799e+07",
+   "vol": "1.1312475330524e+07",
    "name": "Julong Holding Limited",
    "first_seen": "06:23"
   },
   "UPC": {
-   "pct": 11.01,
-   "last": 4.74,
+   "pct": 11.48,
+   "last": 4.76,
    "prev_close": 4.27,
-   "vol": "4.038184988317e+06",
+   "vol": "4.056939188317e+06",
    "name": "Universe Pharmaceuticals",
    "first_seen": "06:23"
   },
@@ -113,10 +113,10 @@
    "first_seen": "07:06"
   },
   "PPBT": {
-   "pct": 36.75,
-   "last": 2.2701,
+   "pct": 41.03,
+   "last": 2.3411,
    "prev_close": 1.66,
-   "vol": "6.827671192949e+07",
+   "vol": "6.9192658110488e+07",
    "name": "Purple Biotech",
    "first_seen": "07:36"
   },
@@ -225,10 +225,10 @@
    "first_seen": "09:33"
   },
   "TRAX": {
-   "pct": 14.07,
-   "last": 46.9625,
+   "pct": 13.81,
+   "last": 46.855,
    "prev_close": 41.17,
-   "vol": "706501.663352",
+   "vol": "729908.46592",
    "name": "First Tracks Biotherapeutics",
    "first_seen": "09:33"
   },
@@ -249,26 +249,26 @@
    "first_seen": "09:33"
   },
   "OABI": {
-   "pct": 19.71,
-   "last": 5.315,
+   "pct": 20.83,
+   "last": 5.365,
    "prev_close": 4.44,
-   "vol": "3.499273920848e+06",
+   "vol": "3.638715153856e+06",
    "name": "OmniAb",
    "first_seen": "09:45"
   },
   "MOVE": {
-   "pct": 16.0,
-   "last": 14.86,
+   "pct": 15.22,
+   "last": 14.76,
    "prev_close": 12.81,
-   "vol": "303746.704765",
+   "vol": "359647.895402",
    "name": "Corvex, Inc.",
    "first_seen": "09:45"
   },
   "RNXT": {
-   "pct": 12.8,
-   "last": 2.38,
+   "pct": 13.27,
+   "last": 2.3899,
    "prev_close": 2.11,
-   "vol": "1.895811944788e+06",
+   "vol": "1.944672944788e+06",
    "name": "RenovoRx",
    "first_seen": "09:45"
   },
@@ -281,10 +281,10 @@
    "first_seen": "10:00"
   },
   "SCWO": {
-   "pct": 10.07,
-   "last": 3.17,
+   "pct": 10.76,
+   "last": 3.19,
    "prev_close": 2.88,
-   "vol": "122560.528571",
+   "vol": "131208.207808",
    "name": "374Water",
    "first_seen": "10:00"
   },
@@ -297,10 +297,10 @@
    "first_seen": "10:00"
   },
   "TITN": {
-   "pct": 12.27,
-   "last": 23.06,
+   "pct": 12.29,
+   "last": 23.065,
    "prev_close": 20.54,
-   "vol": "314028.692212",
+   "vol": "334561.543212",
    "name": "Titan Machinery",
    "first_seen": "10:00"
   },
@@ -313,10 +313,10 @@
    "first_seen": "10:00"
   },
   "NDRA": {
-   "pct": 21.06,
-   "last": 6.3801,
+   "pct": 22.39,
+   "last": 6.45,
    "prev_close": 5.27,
-   "vol": "99581.006686",
+   "vol": "100873.786686",
    "name": "ENDRA Life Sciences",
    "first_seen": "10:12"
   },
@@ -329,10 +329,10 @@
    "first_seen": "10:12"
   },
   "EPRX": {
-   "pct": 10.73,
-   "last": 7.02,
+   "pct": 11.28,
+   "last": 7.055,
    "prev_close": 6.34,
-   "vol": "214423.946361",
+   "vol": "343594.883727",
    "name": "Eupraxia",
    "first_seen": "10:12"
   },
@@ -353,18 +353,18 @@
    "first_seen": "10:19"
   },
   "IRD": {
-   "pct": 14.57,
-   "last": 4.388,
+   "pct": 14.1,
+   "last": 4.37,
    "prev_close": 3.83,
-   "vol": "1.712069499788e+06",
+   "vol": "1.766501395468e+06",
    "name": "Opus Genetics",
    "first_seen": "10:19"
   },
   "AIN": {
-   "pct": 10.88,
-   "last": 60.24,
+   "pct": 10.85,
+   "last": 60.225,
    "prev_close": 54.33,
-   "vol": "146217.779559",
+   "vol": "149482.779559",
    "name": "Albany International",
    "first_seen": "10:32"
   },
@@ -380,7 +380,7 @@
    "pct": 31.1,
    "last": 14.88,
    "prev_close": 11.35,
-   "vol": "353608.137335",
+   "vol": "387161.002377",
    "name": "Focus Universal",
    "first_seen": "11:16"
   },
@@ -401,10 +401,10 @@
    "first_seen": "11:44"
   },
   "FTH": {
-   "pct": 12.34,
-   "last": 38.77,
+   "pct": 10.11,
+   "last": 38.0,
    "prev_close": 34.51,
-   "vol": "279772.193133",
+   "vol": "337851.222314",
    "name": "Faeth Therapeutics",
    "first_seen": "11:58"
   },
@@ -417,10 +417,10 @@
    "first_seen": "12:17"
   },
   "SVRE": {
-   "pct": 16.1,
-   "last": 3.1,
+   "pct": 17.23,
+   "last": 3.13,
    "prev_close": 2.67,
-   "vol": "73226.336029",
+   "vol": "74712.383312",
    "name": "SaverOne",
    "first_seen": "12:17"
   },
@@ -449,10 +449,10 @@
    "first_seen": "12:46"
   },
   "SORA": {
-   "pct": 12.5,
-   "last": 2.34,
+   "pct": 13.22,
+   "last": 2.355,
    "prev_close": 2.08,
-   "vol": "7152.544003",
+   "vol": "8991.544003",
    "name": "AsiaStrategy",
    "first_seen": "12:46"
   },
@@ -471,6 +471,38 @@
    "vol": "434409.616642",
    "name": "Santacruz Silver Mining Ltd.",
    "first_seen": "12:59"
+  },
+  "WAVE": {
+   "pct": 11.32,
+   "last": 6.49,
+   "prev_close": 5.83,
+   "vol": "22400.106743",
+   "name": "Eco Wave Power Global",
+   "first_seen": "13:19"
+  },
+  "RGC": {
+   "pct": 10.73,
+   "last": 6.09,
+   "prev_close": 5.5,
+   "vol": "130158.513739",
+   "name": "Regencell Bioscience",
+   "first_seen": "13:19"
+  },
+  "FMC": {
+   "pct": 10.52,
+   "last": 13.13,
+   "prev_close": 11.88,
+   "vol": "2.784017940012e+06",
+   "name": "FMC",
+   "first_seen": "13:19"
+  },
+  "KARD": {
+   "pct": 10.36,
+   "last": 21.63,
+   "prev_close": 19.6,
+   "vol": "112137.582239",
+   "name": "Kardigan, Inc.",
+   "first_seen": "13:19"
   }
  },
  "halal_fail": [
