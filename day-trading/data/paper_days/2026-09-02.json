@@ -94,6 +94,24 @@
       "rank_top": "GTLB -- 3 crossed / 1 armable",
       "rank_detail": "1 GTLB +19.8% coil 0.968 press +0.19 gap 19.8 calm-yes halal PASS COILED; 2 JLHL +27.4% coil 0.930 CALM-GAP FAIL; 3 UPC +26.0% coil 0.910 CALM-GAP FAIL + HARAM by ruling",
       "read": "GTLB (GitLab, 7.6B cap, 10.9M shares yesterday) is the one liquid, permissible, coiled name on the board. Its calm gap is +19.8% against a 20% gate -- one tick from the line, with the 35% top-name grace as the backstop. Everything else is either a stale mark or a sub-$150M microcap."
+    },
+    {
+      "et": "07:01",
+      "state": "FLAT-5m",
+      "scan_rows": 93,
+      "candidates": 13,
+      "new": [
+        "FBLA",
+        "CANF",
+        "ARMH(re-entered; purged again, pattern now fixed)"
+      ],
+      "gone_still_latched": [
+        "CHRN"
+      ],
+      "note": "Second scan: 93 rows, 75 funds. NEW: FBLA (FB Bancorp, +21.9% -- a BANK, halal FAIL on question 2 without a screen; recorded via record_halal.py so it can never re-enter), CANF (Can-Fite BioPharma, +15.2%, 7M cap). Dump rebuilt via new plan/dump_carry.py (carry base rows, explicit --drop from a full 95-vs-93 ticker diff: CVR CHRN BRNX HPEL; --set for the 4 rows whose numbers moved + 2 new).",
+      "rank_top": "GTLB -- 3 crossed / 1 armable",
+      "rank_detail": "1 GTLB +19.5% coil 0.966 press -0.01 gap7 +19.5 calm-yes PASS COILED; 2 JLHL +33.9% coil 0.950 CALM-GAP FAIL; 3 UPC +13.3% HARAM (ruling)",
+      "gap7_note": "GTLB's 07:00 bar exists on the RH tape (real premarket volume), so the calm gap is measured, not completed: +19.5% against the 20% gate, inside the line on its own merits and doubly inside with the 35% top-name grace."
     }
   ],
   "halal": {
@@ -101,7 +119,8 @@
       "GTLB"
     ],
     "FAIL": [
-      "UPC"
+      "UPC",
+      "FBLA"
     ],
     "CANNOT_VERIFY": []
   },
@@ -122,15 +141,55 @@
     "UPC": {
       "verdict": "FAIL (ruling)",
       "reason": "HARAM by user ruling in data/halal_rulings.json -- refused by the ranker without a live screen. Not re-litigated."
+    },
+    "FBLA": {
+      "q1": "not reached",
+      "q2": "FAIL",
+      "reason": "FB Bancorp -- a bank holding company (the name says it; RH scan Market cap 226M). Banking/lending is enumerated haram, dispositive without running q1."
     }
   },
   "trades": [],
   "armed": [],
   "vetoes": {
-    "decisions_reached": 0,
-    "spread": [],
-    "depth": [],
-    "chase_fill_arming": []
+    "decisions_reached": 1,
+    "spread": [
+      {
+        "et": "07:02",
+        "sym": "GTLB",
+        "phase": "premarket",
+        "bid": 53.5,
+        "bid_size": 4,
+        "ask": 54.0,
+        "ask_size": 44,
+        "spread_pct": 0.93,
+        "cap_pct": 0.5,
+        "verdict": "VETO",
+        "note": "GTLB cleared halal (both questions), calm-gap, coil and rank 1 and was taken to the book at 07:02: inside bid 53.50 x4 / inside ask 54.00 x44 = 0.93%, 1.9x the cap. Depth is NOT the problem (displayed asks from 54.00 up to 56.08 = trigger 55.80 x1.005 sum to ~4,000 shares against 269 needed). Re-evaluate every cycle; premarket books on a 7.6B name normally collapse to a few cents at 09:30."
+      }
+    ],
+    "depth": [
+      {
+        "et": "07:02",
+        "sym": "GTLB",
+        "intended_shares": 268,
+        "ticket_usd": 15000,
+        "trigger": 55.8,
+        "trigger_plus_half_pct": 56.08,
+        "cumulative_ask_size_within_cap": 4021,
+        "pct_of_intended": 1500,
+        "verdict": "PASS"
+      }
+    ],
+    "chase_fill_arming": [
+      {
+        "et": "07:02",
+        "sym": "GTLB",
+        "last": 53.88,
+        "trigger": 55.8,
+        "verdict": "PASS",
+        "note": "last 53.88 < 55.80 premarket-high trigger -- a genuine forward stop, no chase."
+      }
+    ]
   },
   "trigger_c": [],
   "coverage_gaps": [],

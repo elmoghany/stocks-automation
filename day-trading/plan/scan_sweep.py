@@ -23,7 +23,11 @@ SPAC_PAT = re.compile(r"acquisition|blank.?check|capital investment corp|researc
 # fixed-income in substance, which is a live halal question of its own.
 NONCOMMON_PAT = re.compile(
     r"\bwarrants?\b|\brights?\b|\bunits?\b|\bpreferred\b|\bpfd\b|\bdepositary\b"
-    r"|\bdebenture|\bnotes? due\b|\bsubordinated\b", re.I)
+    r"|\bdebenture|\bnotes? due\b|\bsubordinated\b"
+    # ADRhedged (2026-09-02, Day 21): "Arm Holdings PLC ADRhedged" (ARMH) is a
+    # Precidian currency-hedged ADR wrapper product, not the issuer's common
+    # stock; it reached the candidate list twice before this pattern existed.
+    r"|adrhedged", re.I)
 FUND_PAT = re.compile(
     r"ETF|ETN|\bfund\b|\btrust\b|ishares|proshares|direxion|vanguard|invesco|franklin|spdr"
     r"|microsectors|leverage shares|defiance|graniteshares|tradr |corgi |themes|tidal"

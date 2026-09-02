@@ -1,17 +1,17 @@
 {
  "candidates": {
   "JLHL": {
-   "pct": 28.65,
-   "last": 7.23,
-   "prev_close": 5.6199,
+   "pct": 33.45,
+   "last": 7.5,
+   "prev_close": 5.6201,
    "vol": "99482.965074",
    "name": "Julong Holding Limited",
    "first_seen": "06:23"
   },
   "UPC": {
-   "pct": 24.36,
-   "last": 5.31,
-   "prev_close": 4.2699,
+   "pct": 11.71,
+   "last": 4.77,
+   "prev_close": 4.27,
    "vol": "1575715.7766",
    "name": "Universe Pharmaceuticals",
    "first_seen": "06:23"
@@ -33,10 +33,10 @@
    "first_seen": "06:23"
   },
   "GTLB": {
-   "pct": 19.21,
-   "last": 53.75,
-   "prev_close": 45.0885,
-   "vol": "10855885.963",
+   "pct": 19.49,
+   "last": 53.88,
+   "prev_close": 45.0916,
+   "vol": "10855885.963333",
    "name": "GitLab",
    "first_seen": "06:23"
   },
@@ -87,9 +87,27 @@
    "vol": "4307.4499",
    "name": "Presurance Holdings",
    "first_seen": "06:23"
+  },
+  "FBLA": {
+   "pct": 21.87,
+   "last": 19.0,
+   "prev_close": 15.5904,
+   "vol": "123270.169559",
+   "name": "FB Bancorp",
+   "first_seen": "07:01"
+  },
+  "CANF": {
+   "pct": 15.19,
+   "last": 3.7899,
+   "prev_close": 3.2901,
+   "vol": "16314.6861",
+   "name": "Can-Fite BioPharma",
+   "first_seen": "07:01"
   }
  },
- "halal_fail": [],
+ "halal_fail": [
+  "FBLA"
+ ],
  "fake_gap": [],
  "inherited_fail": [
   "AAPG",
@@ -242,6 +260,12 @@
  ],
  "_seed": "seeded 2026-09-02 from scan_state_2026-09-01 (inherited_fail + halal_fail + cannot_verify)",
  "_purged": [
+  {
+   "purged": [
+    "ARMH"
+   ],
+   "reason": "cross-day scan_dump filename collision -- these never crossed +10% today"
+  },
   {
    "purged": [
     "ARMH"
