@@ -312,6 +312,11 @@
       "et": "10:17",
       "state": "FLAT-1m poll",
       "armable_after_screens": "TRAX (vetoed at the book, re-check each minute), RNXT (penny-spread veto by construction), then GTLB (#9, +13.0%, coil 0.889, PASS, book 0.1%) and DAKT (#10, +5.9%, coil 0.949, PASS, 0.34%). Effective TOP for Trigger C polling = GTLB; Trigger B for GTLB sits at the 57.29 session high (12% away) and the ORB high at 55.55, so only Trigger C is a realistic path. TRAX outranks GTLB the moment its spread passes."
+    },
+    {
+      "et": "10:19",
+      "state": "FILL -> HOLD-20m",
+      "event": "GTLB ticket 3: 291 sh @ 51.32 = $14,934.12 on a fresh Trigger C. Deployed today $44,594.92 of $100,000; 4 tickets left ($15k x3 + $10k). TRAX fired the same macd_cross_up at 10:17 but its book was 1.7% wide (veto stands)."
     }
   ],
   "halal": {
@@ -578,6 +583,26 @@
       "peak": 483.94,
       "peak_open_pnl": 295.74,
       "trough_open_pnl": -1176.51
+    },
+    {
+      "ticket": 3,
+      "sym": "GTLB",
+      "side": "long",
+      "REAL_ORDER": false,
+      "entry_et": "10:19",
+      "entry_bar_utc": "2026-09-02T14:19:00Z",
+      "entry_price": 51.32,
+      "shares": 291,
+      "notional": 14934.12,
+      "trigger": "C -- macd_cross_up @ 10:17 close",
+      "fill_semantic": "Marketable limit (cap 51.46) swept the displayed asks at 10:19:34: 100 @ 51.31, 104 @ 51.32, 87 @ 51.33 -> VWAP 51.32 (rounded). Booked at the SWEEP price, not the naive inside ask (51.31) and not the signal bar's close -- the 10:17 close is recorded below as the simulator-convention bracket.",
+      "protective_stop": {
+        "level": 47.2144,
+        "basis": "max(entry x 0.92, peak x 0.60)",
+        "placed_et": "10:19",
+        "note": "watcher-owned (c37)"
+      },
+      "status": "OPEN"
     }
   ],
   "armed": [
@@ -658,10 +683,37 @@
         "basis": "max(entry x 0.92, peak x 0.60) on an assumed 474.40 fill"
       },
       "status": "FILLED 09:33 -- see trades[1]"
+    },
+    {
+      "ticket": 3,
+      "sym": "GTLB",
+      "armed_et": "10:19",
+      "trigger_type": "C -- macd_cross_up on the 10:17 1-min close (champion buy_set), read TAKEABLE NOW at 10:19:23",
+      "order": "marketable limit at ask +0.3% = 51.46, filled immediately against the displayed ask ladder",
+      "shares": 291,
+      "REAL_ORDER": false,
+      "paper_only": "NO REAL ORDERS EVER",
+      "gates_at_arming": {
+        "halal": "PASS both (screened 06:28; unchanged)",
+        "rank": "9th by the ranker's order, but the FIRST ARMABLE: ranks 1-2 (EPRX, TITN) and 7 (OABI) have no 7AM print, 3 (TRAX) and 6 (RNXT) are spread-vetoed, 4-5 (ASTS, ALMS) failed halal, 8 (MOVE) is -0.4% -- GTLB is the best name that can actually be bought",
+        "coil": 0.889,
+        "pressure": 0.04,
+        "gap7_pct": 19.5,
+        "calm_gap": "CALM",
+        "gain_pct_at_arming": 13.0,
+        "same_name_after_stop": "Re-entry of the name stopped out at 09:31 -- permitted: rotation goes to whatever ranks best now, same name allowed when it still ranks first among armables. Recorded plainly."
+      },
+      "veto_checks_at_arming": {
+        "spread": "PASS 0.10%",
+        "depth": "PASS 1,638 sh to 51.46 vs 291",
+        "size_cap": "NOT BINDING (post-open minutes 50-140k sh; 20% of trailing-10 >> 291)",
+        "halt": "active"
+      },
+      "status": "FILLED 10:19 -- see trades[2]"
     }
   ],
   "vetoes": {
-    "decisions_reached": 7,
+    "decisions_reached": 8,
     "spread": [
       {
         "et": "07:02",
@@ -751,6 +803,19 @@
         "cap_pct": 0.5,
         "verdict": "VETO",
         "note": "Halal PASS, completed gap calm. A $2.37 stock cannot be inside a 0.5% cap with a penny spread (1 tick = 0.42%); two ticks = veto by construction."
+      },
+      {
+        "et": "10:19",
+        "sym": "GTLB",
+        "phase": "post-open",
+        "bid": 51.26,
+        "bid_size": 24,
+        "ask": 51.31,
+        "ask_size": 100,
+        "spread_pct": 0.1,
+        "cap_pct": 0.5,
+        "verdict": "PASS",
+        "trigger": "C macd_cross_up @10:17 close (fresh at the 10:19:23 read)"
       }
     ],
     "depth": [
@@ -797,6 +862,16 @@
         "cumulative_ask_size_within_cap": 3060,
         "pct_of_intended": 9870,
         "verdict": "PASS"
+      },
+      {
+        "et": "10:19",
+        "sym": "GTLB",
+        "intended_shares": 291,
+        "ticket_usd": 15000,
+        "marketable_limit": 51.46,
+        "cumulative_ask_size_within_limit": 1638,
+        "pct_of_intended": 563,
+        "verdict": "PASS"
       }
     ],
     "chase_fill_arming": [
@@ -824,13 +899,18 @@
         "trigger": 474.4,
         "verdict": "PASS (marginal)",
         "note": "bid 473.94 < 474.40 trigger, so the stop is not yet met on the bid; the ask 474.74 already sits above it. Book moved 466 -> 474 in the 20 s between the quote and the L2 read. Armed as a genuine stop-limit; if the 09:33 bar opens above the 476.77 limit the order is skipped, not chased."
+      },
+      {
+        "et": "10:19",
+        "sym": "GTLB",
+        "verdict": "n/a -- pattern entry is a marketable limit at ask +0.3%, not a stop; ask 51.31 vs limit 51.46"
       }
     ],
     "rates": {
-      "note": "through 10:16",
-      "spread": "5 vetoes / 7 decisions = 71% (premarket 3/4, post-open 2/3)",
-      "depth": "0 skip / 1 reduce / 7",
-      "chase": "0/7"
+      "note": "through 10:19",
+      "spread": "5 vetoes / 8 decisions = 63% (premarket 3/4 = 75%, post-open 2/4 = 50%)",
+      "depth": "0 skip / 1 reduce / 8",
+      "chase": "0/8"
     }
   },
   "trigger_c": [
