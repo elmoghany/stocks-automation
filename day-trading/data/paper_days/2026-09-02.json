@@ -112,6 +112,43 @@
       "rank_top": "GTLB -- 3 crossed / 1 armable",
       "rank_detail": "1 GTLB +19.5% coil 0.966 press -0.01 gap7 +19.5 calm-yes PASS COILED; 2 JLHL +33.9% coil 0.950 CALM-GAP FAIL; 3 UPC +13.3% HARAM (ruling)",
       "gap7_note": "GTLB's 07:00 bar exists on the RH tape (real premarket volume), so the calm gap is measured, not completed: +19.5% against the 20% gate, inside the line on its own merits and doubly inside with the 35% top-name grace."
+    },
+    {
+      "et": "07:06",
+      "state": "FLAT-5m",
+      "scan_rows": 93,
+      "candidates": 12,
+      "new": [
+        "RAYA"
+      ],
+      "delegated": "scan sweep delegated to a subagent (writes the verbatim dump, runs scan_sweep, returns only the report) -- keeps the ~30KB raw scan out of the coordinator; cost: 212 s wall clock for the delegate",
+      "rank_top": "GTLB -- 4 crossed / 1 armable",
+      "rank_detail": "1 GTLB +18.7% coil 0.959 press -0.23 gap7 +19.5 calm PASS COILED; 2 CANF +35.4% coil 0.903 press +0.08 gap7 +12.8 calm NEEDS-SCREEN (not at candidacy: coil < 0.95); 3 UPC HARAM; 4 JLHL calm-gap FAIL",
+      "spread_check": "GTLB quote 07:06 bid 53.50 / ask 53.95 = 0.84% -- still over the 0.5% cap, premarket veto stands (not counted as a new decision; same name, same rule, same phase).",
+      "cadence_honesty": "cycle wall clock ~4 min from scan to rank read (07:06 fire -> 07:10 read)."
+    },
+    {
+      "et": "07:11",
+      "state": "FLAT-5m",
+      "scan_rows": 93,
+      "candidates": 12,
+      "new": [],
+      "rank_top": "GTLB -- 5 crossed / 1 armable",
+      "rank_detail": "1 GTLB +20.6% coil 0.975 press -0.19 gap7 +19.5 calm PASS COILED; 2 RAYA +10.6% coil 1.000 press UNTRUSTED (3 bars) gap7 +10.6 NEEDS-SCREEN; 3 CANF +31.6% coil 0.878; 4 UPC HARAM; 5 JLHL calm-gap FAIL",
+      "spread_check": "GTLB quote 07:10 bid 53.73 / ask 54.60 = 1.60% -- WIDER than at 07:02. Premarket veto stands.",
+      "trigger_c": "GTLB 07:08 close: bullish_engulfing + macd_cross_up + tweezer_bottom, read at 07:13 wall clock = STALE (tag says 2m at the 07:11 as-of; 5 min in fact). Not takeable; spread-vetoed anyway.",
+      "note": "RAYA reached candidacy (rank 2, coil 1.000, calm) so the lazy live screen ran on it -- see halal_detail."
+    },
+    {
+      "et": "07:16",
+      "state": "FLAT-5m",
+      "scan_rows": 93,
+      "candidates": 11,
+      "rank_top": "GTLB -- 4 crossed / 1 armable",
+      "rank_detail": "1 GTLB +19.2% coil 0.963 press -0.68 calm PASS; 2 CANF +30.0% coil 0.867; 3 JLHL calm-gap FAIL; 4 UPC HARAM",
+      "spread_check": "GTLB 07:15 bid 53.60 / ask 54.60 = 1.85% -- veto stands (widening: 0.93 -> 0.84 -> 1.60 -> 1.85%)",
+      "trigger_c": "nothing fresh (07:08 cluster now 7m stale)",
+      "tooling": "plan/cyc.py (new): one call = ingest + rank + trigger-on-TOP + heartbeat"
     }
   ],
   "halal": {
@@ -120,7 +157,8 @@
     ],
     "FAIL": [
       "UPC",
-      "FBLA"
+      "FBLA",
+      "RAYA"
     ],
     "CANNOT_VERIFY": []
   },
@@ -146,6 +184,21 @@
       "q1": "not reached",
       "q2": "FAIL",
       "reason": "FB Bancorp -- a bank holding company (the name says it; RH scan Market cap 226M). Banking/lending is enumerated haram, dispositive without running q1."
+    },
+    "CANF": {
+      "status": "NOT YET SCREENED -- rank 2 but coil 0.903 < 0.95, so not at candidacy under the lazy-screen rule. mcap 7.45M cached. Can-Fite BioPharma, Israeli clinical-stage (cancer/liver/inflammatory + erectile dysfunction drug CF602). 5 employees, financial_status CB0."
+    },
+    "RAYA": {
+      "q1": "FAIL",
+      "loan_pct": 523.62,
+      "cash_pct": 198.1,
+      "combined": 721.72,
+      "haram_pct": 0,
+      "reason": "LOAN>10+COMBINED>20",
+      "source": "quarterly",
+      "mcap": 2383645,
+      "screened_et": "07:14",
+      "note": "Erayak Power Solution -- q2 would PASS (power-solution products, manufacturing/wholesale/retail), but a 2.4M-cap shell after serial reverse splits (52-week high 180.84 vs 2.50) carries debt at 5x its own market cap. Reached candidacy at rank 2 on THREE real bars with coil 1.000 and untrusted pressure. Refused; recorded in scan_state so it never re-enters."
     }
   },
   "trades": [],
@@ -191,7 +244,19 @@
       }
     ]
   },
-  "trigger_c": [],
+  "trigger_c": [
+    {
+      "et": "07:10",
+      "sym": "GTLB",
+      "signal": "macd_cross_up",
+      "signal_et": "07:04",
+      "tag_as_of_0706": "TAKEABLE NOW (1m since close)",
+      "wall_clock_at_read": "07:10 -- 6 min after the close that produced it, so STALE in fact",
+      "taken": false,
+      "why_not": "Two independent refusals: (1) the premarket book was 0.84-0.93% wide at 07:02-07:06, over the 0.5% cap, so the entry would have been spread-vetoed at arming regardless; (2) the read happened 6 minutes after the 07:04 close because the cycle (delegated scan + batched bars + rank) takes ~4 min -- the tag's own 2-min freshness window had lapsed at wall-clock time even though the --as-of run stamped it fresh. The `trigger` command's own WARNING line ('as-of 07:06 vs wall clock 07:10 -- tags may be stale') caught this. Rule applied: never enter on a signal whose freshness is only nominal.",
+      "also": "bullish_engulfing at the 07:00 close, already STALE at the 07:06 as-of."
+    }
+  ],
   "coverage_gaps": [],
   "errors": [],
   "findings": [],

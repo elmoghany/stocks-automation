@@ -1,18 +1,18 @@
 {
  "candidates": {
   "JLHL": {
-   "pct": 33.45,
-   "last": 7.5,
-   "prev_close": 5.6201,
+   "pct": 21.53,
+   "last": 6.83,
+   "prev_close": 5.62,
    "vol": "99482.965074",
    "name": "Julong Holding Limited",
    "first_seen": "06:23"
   },
   "UPC": {
-   "pct": 11.71,
-   "last": 4.77,
+   "pct": 12.88,
+   "last": 4.82,
    "prev_close": 4.27,
-   "vol": "1575715.7766",
+   "vol": "1.5757157766e+06",
    "name": "Universe Pharmaceuticals",
    "first_seen": "06:23"
   },
@@ -27,16 +27,16 @@
   "MLEC": {
    "pct": 19.8,
    "last": 8.26,
-   "prev_close": 6.8948,
+   "prev_close": 6.895,
    "vol": "11825.1106",
    "name": "Moolec Science",
    "first_seen": "06:23"
   },
   "GTLB": {
-   "pct": 19.49,
-   "last": 53.88,
-   "prev_close": 45.0916,
-   "vol": "10855885.963333",
+   "pct": 19.8,
+   "last": 54.02,
+   "prev_close": 45.09,
+   "vol": "1.0855885963333e+07",
    "name": "GitLab",
    "first_seen": "06:23"
   },
@@ -51,7 +51,7 @@
   "EXOZ": {
    "pct": 14.62,
    "last": 7.45,
-   "prev_close": 6.4997,
+   "prev_close": 6.5,
    "vol": "4128.7463",
    "name": "eXoZymes Inc.",
    "first_seen": "06:23"
@@ -59,7 +59,7 @@
   "BSEM": {
    "pct": 13.71,
    "last": 3.98,
-   "prev_close": 3.5001,
+   "prev_close": 3.5,
    "vol": "90433.7519",
    "name": "BioStem Technologies",
    "first_seen": "06:23"
@@ -67,7 +67,7 @@
   "MGRT": {
    "pct": 12.55,
    "last": 121.54,
-   "prev_close": 107.9876,
+   "prev_close": 107.99,
    "vol": "37034.780351",
    "name": "Mega Fortune Company Limited",
    "first_seen": "06:23"
@@ -83,7 +83,7 @@
   "PRHI": {
    "pct": 10.65,
    "last": 6.65,
-   "prev_close": 6.0099,
+   "prev_close": 6.01,
    "vol": "4307.4499",
    "name": "Presurance Holdings",
    "first_seen": "06:23"
@@ -97,16 +97,25 @@
    "first_seen": "07:01"
   },
   "CANF": {
-   "pct": 15.19,
-   "last": 3.7899,
-   "prev_close": 3.2901,
+   "pct": 32.52,
+   "last": 4.36,
+   "prev_close": 3.29,
    "vol": "16314.6861",
    "name": "Can-Fite BioPharma",
    "first_seen": "07:01"
+  },
+  "RAYA": {
+   "pct": 12.83,
+   "last": 2.55,
+   "prev_close": 2.26,
+   "vol": "3783.211408",
+   "name": "Erayak Power Solution",
+   "first_seen": "07:06"
   }
  },
  "halal_fail": [
-  "FBLA"
+  "FBLA",
+  "RAYA"
  ],
  "fake_gap": [],
  "inherited_fail": [
