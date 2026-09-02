@@ -86,3 +86,23 @@ def minute_bars(symbol: str, date: str) -> pd.DataFrame | None:
                             "c": "Close", "v": "Volume"})
     return (df.set_index("begins_at").sort_index()
             [["Open", "High", "Low", "Close", "Volume"]])
+
+
+def ticker_details(symbol: str, date: str | None = None) -> dict:
+    """Reference row for one symbol (/v3/reference/tickers/{symbol}),
+    optionally as of `date`. Returns the `results` dict, or {} when the
+    reference has no row (404 -- delisted / unknown symbol). Added
+    2026-09-01 for plan/pool_hygiene.py (security `type` screen:
+    CS / ADRC vs ETF / WARRANT / UNIT / RIGHT / PFD ...). Throttled and
+    retried like every other call here; a 404 is an answer, not an
+    error, so it is returned rather than raised."""
+    url = f"{BASE}/v3/reference/tickers/{symbol}?apiKey={_key()}"
+    if date:
+        url += f"&date={date}"
+    try:
+        d = _get(url)
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            return {}
+        raise
+    return d.get("results") or {}
