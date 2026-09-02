@@ -6128,3 +6128,129 @@ at every checkpoint; the aug2026 rows are equal), which is the
 mechanical proof that only stop/trail/target/scale-out fills moved.
 EXPECT_PRE (--prepool) is frozen at the pre-epoch engine and now
 needs the a190a72^ engine to reproduce (noted in idgate.py).
+
+## FILL-MODEL LADDER (run 2026-09-02 02:14 -> 04:05): STEP 2 RE-MEASUREMENT
+Same environment as the corrected ladder: HALAL_STRICT=1 PT_FILED=1
+POOL_HYGIENE=1 ROTTRADES=1 MASSIVE_TH_INTERVAL=0.25, 10bps, engine
+a190a72 (fill-model epoch), plan/rotation_sim.py cac0589, 14 shards
+on 4 cores (/c/tmp/fm/launch.sh). Results data/massive/
+rotation_results_fm_*.json, trade dumps rotation_trades_*_fm_*.json,
+audit data/massive/phantom_fill_audit_fm.json (/c/tmp/fm/phantom_fm.py),
+table /c/tmp/fm/table_fm.py -> table_final.txt, logs /c/tmp/fm/*.log.
+
+PHANTOM ASSERT (the reason for the epoch): 99 dumps, 107,178 legs
+(29,675 non-flatten). Exits above the exit bar's High: 0. Exits below
+its Low (beyond the premarket haircut): 0. REPRICED == engine in every
+dump to the dollar. The first pass flagged one leg 31 times (MDAI
+2025-01-22 10:55, every PTRAIL dump): the bar's High is 2.235 on
+sub-penny tape, the fill was 2.235 (= Open = High), and the trade dict
+rounds exit to 2.24; the audit tolerance is now half a cent plus float
+epsilon. Not a fill defect.
+
+IDENTITY: HOLD1 / HOLD6 / RHOLD6 (all 30 reps) are byte-identical to
+the corrected ladder (HOLD1 -903, HOLD6 -129,691, RHOLD6 median
+-180,860 [-248,351 .. -124,488]) -- the fill model cannot touch a
+flatten-only config, and the exported `shares` reproduce the
+estimated `deployed` to within rounding (HOLD6 16.6M both epochs).
+
+THE TABLE (both years, 445 traded days; deployed now EXACT from the
+exported shares; percentiles = rank of the ranked config inside its
+30-replicate random control):
+
+  config      total       Y1        Y2      tkts  deployed  ret%   $/tkt  negm  maxDD   best_day  worst_day  ex_best   phantom  REPRICED  rep$/tkt
+  C37F-fm   -121,234   -79,386   -41,848   2148   28.6M   -0.42    -56  17/23  88,564  +11,667  -11,382   -132,901      0    -121,234    -56
+  HOLD1         -903   -14,387   +13,484    448    5.3M   -0.02     -2  12/23  31,963  +26,832  -13,425    -27,735      0        -903     -2
+  HOLD6     -129,691  -122,186    -7,505   1515   16.6M   -0.78    -86  16/23 123,205  +31,280  -12,556   -160,971      0    -129,691    -86
+  PTRAIL1    -82,123   -28,299   -53,824    824   10.5M   -0.78   -100  17/23  66,616  +15,597   -7,800    -97,720      0     -82,123   -100
+  PTRAIL6   -165,864  -133,163   -32,701   1807   20.4M   -0.81    -92  14/23 133,163  +19,224   -8,722   -185,088      0    -165,864    -92
+  exits: C37F-fm bearish 1305/+479,100, stop 561/-539,345, scale-out 23/+23,103, window-close 282/-84,093
+         HOLD1 window-close 448/-903 (ONLY, asserted)   HOLD6 window-close 1515/-129,691 (ONLY)
+         PTRAIL1 stop(trail) 388/-159,533, window-close 436/+77,410
+         PTRAIL6 stop(trail) 866/-203,567, window-close 941/+37,703
+
+  RANDOM CONTROLS (same machinery, same 10bps, symmetric gap allowance, seeds rc60-{date}-{ticket}-{rep}, n=30 each):
+  RHOLD6    total median -180,860 [-248,351 .. -124,488]  ex_best median -210,920  $/tkt median -120  negm median 17/23
+     HOLD6:   total pctile 97 | ex_best pctile 97 | Y1 pctile 100 | Y2 pctile 80 | $/tkt pctile 97   (unchanged)
+  RPTRAIL6  total median -166,620 [-225,817 .. -108,081]  ex_best median -184,448  $/tkt median  -95  negm median 17/23
+     PTRAIL6: total pctile 57 | ex_best pctile 47 | Y1 pctile 77 | Y2 pctile 20 | $/tkt pctile 63
+     (pre-epoch: control median +243,400, PTRAIL6 pctile 43 -- the whole
+     distribution moved down by ~$410k; the ranked config's place in it
+     did not.)
+
+  AUGUST 2026 OUT-OF-SAMPLE (22 sessions 08-03..09-01, ROTLABELS=aug2026, same pool/hygiene as the corrected ladder):
+  config       total  days  tkts  deployed  $/tkt  maxDD  best_day  ex_best  phantom
+  C37F-fm     +3,688    22   103    1.4M     +36   6,376   +4,040     -352      0
+  HOLD1       +4,944    22    22    0.3M    +225   4,142   +8,787   -3,843      0   (new row this epoch)
+  HOLD6       +6,193    22    51    0.6M    +121   6,954   +8,787   -2,594      0   (identical to pre-epoch)
+  PTRAIL6     -3,955    22    72    1.0M     -55  12,290   +2,950   -6,905      0
+  RPTRAIL6 n=30 median -2,601 [-6,416 .. -118]  ex_best median -6,808  $/tkt median -37
+     PTRAIL6@aug: total pctile 20 | ex_best pctile 43 | $/tkt pctile 20
+  (pre-epoch PTRAIL6@aug was +10,004 engine / -3,598 repriced; C37F
+  +4,397 / +3,731 repriced. Honest fills land within a few hundred
+  dollars of the repriced bounds, as they should.)
+
+WHAT MOVED AND WHY (engine vs corrected-ladder engine numbers):
+  * C37F: -76,705 -> -121,234 (-44,529). The repriced bound was
+    -103,621; the extra -17,613 is the causal peak: with a bar's High
+    reaching the trail one bar later, the 20%/10% trail sits lower for
+    a bar and some exits print a bar later at a worse price. Stop
+    column -494,224 -> -539,345 (-45,121); bearish and scale-out
+    columns essentially unchanged (+479,100 vs +478,575). Per ticket
+    -36 -> -56; per traded day -172 -> -272.
+  * PTRAIL6: +238,913 -> -165,864 (-404,777). The repriced bound was
+    -69,965; the remaining -95,899 is the peak guard: the pressure
+    trail's 10% tight leg was being armed off spikes that never
+    confirmed, and on honest peaks it stops out later and lower. Its
+    trail exits are now 866 legs / -203,567 (were 867 / +197,205).
+  * PTRAIL1: +59,463 -> -82,123; trail exits 388 / -159,533 (were 390
+    / -16,378).
+  * HOLD rows: 0 change, by construction.
+
+VERDICT (per config, vs C37F-fm per ticket = -56, and vs its control):
+  1. HOLD1 (-2/ticket): beats C37F-fm per ticket by $54 and in total
+     (-903 vs -121,234) -- by trading 448 tickets to C37F's 2,148, one
+     a day, with Y1 -14,387 / Y2 +13,484, ex-best -27,735, negm 12/23.
+     No sequential random control exists in CFGS (RHOLD6 is not
+     like-for-like); unchanged from the corrected ladder. Still the
+     least-bad row, still not an edge.
+  2. HOLD6 (-86/ticket): worse than C37F-fm per ticket; 97th
+     percentile of RHOLD6 (Y1 100th, Y2 80th) -- the ranking picks
+     better holders than a shuffle and every one of them loses.
+     Unchanged.
+  3. PTRAIL1 (-100/ticket): worse than C37F-fm per ticket and in
+     total; its trail exits are the losing column now that they fill
+     at prices that traded. No own control.
+  4. PTRAIL6 (-92/ticket): worse than C37F-fm per ticket; total 57th
+     / per-ticket 63rd / ex-best 47th percentile of RPTRAIL6 --
+     indistinguishable from a shuffle, exactly where the repriced
+     column already put it. The "+$238,913" of the corrected ladder
+     was entirely the fill model.
+  5. C37F-fm (-56/ticket, -121,234, 17/23 negative months, ex-best
+     -132,901): the champion on honest fills loses $20/ticket more
+     than the corrected ladder said. Nothing in the ladder beats it
+     per ticket except HOLD1, and nothing is positive on either year
+     except HOLD1's Y2.
+  6. August 2026: PTRAIL6 negative (-3,955) at the 20th percentile of
+     its control; HOLD1/HOLD6 positive (+4,944 / +6,193) in a month
+     where every hold was kind; C37F-fm +3,688 with ex-best -352.
+     One month; reported, not concluded.
+  BASELINE NOTE for the live campaign: the C37F day-rate under this
+  environment is now -$272/traded day (-121,234 / 445), versus the
+  -$163 (pre-leak-close) and -$182 (C37F-hl) figures the sessions
+  score against. The live scorer is not this file owner's to change;
+  flagged here for the next baseline pass.
+
+## OPS / FILES (fill-model epoch 2026-09-02)
+Changed: day-trading.py (simulate_trades: _sell_fill, _peak_update,
+_isolated_print, _wick_cap, _hi_now, shares export; _hi removed),
+plan/rotation_sim.py (_shares_est reads the exported shares),
+plan/idgate.py (EXPECT re-baselined with a dated note, old values
+kept, EXPECT_PRE frozen at the pre-epoch engine), plan/fillmodel_test.py
+(new: the proofs), NOTES-DAYTRADING.md (these two sections).
+Commits a190a72 (engine + test + rotation_sim), cac0589 (idgate +
+NOTES step 1), then NOTES step 2 + test tolerance. Data added:
+rotation_results_fm_{c37,h1,h6,p1,p6,rh_a,rh_b,rp_a,rp_b,oos_c,
+oos_h1,oos_h6,oos_p,oos_r}.json, 99 rotation_trades_*_fm_*.json,
+phantom_fill_audit_fm.json. Scripts and logs in /c/tmp/fm/. idgate
+confirmation run (/c/tmp/fm/idgate2.log): identity chain ALL EXACT on
+the new values. No file outside the owned set was touched.

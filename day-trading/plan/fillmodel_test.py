@@ -69,7 +69,7 @@ def check_inside_bars(df, trades, label):
         o, h, lo = _bar(df, t["exit_time"])
         # premarket sells pay pm_spread_bps AFTER the clamp, so allow
         # the haircut below the Low; nothing may print above the High
-        if t["exit"] > h + 0.005 or t["exit"] < lo * (1 - 0.01) - 0.005:
+        if t["exit"] > h + 0.00501 or t["exit"] < lo * (1 - 0.01) - 0.00501:
             bad.append((label, str(t["exit_time"])[11:16], t["exit"],
                         round(h, 2), round(lo, 2), t["reason"]))
     return bad
