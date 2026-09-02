@@ -5929,14 +5929,14 @@ config inside its 30-replicate random control distribution):
          PTRAIL1 stop(trail) 390/-16k, window-close 436/+76k   PTRAIL6 stop(trail) 867/+197k, window-close 940/+42k
 
   RANDOM CONTROLS (same machinery, same 10bps, same symmetric gap allowance, seeds rc60-{date}-{ticket}-{rep}):
-  RHOLD6   n=15*  total median -180,018 [-248,351 .. -124,488]  ex_best median -205,792  $/tkt median -119  negm median 17/23
-     HOLD6:  total pctile 93 | ex_best pctile 93 | Y1 pctile 100 | Y2 pctile 73 | $/tkt pctile 93 | REPRICED pctile 93
+  RHOLD6   n=30   total median -180,860 [-248,351 .. -124,488]  ex_best median -210,920  $/tkt median -120  negm median 17/23
+     HOLD6:  total pctile 97 | ex_best pctile 97 | Y1 pctile 100 | Y2 pctile 80 | $/tkt pctile 97 | REPRICED pctile 97
   RPTRAIL6 n=30   total median +243,400 [+198,876 .. +323,750]  ex_best median +222,610  $/tkt median +138  negm median 7.5/23
                   REPRICED median -77,712 [-134,707 .. -14,893]
      PTRAIL6: total pctile 43 | ex_best pctile 43 | Y1 pctile 57 | Y2 pctile 30 | $/tkt pctile 33 | REPRICED pctile 57
-  (* RHOLD6 reps 15-29 crashed at y2025 150/194 on a Windows EACCES
-  reading a shares-cache file mid-replace by a sibling; fixed in
-  92b68fb and relaunched 01:25 -- appended below when landed.)
+  (RHOLD6 reps 15-29 first crashed at y2025 150/194 on a Windows
+  EACCES reading a shares-cache file mid-replace by a sibling; fixed in
+  92b68fb, relaunched 01:25, landed 02:01 -- the n=30 numbers above.)
 
 PHANTOM FILLS (found by the $-best-day audit, quantified over every dump):
   A non-flatten exit booked ABOVE the exit bar's High never traded. The
@@ -5976,10 +5976,10 @@ VERDICT (plain language):
      machinery and costs. (The 08-27 "ranking contributes 18%"
      decomposition was an artifact of one seed + asymmetric gap
      allowance.)
-  3. Does HOLD6 beat its random control? At the 93rd percentile of 15
-     replicates (Y1 100th), so the ranking does pick better holders
-     than a shuffle -- but every one of them loses money: HOLD6
-     -129,691, control median -180,018. "Buy a +10% gapper and hold to
+  3. Does HOLD6 beat its random control? At the 97th percentile of 30
+     replicates (Y1 100th, Y2 80th), so the ranking does pick better
+     holders than a shuffle -- but every one of them loses money:
+     HOLD6 -129,691, control median -180,860, best replicate -124,488. "Buy a +10% gapper and hold to
      15:00" is negative-drift, not a beta harvest; the 08-27 XHB/XHR
      "drift available to random selection" reading was the pressure
      trail's phantom fills, not drift.
