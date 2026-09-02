@@ -7,7 +7,7 @@
   "benchmark_per_day": 1517,
   "honest_baseline_per_day": -163,
   "status": "OPEN",
-  "counts_as_traded_day": false,
+  "counts_as_traded_day": true,
   "config": "C37",
   "ops": {
     "skeleton_written_et": "06:21",
@@ -253,19 +253,45 @@
       "position": "GTLB open; ran 56.25 -> 57.29 (09:07 peak), open P&L +$120 -> +$367 at 09:06; pressure flipped positive (+0.25..+0.82) from 09:00, so the 40% leg widens the trail; hard stop 51.336 binds.",
       "bench_0908": "scan 90 rows, 9 candidates. NEW: ERNA (Ernexa Therapeutics, 7.1M cap, +12.9%, 4.91; 5 employees; 52-week high 71.50 vs 4.91 = reverse-split shell). PPBT faded 62% -> 41%. The scan keeps dropping and re-adding GTLB/DAKT/CANF/CALC on the %Change column -- all latched.",
       "bench_note": "No bench name is both halal-PASS and liquid except DAKT (latched, ~+9-10%, coil 0.99, PASS)."
+    },
+    {
+      "et": "09:11-09:29",
+      "state": "HOLD-20m",
+      "position": "GTLB open; faded from the 57.29 peak to 55.14 by 09:26 (pre-open selling, 41k-share 09:25 bar); open P&L +$310 -> -$70 -> -$13. Hard stop 51.336 binds (10% trail from 57.29 = 51.56 was briefly the live stop 09:14-09:18 while pressure was <= -0.3).",
+      "bench_0926": "scan 98 rows, 15 candidates, SIX new at the pre-open: DELL (+10.2%, 468, 275B cap, 16M sh -- earnings; P/B -196 = negative book, q1 will need the screen), VLRS (Volaris airline, 744M, 380k sh), DSWL (Deswell, 46M, plastics/electronics, cash-rich, 6.9% dividend), HUHU (108M, gas systems, China), LCFY (4.5M shell), BRR (ProCap Financial -- bitcoin lending -> halal FAIL q2, recorded). Market caps cached for all six; live screens deferred to candidacy (holding, no ticket free)."
+    },
+    {
+      "et": "09:30-09:32",
+      "state": "EXIT -> EXIT-RERANK",
+      "event": "Opening flush: 09:30 bar o 55.23 h 55.55 l 51.76 c 52.06 on 1,034,159 sh (the premarket high-volume minute was 41k). Low 51.76 sat 0.4% above the 51.336 hard stop. Pressure fell to -0.75 so the 10% leg engaged (57.29 x 0.9 = 51.561 > hard 51.336). 09:31 bar l 50.28 -> EXIT-TRAIL @ 51.561. CB-WOULD-FIRE -3% and -5% logged by the watcher at 09:31 (measurement only).",
+      "watcher": "booked, wrote 2026-09-02.flatten.json record, unlinked position_GTLB.json; --book stays running for the rest of the day (BOOK 0 open)."
+    },
+    {
+      "et": "09:32",
+      "state": "EXIT-RERANK",
+      "rank_top": "DELL -- 8 crossed / 3 armable",
+      "rank_detail": "1 DELL +11.0% coil 0.994 press +0.53 gap7 +8.3 calm PASS COILED; 2 DAKT +7.8% coil 0.966 press -0.20 PASS (below +10% now); 3 UPC HARAM; 4 JLHL calm FAIL; 5 CANF -17.9%; 6 PPBT calm FAIL; 7 GTLB +12.9% coil 0.888 press -0.61 (just stopped out; ranks 7th, so no re-entry); 8 VLRS",
+      "spread_checks_0932": "GTLB 51.05/51.15 0.20%; DAKT 20.76/20.95 0.91%; DELL 466.39/468.00 0.34%; DSWL 3.02/3.08 1.97%; VLRS 6.45/6.52 1.08%; HUHU 3.84/4.41 13.8% -- post-open, DELL and GTLB are the only tight books."
+    },
+    {
+      "et": "09:33",
+      "state": "FILL -> HOLD-20m",
+      "event": "DELL stop 474.40 hit on the 09:33 bar. Ticket 2 filled 31 sh @ 474.40 = $14,706.40. Cumulative deployed today $29,660.80 of $100,000; tickets left 5 ($15k x4 + $10k). Trigger C also fired on the same 09:33 close (macd_cross_up, TAKEABLE NOW at the 09:34:21 read) -- moot, the stop-buy had already taken the ticket on the same bar."
     }
   ],
   "halal": {
     "PASS": [
       "GTLB",
-      "DAKT"
+      "DAKT",
+      "DELL"
     ],
     "FAIL": [
       "UPC",
       "FBLA",
       "RAYA",
       "LHSW",
-      "EOSE"
+      "EOSE",
+      "BRR"
     ],
     "CANNOT_VERIFY": []
   },
@@ -343,6 +369,25 @@
       "q2": "PASS -- Daktronics makes scoreboards and LED video displays; casinos, cruise ships and quick-serve restaurants appear only as customer categories of the Commercial segment, i.e. general-purpose products sold INTO those markets (the AMD principle), and the external AAOIFI screen affirms impermissible revenue <5%.",
       "screened_et": "08:14",
       "verdict": "PASS -- armable on halal (bench for rotation)"
+    },
+    "BRR": {
+      "q1": "not reached",
+      "q2": "FAIL",
+      "reason": "ProCap Financial -- 'bitcoin-native financial services firm offering lending, trading, and investment solutions'. Lending/finance is enumerated haram; dispositive. RH sector label says 'Technology Services' -- the label lied again, the description caught it."
+    },
+    "DELL": {
+      "q1": "PASS",
+      "loan_pct": 11.33,
+      "cash_pct": 4.21,
+      "combined": 15.54,
+      "haram_pct": 0.05,
+      "source": "quarterly",
+      "mcap": 275104674110,
+      "screened_et": "09:33",
+      "exception": "loans 11.33 > 10 but combined 15.54 <= 20 -- the one-side-over-10 exception (the HLIT/ANGX zone).",
+      "negative_book_note": "P/B -196 (negative book from the VMware spin/buybacks). The blind-spot rule fires on an IMPLAUSIBLE input like loan_pct 0.00; here loans are 11.33% of a 275B cap = ~$31B, matching Dell's reported debt, so the ratios are real.",
+      "q2": "PASS -- IT hardware (servers, storage, PCs). Dell Financial Services is a captive lease/finance arm, but interest income is 0.05% of revenue, far under the 5% line; the business is permissible.",
+      "verdict": "PASS -- armable"
     }
   },
   "trades": [
@@ -372,6 +417,47 @@
         "note": "Resting from the fill; the watcher (paper_watch.py --book, EXIT_MODE c37) owns it and every other exit: 20/10/40 pressure trail from peak, bank 1/3 at +25%, 14:50-14:59 ladder."
       },
       "premarket_entry_caveat": "Filled at 08:13, pre-open. The sim charges 50 bps on pre-09:30 fills; the live spread at the last book read (08:08) was 1.28%, so this entry sits in the premarket-book divergence the parity audit flags. Recorded, not adjusted.",
+      "status": "CLOSED -- stopped 09:31 by the watcher, 5.5 h before the ladder",
+      "exit_et": "09:31",
+      "exit_bar_utc": "2026-09-02T13:31:00Z",
+      "exit_price": 51.561,
+      "exit_reason": "EXIT-TRAIL -- 10% pressure-tight trail from the 57.29 peak (pressure -0.66 <= -0.3), stop 51.561; the 09:31 bar's LOW 50.28 took it out intrabar. Booked by paper_watch.py --book at 09:32:18, fill AT the stop level (the simulator's convention).",
+      "exit_modelling": {
+        "method": "watcher stop-level fill (intrabar, bar LOW <= stop)",
+        "stop_level": 51.561,
+        "bar_0931": "o 51.95 h 52.45 l 50.28 c 50.89 v 500,940",
+        "bracket": "optimistic/booked 51.561 (stop level); the bar opened 51.95 ABOVE the stop and traded down through it on half a million shares, so a resting stop-limit with a bid-1% marketable limit would realistically have filled in the 51.0-51.5 zone; pessimistic 50.89 (bar close) = -$1,316. The open flush was 1.03M shares in the 09:30 bar (l 51.76, 0.4% above the stop) and 500k in 09:31 -- this was the opening auction unwind of a +24% premarket gap on an earnings name, exactly the shape the -8%/10% stops were fitted to."
+      },
+      "pnl": -1136.05,
+      "pnl_pct": -7.6,
+      "hold_minutes": 78,
+      "peak": 57.29,
+      "peak_open_pnl": 399.32,
+      "trough_open_pnl": -1136.05
+    },
+    {
+      "ticket": 2,
+      "sym": "DELL",
+      "side": "long",
+      "REAL_ORDER": false,
+      "entry_et": "09:33",
+      "entry_bar_utc": "2026-09-02T13:33:00Z",
+      "entry_price": 474.4,
+      "shares": 31,
+      "notional": 14706.4,
+      "trigger": "B -- session-high stop-buy at 474.40, armed 09:33:16",
+      "fill_semantic": "The 09:33 bar opened 469.50 (below the trigger), printed a high of 474.77 and closed 473.13 on 140,388 shares. Booked AT the trigger per the simulator's convention. HONESTY NOTE: the arm was placed mid-bar at 09:33:16 with the L2 ask already at 474.74 (bid 473.94), so a real stop order would most likely have triggered within seconds and filled near 474.74 -- the bracket is 474.40 (booked) to 474.77 (bar high), a 0.08% band; not adjusted.",
+      "fill_realism": {
+        "assumed_fill": 474.4,
+        "mark_plus_60s": null,
+        "note": "filled in on the 09:34 bar close"
+      },
+      "protective_stop": {
+        "level": 436.448,
+        "basis": "max(entry x 0.92, peak x 0.60)",
+        "placed_et": "09:33",
+        "note": "Watcher-owned (c37): -8% hard, 20/10/40 pressure trail, bank 1/3 at +25%, 14:50-14:59 ladder."
+      },
       "status": "OPEN"
     }
   ],
@@ -414,10 +500,49 @@
         "basis": "max(entry x 0.92, peak x 0.60) on an assumed 55.80 fill; re-placed upward as the peak rises"
       },
       "status": "FILLED 08:13 -- see trades[0]"
+    },
+    {
+      "ticket": 2,
+      "sym": "DELL",
+      "armed_et": "09:33",
+      "trigger_type": "B -- session-high stop-buy (session high 474.40 printed on the 09:31 bar; ratchets with new highs)",
+      "stop_trigger": 474.4,
+      "limit": 476.77,
+      "limit_basis": "trigger x 1.005",
+      "shares": 31,
+      "notional_at_trigger": 14706.4,
+      "prev_close": 425.0,
+      "REAL_ORDER": false,
+      "paper_only": "NO REAL ORDERS EVER -- paper arm recorded in the ledger.",
+      "gates_at_arming": {
+        "halal": "PASS both questions (live screen 09:33)",
+        "rank": 1,
+        "coil": 0.994,
+        "pressure": 0.53,
+        "gap7_pct": 8.3,
+        "calm_gap": "CALM",
+        "gain_pct_at_arming": 11.0,
+        "price_ge_2": true,
+        "sessions_ge_50": true,
+        "common_stock": true
+      },
+      "veto_checks_at_arming": {
+        "fill_arming": "PASS (marginal, see chase ledger)",
+        "spread": "PASS 0.17%",
+        "depth": "PASS ~3,060 sh inside the cap vs 31",
+        "size_cap": "NOT BINDING -- trailing-10 completed minutes 456,757 sh, 20% = 91,351 vs 31",
+        "halt": "quote state=active"
+      },
+      "fill_semantics": "Paper resting stop-limit: fills on the first completed 1-min bar whose HIGH >= 474.40, at the trigger if the bar OPEN <= 474.40, at the OPEN if 474.40 < open <= 476.77, NO FILL if open > 476.77 (limit skipped; ratchet re-arms at the new high).",
+      "protective_stop_on_fill": {
+        "level": 436.448,
+        "basis": "max(entry x 0.92, peak x 0.60) on an assumed 474.40 fill"
+      },
+      "status": "FILLED 09:33 -- see trades[1]"
     }
   ],
   "vetoes": {
-    "decisions_reached": 4,
+    "decisions_reached": 5,
     "spread": [
       {
         "et": "07:02",
@@ -469,6 +594,18 @@
         "cap_pct": 0.5,
         "verdict": "VETO",
         "trigger": "C macd_cross_up + morning_star @08:06 close (fresh)"
+      },
+      {
+        "et": "09:33",
+        "sym": "DELL",
+        "phase": "post-open",
+        "bid": 473.94,
+        "bid_size": 82,
+        "ask": 474.74,
+        "ask_size": 224,
+        "spread_pct": 0.17,
+        "cap_pct": 0.5,
+        "verdict": "PASS"
       }
     ],
     "depth": [
@@ -504,6 +641,17 @@
         "cumulative_ask_size_within_limit": 100,
         "pct_of_intended": 36,
         "verdict": "REDUCE (would have cut to 100 sh); moot after the spread veto"
+      },
+      {
+        "et": "09:33",
+        "sym": "DELL",
+        "intended_shares": 31,
+        "ticket_usd": 15000,
+        "trigger": 474.4,
+        "trigger_plus_half_pct": 476.77,
+        "cumulative_ask_size_within_cap": 3060,
+        "pct_of_intended": 9870,
+        "verdict": "PASS"
       }
     ],
     "chase_fill_arming": [
@@ -522,13 +670,22 @@
         "trigger": 55.8,
         "verdict": "PASS",
         "note": "last 54.71 < 55.80 -- genuine forward stop (coil 0.981, not 1.000)."
+      },
+      {
+        "et": "09:33",
+        "sym": "DELL",
+        "bid": 473.94,
+        "ask": 474.74,
+        "trigger": 474.4,
+        "verdict": "PASS (marginal)",
+        "note": "bid 473.94 < 474.40 trigger, so the stop is not yet met on the bid; the ask 474.74 already sits above it. Book moved 466 -> 474 in the 20 s between the quote and the L2 read. Armed as a genuine stop-limit; if the 09:33 bar opens above the 476.77 limit the order is skipped, not chased."
       }
     ],
     "rates": {
-      "note": "premarket through 08:08",
-      "spread": "3 vetoes / 4 decisions = 75%",
-      "depth": "0 skip / 1 reduce / 4",
-      "chase": "0/4"
+      "note": "through 09:33",
+      "spread": "3 vetoes / 5 decisions = 60% (premarket 3/4 = 75%, post-open 0/1)",
+      "depth": "0 skip / 1 reduce / 5",
+      "chase": "0/5"
     }
   },
   "trigger_c": [
@@ -580,6 +737,15 @@
       "tag_at_read": "TAKEABLE NOW (1m since close), read 08:08:15 -- FRESH",
       "taken": false,
       "why_not": "Book at 08:08:19: bid 54.80 x100 / ask 55.50 x130 = 1.28%, 2.6x the cap -> SPREAD VETO (decision #4). The 08:07 bar had just spiked to 55.50 (close 55.21) and the ask side jumped to the spike high while the bid stayed at 54.80. Second fresh, legal Trigger C refused by the premarket book in six minutes."
+    },
+    {
+      "et": "09:34",
+      "sym": "DELL",
+      "signal": "macd_cross_up",
+      "signal_et": "09:33",
+      "tag_at_read": "TAKEABLE NOW (0m)",
+      "taken": false,
+      "why_not": "The Trigger B stop-buy filled on the same bar; one position at a time. Recorded as fired-and-fresh, the first post-open Trigger C that would have been takeable on the book (0.17%)."
     }
   ],
   "coverage_gaps": [],
@@ -600,9 +766,18 @@
       "mark_plus_60s": 56.19,
       "delta_pct": 0.69,
       "note": "Premarket stop-buy through the premarket high on a 7.6B name. Favourable because the break continued; the book was 1.28% wide at the last read before the fill, so a real order would have paid somewhere between the trigger and the limit."
+    },
+    {
+      "sym": "GTLB",
+      "side": "exit",
+      "modelled_fill": 51.561,
+      "naive_alt": "n/a (stop, not a ladder)",
+      "bar_low": 50.28,
+      "bar_close": 50.89,
+      "self_flattery_est": "0 to -$180 depending on where inside 50.28-51.56 a real stop-limit filled; recorded as a bracket, not adjusted."
     }
   ],
-  "pnl": 0.0,
+  "pnl": -1136.05,
   "watcher": {
     "started_et": "08:15:10",
     "mode": "c37",

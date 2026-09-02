@@ -1,0 +1,36 @@
+{
+ "date": "2026-09-02",
+ "records": [
+  {
+   "sym": "GTLB",
+   "ticket": 1,
+   "date": "2026-09-02",
+   "mode": "c37",
+   "entry": 55.8,
+   "shares_initial": 268,
+   "entry_bar_utc": "2026-09-02T12:13:00Z",
+   "prev_close": 45.09,
+   "exit_kind": "exit-trail",
+   "fills": [
+    {
+     "kind": "EXIT-TRAIL",
+     "time": "2026-09-02T09:31:00-04:00",
+     "shares": 268,
+     "px": 51.561,
+     "src": "stop level"
+    }
+   ],
+   "vwap": 51.561,
+   "shares_exited": 268,
+   "scale_out": null,
+   "banked": 0.0,
+   "pnl": -1136.05,
+   "peak": 57.29,
+   "rungs": [],
+   "deployed": 14954.4,
+   "exit_time": "2026-09-02T09:31:00-04:00",
+   "booked_at": "2026-09-02T09:32:18.645307-04:00",
+   "exit_parity": null
+  }
+ ]
+}
