@@ -5717,3 +5717,64 @@ COMMIT B -- day-trading.py rank / trigger / halal_check + live_halal:
  flagged for the user.
  NOT done here (other owners): rotation_sim, penny_ax11b_massive,
  paper_watch, the skill, the launcher, the prompt.
+
+## 2026-09-01 -- Live paper watcher rewritten for the multi-position book (Part 3 / Commit 4, items 10-11)
+plan/paper_watch.py is now ONE process for the whole book (`--book`), and it
+owns every exit. The 2026-08 watcher's audited defects, each closed:
+ * L5  position_{SYM}.json loaded on a `sym` match alone, so a leftover file
+   resurrected an old entry/shares/peak; the 14:57 ladder only PRINTED and
+   never booked or unlinked, so leftovers were the norm. Now every state file
+   carries `date`; a file dated any other day (or with no date) is refused
+   with `STALE-STATE {sym} dated {date} -- REFUSING; move it aside`, exit 2,
+   never loaded -- on the --book path and the legacy argv path alike. The
+   ladder books, records and UNLINKS (the only unlink path, shared by the
+   stop/trail exits).
+ * L6  `if not h: continue` sat before the flatten check, so a dead feed
+   meant no flatten. Now `t = now_et()` is read FIRST and the ladder fires on
+   the clock even with no data (`FLATTEN-NO-DATA proxy=last_known_close`).
+ * L12 the flatten used the last bar in the file. Now rung fills come from
+   the agent-written data/paper/quotes_{date}.json (bid/ask/ts; >90 s stale
+   falls back to the newest COMPLETED bar close, logged `BID-PROXY`).
+ * The agent no longer books exits by hand: stop/trail/ladder are all
+   booked by the watcher into data/paper_days/{date}.flatten.json (fills,
+   VWAP, P&L, rungs incl. UNFILLED ones, and `exit_parity` = 14:59 close x
+   0.999 vs live VWAP in $ and bps, written once the 14:59 bar lands or as
+   a proxy at 15:02), plus {date}.equity.json (per-tick marks / open /
+   realized / book P&L / deployed notional / dd%), {date}.cb.json
+   (circuit-breaker MEASUREMENT only: first crossing of -3/-5/-8% of deployed
+   notional prints `CB-WOULD-FIRE ... (LOG ONLY, NOT ACTING)`), and the
+   WATCH_ALIVE_{date}.json heartbeat the watchdog already checks.
+Exit modes (`--exit-mode` / EXIT_MODE env), default c37 so live is unchanged
+until the switch: c37 = -8% hard stop, 20/10/40% pressure trail, bank 1/3 at
++25%; ptrail = NO hard stop (1%-of-entry sentinel), NO base trail, only the
+pressure-conditional 10%/40% legs, no scale-out; hold = nothing but the
+ladder. All modes use the backtest's intrabar semantics: peak on bar HIGH,
+pressure over the 10 bars ending at that bar, bar LOW <= stop -> fill AT the
+stop level; only COMPLETED minutes count. Ladder times come from
+market_calendar.session_times (full 14:50/14:55/14:58/14:59, half
+12:50/12:55/12:58/12:59; full-day defaults if the import fails). Rung k sells
+min(remaining, floor(0.20 x sum vol of last 10 completed bars)) at bid x 0.999
+with the rung limit (bid -0.5/-1/-2/-2%) as a floor; a rung stays PENDING
+until the next completed bar and is marked `UNFILLED (limit above market)`
+with its shares rolled forward if that bar's LOW < limit; the 14:59 FINAL
+rung has no size guard and no confirmation. State files are created with
+`--open SYM --entry PX --shares N --ticket K [--entry-bar-utc ISO]` (bars
+before the entry bar are never replayed -- the CRML 04:00 false-stop lesson).
+plan/posn.py is reporting-only and mode-aware (entry, shares, last, peak, P&L,
+10-bar pressure, active exit leg or "no stop armed", minutes to the first
+rung, 20%-of-trailing-10 size cap, intrabar breach replay); the old claim that
+a stop is "never absent" is gone.
+Self-test plan/watch_book_selftest.py (47 checks, ALL PASS): six real
+2026-08-25 names in a scratch data root (only CRML has real afternoon bars in
+the cache, so afternoons are extended synthetically), ladder replay 14:49 ->
+15:02 with --once ticks; dead-feed 14:58 FLATTEN-NO-DATA; stale 2026-08-24
+file refused byte-identical on both paths; ptrail books EXIT-TRAIL at 10.35
+after a +15% peak once pressure <= -0.3, hold does not exit until the ladder,
+c37 exits a -9% drift on the hard stop where ptrail holds it.
+Live CLIs: `python plan/paper_watch.py --book` (c37, today), `--exit-mode
+ptrail` / `hold` at the switch, `--once` for a foreground tick; the legacy
+`SYM ENTRY SHARES PC BARS_JSON` form still runs through the same engine.
+NOT touched here (other owners): day-trading.py, rotation_sim, market_calendar,
+wait_until, the skill, the launcher, the prompt -- the prompt still says
+"paper_watch as foreground one-shots" and the skill still describes the
+by-hand exit; both need the --book / --open / quotes_{date}.json wording.
