@@ -215,17 +215,37 @@
       "stop": "55.80 not hit; GTLB drifting DOWN 54.50 -> 54.15 -> 54.20. Quote 07:57 bid 54.18 / ask 54.50 = 0.59% (widened again from 0.31%).",
       "trigger_c": "none fresh since the 07:43 morning_star.",
       "loop": "corrected ordering: bars -> cyc.py read, then a separate wait call."
+    },
+    {
+      "et": "08:01-08:04",
+      "state": "FLAT-1m poll (ARMED GTLB 55.80)",
+      "scan_rows": 96,
+      "candidates": 11,
+      "new": [
+        "EOSE"
+      ],
+      "rank_top": "GTLB (EOSE ranked #1 but NEEDS-SCREEN -> live FAIL; GTLB is the armable TOP)",
+      "rank_detail": "1 EOSE +10.9% coil 0.977 press +0.16 gap7 -1.3 -> FAIL; 2 GTLB +20.8% coil 0.976 press -0.23 PASS; 3 UPC HARAM; 4 PPBT calm FAIL (and now 1.96 < $2); 5 CANF coil 0.807; 6 JLHL calm FAIL; 7 KIDZ -10.9% (faded below its cross); 8 LHSW FAIL",
+      "stop": "55.80 not hit; last bar 08:03 c 54.45."
+    },
+    {
+      "et": "08:13",
+      "state": "FILL -> HOLD-20m",
+      "event": "GTLB stop 55.80 hit on the 08:13 bar (o 55.6241 h 56.17 l 55.6241 c 56.108 v 7256). Ticket 1 filled 268 sh @ 55.80 = $14,954.40. Watcher opened; cadence switches to HOLD (position watch owns the 1-min bars; light bench every ~20 min; full re-rank at exit).",
+      "bench_at_fill": "2 GTLB (now +24.4% coil 0.999), 3 DAKT +9.7% coil 0.988 gap7 +1.6 PASS (live q1 PASS loan 1.5 / cash 14.08 / combined 15.58 + 2026-08-22 external ruling PASS) -- DAKT has NOT yet printed its +10% cross on the bars (9.7%); latched from the scan at +10.59%. EOSE #1 by coil but halal FAIL."
     }
   ],
   "halal": {
     "PASS": [
-      "GTLB"
+      "GTLB",
+      "DAKT"
     ],
     "FAIL": [
       "UPC",
       "FBLA",
       "RAYA",
-      "LHSW"
+      "LHSW",
+      "EOSE"
     ],
     "CANNOT_VERIFY": []
   },
@@ -278,9 +298,61 @@
       "mcap": 10003221,
       "screened_et": "07:49",
       "note": "Lianhe Sowell (Shenzhen electronics trading + software, 10M cap). Reached candidacy at rank 2 on coil 1.000 / calm +8.0% with untrusted pressure. Fails financing at 33% loans/mcap. q2 would pass (electronics/software), moot."
+    },
+    "EOSE": {
+      "q1": "FAIL",
+      "loan_pct": 57.98,
+      "cash_pct": 27.64,
+      "combined": 85.62,
+      "haram_pct": 1.33,
+      "reason": "LOAN>10+COMBINED>20",
+      "source": "quarterly",
+      "mcap": 1105249880,
+      "screened_et": "08:05",
+      "note": "Eos Energy (zinc grid-storage batteries, 1.1B cap, 22M sh/day average -- the most LIQUID name to cross all day). It ranked #1 at 08:04, ABOVE GTLB (coil 0.977, pressure +0.16, gap7 -1.3% = a textbook late crosser that was flat at 07:00). Refused on financing: 58% loans/mcap (the Cerberus term loan + converts) with P/B -1.00. q2 would PASS. The Day-8 finding again: the tradeable books carry the leverage that fails the ratio test."
+    },
+    "DAKT": {
+      "q1": "PASS",
+      "loan_pct": 1.5,
+      "cash_pct": 14.08,
+      "combined": 15.58,
+      "haram_pct": 0.13,
+      "source": "quarterly",
+      "mcap": 934717732,
+      "ruling": "data/halal_rulings.json 2026-08-22 PASS -- Zoya 'Shariah-compliant' (AAOIFI) + Musaffa 'halal'; screen triggers were restaurant/cruise/casino as CUSTOMERS of the display business",
+      "q2": "PASS -- Daktronics makes scoreboards and LED video displays; casinos, cruise ships and quick-serve restaurants appear only as customer categories of the Commercial segment, i.e. general-purpose products sold INTO those markets (the AMD principle), and the external AAOIFI screen affirms impermissible revenue <5%.",
+      "screened_et": "08:14",
+      "verdict": "PASS -- armable on halal (bench for rotation)"
     }
   },
-  "trades": [],
+  "trades": [
+    {
+      "ticket": 1,
+      "sym": "GTLB",
+      "side": "long",
+      "REAL_ORDER": false,
+      "entry_et": "08:13",
+      "entry_bar_utc": "2026-09-02T12:13:00Z",
+      "entry_price": 55.8,
+      "shares": 268,
+      "notional": 14954.4,
+      "trigger": "B -- premarket-high stop-buy at 55.80, armed 07:33",
+      "fill_semantic": "The 08:13 bar opened 55.6241 (below the trigger), printed a high of 56.17 and closed 56.108 on 7,256 shares. The stop triggered intrabar with the open below it, so the fill is booked AT the trigger (55.80), the simulator's convention for breaks. Bracket: the bar closed ABOVE the 56.079 limit, so a real stop-limit that saw the print jump 55.79 -> 56.10 in one tick could have filled at the limit or been skipped; pessimistic fill 56.079 (-0.5%), optimistic/booked 55.80.",
+      "fill_realism": {
+        "assumed_fill": 55.8,
+        "mark_plus_60s": null,
+        "note": "filled in on the 08:14 bar close"
+      },
+      "protective_stop": {
+        "level": 51.336,
+        "basis": "max(entry x 0.92, peak x 0.60) = max(51.336, 33.70)",
+        "placed_et": "08:13",
+        "note": "Resting from the fill; the watcher (paper_watch.py --book, EXIT_MODE c37) owns it and every other exit: 20/10/40 pressure trail from peak, bank 1/3 at +25%, 14:50-14:59 ladder."
+      },
+      "premarket_entry_caveat": "Filled at 08:13, pre-open. The sim charges 50 bps on pre-09:30 fills; the live spread at the last book read (08:08) was 1.28%, so this entry sits in the premarket-book divergence the parity audit flags. Recorded, not adjusted.",
+      "status": "OPEN"
+    }
+  ],
   "armed": [
     {
       "ticket": 1,
@@ -319,11 +391,11 @@
         "level": 51.336,
         "basis": "max(entry x 0.92, peak x 0.60) on an assumed 55.80 fill; re-placed upward as the peak rises"
       },
-      "status": "ARMED -- waiting for the trigger"
+      "status": "FILLED 08:13 -- see trades[0]"
     }
   ],
   "vetoes": {
-    "decisions_reached": 2,
+    "decisions_reached": 4,
     "spread": [
       {
         "et": "07:02",
@@ -349,6 +421,32 @@
         "spread_pct": 0.46,
         "cap_pct": 0.5,
         "verdict": "PASS"
+      },
+      {
+        "et": "08:02",
+        "sym": "GTLB",
+        "phase": "premarket",
+        "bid": 54.18,
+        "bid_size": 50,
+        "ask": 54.54,
+        "ask_size": 100,
+        "spread_pct": 0.66,
+        "cap_pct": 0.5,
+        "verdict": "VETO",
+        "trigger": "C morning_star @08:01 close (fresh)"
+      },
+      {
+        "et": "08:08",
+        "sym": "GTLB",
+        "phase": "premarket",
+        "bid": 54.8,
+        "bid_size": 100,
+        "ask": 55.5,
+        "ask_size": 130,
+        "spread_pct": 1.28,
+        "cap_pct": 0.5,
+        "verdict": "VETO",
+        "trigger": "C macd_cross_up + morning_star @08:06 close (fresh)"
       }
     ],
     "depth": [
@@ -374,6 +472,16 @@
         "levels": "55.85x1, 55.90x215, 55.94x100, 55.95x25, 55.97x100, 55.99x10, 56.00x1875",
         "pct_of_intended": 868,
         "verdict": "PASS"
+      },
+      {
+        "et": "08:02",
+        "sym": "GTLB",
+        "intended_shares": 274,
+        "ticket_usd": 15000,
+        "marketable_limit": 54.7,
+        "cumulative_ask_size_within_limit": 100,
+        "pct_of_intended": 36,
+        "verdict": "REDUCE (would have cut to 100 sh); moot after the spread veto"
       }
     ],
     "chase_fill_arming": [
@@ -395,10 +503,10 @@
       }
     ],
     "rates": {
-      "note": "premarket so far",
-      "spread": "1 veto / 2 decisions = 50% (both GTLB, 07:02 veto / 07:31 pass)",
-      "depth": "0/2",
-      "chase": "0/2"
+      "note": "premarket through 08:08",
+      "spread": "3 vetoes / 4 decisions = 75%",
+      "depth": "0 skip / 1 reduce / 4",
+      "chase": "0/4"
     }
   },
   "trigger_c": [
@@ -432,6 +540,24 @@
       "taken": false,
       "why_not": "OPS DEFECT (self-inflicted, logged as an error): the cycle command chained `wait_until 07:47` AFTER the trigger call in the same tool call, so the TAKEABLE tag printed at 07:45:19 was not READ until 07:47:00 -- 4 min after the 07:43 close, outside the 2-min freshness window. This is exactly the Day-13 loop-ordering defect (2026-08-21) recurring: 'the read is the time-critical step; the wait is never allowed between the trigger call and reading its output'. Not entered: a stale tag is a refusal by rule, not by judgement. GTLB was otherwise armable at the moment (spread 0.31% at 07:38, halal PASS, calm, rank 1).",
       "fix": "from this point every cycle is bars -> cyc.py (read) as one step and the pacing wait as a SEPARATE later tool call."
+    },
+    {
+      "et": "08:02",
+      "sym": "GTLB",
+      "signal": "morning_star",
+      "signal_et": "08:01",
+      "tag_at_read": "TAKEABLE NOW (0m since close), read 08:02:15 wall clock -- FRESH",
+      "taken": false,
+      "why_not": "Taken to the book at 08:02:22: inside bid 54.18 x50 / ask 54.54 x100 = 0.66%, over the 0.5% cap -> SPREAD VETO (decision #3 of the day). Secondary: a marketable limit at ask +0.3% = 54.70 would have met only 100 displayed shares (36% of the 274 intended) -> ticket would have been cut to 100 sh under the depth rule even if the spread had passed. Both refusals logged; the entry was legal and fresh, the book was not."
+    },
+    {
+      "et": "08:08",
+      "sym": "GTLB",
+      "signal": "macd_cross_up + morning_star",
+      "signal_et": "08:06",
+      "tag_at_read": "TAKEABLE NOW (1m since close), read 08:08:15 -- FRESH",
+      "taken": false,
+      "why_not": "Book at 08:08:19: bid 54.80 x100 / ask 55.50 x130 = 1.28%, 2.6x the cap -> SPREAD VETO (decision #4). The 08:07 bar had just spiked to 55.50 (close 55.21) and the ask side jumped to the spike high while the bid stayed at 54.80. Second fresh, legal Trigger C refused by the premarket book in six minutes."
     }
   ],
   "coverage_gaps": [],
