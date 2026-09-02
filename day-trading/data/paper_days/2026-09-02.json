@@ -15,14 +15,123 @@
     "start_on_time": true,
     "start_note": "Launched 06:20 ET, 20 min ahead of the 06:40 target. No coverage gap at the front of the session.",
     "trading_day_guard": "TRADING 2026-09-02 full (market_calendar.py). SESSION close=16:00 exit_end=15:00 entry_cutoff=14:30 cross_cap=14:00 ladder=14:50,14:55,14:58,14:59",
-    "capability_probe": {"status": "PENDING"}
+    "capability_probe": {
+      "status": "PASS",
+      "run_et": "06:21",
+      "probe_1_python": {
+        "cmd": "python -c print(1)",
+        "result": "1",
+        "exit": 0,
+        "verdict": "PASS"
+      },
+      "probe_2_git": {
+        "cmd": "git status --short + git commit + git push",
+        "result": "skeleton committed 0c43d4a and pushed",
+        "exit": 0,
+        "verdict": "PASS"
+      },
+      "probe_3_mcp": {
+        "cmd": "get_equity_quotes SPY",
+        "result": "SPY last_non_reg 759.63 @10:12:45Z, bid 759.95 / ask 759.99 @10:20:55Z, prev_close 761.78",
+        "verdict": "PASS"
+      },
+      "note": "All three PASS -- full capability. No PERMISSION_BLOCKED flag needed. Heartbeat SESSION_ALIVE_2026-09-02.flag first written 06:21:40 ET."
+    },
+    "heartbeat": {
+      "file": "data/paper_days/SESSION_ALIVE_2026-09-02.flag",
+      "first_et": "06:21:40",
+      "cadence": "every cycle, <=5 min"
+    },
+    "halal_list": {
+      "updated": "2026-09-01",
+      "age_days": 1,
+      "n_symbols": 1260,
+      "stale_gate": "PASS (refreshed yesterday by the monthly job, age 1 day)"
+    },
+    "watcher_precheck": "posn.py: BOOK EMPTY -- no data/paper/position_*.json state files, nothing from another day to move aside. data/paper_days/watch_NEOV.json is a legacy 2026-08-31 bars file, not a position state file; ignored.",
+    "premarket_tape": {
+      "spy_prev_close": 761.78,
+      "spy_premarket_0620et": 759.63,
+      "spy_premarket_pct": -0.28,
+      "read": "SPY -0.28% premarket -- mildly soft tone into the open."
+    },
+    "scan_state_seed": "seeded 06:22 ET from scan_state_2026-09-01: 137 inherited_fail, 7 spac, 0 fake_gap. A halal FAIL is never re-litigated."
   },
-  "cycles": [],
-  "halal": {"PASS": [], "FAIL": [], "CANNOT_VERIFY": []},
-  "halal_detail": {},
+  "cycles": [
+    {
+      "et": "06:23",
+      "state": "FLAT-5m",
+      "scan_rows": 95,
+      "candidates": 12,
+      "dropped": {
+        "fund": 76,
+        "noncommon": 2,
+        "spac": 1,
+        "inherited_fail": 5
+      },
+      "note": "ETF contamination for a FOURTH session: 76 of 95 rows were funds. Dropped noncommon EOSEW (warrant) and ARMH ('Arm Holdings PLC ADRhedged' -- a Precidian ADRhedged wrapper product, not common stock; scan_sweep NONCOMMON_PAT extended with 'adrhedged' and ARMH purged from the crossed set via purge_candidates.py). Dropped spac ALF. Inherited FAILs refused without re-litigation: DUKR +59.8%, BNR, HVT.A, CVR, BRNX. Scan did not spill this time (95 rows landed in context); transcribed to scan_specs_2026-09-02_0623.txt and rebuilt via dump_from_delta.py with names supplied for all 95 rows.",
+      "candidate_list": [
+        "JLHL",
+        "UPC",
+        "ILAG",
+        "MLEC",
+        "GTLB",
+        "ALGS",
+        "EXOZ",
+        "BSEM",
+        "MGRT",
+        "CHRN",
+        "PRHI"
+      ]
+    },
+    {
+      "et": "06:27",
+      "state": "FLAT-5m",
+      "action": "bars + rank",
+      "bars_batch": "10 symbols in 1 spilled call (returned-set assert PASSED) + PRHI alone (144 bars, all interpolated -- lesson: a single-symbol call does NOT spill and costs ~30KB of context; batch or narrow the window)",
+      "prev_close_source": "official close from get_equity_quotes (close.price), not the scan-derived ratio",
+      "fake_gap_detector": "ILAG, MLEC, EXOZ, BSEM, MGRT, PRHI returned ZERO real bars (all interpolated) -- no premarket trade at all; their scan %Change is a stale mark. ALGS and CHRN 1 real bar each. Held as NOT-YET-CROSSED, not dropped: a genuine cross can print after 09:30.",
+      "rank_top": "GTLB -- 3 crossed / 1 armable",
+      "rank_detail": "1 GTLB +19.8% coil 0.968 press +0.19 gap 19.8 calm-yes halal PASS COILED; 2 JLHL +27.4% coil 0.930 CALM-GAP FAIL; 3 UPC +26.0% coil 0.910 CALM-GAP FAIL + HARAM by ruling",
+      "read": "GTLB (GitLab, 7.6B cap, 10.9M shares yesterday) is the one liquid, permissible, coiled name on the board. Its calm gap is +19.8% against a 20% gate -- one tick from the line, with the 35% top-name grace as the backstop. Everything else is either a stale mark or a sub-$150M microcap."
+    }
+  ],
+  "halal": {
+    "PASS": [
+      "GTLB"
+    ],
+    "FAIL": [
+      "UPC"
+    ],
+    "CANNOT_VERIFY": []
+  },
+  "halal_detail": {
+    "GTLB": {
+      "q1": "PASS",
+      "loan_pct": 0.0,
+      "cash_pct": 17.82,
+      "combined": 17.82,
+      "haram_pct": 1.13,
+      "source": "quarterly",
+      "mcap": 7617390287,
+      "loan_zero_sanity": "loan_pct 0.00 is PLAUSIBLE here, not the negative-book blind spot: P/B is +7.98 and GitLab carries no debt (cash-funded SaaS; cash 17.8% of a 7.6B cap = ~$1.36B, matching its reported cash+investments). The one-side-over-10-with-combined-under-20 exception applies (cash 17.82 / combined 17.82).",
+      "q2": "PASS -- GitLab, DevSecOps software platform (source-code hosting, CI/CD, security scanning). Packaged software sold to enterprises; no alcohol/gambling/finance/tobacco/defense/adult/pork/entertainment line. Interest income 1.13% of revenue, under the 5% line.",
+      "verdict": "PASS -- armable on halal",
+      "screened_et": "06:28"
+    },
+    "UPC": {
+      "verdict": "FAIL (ruling)",
+      "reason": "HARAM by user ruling in data/halal_rulings.json -- refused by the ranker without a live screen. Not re-litigated."
+    }
+  },
   "trades": [],
   "armed": [],
-  "vetoes": {"decisions_reached": 0, "spread": [], "depth": [], "chase_fill_arming": []},
+  "vetoes": {
+    "decisions_reached": 0,
+    "spread": [],
+    "depth": [],
+    "chase_fill_arming": []
+  },
   "trigger_c": [],
   "coverage_gaps": [],
   "errors": [],
