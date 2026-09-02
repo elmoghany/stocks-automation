@@ -15,10 +15,13 @@ import csv
 import json
 import sys
 from pathlib import Path
-from datetime import datetime, timezone, timedelta
+from datetime import datetime
+from zoneinfo import ZoneInfo
 
 DIR = Path(__file__).resolve().parent.parent
-ET = timezone(timedelta(hours=-4))          # EDT; session is 2026-08-14
+# DST-aware (2026-09-01 live-tool fixes): the fixed -4h offset this used
+# to carry would have mislabelled every bar by an hour from 2026-11-01.
+ET = ZoneInfo("America/New_York")
 
 
 def main():

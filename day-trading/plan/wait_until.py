@@ -12,14 +12,18 @@ transcript, and returns immediately if the target is already past.
 """
 import sys
 import time
-from datetime import datetime, timedelta, timezone
+from datetime import datetime, timezone
+from zoneinfo import ZoneInfo
 
 CAP = 480
-ET_OFFSET = timedelta(hours=-4)          # summer; CLOCK RULE: TZ env is broken
+# CLOCK RULE: the TZ env var is broken on this box, so the zone is named
+# explicitly. zoneinfo handles DST itself (2026-09-01 live-tool fixes: the
+# old fixed -4h offset would have been an hour wrong from 2026-11-01).
+ET = ZoneInfo("America/New_York")
 
 
 def et_now():
-    return datetime.now(timezone.utc) + ET_OFFSET
+    return datetime.now(ET)
 
 
 def main():
@@ -37,7 +41,8 @@ def main():
     wait_s = (target - now).total_seconds()
     capped = min(wait_s, budget)
     print(f"waiting {capped:.0f}s -> {target_s} ET "
-          f"(now {now:%H:%M:%S} ET / {now - ET_OFFSET:%H:%M:%S} UTC"
+          f"(now {now:%H:%M:%S} ET / "
+          f"{now.astimezone(timezone.utc):%H:%M:%S} UTC"
           f"{'; CAPPED, call again' if capped < wait_s else ''})",
           flush=True)
 
@@ -46,7 +51,8 @@ def main():
         time.sleep(min(15, max(0.5, deadline - time.time())))
 
     end = et_now()
-    print(f"awake at {end:%H:%M:%S} ET / {end - ET_OFFSET:%H:%M:%S} UTC")
+    print(f"awake at {end:%H:%M:%S} ET / "
+          f"{end.astimezone(timezone.utc):%H:%M:%S} UTC")
     return 0
 
 
