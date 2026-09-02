@@ -393,6 +393,16 @@
       "state": "HOLD-20m",
       "position": "GTLB t3 open @ 51.32; grinding lower 50.7 -> 49.91 (13:00 low) -> 50.2; open P&L -$200..-$352; pressure -0.2..-0.5 so the 10% leg (47.943) and the hard stop (47.214) alternate as the live stop.",
       "ops": "12:59 scan delegate returned nothing (it spawned a sub-agent instead of doing the work; no dump file written) -- re-run at 13:05 with an explicit 'do it yourself' instruction. No candidate was missed: the 12:46 sweep is 19 min old and the position is held anyway."
+    },
+    {
+      "et": "12:59/13:05 bench",
+      "scan_rows": "65 / 70",
+      "candidates": "18 / 21",
+      "new": [
+        "SVRN (19.5M shipping shell, CC5 Noncompliant)",
+        "SCZM (Santacruz Silver, 942M, 543k avg vol, silver mining -- permissible line; q1 to screen at candidacy)"
+      ],
+      "note": "The 12:59 delegate did complete via its own sub-agent after all (both dumps written; the 13:05 retry is a harmless duplicate). MOVE +16%, TRAX +14%, OABI +19.7% still no 7AM print."
     }
   ],
   "halal": {
