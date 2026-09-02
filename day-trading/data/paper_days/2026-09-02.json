@@ -327,6 +327,12 @@
         "MLGO (52M)"
       ],
       "note": "caps cached; screens deferred (holding)."
+    },
+    {
+      "et": "10:20-10:36",
+      "state": "HOLD-20m",
+      "position": "GTLB t3 open @ 51.32; range 51.07-51.83, open P&L -$44..+$33; pressure ~0; hard stop 47.214.",
+      "bench_1032": "scan 50 rows, 14 candidates. NEW: AIN (Albany International, 1.71B, 246k avg vol, +10.9% at 60.26 -- machine clothing + Engineered Composites for commercial AND defense aerospace; q2 needs the defense share judged if it ever reaches candidacy). OABI faded to +11.3%, TRAX +10.5%, RNXT off the scan (latched)."
     }
   ],
   "halal": {

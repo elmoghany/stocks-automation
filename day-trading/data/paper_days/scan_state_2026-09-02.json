@@ -1,18 +1,18 @@
 {
  "candidates": {
   "JLHL": {
-   "pct": 29.18,
-   "last": 7.26,
+   "pct": 30.77,
+   "last": 7.3491,
    "prev_close": 5.62,
-   "vol": "9.811600506679e+06",
+   "vol": "1.0283863897736e+07",
    "name": "Julong Holding Limited",
    "first_seen": "06:23"
   },
   "UPC": {
-   "pct": 18.97,
-   "last": 5.08,
+   "pct": 10.29,
+   "last": 4.7093,
    "prev_close": 4.27,
-   "vol": "1.5757157766e+06",
+   "vol": "3.762274687079e+06",
    "name": "Universe Pharmaceuticals",
    "first_seen": "06:23"
   },
@@ -33,10 +33,10 @@
    "first_seen": "06:23"
   },
   "GTLB": {
-   "pct": 13.84,
-   "last": 51.33,
+   "pct": 13.74,
+   "last": 51.285,
    "prev_close": 45.09,
-   "vol": "1.1096064270692e+07",
+   "vol": "1.1911178377183e+07",
    "name": "GitLab",
    "first_seen": "06:23"
   },
@@ -113,10 +113,10 @@
    "first_seen": "07:06"
   },
   "PPBT": {
-   "pct": 48.19,
-   "last": 2.46,
+   "pct": 38.55,
+   "last": 2.3,
    "prev_close": 1.66,
-   "vol": "5.7218609371258e+07",
+   "vol": "6.0769495592418e+07",
    "name": "Purple Biotech",
    "first_seen": "07:36"
   },
@@ -225,10 +225,10 @@
    "first_seen": "09:33"
   },
   "TRAX": {
-   "pct": 10.78,
-   "last": 45.61,
+   "pct": 10.52,
+   "last": 45.5,
    "prev_close": 41.17,
-   "vol": "312509.507515",
+   "vol": "377692.659263",
    "name": "First Tracks Biotherapeutics",
    "first_seen": "09:33"
   },
@@ -249,10 +249,10 @@
    "first_seen": "09:33"
   },
   "OABI": {
-   "pct": 13.18,
-   "last": 5.025,
+   "pct": 11.26,
+   "last": 4.94,
    "prev_close": 4.44,
-   "vol": "996645.246934",
+   "vol": "1.141210686494e+06",
    "name": "OmniAb",
    "first_seen": "09:45"
   },
@@ -273,18 +273,18 @@
    "first_seen": "09:45"
   },
   "XTLB": {
-   "pct": 12.72,
-   "last": 2.615,
+   "pct": 15.95,
+   "last": 2.69,
    "prev_close": 2.32,
-   "vol": "14606.624837",
+   "vol": "18278.624837",
    "name": "XTL Biopharmaceuticals",
    "first_seen": "10:00"
   },
   "SCWO": {
-   "pct": 11.11,
-   "last": 3.2,
+   "pct": 13.81,
+   "last": 3.2777,
    "prev_close": 2.88,
-   "vol": "53730.030925",
+   "vol": "61143.441559",
    "name": "374Water",
    "first_seen": "10:00"
   },
@@ -297,10 +297,10 @@
    "first_seen": "10:00"
   },
   "TITN": {
-   "pct": 14.22,
-   "last": 23.46,
+   "pct": 13.29,
+   "last": 23.27,
    "prev_close": 20.54,
-   "vol": "104054.865269",
+   "vol": "129998.817098",
    "name": "Titan Machinery",
    "first_seen": "10:00"
   },
@@ -313,10 +313,10 @@
    "first_seen": "10:00"
   },
   "NDRA": {
-   "pct": 22.01,
-   "last": 6.43,
+   "pct": 23.06,
+   "last": 6.485,
    "prev_close": 5.27,
-   "vol": "39608.956125",
+   "vol": "55284.019588",
    "name": "ENDRA Life Sciences",
    "first_seen": "10:12"
   },
@@ -332,7 +332,7 @@
    "pct": 11.51,
    "last": 7.07,
    "prev_close": 6.34,
-   "vol": "145179.012316",
+   "vol": "155504.012316",
    "name": "Eupraxia",
    "first_seen": "10:12"
   },
@@ -345,20 +345,28 @@
    "first_seen": "10:12"
   },
   "MLGO": {
-   "pct": 10.5,
-   "last": 4.21,
+   "pct": 10.24,
+   "last": 4.2,
    "prev_close": 3.81,
-   "vol": "18415.284504",
+   "vol": "20761.25071",
    "name": "MicroAlgo, Inc. Class A",
    "first_seen": "10:19"
   },
   "IRD": {
-   "pct": 10.44,
-   "last": 4.23,
+   "pct": 10.7,
+   "last": 4.24,
    "prev_close": 3.83,
-   "vol": "286697.915401",
+   "vol": "376974.080555",
    "name": "Opus Genetics",
    "first_seen": "10:19"
+  },
+  "AIN": {
+   "pct": 10.91,
+   "last": 60.26,
+   "prev_close": 54.33,
+   "vol": "74368.899579",
+   "name": "Albany International",
+   "first_seen": "10:32"
   }
  },
  "halal_fail": [
