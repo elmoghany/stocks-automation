@@ -129,7 +129,12 @@ def shares_asof(sym, date):
     else:
         f = SH / f"{sym}_{date[:7]}.json"
     if f.exists():
-        return json.loads(f.read_text())
+        import time
+        for i in range(4):
+            try:
+                return json.loads(f.read_text())
+            except (PermissionError, json.JSONDecodeError):
+                time.sleep(0.1 * (i + 1))   # sibling mid-replace (Windows)
     d = api(f"https://api.polygon.io/v3/reference/tickers/{sym}?date={date}"
             f"&apiKey={KEY}")
     if not d:
