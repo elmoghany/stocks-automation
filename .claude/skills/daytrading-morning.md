@@ -122,6 +122,29 @@ compliance verdict, convertible only by an affirmative evidence ruling. Low-mcap
 ratios constantly (small denominator); that is by design and is the
 single largest determinant of what we can trade.
 
+## Ops contract (2026-09-01): heartbeat, clock, calendar, watcher
+* **Heartbeat.** After a GREEN capability probe and on every cycle (≤5 min),
+  touch `data/paper_days/SESSION_ALIVE_{date}.flag`. The launcher's liveness
+  check and the 12:00 + 14:45 watchdog key on it; a day file alone is a WEAK
+  signal (Day 16 proved presence ≠ capability).
+* **Clock.** Never compute ET by hand. `python plan/wait_until.py HH:MM`
+  (zoneinfo, DST-safe) for every wait; Monitors on UTC.
+* **Calendar.** Read `python plan/market_calendar.py` at start; its SESSION
+  line carries entry_cutoff / exit_end / cross_cap / ladder for the day.
+  Half-days (13:00 close): last new ticket 12:00, ladder 12:50–12:59.
+* **Halal at arm time.** `rank` membership is a prefilter; every arming runs
+  `python plan/live_halal.py SYM --json` and arms only on verdict PASS.
+* **Watcher.** `python plan/paper_watch.py --open …` on each fill, then ONE
+  `python plan/paper_watch.py --book` background task for the whole book
+  (default `EXIT_MODE=c37` = the rules in "In position" below). Feed it
+  completed bars into `data/rh_bars/{SYM}_{date}.csv` every minute and, from
+  14:45, `data/paper/quotes_{date}.json` from `get_equity_quotes`. The
+  watcher owns the end-of-day ladder, books every exit (`{date}.flatten.json`
+  with `exit_parity` vs the 14:59 close, `{date}.equity.json`, circuit-breaker
+  levels logged only), unlinks its state files and writes
+  `WATCH_ALIVE_{date}.json`. Never flatten by hand while it runs; a state file
+  from another day makes it refuse to start — move it aside and log why.
+
 ## Pre-open (from 6:40)
 0. **CAPABILITY PROBE — LIVENESS IS NOT CAPABILITY** (Day 16, 2026-08-26).
    Straight after the day-file skeleton, run three cheap probes and record
