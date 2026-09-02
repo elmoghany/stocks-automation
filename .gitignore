@@ -80,3 +80,5 @@ config.ini
 # Generated backtest results
 day-trading/plan/*.json
 earnings-trading/plan/*.json
+# live watcher state: per-day, never committed (stale files resurrect positions)
+day-trading/data/paper/position_*.json

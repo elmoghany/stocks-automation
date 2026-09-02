@@ -9,6 +9,21 @@ Champion: **C37** sequential ticket rotation.
 **Benchmark (2026-08-27 FINAL — the honest ones): score the day
 against −$163/traded day, not against any positive number.**
 
+**CORRECTION 2026-09-01 (read before quoting any row below).** A simulator
+audit found that every XH/XP/K row in the table was run with a hidden
+pressure-conditional trail active (the engine's `pressure_trail=(10,0.3,0.3,
+10,40)` was inherited from Z104's kwargs and never overridden by
+`trail_pct=999`). Those rows are therefore NOT "no exits": true hold-to-flatten
+LOSES (130-day counterfactual: K6S −$136k, XHB −$43k), and what actually won
+was C37's ranking + a 10%/40% trail that engages only when 10-bar pressure
+turns (≤ −0.3 / ≥ +0.3), with no hard stop, no base trail, no scale-out, no
+pattern exits, concurrent tickets. The K/XH rows are being re-measured under
+their true names (HOLD vs PTRAIL, with seeded control replicates, per-ticket
+and ex-best-day columns, and a hygiene-cleaned pool). Until that table lands,
+the live ruleset stays C37 and the only benchmark to quote is −$163/day.
+Live scoreboard: 17 scored days through 2026-09-01 at −$38/day — ahead of the
+honest baseline.
+
 The $1,517/day figure is RETIRED and was never real: minute bars had
 been fetched only to full-day-gain depth, so the backtest chose from a
 hindsight-curated sliver of the universe. On the full-coverage pool
@@ -108,6 +123,23 @@ ratios constantly (small denominator); that is by design and is the
 single largest determinant of what we can trade.
 
 ## Pre-open (from 6:40)
+0. **CAPABILITY PROBE — LIVENESS IS NOT CAPABILITY** (Day 16, 2026-08-26).
+   Straight after the day-file skeleton, run three cheap probes and record
+   them in the day JSON at `ops.capability_probe`: `python -c "print(1)"`,
+   `git status --short`, and one MCP call (`get_equity_quotes SPY`).
+   Day 16 wrote its skeleton, was logged "confirmed live" by the launcher's
+   720 s check and read healthy by the 12:00 watchdog — while unable to run
+   python, commit, or fetch a single bar, because `--permission-mode
+   acceptEdits` auto-approves *edits only*. Every presence guard in this
+   campaign keys on the day file, and the day file is exactly the artefact a
+   crippled session can still produce. Any DENIED probe → loud `errors[]`
+   entry, a `PERMISSION_BLOCKED_{date}.flag` runbook, a line appended to
+   `data/scheduler_log.txt`, a PushNotification — then keep re-probing until
+   15:00 (the tradeable window is 09:30–14:30, so a mid-morning unblock
+   still trades). **Never improvise around it**: no hand-ranking, no
+   substitute price feed, no entries credited for the gap. A blocked day is
+   an ops failure — `pnl 0`, `counts_as_traded_day false`, denominator
+   unchanged. It is not a flat day.
 
 1. Trading-day guard. Verify `data/halal_list.json` age < 35 days.
 2. Confirm no paper agent is already running for today.

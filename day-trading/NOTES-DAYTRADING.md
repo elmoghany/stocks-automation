@@ -5615,3 +5615,35 @@ Its vetoes are consistent with the abstention finding. The honest
 per-day target for ONE position with exits is ~-$163; for one position
 without exits ~+$188.
 
+## RETRACTION 2026-09-01: the W-campaign "winner" was mislabeled
+A read-only simulator audit (plan-mode review, 2026-09-01) found that every
+XH/XP/K/KR configuration set `trail_pct=999, stop_pct=99` to "remove all
+exits" while `SIMKW` (plan/rotation_sim.py:99-103, built from BASE_SIM + Z104's
+sim kwargs) still carried `pressure_trail=(10, 0.3, 0.3, 10, 40)`, which
+`sim_extra` never overrode. day-trading.py:1804-1813 then discards the 999 and
+arms a 10% trail from peak whenever 10-bar pressure <= -0.3 and a 40% trail
+when >= +0.3. Exit-reason decomposition of K6S as run: 'stop' (that trail)
++$24,275 over 219 exits; window-close flatten -$5,535 over 264 exits. Re-run
+with pressure_trail=None on a 130-day sample: K6S -$136,028, XHB -$43,449,
+KR6S -$165,517. The published tickets_per_day 1.87 for a config that should
+hold one ticket all day (true hold gives 1.01) was the tell.
+
+RETRACTED: "every exit mechanism we own subtracts value on honest data";
+"XHB = remove ALL exits +83,759"; "K6S +301,927 is the honest number".
+STANDS: C37F -72,673 (the champion's own rules on the honest pool); Z104's
+collapse; the IC study; the liquidity calibration; the live scoreboard.
+CORRECTED READING: true hold-to-flatten loses; what won is C37's ranking plus
+a pressure-CONDITIONAL trail (cut only when the tape turns), no hard stop, no
+base trail, no scale-out, no pattern exits, run concurrently. That rule is
+being re-measured under its real name (PTRAIL) against true HOLD, C37F, and
+30-replicate seeded random controls, per ticket and ex-best-day, on a
+hygiene-cleaned pool (287 NASDAQ test-symbol rows and 45 reverse-split
+artifact rows found in the pool). Nothing is adopted until that table lands.
+
+Also fixed today (safety, independent of the above): the headless launcher
+granted the whole Robinhood MCP server incl. place_*_order; now an explicit
+read-only tool list plus a tracked .claude/settings.json deny list for every
+order tool; calendar ERROR is loud in launcher and watchdog; the watchdog
+checks the SESSION_ALIVE heartbeat and a WATCH_ALIVE heartbeat when position
+files are open, and fires a second time at 14:45; the launcher honors its own
+LAUNCHED flag against a double fire.
