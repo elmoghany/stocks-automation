@@ -47,12 +47,30 @@ HARAM = ps.HARAM_INDUSTRY_WORDS
 def api(url):
     """Throttled + retried via trading.massive._get. A raw urllib call
     here once bypassed the rate limiter, and a 429 could be cached
-    permanently as empty (halal cache poisoning). Never bypass it."""
+    permanently as empty (halal cache poisoning). Never bypass it.
+
+    Return contract (2026-09-01): {} means TRANSPORT FAILURE (429s
+    exhausted, timeout, DNS) and must never be cached by a caller; a
+    404 is a real answer ("no reference row for this symbol/date") and
+    comes back as a dict with results=None so callers can cache it."""
     from shared import massive
+    import urllib.error
     try:
         return massive._get(url)
+    except urllib.error.HTTPError as e:
+        if e.code == 404:
+            return {"status": "NOT_FOUND", "results": None}
+        return {}
     except Exception:
         return {}
+
+
+def _write_atomic(f, obj):
+    """Parallel shards share these caches; never leave a torn file."""
+    import os
+    tmp = f.with_name(f"{f.name}.{os.getpid()}.tmp")
+    tmp.write_text(json.dumps(obj))
+    os.replace(tmp, f)
 
 
 def get(sym, date):
@@ -82,14 +100,34 @@ def massive_fin(sym):
 
 
 def shares_asof(sym, date):
-    f = SH / f"{sym}_{date[:7]}.json"
+    """Shares outstanding as of `date` (Massive v3 tickers, ?date=).
+
+    HALAL-LEAK EPOCH 2026-09-01 (audit): the cache was keyed by MONTH,
+    so the first date queried in a month answered for every other date
+    in it -- including EARLIER dates (a look-ahead when the first query
+    happened to be late in the month), and a transport failure ({} from
+    api()) was cached as null forever (761 of 14,634 files are null).
+    Under HALAL_STRICT (the live-gate epoch every ladder run uses) the
+    cache is keyed by the EXACT as-of date, {sym}_{date}.json; the old
+    month files are left in place and never read by this path (nothing
+    migrated). The legacy month key survives ONLY for the non-strict
+    identity chain (S095/Z104 in idgate.py), so those gates stay EXACT
+    by construction. In BOTH modes a transport failure is never cached.
+    """
+    if HALAL_STRICT:
+        f = SH / f"{sym}_{date}.json"
+    else:
+        f = SH / f"{sym}_{date[:7]}.json"
     if f.exists():
         return json.loads(f.read_text())
     d = api(f"https://api.polygon.io/v3/reference/tickers/{sym}?date={date}"
             f"&apiKey={KEY}")
-    sh = (d.get("results") or {}).get("weighted_shares_outstanding") or \
-        (d.get("results") or {}).get("share_class_shares_outstanding")
-    f.write_text(json.dumps(sh))
+    if not d:
+        return None              # transport failure: NOT cached, retried
+    res = d.get("results") or {}
+    sh = res.get("weighted_shares_outstanding") or \
+        res.get("share_class_shares_outstanding")
+    _write_atomic(f, sh)         # real answer (incl. 404 / no field) cached
     return sh
 
 
@@ -187,6 +225,14 @@ def halal_pt(sym, date, prev_close):
         return False
     sh = shares_asof(sym, date)
     if not sh or not prev_close:
+        # HALAL-LEAK EPOCH 2026-09-01: this fallback to the STATIC
+        # present-day verdict (rules_ytd.json) fired BEFORE the strict
+        # refusal below whenever shares/prev_close were missing (~55%
+        # of share lookups per the audit) -- a present-day answer to a
+        # point-in-time question. Live's rule is "missing data is a
+        # FAIL", so under HALAL_STRICT refuse here too.
+        if HALAL_STRICT:
+            return False
         return bool(VER.get(sym, {}).get("halal_ok"))
     mcap = sh * prev_close
     # precise (yf quarterlies cache)
