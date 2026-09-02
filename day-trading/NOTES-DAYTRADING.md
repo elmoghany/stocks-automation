@@ -1,5 +1,82 @@
 # Penny Stocks Trading Notes
 
+## PAPER DAY 21 (2026-09-02) — three tickets, three stops, −$2,868.22: the day the entries bought the top minute
+
+**3 tickets: GTLB 268 @ 55.80 → 51.561 (−$1,136.05, 10% pressure trail), DELL 31 @
+474.40 → 436.448 (−$1,176.51, −8% hard stop), GTLB 291 @ 51.32 → 49.4105 (−$555.66,
+14:50 ladder). Flat by 14:50, zero real orders.** `counts_as_traded_day: true`.
+**Cumulative −$647.82 → −$3,516.04 over 18 scored days = −$195.34/day** (was
+−$38.11 over 17). Against the −$163/day honest baseline live is now **behind by
+$582 in total** ($2,705 lost to the baseline in one day). Full detail in
+`data/paper_days/2026-09-02.{json,md}`.
+
+Headless launch clean, 06:20 start; probe green 06:21; heartbeat every cycle.
+Sixth consecutive session the Day-16 fix has held.
+
+### The day in one line
+Every exit mechanism fired exactly as written. The losses are entry losses: two
+stop-buys through the session high of an earnings gapper, one 77 minutes before the
+open flush (GTLB, +24% premarket, 1.03M shares in the 09:30 bar to 0.4% above the
+hard stop, taken out the next minute) and one in the third minute after it (DELL,
+−1.72% at +60 s, the campaign's worst entry realism). The full-coverage backtest
+already says these rules lose $163/day; this is that distribution's tail.
+
+### What actually worked
+* **The watcher owned the whole book, start to finish.** One `paper_watch.py --book`
+  process from 08:15 to 15:03 booked all three exits (trail, hard stop, ladder),
+  picked up the DELL and second-GTLB state files dynamically, wrote flatten /
+  equity / cb, logged two CB-WOULD-FIRE levels (−3%, −5% at 09:31, measurement
+  only), and exited BOOK FLAT on its own. Nothing was flattened by hand.
+* **Scan sweeps delegated to haiku subagents** (26 sweeps): the verbatim 30 KB dump
+  never touched the coordinator. One delegate spawned a sub-agent instead of doing
+  the work; the work still landed. Cost ~3 min per sweep.
+* **`cyc.py` / `hold.py`** collapsed each cycle to one MCP call + one bash call.
+* **Veto ledger post-open inside the band for the second session**: spread 2/4
+  post-open (TRAX 1.73%, RNXT 0.85% — both ranked above the name bought), 3/4
+  premarket; depth 0 skips; chase 0/8.
+
+### What went wrong (ops)
+* **Loop-ordering defect recurred at 07:47** (Day 13's): a pacing wait chained
+  after the trigger read let a fresh `morning_star` on GTLB age out unread. Fixed on
+  the spot; it cost a legal Trigger C entry on the only armable name.
+* **Host stall 13:36–14:13**: a parallel campaign session loaded the machine until a
+  bars call took 27 min and python hit the 120 s tool timeout. The session loop
+  stalled; the watcher kept evaluating every bar that landed (30 s ticks stretched
+  to minutes). No decision was pending; ladder and quotes file ran on time. Logged
+  as a coverage gap. **A headless session cannot share the host with a heavy
+  backtest** — that is a scheduling rule, not a code fix.
+* Exit parity for ticket 3 was computed by the watcher off a 14:50 proxy (the 14:59
+  bar was 3 min from being ingested): +$30.51 in its record; the true 14:59 figure is
+  **−$42.17 (−29 bps)**. Both are in the JSON. The watcher should wait for the 14:59
+  bar before writing parity, or say "PROXY" in the record — it does the latter.
+
+### The halal gate, fourth session of the same finding
+31 screened → 6 PASS (GTLB, DELL, DAKT, TRAX, RNXT, + DAKT's external ruling).
+The liquid crossers failed on financing: **EOSE** 58% loans (1.1B, 22M sh/day, coil
+0.977, flat at 07:00 — ranked #1 above GTLB at 08:04), **ASTS** 25% combined and
+interest 46% of revenue (24B, 9M sh/day), **ALMS** cash 37%. DELL passed only
+through the one-side-over-10 exception (loans 11.33, combined 15.54). Two names
+were blocked by a *missing 7AM print* rather than the gap itself — **OABI** (737M,
+3.7M sh, +22% all afternoon, 0.2% book) and TITN — because Polygon had no trade at
+or before 07:00 either. That is an honest refusal, but OABI is the clearest case yet
+of the calm-gap gate refusing a name for being quiet at 07:00 rather than for
+gapping: worth a rule (e.g. first print after 07:00 within the calm band = CALM)
+before it costs a third session.
+
+### Fill realism, both ways
+GTLB t1 +0.69% (favourable, the break ran); DELL t2 **−1.72%** (the top of a
+1-minute spike); GTLB t3 +0.86% (sweep VWAP 51.32 vs the 51.38 signal close).
+Exits: trail and stop at the level (brackets −$180 / −$41 to the bar close); ladder
+bid×0.999 = $14.41 below the naive inside bid.
+
+### Standing question for the campaign
+Two of the three losses were **stop-buys at the session high on earnings gappers in
+the opening 90 minutes** — the same shape as Day 5's LFST and Day 19's NEOV. The
+fill-arming rule guarantees the trigger is forward; it does not say anything about
+*when* a high stop-buy is worth taking. The RHOLD6/PTRAIL re-measurement should
+report Trigger B's contribution split pre-open / first-30-min / rest-of-day before
+the live ruleset keeps paying for it.
+
 ## PAPER DAY 20 (2026-09-01) — MMED +$73.00, and a cross-day collision that would have latched four ghosts
 
 **1 ticket, MMED 663 sh @ 22.6199 → 22.73, +$73.00, flat at the 14:57 flatten,

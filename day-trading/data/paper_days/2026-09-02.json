@@ -6,7 +6,7 @@
   "session_type": "headless (Windows Task Scheduler \\Stocks\\C37MorningLaunch)",
   "benchmark_per_day": 1517,
   "honest_baseline_per_day": -163,
-  "status": "OPEN",
+  "status": "CLOSED",
   "counts_as_traded_day": true,
   "config": "C37",
   "ops": {
@@ -742,7 +742,25 @@
       "hold_minutes": 271,
       "peak": 53.27,
       "peak_open_pnl": 567.45,
-      "trough_open_pnl": -622.74
+      "trough_open_pnl": -622.74,
+      "exit_parity": {
+        "watcher_record": {
+          "close_used": 49.355,
+          "proxy": "14:50 bar (the 14:59 bar had not been ingested when the watcher computed parity at 15:02:53 -- the session's bars feed was ~3 min behind after the host stall)",
+          "backtest_exit": 49.3056,
+          "live_vwap": 49.4105,
+          "delta_usd": 30.51,
+          "delta_bps": 21.3
+        },
+        "corrected_from_csv": {
+          "close_1459": 49.605,
+          "backtest_exit_1459x0999": 49.5554,
+          "live_vwap": 49.4105,
+          "delta_usd": -42.17,
+          "delta_bps": -29.2,
+          "note": "computed post-hoc from the ingested 14:59 bar; the watcher's proxy figure is left in flatten.json untouched."
+        }
+      }
     }
   ],
   "armed": [
@@ -1047,10 +1065,11 @@
       }
     ],
     "rates": {
-      "note": "through 10:19",
-      "spread": "5 vetoes / 8 decisions = 63% (premarket 3/4 = 75%, post-open 2/4 = 50%)",
-      "depth": "0 skip / 1 reduce / 8",
-      "chase": "0/8"
+      "final": "through 10:19 (last decision)",
+      "spread": "5 vetoes / 8 decisions = 63% (premarket 3/4 = 75%; post-open 2/4 = 50%)",
+      "depth": "0 skips, 1 reduce (would have cut GTLB to 100 sh at 08:02 had the spread passed) / 8",
+      "chase": "0/8",
+      "note": "Post-open rate finally inside the modelled 50-65% band; premarket still over it. Both post-open vetoes (TRAX 1.73%, RNXT 0.85%) were on names that ranked ABOVE the name actually bought."
     }
   },
   "trigger_c": [
@@ -1225,5 +1244,51 @@
       }
     },
     "note": "Ledger facts only; RH bar CSVs untouched. The rank command will keep printing CALM-GAP FAIL for these names because it reads RH bars; the session applies the completed verdicts by hand ON TOP of the ranker's ORDER (never re-ordering)."
+  },
+  "eod": {
+    "closed_et": "14:50 (ladder rung 1)",
+    "flat_by_1500": true,
+    "tickets_taken": 3,
+    "tickets_available": 7,
+    "capital_deployed": 44594.92,
+    "capital_budget": 100000.0,
+    "capital_idle": 55405.08,
+    "trades_summary": [
+      {
+        "t": 1,
+        "sym": "GTLB",
+        "entry": "08:13 @ 55.80 x268 (premarket-high stop-buy)",
+        "exit": "09:31 @ 51.561 (10% pressure trail from 57.29)",
+        "pnl": -1136.05
+      },
+      {
+        "t": 2,
+        "sym": "DELL",
+        "entry": "09:33 @ 474.40 x31 (session-high stop-buy)",
+        "exit": "10:12 @ 436.448 (-8% hard stop)",
+        "pnl": -1176.51
+      },
+      {
+        "t": 3,
+        "sym": "GTLB",
+        "entry": "10:19 @ 51.32 x291 (Trigger C macd_cross_up)",
+        "exit": "14:50 @ 49.4105 (ladder)",
+        "pnl": -555.66
+      }
+    ],
+    "pnl": -2868.22,
+    "cumulative_before": -647.82,
+    "cumulative_after": -3516.04,
+    "scored_days": 18,
+    "per_day": -195.34,
+    "per_day_before": -38.11,
+    "honest_baseline_per_day": -163.0,
+    "baseline_total_18d": -2934.0,
+    "vs_honest_baseline_today": -2705.22,
+    "ahead_of_baseline_total": -582.04,
+    "vs_benchmark_1517": -4385.22,
+    "verdict": "A red day, the campaign's worst: -$2,868.22 on three tickets, $2,705 below the -$163 honest baseline and enough to flip the 18-day running average from -$38/day to -$195/day, now $582 BEHIND the baseline in total. Three separate C37 exits all fired as designed (10% pressure trail, -8% hard stop, 14:50 ladder); the losses came from ENTRIES that bought the top minute of two earnings gappers (GTLB premarket high at 08:13, DELL session high at 09:33) right before the opening flush -- the pattern the -8%/10% stops were fitted to on a cache whose survivors ran +100-300%, and which the full-coverage pool says loses.",
+    "what_drove_it": "1) GTLB t1: a 24% premarket gap on a 7.6B earnings name bought at its premarket high 77 min before the open; the 09:30 bar flushed 1.03M shares to 51.76 and the 09:31 bar took the 10% trail. 2) DELL t2: bought the third minute after the open at the session high on a 275B earnings gapper; -1.72% at +60 s (worst entry realism of the campaign), then a 3.5-hour bleed to the hard stop. 3) GTLB t3: a clean Trigger C fill on a 0.10% book that ran +$540 by 11:15 and gave it all back into the ladder. Nothing was a process error; every gate, veto and exit ran as written.",
+    "bias_statement": "UNDERSTATED coverage in the last hour: the host stall 13:36-14:13 stopped the session loop (watcher unaffected). No decision was pending, but the 13:34-14:30 window had no fresh scans, so a late crosser in that window would not have been seen; ticket 4 was never a live question because the position was open through the 14:30 cutoff anyway."
   }
 }
