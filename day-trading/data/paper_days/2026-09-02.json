@@ -387,6 +387,12 @@
       "state": "HOLD-20m",
       "position": "GTLB t3 open @ 51.32; 50.55-51.05, open P&L ~-$150..-$200; pressure ~0; hard stop 47.214.",
       "bench_1246": "scan 62 rows, 21 candidates. NEW: CURR (fintech/remittance -> FAIL, recorded), SAIH (bitcoin mining, 46M cap -- q2 would need the crypto-mining judgement; 20k avg vol, moot), SORA (luxury watch wholesaler, 57M, 6k sh). Caps cached. TRAX +13.9% (639k sh), MOVE +14.6%, OABI +21.3% (3.3M sh, no 7AM print)."
+    },
+    {
+      "et": "12:50-13:05",
+      "state": "HOLD-20m",
+      "position": "GTLB t3 open @ 51.32; grinding lower 50.7 -> 49.91 (13:00 low) -> 50.2; open P&L -$200..-$352; pressure -0.2..-0.5 so the 10% leg (47.943) and the hard stop (47.214) alternate as the live stop.",
+      "ops": "12:59 scan delegate returned nothing (it spawned a sub-agent instead of doing the work; no dump file written) -- re-run at 13:05 with an explicit 'do it yourself' instruction. No candidate was missed: the 12:46 sweep is 19 min old and the position is held anyway."
     }
   ],
   "halal": {
