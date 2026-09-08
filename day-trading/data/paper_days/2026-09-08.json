@@ -831,6 +831,46 @@
       "posn": "QCOM t1 81 sh @ 184.89 OPEN; last 176.80 (bar 11:46); book P&L about -657",
       "watcher": "alive, peak 185.26, hard stop 170.10",
       "note": "172-row scan spilled to file (117 funds); PHVS faded to 38.6 (+9.5%, off the +10% scan); QCOM 176.2-177.1 range for 2 hours"
+    },
+    {
+      "et": "12:07",
+      "n": 43,
+      "kind": "light bench (in position)",
+      "scan_rows": 185,
+      "candidates_n": 20,
+      "new": [
+        "APLD(FAIL)",
+        "CV(PASS)",
+        "EROC(FAIL)",
+        "IOND(PASS, crypto-mining caveat)",
+        "NNE(FAIL)",
+        "UROY(PASS)"
+      ],
+      "pass_pool_unranked": [
+        "BSEM",
+        "FAC",
+        "OESX",
+        "OBX",
+        "BUUU",
+        "ATHR",
+        "ERO",
+        "COHR",
+        "LITE",
+        "REAX",
+        "FRMI",
+        "SILC",
+        "AXTI",
+        "BE",
+        "TTRX",
+        "CV",
+        "IOND",
+        "UROY",
+        "PHVS",
+        "INBX"
+      ],
+      "posn": "QCOM t1 81 sh @ 184.89 OPEN; last 174.76 (bar 12:06); book P&L about -820",
+      "watcher": "alive, peak 185.26, hard stop 170.10",
+      "note": "185-row scan spilled to file (120 funds); QCOM drifted to a 174.4-175.4 range, 2.7% above the hard stop"
     }
   ],
   "trades": [
@@ -1582,6 +1622,67 @@
       "mcap": 322604473,
       "q2": "PASS -- Turn Therapeutics, dermatology pharma / device",
       "note": "not ranked (in position)"
+    },
+    "APLD": {
+      "et": "12:07",
+      "verdict": "FAIL",
+      "loan_pct": 60.23,
+      "cash_pct": 18.8,
+      "combined": 79.03,
+      "fail_reason": "LOAN>10+COMBINED>20",
+      "mcap": 8467178095
+    },
+    "CV": {
+      "et": "12:07",
+      "verdict": "PASS",
+      "loan_pct": 0.2,
+      "cash_pct": 2.67,
+      "combined": 2.87,
+      "haram_pct": 0.56,
+      "mcap": 339818539,
+      "q2": "PASS -- CapsoVision, capsule endoscopy imaging",
+      "note": "not ranked (in position)"
+    },
+    "EROC": {
+      "et": "12:07",
+      "verdict": "FAIL",
+      "loan_pct": 1.01,
+      "cash_pct": 20.9,
+      "combined": 21.91,
+      "fail_reason": "CASH>10+COMBINED>20",
+      "mcap": 2998102093
+    },
+    "IOND": {
+      "et": "12:07",
+      "verdict": "PASS",
+      "loan_pct": 0.0,
+      "cash_pct": 15.47,
+      "combined": 15.47,
+      "haram_pct": 0.09,
+      "mcap": 3778328948,
+      "q2": "PASS with caveat -- Ionic Digital, cryptocurrency mining / digital infrastructure; not on the house haram-industry list (lending, insurance, gambling, alcohol, cannabis, hotels), ratios pass with cash 15.47 over 10 but combined under 20",
+      "note": "not ranked (in position); flag for user review of crypto-mining stance"
+    },
+    "NNE": {
+      "et": "12:07",
+      "verdict": "FAIL",
+      "loan_pct": 0.27,
+      "cash_pct": 55.28,
+      "combined": 55.55,
+      "haram_pct": 581.5,
+      "fail_reason": "CASH>10+COMBINED>20; HARAM>=5% (pre-revenue, interest income dominates)",
+      "mcap": 1050335755
+    },
+    "UROY": {
+      "et": "12:07",
+      "verdict": "PASS",
+      "loan_pct": 0.01,
+      "cash_pct": 13.65,
+      "combined": 13.66,
+      "haram_pct": 0.21,
+      "mcap": 1862657092,
+      "q2": "PASS -- Uranium Royalty, uranium royalties and physical uranium (revenue interests, no lending)",
+      "note": "cash side 13.65 over 10 but combined 13.66 under 20 (one-side-over rule); not ranked (in position)"
     }
   },
   "vetoes": {
