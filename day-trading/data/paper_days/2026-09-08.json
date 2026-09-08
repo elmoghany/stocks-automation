@@ -14,7 +14,18 @@
     "session_start_et": "06:20",
     "start_on_time": true,
     "trading_day_guard": "TRADING 2026-09-08 full (market_calendar.py). SESSION close=16:00 exit_end=15:00 entry_cutoff=14:30 cross_cap=14:00 ladder=14:50,14:55,14:58,14:59",
-    "capability_probe": {"status": "PENDING"}
+    "capability_probe": {
+      "status": "PASS",
+      "run_et": "06:21",
+      "probe_1_python": {"cmd": "python -c print(1)", "result": "1", "exit": 0, "verdict": "PASS"},
+      "probe_2_git": {"cmd": "git status --short + git add (own path) + commit + push", "result": "skeleton committed 879f20d and pushed (PUSH_EXIT=0)", "exit": 0, "verdict": "PASS"},
+      "probe_3_mcp": {"cmd": "get_equity_quotes SPY", "result": "SPY last_non_reg 769.07 @10:20:42Z, bid 769.04 / ask 769.13 @10:20:44Z, prev_close 770.19 (2026-09-04)", "verdict": "PASS"},
+      "note": "All three PASS -- full capability. No PERMISSION_BLOCKED flag. Heartbeat SESSION_ALIVE_2026-09-08.flag first written 06:21:01 ET."
+    },
+    "heartbeat": {"file": "data/paper_days/SESSION_ALIVE_2026-09-08.flag", "first_et": "06:21:01", "cadence": "every cycle, <=5 min"},
+    "halal_list": {"updated": "2026-09-01", "age_days": 7, "n_symbols": 1260, "stale_gate": "PASS (age 7 days < 35)"},
+    "watcher_precheck": "posn.py: BOOK EMPTY -- no data/paper/position_*.json state files; nothing from another day to move aside.",
+    "premarket_tape": {"spy_prev_close": 770.19, "spy_premarket_0620et": 769.07, "spy_premarket_pct": -0.15, "read": "SPY -0.15% premarket after the Labor Day weekend -- flat tone into the open."}
   },
   "cycles": [],
   "trades": [],
