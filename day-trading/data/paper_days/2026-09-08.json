@@ -443,6 +443,19 @@
       "note": "No new stocks (RGTX/ORCU funds in; ORCX, SLE, BEX off). PHVS 40.91 (+16.1%), no fill (max post-arm high 41.30); INBX 128 (+5.6%), 128.00/129.30. Trigger C quiet.",
       "new": [],
       "rank_top": "PHVS (armed)"
+    },
+    {
+      "et": "08:37",
+      "state": "FLAT-5m (ticket 1 PHVS RESTING)",
+      "scan_rows": 60,
+      "candidates": 24,
+      "dropped": {
+        "fund": 53,
+        "inherited_fail": 0
+      },
+      "note": "No new stocks (SLE/BEX/ORCX back; IONL/BEG off; PHVS itself absent from this scan snapshot at +17.4% -- latched, stays the armed name). PHVS 08:35 bar 40.50->41.40 on 6,216 sh, no fill (stop 47.89); quote 40.40/41.40 = 2.4%. INBX 130.60 (+7.8%), 128.50/130.94. Trigger C: PHVS tweezer_bottom (08:31) went stale unevaluated -- see errors[].",
+      "new": [],
+      "rank_top": "PHVS (armed)"
     }
   ],
   "trades": [],
@@ -629,6 +642,11 @@
       "et": "08:03",
       "type": "trigger-c-gap",
       "msg": "ERROR: Trigger C (reversal-candle) polling was not started until 08:03 -- from 07:00 to 08:03 only Trigger B (premarket-high stop-buy) was watched. The first `trigger` run at 08:03 shows PHVS fired macd_cross_up on the 07:56 close and morning_star on the 07:59 close, both STALE by the time they were seen. NOT credited (a signal is only takeable on its own close; OUTAGE rule 3 -- never backfill an entry). From 08:03 the trigger command runs on every 1-min bar append for the top names."
+    },
+    {
+      "et": "08:34",
+      "type": "process",
+      "msg": "ERROR: a TAKEABLE Trigger C tag (PHVS tweezer_bottom, 08:31 close) surfaced inside a chained tool call that then waited to 08:34; the arming checklist was not run on the signal's own minute. Fix applied from 08:34: the trigger poll output gates the wait -- any TAKEABLE NOW tag skips the wait so the quote/book check runs immediately."
     }
   ],
   "coverage_gaps": [],
@@ -1292,6 +1310,13 @@
       "signal": "macd_cross_up on the 08:15 close",
       "tag": "TAKEABLE NOW (2m since close)",
       "decision": "REFUSED -- INBX is not the top-ranked name (PHVS is; INBX coil .884 at 121.31, +0.1% vs prior close) and bid 121.33 / ask 122.15 = 0.67% > 0.5% cap."
+    },
+    {
+      "et": "08:32",
+      "sym": "PHVS",
+      "signal": "tweezer_bottom on the 08:31 close",
+      "tag": "TAKEABLE NOW (1m since close) at 08:32:40",
+      "decision": "NOT EVALUATED LIVE -- the bookkeeping chain ran the trigger poll and then continued into its 08:34 wait without stopping to re-quote/book; by the next read the signal was 3 min stale. Last known quote before the signal (12:31:25Z) was bid 40.55 / ask 41.00 = 1.1%, over the 0.5% cap, so the entry would most likely have been spread-vetoed anyway. NOT credited (OUTAGE rule 3 spirit: never backfill an entry)."
     }
   ]
 }
