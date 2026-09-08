@@ -39,6 +39,10 @@
 "name": "Aligos Therapeutics",
 "type": "EQUITY"
 },
+"ALTI": {
+"name": "AlTi Global",
+"type": "EQUITY"
+},
 "AMCI": {
 "name": "AMC Robotics",
 "type": "EQUITY"
@@ -267,6 +271,10 @@
 "name": "Leverage Shares 2X Long DUOL Daily ETF",
 "type": "EQUITY"
 },
+"EAF": {
+"name": "GrafTech",
+"type": "EQUITY"
+},
 "EMIF": {
 "name": "iShares Emerging Markets Infrastructure ETF",
 "type": "EQUITY"
@@ -465,6 +473,10 @@
 },
 "LABT": {
 "name": "Lakewood-Amedex Biotherapeutics Inc",
+"type": "EQUITY"
+},
+"LINT": {
+"name": "Direxion Daily INTC Bull 2X ETF",
 "type": "EQUITY"
 },
 "LITC": {

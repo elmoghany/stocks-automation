@@ -1,0 +1,5 @@
+[
+ ["set", "halal_detail.EAF", {"et": "09:27", "verdict": "FAIL", "loan_pct": 740.92, "cash_pct": 89.86, "combined": 830.78, "fail_reason": "LOAN>10+COMBINED>20", "source": "quarterly", "mcap": 161771640, "note": "GrafTech -- graphite electrodes; debt far above market cap"}],
+ ["set", "halal_detail.ALTI", {"et": "09:27", "verdict": "FAIL", "loan_pct": 16.24, "cash_pct": 6.68, "combined": 22.92, "fail_reason": "LOAN>10+COMBINED>20; q2 FAIL (conventional financial services / investment manager)", "source": "quarterly", "mcap": 467050575, "note": "AlTi Global -- Finance / Investment Managers"}],
+ ["append", "cycles", {"et": "09:27", "n": 35, "kind": "light bench (in position)", "scan_rows": 71, "candidates": ["BNC", "PHVS", "SLE", "EAF", "ALTI"], "new": ["EAF(FAIL)", "ALTI(FAIL)", "TGL(FAIL, back)"], "gone": ["QCOM (+6.9%, below the +10% filter; latched)"], "posn": "QCOM t1 81 sh @ 184.89 OPEN; last 180.30 (bar 09:26); book P&L -376", "watcher": "alive pid 8852, peak 185.26, hard stop 170.10", "note": "QCOM faded from 185.26 to ~180 in premarket; no exit signal yet (hard stop only until pressure trail engages)"}]
+]
