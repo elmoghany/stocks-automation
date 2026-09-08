@@ -1157,6 +1157,16 @@
       "posn": "QCOM t1 81 sh @ 184.89 OPEN; last 175.55 (bar 14:25); book P&L about -755",
       "watcher": "alive, peak 185.26, hard stop 170.10",
       "note": "176-row scan spilled to file (114 funds); QCOM rallied 173.4 -> 176.26 (14:15-14:23) on 30-40k bars then eased to 175.5; no scans after this; quotes feed to the watcher starts 14:45; ladder 14:50/14:55/14:58/14:59"
+    },
+    {
+      "et": "14:51",
+      "n": 51,
+      "kind": "EXIT (watcher ladder)",
+      "event": "EXIT-FLATTEN QCOM vwap 173.6262 x81 P&L -912.37 (entry 184.89, 1 fill, banked 0)",
+      "rung1": "14:50:10 81 sh limit 172.931 fill 173.6262 bid 173.80 (quote) pending -> FILLED confirmed by bar 14:50",
+      "posn": "FLAT",
+      "watcher": "alive pid 8852, book 0 open, book P&L -912.37; position_QCOM.json unlinked; 2026-09-08.flatten.json written",
+      "note": "quote feed to the watcher ran 14:44-14:51 every minute via plan/write_quote.py (new helper: PowerShell 5.1 strips the inner quotes of an inline python -c JSON literal, first attempt at 14:44 failed and the file was written by the helper at 14:45); bar feed continues to 15:02 for the exit_parity proxy"
     }
   ],
   "trades": [
@@ -1203,7 +1213,22 @@
         "vs_entry_pct": -0.24,
         "note": "56 s after fill; mark below entry, no fill-quality concern (filled at the displayed inside ask)"
       },
-      "status": "OPEN"
+      "status": "CLOSED",
+      "exit": {
+        "et": "14:50",
+        "utc": "2026-09-08T18:50:10Z",
+        "kind": "ladder rung1 (watcher-owned 14:50 flatten)",
+        "shares": 81,
+        "px": 173.6262,
+        "vwap": 173.6262,
+        "basis": "quote bid 173.80 at 18:50:00Z x (1 - 0.1%); limit 172.931 (bid x 0.995); confirmed by the 14:50 bar (low 173.59 >= limit)",
+        "booked_at": "2026-09-08T14:51:41-04:00",
+        "src": "quote"
+      },
+      "pnl": -912.37,
+      "pnl_pct": -6.09,
+      "peak": 185.26,
+      "exit_note": "never touched the 170.10 hard stop (day low 173.15 at 09:41, -6.35%); pressure trail never armed (no +10% excursion; peak 185.26 = +0.2%); rode the full-day fade from a premarket +10% cross into an RTH ranging 173-178; the ladder took all 81 sh on rung 1 (size guard 20% x 10-bar vol >> 81 sh)"
     }
   ],
   "halal_detail": {
@@ -2183,7 +2208,7 @@
     }
   ],
   "coverage_gaps": [],
-  "pnl": 0,
+  "pnl": -912.37,
   "veto_log": [
     {
       "et": "07:01",
@@ -2979,11 +3004,5 @@
       "result": "ENTERED t1 81 sh @ 184.89"
     }
   ],
-  "posn": {
-    "sym": "QCOM",
-    "ticket": 1,
-    "shares": 81,
-    "entry": 184.89,
-    "since_et": "09:11"
-  }
+  "posn": "FLAT"
 }

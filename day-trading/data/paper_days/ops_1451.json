@@ -1,0 +1,11 @@
+[
+ ["set", "trades.0.exit", {"et": "14:50", "utc": "2026-09-08T18:50:10Z", "kind": "ladder rung1 (watcher-owned 14:50 flatten)", "shares": 81, "px": 173.6262, "vwap": 173.6262, "basis": "quote bid 173.80 at 18:50:00Z x (1 - 0.1%); limit 172.931 (bid x 0.995); confirmed by the 14:50 bar (low 173.59 >= limit)", "booked_at": "2026-09-08T14:51:41-04:00", "src": "quote"}],
+ ["set", "trades.0.pnl", -912.37],
+ ["set", "trades.0.pnl_pct", -6.09],
+ ["set", "trades.0.peak", 185.26],
+ ["set", "trades.0.status", "CLOSED"],
+ ["set", "trades.0.exit_note", "never touched the 170.10 hard stop (day low 173.15 at 09:41, -6.35%); pressure trail never armed (no +10% excursion; peak 185.26 = +0.2%); rode the full-day fade from a premarket +10% cross into an RTH ranging 173-178; the ladder took all 81 sh on rung 1 (size guard 20% x 10-bar vol >> 81 sh)"],
+ ["set", "posn", "FLAT"],
+ ["set", "pnl", -912.37],
+ ["append", "cycles", {"et": "14:51", "n": 51, "kind": "EXIT (watcher ladder)", "event": "EXIT-FLATTEN QCOM vwap 173.6262 x81 P&L -912.37 (entry 184.89, 1 fill, banked 0)", "rung1": "14:50:10 81 sh limit 172.931 fill 173.6262 bid 173.80 (quote) pending -> FILLED confirmed by bar 14:50", "posn": "FLAT", "watcher": "alive pid 8852, book 0 open, book P&L -912.37; position_QCOM.json unlinked; 2026-09-08.flatten.json written", "note": "quote feed to the watcher ran 14:44-14:51 every minute via plan/write_quote.py (new helper: PowerShell 5.1 strips the inner quotes of an inline python -c JSON literal, first attempt at 14:44 failed and the file was written by the helper at 14:45); bar feed continues to 15:02 for the exit_parity proxy"}]
+]

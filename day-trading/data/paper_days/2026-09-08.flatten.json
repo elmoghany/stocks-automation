@@ -1,0 +1,48 @@
+{
+ "date": "2026-09-08",
+ "records": [
+  {
+   "sym": "QCOM",
+   "ticket": 1,
+   "date": "2026-09-08",
+   "mode": "c37",
+   "entry": 184.89,
+   "shares_initial": 81,
+   "entry_bar_utc": "2026-09-08T13:11:00Z",
+   "prev_close": 168.74,
+   "exit_kind": "ladder",
+   "fills": [
+    {
+     "kind": "rung1",
+     "time": "14:50",
+     "shares": 81,
+     "px": 173.6262,
+     "src": "quote"
+    }
+   ],
+   "vwap": 173.6262,
+   "shares_exited": 81,
+   "scale_out": null,
+   "banked": 0.0,
+   "pnl": -912.37,
+   "peak": 185.26,
+   "rungs": [
+    {
+     "k": 0,
+     "time": "14:50",
+     "shares": 81,
+     "limit": 172.931,
+     "fill": 173.6262,
+     "bid": 173.8,
+     "bid_src": "quote",
+     "status": "FILLED",
+     "note": "confirmed by bar 14:50"
+    }
+   ],
+   "deployed": 14976.09,
+   "exit_time": "14:50",
+   "booked_at": "2026-09-08T14:51:41.133167-04:00",
+   "exit_parity": null
+  }
+ ]
+}
