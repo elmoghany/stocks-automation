@@ -522,6 +522,29 @@
       "armed": "PHVS t1 stop 47.89/lim 48.13/313sh RESTING; last 42.00 bid 42.00 ask 42.40 (0.95%)",
       "trigger_c": "PHVS none; INBX 08:56 morning_star STALE (ranked #5, not top)",
       "note": "scan ran 08:58 (1 min late; context compaction); PHVS max post-arm high 42.70, no fill"
+    },
+    {
+      "et": "09:02",
+      "n": 33,
+      "scan_rows": 65,
+      "candidates": [
+        "BNC",
+        "PHVS",
+        "SLE"
+      ],
+      "new": [
+        "QCMU(fund)",
+        "QCML(fund)"
+      ],
+      "gone": [
+        "GLWG",
+        "INTW"
+      ],
+      "top": "PHVS",
+      "posn": "FLAT",
+      "armed": "PHVS t1 stop 47.89/lim 48.13/313sh RESTING; last 42.00 bid 42.00 ask 42.20 (0.47%)",
+      "trigger_c": "PHVS none; INBX 08:56 morning_star STALE",
+      "note": "quiet premarket tape; PHVS 42.0-42.4 range, no new session high"
     }
   ],
   "trades": [],
