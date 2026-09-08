@@ -228,6 +228,19 @@
         "PRQR"
       ],
       "rank_top": "PHVS (spread-vetoed); INBX #2"
+    },
+    {
+      "et": "07:17",
+      "state": "FLAT-5m",
+      "scan_rows": 64,
+      "candidates": 20,
+      "dropped": {
+        "fund": 51,
+        "inherited_fail": 1
+      },
+      "note": "No new stocks (PLSM back, FAIL; ZCSH/CHNU funds back; STLU/ORCX out). PHVS +25.1% at 44.10 fading from the 47.89 high; INBX +10.6% at 134 (premarket high 137.25 on the 07:13 bar). Both halal-PASS names spread-vetoed (PHVS 2.2%, INBX 6.6%). TOP still PHVS.",
+      "new": [],
+      "rank_top": "PHVS (spread-vetoed x15); INBX #2"
     }
   ],
   "trades": [],
@@ -351,11 +364,11 @@
   },
   "vetoes": {
     "spread": {
-      "n": 11,
-      "of": 13,
+      "n": 15,
+      "of": 17,
       "premarket": {
-        "n": 11,
-        "of": 13
+        "n": 15,
+        "of": 17
       },
       "post_open": {
         "n": 0,
@@ -517,6 +530,46 @@
       "cap_pct": 0.5,
       "trigger": "premarket high 47.89",
       "decision": "NOT ARMED"
+    },
+    {
+      "et": "07:14",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 44.66 / ask 46.45, last 46.10 @11:13:46Z",
+      "spread_pct": 4.0,
+      "cap_pct": 0.5,
+      "trigger": "premarket high 47.89",
+      "decision": "NOT ARMED"
+    },
+    {
+      "et": "07:15",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 44.66 / ask 46.00, last 45.43 @11:15:01Z",
+      "spread_pct": 3.0,
+      "cap_pct": 0.5,
+      "trigger": "premarket high 47.89",
+      "decision": "NOT ARMED"
+    },
+    {
+      "et": "07:16",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 44.66 / ask 45.74, last 45.75 @11:15:59Z",
+      "spread_pct": 2.4,
+      "cap_pct": 0.5,
+      "trigger": "premarket high 47.89",
+      "decision": "NOT ARMED"
+    },
+    {
+      "et": "07:17",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 44.00 / ask 45.00, last 44.10 @11:16:53Z",
+      "spread_pct": 2.2,
+      "cap_pct": 0.5,
+      "trigger": "premarket high 47.89; PHVS fading (+25%)",
+      "decision": "NOT ARMED. INBX (#2) bid 130 / ask 138.90 = 6.6%."
     }
   ],
   "armed": [

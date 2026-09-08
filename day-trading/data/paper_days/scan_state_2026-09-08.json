@@ -1,8 +1,8 @@
 {
  "candidates": {
   "BNC": {
-   "pct": 55.87,
-   "last": 5.44,
+   "pct": 53.58,
+   "last": 5.36,
    "prev_close": 3.49,
    "vol": "627215.138899",
    "name": "CEA Industries",
@@ -41,8 +41,8 @@
    "first_seen": "06:22"
   },
   "SLE": {
-   "pct": 15.82,
-   "last": 4.54,
+   "pct": 14.67,
+   "last": 4.495,
    "prev_close": 3.92,
    "vol": "663380.820913",
    "name": "Super League Enterprise",
@@ -105,16 +105,16 @@
    "first_seen": "06:37"
   },
   "PHVS": {
-   "pct": 29.58,
-   "last": 45.6758,
+   "pct": 25.11,
+   "last": 44.1,
    "prev_close": 35.25,
    "vol": "483983.130742",
    "name": "Pharvaris",
    "first_seen": "06:52"
   },
   "INBX": {
-   "pct": 11.41,
-   "last": 135.0,
+   "pct": 10.59,
+   "last": 134.0,
    "prev_close": 121.17,
    "vol": "196525.169248",
    "name": "Inhibrx Biosciences",
