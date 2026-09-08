@@ -306,6 +306,19 @@
       "note": "No new stocks (IONX/PRQR/FEED off). PHVS +23.4% at 43.50, spread 2.8%; INBX no print since 11:22Z. Nothing armed.",
       "new": [],
       "rank_top": "PHVS (spread-vetoed x31)"
+    },
+    {
+      "et": "07:47",
+      "state": "FLAT-5m",
+      "scan_rows": 61,
+      "candidates": 20,
+      "dropped": {
+        "fund": 51,
+        "inherited_fail": 1
+      },
+      "note": "No new stocks (PCTY off; ZCSH/IONX funds back). RANK 07:44: TOP = INBX (coil .954, +8.1% but latched), PHVS #3 (coil .879, +17.9% at 41.57). INBX book stale/6% wide, PHVS 3.4%. Nothing armed.",
+      "new": [],
+      "rank_top": "INBX (spread-vetoed); PHVS #3"
     }
   ],
   "trades": [],
@@ -429,11 +442,11 @@
   },
   "vetoes": {
     "spread": {
-      "n": 31,
-      "of": 33,
+      "n": 34,
+      "of": 36,
       "premarket": {
-        "n": 31,
-        "of": 33
+        "n": 34,
+        "of": 36
       },
       "post_open": {
         "n": 0,
@@ -782,6 +795,34 @@
       "spread_pct": 2.8,
       "cap_pct": 0.5,
       "decision": "NOT ARMED"
+    },
+    {
+      "et": "07:44",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 42.08 / ask 43.00, last 42.08 @11:43:26Z",
+      "spread_pct": 2.2,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED; PHVS fading (+19.4%), coil now 0.879 -- re-ranked"
+    },
+    {
+      "et": "07:46",
+      "sym": "INBX",
+      "veto": "SPREAD",
+      "quote": "bid 122.50 / ask 130.00 (stale @11:24:30Z), last 131.00 @11:22:46Z -- no print in 24 min",
+      "spread_pct": 6.1,
+      "cap_pct": 0.5,
+      "trigger": "B premarket-high stop-buy 137.25 (07:13 bar), limit 137.94",
+      "decision": "NOT ARMED -- INBX is TOP since the 07:44 re-rank (coil .954); PHVS #3 (coil .879) bid 41.01 / ask 42.43 = 3.4%"
+    },
+    {
+      "et": "07:47",
+      "sym": "INBX",
+      "veto": "SPREAD",
+      "quote": "bid 122.50 / ask 130.00 (stale @11:24Z), no print since 11:22Z",
+      "spread_pct": 6.1,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED. PHVS #3 bid 41.01 / ask 42.43 = 3.4%, +17.9%."
     }
   ],
   "armed": [
