@@ -695,6 +695,10 @@
 "name": "Corgi TER 2x Daily ETF",
 "type": "EQUITY"
 },
+"TGL": {
+"name": "Treasure Global",
+"type": "EQUITY"
+},
 "TSEU": {
 "name": "Tradr 2X Long TSEM Daily ETF",
 "type": "EQUITY"
@@ -753,6 +757,10 @@
 },
 "VACI": {
 "name": "Viking Acquisition Corp. I",
+"type": "EQUITY"
+},
+"VERU": {
+"name": "Veru",
 "type": "EQUITY"
 },
 "VIAG": {

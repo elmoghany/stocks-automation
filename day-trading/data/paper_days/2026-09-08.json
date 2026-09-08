@@ -388,6 +388,22 @@
       "note": "No new stocks (WYHG back at +41%, FAIL pork; ORCX fund; INTW off). PHVS TOP +18.2% at 41.67, 2.2%; INBX 14.8%; GMTL no print. Trigger C: nothing fresh. Nothing armed.",
       "new": [],
       "rank_top": "PHVS (spread-vetoed)"
+    },
+    {
+      "et": "08:17",
+      "state": "FLAT-5m",
+      "scan_rows": 61,
+      "candidates": 24,
+      "dropped": {
+        "fund": 51,
+        "inherited_fail": 0
+      },
+      "note": "NEW: TGL (Treasure Global, $4.7M) +10.7% -> FAIL (cash 60%); VERU (Veru, $45M) +10.2% -> FAIL (cash 65%). ATRA/ORCX/ZCSH/ADXN off. PHVS TOP +19.2% at 42.01, 2.2%; INBX back to 121.31 (0.67%), Trigger C macd_cross_up refused (rank/spread). Nothing armed.",
+      "new": [
+        "TGL",
+        "VERU"
+      ],
+      "rank_top": "PHVS (spread-vetoed)"
     }
   ],
   "trades": [],
@@ -520,15 +536,27 @@
       "et": "08:07",
       "q1": "halal_universe: loan 11.29 / cash 9.36 / combined 20.65 -> LOAN>10+COMBINED>20 (real verdict, not re-litigated); RH mcap 98M",
       "q2": "allogeneic T-cell immunotherapy -- permissible; moot"
+    },
+    "TGL": {
+      "verdict": "FAIL",
+      "et": "08:17",
+      "q1": "halal_universe: loan 1.16 / cash 60.35 / combined 61.51 -> CASH>10+COMBINED>20 (mcap 4.7M)",
+      "q2": "payment/e-commerce rebate platform -- not reached"
+    },
+    "VERU": {
+      "verdict": "FAIL",
+      "et": "08:17",
+      "q1": "halal_universe: loan 5.98 / cash 64.9 / combined 70.88 -> CASH>10+COMBINED>20 (mcap 45M)",
+      "q2": "biopharma -- permissible; moot"
     }
   },
   "vetoes": {
     "spread": {
-      "n": 51,
-      "of": 53,
+      "n": 54,
+      "of": 56,
       "premarket": {
-        "n": 51,
-        "of": 53
+        "n": 54,
+        "of": 56
       },
       "post_open": {
         "n": 0,
@@ -1070,6 +1098,33 @@
       "spread_pct": 2.2,
       "cap_pct": 0.5,
       "decision": "NOT ARMED. INBX 112.50/129.17 = 14.8%. GMTL 21%."
+    },
+    {
+      "et": "08:13",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 41.51 / ask 42.43, last 41.67 (no print since 12:11Z)",
+      "spread_pct": 2.2,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED. INBX 113.50/130.26 = 14.8%. GMTL 21%."
+    },
+    {
+      "et": "08:15",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 41.50 / ask 42.43, last 41.67 (no print since 12:11Z)",
+      "spread_pct": 2.2,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED. INBX bounced 113->122 (bid 114 / ask 123 = 7.6%). GMTL 21%."
+    },
+    {
+      "et": "08:17",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 41.50 / ask 42.43, last 42.01 @12:16:43Z",
+      "spread_pct": 2.2,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED. INBX 121.33/122.15 = 0.67% (last 121.31, back to flat vs prior close; rank low). GMTL 21%."
     }
   ],
   "armed": [
@@ -1122,6 +1177,13 @@
       "signal": "rsi_cross_up on the 08:06 close",
       "tag": "TAKEABLE NOW (1m since close)",
       "decision": "REFUSED -- INBX is rank #5 (coil .846, -7.2% vs prior close after the 08:00 dump); C37 arms only the top-ranked name (PHVS). Also SPREAD veto: bid 111.50 / ask 120.00 = 7.6%; a marketable limit at ask+0.3% (120.36) would be a 7% chase over the 112.50 last."
+    },
+    {
+      "et": "08:17",
+      "sym": "INBX",
+      "signal": "macd_cross_up on the 08:15 close",
+      "tag": "TAKEABLE NOW (2m since close)",
+      "decision": "REFUSED -- INBX is not the top-ranked name (PHVS is; INBX coil .884 at 121.31, +0.1% vs prior close) and bid 121.33 / ask 122.15 = 0.67% > 0.5% cap."
     }
   ]
 }
