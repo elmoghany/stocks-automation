@@ -1,10 +1,10 @@
 {
  "candidates": {
   "BNC": {
-   "pct": 35.82,
-   "last": 4.74,
+   "pct": 40.69,
+   "last": 4.9101,
    "prev_close": 3.49,
-   "vol": "48443081.270566",
+   "vol": "5.0074321541402e+07",
    "name": "CEA Industries",
    "first_seen": "06:22"
   },
@@ -44,7 +44,7 @@
    "pct": 20.92,
    "last": 4.74,
    "prev_close": 3.92,
-   "vol": "782284.579635",
+   "vol": "835104.562635",
    "name": "Super League Enterprise",
    "first_seen": "06:22"
   },
@@ -105,10 +105,10 @@
    "first_seen": "06:37"
   },
   "PHVS": {
-   "pct": 12.48,
-   "last": 39.65,
+   "pct": 11.91,
+   "last": 39.45,
    "prev_close": 35.25,
-   "vol": "2688892.195048",
+   "vol": "3.203900114388e+06",
    "name": "Pharvaris",
    "first_seen": "06:52"
   },
@@ -129,10 +129,10 @@
    "first_seen": "07:12"
   },
   "GMTL": {
-   "pct": 10.54,
-   "last": 11.96,
+   "pct": 10.44,
+   "last": 11.95,
    "prev_close": 10.82,
-   "vol": "131983.575132",
+   "vol": "47390.463043",
    "name": "Guardian Metal Resources",
    "first_seen": "07:57"
   },
@@ -281,18 +281,18 @@
    "first_seen": "10:07"
   },
   "FAC": {
-   "pct": 12.19,
-   "last": 5.845,
+   "pct": 13.07,
+   "last": 5.8909,
    "prev_close": 5.21,
-   "vol": "247091.931488",
+   "vol": "260658.082461",
    "name": "Factorial Energy Inc.",
    "first_seen": "10:07"
   },
   "OESX": {
-   "pct": 16.16,
-   "last": 29.04,
+   "pct": 15.62,
+   "last": 28.905,
    "prev_close": 25.0,
-   "vol": "81881.842007",
+   "vol": "106118.150375",
    "name": "Orion Energy Systems",
    "first_seen": "10:07"
   },
@@ -329,10 +329,10 @@
    "first_seen": "10:07"
   },
   "OBX": {
-   "pct": 15.34,
-   "last": 19.4,
+   "pct": 15.43,
+   "last": 19.415,
    "prev_close": 16.82,
-   "vol": "146996.458495",
+   "vol": "191791.508545",
    "name": "Obsidian Therapeutics",
    "first_seen": "10:07"
   },
@@ -361,10 +361,10 @@
    "first_seen": "10:07"
   },
   "BUUU": {
-   "pct": 16.45,
-   "last": 40.2915,
+   "pct": 18.44,
+   "last": 40.98,
    "prev_close": 34.6,
-   "vol": "131350.097331",
+   "vol": "142855.943435",
    "name": "BUUU Group Limited Class A",
    "first_seen": "10:27"
   },
@@ -385,10 +385,10 @@
    "first_seen": "10:27"
   },
   "ERO": {
-   "pct": 11.75,
-   "last": 39.0,
+   "pct": 12.52,
+   "last": 39.27,
    "prev_close": 34.9,
-   "vol": "712122.207396",
+   "vol": "794538.54881",
    "name": "Ero Copper",
    "first_seen": "10:27"
   },
@@ -423,6 +423,70 @@
    "vol": "28929.792422",
    "name": "MindForge Inc. Class A",
    "first_seen": "10:47"
+  },
+  "ZH": {
+   "pct": 12.79,
+   "last": 2.91,
+   "prev_close": 2.58,
+   "vol": "332232.119475",
+   "name": "Zhihu Inc",
+   "first_seen": "11:07"
+  },
+  "REAX": {
+   "pct": 11.19,
+   "last": 20.76,
+   "prev_close": 18.67,
+   "vol": "431854.986072",
+   "name": "Real REMAX Group",
+   "first_seen": "11:07"
+  },
+  "SATL": {
+   "pct": 10.88,
+   "last": 5.145,
+   "prev_close": 4.64,
+   "vol": "1.81962799144e+06",
+   "name": "Satellogic Inc.",
+   "first_seen": "11:07"
+  },
+  "COHR": {
+   "pct": 10.4,
+   "last": 311.175,
+   "prev_close": 281.86,
+   "vol": "4.496415182758e+06",
+   "name": "Coherent",
+   "first_seen": "11:07"
+  },
+  "CRWV": {
+   "pct": 10.36,
+   "last": 98.62,
+   "prev_close": 89.36,
+   "vol": "1.5603314326125e+07",
+   "name": "CoreWeave",
+   "first_seen": "11:07"
+  },
+  "UUU": {
+   "pct": 10.22,
+   "last": 5.8198,
+   "prev_close": 5.28,
+   "vol": "4538.348464",
+   "name": "Universal Safety Products",
+   "first_seen": "11:07"
+  },
+  "LITE": {
+   "pct": 10.2,
+   "last": 971.17,
+   "prev_close": 881.255,
+   "vol": "3.030292849546e+06",
+   "name": "Lumentum",
+   "first_seen": "11:07"
+  },
+  "EFSI": {
+   "pct": 10.14,
+   "last": 46.15,
+   "prev_close": 41.9,
+   "vol": "39167.434235",
+   "name": "Eagle Financial Services",
+   "first_seen": "11:07"
   }
  },
  "halal_fail": [
@@ -431,7 +495,9 @@
   "ATRA",
   "BHST",
   "CLIR",
+  "CRWV",
   "EAF",
+  "EFSI",
   "ELOX",
   "FCEL",
   "FEED",
@@ -457,6 +523,7 @@
   "PRQR",
   "PS",
   "ROIV",
+  "SATL",
   "SEGG",
   "SEI",
   "SMR",
@@ -465,11 +532,13 @@
   "TGL",
   "TMS",
   "UPB",
+  "UUU",
   "VERU",
   "VIDA",
   "WLYB",
   "WYHG",
-  "YQ"
+  "YQ",
+  "ZH"
  ],
  "fake_gap": [],
  "inherited_fail": [

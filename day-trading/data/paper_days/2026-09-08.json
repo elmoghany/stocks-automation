@@ -723,6 +723,40 @@
       "posn": "QCOM t1 81 sh @ 184.89 OPEN; last 177.40 (bar 10:47); book P&L about -610",
       "watcher": "alive, peak 185.26, hard stop 170.10",
       "note": "120-row scan (84 funds); QCOM range-bound 176.7-177.8 for 40 min"
+    },
+    {
+      "et": "11:07",
+      "n": 40,
+      "kind": "light bench (in position)",
+      "scan_rows": 142,
+      "candidates_n": 17,
+      "new": [
+        "COHR(PASS)",
+        "CRWV(FAIL)",
+        "EFSI(FAIL)",
+        "LITE(PASS)",
+        "REAX(PASS)",
+        "SATL(FAIL)",
+        "UUU(FAIL)",
+        "ZH(FAIL)"
+      ],
+      "pass_pool_unranked": [
+        "BSEM",
+        "FAC",
+        "OESX",
+        "OBX",
+        "BUUU",
+        "ATHR",
+        "ERO",
+        "COHR",
+        "LITE",
+        "REAX",
+        "PHVS",
+        "INBX"
+      ],
+      "posn": "QCOM t1 81 sh @ 184.89 OPEN; last 175.83 (bar 11:07); book P&L about -735",
+      "watcher": "alive, peak 185.26, hard stop 170.10",
+      "note": "142-row scan spilled to file (used directly as dump, 100 funds); GMTL back on the scan at +10.4% (calm-gap FAIL stands); QCOM drifting 175.5-177"
     }
   ],
   "trades": [
@@ -1244,6 +1278,87 @@
       "combined": 8.22,
       "fail_reason": "HARAM INDUSTRY (insurance) -- MindForge, AI services to conventional insurance carriers",
       "mcap": 120147286
+    },
+    "COHR": {
+      "et": "11:08",
+      "verdict": "PASS",
+      "loan_pct": 5.81,
+      "cash_pct": 3.26,
+      "combined": 9.07,
+      "haram_pct": 0.5,
+      "mcap": 60943970598,
+      "q2": "PASS -- Coherent, photonics / lasers / optical networking",
+      "note": "not ranked (in position)"
+    },
+    "CRWV": {
+      "et": "11:08",
+      "verdict": "FAIL",
+      "loan_pct": 94.85,
+      "cash_pct": 10.18,
+      "combined": 105.03,
+      "haram_pct": 6.21,
+      "fail_reason": "LOAN>10+COMBINED>20; HARAM>=5%",
+      "mcap": 54411844456
+    },
+    "EFSI": {
+      "et": "11:08",
+      "verdict": "FAIL",
+      "loan_pct": 11.86,
+      "cash_pct": 0.0,
+      "combined": 11.86,
+      "haram_pct": 24.44,
+      "fail_reason": "HARAM INDUSTRY (bank) -- Eagle Financial Services",
+      "mcap": 249746263
+    },
+    "LITE": {
+      "et": "11:08",
+      "verdict": "PASS",
+      "loan_pct": 1.92,
+      "cash_pct": 3.14,
+      "combined": 5.06,
+      "haram_pct": 1.41,
+      "mcap": 87123816000,
+      "q2": "PASS -- Lumentum, optical / photonic components and lasers",
+      "note": "not ranked (in position); $971 stock, 15 sh ticket"
+    },
+    "REAX": {
+      "et": "11:08",
+      "verdict": "PASS",
+      "loan_pct": 0.0,
+      "cash_pct": 19.05,
+      "combined": 19.05,
+      "haram_pct": 0.02,
+      "mcap": 454868103,
+      "q2": "PASS -- Real REMAX Group, real estate brokerage / franchising platform (services, no lending)",
+      "note": "cash side 19.05 over 10 but combined 19.05 under 20 (one-side-over rule); not ranked (in position)"
+    },
+    "SATL": {
+      "et": "11:08",
+      "verdict": "FAIL",
+      "loan_pct": 12.2,
+      "cash_pct": 14.26,
+      "combined": 26.46,
+      "fail_reason": "HARAM INDUSTRY (defense, aerospace) per screener; ratios also fail",
+      "mcap": 790991836
+    },
+    "UUU": {
+      "et": "11:08",
+      "verdict": "FAIL",
+      "loan_pct": 4.02,
+      "cash_pct": 21.05,
+      "combined": 25.08,
+      "haram_pct": 17.23,
+      "fail_reason": "CASH>10+COMBINED>20; HARAM>=5%",
+      "mcap": 17625049
+    },
+    "ZH": {
+      "et": "11:08",
+      "verdict": "FAIL",
+      "loan_pct": 48.87,
+      "cash_pct": 1654.11,
+      "combined": 1702.97,
+      "fail_reason": "LOAN>10+COMBINED>20",
+      "mcap": 260239012
     }
   },
   "vetoes": {
