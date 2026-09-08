@@ -1,0 +1,691 @@
+{
+ "data": {
+  "result": {
+   "results": [
+    {
+     "ticker": "BNC",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "BNC",
+      "Name": "CEA Industries",
+      "% Change": "0.4037249283667621",
+      "Last": "4.899",
+      "Volume": "38847974.386384"
+     }
+    },
+    {
+     "ticker": "WYHG",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "WYHG",
+      "Name": "Wing Yip Food Holdings Group",
+      "% Change": "0.310369458128079",
+      "Last": "5.3201",
+      "Volume": "14868887.628564"
+     }
+    },
+    {
+     "ticker": "EO",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "EO",
+      "Name": "Corgi EOSE 2x Daily ETF",
+      "% Change": "0.23458282950423234",
+      "Last": "10.21",
+      "Volume": "629.5054"
+     }
+    },
+    {
+     "ticker": "TDOT",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "TDOT",
+      "Name": "21shares Polkadot Staking ETF",
+      "% Change": "0.21553682249741013",
+      "Last": "12.79",
+      "Volume": "3194.0556"
+     }
+    },
+    {
+     "ticker": "EOSU",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "EOSU",
+      "Name": "T-REX 2X Long EOSE Daily Target ETF",
+      "% Change": "0.21540469973890344",
+      "Last": "9.31",
+      "Volume": "149107.794134"
+     }
+    },
+    {
+     "ticker": "IONX",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "IONX",
+      "Name": "Defiance Daily Target 2X Long IONQ ETF",
+      "% Change": "0.21419299004759842",
+      "Last": "28.06",
+      "Volume": "698450.143909"
+     }
+    },
+    {
+     "ticker": "NUR",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "NUR",
+      "Name": "Nuran Wireless",
+      "% Change": "0.21129943502824866",
+      "Last": "2.144",
+      "Volume": "6685.042161"
+     }
+    },
+    {
+     "ticker": "EAF",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "EAF",
+      "Name": "GrafTech",
+      "% Change": "0.2112903225806451",
+      "Last": "7.51",
+      "Volume": "245624.193359"
+     }
+    },
+    {
+     "ticker": "IONL",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "IONL",
+      "Name": "GraniteShares ETF Trust GraniteShares 2x Long IONQ Daily ETF",
+      "% Change": "0.20974076983503534",
+      "Last": "15.4",
+      "Volume": "611049.065556"
+     }
+    },
+    {
+     "ticker": "RGTX",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "RGTX",
+      "Name": "Defiance Daily Target 2X Long RGTI ETF",
+      "% Change": "0.1881838074398248",
+      "Last": "10.86",
+      "Volume": "1183012.201308"
+     }
+    },
+    {
+     "ticker": "QBTX",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "QBTX",
+      "Name": "Tradr 2X Long QBTS Daily ETF",
+      "% Change": "0.18197278911564632",
+      "Last": "6.95",
+      "Volume": "1952906.423709"
+     }
+    },
+    {
+     "ticker": "SEI",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "SEI",
+      "Name": "Solaris Energy Infrastructure",
+      "% Change": "0.18181818181818182",
+      "Last": "65",
+      "Volume": "689369.523213"
+     }
+    },
+    {
+     "ticker": "QUA",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "QUA",
+      "Name": "Corgi QBTS 2x Daily ETF",
+      "% Change": "0.18120556986229558",
+      "Last": "15.32",
+      "Volume": "0"
+     }
+    },
+    {
+     "ticker": "SLE",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "SLE",
+      "Name": "Super League Enterprise",
+      "% Change": "0.18112244897959184",
+      "Last": "4.63",
+      "Volume": "416934.304993"
+     }
+    },
+    {
+     "ticker": "RGTU",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "RGTU",
+      "Name": "Tradr 2X Long RGTI Daily ETF",
+      "% Change": "0.18030965771019924",
+      "Last": "11.9",
+      "Volume": "108720.787784"
+     }
+    },
+    {
+     "ticker": "HFSP",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "HFSP",
+      "Name": "Tidal Trust III TradersAI Large Cap Equity & Cash ETF",
+      "% Change": "0.175344563552833",
+      "Last": "15.35",
+      "Volume": "0"
+     }
+    },
+    {
+     "ticker": "ROIV",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "ROIV",
+      "Name": "Roivant Sciences",
+      "% Change": "0.17516175207557977",
+      "Last": "41.0484",
+      "Volume": "3716338.957132"
+     }
+    },
+    {
+     "ticker": "RGTC",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "RGTC",
+      "Name": "Corgi RGTI 2x Daily ETF",
+      "% Change": "0.17469837245096073",
+      "Last": "25.11",
+      "Volume": "356"
+     }
+    },
+    {
+     "ticker": "BSEM",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "BSEM",
+      "Name": "BioStem Technologies",
+      "% Change": "0.16870619946091636",
+      "Last": "4.3359",
+      "Volume": "106847.980266"
+     }
+    },
+    {
+     "ticker": "HCWC",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "HCWC",
+      "Name": "Healthy Choice Wellness",
+      "% Change": "0.1673789173789175",
+      "Last": "8.195",
+      "Volume": "67422.670505"
+     }
+    },
+    {
+     "ticker": "CRWU",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "CRWU",
+      "Name": "T-REX 2X Long CRWV Daily Target ETF",
+      "% Change": "0.16056118472330475",
+      "Last": "44.67",
+      "Volume": "81453.170435"
+     }
+    },
+    {
+     "ticker": "BEC",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "BEC",
+      "Name": "Corgi BE 2x Daily ETF",
+      "% Change": "0.15835933625068274",
+      "Last": "18.45",
+      "Volume": "16623.924918"
+     }
+    },
+    {
+     "ticker": "AVAZ",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "AVAZ",
+      "Name": "2x Avalanche ETF",
+      "% Change": "0.15786147072926213",
+      "Last": "10.625",
+      "Volume": "260.636"
+     }
+    },
+    {
+     "ticker": "JOBC",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "JOBC",
+      "Name": "Corgi JOBY 2x Daily ETF",
+      "% Change": "0.15640710399143046",
+      "Last": "19",
+      "Volume": "0"
+     }
+    },
+    {
+     "ticker": "BEX",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "BEX",
+      "Name": "Tradr 2X Long BE Daily ETF",
+      "% Change": "0.15631825273010938",
+      "Last": "37.06",
+      "Volume": "1260624.414351"
+     }
+    },
+    {
+     "ticker": "CWVX",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "CWVX",
+      "Name": "Tradr 2X Long CRWV Daily ETF",
+      "% Change": "0.15606242496998807",
+      "Last": "19.26",
+      "Volume": "290594.579726"
+     }
+    },
+    {
+     "ticker": "INFH",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "INFH",
+      "Name": "Defiance Daily Target 2X Long INFQ ETF",
+      "% Change": "0.15538847117794488",
+      "Last": "9.22",
+      "Volume": "108138.4718"
+     }
+    },
+    {
+     "ticker": "SMUP",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "SMUP",
+      "Name": "T-REX 2X Long SMR Daily Target ETF",
+      "% Change": "0.15471698113207552",
+      "Last": "6.12",
+      "Volume": "64758.6319"
+     }
+    },
+    {
+     "ticker": "CRWG",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "CRWG",
+      "Name": "Leverage Shares 2X Long CRWV Daily ETF",
+      "% Change": "0.15392303848075953",
+      "Last": "23.09",
+      "Volume": "657619.716904"
+     }
+    },
+    {
+     "ticker": "SMU",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "SMU",
+      "Name": "Tradr 2X Long SMR Daily ETF",
+      "% Change": "0.15338345864661648",
+      "Last": "7.67",
+      "Volume": "832644.742362"
+     }
+    },
+    {
+     "ticker": "IREG",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "IREG",
+      "Name": "Leverage Shares 2X Long IREN Daily ETF",
+      "% Change": "0.1521035598705502",
+      "Last": "10.68",
+      "Volume": "380846.832299"
+     }
+    },
+    {
+     "ticker": "CRWX",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "CRWX",
+      "Name": "Corgi CRWV 2x Daily ETF",
+      "% Change": "0.1503208065994501",
+      "Last": "25.1",
+      "Volume": "3261.6319"
+     }
+    },
+    {
+     "ticker": "IRE",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "IRE",
+      "Name": "Defiance Daily Target 2X Long IREN ETF",
+      "% Change": "0.14916151809355688",
+      "Last": "13.02",
+      "Volume": "1961376.933032"
+     }
+    },
+    {
+     "ticker": "BEG",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "BEG",
+      "Name": "Leverage Shares 2x Long BE Daily ETF",
+      "% Change": "0.1469405984814649",
+      "Last": "51.36",
+      "Volume": "287580.258867"
+     }
+    },
+    {
+     "ticker": "ALTI",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "ALTI",
+      "Name": "AlTi Global",
+      "% Change": "0.14666666666666664",
+      "Last": "3.44",
+      "Volume": "91716.311798"
+     }
+    },
+    {
+     "ticker": "IREX",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "IREX",
+      "Name": "Tradr 2X Long IREN Daily ETF",
+      "% Change": "0.14450516089860369",
+      "Last": "18.85",
+      "Volume": "502125.304502"
+     }
+    },
+    {
+     "ticker": "NUAI",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "NUAI",
+      "Name": "New Era Energy & Digital",
+      "% Change": "0.1423290203327171",
+      "Last": "6.18",
+      "Volume": "2093040.287677"
+     }
+    },
+    {
+     "ticker": "YDES",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "YDES",
+      "Name": "YD Bio",
+      "% Change": "0.1355932203389829",
+      "Last": "4.02",
+      "Volume": "5051.800039"
+     }
+    },
+    {
+     "ticker": "PHVS",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "PHVS",
+      "Name": "Pharvaris",
+      "% Change": "0.13503546099290775",
+      "Last": "40.01",
+      "Volume": "1743532.66453"
+     }
+    },
+    {
+     "ticker": "AEHG",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "AEHG",
+      "Name": "Leverage Shares 2X Long AEHR Daily ETF",
+      "% Change": "0.13191489361702136",
+      "Last": "7.98",
+      "Volume": "631505.6426"
+     }
+    },
+    {
+     "ticker": "YQ",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "YQ",
+      "Name": "17 Education & Technology",
+      "% Change": "0.13013698630136983",
+      "Last": "3.3",
+      "Volume": "38553.307692"
+     }
+    },
+    {
+     "ticker": "JDZG",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "JDZG",
+      "Name": "Jiade Limited",
+      "% Change": "0.12857605177993528",
+      "Last": "3.4873",
+      "Volume": "57984.198"
+     }
+    },
+    {
+     "ticker": "FCXG",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "FCXG",
+      "Name": "Leverage Shares 2x Long FCX Daily ETF",
+      "% Change": "0.1239626619973612",
+      "Last": "18.23",
+      "Volume": "22161.3165"
+     }
+    },
+    {
+     "ticker": "ELOX",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "ELOX",
+      "Name": "Eloxx Pharmaceuticals",
+      "% Change": "0.12150000000000011",
+      "Last": "16.8225",
+      "Volume": "4219.335332"
+     }
+    },
+    {
+     "ticker": "ATRA",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "ATRA",
+      "Name": "Atara Biotherapeutics",
+      "% Change": "0.11680327868852465",
+      "Last": "10.9",
+      "Volume": "23413.205177"
+     }
+    },
+    {
+     "ticker": "EOSE",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "EOSE",
+      "Name": "Eos Energy",
+      "% Change": "0.11597938144329901",
+      "Last": "4.33",
+      "Volume": "8407892.869045"
+     }
+    },
+    {
+     "ticker": "INTW",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "INTW",
+      "Name": "GraniteShares 2x Long INTC Daily ETF",
+      "% Change": "0.1149342891278374",
+      "Last": "23.33",
+      "Volume": "3010325.98709"
+     }
+    },
+    {
+     "ticker": "LINT",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "LINT",
+      "Name": "Direxion Daily INTC Bull 2X ETF",
+      "% Change": "0.11341918626353113",
+      "Last": "119.314",
+      "Volume": "72061.753143"
+     }
+    },
+    {
+     "ticker": "TEUP",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "TEUP",
+      "Name": "T-REX 2X Long TE Daily Target ETF",
+      "% Change": "0.11295620437956214",
+      "Last": "30.495",
+      "Volume": "7981.497127"
+     }
+    },
+    {
+     "ticker": "TXXS",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "TXXS",
+      "Name": "21Shares 2x Long Sui ETF",
+      "% Change": "0.1104620472124911",
+      "Last": "25.4539",
+      "Volume": "530.3426"
+     }
+    },
+    {
+     "ticker": "APLX",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "APLX",
+      "Name": "Tradr 2X Long APLD Daily ETF",
+      "% Change": "0.11005917159763332",
+      "Last": "9.38",
+      "Volume": "355329.942178"
+     }
+    },
+    {
+     "ticker": "INT",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "INT",
+      "Name": "Corgi INTC 2x Daily ETF",
+      "% Change": "0.11001209921355112",
+      "Last": "18.3485",
+      "Volume": "11717.3292"
+     }
+    },
+    {
+     "ticker": "HSCS",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "HSCS",
+      "Name": "HeartSciences",
+      "% Change": "0.10991957104557633",
+      "Last": "4.14",
+      "Volume": "87450.188483"
+     }
+    },
+    {
+     "ticker": "QPUX",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "QPUX",
+      "Name": "Defiance 2X Daily Long Pure Quantum ETF",
+      "% Change": "0.10803834808259585",
+      "Last": "15.025",
+      "Volume": "139708.006316"
+     }
+    },
+    {
+     "ticker": "NEBX",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "NEBX",
+      "Name": "Tradr 2X Long NBIS Daily ETF",
+      "% Change": "0.10689388071262579",
+      "Last": "28.58",
+      "Volume": "836166.090294"
+     }
+    },
+    {
+     "ticker": "NBIL",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "NBIL",
+      "Name": "GraniteShares 2x Long NBIS Daily ETF",
+      "% Change": "0.10634775704644694",
+      "Last": "27.8689",
+      "Volume": "1136988.011012"
+     }
+    },
+    {
+     "ticker": "IONQ",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "IONQ",
+      "Name": "IonQ",
+      "% Change": "0.10602226720647767",
+      "Last": "43.71",
+      "Volume": "9190248.556145"
+     }
+    },
+    {
+     "ticker": "CCFE",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "CCFE",
+      "Name": "EA Series Trust Concourse Capital Focused Equity ETF",
+      "% Change": "0.1055674167779846",
+      "Last": "29.05",
+      "Volume": "0"
+     }
+    },
+    {
+     "ticker": "QUBX",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "QUBX",
+      "Name": "Tradr 2X Long QUBT Daily ETF",
+      "% Change": "0.1032357473035439",
+      "Last": "7.16",
+      "Volume": "165294.133551"
+     }
+    },
+    {
+     "ticker": "NBIG",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "NBIG",
+      "Name": "Leverage Shares 2X Long NBIS Daily ETF",
+      "% Change": "0.10306850892343111",
+      "Last": "19.1603",
+      "Volume": "787673.780062"
+     }
+    },
+    {
+     "ticker": "UMCX",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "UMCX",
+      "Name": "Corgi UMC 2x Daily ETF",
+      "% Change": "0.10303925646505356",
+      "Last": "15.381",
+      "Volume": "375.7207"
+     }
+    },
+    {
+     "ticker": "SVRN",
+     "instrument_type": "EQUITY",
+     "columns": {
+      "Symbol": "SVRN",
+      "Name": "SVRN",
+      "% Change": "0.10033076074972438",
+      "Last": "9.98",
+      "Volume": "8007.320808"
+     }
+    }
+   ],
+   "total_items": 62
+  }
+ }
+}

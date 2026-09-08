@@ -1,10 +1,10 @@
 {
  "candidates": {
   "BNC": {
-   "pct": 59.6,
-   "last": 5.5699,
+   "pct": 40.37,
+   "last": 4.899,
    "prev_close": 3.49,
-   "vol": "627215.138899",
+   "vol": "38847974.386384",
    "name": "CEA Industries",
    "first_seen": "06:22"
   },
@@ -41,10 +41,10 @@
    "first_seen": "06:22"
   },
   "SLE": {
-   "pct": 14.29,
-   "last": 4.48,
+   "pct": 18.11,
+   "last": 4.63,
    "prev_close": 3.92,
-   "vol": "663380.820913",
+   "vol": "416934.304993",
    "name": "Super League Enterprise",
    "first_seen": "06:22"
   },
@@ -105,10 +105,10 @@
    "first_seen": "06:37"
   },
   "PHVS": {
-   "pct": 18.58,
-   "last": 41.8,
+   "pct": 13.5,
+   "last": 40.01,
    "prev_close": 35.25,
-   "vol": "483983.130742",
+   "vol": "1743532.66453",
    "name": "Pharvaris",
    "first_seen": "06:52"
   },
@@ -191,6 +191,70 @@
    "vol": "1433430.564924",
    "name": "AlTi Global",
    "first_seen": "09:27"
+  },
+  "NUR": {
+   "pct": 21.13,
+   "last": 2.144,
+   "prev_close": 1.77,
+   "vol": "6685.042161",
+   "name": "Nuran Wireless",
+   "first_seen": "09:47"
+  },
+  "BSEM": {
+   "pct": 16.87,
+   "last": 4.3359,
+   "prev_close": 3.71,
+   "vol": "106847.980266",
+   "name": "BioStem Technologies",
+   "first_seen": "09:47"
+  },
+  "HCWC": {
+   "pct": 16.74,
+   "last": 8.195,
+   "prev_close": 7.02,
+   "vol": "67422.670505",
+   "name": "Healthy Choice Wellness",
+   "first_seen": "09:47"
+  },
+  "NUAI": {
+   "pct": 14.23,
+   "last": 6.18,
+   "prev_close": 5.41,
+   "vol": "2093040.287677",
+   "name": "New Era Energy & Digital",
+   "first_seen": "09:47"
+  },
+  "JDZG": {
+   "pct": 12.86,
+   "last": 3.4873,
+   "prev_close": 3.09,
+   "vol": "57984.198",
+   "name": "Jiade Limited",
+   "first_seen": "09:47"
+  },
+  "ELOX": {
+   "pct": 12.15,
+   "last": 16.8225,
+   "prev_close": 15.0,
+   "vol": "4219.335332",
+   "name": "Eloxx Pharmaceuticals",
+   "first_seen": "09:47"
+  },
+  "HSCS": {
+   "pct": 10.99,
+   "last": 4.14,
+   "prev_close": 3.73,
+   "vol": "87450.188483",
+   "name": "HeartSciences",
+   "first_seen": "09:47"
+  },
+  "IONQ": {
+   "pct": 10.6,
+   "last": 43.71,
+   "prev_close": 39.52,
+   "vol": "9190248.556145",
+   "name": "IonQ",
+   "first_seen": "09:47"
   }
  },
  "halal_fail": [
@@ -198,11 +262,18 @@
   "ALTI",
   "ATRA",
   "EAF",
+  "ELOX",
   "FEED",
   "GLMD",
   "HBNB",
   "HCWB",
+  "HCWC",
+  "HSCS",
+  "IONQ",
   "ISPC",
+  "JDZG",
+  "NUAI",
+  "NUR",
   "PCTY",
   "PLSM",
   "PRQR",
