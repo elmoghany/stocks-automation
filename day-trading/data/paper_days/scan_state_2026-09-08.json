@@ -1,10 +1,10 @@
 {
  "candidates": {
   "BNC": {
-   "pct": 46.13,
-   "last": 5.1,
+   "pct": 52.29,
+   "last": 5.315,
    "prev_close": 3.49,
-   "vol": "5.7545211409038e+07",
+   "vol": "5.9786198003581e+07",
    "name": "CEA Industries",
    "first_seen": "06:22"
   },
@@ -41,10 +41,10 @@
    "first_seen": "06:22"
   },
   "SLE": {
-   "pct": 24.46,
-   "last": 4.879,
+   "pct": 21.68,
+   "last": 4.77,
    "prev_close": 3.92,
-   "vol": "1.186670140355e+06",
+   "vol": "1.24689467053e+06",
    "name": "Super League Enterprise",
    "first_seen": "06:22"
   },
@@ -129,10 +129,10 @@
    "first_seen": "07:12"
   },
   "GMTL": {
-   "pct": 14.46,
-   "last": 12.385,
+   "pct": 15.06,
+   "last": 12.45,
    "prev_close": 10.82,
-   "vol": "118379.445907",
+   "vol": "131942.01837",
    "name": "Guardian Metal Resources",
    "first_seen": "07:57"
   },
@@ -201,10 +201,10 @@
    "first_seen": "09:47"
   },
   "BSEM": {
-   "pct": 11.59,
-   "last": 4.14,
+   "pct": 10.24,
+   "last": 4.09,
    "prev_close": 3.71,
-   "vol": "319276.275095",
+   "vol": "325372.275095",
    "name": "BioStem Technologies",
    "first_seen": "09:47"
   },
@@ -281,18 +281,18 @@
    "first_seen": "10:07"
   },
   "FAC": {
-   "pct": 14.01,
-   "last": 5.94,
+   "pct": 14.2,
+   "last": 5.95,
    "prev_close": 5.21,
-   "vol": "312314.792572",
+   "vol": "327863.909948",
    "name": "Factorial Energy Inc.",
    "first_seen": "10:07"
   },
   "OESX": {
-   "pct": 19.0,
-   "last": 29.7508,
+   "pct": 16.64,
+   "last": 29.16,
    "prev_close": 25.0,
-   "vol": "135256.828128",
+   "vol": "139898.877572",
    "name": "Orion Energy Systems",
    "first_seen": "10:07"
   },
@@ -329,10 +329,10 @@
    "first_seen": "10:07"
   },
   "OBX": {
-   "pct": 16.44,
-   "last": 19.585,
+   "pct": 15.58,
+   "last": 19.44,
    "prev_close": 16.82,
-   "vol": "253236.657881",
+   "vol": "280333.055268",
    "name": "Obsidian Therapeutics",
    "first_seen": "10:07"
   },
@@ -364,7 +364,7 @@
    "pct": 11.24,
    "last": 38.49,
    "prev_close": 34.6,
-   "vol": "149743.830944",
+   "vol": "150510.711707",
    "name": "BUUU Group Limited Class A",
    "first_seen": "10:27"
   },
@@ -473,10 +473,10 @@
    "first_seen": "11:07"
   },
   "LITE": {
-   "pct": 12.16,
-   "last": 988.42,
+   "pct": 11.41,
+   "last": 981.77,
    "prev_close": 881.255,
-   "vol": "4.154648714417e+06",
+   "vol": "4.446422384373e+06",
    "name": "Lumentum",
    "first_seen": "11:07"
   },
@@ -505,10 +505,10 @@
    "first_seen": "11:27"
   },
   "FRMI": {
-   "pct": 12.75,
-   "last": 5.7727,
+   "pct": 12.5,
+   "last": 5.76,
    "prev_close": 5.12,
-   "vol": "1.183635952821e+07",
+   "vol": "1.2519852816425e+07",
    "name": "Fermi",
    "first_seen": "11:27"
   },
@@ -545,18 +545,18 @@
    "first_seen": "11:27"
   },
   "TTRX": {
-   "pct": 13.37,
-   "last": 11.11,
+   "pct": 19.21,
+   "last": 11.6821,
    "prev_close": 9.8,
-   "vol": "91164.220986",
+   "vol": "99947.945194",
    "name": "Turn Therapeutics",
    "first_seen": "11:47"
   },
   "BE": {
-   "pct": 11.58,
-   "last": 282.16,
+   "pct": 10.67,
+   "last": 279.845,
    "prev_close": 252.87,
-   "vol": "1.7107509373472e+07",
+   "vol": "1.7982763906719e+07",
    "name": "Bloom Energy",
    "first_seen": "11:47"
   },
@@ -593,10 +593,10 @@
    "first_seen": "11:47"
   },
   "AXTI": {
-   "pct": 10.74,
-   "last": 68.26,
+   "pct": 11.02,
+   "last": 68.435,
    "prev_close": 61.64,
-   "vol": "7.909830063006e+06",
+   "vol": "8.266876287953e+06",
    "name": "AXT",
    "first_seen": "11:47"
   },
@@ -609,10 +609,10 @@
    "first_seen": "11:47"
   },
   "CV": {
-   "pct": 12.19,
-   "last": 6.72,
+   "pct": 13.86,
+   "last": 6.82,
    "prev_close": 5.99,
-   "vol": "140215.87053",
+   "vol": "154641.496275",
    "name": "CapsoVision",
    "first_seen": "12:07"
   },
@@ -641,10 +641,10 @@
    "first_seen": "12:07"
   },
   "IOND": {
-   "pct": 10.16,
-   "last": 83.91,
+   "pct": 11.28,
+   "last": 84.76,
    "prev_close": 76.17,
-   "vol": "565151.432622",
+   "vol": "671236.917839",
    "name": "Ionic Digital Inc. Class A",
    "first_seen": "12:07"
   },
@@ -655,6 +655,22 @@
    "vol": "2.404461608399e+06",
    "name": "Uranium Royalty",
    "first_seen": "12:07"
+  },
+  "AGPU": {
+   "pct": 10.32,
+   "last": 11.7707,
+   "prev_close": 10.67,
+   "vol": "192261.90669",
+   "name": "Axe Compute",
+   "first_seen": "12:27"
+  },
+  "MLYS": {
+   "pct": 10.28,
+   "last": 31.11,
+   "prev_close": 28.21,
+   "vol": "931285.448546",
+   "name": "Mineralys Therapeutics",
+   "first_seen": "12:27"
   }
  },
  "halal_fail": [
@@ -690,6 +706,7 @@
   "KPLT",
   "LNAI",
   "MF",
+  "MLYS",
   "MRT",
   "MTC",
   "NBIS",
