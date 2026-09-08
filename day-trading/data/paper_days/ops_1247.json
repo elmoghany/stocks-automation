@@ -1,0 +1,5 @@
+[
+ ["set", "halal_detail.BW", {"et": "12:47", "verdict": "FAIL", "loan_pct": 27.58, "cash_pct": 26.41, "combined": 53.99, "fail_reason": "LOAN>10+COMBINED>20", "mcap": 1168630859}],
+ ["set", "halal_detail.CURX", {"et": "12:47", "verdict": "FAIL", "loan_pct": 3.17, "cash_pct": 33.73, "combined": 36.9, "fail_reason": "CASH>10+COMBINED>20", "mcap": 8712049}],
+ ["append", "cycles", {"et": "12:47", "n": 45, "kind": "light bench (in position)", "scan_rows": 173, "candidates_n": 16, "new": ["BW(FAIL)", "CURX(FAIL)"], "pass_pool_unranked": ["BSEM", "FAC", "OESX", "OBX", "BUUU", "ATHR", "ERO", "COHR", "LITE", "REAX", "FRMI", "SILC", "AXTI", "BE", "TTRX", "CV", "IOND", "UROY", "AGPU", "PHVS", "INBX"], "posn": "QCOM t1 81 sh @ 184.89 OPEN; last 174.85 (bar 12:46); book P&L about -815", "watcher": "alive, peak 185.26, hard stop 170.10", "note": "173-row scan spilled to file (113 funds); QCOM 174.3-175.6 range, lunch-hour drift"}]
+]

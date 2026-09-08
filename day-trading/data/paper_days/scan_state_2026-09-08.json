@@ -1,10 +1,10 @@
 {
  "candidates": {
   "BNC": {
-   "pct": 52.29,
-   "last": 5.315,
+   "pct": 50.86,
+   "last": 5.265,
    "prev_close": 3.49,
-   "vol": "5.9786198003581e+07",
+   "vol": "6.1216501442932e+07",
    "name": "CEA Industries",
    "first_seen": "06:22"
   },
@@ -41,10 +41,10 @@
    "first_seen": "06:22"
   },
   "SLE": {
-   "pct": 21.68,
-   "last": 4.77,
+   "pct": 16.84,
+   "last": 4.58,
    "prev_close": 3.92,
-   "vol": "1.24689467053e+06",
+   "vol": "1.339061694401e+06",
    "name": "Super League Enterprise",
    "first_seen": "06:22"
   },
@@ -129,10 +129,10 @@
    "first_seen": "07:12"
   },
   "GMTL": {
-   "pct": 15.06,
-   "last": 12.45,
+   "pct": 15.34,
+   "last": 12.48,
    "prev_close": 10.82,
-   "vol": "131942.01837",
+   "vol": "133293.81969",
    "name": "Guardian Metal Resources",
    "first_seen": "07:57"
   },
@@ -281,18 +281,18 @@
    "first_seen": "10:07"
   },
   "FAC": {
-   "pct": 14.2,
-   "last": 5.95,
+   "pct": 14.59,
+   "last": 5.97,
    "prev_close": 5.21,
-   "vol": "327863.909948",
+   "vol": "339898.366029",
    "name": "Factorial Energy Inc.",
    "first_seen": "10:07"
   },
   "OESX": {
-   "pct": 16.64,
-   "last": 29.16,
+   "pct": 16.08,
+   "last": 29.02,
    "prev_close": 25.0,
-   "vol": "139898.877572",
+   "vol": "144671.928572",
    "name": "Orion Energy Systems",
    "first_seen": "10:07"
   },
@@ -329,10 +329,10 @@
    "first_seen": "10:07"
   },
   "OBX": {
-   "pct": 15.58,
-   "last": 19.44,
+   "pct": 16.41,
+   "last": 19.58,
    "prev_close": 16.82,
-   "vol": "280333.055268",
+   "vol": "292910.055268",
    "name": "Obsidian Therapeutics",
    "first_seen": "10:07"
   },
@@ -361,10 +361,10 @@
    "first_seen": "10:07"
   },
   "BUUU": {
-   "pct": 11.24,
-   "last": 38.49,
+   "pct": 10.58,
+   "last": 38.26,
    "prev_close": 34.6,
-   "vol": "150510.711707",
+   "vol": "151629.749926",
    "name": "BUUU Group Limited Class A",
    "first_seen": "10:27"
   },
@@ -473,10 +473,10 @@
    "first_seen": "11:07"
   },
   "LITE": {
-   "pct": 11.41,
-   "last": 981.77,
+   "pct": 12.6,
+   "last": 992.3,
    "prev_close": 881.255,
-   "vol": "4.446422384373e+06",
+   "vol": "4.719789822579e+06",
    "name": "Lumentum",
    "first_seen": "11:07"
   },
@@ -505,10 +505,10 @@
    "first_seen": "11:27"
   },
   "FRMI": {
-   "pct": 12.5,
-   "last": 5.76,
+   "pct": 12.99,
+   "last": 5.785,
    "prev_close": 5.12,
-   "vol": "1.2519852816425e+07",
+   "vol": "1.3327607371536e+07",
    "name": "Fermi",
    "first_seen": "11:27"
   },
@@ -545,18 +545,18 @@
    "first_seen": "11:27"
   },
   "TTRX": {
-   "pct": 19.21,
-   "last": 11.6821,
+   "pct": 20.82,
+   "last": 11.84,
    "prev_close": 9.8,
-   "vol": "99947.945194",
+   "vol": "124935.576617",
    "name": "Turn Therapeutics",
    "first_seen": "11:47"
   },
   "BE": {
-   "pct": 10.67,
-   "last": 279.845,
+   "pct": 10.75,
+   "last": 280.05,
    "prev_close": 252.87,
-   "vol": "1.7982763906719e+07",
+   "vol": "1.8517270203863e+07",
    "name": "Bloom Energy",
    "first_seen": "11:47"
   },
@@ -593,10 +593,10 @@
    "first_seen": "11:47"
   },
   "AXTI": {
-   "pct": 11.02,
-   "last": 68.435,
+   "pct": 10.97,
+   "last": 68.4,
    "prev_close": 61.64,
-   "vol": "8.266876287953e+06",
+   "vol": "8.532075685849e+06",
    "name": "AXT",
    "first_seen": "11:47"
   },
@@ -609,10 +609,10 @@
    "first_seen": "11:47"
   },
   "CV": {
-   "pct": 13.86,
-   "last": 6.82,
+   "pct": 15.36,
+   "last": 6.91,
    "prev_close": 5.99,
-   "vol": "154641.496275",
+   "vol": "166650.542384",
    "name": "CapsoVision",
    "first_seen": "12:07"
   },
@@ -649,10 +649,10 @@
    "first_seen": "12:07"
   },
   "UROY": {
-   "pct": 10.09,
-   "last": 4.888,
+   "pct": 10.14,
+   "last": 4.89,
    "prev_close": 4.44,
-   "vol": "2.404461608399e+06",
+   "vol": "2.856483327039e+06",
    "name": "Uranium Royalty",
    "first_seen": "12:07"
   },
@@ -671,6 +671,22 @@
    "vol": "931285.448546",
    "name": "Mineralys Therapeutics",
    "first_seen": "12:27"
+  },
+  "BW": {
+   "pct": 10.38,
+   "last": 7.8368,
+   "prev_close": 7.1,
+   "vol": "2.34250083279e+06",
+   "name": "Babcock & Wilcox",
+   "first_seen": "12:47"
+  },
+  "CURX": {
+   "pct": 10.01,
+   "last": 5.5553,
+   "prev_close": 5.05,
+   "vol": "19986.6",
+   "name": "Curanex Pharmaceuticals",
+   "first_seen": "12:47"
   }
  },
  "halal_fail": [
@@ -679,9 +695,11 @@
   "APLD",
   "ATRA",
   "BHST",
+  "BW",
   "CLIR",
   "CRWV",
   "CTRM",
+  "CURX",
   "EAF",
   "EFSI",
   "ELOX",
