@@ -375,6 +375,19 @@
         "ATRA"
       ],
       "rank_top": "PHVS (spread-vetoed)"
+    },
+    {
+      "et": "08:12",
+      "state": "FLAT-5m",
+      "scan_rows": 63,
+      "candidates": 22,
+      "dropped": {
+        "fund": 53,
+        "inherited_fail": 0
+      },
+      "note": "No new stocks (WYHG back at +41%, FAIL pork; ORCX fund; INTW off). PHVS TOP +18.2% at 41.67, 2.2%; INBX 14.8%; GMTL no print. Trigger C: nothing fresh. Nothing armed.",
+      "new": [],
+      "rank_top": "PHVS (spread-vetoed)"
     }
   ],
   "trades": [],
@@ -511,11 +524,11 @@
   },
   "vetoes": {
     "spread": {
-      "n": 47,
-      "of": 49,
+      "n": 51,
+      "of": 53,
       "premarket": {
-        "n": 47,
-        "of": 49
+        "n": 51,
+        "of": 53
       },
       "post_open": {
         "n": 0,
@@ -1021,6 +1034,42 @@
       "spread_pct": 3.5,
       "cap_pct": 0.5,
       "decision": "NOT ARMED. INBX 111.50/120.00 = 7.6%. GMTL 21%."
+    },
+    {
+      "et": "08:08",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 42.10 / ask 42.43, last 41.75",
+      "spread_pct": 0.78,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED (converging). INBX 111.50/112.80 = 1.2%."
+    },
+    {
+      "et": "08:09",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 42.10 / ask 42.43, last 41.75 (no PHVS print since 12:06Z)",
+      "spread_pct": 0.78,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED. INBX 112.00/120.00 = 7%."
+    },
+    {
+      "et": "08:10",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 40.55 / ask 42.17, last 42.00 @12:10:00Z",
+      "spread_pct": 3.9,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED. INBX 112.80/113.40 = 0.53% (rank #5, not the arming name)."
+    },
+    {
+      "et": "08:12",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 41.51 / ask 42.43, last 41.67",
+      "spread_pct": 2.2,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED. INBX 112.50/129.17 = 14.8%. GMTL 21%."
     }
   ],
   "armed": [
