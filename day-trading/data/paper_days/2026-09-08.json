@@ -267,6 +267,19 @@
       "note": "No new stocks (BNC back at +44%, STLU fund back). PHVS +26.8% at 44.68, spread 1.5%; INBX +8% off-scan but latched, spread 6%. Nothing armed.",
       "new": [],
       "rank_top": "PHVS (spread-vetoed x22)"
+    },
+    {
+      "et": "07:32",
+      "state": "FLAT-5m",
+      "scan_rows": 64,
+      "candidates": 20,
+      "dropped": {
+        "fund": 51,
+        "inherited_fail": 1
+      },
+      "note": "No new stocks (IONL/IONX/RGTX funds). PHVS +25.9% at 44.39, spread 3.3%; INBX quote stale since 11:24Z. Nothing armed.",
+      "new": [],
+      "rank_top": "PHVS (spread-vetoed x25)"
     }
   ],
   "trades": [],
@@ -390,11 +403,11 @@
   },
   "vetoes": {
     "spread": {
-      "n": 22,
-      "of": 24,
+      "n": 25,
+      "of": 27,
       "premarket": {
-        "n": 22,
-        "of": 24
+        "n": 25,
+        "of": 27
       },
       "post_open": {
         "n": 0,
@@ -662,6 +675,33 @@
       "spread_pct": 1.5,
       "cap_pct": 0.5,
       "decision": "NOT ARMED. INBX 122.50/130.00 = 6%."
+    },
+    {
+      "et": "07:28",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 43.57 / ask 44.50, last 44.53 @11:27:06Z",
+      "spread_pct": 2.1,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED; premarket tape thinning (100-300 sh bars)"
+    },
+    {
+      "et": "07:30",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 43.00 / ask 44.50, last 43.77 @11:28:49Z",
+      "spread_pct": 3.4,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED. INBX quote stale (122.50/130.00 @11:24Z)."
+    },
+    {
+      "et": "07:32",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 43.00 / ask 44.43, last 44.39 @11:31:55Z",
+      "spread_pct": 3.3,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED"
     }
   ],
   "armed": [
