@@ -1,8 +1,8 @@
 {
  "candidates": {
   "BNC": {
-   "pct": 63.61,
-   "last": 5.71,
+   "pct": 62.18,
+   "last": 5.66,
    "prev_close": 3.49,
    "vol": "627215.138899",
    "name": "CEA Industries",
@@ -103,6 +103,14 @@
    "vol": "32583.430833",
    "name": "ENvue Medical",
    "first_seen": "06:37"
+  },
+  "PHVS": {
+   "pct": 10.35,
+   "last": 38.9,
+   "prev_close": 35.25,
+   "vol": "483983.130742",
+   "name": "Pharvaris",
+   "first_seen": "06:52"
   }
  },
  "halal_fail": [

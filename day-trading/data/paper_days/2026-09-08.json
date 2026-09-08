@@ -155,6 +155,21 @@
       "note": "No new crossers. BNC 63.6%, ROIV 24.0%, BRNX 13.8%. All 15 crossed names halal FAIL; nothing armable. Dump correction: UPB had actually left the scan at 06:27 and was carried with stale values in the 06:27-06:42 rebuilt dumps; dropped now (latched, FAIL -- no decision affected).",
       "new": [],
       "rank_top": "none armable"
+    },
+    {
+      "et": "06:52",
+      "state": "FLAT-5m",
+      "scan_rows": 60,
+      "candidates": 16,
+      "dropped": {
+        "fund": 45,
+        "inherited_fail": 2
+      },
+      "note": "PHVS (Pharvaris, $2.47B rare-disease biotech) +10.4% NEW at 38.90 vs pc 35.25 -- ON the halal list (universe PASS: loan 0.03 / cash 10.28 / combined 10.31, one-side exception). First prefilter-PASS name of the day. RH extended minute bars show NO real print through 10:51Z (all interpolated at 35.25), so it cannot be ranked yet -- feed divergence (scanner last 38.90). Live screen with the RH cap run now; result in halal_detail.PHVS. Everything else unchanged and FAIL.",
+      "new": [
+        "PHVS"
+      ],
+      "rank_top": "none armable (PHVS awaiting RH bars)"
     }
   ],
   "trades": [],
