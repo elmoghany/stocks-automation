@@ -1,0 +1,26 @@
+{
+  "date": "2026-09-08",
+  "day_number": 22,
+  "protocol": "C37",
+  "mode": "paper",
+  "session_type": "headless (Windows Task Scheduler \\Stocks\\C37MorningLaunch)",
+  "benchmark_per_day": -272,
+  "benchmark_note": "C37F-fm 2026-09-02: -$272/traded day (realistic gap-through fills). $1,517 RETIRED; -$163 superseded.",
+  "status": "OPEN",
+  "counts_as_traded_day": false,
+  "config": "C37",
+  "ops": {
+    "skeleton_written_et": "06:21",
+    "session_start_et": "06:20",
+    "start_on_time": true,
+    "trading_day_guard": "TRADING 2026-09-08 full (market_calendar.py). SESSION close=16:00 exit_end=15:00 entry_cutoff=14:30 cross_cap=14:00 ladder=14:50,14:55,14:58,14:59",
+    "capability_probe": {"status": "PENDING"}
+  },
+  "cycles": [],
+  "trades": [],
+  "halal_detail": {},
+  "vetoes": {"spread": {"n": 0, "of": 0}, "depth": {"n": 0, "of": 0}, "chase": {"n": 0, "of": 0}},
+  "errors": [],
+  "coverage_gaps": [],
+  "pnl": 0
+}
