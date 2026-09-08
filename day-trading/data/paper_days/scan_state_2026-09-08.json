@@ -1,10 +1,10 @@
 {
  "candidates": {
   "BNC": {
-   "pct": 50.14,
-   "last": 5.2399,
+   "pct": 44.7,
+   "last": 5.05,
    "prev_close": 3.49,
-   "vol": "5.3958573305087e+07",
+   "vol": "5.5975716762886e+07",
    "name": "CEA Industries",
    "first_seen": "06:22"
   },
@@ -41,10 +41,10 @@
    "first_seen": "06:22"
   },
   "SLE": {
-   "pct": 22.96,
-   "last": 4.82,
+   "pct": 24.79,
+   "last": 4.8917,
    "prev_close": 3.92,
-   "vol": "953902.807751",
+   "vol": "1.116542414955e+06",
    "name": "Super League Enterprise",
    "first_seen": "06:22"
   },
@@ -129,10 +129,10 @@
    "first_seen": "07:12"
   },
   "GMTL": {
-   "pct": 14.73,
-   "last": 12.4133,
+   "pct": 16.73,
+   "last": 12.63,
    "prev_close": 10.82,
-   "vol": "85295.725506",
+   "vol": "104984.705589",
    "name": "Guardian Metal Resources",
    "first_seen": "07:57"
   },
@@ -281,18 +281,18 @@
    "first_seen": "10:07"
   },
   "FAC": {
-   "pct": 14.4,
-   "last": 5.96,
+   "pct": 14.01,
+   "last": 5.94,
    "prev_close": 5.21,
-   "vol": "282613.93659",
+   "vol": "293248.243284",
    "name": "Factorial Energy Inc.",
    "first_seen": "10:07"
   },
   "OESX": {
-   "pct": 16.8,
-   "last": 29.2,
+   "pct": 17.82,
+   "last": 29.455,
    "prev_close": 25.0,
-   "vol": "115326.34658",
+   "vol": "127328.568979",
    "name": "Orion Energy Systems",
    "first_seen": "10:07"
   },
@@ -329,10 +329,10 @@
    "first_seen": "10:07"
   },
   "OBX": {
-   "pct": 15.9,
-   "last": 19.495,
+   "pct": 17.24,
+   "last": 19.72,
    "prev_close": 16.82,
-   "vol": "203627.763945",
+   "vol": "232816.657881",
    "name": "Obsidian Therapeutics",
    "first_seen": "10:07"
   },
@@ -361,10 +361,10 @@
    "first_seen": "10:07"
   },
   "BUUU": {
-   "pct": 11.24,
-   "last": 38.49,
+   "pct": 11.65,
+   "last": 38.63,
    "prev_close": 34.6,
-   "vol": "147693.303885",
+   "vol": "148958.553885",
    "name": "BUUU Group Limited Class A",
    "first_seen": "10:27"
   },
@@ -385,10 +385,10 @@
    "first_seen": "10:27"
   },
   "ERO": {
-   "pct": 11.52,
-   "last": 38.92,
+   "pct": 11.06,
+   "last": 38.76,
    "prev_close": 34.9,
-   "vol": "922159.567155",
+   "vol": "999207.668249",
    "name": "Ero Copper",
    "first_seen": "10:27"
   },
@@ -473,10 +473,10 @@
    "first_seen": "11:07"
   },
   "LITE": {
-   "pct": 11.9,
-   "last": 986.085,
+   "pct": 12.24,
+   "last": 989.1103,
    "prev_close": 881.255,
-   "vol": "3.473375063981e+06",
+   "vol": "3.86862111006e+06",
    "name": "Lumentum",
    "first_seen": "11:07"
   },
@@ -489,10 +489,10 @@
    "first_seen": "11:07"
   },
   "SILC": {
-   "pct": 12.89,
-   "last": 46.14,
+   "pct": 11.33,
+   "last": 45.5,
    "prev_close": 40.87,
-   "vol": "93457.812101",
+   "vol": "102804.840642",
    "name": "Silicom",
    "first_seen": "11:27"
   },
@@ -505,10 +505,10 @@
    "first_seen": "11:27"
   },
   "FRMI": {
-   "pct": 10.64,
-   "last": 5.665,
+   "pct": 13.28,
+   "last": 5.8,
    "prev_close": 5.12,
-   "vol": "9.212124784056e+06",
+   "vol": "1.0766264690074e+07",
    "name": "Fermi",
    "first_seen": "11:27"
   },
@@ -543,6 +543,70 @@
    "vol": "12261.246927",
    "name": "MMTec",
    "first_seen": "11:27"
+  },
+  "TTRX": {
+   "pct": 11.73,
+   "last": 10.95,
+   "prev_close": 9.8,
+   "vol": "80869.944345",
+   "name": "Turn Therapeutics",
+   "first_seen": "11:47"
+  },
+  "BE": {
+   "pct": 11.19,
+   "last": 281.165,
+   "prev_close": 252.87,
+   "vol": "1.6010277744927e+07",
+   "name": "Bloom Energy",
+   "first_seen": "11:47"
+  },
+  "NBIS": {
+   "pct": 10.65,
+   "last": 250.5,
+   "prev_close": 226.39,
+   "vol": "1.252005073305e+07",
+   "name": "Nebius Group",
+   "first_seen": "11:47"
+  },
+  "HYPD": {
+   "pct": 10.61,
+   "last": 3.65,
+   "prev_close": 3.3,
+   "vol": "1.018662391101e+06",
+   "name": "Hyperion DeFi",
+   "first_seen": "11:47"
+  },
+  "QBTS": {
+   "pct": 10.55,
+   "last": 18.33,
+   "prev_close": 16.58,
+   "vol": "1.8067291029635e+07",
+   "name": "D-Wave Quantum",
+   "first_seen": "11:47"
+  },
+  "MRT": {
+   "pct": 10.4,
+   "last": 2.23,
+   "prev_close": 2.02,
+   "vol": "30054.104535",
+   "name": "Marti Technologies, Inc.",
+   "first_seen": "11:47"
+  },
+  "AXTI": {
+   "pct": 10.37,
+   "last": 68.03,
+   "prev_close": 61.64,
+   "vol": "7.396858444794e+06",
+   "name": "AXT",
+   "first_seen": "11:47"
+  },
+  "CTRM": {
+   "pct": 10.32,
+   "last": 2.62,
+   "prev_close": 2.375,
+   "vol": "101065.380725",
+   "name": "Castor Maritime",
+   "first_seen": "11:47"
   }
  },
  "halal_fail": [
@@ -552,6 +616,7 @@
   "BHST",
   "CLIR",
   "CRWV",
+  "CTRM",
   "EAF",
   "EFSI",
   "ELOX",
@@ -563,6 +628,7 @@
   "HCWB",
   "HCWC",
   "HSCS",
+  "HYPD",
   "IE",
   "IMSR",
   "INFQ",
@@ -574,7 +640,9 @@
   "KPLT",
   "LNAI",
   "MF",
+  "MRT",
   "MTC",
+  "NBIS",
   "NRGV",
   "NUAI",
   "NUR",
@@ -583,6 +651,7 @@
   "PLSM",
   "PRQR",
   "PS",
+  "QBTS",
   "ROIV",
   "SATL",
   "SEGG",
