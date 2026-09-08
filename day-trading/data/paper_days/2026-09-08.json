@@ -430,6 +430,19 @@
       "note": "No new stocks (ORCX fund back, RGTX off). PHVS fading to 41.15 (+16.7%), no fill (post-arm max high 41.30). INBX 124 (+2.3%), 122.50/129.99. GMTL no print since 07:54. Trigger C quiet.",
       "new": [],
       "rank_top": "PHVS (armed)"
+    },
+    {
+      "et": "08:32",
+      "state": "FLAT-5m (ticket 1 PHVS RESTING)",
+      "scan_rows": 60,
+      "candidates": 24,
+      "dropped": {
+        "fund": 53,
+        "inherited_fail": 0
+      },
+      "note": "No new stocks (RGTX/ORCU funds in; ORCX, SLE, BEX off). PHVS 40.91 (+16.1%), no fill (max post-arm high 41.30); INBX 128 (+5.6%), 128.00/129.30. Trigger C quiet.",
+      "new": [],
+      "rank_top": "PHVS (armed)"
     }
   ],
   "trades": [],
