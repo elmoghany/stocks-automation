@@ -1,8 +1,8 @@
 {
  "candidates": {
   "BNC": {
-   "pct": 56.85,
-   "last": 5.474,
+   "pct": 59.89,
+   "last": 5.58,
    "prev_close": 3.49,
    "vol": "627215.138899",
    "name": "CEA Industries",
@@ -41,8 +41,8 @@
    "first_seen": "06:22"
   },
   "SLE": {
-   "pct": 12.76,
-   "last": 4.42,
+   "pct": 14.6,
+   "last": 4.4923,
    "prev_close": 3.92,
    "vol": "663380.820913",
    "name": "Super League Enterprise",
@@ -105,8 +105,8 @@
    "first_seen": "06:37"
   },
   "PHVS": {
-   "pct": 19.15,
-   "last": 42.0,
+   "pct": 19.21,
+   "last": 42.02,
    "prev_close": 35.25,
    "vol": "483983.130742",
    "name": "Pharvaris",
@@ -159,6 +159,22 @@
    "vol": "143543.14156",
    "name": "Veru",
    "first_seen": "08:17"
+  },
+  "SEI": {
+   "pct": 10.31,
+   "last": 60.67,
+   "prev_close": 55.0,
+   "vol": "1527919.446682",
+   "name": "Solaris Energy Infrastructure",
+   "first_seen": "09:07"
+  },
+  "QCOM": {
+   "pct": 10.3,
+   "last": 186.1194,
+   "prev_close": 168.74,
+   "vol": "8546946.56908",
+   "name": "Qualcomm",
+   "first_seen": "09:07"
   }
  },
  "halal_fail": [
@@ -173,6 +189,7 @@
   "PLSM",
   "PRQR",
   "ROIV",
+  "SEI",
   "SVRN",
   "TGL",
   "UPB",

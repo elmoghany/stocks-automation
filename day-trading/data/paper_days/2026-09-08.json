@@ -545,6 +545,35 @@
       "armed": "PHVS t1 stop 47.89/lim 48.13/313sh RESTING; last 42.00 bid 42.00 ask 42.20 (0.47%)",
       "trigger_c": "PHVS none; INBX 08:56 morning_star STALE",
       "note": "quiet premarket tape; PHVS 42.0-42.4 range, no new session high"
+    },
+    {
+      "et": "09:07",
+      "n": 34,
+      "scan_rows": 66,
+      "candidates": [
+        "BNC",
+        "PHVS",
+        "SLE",
+        "SEI",
+        "QCOM"
+      ],
+      "new": [
+        "SEI",
+        "QCOM"
+      ],
+      "gone": [
+        "ORCU"
+      ],
+      "top": "QCOM",
+      "rank_top3": [
+        "QCOM",
+        "SEI(FAIL)",
+        "SLE(FAIL)"
+      ],
+      "posn": "FLAT",
+      "armed": "QCOM t1 stop 187.50/lim 188.44/80sh armed 09:09; PHVS t1 cancelled",
+      "trigger_c": "none",
+      "note": "QCOM +10.3% crossed ~09:00 on a calm gap7 (+0.9%); coil 0.996; halal PASS; SEI halal FAIL"
     }
   ],
   "trades": [],
@@ -695,15 +724,38 @@
       "et": "08:52",
       "q1": "halal_universe: loan 99.77 / cash 18.64 / combined 118.41 -> LOAN>10+COMBINED>20 (RH mcap 5.3M)",
       "q2": "immunotherapy biotech -- permissible; moot"
+    },
+    "SEI": {
+      "et": "09:07",
+      "verdict": "FAIL",
+      "loan_pct": 59.7,
+      "cash_pct": 19.56,
+      "combined": 79.26,
+      "fail_reason": "LOAN>10+COMBINED>20",
+      "source": "quarterly",
+      "mcap": 4212307942,
+      "note": "Solaris Energy Infrastructure -- oilfield services; financing ratios fail"
+    },
+    "QCOM": {
+      "et": "09:07",
+      "verdict": "PASS",
+      "loan_pct": 8.61,
+      "cash_pct": 4.68,
+      "combined": 13.3,
+      "haram_pct": 0.24,
+      "source": "quarterly",
+      "mcap": 177258481170,
+      "q2": "PASS -- semiconductors / IP licensing, no haram business line",
+      "rerun_at_arming": "09:09 same verdict"
     }
   },
   "vetoes": {
     "spread": {
       "n": 60,
-      "of": 63,
+      "of": 64,
       "premarket": {
         "n": 60,
-        "of": 63
+        "of": 61
       },
       "post_open": {
         "n": 0,
@@ -712,7 +764,7 @@
     },
     "depth": {
       "n": 4,
-      "of": 6,
+      "of": 7,
       "reductions": 1,
       "note": "07:09 reduced 337->113; 07:10 SKIP; 08:22 PASS; 08:37 SKIP; 08:39 SKIP; 08:49 SKIP (all Trigger C skips at 14%)"
     },
@@ -723,7 +775,7 @@
     },
     "size_cap": {
       "n": 3,
-      "of": 3,
+      "of": 4,
       "note": "07:56-07:59 INBX: 0 sh in trailing 10 completed minutes"
     }
   },
@@ -1343,6 +1395,15 @@
       "cap_pct": 0.5,
       "depth": "50 sh inside cap vs 357",
       "decision": "NOT TAKEN"
+    },
+    {
+      "et": "09:09",
+      "sym": "QCOM",
+      "check": "arming",
+      "spread_pct": 0.32,
+      "depth_sh": 3472,
+      "intended_sh": 80,
+      "result": "PASS -- armed"
     }
   ],
   "armed": [
@@ -1427,6 +1488,37 @@
         "level": 44.059,
         "basis": "max(entry x 0.92, peak x 0.60) on an assumed 47.89 fill; re-placed upward as the peak rises"
       },
+      "status": "CANCELLED 09:09 -- TOP changed to QCOM at the 09:07 re-rank (no fill; max post-arm high 42.70 vs stop 47.89)"
+    },
+    {
+      "ticket": 1,
+      "sym": "QCOM",
+      "et": "09:09",
+      "armed_utc": "2026-09-08T13:09:00Z",
+      "trigger": "B premarket-high stop-buy",
+      "stop": 187.5,
+      "limit": 188.44,
+      "shares": 80,
+      "notional": 15000,
+      "pm_high_bar_utc": "2026-09-08T13:06:00Z",
+      "prev_close": 168.74,
+      "gap7_pct": 0.9,
+      "calm": true,
+      "quote_at_arm": {
+        "last": 184.69,
+        "bid": 184.4,
+        "ask": 185.0
+      },
+      "checks": {
+        "fill_arming": "PASS (last/bid below stop)",
+        "spread_pct": 0.32,
+        "depth_to_limit_sh": 3472,
+        "size_cap_sh": 64599,
+        "vol10": 322995,
+        "halal": "PASS",
+        "state": "active"
+      },
+      "protective_stop_on_fill": 172.5,
       "status": "RESTING"
     }
   ],

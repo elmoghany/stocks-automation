@@ -611,6 +611,10 @@
 "name": "Direxion Daily QCOM Bull 2X ETF",
 "type": "EQUITY"
 },
+"QCOM": {
+"name": "Qualcomm",
+"type": "EQUITY"
+},
 "QUA": {
 "name": "Corgi QBTS 2x Daily ETF",
 "type": "EQUITY"
@@ -653,6 +657,10 @@
 },
 "SDUR": {
 "name": "Aristotle Short Term Income ETF",
+"type": "EQUITY"
+},
+"SEI": {
+"name": "Solaris Energy Infrastructure",
 "type": "EQUITY"
 },
 "SLE": {

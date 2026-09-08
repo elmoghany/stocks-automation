@@ -1,0 +1,12 @@
+[
+ ["set", "armed.1.status", "CANCELLED 09:09 -- TOP changed to QCOM at the 09:07 re-rank (no fill; max post-arm high 42.70 vs stop 47.89)"],
+ ["set", "halal_detail.SEI", {"et": "09:07", "verdict": "FAIL", "loan_pct": 59.7, "cash_pct": 19.56, "combined": 79.26, "fail_reason": "LOAN>10+COMBINED>20", "source": "quarterly", "mcap": 4212307942, "note": "Solaris Energy Infrastructure -- oilfield services; financing ratios fail"}],
+ ["set", "halal_detail.QCOM", {"et": "09:07", "verdict": "PASS", "loan_pct": 8.61, "cash_pct": 4.68, "combined": 13.3, "haram_pct": 0.24, "source": "quarterly", "mcap": 177258481170, "q2": "PASS -- semiconductors / IP licensing, no haram business line", "rerun_at_arming": "09:09 same verdict"}],
+ ["append", "armed", {"ticket": 1, "sym": "QCOM", "et": "09:09", "armed_utc": "2026-09-08T13:09:00Z", "trigger": "B premarket-high stop-buy", "stop": 187.50, "limit": 188.44, "shares": 80, "notional": 15000, "pm_high_bar_utc": "2026-09-08T13:06:00Z", "prev_close": 168.74, "gap7_pct": 0.9, "calm": true, "quote_at_arm": {"last": 184.69, "bid": 184.40, "ask": 185.00}, "checks": {"fill_arming": "PASS (last/bid below stop)", "spread_pct": 0.32, "depth_to_limit_sh": 3472, "size_cap_sh": 64599, "vol10": 322995, "halal": "PASS", "state": "active"}, "protective_stop_on_fill": 172.50, "status": "RESTING"}],
+ ["set", "vetoes.spread.of", 64],
+ ["set", "vetoes.spread.premarket.of", 61],
+ ["set", "vetoes.depth.of", 7],
+ ["set", "vetoes.size_cap.of", 4],
+ ["append", "veto_log", {"et": "09:09", "sym": "QCOM", "check": "arming", "spread_pct": 0.32, "depth_sh": 3472, "intended_sh": 80, "result": "PASS -- armed"}],
+ ["append", "cycles", {"et": "09:07", "n": 34, "scan_rows": 66, "candidates": ["BNC", "PHVS", "SLE", "SEI", "QCOM"], "new": ["SEI", "QCOM"], "gone": ["ORCU"], "top": "QCOM", "rank_top3": ["QCOM", "SEI(FAIL)", "SLE(FAIL)"], "posn": "FLAT", "armed": "QCOM t1 stop 187.50/lim 188.44/80sh armed 09:09; PHVS t1 cancelled", "trigger_c": "none", "note": "QCOM +10.3% crossed ~09:00 on a calm gap7 (+0.9%); coil 0.996; halal PASS; SEI halal FAIL"}]
+]

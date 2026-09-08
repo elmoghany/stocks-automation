@@ -45,19 +45,39 @@ def main():
         print(json.dumps(node, indent=1)[:4000])
         return
 
+    # batch (2026-09-08, Day 22): one read-modify-write for many ops, because
+    # PowerShell's --% token swallows the rest of the line so every inline-JSON
+    # call had to be its own shell invocation.
+    #   python plan/dayjson.py <date> batch @ops.json
+    # ops.json = [["set"|"append", "dotted.path", <value>], ...]
+    if op == "batch":
+        raw = rest[0]
+        if raw.startswith("@"):
+            raw = Path(raw[1:]).read_text(encoding="utf-8")
+        for bop, dotted, value in json.loads(raw):
+            apply_op(doc, bop, dotted, value)
+        json.dump(doc, open(path, "w", encoding="utf-8"), indent=2)
+        return
+
     # PowerShell strips the inner double quotes out of a single-quoted argument,
     # so inline JSON on the command line is not survivable on this box (the
     # windows-shell-quirks lesson again). Prefer @file.
     raw = rest[1]
     if raw.startswith("@"):
         raw = Path(raw[1:]).read_text(encoding="utf-8")
-    dotted, value = rest[0], json.loads(raw)
+    apply_op(doc, op, rest[0], json.loads(raw))
+    json.dump(doc, open(path, "w", encoding="utf-8"), indent=2)
+
+
+def apply_op(doc, op, dotted, value):
     parts = dotted.split(".")
     parent = dig(doc, parts[:-1], create=True)
     key = parts[-1]
-
+    if isinstance(parent, list):
+        key = int(key)
     if op == "append":
-        parent.setdefault(key, [])
+        if isinstance(parent, dict):
+            parent.setdefault(key, [])
         if not isinstance(parent[key], list):
             sys.exit(f"ERROR: {dotted} is {type(parent[key]).__name__}, not a list")
         parent[key].append(value)
@@ -67,8 +87,6 @@ def main():
         print(f"set {dotted}")
     else:
         sys.exit(f"ERROR: unknown op {op!r}")
-
-    json.dump(doc, open(path, "w", encoding="utf-8"), indent=2)
 
 
 if __name__ == "__main__":
