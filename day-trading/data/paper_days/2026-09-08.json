@@ -404,6 +404,19 @@
         "VERU"
       ],
       "rank_top": "PHVS (spread-vetoed)"
+    },
+    {
+      "et": "08:22",
+      "state": "FLAT-5m",
+      "scan_rows": 61,
+      "candidates": 24,
+      "dropped": {
+        "fund": 52,
+        "inherited_fail": 0
+      },
+      "note": "No new stocks (ZCSH fund back, VERU off). PHVS spread narrowed to 0.48% -> ARMED ticket 1: stop 47.89 / limit 48.13 / 313 sh (see armed[1]). INBX 120.60/129.99 = 7.8%. GMTL no print.",
+      "new": [],
+      "rank_top": "PHVS -- ARMED"
     }
   ],
   "trades": [],
@@ -552,11 +565,11 @@
   },
   "vetoes": {
     "spread": {
-      "n": 54,
-      "of": 56,
+      "n": 56,
+      "of": 59,
       "premarket": {
-        "n": 54,
-        "of": 56
+        "n": 56,
+        "of": 59
       },
       "post_open": {
         "n": 0,
@@ -1125,6 +1138,33 @@
       "spread_pct": 2.2,
       "cap_pct": 0.5,
       "decision": "NOT ARMED. INBX 121.33/122.15 = 0.67% (last 121.31, back to flat vs prior close; rank low). GMTL 21%."
+    },
+    {
+      "et": "08:19",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 42.00 / ask 42.43, last 42.01 (no print since 12:16Z)",
+      "spread_pct": 1.0,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED. INBX 120.00/123.00 = 2.5%. GMTL 21%."
+    },
+    {
+      "et": "08:21",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 42.00 / ask 42.43, last 42.00 @12:20:35Z",
+      "spread_pct": 1.0,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED. INBX 120.00/129.99 = 8%. GMTL 21%."
+    },
+    {
+      "et": "08:22",
+      "sym": "PHVS",
+      "veto": "none -- ARMED",
+      "quote": "bid 41.50 / ask 41.70, last 41.70",
+      "spread_pct": 0.48,
+      "depth": "PASS 6,296 sh inside the cap",
+      "decision": "ARMED ticket 1: stop 47.89 / limit 48.13 / 313 sh"
     }
   ],
   "armed": [
@@ -1168,6 +1208,48 @@
         "basis": "max(entry x 0.92, peak x 0.60) on an assumed 44.51 fill; re-placed upward as the peak rises"
       },
       "status": "NO FILL -- the 07:09 bar (first completed bar after the 11:09:20Z arm with HIGH >= 44.51) OPENED at 44.99, above the 44.73 limit, so per the pre-committed fill semantics the stop triggered and the limit was skipped. Not credited. Bracket: the bar's LOW was 44.47, so a real limit resting at 44.73 after the trigger could have filled on the dip; recorded, NOT booked. Order cancelled at 07:10; ratchet moved to 45.38 and the re-arm was a DEPTH skip."
+    },
+    {
+      "ticket": 1,
+      "sym": "PHVS",
+      "armed_et": "08:22",
+      "armed_utc": "2026-09-08T12:22:45Z",
+      "rearm_of": "07:09 arm (NO FILL, cancelled 07:10)",
+      "trigger_type": "B -- premarket-high stop-buy (premarket high 47.89 printed on the 07:11 bar; ratchets up with any new session high)",
+      "stop_trigger": 47.89,
+      "limit": 48.13,
+      "limit_basis": "trigger x 1.005",
+      "shares": 313,
+      "shares_intended": 313,
+      "notional_at_trigger": 14989.57,
+      "prev_close": 35.25,
+      "REAL_ORDER": false,
+      "paper_only": "NO REAL ORDERS EVER -- paper arm recorded in the ledger.",
+      "gates_at_arming": {
+        "halal": "PASS both questions (live 06:53)",
+        "rank": "1 (08:01 rank; 08:22 sweep unchanged; INBX .884 / GMTL excluded)",
+        "coil": 0.871,
+        "pressure": "-0.01 (08:01 rank, trusted)",
+        "gap7_pct": 18.3,
+        "calm_gap": "CALM",
+        "gain_pct_at_arming": 18.3,
+        "price_ge_2": true,
+        "sessions_ge_50": true,
+        "common_stock": true
+      },
+      "veto_checks_at_arming": {
+        "fill_arming": "PASS -- last 41.70 @12:22:19Z and bid 41.50 both far below the 47.89 trigger (14% away)",
+        "spread": "PASS -- 0.48% (41.50/41.70 @12:22:21Z); second pass of the session after 56 vetoes",
+        "depth": "PASS -- 6,296 displayed ask shares from the inside ask 41.70 up to the 48.13 cap (incl. 1,251 @44.20, 1,300 @45.80, 2,096 @47.00) vs 313 needed",
+        "size_cap": "NOT BINDING -- trailing 10 completed minutes (12:11-12:20) 4,305 sh, 20% = 861 vs 313",
+        "halt": "quote state=active, has_traded=true (get_equity_tradability NOT called: needs an account number; headless paper session)"
+      },
+      "fill_semantics": "Paper resting stop-limit: fills INTRABAR on the first completed 1-min bar after 12:22:45Z whose HIGH >= 47.89, at the trigger (bar open <= trigger) or at the bar OPEN if 47.89 < open <= 48.13; NO FILL if the bar opens above 48.13 -- then re-arm at the new session high per the fill-arming rule.",
+      "protective_stop_on_fill": {
+        "level": 44.059,
+        "basis": "max(entry x 0.92, peak x 0.60) on an assumed 47.89 fill; re-placed upward as the peak rises"
+      },
+      "status": "RESTING"
     }
   ],
   "trigger_c": [
