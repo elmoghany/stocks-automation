@@ -332,6 +332,21 @@
       "note": "Same 61 names. INBX (TOP) still no print since 11:22Z, book 6% wide; PHVS +16.0% at 40.90, 3.0%. Nothing armed.",
       "new": [],
       "rank_top": "INBX (spread-vetoed); PHVS #3"
+    },
+    {
+      "et": "07:57",
+      "state": "FLAT-5m",
+      "scan_rows": 62,
+      "candidates": 21,
+      "dropped": {
+        "fund": 51,
+        "inherited_fail": 1
+      },
+      "note": "NEW: GMTL (Guardian Metal Resources, $443M tungsten/strategic-metals explorer, Nevada) +10.5% at 11.96 vs pc 10.82 -- on halal_list, universe PASS (loan 0 / cash 2.09); ONE RH premarket print (100 sh @07:54). INBX still no print since 07:22 (locked/crossed premarket book, size cap 0). PHVS +17.2% at 41.31, 1.8%. See rank in transcript.",
+      "new": [
+        "GMTL"
+      ],
+      "rank_top": "see 07:58 rank"
     }
   ],
   "trades": [],
@@ -455,11 +470,11 @@
   },
   "vetoes": {
     "spread": {
-      "n": 37,
-      "of": 39,
+      "n": 40,
+      "of": 42,
       "premarket": {
-        "n": 37,
-        "of": 39
+        "n": 40,
+        "of": 42
       },
       "post_open": {
         "n": 0,
@@ -476,6 +491,11 @@
       "n": 0,
       "of": 1,
       "note": "07:06 last==trigger with ask above the +0.5% cap; spread veto fired first"
+    },
+    "size_cap": {
+      "n": 2,
+      "of": 2,
+      "note": "07:56, 07:57 INBX: 0 sh in trailing 10 completed minutes"
     }
   },
   "errors": [
@@ -863,6 +883,34 @@
       "spread_pct": 6.1,
       "cap_pct": 0.5,
       "decision": "NOT ARMED. PHVS 40.60/41.84 = 3.0%, +16.0%."
+    },
+    {
+      "et": "07:54",
+      "sym": "INBX",
+      "veto": "SPREAD",
+      "quote": "stale 122.50/130.00 @11:24Z",
+      "spread_pct": 6.1,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED. PHVS 41.00/41.74 = 1.8%."
+    },
+    {
+      "et": "07:56",
+      "sym": "INBX",
+      "veto": "SIZE-CAP",
+      "quote": "bid 133.00 / ask 133.00 (locked quote @11:55:01Z), last 131.00 @11:22:46Z",
+      "spread_pct": 0.0,
+      "cap_pct": 0.5,
+      "trigger": "B stop-buy 137.25 / limit 137.94 -- last and bid below trigger, stop would be legal",
+      "size_cap": "FAIL -- zero shares printed in the trailing 10 completed minutes (no RH print since 11:22Z), 20% of 0 = 0 sh; cannot size a ticket",
+      "decision": "NOT ARMED. PHVS 41.31/41.74 = 1.0% SPREAD veto."
+    },
+    {
+      "et": "07:57",
+      "sym": "INBX",
+      "veto": "SIZE-CAP",
+      "quote": "locked 136.63/136.63 @11:57:02Z, no print since 11:22Z; L2 at 07:56 was CROSSED (bids 140/139/138.75 above asks 126/130/132.64) -- premarket book unusable",
+      "size_cap": "0 sh in trailing 10 completed minutes",
+      "decision": "NOT ARMED. PHVS 41.00/41.74 = 1.8% SPREAD veto."
     }
   ],
   "armed": [

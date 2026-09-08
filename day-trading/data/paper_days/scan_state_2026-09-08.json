@@ -41,8 +41,8 @@
    "first_seen": "06:22"
   },
   "SLE": {
-   "pct": 15.82,
-   "last": 4.54,
+   "pct": 14.8,
+   "last": 4.5,
    "prev_close": 3.92,
    "vol": "663380.820913",
    "name": "Super League Enterprise",
@@ -105,8 +105,8 @@
    "first_seen": "06:37"
   },
   "PHVS": {
-   "pct": 16.03,
-   "last": 40.9,
+   "pct": 17.19,
+   "last": 41.31,
    "prev_close": 35.25,
    "vol": "483983.130742",
    "name": "Pharvaris",
@@ -127,6 +127,14 @@
    "vol": "368464.439971",
    "name": "ProQR Therapeutics",
    "first_seen": "07:12"
+  },
+  "GMTL": {
+   "pct": 10.54,
+   "last": 11.96,
+   "prev_close": 10.82,
+   "vol": "131983.575132",
+   "name": "Guardian Metal Resources",
+   "first_seen": "07:57"
   }
  },
  "halal_fail": [
