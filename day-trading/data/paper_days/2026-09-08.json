@@ -319,6 +319,19 @@
       "note": "No new stocks (PCTY off; ZCSH/IONX funds back). RANK 07:44: TOP = INBX (coil .954, +8.1% but latched), PHVS #3 (coil .879, +17.9% at 41.57). INBX book stale/6% wide, PHVS 3.4%. Nothing armed.",
       "new": [],
       "rank_top": "INBX (spread-vetoed); PHVS #3"
+    },
+    {
+      "et": "07:52",
+      "state": "FLAT-5m",
+      "scan_rows": 61,
+      "candidates": 20,
+      "dropped": {
+        "fund": 51,
+        "inherited_fail": 1
+      },
+      "note": "Same 61 names. INBX (TOP) still no print since 11:22Z, book 6% wide; PHVS +16.0% at 40.90, 3.0%. Nothing armed.",
+      "new": [],
+      "rank_top": "INBX (spread-vetoed); PHVS #3"
     }
   ],
   "trades": [],
@@ -442,11 +455,11 @@
   },
   "vetoes": {
     "spread": {
-      "n": 34,
-      "of": 36,
+      "n": 37,
+      "of": 39,
       "premarket": {
-        "n": 34,
-        "of": 36
+        "n": 37,
+        "of": 39
       },
       "post_open": {
         "n": 0,
@@ -823,6 +836,33 @@
       "spread_pct": 6.1,
       "cap_pct": 0.5,
       "decision": "NOT ARMED. PHVS #3 bid 41.01 / ask 42.43 = 3.4%, +17.9%."
+    },
+    {
+      "et": "07:49",
+      "sym": "INBX",
+      "veto": "SPREAD",
+      "quote": "stale 122.50/130.00 @11:24Z, no print since 11:22Z",
+      "spread_pct": 6.1,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED. PHVS 40.36/42.00 = 4.0%, +16.3% at 40.99."
+    },
+    {
+      "et": "07:51",
+      "sym": "INBX",
+      "veto": "SPREAD",
+      "quote": "stale 122.50/130.00 @11:24Z",
+      "spread_pct": 6.1,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED. PHVS 40.25/41.00 = 1.8%, +14.6% at 40.40."
+    },
+    {
+      "et": "07:52",
+      "sym": "INBX",
+      "veto": "SPREAD",
+      "quote": "stale 122.50/130.00 @11:24Z",
+      "spread_pct": 6.1,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED. PHVS 40.60/41.84 = 3.0%, +16.0%."
     }
   ],
   "armed": [
