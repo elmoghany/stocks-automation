@@ -75,6 +75,10 @@
 "name": "Corgi ASTS 2x Daily ETF",
 "type": "EQUITY"
 },
+"ATRA": {
+"name": "Atara Biotherapeutics",
+"type": "EQUITY"
+},
 "AVGC": {
 "name": "Corgi AVGO 2x Daily ETF",
 "type": "EQUITY"
@@ -393,6 +397,10 @@
 },
 "INBX": {
 "name": "Inhibrx Biosciences",
+"type": "EQUITY"
+},
+"INTW": {
+"name": "GraniteShares 2x Long INTC Daily ETF",
 "type": "EQUITY"
 },
 "IONL": {

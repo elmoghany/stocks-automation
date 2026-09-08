@@ -1,8 +1,8 @@
 {
  "candidates": {
   "BNC": {
-   "pct": 39.26,
-   "last": 4.86,
+   "pct": 42.69,
+   "last": 4.98,
    "prev_close": 3.49,
    "vol": "627215.138899",
    "name": "CEA Industries",
@@ -41,8 +41,8 @@
    "first_seen": "06:22"
   },
   "SLE": {
-   "pct": 17.09,
-   "last": 4.59,
+   "pct": 15.09,
+   "last": 4.5116,
    "prev_close": 3.92,
    "vol": "663380.820913",
    "name": "Super League Enterprise",
@@ -105,8 +105,8 @@
    "first_seen": "06:37"
   },
   "PHVS": {
-   "pct": 18.8,
-   "last": 41.8758,
+   "pct": 18.44,
+   "last": 41.75,
    "prev_close": 35.25,
    "vol": "483983.130742",
    "name": "Pharvaris",
@@ -135,10 +135,19 @@
    "vol": "131983.575132",
    "name": "Guardian Metal Resources",
    "first_seen": "07:57"
+  },
+  "ATRA": {
+   "pct": 14.96,
+   "last": 11.22,
+   "prev_close": 9.76,
+   "vol": "135655.62452",
+   "name": "Atara Biotherapeutics",
+   "first_seen": "08:07"
   }
  },
  "halal_fail": [
   "ADXN",
+  "ATRA",
   "FEED",
   "GLMD",
   "HBNB",

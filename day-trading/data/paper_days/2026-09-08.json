@@ -360,6 +360,21 @@
       "note": "No new stocks (WYHG off). RANK 08:01: TOP = PHVS again (coil .877) after INBX printed 128->116.06 on its 08:00 bar (below prior close; coil .846, #5). GMTL excluded (1 bar). PHVS +18.8% at 41.88, 2.2% spread. Nothing armed.",
       "new": [],
       "rank_top": "PHVS (spread-vetoed)"
+    },
+    {
+      "et": "08:07",
+      "state": "FLAT-5m",
+      "scan_rows": 62,
+      "candidates": 22,
+      "dropped": {
+        "fund": 52,
+        "inherited_fail": 0
+      },
+      "note": "NEW: ATRA (Atara Biotherapeutics, $98M) +15.0% -> FAIL (loan 11.3 / combined 20.7). INTW fund new; DUKR off. Trigger C polling live since 08:03: INBX rsi_cross_up TAKEABLE at 08:07 but refused (rank #5, 7.6% spread). PHVS TOP, +18.4% at 41.75, 3.5% spread. Nothing armed.",
+      "new": [
+        "ATRA"
+      ],
+      "rank_top": "PHVS (spread-vetoed)"
     }
   ],
   "trades": [],
@@ -486,15 +501,21 @@
       "q1": "live_halal with RH mcap 443M: loan 0.0 / cash 2.39 / combined 2.39 -> PASS; universe PASS; on halal_list",
       "q2": "PASS -- Guardian Metal Resources plc, tungsten/strategic-metals exploration in Nevada; no haram-adjacent line",
       "armable": "YES on halal; premarket-dark (1 RH print, Polygon 2 prints, no 07:00 bar -> CALM-GAP FAIL stands per gap7_complete); ranker excludes it until it has bars"
+    },
+    "ATRA": {
+      "verdict": "FAIL",
+      "et": "08:07",
+      "q1": "halal_universe: loan 11.29 / cash 9.36 / combined 20.65 -> LOAN>10+COMBINED>20 (real verdict, not re-litigated); RH mcap 98M",
+      "q2": "allogeneic T-cell immunotherapy -- permissible; moot"
     }
   },
   "vetoes": {
     "spread": {
-      "n": 43,
-      "of": 45,
+      "n": 47,
+      "of": 49,
       "premarket": {
-        "n": 43,
-        "of": 45
+        "n": 47,
+        "of": 49
       },
       "post_open": {
         "n": 0,
@@ -523,6 +544,11 @@
       "et": "06:48",
       "type": "dump-rebuild",
       "msg": "ERROR: UPB left the scan at 06:27 but the delta-rebuilt dumps for 06:27/06:32/06:37/06:42 carried it with the 06:22 values (I missed it in the gone list). Corrected at 06:47. Impact: none -- UPB was already latched in the crossed set and a halal FAIL since 06:24; the sweep's candidates_now count was 1 too high for four cycles."
+    },
+    {
+      "et": "08:03",
+      "type": "trigger-c-gap",
+      "msg": "ERROR: Trigger C (reversal-candle) polling was not started until 08:03 -- from 07:00 to 08:03 only Trigger B (premarket-high stop-buy) was watched. The first `trigger` run at 08:03 shows PHVS fired macd_cross_up on the 07:56 close and morning_star on the 07:59 close, both STALE by the time they were seen. NOT credited (a signal is only takeable on its own close; OUTAGE rule 3 -- never backfill an entry). From 08:03 the trigger command runs on every 1-min bar append for the top names."
     }
   ],
   "coverage_gaps": [],
@@ -958,6 +984,43 @@
       "cap_pct": 0.5,
       "trigger": "premarket high 47.89 (14% above); TOP again after INBX dumped to 116 (coil .846)",
       "decision": "NOT ARMED. INBX 113.50/124.52 = 9.7%. GMTL 10.70/12.98 = 21%."
+    },
+    {
+      "et": "08:03",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 41.51 / ask 42.11, last 42.00 @12:02:55Z",
+      "spread_pct": 1.4,
+      "cap_pct": 0.5,
+      "trigger_c": "PHVS 07:56 macd_cross_up STALE, 07:59 morning_star STALE (polling gap, see errors[]); INBX 07:10 macd_cross_up STALE",
+      "decision": "NOT ARMED. INBX 109.50/113.49 = 3.6% (last 113, -6.7%). GMTL 21%."
+    },
+    {
+      "et": "08:04",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 41.51 / ask 42.00, last 41.99 @12:03:57Z",
+      "spread_pct": 1.2,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED. INBX 111.00/113.49 = 2.2%. GMTL 21%."
+    },
+    {
+      "et": "08:05",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 41.00 / ask 42.00, last 41.99",
+      "spread_pct": 2.4,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED. INBX 110.00/113.49 = 3.1%. GMTL 21%."
+    },
+    {
+      "et": "08:07",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 40.55 / ask 42.00, last 41.75",
+      "spread_pct": 3.5,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED. INBX 111.50/120.00 = 7.6%. GMTL 21%."
     }
   ],
   "armed": [
@@ -1001,6 +1064,15 @@
         "basis": "max(entry x 0.92, peak x 0.60) on an assumed 44.51 fill; re-placed upward as the peak rises"
       },
       "status": "NO FILL -- the 07:09 bar (first completed bar after the 11:09:20Z arm with HIGH >= 44.51) OPENED at 44.99, above the 44.73 limit, so per the pre-committed fill semantics the stop triggered and the limit was skipped. Not credited. Bracket: the bar's LOW was 44.47, so a real limit resting at 44.73 after the trigger could have filled on the dip; recorded, NOT booked. Order cancelled at 07:10; ratchet moved to 45.38 and the re-arm was a DEPTH skip."
+    }
+  ],
+  "trigger_c": [
+    {
+      "et": "08:07",
+      "sym": "INBX",
+      "signal": "rsi_cross_up on the 08:06 close",
+      "tag": "TAKEABLE NOW (1m since close)",
+      "decision": "REFUSED -- INBX is rank #5 (coil .846, -7.2% vs prior close after the 08:00 dump); C37 arms only the top-ranked name (PHVS). Also SPREAD veto: bid 111.50 / ask 120.00 = 7.6%; a marketable limit at ask+0.3% (120.36) would be a 7% chase over the 112.50 last."
     }
   ]
 }
