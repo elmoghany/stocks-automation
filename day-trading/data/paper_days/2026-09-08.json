@@ -636,6 +636,39 @@
       "posn": "QCOM t1 81 sh @ 184.89 OPEN; last 176.73 (bar 09:47); book P&L about -660",
       "watcher": "alive, peak 185.26, hard stop 170.10",
       "note": "RTH scan set turned over (41 funds dropped); scan written as TSV -> scan_tsv_to_dump (delta path impractical with 60+ changed rows); QCOM low 173.15 at 09:41, bouncing"
+    },
+    {
+      "et": "10:07",
+      "n": 37,
+      "kind": "light bench (in position)",
+      "scan_rows": 106,
+      "candidates_n": 17,
+      "new": [
+        "LNAI(FAIL)",
+        "GRNQ(FAIL q2)",
+        "KPLT(FAIL)",
+        "FAC(PASS)",
+        "OESX(PASS)",
+        "BHST(FAIL)",
+        "SMR(FAIL)",
+        "SEGG(FAIL)",
+        "NRGV(FAIL)",
+        "OBX(PASS)",
+        "TE(FAIL)",
+        "PS(FAIL q2)",
+        "TMS(FAIL)"
+      ],
+      "pass_pool_unranked": [
+        "BSEM",
+        "FAC",
+        "OESX",
+        "OBX",
+        "PHVS",
+        "INBX"
+      ],
+      "posn": "QCOM t1 81 sh @ 184.89 OPEN; last 176.26 (bar 10:08); book P&L about -700",
+      "watcher": "alive, peak 185.26, hard stop 170.10",
+      "note": "106-row RTH scan (74 funds); 13 new real names screened; QCOM consolidating 175-176.5 after the 09:41 low 173.15"
     }
   ],
   "trades": [
@@ -954,6 +987,130 @@
       "haram_pct": 9.99,
       "fail_reason": "HARAM>=5% (interest income 9.99% of revenue)",
       "mcap": 17738566427
+    },
+    "LNAI": {
+      "et": "10:09",
+      "verdict": "FAIL",
+      "loan_pct": 11.16,
+      "cash_pct": 24.94,
+      "combined": 36.1,
+      "haram_pct": 152.82,
+      "fail_reason": "LOAN>10+COMBINED>20",
+      "mcap": 12649554
+    },
+    "GRNQ": {
+      "et": "10:09",
+      "verdict": "FAIL",
+      "loan_pct": 0.16,
+      "cash_pct": 1.64,
+      "combined": 1.81,
+      "fail_reason": "q2 FAIL -- Greenpro Capital: financial advisory / digital-asset trading / real estate (Finance, Investment Managers); ratios pass",
+      "mcap": 38612001
+    },
+    "KPLT": {
+      "et": "10:09",
+      "verdict": "FAIL",
+      "loan_pct": 165.6,
+      "cash_pct": 38.82,
+      "combined": 204.41,
+      "fail_reason": "LOAN>10+COMBINED>20; q2 also FAIL (lease-purchase consumer finance)",
+      "mcap": 46492033
+    },
+    "FAC": {
+      "et": "10:09",
+      "verdict": "PASS",
+      "loan_pct": 1.23,
+      "cash_pct": 17.64,
+      "combined": 18.88,
+      "haram_pct": 0,
+      "mcap": 639463875,
+      "q2": "PASS -- Factorial Energy, solid-state batteries (RH sector label Finance is a misclassification of a de-SPAC shell name)",
+      "note": "not ranked (in position)"
+    },
+    "OESX": {
+      "et": "10:09",
+      "verdict": "PASS",
+      "loan_pct": 5.7,
+      "cash_pct": 4.51,
+      "combined": 10.21,
+      "haram_pct": 0.11,
+      "mcap": 114541012,
+      "q2": "PASS -- Orion Energy Systems, LED lighting / EV charging",
+      "note": "not ranked (in position)"
+    },
+    "BHST": {
+      "et": "10:09",
+      "verdict": "FAIL",
+      "loan_pct": 33.79,
+      "cash_pct": 34.92,
+      "combined": 68.71,
+      "fail_reason": "LOAN>10+COMBINED>20 (activity leg has a 2026-08-22 PASS ruling; ratios still gate)",
+      "mcap": 46453208
+    },
+    "SMR": {
+      "et": "10:09",
+      "verdict": "FAIL",
+      "loan_pct": 0.02,
+      "cash_pct": 22.95,
+      "combined": 22.97,
+      "fail_reason": "CASH>10+COMBINED>20",
+      "mcap": 4671865424
+    },
+    "SEGG": {
+      "et": "10:09",
+      "verdict": "FAIL",
+      "loan_pct": 62.43,
+      "cash_pct": 1.73,
+      "combined": 64.16,
+      "fail_reason": "HARAM INDUSTRY (lottery); RH status Noncompliant",
+      "mcap": 9908849
+    },
+    "NRGV": {
+      "et": "10:09",
+      "verdict": "FAIL",
+      "loan_pct": 31.66,
+      "cash_pct": 12.07,
+      "combined": 43.73,
+      "fail_reason": "LOAN>10+COMBINED>20",
+      "mcap": 773729200
+    },
+    "OBX": {
+      "et": "10:09",
+      "verdict": "PASS",
+      "loan_pct": 0.31,
+      "cash_pct": 5.11,
+      "combined": 5.42,
+      "haram_pct": 0,
+      "mcap": 1150520262,
+      "q2": "PASS -- Obsidian Therapeutics, cell and gene therapy",
+      "note": "not ranked (in position)"
+    },
+    "TE": {
+      "et": "10:09",
+      "verdict": "FAIL",
+      "loan_pct": 52.19,
+      "cash_pct": 5.3,
+      "combined": 57.5,
+      "fail_reason": "LOAN>10+COMBINED>20",
+      "mcap": 1491526005
+    },
+    "PS": {
+      "et": "10:09",
+      "verdict": "FAIL",
+      "loan_pct": 1.49,
+      "cash_pct": 0.05,
+      "combined": 1.55,
+      "fail_reason": "q2 FAIL -- Pershing Square Holdco, investment manager / closed-end fund holdco; ratios pass",
+      "mcap": 16952000837
+    },
+    "TMS": {
+      "et": "10:09",
+      "verdict": "FAIL",
+      "loan_pct": 74.54,
+      "cash_pct": 22.47,
+      "combined": 97.01,
+      "fail_reason": "LOAN>10+COMBINED>20; q2 also FAIL (Financial Conglomerates acquiror)",
+      "mcap": 504574532
     }
   },
   "vetoes": {

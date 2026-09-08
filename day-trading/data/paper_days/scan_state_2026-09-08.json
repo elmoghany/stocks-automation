@@ -1,10 +1,10 @@
 {
  "candidates": {
   "BNC": {
-   "pct": 40.37,
-   "last": 4.899,
+   "pct": 40.4,
+   "last": 4.9,
    "prev_close": 3.49,
-   "vol": "38847974.386384",
+   "vol": "43981492.678306",
    "name": "CEA Industries",
    "first_seen": "06:22"
   },
@@ -41,10 +41,10 @@
    "first_seen": "06:22"
   },
   "SLE": {
-   "pct": 18.11,
-   "last": 4.63,
+   "pct": 16.84,
+   "last": 4.58,
    "prev_close": 3.92,
-   "vol": "416934.304993",
+   "vol": "613892.039658",
    "name": "Super League Enterprise",
    "first_seen": "06:22"
   },
@@ -105,10 +105,10 @@
    "first_seen": "06:37"
   },
   "PHVS": {
-   "pct": 13.5,
-   "last": 40.01,
+   "pct": 17.45,
+   "last": 41.4,
    "prev_close": 35.25,
-   "vol": "1743532.66453",
+   "vol": "2200366.390878",
    "name": "Pharvaris",
    "first_seen": "06:52"
   },
@@ -201,10 +201,10 @@
    "first_seen": "09:47"
   },
   "BSEM": {
-   "pct": 16.87,
-   "last": 4.3359,
+   "pct": 19.0,
+   "last": 4.415,
    "prev_close": 3.71,
-   "vol": "106847.980266",
+   "vol": "176054.805035",
    "name": "BioStem Technologies",
    "first_seen": "09:47"
   },
@@ -255,16 +255,122 @@
    "vol": "9190248.556145",
    "name": "IonQ",
    "first_seen": "09:47"
+  },
+  "LNAI": {
+   "pct": 16.74,
+   "last": 2.79,
+   "prev_close": 2.39,
+   "vol": "13288.814867",
+   "name": "Lunai Bioworks",
+   "first_seen": "10:07"
+  },
+  "GRNQ": {
+   "pct": 16.58,
+   "last": 21.8,
+   "prev_close": 18.7,
+   "vol": "310945.642659",
+   "name": "Greenpro Capital",
+   "first_seen": "10:07"
+  },
+  "KPLT": {
+   "pct": 16.45,
+   "last": 9.1993,
+   "prev_close": 7.9,
+   "vol": "62191.608154",
+   "name": "Katapult",
+   "first_seen": "10:07"
+  },
+  "FAC": {
+   "pct": 15.16,
+   "last": 6.0,
+   "prev_close": 5.21,
+   "vol": "177109.751646",
+   "name": "Factorial Energy Inc.",
+   "first_seen": "10:07"
+  },
+  "OESX": {
+   "pct": 13.12,
+   "last": 28.28,
+   "prev_close": 25.0,
+   "vol": "57239.674045",
+   "name": "Orion Energy Systems",
+   "first_seen": "10:07"
+  },
+  "BHST": {
+   "pct": 12.6,
+   "last": 2.0493,
+   "prev_close": 1.82,
+   "vol": "8747.934549",
+   "name": "BioHarvest Sciences",
+   "first_seen": "10:07"
+  },
+  "SMR": {
+   "pct": 11.91,
+   "last": 10.855,
+   "prev_close": 9.7,
+   "vol": "10156211.941152",
+   "name": "NuScale Power",
+   "first_seen": "10:07"
+  },
+  "SEGG": {
+   "pct": 10.99,
+   "last": 3.03,
+   "prev_close": 2.73,
+   "vol": "53852.222721",
+   "name": "Sports Entertainment Gaming",
+   "first_seen": "10:07"
+  },
+  "NRGV": {
+   "pct": 10.68,
+   "last": 4.25,
+   "prev_close": 3.84,
+   "vol": "1169005.52298",
+   "name": "Energy Vault Holdings",
+   "first_seen": "10:07"
+  },
+  "OBX": {
+   "pct": 10.58,
+   "last": 18.6,
+   "prev_close": 16.82,
+   "vol": "81473.458495",
+   "name": "Obsidian Therapeutics",
+   "first_seen": "10:07"
+  },
+  "TE": {
+   "pct": 10.54,
+   "last": 5.085,
+   "prev_close": 4.6,
+   "vol": "5821797.277318",
+   "name": "T1 Energy",
+   "first_seen": "10:07"
+  },
+  "PS": {
+   "pct": 10.21,
+   "last": 43.07,
+   "prev_close": 39.08,
+   "vol": "99069.782299",
+   "name": "Pershing Square Inc.",
+   "first_seen": "10:07"
+  },
+  "TMS": {
+   "pct": 10.05,
+   "last": 6.79,
+   "prev_close": 6.17,
+   "vol": "22267.165604",
+   "name": "Teamshares Inc.",
+   "first_seen": "10:07"
   }
  },
  "halal_fail": [
   "ADXN",
   "ALTI",
   "ATRA",
+  "BHST",
   "EAF",
   "ELOX",
   "FEED",
   "GLMD",
+  "GRNQ",
   "HBNB",
   "HCWB",
   "HCWC",
@@ -272,15 +378,23 @@
   "IONQ",
   "ISPC",
   "JDZG",
+  "KPLT",
+  "LNAI",
+  "NRGV",
   "NUAI",
   "NUR",
   "PCTY",
   "PLSM",
   "PRQR",
+  "PS",
   "ROIV",
+  "SEGG",
   "SEI",
+  "SMR",
   "SVRN",
+  "TE",
   "TGL",
+  "TMS",
   "UPB",
   "VERU",
   "VIDA",
