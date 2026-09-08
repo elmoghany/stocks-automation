@@ -1,0 +1,4 @@
+[
+ ["set", "watcher.exit_parity", {"computed_at": "15:02:12 (watcher, true 14:59 close, no proxy)", "close_1459": 173.565, "backtest_exit": 173.3914, "live_vwap": 173.6262, "delta_usd": 19.02, "delta_bps": 13.5, "note": "live ladder fill was $19.02 (+13.5 bps) BETTER than the backtest's 14:59-close exit model; the 14:59 bar was ingested at 15:00:23, before the 15:02 parity computation"}],
+ ["set", "watcher.exited", "15:02:12 BOOK FLAT -- watcher done, exit code 0"]
+]

@@ -1,5 +1,72 @@
 # Penny Stocks Trading Notes
 
+## PAPER DAY 22 (2026-09-08) — one ticket, QCOM, −$912.37: a large-cap premarket pop bought one bar off the high
+
+**1 ticket: QCOM 81 @ 184.89 → 173.6262 (−$912.37, −6.09%, 14:50 ladder rung 1).
+Flat at 14:50 by the watcher, zero real orders.** `counts_as_traded_day: true`.
+**Cumulative −$3,516.04 → −$4,428.41 over 19 scored days = −$233.07/day** (was
+−$195.34 over 18). Against the **−$272/day C37F-fm benchmark** today was $640 worse;
+cumulatively live is still $740 ahead of the benchmark's −$5,168 over 19 days. Full
+detail in `data/paper_days/2026-09-08.{json,md}`.
+
+Headless launch clean (scheduler flag 06:22), heartbeat every cycle 06:22–15:00, no
+coverage gaps, 56 ledger commits. Seventh consecutive session the Day-16 fix has held.
+
+### The day in one line
+QCOM crossed +10% at 09:00 premarket on a 0.9% calm gap (halal PASS, semiconductors,
+loans 8.61 / cash 4.68); the 09:09 `bullish_spinning_top` was TAKEABLE at 09:11 and
+filled at the L2 inside ask 184.89 (spread 0.10%, −0.24% at +56 s) one bar after the
+day's 185.26 high. The open unwound the whole premarket move to 173.15 (−6.35%) by
+09:41, two points above the 170.10 hard stop, and the name ranged 173–178 for the rest
+of the day. No C37 exit was ever live (no +10% excursion → no pressure trail; the hard
+stop never touched; +25% bank unreachable), so the 14:50 ladder was the exit by
+construction: 81 sh on rung 1 at bid×0.999.
+
+### What actually worked
+* **The watcher owned the book start to finish**: one `paper_watch.py --book` process
+  (pid 8852) 09:12 → 15:00+, booked the ladder itself (EXIT-FLATTEN 14:51:41), wrote
+  flatten / equity (695 points) / WATCH_ALIVE, unlinked its state file. Never restarted.
+* **Scan spills handled in-line**: every RTH `run_scan` (166–185 rows) exceeded the
+  tool-result cap and spilled to a file; copying the spill with python as the dump and
+  running `scan_sweep.py` on it directly worked 16/16 times with zero raw JSON in
+  context. `dayjson.py batch @ops.json` replaced the per-field ledger writes.
+* **Quote feed for the ladder** via the new `plan/write_quote.py` (PowerShell 5.1
+  strips the inner quotes of an inline `python -c` JSON literal; the 14:44 inline
+  attempt failed, the helper wrote the file at 14:45, rung 1 used `src=quote`).
+* Veto ledger: 65 decisions; spread 60 (premarket 60/62, post-open 0/0); depth 4/8
+  skips + 1 reduction; chase 0/2; size cap 3/5 (INBX, 0 sh in the trailing 10 min).
+
+### What went wrong (ops)
+* **Trigger C polling started at 08:03, not 07:00** (error 08:03): PHVS
+  `macd_cross_up` 07:56 and `morning_star` 07:59 were stale when first seen; not
+  credited, not backfilled.
+* **Loop-ordering defect a third time** (Day 13, Day 21, now 08:31–08:34): a TAKEABLE
+  PHVS `tweezer_bottom` surfaced inside a chained wait. Fixed from 08:34 (the trigger
+  output gates the wait). The five PHVS signals evaluated live afterwards were all
+  spread (1.0–2.4%) / depth refusals, so it cost process fidelity, not a fill. **This
+  needs to move into `cyc.py`-style tooling (bars → trigger → stop, no wait in the same
+  call) rather than being re-fixed by hand each session.**
+* 06:48 dump-rebuild: UPB carried in four delta-rebuilt dumps after leaving the scan;
+  no impact.
+
+### The halal gate, fifth session of the same finding
+102 screened → 29 PASS, 73 FAIL (15 LOAN>10+COMBINED>20, 9 CASH>10+COMBINED>20,
+21 industry / q2, the rest haram-revenue: NNE interest 581% of revenue, QBTS 41%,
+CTRM 1,108% combined). Three PASSes carry a crypto caveat for user review (IOND
+mining, AGPU treasury, CYPH Zcash treasury — Robinhood still describes CYPH with the
+old Leap Therapeutics biotech text). The liquid PASS names (INTC, DOCN, SMTC, LITE,
+BE, AXTI, VIAV, COHR, ERO) all crossed while QCOM was held; one position at a time
+left $85k idle.
+
+### Standing question for the campaign
+This is a **new loss shape**: not a stop-buy at a session high on an earnings gapper
+(Days 5, 19, 21) but a Trigger C reversal candle on a $200B large-cap's premarket news
+pop, filled with perfect realism. The 0.996 coil came from 8,000-share premarket bars —
+a large-cap does not coil the way the rank was fitted on penny gappers, and none of the
+C37 exits can engage on a name that moves 2–3% a day. Candidate rules before it costs
+a second session: a market-cap ceiling on the C37 candidate set, or a premarket-volume
+floor before the coil score counts. Measure both on the full-coverage set first.
+
 ## PAPER DAY 21 (2026-09-02) — three tickets, three stops, −$2,868.22: the day the entries bought the top minute
 
 **3 tickets: GTLB 268 @ 55.80 → 51.561 (−$1,136.05, 10% pressure trail), DELL 31 @

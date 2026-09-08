@@ -1,0 +1,39 @@
+[
+ ["set", "status", "CLOSED"],
+ ["set", "counts_as_traded_day", true],
+ ["set", "pnl", -912.37],
+ ["set", "posn", "FLAT"],
+ ["set", "eod", {
+   "closed_et": "14:50 (ladder rung 1, watcher-owned)",
+   "flat_by_1500": true,
+   "tickets_taken": 1,
+   "tickets_available": 7,
+   "capital_deployed": 14976.09,
+   "capital_budget": 100000.0,
+   "capital_idle": 85023.91,
+   "trades_summary": [{"t": 1, "sym": "QCOM", "entry": "09:11 @ 184.89 x81 (Trigger C bullish_spinning_top on the 09:09 close, premarket)", "exit": "14:50 @ 173.6262 (ladder rung 1, quote bid 173.80 x 0.999)", "pnl": -912.37, "pnl_pct": -6.09}],
+   "pnl": -912.37,
+   "cumulative_before": -3516.04,
+   "cumulative_after": -4428.41,
+   "scored_days": 19,
+   "per_day": -233.07,
+   "per_day_before": -195.34,
+   "benchmark_per_day": -272.0,
+   "benchmark_note": "C37F-fm 2026-09-02 realistic gap-through fills; -$163 honest baseline superseded, $1,517 retired",
+   "vs_benchmark_today": -640.37,
+   "benchmark_total_19d": -5168.0,
+   "ahead_of_benchmark_total": 739.59,
+   "closing_quotes_1500": {"QCOM": {"last": 173.555, "vs_prev_close_pct": 2.85, "prev_close": 168.74}, "PHVS": {"last": 38.52, "vs_prev_close_pct": 9.28}, "INBX": {"last": 116.26, "vs_prev_close_pct": -4.05}},
+   "verdict": "A red day inside the modelled distribution: -$912.37 on the one ticket, $640 below the -$272/day benchmark, cumulative -$3,516.04 -> -$4,428.41 over 19 scored days (-$233/day), still $740 ahead of the benchmark in total. QCOM crossed +10% at 09:00 on a calm gap (+0.9% at 07:00), passed halal (loans 8.61 / cash 4.68, semiconductors), and the Trigger C spinning-top fill at 09:11 (L2 inside ask, spread 0.10%, -0.24% at +56 s) bought within 0.2% of the day's high (185.26). The open sold the whole premarket move: 173.15 at 09:41 (-6.35%), 2 points above the 170.10 hard stop, then a 173-178 range all day. No C37 exit ever armed (no +10% excursion, so no pressure trail; the hard stop was never touched); the 14:50 ladder took all 81 sh on rung 1. Entries closed at 14:30 with one ticket taken and $85k idle: every other +10% crosser was either a halal FAIL (73 of 102 screened) or a wide-book microcap (PHVS 1-2.4% spreads, five Trigger C refusals)."
+ }],
+ ["set", "watcher", {"process": "paper_watch.py --book (c37), pid 8852, one process 09:12 -> after 15:00, never restarted", "opened": "09:12 via --open QCOM 184.89 x81", "exits_booked": ["EXIT-FLATTEN QCOM 14:51:41 vwap 173.6262 x81 P&L -912.37 (rung 1 at 14:50:10, quote bid 173.80, confirmed by bar 14:50)"], "files": ["data/paper_days/2026-09-08.flatten.json", "data/paper_days/2026-09-08.equity.json (695 points 09:12-15:00)", "data/paper_days/WATCH_ALIVE_2026-09-08.json"], "hard_stop": 170.0988, "peak": 185.26, "trail_armed": false, "cb_would_fire": "none logged (worst mark -6.35% at 09:41 vs 3/5/8% levels of DEPLOYED notional; a -6.35% mark on one $15k ticket is -$950 = -0.95% of the $100k budget)", "quote_feed": "data/paper/quotes_2026-09-08.json written 14:44-14:51 every minute via plan/write_quote.py; rung 1 used src=quote", "bar_feed": "plan/append_bars.py every 1-2 min 09:12-15:00 (QCOM 401 bars; PHVS/INBX fed to 14:30 for rotation readiness)", "exit_parity": "watcher computes at 15:02 (PARITY_GRACE_MIN); 14:59 close 173.565 ingested at 15:00:23 so the proxy has the true close"}],
+ ["set", "fill_realism", {"t1_QCOM_entry": {"fill": 184.89, "signal_close": 184.9988, "last_60s": 184.4535, "vs_entry_pct": -0.24, "note": "filled at the displayed L2 inside ask (300 sh shown vs 81 wanted); the mark 56 s later was 0.24% below -- ordinary noise, not a chase"}, "t1_QCOM_exit": {"ladder_fill": 173.6262, "quote_bid": 173.80, "bar_1450_close": 173.67, "bar_1450_low": 173.59, "note": "bid x 0.999 = $14.08 below the naive inside bid on 81 sh; the fill sits inside the 14:50 bar range"}}],
+ ["set", "findings", [
+   "The entry bought the premarket top: QCOM's +10% cross came at 09:00 on a 0.9% calm gap after a 168.74 close, and the 09:09 spinning top printed at 185.00 with the day's high 185.26 one bar earlier. The opening auction and first 11 minutes of RTH unwound 6.35% -- a large-cap ($200B) reacting to news is not the coil the C37 rank was fitted on (penny / small-cap gappers), and the 30-bar pressure model had 0.996 coil on 8k-share premarket bars.",
+   "No C37 exit mechanism was ever live: the pressure trail needs a +10% excursion from entry (never above +0.2%), the hard stop sat 2.0-2.5% under the entire RTH range, and the 1/3 bank at +25% is unreachable on a large-cap. For a name like this the only working exit is the 14:50 ladder, i.e. hold-to-close by construction.",
+   "The halal gate is the binding constraint on capital again: 102 names screened, 73 FAIL (15 LOAN>10+COMBINED>20, 9 CASH>10+COMBINED>20, 21 industry / q2 fails, the rest haram-revenue or mixed), 29 PASS of which three carry crypto caveats (IOND, AGPU, CYPH) and most of the rest are sub-$10 microcaps with 1-2% books. Only $15k of the $100k budget was deployed.",
+   "Trigger C polling did not start until 08:03 (error 08:03); two PHVS signals (07:56 macd_cross_up, 07:59 morning_star) aged out unseen and were not credited. A third (08:31 tweezer_bottom) surfaced inside a chained wait (error 08:34) -- the Day-13 / Day-21 loop-ordering defect again, fixed on the spot by gating the wait on the trigger output. The five PHVS signals evaluated live (08:37-08:49) were all refused on spread (1.0-2.4%) and depth, so the miss is a process defect, not a lost fill.",
+   "Scan spill handling: from 09:27 every RTH run_scan (166-185 rows, 60-66 KB) exceeded the tool-result cap and spilled to a file; copying the spilled file with python as the dump and running scan_sweep.py on it directly worked every time and kept the raw JSON out of context. The premarket delta/rebuild path (scan_delta.py) is only needed while the scan is small.",
+   "Ops: heartbeat every cycle 06:22-15:00; no coverage gaps; the watcher ran as one process and booked the exit itself; ledger committed and pushed after every cycle (56 commits today). New helpers: dayjson.py `batch @ops.json`, plan/write_quote.py."
+ ]]
+]

@@ -42,7 +42,14 @@
    "deployed": 14976.09,
    "exit_time": "14:50",
    "booked_at": "2026-09-08T14:51:41.133167-04:00",
-   "exit_parity": null
+   "exit_parity": {
+    "close_1459": 173.565,
+    "backtest_exit": 173.3914,
+    "live_vwap": 173.6262,
+    "delta_usd": 19.02,
+    "delta_bps": 13.5,
+    "proxy": null
+   }
   }
  ]
 }
