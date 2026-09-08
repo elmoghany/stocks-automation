@@ -497,6 +497,31 @@
         "HCWB"
       ],
       "rank_top": "PHVS (armed)"
+    },
+    {
+      "et": "08:58",
+      "n": 32,
+      "scan_rows": 65,
+      "candidates": [
+        "BNC",
+        "PHVS",
+        "SLE"
+      ],
+      "new": [],
+      "gone": [
+        "GMTL",
+        "HCWB"
+      ],
+      "top": "PHVS",
+      "rank_top3": [
+        "SLE(FAIL)",
+        "PHVS",
+        "BNC(calm-gap)"
+      ],
+      "posn": "FLAT",
+      "armed": "PHVS t1 stop 47.89/lim 48.13/313sh RESTING; last 42.00 bid 42.00 ask 42.40 (0.95%)",
+      "trigger_c": "PHVS none; INBX 08:56 morning_star STALE (ranked #5, not top)",
+      "note": "scan ran 08:58 (1 min late; context compaction); PHVS max post-arm high 42.70, no fill"
     }
   ],
   "trades": [],
