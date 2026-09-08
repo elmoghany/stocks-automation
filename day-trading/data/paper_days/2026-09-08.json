@@ -17,20 +17,139 @@
     "capability_probe": {
       "status": "PASS",
       "run_et": "06:21",
-      "probe_1_python": {"cmd": "python -c print(1)", "result": "1", "exit": 0, "verdict": "PASS"},
-      "probe_2_git": {"cmd": "git status --short + git add (own path) + commit + push", "result": "skeleton committed 879f20d and pushed (PUSH_EXIT=0)", "exit": 0, "verdict": "PASS"},
-      "probe_3_mcp": {"cmd": "get_equity_quotes SPY", "result": "SPY last_non_reg 769.07 @10:20:42Z, bid 769.04 / ask 769.13 @10:20:44Z, prev_close 770.19 (2026-09-04)", "verdict": "PASS"},
+      "probe_1_python": {
+        "cmd": "python -c print(1)",
+        "result": "1",
+        "exit": 0,
+        "verdict": "PASS"
+      },
+      "probe_2_git": {
+        "cmd": "git status --short + git add (own path) + commit + push",
+        "result": "skeleton committed 879f20d and pushed (PUSH_EXIT=0)",
+        "exit": 0,
+        "verdict": "PASS"
+      },
+      "probe_3_mcp": {
+        "cmd": "get_equity_quotes SPY",
+        "result": "SPY last_non_reg 769.07 @10:20:42Z, bid 769.04 / ask 769.13 @10:20:44Z, prev_close 770.19 (2026-09-04)",
+        "verdict": "PASS"
+      },
       "note": "All three PASS -- full capability. No PERMISSION_BLOCKED flag. Heartbeat SESSION_ALIVE_2026-09-08.flag first written 06:21:01 ET."
     },
-    "heartbeat": {"file": "data/paper_days/SESSION_ALIVE_2026-09-08.flag", "first_et": "06:21:01", "cadence": "every cycle, <=5 min"},
-    "halal_list": {"updated": "2026-09-01", "age_days": 7, "n_symbols": 1260, "stale_gate": "PASS (age 7 days < 35)"},
+    "heartbeat": {
+      "file": "data/paper_days/SESSION_ALIVE_2026-09-08.flag",
+      "first_et": "06:21:01",
+      "cadence": "every cycle, <=5 min"
+    },
+    "halal_list": {
+      "updated": "2026-09-01",
+      "age_days": 7,
+      "n_symbols": 1260,
+      "stale_gate": "PASS (age 7 days < 35)"
+    },
     "watcher_precheck": "posn.py: BOOK EMPTY -- no data/paper/position_*.json state files; nothing from another day to move aside.",
-    "premarket_tape": {"spy_prev_close": 770.19, "spy_premarket_0620et": 769.07, "spy_premarket_pct": -0.15, "read": "SPY -0.15% premarket after the Labor Day weekend -- flat tone into the open."}
+    "premarket_tape": {
+      "spy_prev_close": 770.19,
+      "spy_premarket_0620et": 769.07,
+      "spy_premarket_pct": -0.15,
+      "read": "SPY -0.15% premarket after the Labor Day weekend -- flat tone into the open."
+    }
   },
-  "cycles": [],
+  "cycles": [
+    {
+      "et": "06:22",
+      "state": "FLAT-5m",
+      "scan_rows": 58,
+      "candidates": 12,
+      "dropped": {
+        "fund": 45,
+        "inherited_fail": 1
+      },
+      "note": "58 rows landed in context; transcribed to scan_2026-09-08_0622.tsv -> scan_tsv_to_dump -> scan_sweep. 45 of 58 rows are funds. DUKR +64.6% refused (inherited FAIL, not re-litigated). Bars: two batched historicals calls (10+3), both spilled to files and ingested via rh_bars_ingest with returned-set assert OK. WLYB/ADXN/GLMD/HBNB have no real premarket prints yet (all bars interpolated).",
+      "candidate_list": [
+        "BNC",
+        "ISPC",
+        "WYHG",
+        "ROIV",
+        "SVRN",
+        "SLE",
+        "WLYB",
+        "UPB",
+        "ADXN",
+        "GLMD",
+        "HBNB",
+        "VIDA"
+      ],
+      "rank_top": "VIDA",
+      "rank": "1 SVRN coil .963 NEEDS-SCREEN | 2 SLE FAIL(ruling) | 3 UPB coil .961 NEEDS-SCREEN | 4 VIDA coil .965 PASS | 5-8 ISPC BNC WYHG ROIV calm-gap FAIL (>20%)",
+      "armable": "none yet -- no 7AM bar until 07:00, so gap7 is provisional; pressure UNTRUSTED (<20k sh) on all coiled names"
+    }
+  ],
   "trades": [],
-  "halal_detail": {},
-  "vetoes": {"spread": {"n": 0, "of": 0}, "depth": {"n": 0, "of": 0}, "chase": {"n": 0, "of": 0}},
+  "halal_detail": {
+    "SVRN": {
+      "verdict": "FAIL",
+      "et": "06:24",
+      "q1": "live_halal: loan 0.0 / cash 132.07 / combined 132.07 -> CASH>10+COMBINED>20 (mcap 19.5M, quarterly)",
+      "q2": "not reached"
+    },
+    "UPB": {
+      "verdict": "FAIL",
+      "et": "06:24",
+      "q1": "halal_universe: loan 0.3 / cash 80.39 / combined 80.7, haram_pct 73.84 -> CASH>10+COMBINED>20; live_halal REFUSE-TO-EVALUATE (no RH mcap) -- universe FAIL is a real verdict, not re-litigated",
+      "q2": "not reached"
+    },
+    "SLE": {
+      "verdict": "FAIL",
+      "et": "06:24",
+      "q1": "n/a",
+      "q2": "HARAM by user ruling 2026-08-21 (entertainment is the line)"
+    },
+    "ISPC": {
+      "verdict": "FAIL",
+      "et": "06:24",
+      "q1": "halal_universe: cash 72.68 / combined 79.25 -> FAIL",
+      "q2": "not reached"
+    },
+    "WYHG": {
+      "verdict": "FAIL",
+      "et": "06:24",
+      "q1": "halal_universe: loan 378 / cash 1141",
+      "q2": "HARAM INDUSTRY (pork)"
+    },
+    "ROIV": {
+      "verdict": "FAIL",
+      "et": "06:24",
+      "q1": "halal_universe: haram_pct 640 -> HARAM>=5%",
+      "q2": "not reached"
+    },
+    "ADXN": {
+      "verdict": "FAIL",
+      "et": "06:24",
+      "q1": "halal_universe: cash 18.89 / combined 20.95 -> CASH>10+COMBINED>20",
+      "q2": "not reached"
+    },
+    "VIDA": {
+      "verdict": "PENDING",
+      "et": "06:24",
+      "q1": "halal_universe PASS (loan 0 / cash 2.51); live_halal REFUSE-TO-EVALUATE -- no RH mcap cached; fetching",
+      "q2": "pending profile"
+    }
+  },
+  "vetoes": {
+    "spread": {
+      "n": 0,
+      "of": 0
+    },
+    "depth": {
+      "n": 0,
+      "of": 0
+    },
+    "chase": {
+      "n": 0,
+      "of": 0
+    }
+  },
   "errors": [],
   "coverage_gaps": [],
   "pnl": 0
