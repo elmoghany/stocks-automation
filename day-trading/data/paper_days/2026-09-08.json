@@ -482,6 +482,21 @@
       "note": "No new stocks (QBTX/INT funds, YQ back -- FAIL). PHVS 41.16 (+16.8%), bid 41.23 / ask 41.50 = 0.65%, no fill; third Trigger C (morning_star 08:41) refused on spread 1.2% at 08:42. INBX 126.55, 125.02/128.00. GMTL still one print.",
       "new": [],
       "rank_top": "PHVS (armed)"
+    },
+    {
+      "et": "08:52",
+      "state": "FLAT-5m (ticket 1 PHVS RESTING)",
+      "scan_rows": 65,
+      "candidates": 25,
+      "dropped": {
+        "fund": 57,
+        "inherited_fail": 0
+      },
+      "note": "NEW: HCWB (HCW Biologics, $5.3M) +16.7% -> FAIL (loan 100%). INTW fund back; YQ/TGL off. PHVS 42.40 (+20.3%), bid 42.00 / ask 42.70 = 1.7%, no fill (max post-arm high 42.70 vs 47.89 stop). Fourth Trigger C (morning_star 08:48) refused live on spread 1.0% + depth. INBX 127.40.",
+      "new": [
+        "HCWB"
+      ],
+      "rank_top": "PHVS (armed)"
     }
   ],
   "trades": [],
@@ -626,15 +641,21 @@
       "et": "08:17",
       "q1": "halal_universe: loan 5.98 / cash 64.9 / combined 70.88 -> CASH>10+COMBINED>20 (mcap 45M)",
       "q2": "biopharma -- permissible; moot"
+    },
+    "HCWB": {
+      "verdict": "FAIL",
+      "et": "08:52",
+      "q1": "halal_universe: loan 99.77 / cash 18.64 / combined 118.41 -> LOAN>10+COMBINED>20 (RH mcap 5.3M)",
+      "q2": "immunotherapy biotech -- permissible; moot"
     }
   },
   "vetoes": {
     "spread": {
-      "n": 59,
-      "of": 62,
+      "n": 60,
+      "of": 63,
       "premarket": {
-        "n": 59,
-        "of": 62
+        "n": 60,
+        "of": 63
       },
       "post_open": {
         "n": 0,
@@ -642,10 +663,10 @@
       }
     },
     "depth": {
-      "n": 3,
-      "of": 5,
+      "n": 4,
+      "of": 6,
       "reductions": 1,
-      "note": "07:09 reduced 337->113; 07:10 SKIP 13%; 08:22 PASS 6,296 sh; 08:37 SKIP 14%; 08:39 SKIP 14% (Trigger C)"
+      "note": "07:09 reduced 337->113; 07:10 SKIP; 08:22 PASS; 08:37 SKIP; 08:39 SKIP; 08:49 SKIP (all Trigger C skips at 14%)"
     },
     "chase": {
       "n": 0,
@@ -1264,6 +1285,16 @@
       "spread_pct": 1.2,
       "cap_pct": 0.5,
       "decision": "NOT TAKEN"
+    },
+    {
+      "et": "08:49",
+      "sym": "PHVS",
+      "veto": "SPREAD+DEPTH (Trigger C morning_star)",
+      "quote": "bid 41.57 / ask 42.00, last 41.97",
+      "spread_pct": 1.0,
+      "cap_pct": 0.5,
+      "depth": "50 sh inside cap vs 357",
+      "decision": "NOT TAKEN"
     }
   ],
   "armed": [
@@ -1393,6 +1424,13 @@
       "signal": "morning_star on the 08:41 close",
       "tag": "TAKEABLE NOW (1m since close) at 08:42:38 -- evaluated live at 08:42:50",
       "decision": "REFUSED -- SPREAD veto: bid 41.00 x193 / ask 41.50 x100 = 1.2% vs 0.5% cap. (Depth alone: 100 sh at 41.50 inside a 41.62 marketable-limit cap vs 362 intended = 28%, would have been a reduction, not a skip.) Last 41.40. Resting Trigger B stop (47.89) stays."
+    },
+    {
+      "et": "08:49",
+      "sym": "PHVS",
+      "signal": "morning_star on the 08:48 close",
+      "tag": "TAKEABLE NOW (0m since close) at 08:49:18 -- evaluated live at 08:49:24",
+      "decision": "REFUSED -- SPREAD veto: bid 41.57 x120 / ask 42.00 x50 = 1.0% vs 0.5% cap; DEPTH skip: 50 sh at 42.00 inside a 42.13 marketable-limit cap vs 357 intended (14%). Last 41.97. Resting Trigger B stop (47.89) stays."
     }
   ]
 }
