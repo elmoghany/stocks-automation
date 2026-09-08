@@ -322,11 +322,11 @@
   },
   "vetoes": {
     "spread": {
-      "n": 7,
-      "of": 7,
+      "n": 8,
+      "of": 9,
       "premarket": {
-        "n": 7,
-        "of": 7
+        "n": 8,
+        "of": 9
       },
       "post_open": {
         "n": 0,
@@ -335,11 +335,14 @@
     },
     "depth": {
       "n": 0,
-      "of": 0
+      "of": 1,
+      "reductions": 1,
+      "note": "07:09 PHVS reduced 337->113 sh (33.5% of intended, above the 25% skip floor)"
     },
     "chase": {
       "n": 0,
-      "of": 0
+      "of": 1,
+      "note": "07:06 last==trigger with ask above the +0.5% cap was a chase condition but the spread veto fired first; counted under spread"
     }
   },
   "errors": [
@@ -427,6 +430,67 @@
       "cap_pct": 0.5,
       "trigger": "premarket high now 44.50 (07:06 bar, 4,945 sh); last 44.39 just below; PHVS +25.9% (gap7 stays +18.3% CALM -- measured at 07:00)",
       "decision": "NOT ARMED"
+    },
+    {
+      "et": "07:08",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 43.00 x200 / ask 44.53 x67, last 44.51 @11:08:02Z (new premarket high 44.51)",
+      "spread_pct": 3.6,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED. Polling policy from here: quote+bar every minute, full L2 book only once the quoted spread is inside the 0.5% cap (depth check); scan every 5 min."
+    },
+    {
+      "et": "07:09",
+      "sym": "PHVS",
+      "veto": "none -- ARMED",
+      "quote": "bid 43.73 / ask 43.91, last 44.00",
+      "spread_pct": 0.41,
+      "depth": "REDUCED 337 -> 113 sh (displayed ask 113 sh inside the cap)",
+      "decision": "ARMED ticket 1: stop 44.51 / limit 44.73 / 113 sh"
+    }
+  ],
+  "armed": [
+    {
+      "ticket": 1,
+      "sym": "PHVS",
+      "armed_et": "07:09",
+      "armed_utc": "2026-09-08T11:09:20Z",
+      "trigger_type": "B -- premarket-high stop-buy (premarket high 44.51 printed 07:08; ratchets up with any new session high)",
+      "stop_trigger": 44.51,
+      "limit": 44.73,
+      "limit_basis": "trigger x 1.005",
+      "shares": 113,
+      "shares_intended": 337,
+      "notional_at_trigger": 5029.63,
+      "prev_close": 35.25,
+      "REAL_ORDER": false,
+      "paper_only": "NO REAL ORDERS EVER -- paper arm recorded in the ledger.",
+      "gates_at_arming": {
+        "halal": "PASS both questions (live 06:53: loan 0.03 / cash 12.91 / combined 12.94; rare-disease biotech)",
+        "rank": 1,
+        "coil": 0.988,
+        "pressure": "untrusted at 06:58 rank (<20k sh); ~50k sh printed since",
+        "gap7_pct": 18.3,
+        "calm_gap": "CALM (07:00 bar c 41.70 vs pc 35.25)",
+        "gain_pct_at_arming": 24.8,
+        "price_ge_2": true,
+        "sessions_ge_50": "yes -- Nasdaq-listed since Feb 2021",
+        "common_stock": true
+      },
+      "veto_checks_at_arming": {
+        "fill_arming": "PASS -- last 44.00 @11:08:36Z and bid 43.73 both below the 44.51 trigger",
+        "spread": "PASS -- 0.41% (43.73/43.91 @11:09:09Z), first pass after 8 premarket vetoes",
+        "depth": "REDUCED -- displayed ask size from the inside ask 43.91 up to the 44.73 cap = 113 sh (12+12+12 @43.91-43.93, 10 @44.50, 67 @44.53) vs 337 intended; 33.5% of intended is above the 25% skip floor, so the ticket is cut to 113 sh per the pre-entry depth rule; will re-size upward at any re-arm if depth grows",
+        "size_cap": "NOT BINDING -- trailing 10 completed minutes (06:59-07:08) 50,002 sh, 20% = 10,000 vs 113",
+        "halt": "quote state=active, has_traded=true (get_equity_tradability NOT called: it requires an account number and this is a headless paper session)"
+      },
+      "fill_semantics": "Paper resting stop-limit: fills INTRABAR on the first completed 1-min bar whose HIGH >= 44.51, at the trigger (bar open <= trigger) or at the bar OPEN if 44.51 < open <= 44.73 (gap-through inside the cap); NO FILL if the bar opens above 44.73 (limit skipped) -- then the ratchet re-arms at the new session high per the fill-arming rule.",
+      "protective_stop_on_fill": {
+        "level": 40.949,
+        "basis": "max(entry x 0.92, peak x 0.60) on an assumed 44.51 fill; re-placed upward as the peak rises"
+      },
+      "status": "RESTING"
     }
   ]
 }
