@@ -1,8 +1,8 @@
 {
  "candidates": {
   "BNC": {
-   "pct": 58.75,
-   "last": 5.5405,
+   "pct": 55.87,
+   "last": 5.44,
    "prev_close": 3.49,
    "vol": "627215.138899",
    "name": "CEA Industries",
@@ -41,8 +41,8 @@
    "first_seen": "06:22"
   },
   "SLE": {
-   "pct": 15.08,
-   "last": 4.5112,
+   "pct": 15.82,
+   "last": 4.54,
    "prev_close": 3.92,
    "vol": "663380.820913",
    "name": "Super League Enterprise",
@@ -105,12 +105,28 @@
    "first_seen": "06:37"
   },
   "PHVS": {
-   "pct": 25.93,
-   "last": 44.3904,
+   "pct": 29.58,
+   "last": 45.6758,
    "prev_close": 35.25,
    "vol": "483983.130742",
    "name": "Pharvaris",
    "first_seen": "06:52"
+  },
+  "INBX": {
+   "pct": 11.41,
+   "last": 135.0,
+   "prev_close": 121.17,
+   "vol": "196525.169248",
+   "name": "Inhibrx Biosciences",
+   "first_seen": "07:12"
+  },
+  "PRQR": {
+   "pct": 10.14,
+   "last": 2.28,
+   "prev_close": 2.07,
+   "vol": "368464.439971",
+   "name": "ProQR Therapeutics",
+   "first_seen": "07:12"
   }
  },
  "halal_fail": [
@@ -121,6 +137,7 @@
   "ISPC",
   "PCTY",
   "PLSM",
+  "PRQR",
   "ROIV",
   "SVRN",
   "UPB",

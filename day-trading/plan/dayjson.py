@@ -20,6 +20,13 @@ D = Path(__file__).resolve().parent.parent / "data" / "paper_days"
 
 def dig(obj, parts, create=False):
     for p in parts:
+        # List index support (2026-09-08, Day 22): armed.0.status etc.
+        if isinstance(obj, list):
+            try:
+                obj = obj[int(p)]
+            except (ValueError, IndexError):
+                sys.exit(f"ERROR: list index {p!r} invalid (len {len(obj)})")
+            continue
         if p not in obj:
             if not create:
                 sys.exit(f"ERROR: path segment {p!r} not found")

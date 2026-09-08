@@ -212,6 +212,22 @@
       "note": "No new stocks (TDOT/BEG funds in; PLSM RGTU RGTX ZCSH YQ out). PHVS +25.9% at 44.39, premarket high 44.50, TOP and only halal-eligible name; spread-vetoed on every 1-min read 07:01-07:07 (1.5%-4.4% vs 0.5% cap). SLE 15.1% (FAIL ruling).",
       "new": [],
       "rank_top": "PHVS (spread-vetoed x7)"
+    },
+    {
+      "et": "07:12",
+      "state": "FLAT-5m",
+      "scan_rows": 63,
+      "candidates": 20,
+      "dropped": {
+        "fund": 50,
+        "inherited_fail": 1
+      },
+      "note": "NEW: INBX (Inhibrx, $1.78B biotech) +11.4% at 135.00 -- halal PASS both questions, coil 1.000, gap7 +3.2% CALM; PRQR (ProQR) +10.1% -> FAIL (cash 41%). BRNX gone. RANK 07:13: 1 PHVS (coil .964, pressure +0.29 TRUSTED, gap7 18.3) / 2 INBX (coil 1.000, pressure n/a) -- 2 armable, TOP = PHVS. PHVS +31% at 46.14, premarket high 47.89; bid 46.00 / ask 46.59 = 1.3% SPREAD veto at 07:13. INBX bid 122.50 / ask 135.00 = 10% spread (bench only; C37 arms the top name).",
+      "new": [
+        "INBX",
+        "PRQR"
+      ],
+      "rank_top": "PHVS (spread-vetoed); INBX #2"
     }
   ],
   "trades": [],
@@ -318,15 +334,28 @@
       "et": "07:03",
       "q1": "halal_universe: loan 9.27 / cash 409.69 / combined 418.97 -> CASH>10+COMBINED>20 (mcap 16.7M)",
       "q2": "self-scan ultrasound devices -- permissible; moot"
+    },
+    "INBX": {
+      "verdict": "PASS",
+      "et": "07:13",
+      "q1": "live_halal with RH mcap 1.78B: loan 10.2 / cash 7.49 / combined 17.69 -> PASS (loan side >10 but combined <=20); universe PASS (9.7/8.67/18.37); on halal_list",
+      "q2": "PASS -- Inhibrx Biosciences, clinical-stage biologics (INBRX-109/106); no haram-adjacent line",
+      "armable": "YES on halal; rank #2 behind PHVS; gap7 +3.2% CALM (Polygon confirms no 07:00 print -- premarket-dark, ranker used the last pre-7AM print)"
+    },
+    "PRQR": {
+      "verdict": "FAIL",
+      "et": "07:13",
+      "q1": "live_halal with RH mcap 285M: loan 5.37 / cash 41.07 / combined 46.44 -> CASH>10+COMBINED>20",
+      "q2": "RNA therapeutics -- permissible; moot"
     }
   },
   "vetoes": {
     "spread": {
-      "n": 8,
-      "of": 9,
+      "n": 11,
+      "of": 13,
       "premarket": {
-        "n": 8,
-        "of": 9
+        "n": 11,
+        "of": 13
       },
       "post_open": {
         "n": 0,
@@ -334,15 +363,15 @@
       }
     },
     "depth": {
-      "n": 0,
-      "of": 1,
+      "n": 1,
+      "of": 2,
       "reductions": 1,
-      "note": "07:09 PHVS reduced 337->113 sh (33.5% of intended, above the 25% skip floor)"
+      "note": "07:09 reduced 337->113 (33.5%); 07:10 SKIP at 13% of intended"
     },
     "chase": {
       "n": 0,
       "of": 1,
-      "note": "07:06 last==trigger with ask above the +0.5% cap was a chase condition but the spread veto fired first; counted under spread"
+      "note": "07:06 last==trigger with ask above the +0.5% cap; spread veto fired first"
     }
   },
   "errors": [
@@ -448,6 +477,46 @@
       "spread_pct": 0.41,
       "depth": "REDUCED 337 -> 113 sh (displayed ask 113 sh inside the cap)",
       "decision": "ARMED ticket 1: stop 44.51 / limit 44.73 / 113 sh"
+    },
+    {
+      "et": "07:10",
+      "sym": "PHVS",
+      "veto": "DEPTH",
+      "quote": "bid 43.72 / ask 43.82 (0.23%), last 44.16 @11:10:11Z",
+      "spread_pct": 0.23,
+      "trigger": "re-arm at the new premarket high 45.38 (07:09 bar), limit 45.61; last below trigger -> stop would be legal",
+      "depth": "ERROR: thin book -- displayed ask size from the inside ask 43.91 up to the 45.61 cap = 43 sh (7+12+12+12 @43.91-43.94) vs 329 intended = 13%, below the 25% skip floor",
+      "decision": "NOT ARMED -- depth skip; re-check next minute"
+    },
+    {
+      "et": "07:11",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 46.96 x10 / ask 47.58 x20, last 47.855 @11:11:13Z",
+      "spread_pct": 1.3,
+      "cap_pct": 0.5,
+      "trigger": "premarket high now 47.86 (in-progress 07:11 bar); 07:10 bar o 44.29 h 46.94 c 46.88 ran through the 45.38 level with NO order resting (07:10 depth skip) -- no fill credited",
+      "decision": "NOT ARMED"
+    },
+    {
+      "et": "07:12",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 44.00 / ask 45.91, last 45.68 @11:12:03Z",
+      "spread_pct": 4.3,
+      "cap_pct": 0.5,
+      "trigger": "premarket high 47.89 (07:11 bar)",
+      "decision": "NOT ARMED"
+    },
+    {
+      "et": "07:13",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 46.00 / ask 46.59, last 46.14 @11:13:17Z",
+      "spread_pct": 1.3,
+      "cap_pct": 0.5,
+      "trigger": "premarket high 47.89",
+      "decision": "NOT ARMED"
     }
   ],
   "armed": [
@@ -490,7 +559,7 @@
         "level": 40.949,
         "basis": "max(entry x 0.92, peak x 0.60) on an assumed 44.51 fill; re-placed upward as the peak rises"
       },
-      "status": "RESTING"
+      "status": "NO FILL -- the 07:09 bar (first completed bar after the 11:09:20Z arm with HIGH >= 44.51) OPENED at 44.99, above the 44.73 limit, so per the pre-committed fill semantics the stop triggered and the limit was skipped. Not credited. Bracket: the bar's LOW was 44.47, so a real limit resting at 44.73 after the trigger could have filled on the dip; recorded, NOT booked. Order cancelled at 07:10; ratchet moved to 45.38 and the re-arm was a DEPTH skip."
     }
   ]
 }

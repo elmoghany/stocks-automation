@@ -387,6 +387,10 @@
 "name": "Intelligent Bio Solutions",
 "type": "EQUITY"
 },
+"INBX": {
+"name": "Inhibrx Biosciences",
+"type": "EQUITY"
+},
 "IREZ": {
 "name": "Tradr 2X Short IREN Daily ETF",
 "type": "EQUITY"
@@ -523,6 +527,10 @@
 "name": "Corgi ORCL 2x Daily ETF",
 "type": "EQUITY"
 },
+"ORCX": {
+"name": "Defiance Daily Target 2X Long ORCL ETF",
+"type": "EQUITY"
+},
 "OSSL": {
 "name": "Defiance Daily Target 2X Long OSS ETF",
 "type": "EQUITY"
@@ -545,6 +553,10 @@
 },
 "PRLD": {
 "name": "Prelude Therapeutics",
+"type": "EQUITY"
+},
+"PRQR": {
+"name": "ProQR Therapeutics",
 "type": "EQUITY"
 },
 "PXS": {
