@@ -469,6 +469,19 @@
       "note": "No new stocks (PHVS/IONL/BEG back on the scan; ORCU off). PHVS 41.36 (+17.3%), bid 41.20 / ask 41.50 = 0.73%, no fill (stop 47.89). Two Trigger C signals on PHVS (tweezer_bottom 08:35, macd_cross_up 08:37) were evaluated live and refused on spread+depth. INBX 128.50, 125.02/128.49.",
       "new": [],
       "rank_top": "PHVS (armed)"
+    },
+    {
+      "et": "08:47",
+      "state": "FLAT-5m (ticket 1 PHVS RESTING)",
+      "scan_rows": 65,
+      "candidates": 24,
+      "dropped": {
+        "fund": 56,
+        "inherited_fail": 0
+      },
+      "note": "No new stocks (QBTX/INT funds, YQ back -- FAIL). PHVS 41.16 (+16.8%), bid 41.23 / ask 41.50 = 0.65%, no fill; third Trigger C (morning_star 08:41) refused on spread 1.2% at 08:42. INBX 126.55, 125.02/128.00. GMTL still one print.",
+      "new": [],
+      "rank_top": "PHVS (armed)"
     }
   ],
   "trades": [],
@@ -617,11 +630,11 @@
   },
   "vetoes": {
     "spread": {
-      "n": 58,
-      "of": 61,
+      "n": 59,
+      "of": 62,
       "premarket": {
-        "n": 58,
-        "of": 61
+        "n": 59,
+        "of": 62
       },
       "post_open": {
         "n": 0,
@@ -1242,6 +1255,15 @@
       "cap_pct": 0.5,
       "depth": "50 sh inside cap vs 366",
       "decision": "NOT TAKEN"
+    },
+    {
+      "et": "08:42",
+      "sym": "PHVS",
+      "veto": "SPREAD (Trigger C morning_star)",
+      "quote": "bid 41.00 / ask 41.50, last 41.40",
+      "spread_pct": 1.2,
+      "cap_pct": 0.5,
+      "decision": "NOT TAKEN"
     }
   ],
   "armed": [
@@ -1364,6 +1386,13 @@
       "signal": "macd_cross_up on the 08:37 close",
       "tag": "TAKEABLE NOW (1m since close) at 08:39:20 -- evaluated live at 08:39:27",
       "decision": "REFUSED -- SPREAD veto: bid 41.10 x4 / ask 42.00 x50 = 2.2% vs 0.5% cap; DEPTH skip: 50 sh at 42.00 inside a 42.13 marketable-limit cap vs 366 intended (14%). Last 41.01. Resting Trigger B stop (47.89) stays."
+    },
+    {
+      "et": "08:42",
+      "sym": "PHVS",
+      "signal": "morning_star on the 08:41 close",
+      "tag": "TAKEABLE NOW (1m since close) at 08:42:38 -- evaluated live at 08:42:50",
+      "decision": "REFUSED -- SPREAD veto: bid 41.00 x193 / ask 41.50 x100 = 1.2% vs 0.5% cap. (Depth alone: 100 sh at 41.50 inside a 41.62 marketable-limit cap vs 362 intended = 28%, would have been a reduction, not a skip.) Last 41.40. Resting Trigger B stop (47.89) stays."
     }
   ]
 }

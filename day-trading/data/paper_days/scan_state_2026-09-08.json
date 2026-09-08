@@ -1,8 +1,8 @@
 {
  "candidates": {
   "BNC": {
-   "pct": 44.99,
-   "last": 5.06,
+   "pct": 47.85,
+   "last": 5.16,
    "prev_close": 3.49,
    "vol": "627215.138899",
    "name": "CEA Industries",
@@ -42,7 +42,7 @@
   },
   "SLE": {
    "pct": 14.29,
-   "last": 4.48,
+   "last": 4.4803,
    "prev_close": 3.92,
    "vol": "663380.820913",
    "name": "Super League Enterprise",
@@ -105,8 +105,8 @@
    "first_seen": "06:37"
   },
   "PHVS": {
-   "pct": 17.33,
-   "last": 41.3603,
+   "pct": 17.45,
+   "last": 41.4,
    "prev_close": 35.25,
    "vol": "483983.130742",
    "name": "Pharvaris",
