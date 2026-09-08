@@ -254,6 +254,19 @@
       "note": "No new names. INBX faded to +8.1% (131.00) and BNC dropped off the scan -- both remain latched (INBX halal PASS, still eligible; BNC FAIL). PHVS +26.5% at 44.60, spread 2.5%. Nothing armed.",
       "new": [],
       "rank_top": "PHVS (spread-vetoed x18)"
+    },
+    {
+      "et": "07:27",
+      "state": "FLAT-5m",
+      "scan_rows": 61,
+      "candidates": 20,
+      "dropped": {
+        "fund": 48,
+        "inherited_fail": 1
+      },
+      "note": "No new stocks (BNC back at +44%, STLU fund back). PHVS +26.8% at 44.68, spread 1.5%; INBX +8% off-scan but latched, spread 6%. Nothing armed.",
+      "new": [],
+      "rank_top": "PHVS (spread-vetoed x22)"
     }
   ],
   "trades": [],
@@ -377,11 +390,11 @@
   },
   "vetoes": {
     "spread": {
-      "n": 18,
-      "of": 20,
+      "n": 22,
+      "of": 24,
       "premarket": {
-        "n": 18,
-        "of": 20
+        "n": 22,
+        "of": 24
       },
       "post_open": {
         "n": 0,
@@ -611,6 +624,44 @@
       "spread_pct": 2.5,
       "cap_pct": 0.5,
       "decision": "NOT ARMED. INBX bid 129.00 / ask 131.63 = 2.0% (last 131.00, +8.1% -- below the scan filter now but LATCHED in the crossed set)."
+    },
+    {
+      "et": "07:24",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 44.70 / ask 45.00, last 45.00 @11:24:00Z",
+      "spread_pct": 0.67,
+      "cap_pct": 0.5,
+      "trigger": "premarket high 47.89",
+      "decision": "NOT ARMED (0.67% vs 0.5% cap -- converging; back to 1-minute polling). INBX 129.00/132.64 = 2.8%."
+    },
+    {
+      "et": "07:25",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 44.15 x100 / ask 45.00 x1101, last 45.00 @11:24:00Z",
+      "spread_pct": 1.9,
+      "cap_pct": 0.5,
+      "depth_note": "book filling in: 45.00 x1101, 45.80 x1300, 47.00 x2096 -- ~2,100 sh between the 47.89 trigger and the 48.13 cap, depth no longer binding",
+      "decision": "NOT ARMED"
+    },
+    {
+      "et": "07:26",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 44.31 / ask 45.00, last 44.19 @11:25:09Z",
+      "spread_pct": 1.5,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED"
+    },
+    {
+      "et": "07:27",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 44.35 / ask 45.00, last 44.19",
+      "spread_pct": 1.5,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED. INBX 122.50/130.00 = 6%."
     }
   ],
   "armed": [
