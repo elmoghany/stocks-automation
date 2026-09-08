@@ -1030,6 +1030,48 @@
       "posn": "QCOM t1 81 sh @ 184.89 OPEN; last 174.52 (bar 13:25); book P&L about -840",
       "watcher": "alive, peak 185.26, hard stop 170.10",
       "note": "184-row scan spilled to file (118 funds); QCOM slipped to 174.2-174.5, 2.5% above the hard stop; PHVS faded to 38.1 (+8.5%, off scan); INBX off scan"
+    },
+    {
+      "et": "13:47",
+      "n": 48,
+      "kind": "light bench (in position)",
+      "scan_rows": 171,
+      "candidates_n": 19,
+      "new": [
+        "CREX(FAIL)",
+        "KRRO(FAIL)"
+      ],
+      "pass_pool_unranked": [
+        "BSEM",
+        "FAC",
+        "OESX",
+        "OBX",
+        "BUUU",
+        "ATHR",
+        "ERO",
+        "COHR",
+        "LITE",
+        "REAX",
+        "FRMI",
+        "SILC",
+        "AXTI",
+        "BE",
+        "TTRX",
+        "CV",
+        "IOND",
+        "UROY",
+        "AGPU",
+        "DOCN",
+        "INTC",
+        "SMTC",
+        "LPTH",
+        "VIAV",
+        "PHVS",
+        "INBX"
+      ],
+      "posn": "QCOM t1 81 sh @ 184.89 OPEN; last 173.65 (bar 13:45); book P&L about -910",
+      "watcher": "alive, peak 185.26, hard stop 170.10",
+      "note": "171-row scan spilled to file (114 funds); QCOM leg down 13:38-13:41 to 173.6 on 52k-share bar, 2.1% above the hard stop; BSEM back on scan at +11.3%"
     }
   ],
   "trades": [
@@ -1955,6 +1997,26 @@
       "mcap": 9518381250,
       "q2": "PASS -- Viavi, network test / optical coatings",
       "note": "not ranked (in position)"
+    },
+    "CREX": {
+      "et": "13:47",
+      "verdict": "FAIL",
+      "loan_pct": 169.03,
+      "cash_pct": 26.73,
+      "combined": 195.76,
+      "haram_pct": 1.66,
+      "fail_reason": "LOAN>10+COMBINED>20",
+      "mcap": 40038457
+    },
+    "KRRO": {
+      "et": "13:47",
+      "verdict": "FAIL",
+      "loan_pct": 21.17,
+      "cash_pct": 57.7,
+      "combined": 78.87,
+      "haram_pct": 0.0,
+      "fail_reason": "LOAN>10+COMBINED>20",
+      "mcap": 199385243
     }
   },
   "vetoes": {
