@@ -527,8 +527,16 @@
 "name": "Defiance Daily Target 2X Long OSS ETF",
 "type": "EQUITY"
 },
+"PCTY": {
+"name": "Paylocity",
+"type": "EQUITY"
+},
 "PHVS": {
 "name": "Pharvaris",
+"type": "EQUITY"
+},
+"PLSM": {
+"name": "Pulsenmore Ltd.",
 "type": "EQUITY"
 },
 "PRHI": {
@@ -557,6 +565,14 @@
 },
 "RDIB": {
 "name": "Reading International",
+"type": "EQUITY"
+},
+"RGTU": {
+"name": "Tradr 2X Long RGTI Daily ETF",
+"type": "EQUITY"
+},
+"RGTX": {
+"name": "Defiance Daily Target 2X Long RGTI ETF",
 "type": "EQUITY"
 },
 "RIVC": {

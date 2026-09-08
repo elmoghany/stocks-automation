@@ -183,6 +183,22 @@
       "note": "PHVS printed its first RH premarket bars 06:52-06:56 (o 40.02, premarket high 42.00 @06:54, last 40.55; ~4.6k sh total) -- scanner now +14.5% at 40.35. Halal PASS both questions (halal_detail.PHVS). ISPC left the scan (latched, FAIL). WYHG 33.1%, BNC 61.4%. PHVS is the only halal-eligible name; ranked at 06:58 -- see rank_top.",
       "new": [],
       "rank_top": "PHVS (see rank output in transcript)"
+    },
+    {
+      "et": "07:02",
+      "state": "FLAT-5m",
+      "scan_rows": 62,
+      "candidates": 18,
+      "dropped": {
+        "fund": 48,
+        "inherited_fail": 2
+      },
+      "note": "NEW: PCTY (Paylocity, $8.1B) +11.7% -> FAIL (interest on client funds >=5% of revenue; universe FAIL upheld); PLSM (Pulsenmore) +12.6% -> FAIL (cash 410%). Funds RGTU/RGTX/ZCSH new; CHNU/BEG gone. PHVS +17.2% at 41.30 remains TOP and the only halal-eligible name; SPREAD VETO at 07:01 (4.4%) and 07:02 (1.9%) -- polling the book every minute.",
+      "new": [
+        "PCTY",
+        "PLSM"
+      ],
+      "rank_top": "PHVS (spread-vetoed)"
     }
   ],
   "trades": [],
@@ -277,12 +293,32 @@
       "q1": "live_halal with RH mcap 2.465B: loan 0.03 / cash 12.91 / combined 12.94 -> PASS (cash side >10 but combined <=20, the one-side exception); universe PASS too (cash 10.28)",
       "q2": "PASS -- Pharvaris NV, clinical-stage rare-disease biotech (oral bradykinin B2 antagonists for angioedema); no haram-adjacent line",
       "armable": "YES on halal; still needs coil/calm-gap/trigger and RH bars"
+    },
+    "PCTY": {
+      "verdict": "FAIL",
+      "et": "07:03",
+      "q1": "halal_universe: loan 1.5 / cash 3.07 / combined 4.56 -- ratios PASS",
+      "q2": "FAIL -- universe verdict FAIL (unverified revenue mix keyword); upheld on substance: Paylocity's recurring revenue includes 'interest income on funds held for clients', a material line (~10% of revenue in recent 10-Ks) -> haram revenue >= 5%. Not a keyword false positive."
+    },
+    "PLSM": {
+      "verdict": "FAIL",
+      "et": "07:03",
+      "q1": "halal_universe: loan 9.27 / cash 409.69 / combined 418.97 -> CASH>10+COMBINED>20 (mcap 16.7M)",
+      "q2": "self-scan ultrasound devices -- permissible; moot"
     }
   },
   "vetoes": {
     "spread": {
-      "n": 0,
-      "of": 0
+      "n": 2,
+      "of": 2,
+      "premarket": {
+        "n": 2,
+        "of": 2
+      },
+      "post_open": {
+        "n": 0,
+        "of": 0
+      }
     },
     "depth": {
       "n": 0,
@@ -301,5 +337,33 @@
     }
   ],
   "coverage_gaps": [],
-  "pnl": 0
+  "pnl": 0,
+  "veto_log": [
+    {
+      "et": "07:01",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "trigger": "B premarket-high stop-buy at 42.84 (07:00 bar high), limit 43.05",
+      "quote": "bid 41.05 x200 / ask 42.84 x1, last 41.70 @11:00:45Z",
+      "spread_pct": 4.36,
+      "cap_pct": 0.5,
+      "depth": "PASS -- 2,004 ask shares from 42.84 to 43.05 (1 @42.84, 2,003 @43.00) vs 350 needed",
+      "fill_arming": "PASS -- last 41.70 and bid 41.05 both below the 42.84 trigger",
+      "size_cap": "PASS -- trailing 9 completed premarket minutes 10,347 sh, 20% = 2,069 vs 350",
+      "gap7": "07:00 bar exists (o 41.00 c 41.70 h 42.84) -> +18.3% vs pc 35.25, CALM",
+      "coil": 0.973,
+      "halal": "PASS both (halal_detail.PHVS)",
+      "decision": "NOT ARMED -- premarket book too wide; re-check every minute"
+    },
+    {
+      "et": "07:02",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 41.21 x180 / ask 42.00 x80, last 41.30 @11:02:01Z",
+      "spread_pct": 1.9,
+      "cap_pct": 0.5,
+      "trigger": "B stop-buy 42.84 (premarket high), limit 43.05; last below trigger",
+      "decision": "NOT ARMED -- spread still ~4x the cap; re-check next minute"
+    }
+  ]
 }
