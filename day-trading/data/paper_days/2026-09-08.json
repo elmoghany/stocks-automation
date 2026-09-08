@@ -127,6 +127,21 @@
         "FEED"
       ],
       "rank_top": "none armable"
+    },
+    {
+      "et": "06:42",
+      "state": "FLAT-5m",
+      "scan_rows": 59,
+      "candidates": 15,
+      "dropped": {
+        "fund": 45,
+        "inherited_fail": 2
+      },
+      "note": "BRNX (BrenX) +10.7% NEW -> inherited FAIL from Day 21, refused without re-litigation. VIDA dropped off the scan (still latched, FAIL). FEED faded 16.4->10.4%; BNC back to 62.8%. All 15 crossed names halal FAIL; nothing armable.",
+      "new": [
+        "BRNX"
+      ],
+      "rank_top": "none armable"
     }
   ],
   "trades": [],
