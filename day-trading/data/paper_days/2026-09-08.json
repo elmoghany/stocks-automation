@@ -293,6 +293,19 @@
       "note": "No new stocks (SVRN, ZCSH off; RGTU fund back). PHVS +24.8% at 44.00, spread 2.8%. Nothing armed.",
       "new": [],
       "rank_top": "PHVS (spread-vetoed x28)"
+    },
+    {
+      "et": "07:42",
+      "state": "FLAT-5m",
+      "scan_rows": 60,
+      "candidates": 20,
+      "dropped": {
+        "fund": 49,
+        "inherited_fail": 1
+      },
+      "note": "No new stocks (IONX/PRQR/FEED off). PHVS +23.4% at 43.50, spread 2.8%; INBX no print since 11:22Z. Nothing armed.",
+      "new": [],
+      "rank_top": "PHVS (spread-vetoed x31)"
     }
   ],
   "trades": [],
@@ -416,11 +429,11 @@
   },
   "vetoes": {
     "spread": {
-      "n": 28,
-      "of": 30,
+      "n": 31,
+      "of": 33,
       "premarket": {
-        "n": 28,
-        "of": 30
+        "n": 31,
+        "of": 33
       },
       "post_open": {
         "n": 0,
@@ -742,6 +755,33 @@
       "spread_pct": 2.8,
       "cap_pct": 0.5,
       "decision": "NOT ARMED. INBX no print since 11:22Z."
+    },
+    {
+      "et": "07:39",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 43.00 / ask 44.20, last 44.04 @11:38:47Z",
+      "spread_pct": 2.8,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED"
+    },
+    {
+      "et": "07:41",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 43.00 / ask 43.49, last 43.18 @11:40:40Z",
+      "spread_pct": 1.1,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED"
+    },
+    {
+      "et": "07:42",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 43.00 / ask 44.20, last 43.50 @11:41:39Z",
+      "spread_pct": 2.8,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED"
     }
   ],
   "armed": [
