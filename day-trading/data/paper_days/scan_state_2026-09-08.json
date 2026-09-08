@@ -1,10 +1,10 @@
 {
  "candidates": {
   "BNC": {
-   "pct": 49.0,
-   "last": 5.2,
+   "pct": 46.99,
+   "last": 5.13,
    "prev_close": 3.49,
-   "vol": "6.3912216123742e+07",
+   "vol": "6.4549627400325e+07",
    "name": "CEA Industries",
    "first_seen": "06:22"
   },
@@ -41,10 +41,10 @@
    "first_seen": "06:22"
   },
   "SLE": {
-   "pct": 17.22,
-   "last": 4.595,
+   "pct": 19.01,
+   "last": 4.665,
    "prev_close": 3.92,
-   "vol": "1.380794898255e+06",
+   "vol": "1.399395277591e+06",
    "name": "Super League Enterprise",
    "first_seen": "06:22"
   },
@@ -129,10 +129,10 @@
    "first_seen": "07:12"
   },
   "GMTL": {
-   "pct": 15.16,
-   "last": 12.46,
+   "pct": 17.42,
+   "last": 12.705,
    "prev_close": 10.82,
-   "vol": "161244.442901",
+   "vol": "171293.017782",
    "name": "Guardian Metal Resources",
    "first_seen": "07:57"
   },
@@ -201,10 +201,10 @@
    "first_seen": "09:47"
   },
   "BSEM": {
-   "pct": 11.32,
-   "last": 4.13,
+   "pct": 10.51,
+   "last": 4.1,
    "prev_close": 3.71,
-   "vol": "347783.64429",
+   "vol": "351038.64429",
    "name": "BioStem Technologies",
    "first_seen": "09:47"
   },
@@ -281,18 +281,18 @@
    "first_seen": "10:07"
   },
   "FAC": {
-   "pct": 14.2,
-   "last": 5.95,
+   "pct": 13.34,
+   "last": 5.905,
    "prev_close": 5.21,
-   "vol": "392091.004439",
+   "vol": "421313.782439",
    "name": "Factorial Energy Inc.",
    "first_seen": "10:07"
   },
   "OESX": {
-   "pct": 16.46,
-   "last": 29.115,
+   "pct": 16.58,
+   "last": 29.145,
    "prev_close": 25.0,
-   "vol": "161609.587638",
+   "vol": "166371.931104",
    "name": "Orion Energy Systems",
    "first_seen": "10:07"
   },
@@ -329,10 +329,10 @@
    "first_seen": "10:07"
   },
   "OBX": {
-   "pct": 14.06,
-   "last": 19.185,
+   "pct": 14.03,
+   "last": 19.18,
    "prev_close": 16.82,
-   "vol": "357196.083792",
+   "vol": "372243.607792",
    "name": "Obsidian Therapeutics",
    "first_seen": "10:07"
   },
@@ -385,10 +385,10 @@
    "first_seen": "10:27"
   },
   "ERO": {
-   "pct": 11.4,
-   "last": 38.88,
+   "pct": 10.54,
+   "last": 38.58,
    "prev_close": 34.9,
-   "vol": "1.443065981182e+06",
+   "vol": "1.548193197446e+06",
    "name": "Ero Copper",
    "first_seen": "10:27"
   },
@@ -433,10 +433,10 @@
    "first_seen": "11:07"
   },
   "REAX": {
-   "pct": 10.23,
-   "last": 20.58,
+   "pct": 10.28,
+   "last": 20.59,
    "prev_close": 18.67,
-   "vol": "720339.027887",
+   "vol": "761434.533612",
    "name": "Real REMAX Group",
    "first_seen": "11:07"
   },
@@ -473,10 +473,10 @@
    "first_seen": "11:07"
   },
   "LITE": {
-   "pct": 11.91,
-   "last": 986.25,
+   "pct": 12.14,
+   "last": 988.2499,
    "prev_close": 881.255,
-   "vol": "5.374034358367e+06",
+   "vol": "5.513963769387e+06",
    "name": "Lumentum",
    "first_seen": "11:07"
   },
@@ -505,10 +505,10 @@
    "first_seen": "11:27"
   },
   "FRMI": {
-   "pct": 14.7,
-   "last": 5.8726,
+   "pct": 13.96,
+   "last": 5.835,
    "prev_close": 5.12,
-   "vol": "1.5681965191461e+07",
+   "vol": "1.6363901289115e+07",
    "name": "Fermi",
    "first_seen": "11:27"
   },
@@ -545,18 +545,18 @@
    "first_seen": "11:27"
   },
   "TTRX": {
-   "pct": 22.55,
-   "last": 12.01,
+   "pct": 23.57,
+   "last": 12.11,
    "prev_close": 9.8,
-   "vol": "216494.811836",
+   "vol": "231831.185101",
    "name": "Turn Therapeutics",
    "first_seen": "11:47"
   },
   "BE": {
-   "pct": 11.29,
-   "last": 281.4221,
+   "pct": 11.93,
+   "last": 283.025,
    "prev_close": 252.87,
-   "vol": "2.0666406663417e+07",
+   "vol": "2.1382369098131e+07",
    "name": "Bloom Energy",
    "first_seen": "11:47"
   },
@@ -593,10 +593,10 @@
    "first_seen": "11:47"
   },
   "AXTI": {
-   "pct": 12.49,
-   "last": 69.34,
+   "pct": 13.21,
+   "last": 69.78,
    "prev_close": 61.64,
-   "vol": "9.51621202967e+06",
+   "vol": "9.752145497354e+06",
    "name": "AXT",
    "first_seen": "11:47"
   },
@@ -609,10 +609,10 @@
    "first_seen": "11:47"
   },
   "CV": {
-   "pct": 13.77,
-   "last": 6.815,
+   "pct": 10.6,
+   "last": 6.625,
    "prev_close": 5.99,
-   "vol": "208345.542384",
+   "vol": "244882.691544",
    "name": "CapsoVision",
    "first_seen": "12:07"
   },
@@ -689,10 +689,10 @@
    "first_seen": "12:47"
   },
   "DOCN": {
-   "pct": 13.16,
-   "last": 127.27,
+   "pct": 14.07,
+   "last": 128.2976,
    "prev_close": 112.47,
-   "vol": "1.7376032452e+06",
+   "vol": "1.956920799479e+06",
    "name": "DigitalOcean",
    "first_seen": "13:07"
   },
@@ -705,10 +705,10 @@
    "first_seen": "13:07"
   },
   "SMTC": {
-   "pct": 10.04,
-   "last": 162.73,
+   "pct": 10.84,
+   "last": 163.92,
    "prev_close": 147.885,
-   "vol": "2.814949888406e+06",
+   "vol": "2.912058767553e+06",
    "name": "Semtech",
    "first_seen": "13:07"
   },
@@ -729,10 +729,10 @@
    "first_seen": "13:27"
   },
   "VIAV": {
-   "pct": 11.36,
-   "last": 38.82,
+   "pct": 11.99,
+   "last": 39.04,
    "prev_close": 34.86,
-   "vol": "2.914828712624e+06",
+   "vol": "3.327131861409e+06",
    "name": "Viavi",
    "first_seen": "13:27"
   },
@@ -759,6 +759,22 @@
    "vol": "16781.81058",
    "name": "Creative Realities",
    "first_seen": "13:47"
+  },
+  "CDIO": {
+   "pct": 11.29,
+   "last": 2.07,
+   "prev_close": 1.86,
+   "vol": "31523.906125",
+   "name": "Cardio Diagnostics",
+   "first_seen": "14:07"
+  },
+  "CYPH": {
+   "pct": 10.12,
+   "last": 2.665,
+   "prev_close": 2.42,
+   "vol": "1.2335061598711e+07",
+   "name": "Cypherpunk Technologies",
+   "first_seen": "14:07"
   }
  },
  "halal_fail": [
@@ -768,6 +784,7 @@
   "ATRA",
   "BHST",
   "BW",
+  "CDIO",
   "CLIR",
   "CREX",
   "CRWV",
