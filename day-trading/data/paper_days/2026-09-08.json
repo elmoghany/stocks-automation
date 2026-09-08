@@ -456,6 +456,19 @@
       "note": "No new stocks (SLE/BEX/ORCX back; IONL/BEG off; PHVS itself absent from this scan snapshot at +17.4% -- latched, stays the armed name). PHVS 08:35 bar 40.50->41.40 on 6,216 sh, no fill (stop 47.89); quote 40.40/41.40 = 2.4%. INBX 130.60 (+7.8%), 128.50/130.94. Trigger C: PHVS tweezer_bottom (08:31) went stale unevaluated -- see errors[].",
       "new": [],
       "rank_top": "PHVS (armed)"
+    },
+    {
+      "et": "08:42",
+      "state": "FLAT-5m (ticket 1 PHVS RESTING)",
+      "scan_rows": 62,
+      "candidates": 24,
+      "dropped": {
+        "fund": 54,
+        "inherited_fail": 0
+      },
+      "note": "No new stocks (PHVS/IONL/BEG back on the scan; ORCU off). PHVS 41.36 (+17.3%), bid 41.20 / ask 41.50 = 0.73%, no fill (stop 47.89). Two Trigger C signals on PHVS (tweezer_bottom 08:35, macd_cross_up 08:37) were evaluated live and refused on spread+depth. INBX 128.50, 125.02/128.49.",
+      "new": [],
+      "rank_top": "PHVS (armed)"
     }
   ],
   "trades": [],
@@ -604,11 +617,11 @@
   },
   "vetoes": {
     "spread": {
-      "n": 56,
-      "of": 59,
+      "n": 58,
+      "of": 61,
       "premarket": {
-        "n": 56,
-        "of": 59
+        "n": 58,
+        "of": 61
       },
       "post_open": {
         "n": 0,
@@ -616,10 +629,10 @@
       }
     },
     "depth": {
-      "n": 1,
-      "of": 2,
+      "n": 3,
+      "of": 5,
       "reductions": 1,
-      "note": "07:09 reduced 337->113 (33.5%); 07:10 SKIP at 13% of intended"
+      "note": "07:09 reduced 337->113; 07:10 SKIP 13%; 08:22 PASS 6,296 sh; 08:37 SKIP 14%; 08:39 SKIP 14% (Trigger C)"
     },
     "chase": {
       "n": 0,
@@ -1209,6 +1222,26 @@
       "spread_pct": 0.48,
       "depth": "PASS 6,296 sh inside the cap",
       "decision": "ARMED ticket 1: stop 47.89 / limit 48.13 / 313 sh"
+    },
+    {
+      "et": "08:37",
+      "sym": "PHVS",
+      "veto": "SPREAD+DEPTH (Trigger C tweezer_bottom)",
+      "quote": "bid 41.00 / ask 42.00, last 41.32",
+      "spread_pct": 2.4,
+      "cap_pct": 0.5,
+      "depth": "50 sh at 42.00 inside the 42.13 cap vs 363 needed",
+      "decision": "NOT TAKEN"
+    },
+    {
+      "et": "08:39",
+      "sym": "PHVS",
+      "veto": "SPREAD+DEPTH (Trigger C macd_cross_up)",
+      "quote": "bid 41.10 / ask 42.00, last 41.01",
+      "spread_pct": 2.2,
+      "cap_pct": 0.5,
+      "depth": "50 sh inside cap vs 366",
+      "decision": "NOT TAKEN"
     }
   ],
   "armed": [
@@ -1317,6 +1350,20 @@
       "signal": "tweezer_bottom on the 08:31 close",
       "tag": "TAKEABLE NOW (1m since close) at 08:32:40",
       "decision": "NOT EVALUATED LIVE -- the bookkeeping chain ran the trigger poll and then continued into its 08:34 wait without stopping to re-quote/book; by the next read the signal was 3 min stale. Last known quote before the signal (12:31:25Z) was bid 40.55 / ask 41.00 = 1.1%, over the 0.5% cap, so the entry would most likely have been spread-vetoed anyway. NOT credited (OUTAGE rule 3 spirit: never backfill an entry)."
+    },
+    {
+      "et": "08:37",
+      "sym": "PHVS",
+      "signal": "tweezer_bottom on the 08:35 close",
+      "tag": "TAKEABLE NOW (2m since close) at 08:37:44 -- evaluated live at 08:37:56",
+      "decision": "REFUSED -- SPREAD veto: bid 41.00 x40 / ask 42.00 x50 = 2.4% vs 0.5% cap; DEPTH skip: a marketable limit at ask+0.3% (42.13) sees only 50 displayed shares vs 363 intended (14% < 25% floor). Last 41.32 @12:37:51Z. The resting Trigger B stop (47.89) stays."
+    },
+    {
+      "et": "08:39",
+      "sym": "PHVS",
+      "signal": "macd_cross_up on the 08:37 close",
+      "tag": "TAKEABLE NOW (1m since close) at 08:39:20 -- evaluated live at 08:39:27",
+      "decision": "REFUSED -- SPREAD veto: bid 41.10 x4 / ask 42.00 x50 = 2.2% vs 0.5% cap; DEPTH skip: 50 sh at 42.00 inside a 42.13 marketable-limit cap vs 366 intended (14%). Last 41.01. Resting Trigger B stop (47.89) stays."
     }
   ]
 }
