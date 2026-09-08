@@ -199,6 +199,19 @@
         "PLSM"
       ],
       "rank_top": "PHVS (spread-vetoed)"
+    },
+    {
+      "et": "07:07",
+      "state": "FLAT-5m",
+      "scan_rows": 59,
+      "candidates": 18,
+      "dropped": {
+        "fund": 47,
+        "inherited_fail": 2
+      },
+      "note": "No new stocks (TDOT/BEG funds in; PLSM RGTU RGTX ZCSH YQ out). PHVS +25.9% at 44.39, premarket high 44.50, TOP and only halal-eligible name; spread-vetoed on every 1-min read 07:01-07:07 (1.5%-4.4% vs 0.5% cap). SLE 15.1% (FAIL ruling).",
+      "new": [],
+      "rank_top": "PHVS (spread-vetoed x7)"
     }
   ],
   "trades": [],
@@ -309,11 +322,11 @@
   },
   "vetoes": {
     "spread": {
-      "n": 2,
-      "of": 2,
+      "n": 7,
+      "of": 7,
       "premarket": {
-        "n": 2,
-        "of": 2
+        "n": 7,
+        "of": 7
       },
       "post_open": {
         "n": 0,
@@ -364,6 +377,56 @@
       "cap_pct": 0.5,
       "trigger": "B stop-buy 42.84 (premarket high), limit 43.05; last below trigger",
       "decision": "NOT ARMED -- spread still ~4x the cap; re-check next minute"
+    },
+    {
+      "et": "07:03",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "book bid 41.22 x195 / ask 42.84 x1 (quote ask 42.38 @11:03:01Z), last 42.38 @11:03:22Z",
+      "spread_pct": 3.9,
+      "cap_pct": 0.5,
+      "trigger": "B stop-buy 42.84, limit 43.05; last 42.38 below trigger",
+      "decision": "NOT ARMED"
+    },
+    {
+      "et": "07:04",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 41.36 x100 / ask 43.00 x2003, last 42.00 @11:03:44Z",
+      "spread_pct": 3.9,
+      "cap_pct": 0.5,
+      "trigger": "B stop-buy ratcheted to 42.88 (07:03 bar high, 13,243 sh), limit 43.09; the 07:03 bar traded THROUGH the old 42.84 level while the order was vetoed -- no fill credited",
+      "decision": "NOT ARMED"
+    },
+    {
+      "et": "07:05",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "quote bid 41.36 / ask 42.00 (1.5%), book best ask 42.90 x6 then 43.00 x2003; last 41.75 @11:04:46Z",
+      "spread_pct": 1.5,
+      "cap_pct": 0.5,
+      "trigger": "B stop-buy 42.88, limit 43.09; last below trigger",
+      "decision": "NOT ARMED"
+    },
+    {
+      "et": "07:06",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 43.00 x200 / ask 43.74 (book next 44.10 x1), last 43.35 @11:05:58Z",
+      "spread_pct": 1.7,
+      "cap_pct": 0.5,
+      "trigger": "premarket high ratcheted to 43.35 (07:05 bar h 43.35, 3,678 sh); last == trigger so the FILL-ARMING RULE forbids a stop -- a marketable limit capped at 43.57 would not reach the 43.74 ask (chase condition as well)",
+      "decision": "NOT ARMED -- 07:03 and 07:05 bars both traded through earlier trigger levels while vetoed; no fill credited"
+    },
+    {
+      "et": "07:07",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 43.00 x1210 / ask 44.51 x193, last 44.39 @11:06:55Z",
+      "spread_pct": 3.5,
+      "cap_pct": 0.5,
+      "trigger": "premarket high now 44.50 (07:06 bar, 4,945 sh); last 44.39 just below; PHVS +25.9% (gap7 stays +18.3% CALM -- measured at 07:00)",
+      "decision": "NOT ARMED"
     }
   ]
 }
