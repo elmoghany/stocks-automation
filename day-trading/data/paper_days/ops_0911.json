@@ -1,0 +1,13 @@
+[
+ ["append", "trades", {"ticket": 1, "sym": "QCOM", "side": "BUY", "entry": 184.89, "shares": 81, "notional": 14976.09, "entry_et": "09:11", "entry_utc": "2026-09-08T13:11:25Z", "entry_bar_utc": "2026-09-08T13:11:00Z", "session": "premarket", "trigger": "C bullish_spinning_top on the 09:09 1-min close (TAKEABLE, 1m old at 09:11:18)", "order": "marketable limit 185.40 = ask 184.85 x 1.003", "fill_basis": "L2 inside ask 184.89 x 300 sh at 09:11:24.6 (book newer than the 184.85 quote); 81 sh <= 300 displayed", "quote_at_entry": {"last": 184.84, "bid": 184.72, "ask": 184.85, "l2_bid": 184.70, "l2_ask": 184.89}, "checks": {"spread_pct": 0.10, "depth_to_limit_sh": 2662, "intended_sh": 81, "size_cap_sh": 67108, "vol10": 335542, "chase": "PASS (ask below the 184.9988 signal close)", "halal": "PASS (live_halal 09:11; q2 semiconductors PASS)", "state": "active"}, "prev_close": 168.74, "protective_stop": 170.10, "protective_stop_rule": "max(entry x 0.92, peak x 0.60)", "exit_mode": "c37 (-8% hard, 20/10/40 pressure trail, bank 1/3 at +25%)", "fill_realism_60s": null, "status": "OPEN"}],
+ ["set", "armed.2.status", "SUPERSEDED 09:11 -- Trigger C fill on the same name; resting stop-buy cancelled (one position at a time)"],
+ ["append", "trigger_c", {"et": "09:11", "sym": "QCOM", "pattern": "bullish_spinning_top", "bar_et": "09:09", "age_at_eval": "1m", "tag": "TAKEABLE NOW", "top": true, "result": "ENTERED t1 81 sh @ 184.89"}],
+ ["append", "veto_log", {"et": "09:11", "sym": "QCOM", "check": "trigger_c_entry", "spread_pct": 0.10, "depth_sh": 2662, "intended_sh": 81, "chase": "PASS", "result": "PASS -- filled"}],
+ ["set", "vetoes.spread.of", 65],
+ ["set", "vetoes.spread.premarket.of", 62],
+ ["set", "vetoes.depth.of", 8],
+ ["set", "vetoes.chase.of", 2],
+ ["set", "vetoes.size_cap.of", 5],
+ ["set", "counts_as_traded_day", true],
+ ["set", "posn", {"sym": "QCOM", "ticket": 1, "shares": 81, "entry": 184.89, "since_et": "09:11"}]
+]
