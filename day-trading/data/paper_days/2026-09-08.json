@@ -417,6 +417,19 @@
       "note": "No new stocks (ZCSH fund back, VERU off). PHVS spread narrowed to 0.48% -> ARMED ticket 1: stop 47.89 / limit 48.13 / 313 sh (see armed[1]). INBX 120.60/129.99 = 7.8%. GMTL no print.",
       "new": [],
       "rank_top": "PHVS -- ARMED"
+    },
+    {
+      "et": "08:27",
+      "state": "FLAT-5m (ticket 1 PHVS RESTING: stop 47.89 / limit 48.13 / 313 sh)",
+      "scan_rows": 61,
+      "candidates": 24,
+      "dropped": {
+        "fund": 52,
+        "inherited_fail": 0
+      },
+      "note": "No new stocks (ORCX fund back, RGTX off). PHVS fading to 41.15 (+16.7%), no fill (post-arm max high 41.30). INBX 124 (+2.3%), 122.50/129.99. GMTL no print since 07:54. Trigger C quiet.",
+      "new": [],
+      "rank_top": "PHVS (armed)"
     }
   ],
   "trades": [],
