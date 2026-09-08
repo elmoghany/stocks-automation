@@ -170,6 +170,19 @@
         "PHVS"
       ],
       "rank_top": "none armable (PHVS awaiting RH bars)"
+    },
+    {
+      "et": "06:57",
+      "state": "FLAT-5m",
+      "scan_rows": 59,
+      "candidates": 16,
+      "dropped": {
+        "fund": 45,
+        "inherited_fail": 2
+      },
+      "note": "PHVS printed its first RH premarket bars 06:52-06:56 (o 40.02, premarket high 42.00 @06:54, last 40.55; ~4.6k sh total) -- scanner now +14.5% at 40.35. Halal PASS both questions (halal_detail.PHVS). ISPC left the scan (latched, FAIL). WYHG 33.1%, BNC 61.4%. PHVS is the only halal-eligible name; ranked at 06:58 -- see rank_top.",
+      "new": [],
+      "rank_top": "PHVS (see rank output in transcript)"
     }
   ],
   "trades": [],
@@ -257,6 +270,13 @@
       "et": "06:38",
       "q1": "live_halal with RH mcap 3.72M: loan 35.19 / cash 29.12 / combined 64.31 -> LOAN>10+COMBINED>20 (quarterly)",
       "q2": "ENvue Medical -- enteral-care medical devices, permissible line; moot given Q1 FAIL"
+    },
+    "PHVS": {
+      "verdict": "PASS",
+      "et": "06:53",
+      "q1": "live_halal with RH mcap 2.465B: loan 0.03 / cash 12.91 / combined 12.94 -> PASS (cash side >10 but combined <=20, the one-side exception); universe PASS too (cash 10.28)",
+      "q2": "PASS -- Pharvaris NV, clinical-stage rare-disease biotech (oral bradykinin B2 antagonists for angioedema); no haram-adjacent line",
+      "armable": "YES on halal; still needs coil/calm-gap/trigger and RH bars"
     }
   },
   "vetoes": {
