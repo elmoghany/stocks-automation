@@ -1,0 +1,6 @@
+[
+ ["set", "halal_detail.CLIR", {"et": "10:48", "verdict": "FAIL", "loan_pct": 0.39, "cash_pct": 32.79, "combined": 33.18, "fail_reason": "CASH>10+COMBINED>20", "mcap": 30157047}],
+ ["set", "halal_detail.JFU", {"et": "10:48", "verdict": "FAIL", "loan_pct": 71.68, "cash_pct": 9858.9, "combined": 9930.58, "fail_reason": "HARAM INDUSTRY (lending) -- 9F digital lending / wealth platform", "mcap": 33330304}],
+ ["set", "halal_detail.MF", {"et": "10:48", "verdict": "FAIL", "loan_pct": 0.0, "cash_pct": 8.22, "combined": 8.22, "fail_reason": "HARAM INDUSTRY (insurance) -- MindForge, AI services to conventional insurance carriers", "mcap": 120147286}],
+ ["append", "cycles", {"et": "10:47", "n": 39, "kind": "light bench (in position)", "scan_rows": 120, "candidates_n": 13, "new": ["CLIR(FAIL)", "JFU(FAIL)", "MF(FAIL)"], "pass_pool_unranked": ["BSEM", "FAC", "OESX", "OBX", "BUUU", "ATHR", "ERO", "PHVS", "INBX"], "posn": "QCOM t1 81 sh @ 184.89 OPEN; last 177.40 (bar 10:47); book P&L about -610", "watcher": "alive, peak 185.26, hard stop 170.10", "note": "120-row scan (84 funds); QCOM range-bound 176.7-177.8 for 40 min"}]
+]

@@ -1,10 +1,10 @@
 {
  "candidates": {
   "BNC": {
-   "pct": 36.64,
-   "last": 4.7688,
+   "pct": 35.82,
+   "last": 4.74,
    "prev_close": 3.49,
-   "vol": "47038260.512218",
+   "vol": "48443081.270566",
    "name": "CEA Industries",
    "first_seen": "06:22"
   },
@@ -41,10 +41,10 @@
    "first_seen": "06:22"
   },
   "SLE": {
-   "pct": 20.41,
-   "last": 4.72,
+   "pct": 20.92,
+   "last": 4.74,
    "prev_close": 3.92,
-   "vol": "715903.708774",
+   "vol": "782284.579635",
    "name": "Super League Enterprise",
    "first_seen": "06:22"
   },
@@ -105,10 +105,10 @@
    "first_seen": "06:37"
   },
   "PHVS": {
-   "pct": 14.89,
-   "last": 40.5,
+   "pct": 12.48,
+   "last": 39.65,
    "prev_close": 35.25,
-   "vol": "2521758.183393",
+   "vol": "2688892.195048",
    "name": "Pharvaris",
    "first_seen": "06:52"
   },
@@ -201,10 +201,10 @@
    "first_seen": "09:47"
   },
   "BSEM": {
-   "pct": 18.6,
-   "last": 4.4,
+   "pct": 10.24,
+   "last": 4.09,
    "prev_close": 3.71,
-   "vol": "224905.897221",
+   "vol": "279593.53771",
    "name": "BioStem Technologies",
    "first_seen": "09:47"
   },
@@ -281,18 +281,18 @@
    "first_seen": "10:07"
   },
   "FAC": {
-   "pct": 14.88,
-   "last": 5.985,
+   "pct": 12.19,
+   "last": 5.845,
    "prev_close": 5.21,
-   "vol": "215691.389313",
+   "vol": "247091.931488",
    "name": "Factorial Energy Inc.",
    "first_seen": "10:07"
   },
   "OESX": {
-   "pct": 14.24,
-   "last": 28.56,
+   "pct": 16.16,
+   "last": 29.04,
    "prev_close": 25.0,
-   "vol": "67814.772467",
+   "vol": "81881.842007",
    "name": "Orion Energy Systems",
    "first_seen": "10:07"
   },
@@ -329,10 +329,10 @@
    "first_seen": "10:07"
   },
   "OBX": {
-   "pct": 17.21,
-   "last": 19.715,
+   "pct": 15.34,
+   "last": 19.4,
    "prev_close": 16.82,
-   "vol": "119810.458495",
+   "vol": "146996.458495",
    "name": "Obsidian Therapeutics",
    "first_seen": "10:07"
   },
@@ -361,10 +361,10 @@
    "first_seen": "10:07"
   },
   "BUUU": {
-   "pct": 21.39,
-   "last": 42.0,
+   "pct": 16.45,
+   "last": 40.2915,
    "prev_close": 34.6,
-   "vol": "76056.955135",
+   "vol": "131350.097331",
    "name": "BUUU Group Limited Class A",
    "first_seen": "10:27"
   },
@@ -372,7 +372,7 @@
    "pct": 12.83,
    "last": 3.43,
    "prev_close": 3.04,
-   "vol": "4771.50518",
+   "vol": "4896.960657",
    "name": "Aether Holdings",
    "first_seen": "10:27"
   },
@@ -385,10 +385,10 @@
    "first_seen": "10:27"
   },
   "ERO": {
-   "pct": 11.35,
-   "last": 38.86,
+   "pct": 11.75,
+   "last": 39.0,
    "prev_close": 34.9,
-   "vol": "591919.042038",
+   "vol": "712122.207396",
    "name": "Ero Copper",
    "first_seen": "10:27"
   },
@@ -399,6 +399,30 @@
    "vol": "350693.649234",
    "name": "Ivanhoe Electric",
    "first_seen": "10:27"
+  },
+  "CLIR": {
+   "pct": 13.3,
+   "last": 4.43,
+   "prev_close": 3.91,
+   "vol": "13574.814094",
+   "name": "ClearSign Technologies",
+   "first_seen": "10:47"
+  },
+  "JFU": {
+   "pct": 11.46,
+   "last": 2.831,
+   "prev_close": 2.54,
+   "vol": "9926.843813",
+   "name": "9F",
+   "first_seen": "10:47"
+  },
+  "MF": {
+   "pct": 10.17,
+   "last": 12.8456,
+   "prev_close": 11.66,
+   "vol": "28929.792422",
+   "name": "MindForge Inc. Class A",
+   "first_seen": "10:47"
   }
  },
  "halal_fail": [
@@ -406,6 +430,7 @@
   "ALTI",
   "ATRA",
   "BHST",
+  "CLIR",
   "EAF",
   "ELOX",
   "FCEL",
@@ -420,8 +445,10 @@
   "IONQ",
   "ISPC",
   "JDZG",
+  "JFU",
   "KPLT",
   "LNAI",
+  "MF",
   "NRGV",
   "NUAI",
   "NUR",
