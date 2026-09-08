@@ -83,6 +83,35 @@
       "rank_top": "VIDA",
       "rank": "1 SVRN coil .963 NEEDS-SCREEN | 2 SLE FAIL(ruling) | 3 UPB coil .961 NEEDS-SCREEN | 4 VIDA coil .965 PASS | 5-8 ISPC BNC WYHG ROIV calm-gap FAIL (>20%)",
       "armable": "none yet -- no 7AM bar until 07:00, so gap7 is provisional; pressure UNTRUSTED (<20k sh) on all coiled names"
+    },
+    {
+      "et": "06:27",
+      "state": "FLAT-5m",
+      "scan_rows": 59,
+      "candidates": 13,
+      "dropped": {
+        "fund": 46,
+        "inherited_fail": 1
+      },
+      "note": "Dump rebuilt from the 0622 base via dump_from_delta (7 changed rows, 2 new: ZCSH fund, YQ). YQ = 17 Education & Technology +10.3% NEW -- universe FAIL. Every one of the 13 crossed names is now a halal FAIL (10 live/universe FAILs + SLE ruling + BNC cannabis Q2 + YQ). Nothing armable.",
+      "new": [
+        "YQ",
+        "ZCSH"
+      ],
+      "rank_top": "none armable"
+    },
+    {
+      "et": "06:32",
+      "state": "FLAT-5m",
+      "scan_rows": 59,
+      "candidates": 13,
+      "dropped": {
+        "fund": 46,
+        "inherited_fail": 1
+      },
+      "note": "Same 59-row set as 06:27; six price moves (BNC fading 67.2->60.5%, ROIV firming 21.8->24.4%). No new crossers. All 13 crossed names remain halal FAIL; nothing armable. 06:27 dump rebuilt via the new plan/scan_delta.py helper after the inline-python build failed on PowerShell quoting (no data lost: verdicts and ledger had already been recorded).",
+      "new": [],
+      "rank_top": "none armable"
     }
   ],
   "trades": [],
@@ -130,10 +159,40 @@
       "q2": "not reached"
     },
     "VIDA": {
-      "verdict": "PENDING",
-      "et": "06:24",
-      "q1": "halal_universe PASS (loan 0 / cash 2.51); live_halal REFUSE-TO-EVALUATE -- no RH mcap cached; fetching",
-      "q2": "pending profile"
+      "verdict": "FAIL",
+      "et": "06:25",
+      "q1": "live_halal with RH mcap 28.4M: loan 0.0 / cash 50.92 / combined 50.92 -> CASH>10+COMBINED>20. halal_universe had PASS at cash 2.51 on a stale/other cap; the live screen with the RH cap is authoritative (MARKET CAP IS REQUIRED rule).",
+      "q2": "SaaS AI-agent platform -- permissible; moot given Q1 FAIL"
+    },
+    "WLYB": {
+      "verdict": "FAIL",
+      "et": "06:25",
+      "q1": "live_halal: loan 31.11 / cash 3.06 / combined 34.17 -> LOAN>10+COMBINED>20 (mcap 2.47B)",
+      "q2": "academic/research publishing -- permissible; moot"
+    },
+    "GLMD": {
+      "verdict": "FAIL",
+      "et": "06:25",
+      "q1": "live_halal: loan 3.19 / cash 277.91 -> exceeds limits; ALSO unverified revenue-mix keyword (alcohol: NASH = non-alcoholic steatohepatitis keyword hit)",
+      "q2": "clinical-stage biopharma -- permissible in substance; moot given Q1 FAIL"
+    },
+    "HBNB": {
+      "verdict": "FAIL",
+      "et": "06:25",
+      "q1": "live_halal: loan 0.10 / cash 1.20 PASS on ratios",
+      "q2": "FAIL -- hotel/hospitality developer with no <5% alcohol disclosure; unverified is haram by rule (2026-08-22)"
+    },
+    "BNC": {
+      "verdict": "FAIL",
+      "et": "06:25",
+      "q1": "halal_universe PASS (loan 1.97 / cash 2.41)",
+      "q2": "FAIL -- CEA Industries: cultivation technology primarily for CANNABIS crops plus a BNB crypto treasury segment; intoxicant-industry equipment is a dedicated haram-production line. Also CALM-GAP FAIL at +68%."
+    },
+    "YQ": {
+      "verdict": "FAIL",
+      "et": "06:28",
+      "q1": "halal_universe: loan 67.17 / cash 1770.03 / combined 1837 -> LOAN>10+COMBINED>20 (real verdict, not re-litigated)",
+      "q2": "not reached"
     }
   },
   "vetoes": {
