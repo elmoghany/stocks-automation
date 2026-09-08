@@ -1,8 +1,8 @@
 {
  "candidates": {
   "BNC": {
-   "pct": 60.46,
-   "last": 5.6,
+   "pct": 57.31,
+   "last": 5.49,
    "prev_close": 3.49,
    "vol": "627215.138899",
    "name": "CEA Industries",
@@ -95,19 +95,28 @@
    "vol": "365079.648121",
    "name": "VIDA Global",
    "first_seen": "06:22"
+  },
+  "FEED": {
+   "pct": 16.38,
+   "last": 4.69,
+   "prev_close": 4.03,
+   "vol": "32583.430833",
+   "name": "ENvue Medical",
+   "first_seen": "06:37"
   }
  },
  "halal_fail": [
-  "SVRN",
-  "UPB",
-  "ISPC",
-  "WYHG",
-  "ROIV",
   "ADXN",
-  "VIDA",
-  "WLYB",
+  "FEED",
   "GLMD",
   "HBNB",
+  "ISPC",
+  "ROIV",
+  "SVRN",
+  "UPB",
+  "VIDA",
+  "WLYB",
+  "WYHG",
   "YQ"
  ],
  "fake_gap": [],

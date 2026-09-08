@@ -112,6 +112,21 @@
       "note": "Same 59-row set as 06:27; six price moves (BNC fading 67.2->60.5%, ROIV firming 21.8->24.4%). No new crossers. All 13 crossed names remain halal FAIL; nothing armable. 06:27 dump rebuilt via the new plan/scan_delta.py helper after the inline-python build failed on PowerShell quoting (no data lost: verdicts and ledger had already been recorded).",
       "new": [],
       "rank_top": "none armable"
+    },
+    {
+      "et": "06:37",
+      "state": "FLAT-5m",
+      "scan_rows": 59,
+      "candidates": 14,
+      "dropped": {
+        "fund": 45,
+        "inherited_fail": 1
+      },
+      "note": "FEED (ENvue Medical) +16.4% NEW; ZCSH (fund) gone. FEED absent from the universe -> RH cap cached, live screen FAIL. RH minute bars show NO real premarket print for FEED through 10:36Z (all interpolated at 4.00) while the scanner reports last 4.69 -- feed divergence noted. BNC fading 60.5->57.3%. All 14 crossed names halal FAIL; nothing armable.",
+      "new": [
+        "FEED"
+      ],
+      "rank_top": "none armable"
     }
   ],
   "trades": [],
@@ -193,6 +208,12 @@
       "et": "06:28",
       "q1": "halal_universe: loan 67.17 / cash 1770.03 / combined 1837 -> LOAN>10+COMBINED>20 (real verdict, not re-litigated)",
       "q2": "not reached"
+    },
+    "FEED": {
+      "verdict": "FAIL",
+      "et": "06:38",
+      "q1": "live_halal with RH mcap 3.72M: loan 35.19 / cash 29.12 / combined 64.31 -> LOAN>10+COMBINED>20 (quarterly)",
+      "q2": "ENvue Medical -- enteral-care medical devices, permissible line; moot given Q1 FAIL"
     }
   },
   "vetoes": {
