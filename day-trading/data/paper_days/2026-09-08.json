@@ -347,6 +347,19 @@
         "GMTL"
       ],
       "rank_top": "see 07:58 rank"
+    },
+    {
+      "et": "08:02",
+      "state": "FLAT-5m",
+      "scan_rows": 61,
+      "candidates": 21,
+      "dropped": {
+        "fund": 51,
+        "inherited_fail": 1
+      },
+      "note": "No new stocks (WYHG off). RANK 08:01: TOP = PHVS again (coil .877) after INBX printed 128->116.06 on its 08:00 bar (below prior close; coil .846, #5). GMTL excluded (1 bar). PHVS +18.8% at 41.88, 2.2% spread. Nothing armed.",
+      "new": [],
+      "rank_top": "PHVS (spread-vetoed)"
     }
   ],
   "trades": [],
@@ -466,15 +479,22 @@
       "et": "07:13",
       "q1": "live_halal with RH mcap 285M: loan 5.37 / cash 41.07 / combined 46.44 -> CASH>10+COMBINED>20",
       "q2": "RNA therapeutics -- permissible; moot"
+    },
+    "GMTL": {
+      "verdict": "PASS",
+      "et": "07:58",
+      "q1": "live_halal with RH mcap 443M: loan 0.0 / cash 2.39 / combined 2.39 -> PASS; universe PASS; on halal_list",
+      "q2": "PASS -- Guardian Metal Resources plc, tungsten/strategic-metals exploration in Nevada; no haram-adjacent line",
+      "armable": "YES on halal; premarket-dark (1 RH print, Polygon 2 prints, no 07:00 bar -> CALM-GAP FAIL stands per gap7_complete); ranker excludes it until it has bars"
     }
   },
   "vetoes": {
     "spread": {
-      "n": 40,
-      "of": 42,
+      "n": 43,
+      "of": 45,
       "premarket": {
-        "n": 40,
-        "of": 42
+        "n": 43,
+        "of": 45
       },
       "post_open": {
         "n": 0,
@@ -493,9 +513,9 @@
       "note": "07:06 last==trigger with ask above the +0.5% cap; spread veto fired first"
     },
     "size_cap": {
-      "n": 2,
-      "of": 2,
-      "note": "07:56, 07:57 INBX: 0 sh in trailing 10 completed minutes"
+      "n": 3,
+      "of": 3,
+      "note": "07:56-07:59 INBX: 0 sh in trailing 10 completed minutes"
     }
   },
   "errors": [
@@ -911,6 +931,33 @@
       "quote": "locked 136.63/136.63 @11:57:02Z, no print since 11:22Z; L2 at 07:56 was CROSSED (bids 140/139/138.75 above asks 126/130/132.64) -- premarket book unusable",
       "size_cap": "0 sh in trailing 10 completed minutes",
       "decision": "NOT ARMED. PHVS 41.00/41.74 = 1.8% SPREAD veto."
+    },
+    {
+      "et": "07:59",
+      "sym": "INBX",
+      "veto": "SIZE-CAP",
+      "quote": "locked 130.05/130.05 @11:59:05Z, no print since 11:22Z",
+      "size_cap": "0 sh trailing 10 min",
+      "decision": "NOT ARMED. PHVS 41.35/41.74 = 0.94% SPREAD veto. GMTL 10.70/12.98 (stale @11:30Z) = 21%."
+    },
+    {
+      "et": "08:01",
+      "sym": "INBX",
+      "veto": "SPREAD",
+      "quote": "bid 97.09 / ask 118.00, last 116.06 @12:00:52Z -- 08:00 bar o 128 h 132 l 116.06 c 116.06 on 2,420 sh: INBX dumped below its 121.17 prior close",
+      "spread_pct": 21.5,
+      "cap_pct": 0.5,
+      "decision": "NOT ARMED. PHVS 41.30/42.00 = 1.7%. GMTL 10.72/12.98 = 21%."
+    },
+    {
+      "et": "08:02",
+      "sym": "PHVS",
+      "veto": "SPREAD",
+      "quote": "bid 41.51 / ask 42.43, last 41.88 @12:02:09Z",
+      "spread_pct": 2.2,
+      "cap_pct": 0.5,
+      "trigger": "premarket high 47.89 (14% above); TOP again after INBX dumped to 116 (coil .846)",
+      "decision": "NOT ARMED. INBX 113.50/124.52 = 9.7%. GMTL 10.70/12.98 = 21%."
     }
   ],
   "armed": [
