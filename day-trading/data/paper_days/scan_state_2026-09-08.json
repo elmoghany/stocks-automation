@@ -1,10 +1,10 @@
 {
  "candidates": {
   "BNC": {
-   "pct": 40.69,
-   "last": 4.9101,
+   "pct": 50.14,
+   "last": 5.2399,
    "prev_close": 3.49,
-   "vol": "5.0074321541402e+07",
+   "vol": "5.3958573305087e+07",
    "name": "CEA Industries",
    "first_seen": "06:22"
   },
@@ -41,10 +41,10 @@
    "first_seen": "06:22"
   },
   "SLE": {
-   "pct": 20.92,
-   "last": 4.74,
+   "pct": 22.96,
+   "last": 4.82,
    "prev_close": 3.92,
-   "vol": "835104.562635",
+   "vol": "953902.807751",
    "name": "Super League Enterprise",
    "first_seen": "06:22"
   },
@@ -105,10 +105,10 @@
    "first_seen": "06:37"
   },
   "PHVS": {
-   "pct": 11.91,
-   "last": 39.45,
+   "pct": 11.83,
+   "last": 39.42,
    "prev_close": 35.25,
-   "vol": "3.203900114388e+06",
+   "vol": "3.534230808117e+06",
    "name": "Pharvaris",
    "first_seen": "06:52"
   },
@@ -129,10 +129,10 @@
    "first_seen": "07:12"
   },
   "GMTL": {
-   "pct": 10.44,
-   "last": 11.95,
+   "pct": 14.73,
+   "last": 12.4133,
    "prev_close": 10.82,
-   "vol": "47390.463043",
+   "vol": "85295.725506",
    "name": "Guardian Metal Resources",
    "first_seen": "07:57"
   },
@@ -281,18 +281,18 @@
    "first_seen": "10:07"
   },
   "FAC": {
-   "pct": 13.07,
-   "last": 5.8909,
+   "pct": 14.4,
+   "last": 5.96,
    "prev_close": 5.21,
-   "vol": "260658.082461",
+   "vol": "282613.93659",
    "name": "Factorial Energy Inc.",
    "first_seen": "10:07"
   },
   "OESX": {
-   "pct": 15.62,
-   "last": 28.905,
+   "pct": 16.8,
+   "last": 29.2,
    "prev_close": 25.0,
-   "vol": "106118.150375",
+   "vol": "115326.34658",
    "name": "Orion Energy Systems",
    "first_seen": "10:07"
   },
@@ -329,10 +329,10 @@
    "first_seen": "10:07"
   },
   "OBX": {
-   "pct": 15.43,
-   "last": 19.415,
+   "pct": 15.9,
+   "last": 19.495,
    "prev_close": 16.82,
-   "vol": "191791.508545",
+   "vol": "203627.763945",
    "name": "Obsidian Therapeutics",
    "first_seen": "10:07"
   },
@@ -361,10 +361,10 @@
    "first_seen": "10:07"
   },
   "BUUU": {
-   "pct": 18.44,
-   "last": 40.98,
+   "pct": 11.24,
+   "last": 38.49,
    "prev_close": 34.6,
-   "vol": "142855.943435",
+   "vol": "147693.303885",
    "name": "BUUU Group Limited Class A",
    "first_seen": "10:27"
   },
@@ -385,10 +385,10 @@
    "first_seen": "10:27"
   },
   "ERO": {
-   "pct": 12.52,
-   "last": 39.27,
+   "pct": 11.52,
+   "last": 38.92,
    "prev_close": 34.9,
-   "vol": "794538.54881",
+   "vol": "922159.567155",
    "name": "Ero Copper",
    "first_seen": "10:27"
   },
@@ -433,10 +433,10 @@
    "first_seen": "11:07"
   },
   "REAX": {
-   "pct": 11.19,
-   "last": 20.76,
+   "pct": 11.14,
+   "last": 20.75,
    "prev_close": 18.67,
-   "vol": "431854.986072",
+   "vol": "552901.438314",
    "name": "Real REMAX Group",
    "first_seen": "11:07"
   },
@@ -449,10 +449,10 @@
    "first_seen": "11:07"
   },
   "COHR": {
-   "pct": 10.4,
-   "last": 311.175,
+   "pct": 10.65,
+   "last": 311.886,
    "prev_close": 281.86,
-   "vol": "4.496415182758e+06",
+   "vol": "4.919854329742e+06",
    "name": "Coherent",
    "first_seen": "11:07"
   },
@@ -473,10 +473,10 @@
    "first_seen": "11:07"
   },
   "LITE": {
-   "pct": 10.2,
-   "last": 971.17,
+   "pct": 11.9,
+   "last": 986.085,
    "prev_close": 881.255,
-   "vol": "3.030292849546e+06",
+   "vol": "3.473375063981e+06",
    "name": "Lumentum",
    "first_seen": "11:07"
   },
@@ -487,6 +487,62 @@
    "vol": "39167.434235",
    "name": "Eagle Financial Services",
    "first_seen": "11:07"
+  },
+  "SILC": {
+   "pct": 12.89,
+   "last": 46.14,
+   "prev_close": 40.87,
+   "vol": "93457.812101",
+   "name": "Silicom",
+   "first_seen": "11:27"
+  },
+  "INFQ": {
+   "pct": 11.4,
+   "last": 14.315,
+   "prev_close": 12.85,
+   "vol": "5.898888047862e+06",
+   "name": "Infleqtion",
+   "first_seen": "11:27"
+  },
+  "FRMI": {
+   "pct": 10.64,
+   "last": 5.665,
+   "prev_close": 5.12,
+   "vol": "9.212124784056e+06",
+   "name": "Fermi",
+   "first_seen": "11:27"
+  },
+  "NVA": {
+   "pct": 10.5,
+   "last": 6.7738,
+   "prev_close": 6.13,
+   "vol": "511819.868281",
+   "name": "Nova Minerals Corp",
+   "first_seen": "11:27"
+  },
+  "KEEL": {
+   "pct": 10.23,
+   "last": 3.825,
+   "prev_close": 3.47,
+   "vol": "1.9753048377214e+07",
+   "name": "Keel Infrastructure",
+   "first_seen": "11:27"
+  },
+  "IMSR": {
+   "pct": 10.19,
+   "last": 5.675,
+   "prev_close": 5.15,
+   "vol": "688041.506063",
+   "name": "Terrestrial Energy",
+   "first_seen": "11:27"
+  },
+  "MTC": {
+   "pct": 10.09,
+   "last": 4.8,
+   "prev_close": 4.36,
+   "vol": "12261.246927",
+   "name": "MMTec",
+   "first_seen": "11:27"
   }
  },
  "halal_fail": [
@@ -508,16 +564,21 @@
   "HCWC",
   "HSCS",
   "IE",
+  "IMSR",
+  "INFQ",
   "IONQ",
   "ISPC",
   "JDZG",
   "JFU",
+  "KEEL",
   "KPLT",
   "LNAI",
   "MF",
+  "MTC",
   "NRGV",
   "NUAI",
   "NUR",
+  "NVA",
   "PCTY",
   "PLSM",
   "PRQR",
