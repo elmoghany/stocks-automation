@@ -142,6 +142,19 @@
         "BRNX"
       ],
       "rank_top": "none armable"
+    },
+    {
+      "et": "06:47",
+      "state": "FLAT-5m",
+      "scan_rows": 59,
+      "candidates": 15,
+      "dropped": {
+        "fund": 45,
+        "inherited_fail": 2
+      },
+      "note": "No new crossers. BNC 63.6%, ROIV 24.0%, BRNX 13.8%. All 15 crossed names halal FAIL; nothing armable. Dump correction: UPB had actually left the scan at 06:27 and was carried with stale values in the 06:27-06:42 rebuilt dumps; dropped now (latched, FAIL -- no decision affected).",
+      "new": [],
+      "rank_top": "none armable"
     }
   ],
   "trades": [],
@@ -245,7 +258,13 @@
       "of": 0
     }
   },
-  "errors": [],
+  "errors": [
+    {
+      "et": "06:48",
+      "type": "dump-rebuild",
+      "msg": "ERROR: UPB left the scan at 06:27 but the delta-rebuilt dumps for 06:27/06:32/06:37/06:42 carried it with the 06:22 values (I missed it in the gone list). Corrected at 06:47. Impact: none -- UPB was already latched in the crossed set and a halal FAIL since 06:24; the sweep's candidates_now count was 1 too high for four cycles."
+    }
+  ],
   "coverage_gaps": [],
   "pnl": 0
 }
