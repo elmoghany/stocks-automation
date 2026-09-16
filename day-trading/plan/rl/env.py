@@ -346,12 +346,18 @@ class TicketEnv(gym.Env if gym else object):
 
     def __init__(self, dataset, norm=None, leak=False, shuffle_days=True,
                  seed=0, fee_bps=FEE_BPS, ext_bps=EXT_BPS,
-                 vol_cap=VOL_CAP_FRAC, record=False):
+                 vol_cap=VOL_CAP_FRAC, record=False, leak_k=1):
         super().__init__()
         self.ds = dataset
         self.norm = norm if norm is not None else dataset.norm
         assert self.norm is not None, "fit or pass a TRAIN-fitted normalizer"
         self.leak = leak
+        # POSITIVE CONTROL ONLY. leak_k is how many decision steps of
+        # foresight the clairvoyant observation carries (1 = the next 5
+        # minutes, 6 = the next 30). It exists to measure whether the
+        # harness has the statistical power to see an edge at all; leak=False
+        # is the only setting any reported result may use.
+        self.leak_k = int(leak_k)
         self.shuffle_days = shuffle_days
         self.fee = fee_bps / 1e4
         self.ext = ext_bps / 1e4
@@ -449,7 +455,12 @@ class TicketEnv(gym.Env if gym else object):
         parts = [f.reshape(-1), avail, g.reshape(-1), glob]
         if self.leak:
             nr = np.zeros(K_SLOTS, np.float32)
-            nr[ok] = np.clip(d.next_ret[i, sl[ok]] * 20.0, -5, 5)
+            if ok.any():
+                j = min(i + self.leak_k, len(STEP_MINS) - 1)
+                a = d.fill_o[i, sl[ok]]
+                b = d.fill_o[j, sl[ok]]
+                r = np.log(np.maximum(b, 1e-9) / np.maximum(a, 1e-9))
+                nr[ok] = np.clip(np.nan_to_num(r) * 20.0, -5, 5)
             parts.append(nr)
         return np.concatenate(parts).astype(np.float32)
 

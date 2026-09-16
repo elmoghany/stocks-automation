@@ -7,8 +7,9 @@ VARIANTS
   shuffle  SHUFFLED-LABELS CONTROL. Train AND test on a panel whose
            per-symbol intraday log-return sequence is permuted. A positive
            test result here is proof of leakage, not of skill.
-  leak     POSITIVE CONTROL. The next step's open-to-open return for each
-           candidate slot is appended to the observation. The agent SHOULD
+  leak     POSITIVE CONTROL. The NEXT step's (5 min) open-to-open return
+           for each candidate slot is appended to the observation.
+  leak30   POSITIVE CONTROL, 6 steps (30 min) of foresight. The agent SHOULD
            print a large positive number; if it does not, the harness has no
            statistical power and the null results mean nothing.
 
@@ -39,6 +40,7 @@ sys.path.insert(0, str(HERE))
 import env as E                                             # noqa: E402
 
 RES = E.OUT / "results"
+SPLIT_SALT = {"train": 11, "val": 23, "test": 37, "extra": 53}
 
 
 # ------------------------------------------------------------------ policies
@@ -89,8 +91,10 @@ def load_splits(variant, seed, max_days=None):
     tf = "shuffle" if variant == "shuffle" else None
     out = {}
     for k, files in sp.items():
+        # NOT hash(k): str hashing is salted per process, so the shuffled
+        # panel would differ between two runs with the same --seed.
         out[k] = E.Dataset(files, transform=tf,
-                           seed=seed * 1000 + hash(k) % 997, label=k)
+                           seed=seed * 1000 + SPLIT_SALT[k], label=k)
     norm = out["train"].fit_norm()
     for k in out:
         out[k].set_norm(norm)
@@ -150,7 +154,7 @@ def main():
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--steps", type=int, default=400_000)
     ap.add_argument("--variant", default="real",
-                    choices=["real", "shuffle", "leak"])
+                    choices=["real", "shuffle", "leak", "leak30"])
     ap.add_argument("--evals", type=int, default=10)
     ap.add_argument("--max-days", type=int, default=0)
     ap.add_argument("--device", default="cpu")
@@ -160,10 +164,11 @@ def main():
     t0 = time.time()
     ds, norm, counts = load_splits(a.variant, a.seed,
                                    a.max_days or None)
-    leak = a.variant == "leak"
+    leak = a.variant in ("leak", "leak30")
+    leak_k = 6 if a.variant == "leak30" else 1
     cont = a.algo == "sac"
     cls = ContinuousWrap if cont else E.TicketEnv
-    kw = dict(norm=norm, leak=leak, seed=a.seed)
+    kw = dict(norm=norm, leak=leak, leak_k=leak_k, seed=a.seed)
     train_env = cls(ds["train"], shuffle_days=True, **kw)
     if a.algo in ("maskppo", "eiiemask"):
         from sb3_contrib.common.wrappers import ActionMasker

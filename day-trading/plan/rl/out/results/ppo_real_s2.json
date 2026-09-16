@@ -1,0 +1,184 @@
+{
+ "algo": "ppo",
+ "seed": 2,
+ "variant": "real",
+ "steps": 400000,
+ "n_checkpoints": 10,
+ "best_val_pnl": 4784.885829160625,
+ "best_step": 400000,
+ "split_days": {
+  "train": 151,
+  "val": 42,
+  "test": 251,
+  "extra": 22
+ },
+ "history": [
+  {
+   "step": 40000,
+   "val_pnl": -41858.89521556626,
+   "val_tickets": 286
+  },
+  {
+   "step": 80000,
+   "val_pnl": -11566.677094284853,
+   "val_tickets": 288
+  },
+  {
+   "step": 120000,
+   "val_pnl": -17407.962415144837,
+   "val_tickets": 284
+  },
+  {
+   "step": 160000,
+   "val_pnl": -33032.11710710156,
+   "val_tickets": 276
+  },
+  {
+   "step": 200000,
+   "val_pnl": -18159.000341841853,
+   "val_tickets": 293
+  },
+  {
+   "step": 240000,
+   "val_pnl": -26495.544693645534,
+   "val_tickets": 294
+  },
+  {
+   "step": 280000,
+   "val_pnl": -23199.330544843226,
+   "val_tickets": 294
+  },
+  {
+   "step": 320000,
+   "val_pnl": -21802.995953481826,
+   "val_tickets": 294
+  },
+  {
+   "step": 360000,
+   "val_pnl": -18104.925427620234,
+   "val_tickets": 293
+  },
+  {
+   "step": 400000,
+   "val_pnl": 4784.885829160625,
+   "val_tickets": 292
+  }
+ ],
+ "wall_s": 798.7,
+ "env": {
+  "fee_bps": 10.0,
+  "ext_bps": 50.0,
+  "vol_cap": 0.2,
+  "step_min": 5,
+  "k_slots": 10,
+  "tickets": [
+   15000.0,
+   15000.0,
+   15000.0,
+   15000.0,
+   15000.0,
+   15000.0,
+   10000.0
+  ]
+ },
+ "train": {
+  "days": 151,
+  "total_pnl": -7881.3244046374675,
+  "pnl_per_day": -52.194201355215014,
+  "tickets": 1019,
+  "tickets_per_day": 6.748344370860927,
+  "pnl_per_ticket": -7.734371349006347,
+  "deployed": 12643799.752493337,
+  "ret_on_deployed_pct": -0.06233351175213988,
+  "sharpe_daily_ann": -0.43046255473234,
+  "max_dd": -25944.58110295716,
+  "win_days_pct": 48.34437086092716,
+  "cap_blocked": 276,
+  "noprint_blocked": 641,
+  "forced_flatten": 94,
+  "stale_forced": 60,
+  "ext_fills": 165,
+  "rth_fills": 1873,
+  "invalid_actions": 16118,
+  "exit_ext_n": 149,
+  "exit_ext_pnl": -24965.588915670003,
+  "exit_rth_n": 870,
+  "exit_rth_pnl": 17084.264511032547,
+  "mean_hold_min": 75.64082433758587
+ },
+ "val": {
+  "days": 42,
+  "total_pnl": 4784.885829160625,
+  "pnl_per_day": 113.92585307525297,
+  "tickets": 292,
+  "tickets_per_day": 6.9523809523809526,
+  "pnl_per_ticket": 16.386595305344606,
+  "deployed": 3977799.276868502,
+  "ret_on_deployed_pct": 0.12028977573065217,
+  "sharpe_daily_ann": 0.838617848824912,
+  "max_dd": -8415.163733889352,
+  "win_days_pct": 50.0,
+  "cap_blocked": 28,
+  "noprint_blocked": 103,
+  "forced_flatten": 23,
+  "stale_forced": 6,
+  "ext_fills": 30,
+  "rth_fills": 554,
+  "invalid_actions": 4605,
+  "exit_ext_n": 28,
+  "exit_ext_pnl": -215.80268624206457,
+  "exit_rth_n": 264,
+  "exit_rth_pnl": 5000.6885154026895,
+  "mean_hold_min": 70.39041095890411
+ },
+ "test": {
+  "days": 251,
+  "total_pnl": -35591.090712428835,
+  "pnl_per_day": -141.79717415310293,
+  "tickets": 1738,
+  "tickets_per_day": 6.924302788844622,
+  "pnl_per_ticket": -20.478187981834772,
+  "deployed": 23118050.592781536,
+  "ret_on_deployed_pct": -0.15395368467418238,
+  "sharpe_daily_ann": -0.8787099634849258,
+  "max_dd": -44036.57168699415,
+  "win_days_pct": 46.21513944223107,
+  "cap_blocked": 240,
+  "noprint_blocked": 806,
+  "forced_flatten": 244,
+  "stale_forced": 115,
+  "ext_fills": 445,
+  "rth_fills": 3031,
+  "invalid_actions": 27341,
+  "exit_ext_n": 375,
+  "exit_ext_pnl": 35251.0878146586,
+  "exit_rth_n": 1363,
+  "exit_rth_pnl": -70842.17852708754,
+  "mean_hold_min": 105.65247410817031
+ },
+ "extra": {
+  "days": 22,
+  "total_pnl": -5751.173512770509,
+  "pnl_per_day": -261.41697785320497,
+  "tickets": 132,
+  "tickets_per_day": 6.0,
+  "pnl_per_ticket": -43.56949630886749,
+  "deployed": 1715136.0222636927,
+  "ret_on_deployed_pct": -0.3353187990990896,
+  "sharpe_daily_ann": -4.119396347344109,
+  "max_dd": -7138.7028469802535,
+  "win_days_pct": 36.36363636363637,
+  "cap_blocked": 30,
+  "noprint_blocked": 218,
+  "forced_flatten": 35,
+  "stale_forced": 10,
+  "ext_fills": 75,
+  "rth_fills": 189,
+  "invalid_actions": 2284,
+  "exit_ext_n": 56,
+  "exit_ext_pnl": -7175.014890290227,
+  "exit_rth_n": 76,
+  "exit_rth_pnl": 1423.8413775197157,
+  "mean_hold_min": 153.41666666666666
+ }
+}
