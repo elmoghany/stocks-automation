@@ -55,6 +55,8 @@ GD = ROOT / "data/massive/gd"
 UNI_F = ROOT / "data/halal_universe.json"
 LIST_F = ROOT / "data/halal_list.json"
 NEED_F = ROOT / "data/needs_mcap.json"
+SIC_F = ROOT / "data/sic_codes.json"
+EDGAR_TICKERS = ROOT / "data/edgar/company_tickers.json"
 MIN_PRICE = 2.0
 THREADS = 2          # v1 with 6 threads: yfinance rate-limited after ~900
                      # symbols and returned empty statements for the next
@@ -115,6 +117,280 @@ def screen_one(sym):
     except Exception as e:
         return sym, {"halal": False, "source": "error",
                      "fail_reason": f"ERROR: {type(e).__name__}: {e}"}
+
+
+# ---------------------------------------------------------------- SIC
+# SIC CACHE (user decision 2026-09-16, halal audit fix 2). The gate
+# hard-FAILs SIC 6000-6999, so it needs a SIC per symbol -- and the
+# LIVE gate must never block a 07:00 scan on an SEC round-trip. This
+# builds the cache offline:
+#
+#   data/edgar/company_tickers.json   ticker -> CIK
+#   data.sec.gov/submissions/CIK##########.json   CIK -> sic
+#
+# companyfacts.zip carries only {cik, entityName, facts} -- no `sic` --
+# so the submissions endpoint is the only EDGAR source for it.
+# Resumable: already-cached symbols are skipped, so a re-run after an
+# interruption costs only the remainder.
+#
+# Names with NO SIC (no CIK at all -- ETFs and 1940-Act funds have
+# none, which is itself a tell) are NOT excluded on SIC grounds; the
+# keyword screen and the ratios still decide them.
+SEC_UA = "stocks-automation halal-gate m.osama.elmoghany@gmail.com"
+
+
+def cik_map():
+    """UPPER ticker -> CIK int, incl. the '-'/'.' spelling variants."""
+    raw = json.loads(EDGAR_TICKERS.read_text())
+    out = {}
+    for e in raw.values():
+        t_ = str(e["ticker"]).upper()
+        for k in {t_, t_.replace(".", "-"), t_.replace("-", ".")}:
+            out.setdefault(k, e["cik_str"])
+    return out
+
+
+SIC_THREADS = 5      # SEC asks for <10 req/s; 5 in flight stays inside it
+                     # and takes the full 10,908-name universe from ~3h
+                     # (serial, SEC latency dominates) to ~25 min.
+
+
+def cmd_sic(syms=None, pace=0.05, threads=SIC_THREADS):
+    import urllib.request
+    from threading import Lock
+    cache = json.loads(SIC_F.read_text()) if SIC_F.exists() else {}
+    syms = syms or universe()
+    cm = cik_map()
+    today = time.strftime("%Y-%m-%d")
+    todo = [s for s in syms if s not in cache]
+    print(f"SIC: {len(cache):,} cached, {len(todo):,} to fetch", flush=True)
+    lock = Lock()
+    counts = {"ok": 0, "nocik": 0, "err": 0}
+
+    def one(s):
+        cik = cm.get(s.upper())
+        if cik is None:
+            return s, {"sic": "", "status": "no-cik",
+                       "source": "edgar/company_tickers.json",
+                       "fetched": today}, "nocik"
+        url = f"https://data.sec.gov/submissions/CIK{cik:010d}.json"
+        time.sleep(pace)
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": SEC_UA})
+            with urllib.request.urlopen(req, timeout=30) as r:
+                d = json.loads(r.read().decode())
+            return s, {"sic": str(d.get("sic") or ""),
+                       "desc": d.get("sicDescription") or "",
+                       "name": d.get("name") or "",
+                       "cik": cik,
+                       "status": "ok" if d.get("sic") else "no-sic",
+                       "source": "edgar/submissions",
+                       "fetched": today}, "ok"
+        except Exception as e:
+            # NOT cached: a transport failure is not an answer. Caching
+            # it would silently exempt the name from the sector screen
+            # forever -- the halal-cache-poisoning failure mode.
+            return s, None, f"err {type(e).__name__}: {e}"
+
+    with ThreadPoolExecutor(max_workers=threads) as ex:
+        for i, (s, rec, kind) in enumerate(ex.map(one, todo), 1):
+            if rec is None:
+                counts["err"] += 1
+                if counts["err"] <= 20:
+                    print(f"  SIC {s}: {kind}", flush=True)
+            else:
+                cache[s] = rec
+                counts[kind] += 1
+            if i % 500 == 0:
+                with lock:
+                    SIC_F.write_text(json.dumps(cache))
+                print(f"  ..sic {i:,}/{len(todo):,} (ok {counts['ok']:,} / "
+                      f"no-cik {counts['nocik']:,} / err {counts['err']:,})",
+                      flush=True)
+    SIC_F.write_text(json.dumps(cache))
+    fin = sum(1 for v in cache.values()
+              if str(v.get("sic", "")).isdigit()
+              and 6000 <= int(v["sic"]) <= 6999 and v["sic"] != "6770")
+    spac = sum(1 for v in cache.values() if v.get("sic") == "6770")
+    nosic = sum(1 for v in cache.values()
+                if not str(v.get("sic", "")).isdigit())
+    print(f"SIC cache -> {SIC_F.name}: {len(cache):,} symbols | "
+          f"financial 6000-6999 (ex 6770) {fin:,} | blank-check 6770 "
+          f"{spac:,} | no usable SIC {nosic:,} (not excluded on SIC "
+          f"grounds) | fetch errors {counts['err']:,}")
+    return cache
+
+
+# ------------------------------------------------------- RESCREEN MODE
+# HALAL-FIX EPOCH 2026-09-16. The four gate fixes (strict 10/10/20,
+# SIC 6000-6999, TTM 5%, missing-row refusal) all NARROW the gate; the
+# only loosening is the lifted blanket SPAC rulings. So a full 10,761
+# name re-fetch is not needed to rebuild the list correctly: only names
+# that can still be PASS, or that a lifted ruling could return to PASS,
+# can change. Everything else is already FAIL/null under a strictly
+# more permissive gate and stays that way.
+#
+# `--rescreen` re-runs the FIXED halal_check on exactly that candidate
+# set, keeps every other cached verdict, backs the old files up and
+# writes a flip report attributing each change to its cause.
+def _legacy_probe(sym, t, mcap):
+    """What the PRE-FIX gate's ratio legs would have said on the SAME
+    fresh statements. Report-only: this exists so a flip can be
+    attributed to the GATE CHANGE rather than to two weeks of price and
+    filing drift, and it is never consulted by any verdict. Replicates
+    the old arithmetic exactly -- absent row -> 0, column 0 only,
+    interest / (revenue x 4), and the `or combined <= 20` legs."""
+    import pandas as pd
+
+    def gv(df, names):
+        if df is None or getattr(df, "empty", True):
+            return 0.0
+        for n in names:
+            if n in df.index:
+                v = df.iloc[df.index.get_loc(n), 0]
+                if not pd.isna(v):
+                    return float(v)
+        return 0.0
+    try:
+        bs, inc = t.quarterly_balance_sheet, t.quarterly_income_stmt
+        if (bs is None or getattr(bs, "empty", True)) and \
+                (inc is None or getattr(inc, "empty", True)):
+            bs, inc = t.balance_sheet, t.income_stmt
+    except Exception:
+        return None
+    debt = gv(bs, ["Total Debt"])
+    cash = gv(bs, ["Cash Cash Equivalents And Short Term Investments"])
+    rev = gv(inc, ["Total Revenue", "Operating Revenue"])
+    inti = gv(inc, ["Interest Income", "Interest Income Non Operating",
+                    "Net Interest Income"])
+    if not mcap or mcap <= 0:
+        return None
+    loan, csh = debt / mcap * 100, cash / mcap * 100
+    comb = loan + csh
+    ann = rev * 4
+    haram = (abs(inti) / ann * 100) if ann > 0 else 0.0
+    return {
+        "loan_pct": round(loan, 2), "cash_pct": round(csh, 2),
+        "combined": round(comb, 2), "haram_pct": round(haram, 2),
+        "ratios_ok": ((loan <= 10 or comb <= 20)
+                      and (csh <= 10 or comb <= 20)
+                      and comb <= 20 and haram < 5),
+    }
+
+
+CAUSES = [
+    ("SIC-6xxx", ("FINANCIAL SECTOR (SIC",)),
+    ("missing-row", ("unverified: missing",)),
+    ("strict-10", ("LOAN>10", "CASH>10")),
+    ("TTM-5%", ("HARAM>=5%",)),
+    ("ruling", ("HARAM by user ruling", "external-screener ruling")),
+    ("industry", ("HARAM INDUSTRY",)),
+    ("combined>20", ("COMBINED>20",)),
+    ("unverified-revenue-mix", ("unverified revenue mix",)),
+    ("no-data", ("NO FUNDAMENTALS DATA", "MARKET CAP MISSING")),
+]
+
+
+def _cause(reason):
+    for name, keys in CAUSES:
+        if any(k in (reason or "") for k in keys):
+            return name
+    return "other"
+
+
+def _rescreen_one(sym):
+    import yfinance as yf
+    time.sleep(PACE_SEC)
+    try:
+        t = yf.Ticker(sym)
+        r = dt.halal_check(sym, t)
+        rec = {k: r.get(k) for k in
+               ("halal", "verdict", "source", "loan_pct", "cash_pct",
+                "combined", "haram_pct", "fail_reason")}
+        mc = (dt.load_rh_fundamentals().get(sym.upper()) or {}).get(
+            "market_cap")
+        if not mc:
+            try:
+                mc = (t.info or {}).get("marketCap")
+            except Exception:
+                mc = None
+        return sym, rec, _legacy_probe(sym, t, float(mc or 0))
+    except Exception as e:
+        return sym, {"halal": False, "source": "error",
+                     "fail_reason": f"ERROR: {type(e).__name__}: {e}"}, None
+
+
+def cmd_rescreen():
+    """Re-screen the names whose verdict the 2026-09-16 fixes can move."""
+    done = json.loads(UNI_F.read_text())
+    rulings = json.loads((ROOT / "data/halal_rulings.json").read_text())
+    ruled = {s for s, r in rulings.items()
+             if not s.startswith("_") and isinstance(r, dict)}
+    cands = sorted({s for s, r in done.items() if r.get("halal")}
+                   | (ruled & set(done)))
+    print(f"rescreen: {len(cands):,} candidates "
+          f"({sum(1 for s in cands if done[s].get('halal')):,} currently "
+          f"PASS, rest ruled names that a lifted ruling could return)",
+          flush=True)
+    stamp = "pre-2026-09-16"
+    for f in (UNI_F, LIST_F):
+        bak = f.with_name(f"{f.stem}.{stamp}{f.suffix}")
+        if not bak.exists():
+            bak.write_text(f.read_text())
+            print(f"  backup {f.name} -> {bak.name}", flush=True)
+    before = {s: dict(done[s]) for s in cands}
+    legacy = {}
+    t0 = time.time()
+    with ThreadPoolExecutor(max_workers=THREADS) as ex:
+        for n, (sym, res, leg) in enumerate(ex.map(_rescreen_one, cands), 1):
+            done[sym] = res
+            if leg:
+                legacy[sym] = leg
+            if n % 50 == 0 or n == len(cands):
+                UNI_F.write_text(json.dumps(done))
+                el = time.time() - t0
+                print(f"  [{n:,}/{len(cands):,}] still PASS: "
+                      f"{sum(1 for s in cands[:n] if done[s].get('halal')):,}"
+                      f" (eta {el/n*(len(cands)-n)/60:.0f} min)", flush=True)
+    UNI_F.write_text(json.dumps(done))
+
+    flips = {"to_fail": [], "to_pass": [], "by_cause": {}}
+    for s in cands:
+        was, now = before[s].get("halal"), done[s].get("halal")
+        if was and not now:
+            c = _cause(done[s].get("fail_reason"))
+            leg = legacy.get(s) or {}
+            # a leg the OLD gate would ALSO have failed on this same
+            # fresh data is drift, not the gate change
+            if c in ("strict-10", "TTM-5%", "combined>20") \
+                    and leg and not leg.get("ratios_ok"):
+                c = f"{c} (also fails old gate on today's data)"
+            flips["to_fail"].append(
+                {"symbol": s, "cause": c,
+                 "was": {k: before[s].get(k) for k in
+                         ("loan_pct", "cash_pct", "combined", "haram_pct")},
+                 "now": {k: done[s].get(k) for k in
+                         ("loan_pct", "cash_pct", "combined", "haram_pct")},
+                 "legacy_on_fresh_data": leg,
+                 "reason": done[s].get("fail_reason")})
+            flips["by_cause"][c] = flips["by_cause"].get(c, 0) + 1
+        elif now and not was:
+            flips["to_pass"].append(
+                {"symbol": s, "was_reason": before[s].get("fail_reason"),
+                 "now": {k: done[s].get(k) for k in
+                         ("loan_pct", "cash_pct", "combined", "haram_pct")}})
+    halal = sorted(s for s, r in done.items() if r.get("halal"))
+    LIST_F.write_text(json.dumps(
+        {"updated": time.strftime("%Y-%m-%d"), "n": len(halal),
+         "symbols": halal}))
+    (ROOT / "data/halal_flips_2026-09-16.json").write_text(
+        json.dumps(flips, indent=1))
+    print(f"\nARMABLE {len(before):,} -> {len(halal):,}")
+    print(f"PASS -> FAIL: {len(flips['to_fail']):,}   "
+          f"FAIL -> PASS: {len(flips['to_pass']):,}")
+    for c, n in sorted(flips["by_cause"].items(), key=lambda x: -x[1]):
+        print(f"  {c:<48} {n:,}")
+    print("flip report -> data/halal_flips_2026-09-16.json")
 
 
 def main():
@@ -182,4 +458,12 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    if "--sic" in sys.argv:
+        # SIC cache for the sector screen. Run this BEFORE a refresh or
+        # a rescreen: halal_check reads data/sic_codes.json from disk
+        # only and a name missing from it is simply not SIC-screened.
+        cmd_sic()
+    elif "--rescreen" in sys.argv:
+        cmd_rescreen()
+    else:
+        main()

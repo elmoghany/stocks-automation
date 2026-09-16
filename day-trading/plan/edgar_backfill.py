@@ -228,12 +228,35 @@ def _debt_at(facts, end, cache):
     """Tiered debt at period end. Returns (val, filed) or None.
     Tier presence rule: >=1 tag of the tier present -> missing tier
     siblings read as 0 (an absent balance-sheet line IS zero on that
-    statement -- unlike a missing statement, which stays absent)."""
+    statement -- unlike a missing statement, which stays absent).
+
+    TIER-PRECEDENCE BUG, fixed 2026-09-16 (halal audit Bug 5).
+    This used to RETURN the first tier that had any tag present, so a
+    filer that tags a small tier-1 component AND the tier-2 aggregate
+    had the aggregate discarded. QCOM's 2026-06-28 10-Q tags
+    LongTermDebtCurrent 1,991M + CommercialPaper 498M (tier 1) *and*
+    LongTermDebt 12,781M (tier 2): precedence returned 2,489M against a
+    true 15,270M (6.1x understated). Measured prevalence at the time:
+    4.5% of symbols (20 of 449 sampled) at their latest quarter --
+    TSLA x27.5, WFC x7.2, CTEV x312.
+
+    Now every tier is summed and the MAXIMUM is taken. Over-counting
+    debt only ever REFUSES more, which is the safe direction for a gate
+    whose job is to refuse; under-counting is the false-PASS direction.
+    Caveat kept from the audit (Sec 2.3): even max(components, aggregate)
+    is not universally right -- MKSI tags LongTermDebt 2,544M and
+    ShortTermBorrowings 1,399M as DISJOINT lines (true total ~4,023M),
+    which no fixed tag rule recovers. XBRL debt does not reduce to one
+    rule; this is the conservative approximation, not the truth."""
+    best = None
     for tier in (DEBT_T1, DEBT_T2, DEBT_T3):
         got = [cache[t][end] for t in tier if end in cache[t]]
-        if got:
-            return (sum(v for v, _ in got), max(f for _, f in got))
-    return None
+        if not got:
+            continue
+        cand = (sum(v for v, _ in got), max(f for _, f in got))
+        if best is None or cand[0] > best[0]:
+            best = cand
+    return best
 
 
 def extract_symbol(facts, stats):
@@ -262,18 +285,29 @@ def extract_symbol(facts, stats):
             continue
         ctag, (cval, cfil) = cash_hit
         filed = [cfil]
+        # MISSING-ROW FLAGS (2026-09-16 halal fix, user decision 4:
+        # "a missing statement row never reads as 0"). The 0.0 defaults
+        # below are kept so the stored schema is unchanged, but each
+        # absent line is now NAMED in `miss` so halal_pt can REFUSE the
+        # quarter instead of scoring a fabricated zero. `cash` can never
+        # be missing: a quarter only exists here because a cash tag
+        # anchored it.
+        miss = []
         d = _debt_at(facts, end, debt_cache)
         if d is None:
             d = (0.0, cfil)                    # no debt line tagged
             stats["zero:debt"] += 1
+            miss.append("debt")
         rv = rev.get(end)
         if rv is None:
             rv = (0.0, cfil, False)            # no revenue line tagged
             stats["zero:rev"] += 1
+            miss.append("rev")
         iv = inti.get(end)
         if iv is None:
             iv = (0.0, cfil, False)            # no interest-income line
             stats["zero:intinc"] += 1
+            miss.append("intinc")
         sval, sfil = sti.get(end, (0.0, cfil))
         if not any((d[0], cval + sval, rv[0], iv[0])):
             # all-zero row (inception-date artifacts, e.g. FRMI's
@@ -290,6 +324,7 @@ def extract_symbol(facts, stats):
             "rev": rv[0],
             "intinc": iv[0],
             "filed": max(filed),
+            "miss": miss,
             "src": {"debt_filed": d[1], "cash_filed": cfil,
                     "rev_derived": rv[2], "intinc_derived": iv[2]},
         })
@@ -402,7 +437,7 @@ def cmd_merge():
             else:
                 side.append({k: q[k] for k in
                              ("date", "debt", "cash", "rev",
-                              "intinc", "filed")})
+                              "intinc", "filed", "miss")})
         # side list rebuilt from scratch each run -> idempotent
         st["quarters_edgar"] = side
         side_q += len(side)

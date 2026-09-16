@@ -326,65 +326,11 @@
   "haram_share_est": null,
   "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. Stablecoin carry/funding-rate yield business -- interest-like financial income IS the product; also unverifiable. FAIL on both grounds. Resolution attempt 2026-08-22: no Zoya/Musaffa coverage (absent from both sitemaps), Islamicly per-stock data is account-gated (not used per guardrail); identity confirmed StablecoinX Inc, Ethena-ecosystem stablecoin treasury whose yield IS funding-rate/staking carry. Evidence-based FAIL unchanged"
  },
- "RFAI": {
-  "verdict": "FAIL",
-  "date": "2026-08-22",
-  "haram_share_est": null,
-  "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check: trust assets are ~100% interest-bearing instruments (cash/mcap >> 10% in substance even when statements omit the trust line). FAIL per SPAC class rule."
- },
  "AIAI": {
   "verdict": "FAIL",
   "date": "2026-08-22",
   "haram_share_est": null,
   "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. Repeatedly unverifiable across sessions (no reliable statements). Missing data is a FAIL, never a pass. Resolution attempt 2026-08-22: no Zoya/Musaffa coverage (absent from both sitemaps), Islamicly account-gated; identity confirmed AIAI Holdings Corp (ex-MXLII, Dallas 'AI holding company', NASDAQ listing 2026-05-14, no annual statements yet). No source can resolve it -- default FAIL stands"
- },
- "MLAA": {
-  "verdict": "FAIL",
-  "date": "2026-08-22",
-  "haram_share_est": null,
-  "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL."
- },
- "OTAI": {
-  "verdict": "FAIL",
-  "date": "2026-08-22",
-  "haram_share_est": null,
-  "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL."
- },
- "SHOT": {
-  "verdict": "FAIL",
-  "date": "2026-08-22",
-  "haram_share_est": null,
-  "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL."
- },
- "VII": {
-  "verdict": "FAIL",
-  "date": "2026-08-22",
-  "haram_share_est": null,
-  "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL."
- },
- "TCGX": {
-  "verdict": "FAIL",
-  "date": "2026-08-22",
-  "haram_share_est": null,
-  "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL."
- },
- "RDAC": {
-  "verdict": "FAIL",
-  "date": "2026-08-22",
-  "haram_share_est": null,
-  "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL."
- },
- "ASPC": {
-  "verdict": "FAIL",
-  "date": "2026-08-22",
-  "haram_share_est": null,
-  "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL."
- },
- "MCAH": {
-  "verdict": "FAIL",
-  "date": "2026-08-22",
-  "haram_share_est": null,
-  "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL."
  },
  "AAON": {
   "verdict": "PASS",
@@ -1439,5 +1385,91 @@
   "date": "2026-08-22",
   "haram_share_est": null,
   "basis": "EDGAR read 2026-08-22 (10-K filed 2026-01-28): Bridgford Foods' core snack-food line is 'dry sausage products, salami and beef jerky' and the company 'purchase[s] large quantities of pork, beef, and flour' -- pork-based products are a primary named product line (pork is a house hard class), share undisclosed. IPST/WNW template: named haram product line with no <5% proof. Zoya 'Shariah-compliant' recorded but house rules govern."
+ },
+ "_lifted": {
+  "RFAI": {
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "haram_share_est": null,
+   "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check: trust assets are ~100% interest-bearing instruments (cash/mcap >> 10% in substance even when statements omit the trust line). FAIL per SPAC class rule.",
+   "lifted": "2026-09-16",
+   "lifted_reason": "USER DECISION 2026-09-16 (halal audit): no categorical SPAC ban. A blank check is judged on its data like any other name. With the missing-row refusal in force a SPAC whose trust/cash rows are absent is REFUSED as unverified, and one whose cash/mcap is ~100% FAILS on ratios -- so most still will not arm, but BY DATA, not by class. SIC 6770 is likewise exempt from the 6000-6999 sector FAIL."
+  },
+  "MLAA": {
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "haram_share_est": null,
+   "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL.",
+   "lifted": "2026-09-16",
+   "lifted_reason": "USER DECISION 2026-09-16 (halal audit): no categorical SPAC ban. A blank check is judged on its data like any other name. With the missing-row refusal in force a SPAC whose trust/cash rows are absent is REFUSED as unverified, and one whose cash/mcap is ~100% FAILS on ratios -- so most still will not arm, but BY DATA, not by class. SIC 6770 is likewise exempt from the 6000-6999 sector FAIL."
+  },
+  "OTAI": {
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "haram_share_est": null,
+   "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL.",
+   "lifted": "2026-09-16",
+   "lifted_reason": "USER DECISION 2026-09-16 (halal audit): no categorical SPAC ban. A blank check is judged on its data like any other name. With the missing-row refusal in force a SPAC whose trust/cash rows are absent is REFUSED as unverified, and one whose cash/mcap is ~100% FAILS on ratios -- so most still will not arm, but BY DATA, not by class. SIC 6770 is likewise exempt from the 6000-6999 sector FAIL."
+  },
+  "SHOT": {
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "haram_share_est": null,
+   "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL.",
+   "lifted": "2026-09-16",
+   "lifted_reason": "USER DECISION 2026-09-16 (halal audit): no categorical SPAC ban. A blank check is judged on its data like any other name. With the missing-row refusal in force a SPAC whose trust/cash rows are absent is REFUSED as unverified, and one whose cash/mcap is ~100% FAILS on ratios -- so most still will not arm, but BY DATA, not by class. SIC 6770 is likewise exempt from the 6000-6999 sector FAIL."
+  },
+  "VII": {
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "haram_share_est": null,
+   "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL.",
+   "lifted": "2026-09-16",
+   "lifted_reason": "USER DECISION 2026-09-16 (halal audit): no categorical SPAC ban. A blank check is judged on its data like any other name. With the missing-row refusal in force a SPAC whose trust/cash rows are absent is REFUSED as unverified, and one whose cash/mcap is ~100% FAILS on ratios -- so most still will not arm, but BY DATA, not by class. SIC 6770 is likewise exempt from the 6000-6999 sector FAIL."
+  },
+  "TCGX": {
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "haram_share_est": null,
+   "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL.",
+   "lifted": "2026-09-16",
+   "lifted_reason": "USER DECISION 2026-09-16 (halal audit): no categorical SPAC ban. A blank check is judged on its data like any other name. With the missing-row refusal in force a SPAC whose trust/cash rows are absent is REFUSED as unverified, and one whose cash/mcap is ~100% FAILS on ratios -- so most still will not arm, but BY DATA, not by class. SIC 6770 is likewise exempt from the 6000-6999 sector FAIL."
+  },
+  "RDAC": {
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "haram_share_est": null,
+   "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL.",
+   "lifted": "2026-09-16",
+   "lifted_reason": "USER DECISION 2026-09-16 (halal audit): no categorical SPAC ban. A blank check is judged on its data like any other name. With the missing-row refusal in force a SPAC whose trust/cash rows are absent is REFUSED as unverified, and one whose cash/mcap is ~100% FAILS on ratios -- so most still will not arm, but BY DATA, not by class. SIC 6770 is likewise exempt from the 6000-6999 sector FAIL."
+  },
+  "ASPC": {
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "haram_share_est": null,
+   "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL.",
+   "lifted": "2026-09-16",
+   "lifted_reason": "USER DECISION 2026-09-16 (halal audit): no categorical SPAC ban. A blank check is judged on its data like any other name. With the missing-row refusal in force a SPAC whose trust/cash rows are absent is REFUSED as unverified, and one whose cash/mcap is ~100% FAILS on ratios -- so most still will not arm, but BY DATA, not by class. SIC 6770 is likewise exempt from the 6000-6999 sector FAIL."
+  },
+  "MCAH": {
+   "verdict": "FAIL",
+   "date": "2026-08-22",
+   "haram_share_est": null,
+   "basis": "user ruling 2026-08-22: verdict is BINARY -- unverified is haram. SPAC/blank-check class rule: trust is interest-bearing in substance. FAIL.",
+   "lifted": "2026-09-16",
+   "lifted_reason": "USER DECISION 2026-09-16 (halal audit): no categorical SPAC ban. A blank check is judged on its data like any other name. With the missing-row refusal in force a SPAC whose trust/cash rows are absent is REFUSED as unverified, and one whose cash/mcap is ~100% FAILS on ratios -- so most still will not arm, but BY DATA, not by class. SIC 6770 is likewise exempt from the 6000-6999 sector FAIL."
+  }
+ },
+ "TPCS": {
+  "verdict": "FAIL",
+  "date": "2026-09-16",
+  "haram_share_est": 95,
+  "basis": "USER RULING 2026-09-16 (halal audit Sec 3). TechPrecision is a defense contractor BY TRADE, not a supplier selling into defense: its own EDGAR business description says it makes custom components for U.S. Navy submarines and aircraft carriers, USMC military helicopters, and defense and aerospace programs (Ranor + Stadco), and the submarine components are made exclusively for the Navy. This is NOT the AMD case the 2026-08-14 ruling protects -- AMD sells general-purpose chips that defense happens to buy; TPCS builds the warship part. The label-only screen missed it because Yahoo tags it Industrials / Metal Fabrication, with neither 'defense' nor 'aerospace' in the label. Both external screeners lean non-compliant (Zoya: not compliant; Musaffa: doubtful)."
+ },
+ "CTW": {
+  "verdict": "FAIL",
+  "date": "2026-09-16",
+  "haram_share_est": 90,
+  "basis": "USER RULING 2026-09-16 (halal audit Sec 3). CTW Cayman operates a WEB-BASED GAMING PLATFORM in Japan and Singapore -- free-to-play games inspired by Japanese animations. Gaming/entertainment IS the line of business, which is haram per the user ruling 2026-08-13 ('entertainment is haram'); functionally identical to SLE, ruled FAIL 2026-08-21. Missed by the screen because its labels say 'Gaming' / 'Multimedia' and neither word is in HARAM_PRIMARY_LABEL (which carries entertainment / casino / gambling). Musaffa: not halal."
  }
 }

@@ -235,8 +235,98 @@ def _filed_usable(q, date):
         return False             # unparseable filed date -> never usable
 
 
+def sector_clean(sym):
+    """SIC 6000-6999 sector screen (user decision 2026-09-16, the same
+    rule the live gate runs in day-trading.py::_sic_financial_fail).
+
+    Banks, lenders, insurers, asset managers, brokers, exchanges, REITs
+    and funds are a hard FAIL; SIC 6770 blank checks (SPACs) are
+    deliberately EXEMPT from the class rule and judged on their data. A
+    quirk-coded operating company is restored only by an explicit PASS
+    ruling with a basis. A symbol with no SIC in data/sic_codes.json is
+    not excluded here -- the keyword screen and the ratios still run.
+
+    Present-day classification applied to a point-in-time decision, like
+    the industry label above it: a company's SIC essentially never moves,
+    and the alternative (no sector screen at all in the backtest) is the
+    gate the audit found 213 financial names sitting inside."""
+    fail, sic, _desc = ps._sic_financial_fail(sym)
+    if not fail:
+        return True
+    r = ps._halal_ruling(sym)
+    return bool(isinstance(r, dict) and r.get("verdict") == "PASS"
+                and str(r.get("basis") or "").strip())
+
+
+def _q_miss(q):
+    """Which statement rows a cached quarter cannot vouch for.
+
+    HALAL-FIX EPOCH 2026-09-16 (user decision 4: "a missing statement
+    row never reads as 0"). EDGAR-extracted quarters carry an explicit
+    `miss` list naming every line the filing did not tag
+    (plan/edgar_backfill.py). Legacy yfinance-cached quarters predate
+    the flag and were written under the same absent-row-reads-as-0 bug
+    the live gate had, so for those an exact 0.0 is read as UNVERIFIED:
+    the conservative direction, and only 648 of 34,203 cached quarters
+    are legacy."""
+    if "miss" in q:
+        return [f for f in q["miss"] if f in ("debt", "cash", "rev",
+                                              "intinc")]
+    return [k for k in ("debt", "cash", "rev", "intinc") if not q.get(k)]
+
+
+def _qspan(a, b):
+    from datetime import date as _d
+    try:
+        return abs((_d.fromisoformat(b[:10]) - _d.fromisoformat(a[:10])).days)
+    except ValueError:
+        return 0
+
+
+def _ttm_pt(usable, maxq=4):
+    """(revenue, interest, n_quarters) over the last <= `maxq`
+    NON-OVERLAPPING filed quarters ending at usable[-1] -- the
+    period-matched 5% test (user decision 3).
+
+    The pre-fix line was `ann = sel["rev"] * 4` against ONE quarter of
+    interest income, i.e. a 20% threshold wearing a 5% label. Summing
+    both sides over the identical quarters is correct for any window
+    length, so a name with only one or two filed quarters is still
+    measured honestly rather than annualized by guesswork. The window
+    stops at the first earlier quarter that cannot vouch for its
+    revenue or interest rows; it never silently includes a zero.
+    Quarters whose period ends are less than 45 days apart are the
+    yfinance/EDGAR duplicate of one period and are skipped."""
+    picked, last = [], None
+    for q in reversed(usable):
+        if last is not None and _qspan(q["date"], last) < 45:
+            continue
+        if picked and ({"rev", "intinc"} & set(_q_miss(q))):
+            break                    # window stops, what we have stands
+        picked.append(q)
+        last = q["date"]
+        if len(picked) >= maxq:
+            break
+    return (sum(q["rev"] for q in picked),
+            sum(q["intinc"] for q in picked), len(picked))
+
+
 def halal_pt(sym, date, prev_close):
+    """Point-in-time halal gate for the backtest.
+
+    HALAL-FIX EPOCH 2026-09-16 -- the same four user decisions the live
+    gate took, so the two gates stop disagreeing on doctrine:
+      1. STRICT 10/10/20: loan <= 10 AND cash <= 10 AND combined <= 20.
+         The old `(loan <= 10 or comb <= 20)` legs were unreachable.
+      2. SIC 6000-6999 is a hard FAIL (sector_clean), 6770 excepted.
+      3. The 5% test is TTM interest / TTM revenue over the same
+         quarters (_ttm_pt), not one quarter over four.
+      4. A missing statement row is never 0 (_q_miss) -- refuse.
+    The conservative-bounds path below is unchanged and still stricter
+    than all of this; it is reached only with HALAL_STRICT off."""
     if not industry_clean(sym):
+        return False
+    if not sector_clean(sym):
         return False
     sh = shares_asof(sym, date)
     if not sh or not prev_close:
@@ -262,20 +352,21 @@ def halal_pt(sym, date, prev_close):
             qs = sorted(qs + [q for q in st.get("quarters_edgar", [])
                               if q["date"] not in seen],
                         key=lambda q: q["date"])
-        sel = None
-        for q in qs:
-            if (_filed_usable(q, date) if PT_FILED
-                    else _avail(q["date"]) <= date):   # filed, not ended
-                sel = q
+        usable = [q for q in qs
+                  if (_filed_usable(q, date) if PT_FILED
+                      else _avail(q["date"]) <= date)]  # filed, not ended
+        sel = usable[-1] if usable else None
         if sel:
+            if _q_miss(sel):
+                return False          # unverified: missing statement row
             loan = sel["debt"] / mcap * 100
             cash = sel["cash"] / mcap * 100
             comb = loan + cash
-            ann = sel["rev"] * 4
-            haram = abs(sel["intinc"]) / ann * 100 if ann > 0 else 0
-            return ((loan <= 10 or comb <= 20)
-                    and (cash <= 10 or comb <= 20)
-                    and comb <= 20 and haram < 5)
+            rev, intinc, _n = _ttm_pt(usable)
+            if rev <= 0:
+                return False          # no verifiable revenue -> no 5% test
+            haram = abs(intinc) / rev * 100
+            return (loan <= 10 and cash <= 10 and comb <= 20 and haram < 5)
     if HALAL_STRICT:
         # No FILED quarterly available point-in-time => we cannot verify.
         # The bounds path below substitutes total liabilities for debt
@@ -294,8 +385,7 @@ def halal_pt(sym, date, prev_close):
         loan_ub = sel["liab"] / mcap * 100
         cash_ub = sel["cura"] / mcap * 100
         comb_ub = loan_ub + cash_ub
-        return ((loan_ub <= 10 or comb_ub <= 20)
-                and (cash_ub <= 10 or comb_ub <= 20) and comb_ub <= 20)
+        return (loan_ub <= 10 and cash_ub <= 10 and comb_ub <= 20)
     return bool(VER.get(sym, {}).get("halal_ok"))
 
 

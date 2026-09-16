@@ -644,6 +644,72 @@ HALAL_RULINGS_FILE = _DIR / "data/halal_rulings.json"
 # (2026-09-01 live-tool fixes; the universe is a monthly refresh).
 HALAL_LIST_MAX_AGE_DAYS = 35
 
+# ---- SIC SECTOR SCREEN (user ruling 2026-09-16, halal audit fix 2) ---
+# The keyword list has terms for bank / lending / mortgage / insurance
+# but NONE for asset management, investment advice, broker, exchange,
+# capital markets, blank check, REIT or royalty trust. The 2026-09-16
+# audit measured the hole: 213 of the 1,260 armable names sat in SIC
+# 6000-6999, including CLOV -- a health INSURANCE carrier whose vendor
+# label only ever says "Healthcare Plans".
+#
+# So the sector is screened on the SEC's own classification instead of
+# on vendor prose: SIC 6000-6999 is a HARD FAIL.
+#
+# ONE EXCEPTION, 6770 "Blank Checks" (SPACs), by explicit user
+# decision: no categorical SPAC ban. A SPAC is judged on its data like
+# any other name. In practice most still will not arm -- a SPAC whose
+# trust/cash rows are missing is REFUSED as unverified (decision 4) and
+# one whose cash/mcap is ~100% FAILS on ratios -- but it fails BY DATA,
+# not by class.
+#
+# A non-financial company carrying a 6xxx SIC by quirk (EDGAR files
+# some operating companies under their target industry, and some SPACs
+# under theirs) can be restored only by an explicit PASS ruling WITH A
+# BASIS in data/halal_rulings.json.
+SIC_CODES_FILE = _DIR / "data/sic_codes.json"
+SIC_FINANCIAL_LO, SIC_FINANCIAL_HI = 6000, 6999
+SIC_BLANK_CHECK = "6770"
+
+
+def _sic_for(symbol: str) -> dict | None:
+    """SIC record for a symbol from data/sic_codes.json, or None.
+
+    Built offline by `python plan/build_halal_universe.py --sic` from
+    EDGAR (data/edgar/company_tickers.json -> CIK ->
+    data.sec.gov/submissions/CIK##########.json, which is where the
+    `sic` / `sicDescription` fields live; companyfacts carries neither).
+    Read from cache ONLY -- the live gate never blocks a 07:00 scan on
+    an SEC round-trip. A name with no SIC available is NOT excluded on
+    SIC grounds; the keyword screen and the ratios still apply."""
+    global _SIC_CACHE, _SIC_MTIME
+    try:
+        mt = SIC_CODES_FILE.stat().st_mtime
+    except Exception:
+        mt = None
+    if "_SIC_CACHE" not in globals() or _SIC_MTIME != mt:
+        # reloaded on mtime like the rulings file, so a refreshed cache
+        # takes effect without restarting a running session
+        try:
+            with open(SIC_CODES_FILE) as f:
+                _SIC_CACHE = json.load(f)
+        except Exception:
+            _SIC_CACHE = {}
+        _SIC_MTIME = mt
+    r = _SIC_CACHE.get(symbol.upper())
+    return r if isinstance(r, dict) else None
+
+
+def _sic_financial_fail(symbol: str) -> tuple[bool, str, str]:
+    """(is_hard_fail, sic, description) for the 6000-6999 screen."""
+    r = _sic_for(symbol) or {}
+    sic = str(r.get("sic") or "").strip()
+    desc = str(r.get("desc") or r.get("sicDescription") or "")
+    if not sic.isdigit():
+        return False, "", desc            # no SIC -> not excluded here
+    if sic == SIC_BLANK_CHECK:
+        return False, sic, desc           # SPACs judged on their data
+    return (SIC_FINANCIAL_LO <= int(sic) <= SIC_FINANCIAL_HI), sic, desc
+
 
 def _halal_ruling(symbol: str) -> dict | None:
     """USER ruling for a CANNOT-VERIFY name (W-campaign Phase 4,
@@ -697,23 +763,133 @@ def _industry_hits(symbol: str, t) -> tuple[list, str, str]:
 
 
 def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
-    """Halal compliance (same criteria as plan/full_screen.py and the
-    /halal-check skill): loans/mcap <= 10%, deposits/mcap <= 10%,
-    combined <= 20% (one side may exceed 10% if combined stays under 20),
-    haram revenue < 5% (interest income / annualized revenue), plus a
-    haram-industry keyword screen. Uses yfinance quarterly statements --
-    call lazily (2-3 API requests)."""
+    """Halal compliance gate.
+
+    HALAL-FIX EPOCH 2026-09-16 (user decisions taken on the audit in
+    halal-audit-2026-09-16.md). Four doctrine changes, every one of them
+    closing a path that let a name PASS that should have been refused:
+
+    1. STRICT 10 / 10 / 20 -- ALL THREE BIND INDEPENDENTLY:
+           loans/mcap <= 10  AND  cash/mcap <= 10  AND  combined <= 20
+       The old code read `loan_ok = loan_pct <= 10 or combined <= 20`,
+       which made the 10% legs unreachable -- `combined <= 20` made both
+       of them unconditionally true, so it was the ONLY test that could
+       ever bind. 380 of the 1,260 armable names were riding that, with
+       one side over 10%.
+
+    2. SIC 6000-6999 IS A HARD FAIL (see _sic_financial_fail), with one
+       exception: 6770 blank checks (SPACs) are NOT banned by class and
+       are judged on their own data.
+
+    3. THE 5% HARAM TEST IS TRAILING-TWELVE-MONTH, SAME PERIOD BOTH
+       SIDES: interest income and revenue are summed over the SAME last
+       <= 4 filed quarters. The old line divided ONE quarter of interest
+       by FOUR quarters of revenue (`annual_rev = total_rev * 4`), so
+       the threshold actually enforced was 20%. 44 armable names had a
+       true ratio >= 5% -- MRVL at 10.6% and ASST at 8.8% among them.
+
+    4. A MISSING STATEMENT ROW IS NEVER 0. If debt, cash, revenue or
+       interest income is ABSENT for the period the name is REFUSED
+       ("unverified: missing <field>"), never scored as a zero. The old
+       `get_val` returned 0 for an absent row and the guard required
+       ALL THREE of debt/cash/revenue to be zero, so a two-of-three miss
+       sailed through: FLGT passed with a true cash/mcap of 47.7%, MBGL
+       with a true loan/mcap of 33.9%, and 126 blank-check shells passed
+       on haram_pct exactly 0.00 against a ~100% interest-bearing trust.
+       A Class-B (no-financials) external ruling still covers a name on
+       this path -- that is the user's standing exception and the only
+       one.
+
+    Source chain unchanged: yfinance quarterly -> annual -> info, with
+    `src` recording which tier answered. Note that the `info` tier
+    carries no interest-income field at all, so under (4) it can no
+    longer PASS -- it refuses as "missing interest income". That is the
+    correct reading of "absence of evidence is not compliance"; before
+    this fix all 103 info-tier names had haram_pct == 0 by construction
+    and 69 of them were armable.
+
+    Call lazily (2-3 yfinance API requests)."""
     t = t or yf.Ticker(symbol)
 
-    def get_val(df, names):
-        if df is None or df.empty:
-            return 0
+    DEBT_ROWS = ["Total Debt"]
+    CASH_ROWS = ["Cash Cash Equivalents And Short Term Investments"]
+    REV_ROWS = ["Total Revenue", "Operating Revenue"]
+    INT_ROWS = ["Interest Income", "Interest Income Non Operating",
+                "Net Interest Income"]
+
+    def _row(df, names):
+        """The first of `names` PRESENT in df, as a Series, else None.
+        None means the ROW IS ABSENT, which is not the same fact as a
+        row that says zero -- that distinction is the whole of fix (4)
+        and the reason this replaced the old `get_val`."""
+        if df is None or getattr(df, "empty", True):
+            return None
         for n in names:
             if n in df.index:
-                v = df.iloc[df.index.get_loc(n), 0]
-                if not pd.isna(v):
-                    return float(v)
-        return 0
+                return df.iloc[df.index.get_loc(n)]
+        return None
+
+    def _cols(df):
+        """Statement periods, NEWEST FIRST (yfinance already sorts this
+        way; sorted() so a vendor change cannot silently reverse it)."""
+        try:
+            return sorted(df.columns, reverse=True)
+        except Exception:
+            return list(df.columns)
+
+    def _bs_pair(df, maxq=4):
+        """(debt, cash, missing[]) read from the most recent period
+        where BOTH rows carry a value, so the two legs are period
+        matched. An absent row is NAMED, never defaulted to 0.
+
+        Bounded to the `maxq` most recent periods: yfinance's newest
+        balance-sheet column is sometimes sparse, and falling back one
+        quarter is reasonable, but silently scoring a name off a
+        two-year-old balance sheet is not."""
+        drow, crow = _row(df, DEBT_ROWS), _row(df, CASH_ROWS)
+        miss = (["debt"] if drow is None else []) + \
+               (["cash"] if crow is None else [])
+        if miss:
+            return None, None, miss
+        for c in _cols(df)[:maxq]:
+            if not pd.isna(drow[c]) and not pd.isna(crow[c]):
+                return float(drow[c]), float(crow[c]), []
+        return None, None, ["debt/cash (no recent period carries both)"]
+
+    def _ttm(df, maxq=4):
+        """(revenue, interest, n_periods, missing[]) summed over the
+        SAME last <= `maxq` filed periods -- the period-matched 5% test.
+
+        The window is defined by REVENUE (the last <= 4 periods it is
+        filed for), and the interest row must then cover EVERY period in
+        that window or the name is refused. Cherry-picking whichever
+        periods happen to carry both numbers looks tempting and is
+        wrong: MRVL files "Interest Income" in only 2 of its last 4
+        quarters, and one of those two carries a $1.9bn figure against a
+        $2.1bn revenue quarter (a Yahoo mis-tag of the automotive-
+        Ethernet divestiture). Intersecting on availability would score
+        that pair alone at 45%, a number with no period behind it.
+        Requiring full coverage means the window is always a real span,
+        and a row too sparse to cover it is treated as what it is --
+        absent for those periods, therefore unverified (decision 4).
+
+        The name fallback (Interest Income -> ... -> Net Interest
+        Income) is preserved from the pre-fix gate, but is now resolved
+        AGAINST THE WINDOW: the first listed row that covers it wins."""
+        rrow = _row(df, REV_ROWS)
+        if rrow is None:
+            return None, None, 0, ["revenue"]
+        win = [c for c in _cols(df) if not pd.isna(rrow[c])][:maxq]
+        if not win:
+            return None, None, 0, ["revenue (no period carries a value)"]
+        for n in INT_ROWS:
+            if n not in df.index:
+                continue
+            irow = df.iloc[df.index.get_loc(n)]
+            if all(not pd.isna(irow[c]) for c in win):
+                return (sum(float(rrow[c]) for c in win),
+                        sum(float(irow[c]) for c in win), len(win), [])
+        return None, None, 0, ["interest income"]
 
     # FALLBACK CHAIN (2026-08-07). The source here is yfinance, not
     # E*TRADE -- E*TRADE has no fundamentals endpoint we use. The live
@@ -729,7 +905,8 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
         inc = t.quarterly_income_stmt
     except Exception:
         bs = inc = None
-    if (bs is None or getattr(bs, "empty", True)) and             (inc is None or getattr(inc, "empty", True)):
+    if (bs is None or getattr(bs, "empty", True)) and \
+            (inc is None or getattr(inc, "empty", True)):
         src = "annual"
         try:
             bs = t.balance_sheet          # annual statements
@@ -746,45 +923,116 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
                 mcap = None
     mcap = float(mcap or 0)
 
-    total_debt = get_val(bs, ["Total Debt"])
-    cash_total = get_val(bs, ["Cash Cash Equivalents And Short Term Investments"])
-    total_rev = get_val(inc, ["Total Revenue", "Operating Revenue"])
-    interest_inc = get_val(inc, ["Interest Income",
-                                 "Interest Income Non Operating",
-                                 "Net Interest Income"])
-    annual_rev = total_rev * 4
+    total_debt, cash_total, bs_miss = _bs_pair(bs)
+    # ANNUAL TIER: one filed period IS the twelve months, so _ttm's
+    # single column is already TTM -- no x4 anywhere. (The old code
+    # annualized unconditionally at `annual_rev = total_rev * 4`, which
+    # under-stated the annual tier's haram_pct by a further 4x.)
+    ttm_rev, ttm_int, n_q, inc_miss = _ttm(inc)
 
-    loan_pct = (total_debt / mcap * 100) if mcap > 0 else 0
-    cash_pct = (cash_total / mcap * 100) if mcap > 0 else 0
-    combined = loan_pct + cash_pct
-    haram_pct = (abs(interest_inc) / annual_rev * 100) if annual_rev > 0 else 0
-
-    if total_debt == 0 and cash_total == 0 and total_rev == 0:
-        # last resort: yfinance's summary `info` dict often carries these
-        # even when neither statement table is published
+    if total_debt is None and cash_total is None and ttm_rev is None:
+        # last resort: yfinance's summary `info` dict often carries
+        # these even when neither statement table is published. It has
+        # NO interest-income field, so this tier always carries a
+        # missing row and can only ever refuse (audit Bug 3).
         try:
             info = t.info or {}
         except Exception:
             info = {}
-        total_debt = float(info.get("totalDebt") or 0)
-        cash_total = float(info.get("totalCash") or 0)
-        total_rev = float(info.get("totalRevenue") or 0)
-        annual_rev = total_rev            # info revenue is already annual
-        if total_debt or cash_total or total_rev:
+        i_debt, i_cash = info.get("totalDebt"), info.get("totalCash")
+        i_rev = info.get("totalRevenue")
+        if i_debt is not None or i_cash is not None or i_rev is not None:
             src = "info"
-            loan_pct = (total_debt / mcap * 100) if mcap > 0 else 0
-            cash_pct = (cash_total / mcap * 100) if mcap > 0 else 0
-            combined = loan_pct + cash_pct
-            haram_pct = ((abs(interest_inc) / annual_rev * 100)
-                         if annual_rev > 0 else 0)
+            bs_miss = ([] if i_debt is not None else ["debt"]) + \
+                      ([] if i_cash is not None else ["cash"])
+            total_debt = float(i_debt) if i_debt is not None else None
+            cash_total = float(i_cash) if i_cash is not None else None
+            ttm_rev = float(i_rev) if i_rev is not None else None
+            ttm_int, n_q = None, 1        # info revenue is already annual
+            inc_miss = ([] if i_rev is not None else ["revenue"]) + \
+                       ["interest income"]
 
-    # DATA-PRESENCE CHECK (added 2026-08-07 after the live session found
-    # SSP, RMCO and GTN returning PASS on ALL-ZERO fundamentals). With no
-    # balance sheet every ratio computes to 0.0 and every test passes, so
-    # "no data" was silently indistinguishable from "verified permissible"
-    # -- the worst possible failure for a gate whose whole job is to
-    # refuse. Absence of evidence must never read as compliance.
-    no_statements = (total_debt == 0 and cash_total == 0 and total_rev == 0)
+    loan_pct = (total_debt / mcap * 100) \
+        if (mcap > 0 and total_debt is not None) else None
+    cash_pct = (cash_total / mcap * 100) \
+        if (mcap > 0 and cash_total is not None) else None
+    combined = (loan_pct + cash_pct) \
+        if (loan_pct is not None and cash_pct is not None) else None
+    haram_pct = (abs(ttm_int) / ttm_rev * 100) \
+        if (ttm_int is not None and ttm_rev is not None and ttm_rev > 0) \
+        else None
+
+    def _r(x):
+        return None if x is None else round(x, 2)
+
+    # INDUSTRY SCREEN FIRST, ON EVERY PATH (hoisted 2026-09-16; it was
+    # already first on the no-statements path since 2026-09-01). A
+    # brewer/casino/pork label is a hard FAIL regardless of what the
+    # statements say, of whether a market cap exists, and of any
+    # ruling -- so it is settled before anything else can answer.
+    hits, ind, text = _industry_hits(symbol, t)
+    if hits:
+        return {
+            "verdict": "FAIL",
+            "loan_pct": _r(loan_pct), "cash_pct": _r(cash_pct),
+            "combined": _r(combined), "haram_pct": _r(haram_pct),
+            "halal": False, "source": src,
+            "fail_reason": (f"HARAM INDUSTRY ({', '.join(hits[:3])}) "
+                            f"-- industry screen, final regardless "
+                            f"of any ruling"),
+        }
+
+    # FINANCIAL SECTOR (user decision 2026-09-16, fix 2). SIC
+    # 6000-6999 = banks, lenders, insurers (incl. health insurers like
+    # CLOV), asset managers, brokers/exchanges, REITs and funds. Hard
+    # FAIL. SIC 6770 (blank checks / SPACs) is deliberately EXEMPT from
+    # the class rule and judged on its data. A quirk-coded operating
+    # company is restored only by an explicit PASS ruling WITH a basis.
+    fin_sic, sic_code, sic_desc = _sic_financial_fail(symbol)
+    if fin_sic:
+        _sr = _halal_ruling(symbol)
+        _restored = (isinstance(_sr, dict)
+                     and _sr.get("verdict") == "PASS"
+                     and str(_sr.get("basis") or "").strip())
+        if not _restored:
+            return {
+                "verdict": "FAIL",
+                "loan_pct": _r(loan_pct), "cash_pct": _r(cash_pct),
+                "combined": _r(combined), "haram_pct": _r(haram_pct),
+                "halal": False, "source": src,
+                "sic": sic_code,
+                "fail_reason": (f"FINANCIAL SECTOR (SIC {sic_code} "
+                                f"{sic_desc}) -- 6000-6999 is a hard "
+                                f"FAIL (user ruling 2026-09-16); only "
+                                f"an explicit PASS ruling with a basis "
+                                f"can restore a quirk-coded name"),
+            }
+
+    # A FAIL RULING IS FINAL ON EVERY PATH (2026-08-22), and as of
+    # 2026-09-16 it is CHECKED on every path rather than only on the two
+    # it used to reach. It was consulted on the unverifiable branch and
+    # again just before a PASS was returned, which gave the right
+    # verdict but the wrong REASON whenever a ruled-FAIL name also blew
+    # a ratio -- TPCS is FAILED for being a Navy-submarine parts maker,
+    # not for loan/mcap 18.78. The doctrine (rulings _schema; NOTES
+    # 2026-08-21) always said a FAIL ruling is final; it now also gets
+    # to say WHY. This only ever narrows (-> FAIL), never loosens.
+    _fr = _halal_ruling(symbol)
+    if isinstance(_fr, dict) and _fr.get("verdict") == "FAIL":
+        return {
+            "verdict": "FAIL",
+            "loan_pct": _r(loan_pct), "cash_pct": _r(cash_pct),
+            "combined": _r(combined), "haram_pct": _r(haram_pct),
+            "halal": False,
+            "source": src,
+            "ruling": _fr,
+            "fail_reason": (f"HARAM by user ruling (final, "
+                            f"{_fr.get('date', '?')}): "
+                            f"{_fr.get('basis', '')}"),
+        }
+
+    no_statements = (total_debt is None and cash_total is None
+                     and ttm_rev is None)
     if mcap <= 0 and not no_statements:
         # MARKET CAP MISSING (2026-09-01 live-tool fixes). Statements
         # exist, so this is NOT the no-financials case and must never
@@ -794,95 +1042,102 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
         return {
             "verdict": "FAIL",
             "loan_pct": None, "cash_pct": None, "combined": None,
-            "haram_pct": None, "halal": False,
+            "haram_pct": _r(haram_pct), "halal": False,
             "source": src,
             "fail_reason": ("MARKET CAP MISSING -- statements exist "
                             "but the 10/10/20 ratios have no denominator; "
                             "refusing (not a compliance failure). Cache "
                             "the RH market cap and re-run."),
         }
-    if no_statements:
-        # INDUSTRY SCREEN FIRST (2026-09-01 live-tool fixes). A name with
-        # no statements can still carry a brewer/casino/pork label or
-        # summary; that is a hard FAIL on every path and must be checked
-        # BEFORE any external PASS ruling is honoured below.
-        hits, _ind, _text = _industry_hits(symbol, t)
-        if hits:
+
+    def _b_ruling_or(default):
+        """USER EXCEPTION (2026-08-22): "the only exception for my halal
+        rules: the stocks that are not verifiable because we could not
+        find its finances. then for these use zoya and etc." -- when the
+        statements cannot answer, a professional screener's FULL verdict
+        (their AAOIFI thresholds included) is adopted whole. ONLY
+        rulings explicitly marked class B-no-financials ride this: a
+        Class A ruling (financials exist, revenue mix was the question)
+        must never bypass the ratio gates because yfinance had an outage
+        on the day of the call. Reached only AFTER the industry and SIC
+        screens above, which no ruling can override."""
+        b = _halal_ruling(symbol)
+        if (isinstance(b, dict)
+                and b.get("class") == "B-no-financials"
+                and b.get("verdict") in ("PASS", "FAIL")):
+            ok = b["verdict"] == "PASS"
             return {
-                "verdict": "FAIL",
-                "loan_pct": None, "cash_pct": None, "combined": None,
-                "haram_pct": None, "halal": False,
-                "source": src,
-                "fail_reason": (f"HARAM INDUSTRY ({', '.join(hits[:3])}) "
-                                f"-- industry screen, final regardless "
-                                f"of any ruling"),
-            }
-        # USER EXCEPTION (2026-08-22): "the only exception for my halal
-        # rules: the stocks that are not verifiable because we could not
-        # find its finances. then for these use zoya and etc." -- when NO
-        # financials exist our 10/10/20 ratios cannot run at all, so a
-        # professional screener's FULL verdict (their AAOIFI thresholds
-        # included) is adopted whole. ONLY rulings explicitly marked
-        # class B-no-financials ride this branch: a Class A ruling
-        # (financials exist, revenue mix was the question) must never
-        # bypass the ratio gates just because yfinance had an outage on
-        # the day of the call.
-        b_ruling = _halal_ruling(symbol)
-        if (isinstance(b_ruling, dict)
-                and b_ruling.get("class") == "B-no-financials"
-                and b_ruling.get("verdict") in ("PASS", "FAIL")):
-            ok = b_ruling["verdict"] == "PASS"
-            return {
-                "verdict": b_ruling["verdict"],
+                "verdict": b["verdict"],
                 "loan_pct": None, "cash_pct": None, "combined": None,
                 "haram_pct": None, "halal": ok,
                 "source": "external-ruling",
-                "ruling": b_ruling,
+                "ruling": b,
                 "fail_reason": "" if ok else (
                     f"HARAM by external-screener ruling "
-                    f"{b_ruling.get('date', '?')}: "
-                    f"{b_ruling.get('basis', '')}"),
+                    f"{b.get('date', '?')}: {b.get('basis', '')}"),
             }
-        return {
+        return default
+
+    if no_statements:
+        # DATA-PRESENCE CHECK (added 2026-08-07 after the live session
+        # found SSP, RMCO and GTN returning PASS on ALL-ZERO
+        # fundamentals). With no balance sheet every ratio computes to
+        # 0.0 and every test passes, so "no data" was silently
+        # indistinguishable from "verified permissible" -- the worst
+        # possible failure for a gate whose whole job is to refuse.
+        return _b_ruling_or({
             "loan_pct": None, "cash_pct": None, "combined": None,
             "haram_pct": None, "halal": False,
             "fail_reason": "NO FUNDAMENTALS DATA -- cannot verify, "
                            "refusing (not a compliance failure)",
             "source": "none",
-        }
+        })
 
-    loan_ok = loan_pct <= 10 or combined <= 20
-    cash_ok = cash_pct <= 10 or combined <= 20
+    # MISSING-ROW REFUSAL (user decision 2026-09-16, fix 4). Some of
+    # the statement exists, so this is not the no-financials case -- but
+    # a leg we cannot read is a leg we cannot clear, and scoring it 0 is
+    # exactly how the false PASSes happened. Refuse by name.
+    miss = list(bs_miss) + list(inc_miss)
+    if miss:
+        return _b_ruling_or({
+            "verdict": "FAIL",
+            "loan_pct": _r(loan_pct), "cash_pct": _r(cash_pct),
+            "combined": _r(combined), "haram_pct": _r(haram_pct),
+            "halal": False,
+            "source": src,
+            "fail_reason": (f"unverified: missing {', '.join(miss)} "
+                            f"-- an absent statement row is not a zero "
+                            f"(user ruling 2026-09-16); refusing"),
+        })
+
+    # STRICT 10 / 10 / 20 -- each leg binds on its own (fix 1).
+    loan_ok = loan_pct <= 10
+    cash_ok = cash_pct <= 10
     combined_ok = combined <= 20
     haram_ok = haram_pct < 5
+    industry_ok = True                    # hard-failed above if not
 
-    # Industry screen (label + name + business summary; see
-    # _industry_hits for why the label alone is not trusted).
-    hits, ind, text = _industry_hits(symbol, t)
-    industry_ok = not hits
     # haram_pct measures INTEREST INCOME ONLY. For revenue-sensitive
     # businesses that number cannot see alcohol/pork/gaming revenue, so a
     # clean ratio sheet is not evidence of a permissible revenue mix.
     amb = _kw_hits(HARAM_AMBIGUOUS_ANY, text)
     rev_hits = _kw_hits(REVENUE_SENSITIVE_WORDS, text) + amb
-    unverifiable = bool(rev_hits) and not hits
+    unverifiable = bool(rev_hits)
 
     # ---- human-rulings overlay (W-campaign Phase 4, 2026-08-21) -------
     # data/halal_rulings.json carries the USER's per-name rulings for
     # names THIS screen would return CANNOT-VERIFY on. Consulted ONLY on
-    # that path -- never on a hard industry FAIL (`hits` above blocks
-    # `unverifiable`) and never on a ratio FAIL. A FAIL ruling is final
-    # and returns here; a PASS ruling clears ONLY the unverifiability,
-    # so the normal debt/cash ratio verdict still runs below and can
-    # still FAIL the name. Empty/missing rulings file = no change.
+    # that path -- never on a hard industry FAIL (`hits` returns above)
+    # and never on a ratio FAIL. A FAIL ruling is final and returns
+    # here; a PASS ruling clears ONLY the unverifiability, so the normal
+    # debt/cash ratio verdict still runs below and can still FAIL the
+    # name. Empty/missing rulings file = no change.
     ruling = _halal_ruling(symbol) if unverifiable else None
     if ruling and ruling.get("verdict") == "FAIL":
         return {
             "verdict": "FAIL",
-            "loan_pct": round(loan_pct, 2),
-            "cash_pct": round(cash_pct, 2),
-            "combined": round(combined, 2),
-            "haram_pct": round(haram_pct, 2),
+            "loan_pct": _r(loan_pct), "cash_pct": _r(cash_pct),
+            "combined": _r(combined), "haram_pct": _r(haram_pct),
             "halal": False,
             "source": src,
             "ruling": ruling,
@@ -900,10 +1155,8 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
              and industry_ok and not unverifiable)
     if unverifiable:
         return {
-            "loan_pct": round(loan_pct, 2),
-            "cash_pct": round(cash_pct, 2),
-            "combined": round(combined, 2),
-            "haram_pct": round(haram_pct, 2),
+            "loan_pct": _r(loan_pct), "cash_pct": _r(cash_pct),
+            "combined": _r(combined), "haram_pct": _r(haram_pct),
             "halal": False,
             # USER RULING 2026-08-22: "halal stocks has to be halal or
             # not" -- the verdict is BINARY. Unverifiable haram-revenue
@@ -922,58 +1175,36 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
                 f" and unverified is HARAM by rule (2026-08-22). "
                 f"Financing ratios were loan {loan_pct:.2f} / cash "
                 f"{cash_pct:.2f}"
-                + ("" if (loan_pct <= 10 or loan_pct + cash_pct <= 20)
-                   and (cash_pct <= 10 or loan_pct + cash_pct <= 20)
-                   and loan_pct + cash_pct <= 20
-                   else " (which ALSO exceed the 10/10/20 limits)")
+                + ("" if (loan_ok and cash_ok and combined_ok)
+                   else " (which ALSO exceed the strict 10/10/20 limits)")
                 + ". Convertible to PASS only by an affirmative "
                 f"<5% evidence ruling in halal_rulings.json."),
         }
-    # A FAIL RULING IS FINAL ON EVERY PATH (2026-08-22). The overlay was
-    # consulted only on the unverifiable branch, so a FAIL-ruled name
-    # whose fresh data screens clean silently re-entered the armable
-    # list: the 2026-08-22 rebuild caught user-ruled-FAIL SPACs (ASPC,
-    # RDAC, RFAI) and USDE sitting IN halal_list, and SLE (entertainment
-    # FAIL ruling 2026-08-21) returning live PASS after 'entertainment'
-    # went label-only -- re-litigating verdicts the user closed. The
-    # documented doctrine (rulings _schema; NOTES 2026-08-21: 'a FAIL
-    # ruling is final') always said otherwise; the code now matches it.
-    # This check only ever narrows (PASS -> FAIL), never loosens, and
-    # PASS rulings keep their existing single role (clearing
-    # unverifiability only).
-    if halal:
-        _fr = _halal_ruling(symbol)
-        if isinstance(_fr, dict) and _fr.get("verdict") == "FAIL":
-            return {
-                "verdict": "FAIL",
-                "loan_pct": round(loan_pct, 2),
-                "cash_pct": round(cash_pct, 2),
-                "combined": round(combined, 2),
-                "haram_pct": round(haram_pct, 2),
-                "halal": False,
-                "source": src,
-                "ruling": _fr,
-                "fail_reason": (f"HARAM by user ruling (final, "
-                                f"{_fr.get('date', '?')}): "
-                                f"{_fr.get('basis', '')}"),
-            }
+    # (the FAIL-ruling-final check that used to sit here now runs above,
+    # before the ratio legs, so a ruled name FAILS for the reason the
+    # user ruled on -- see the 2026-09-16 note at that check. The
+    # 2026-08-22 regression it closed -- ruled-FAIL SPACs ASPC/RDAC/RFAI
+    # and SLE re-entering the armable list on clean fresh data -- stays
+    # closed; the check simply fires earlier now.)
     out = {
         "verdict": "PASS" if halal else "FAIL",
         "haram_pct_note": "interest income only -- blind to revenue mix",
-        "loan_pct": round(loan_pct, 2),
-        "cash_pct": round(cash_pct, 2),
-        "combined": round(combined, 2),
-        "haram_pct": round(haram_pct, 2),
+        "loan_pct": _r(loan_pct),
+        "cash_pct": _r(cash_pct),
+        "combined": _r(combined),
+        "haram_pct": _r(haram_pct),
+        "haram_periods": n_q,
         "halal": halal,
         "source": src,
         "fail_reason": "" if halal else (
-            f"HARAM INDUSTRY ({', '.join(hits[:3])})" if not industry_ok else
-            "LOAN>10+COMBINED>20" if not loan_ok else
-            "CASH>10+COMBINED>20" if not cash_ok else
+            "LOAN>10" if not loan_ok else
+            "CASH>10" if not cash_ok else
             "COMBINED>20" if not combined_ok else
-            "HARAM>=5%"
+            "HARAM>=5% (TTM interest / TTM revenue)"
         ),
     }
+    if sic_code:
+        out["sic"] = sic_code
     if ruling:
         out["ruling"] = ruling      # provenance: CV cleared by user ruling
     return out
