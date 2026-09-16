@@ -184,7 +184,7 @@ def table(argv):
     P("")
     for c, dist in sorted(ctrl.items()):
         base = re.sub(r"-[RS]$", "", c)
-        kind = "random pick" if c.endswith("-R") else "shuffled exit"
+        kind = "random pick" if "-R" in c else "shuffled exit"
         o = rows.get(base)
         tot = sorted(d["total"] for d in dist)
         exb = sorted(d["ex_best"] for d in dist)
@@ -227,7 +227,9 @@ def table(argv):
     # ---- verdict scan against the pre-registered bar
     P("")
     P("PASS-BAR SCAN (both years $/tkt > 0; beats C37F-fm -56/tkt; "
-      ">=90th pctile of -R on total AND ex_best; -I loses; -S median beaten)")
+      ">=90th pctile of -R on total AND ex_best; -I loses; -S median beaten; "
+      "aug2026 total > 0). PASSES needs every control leg present "
+      "(R x30, I, S x30, aug); PARTIAL = all present legs pass.")
     for k in order:
         if k == "C37F" or k not in rows:
             continue
@@ -237,19 +239,32 @@ def table(argv):
         r = ctrl.get(k + "-R")
         s_ = ctrl.get(k + "-S")
         inv = rows.get(k + "-I")
+        aug = rows.get(k + "@aug")
+        augr = ctrl.get(k + "-R@aug")
         pr = (pct(o["total"], sorted(d["total"] for d in r)),
-              pct(o["ex_best"], sorted(d["ex_best"] for d in r))) if r else None
+              pct(o["ex_best"], sorted(d["ex_best"] for d in r)),
+              pct(o["pt"], sorted(d["pt"] for d in r))) if r else None
+        py = (pct(o["Y1"], sorted(d["Y1"] for d in r)),
+              pct(o["Y2"], sorted(d["Y2"] for d in r)))             if r and o["Y2"] is not None else None
         ps = pct(o["total"], sorted(d["total"] for d in s_)) if s_ else None
+        pa = pct(aug["total"], sorted(d["total"] for d in augr))             if aug and augr else None
         flags = [f"both_years={'Y' if both else 'n'}",
                  f"beats_C37F={'Y' if beats else 'n'}",
-                 f"R_pct={'-' if pr is None else f'{pr[0]:.0f}/{pr[1]:.0f}'}",
+                 f"R_pct(tot/exb/$t)={'-' if pr is None else f'{pr[0]:.0f}/{pr[1]:.0f}/{pr[2]:.0f}'}",
+                 f"R_pct(Y1/Y2)={'-' if py is None else f'{py[0]:.0f}/{py[1]:.0f}'}",
                  f"I_loses={'-' if inv is None else ('Y' if inv['total'] < o['total'] else 'n')}",
-                 f"S_pct={'-' if ps is None else f'{ps:.0f}'}"]
-        ok = (both and beats and pr is not None and min(pr) >= 90
-              and inv is not None and inv["total"] < o["total"]
-              and (ps is None or ps >= 50))
+                 f"S_pct={'-' if ps is None else f'{ps:.0f}'}",
+                 f"aug={'-' if aug is None else format(aug['total'], '+,.0f')}"
+                 + ("" if pa is None else f"(p{pa:.0f})")]
+        legs = [both, beats,
+                None if pr is None else min(pr[:2]) >= 90,
+                None if inv is None else inv["total"] < o["total"],
+                None if ps is None else ps >= 50,
+                None if aug is None else aug["total"] > 0]
+        full = all(x is True for x in legs)
+        partial = all(x is not False for x in legs) and not full
         P(f"  {k:<11} {o['pt']:+7.0f}/tkt  " + "  ".join(flags)
-          + ("  <-- PASSES" if ok else ""))
+          + ("  <-- PASSES" if full else "  <-- PARTIAL" if partial else ""))
     txt = "\n".join(lines)
     print(txt)
     if outf:
