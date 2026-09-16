@@ -6,10 +6,17 @@ description: C37 halal day-trading session — sequential ticket rotation, one p
 # background; nothing there overrides this section.
 
 Champion: **C37** sequential ticket rotation.
-**Benchmark (fill-model epoch 2026-09-02): score the day against
-−$272/traded day (C37F-fm: C37's own rules, full-coverage pool, pool
-hygiene, realistic gap-through fills — −$121,234 over 445 days, 17/23
-negative months), and against break-even. Earlier figures (−$163, −$182)
+**Benchmark (regular-session epoch 2026-09-16): score the day against
+−$32/traded day (C37F-df: C37's own rules on the full-coverage,
+hygiene-cleaned pool, realistic fills, eligibility only after a
+REGULAR-SESSION +10% print, entry deferred one bar past the proving bar
+— −$14,135 over 445 days, −$7/ticket) and against break-even. NOTE: this
+baseline contains NO premarket entries — the pool cannot measure them
+honestly (a premarket gapper that fades before the regular session reaches
++10% is not in the pool). The retired −$272/day figure's entire loss was its
+premarket book (−$112,494 on 691 premarket legs; regular-session legs
+−$8,740). Live premarket entries currently have NO honest baseline.
+Earlier figures (−$163, −$182)
 were flattered by a stop-fill defect that booked exits at levels the exit
 bar never traded (fixed 2026-09-02, plan/fillmodel_test.py).**
 
