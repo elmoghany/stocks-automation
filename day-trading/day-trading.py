@@ -1820,6 +1820,13 @@ STRONG_BEARISH = {"bearish_engulfing", "evening_star", "evening_doji_star",
 _USE_DEFAULT = object()  # sentinel: None must stay meaning "all patterns"
 
 
+# VS2-series (2026-09-16): the video-sourced trigger names. Used only
+# to decide which fills may waive rule 3 under `pullback_relax`.
+_VS2_PATS = ("ORC", "ORC-RT", "micro-pullback", "ema-pullback",
+             "flag-break", "vwap-reclaim", "vwap-band", "vwap-bounce",
+             "abcd", "halt-resume", "rand-entry")
+
+
 def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     buy_set=_USE_DEFAULT,
                     sell_mode: str = DEFAULT_SELL_MODE,
@@ -1892,7 +1899,19 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     rsi_exit: tuple | None = None,
                     macd_exit: bool | None = None,
                     rand_exit: tuple | None = None,
-                    prev_bar_vol_cap: float | None = None) -> list[dict]:
+                    prev_bar_vol_cap: float | None = None,
+                    or_clock: tuple | None = None,
+                    vwap_entry: tuple | None = None,
+                    micro_pullback: tuple | None = None,
+                    abcd_entry: tuple | None = None,
+                    halt_resume: tuple | None = None,
+                    ema_pullback: tuple | None = None,
+                    flag_break: tuple | None = None,
+                    rand_entry: tuple | None = None,
+                    struct_floor_mode: str | None = None,
+                    pullback_relax: bool = False,
+                    vwap_target: bool = False,
+                    ema_exit: int | None = None) -> list[dict]:
     """Run the entry/exit state machine over 1-min bars of a single day.
 
     State machine:
@@ -1924,6 +1943,65 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
     #   cap lets an open-of-bar fill exceed the whole bar's volume on a
     #   thin tape (audit 2026-09-02: median participation 1.2x).
     # All default off => byte-identical to the pre-MX engine.
+    #
+    # ---- VS2-SERIES (2026-09-16): VIDEO-SOURCED ENTRY TRIGGERS ----
+    # Every kwarg below defaults None/False, and each trigger is
+    # evaluated ONLY from bars strictly before the fill bar, so with the
+    # flags off the engine is byte-identical to the pre-VS2 one
+    # (asserted by plan/vs2_test.py --identity against a pre-edit copy).
+    # or_clock=(start_time, minutes): CLOCK-ANCHORED opening range -- the
+    #   09:30 5-minute OR every ORB video teaches. NOTE the existing
+    #   `orb` kwarg anchors on the first bars OF THE SIM WINDOW, which
+    #   under rotation starts at 07:00: the champion's "ORB" is a
+    #   PREMARKET opening range, a different object. Break = first bar
+    #   after the OR window whose High exceeds the OR high; stop-buy
+    #   filled at max(level, Open); ratchets like `orb`. Routes through
+    #   `orb_retest` when that is set (pattern "ORC").
+    # struct_floor_mode: what the position's structure stop is pinned to
+    #   at entry -- "or_low" (the opening-range low: the ORB video's
+    #   "risk level") or "sig_low" (the low of the bar that generated
+    #   the signal: the VWAP video's "stop below the wick"). Needs
+    #   struct_stop_bars set so the engine reads floor_px.
+    # vwap_entry=(mode, k, tol): "reclaim" buys the open of the bar after
+    #   a completed bar closes back above session VWAP having closed
+    #   below it; "band" is the VWAP-band fade -- a completed bar whose
+    #   Low pierced VWAP - k*sigma but whose Close is back above that
+    #   band and still below VWAP (the rejection wick), bought at the
+    #   next open. sigma is the volume-weighted stdev of typical price
+    #   about VWAP, cumulative from the 09:30 anchor.
+    # micro_pullback=(max_pause, pop_pct): Ross Cameron's micro pullback
+    #   -- after a new high of the session-so-far that capped a >= pop_pct
+    #   run off the 10-bar low, 1..max_pause bars fail to exceed it, then
+    #   a bar takes out the PREVIOUS bar's high (stop-buy at that level).
+    # abcd_entry=(leg_pct, max_pull_frac, max_wait): Ross Cameron's ABCD
+    #   -- A is a swing high that did NOT take out the running high, B
+    #   the pullback low (<= max_pull_frac of the A leg, so it holds),
+    #   and the entry is leg D: the first bar whose High takes out A,
+    #   within max_wait bars of B. Stop = B.
+    # halt_resume=(max_wait, ): the "dip and rip on halt resumption"
+    #   trade -- after a gap of >= 5 minutes of missing tape with both
+    #   edges inside the regular session (the engine's LULD-halt proxy),
+    #   buy the first bar within max_wait bars that takes out the
+    #   previous bar's high. NOTE this is the ONE place the standard
+    #   halt guard (`_halt_gap(i) < 5`) is deliberately inverted, and
+    #   only for this trigger.
+    # ema_pullback=(span, tol_pct): the "first pullback to the 9 EMA"
+    #   rule -- a down-close bar that touches within tol% of a RISING
+    #   EMA(span) but closes above it, then the next bar takes out its
+    #   high.
+    # flag_break=(n, max_rng_pct, pole_pct): bull flag -- n bars whose
+    #   whole range is <= max_rng_pct, preceded by a >= pole_pct pole,
+    #   then a stop-buy through the consolidation high.
+    # rand_entry=(window_min, tag): CONTROL -- market buy at the open of
+    #   a UNIFORMLY RANDOM bar within window_min minutes of the first
+    #   eligible bar. Same name, same exits, no trigger information: it
+    #   isolates what the trigger itself is worth.
+    # pullback_relax: the VS2 triggers are PULLBACK entries, so rule 3
+    #   (price >= prev_close + MIN_DAY_GAIN_PCT) is waived for them --
+    #   exactly as market_at_start already waives it. Eligibility is
+    #   still the rotation layer's regular-session +10% print.
+    # vwap_target=True: exit LIMIT at session VWAP (the VWAP video's
+    #   "target the VWAP"); ema_exit=span: exit on a close below EMA.
     assert entry_mode in ("triggers", "market_at_start"), entry_mode
     mas_done = False
     _vw = None            # VWAP array for the open position
@@ -2100,10 +2178,62 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
             or_high = max(cd.h[i] for i in vol_bars)
             or_end = vol_bars[-1]
 
-    def _entry_ok(px):
+    # ---- VS2 precomputation (all guarded; nothing runs with flags off)
+    orc_high = orc_low = None
+    orc_end = -1
+    if or_clock is not None:
+        _ost, _omin = or_clock[0], int(or_clock[1])
+        _m = _ost.hour * 60 + _ost.minute + _omin
+        _oend = dtime(_m // 60, _m % 60)
+        _oidx = [k for k in range(cd.n)
+                 if _ost <= cd.index[k].time() < _oend]
+        if _oidx:
+            orc_high = max(cd.h[k] for k in _oidx)
+            orc_low = min(cd.l[k] for k in _oidx)
+            orc_end = _oidx[-1]
+    _vwe = _vwsd = None
+    if vwap_entry is not None or vwap_target:
+        # session VWAP, anchored 09:30 (the videos' "today's VWAP")
+        _vwe = cd.vwap_from(dtime(9, 30))
+        if vwap_entry is not None and len(vwap_entry) > 1:
+            # volume-weighted stdev of typical price about VWAP,
+            # cumulative from the same anchor (bar i uses bars <= i)
+            _tp = (cd.h + cd.l + cd.c) / 3.0
+            _times0 = cd.index.time
+            _s0 = next((k for k in range(cd.n)
+                        if _times0[k] >= dtime(9, 30)), None)
+            _vwsd = np.full(cd.n, np.nan)
+            if _s0 is not None:
+                _vv = np.cumsum(cd.v[_s0:])
+                _p1 = np.cumsum((_tp * cd.v)[_s0:])
+                _p2 = np.cumsum((_tp * _tp * cd.v)[_s0:])
+                with np.errstate(divide="ignore", invalid="ignore"):
+                    _mu = np.where(_vv > 0, _p1 / _vv, np.nan)
+                    _var = np.where(_vv > 0, _p2 / _vv - _mu * _mu, np.nan)
+                _vwsd[_s0:] = np.sqrt(np.maximum(_var, 0.0))
+    _mp_rm = None
+    if (micro_pullback is not None or abcd_entry is not None) and cd.n:
+        _mp_rm = np.zeros(cd.n, dtype=int)
+        _best, _bi = -1e18, 0
+        for _k in range(cd.n):
+            if cd.h[_k] > _best:
+                _best, _bi = cd.h[_k], _k
+            _mp_rm[_k] = _bi
+    _epb = None
+    if ema_pullback is not None:
+        _epb = pd.Series(cd.c).ewm(span=int(ema_pullback[0]),
+                                   adjust=False).mean().values
+    _eex = None
+    if ema_exit is not None:
+        _eex = pd.Series(cd.c).ewm(span=int(ema_exit),
+                                   adjust=False).mean().values
+    _re_target = [None]        # rand_entry: bar index drawn at first bar
+    _vs2_floor = [None]        # structure stop level handed to the entry
+
+    def _entry_ok(px, relax=False):
         if not (PRICE_MIN <= px <= PRICE_MAX):
             return False
-        if (prev_close is not None
+        if (not relax and prev_close is not None
                 and px < prev_close * (1 + MIN_DAY_GAIN_PCT / 100)):
             return False
         return True
@@ -2380,11 +2510,148 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     # NOTE: budget consumed on FILL, not trigger (see
                     # entry block) -- a gate-rejected trigger costs
                     # nothing
+            # ---- VS2 video-sourced triggers (2026-09-16) ----
+            # Appended as its own chain so the pre-VS2 elif ladder above
+            # is untouched; every branch is guarded by a kwarg that
+            # defaults None, and each reads bars <= i-1 (or bar i's High
+            # for a stop-buy level that was known before the bar).
+            if (brk is None and or_clock is not None
+                    and orc_high is not None and i > orc_end
+                    and cd.h[i] > orc_high):
+                if orb_retest is not None:
+                    if rt_pending is None:
+                        rt_pending = (orc_high, i, "ORC", False, None)
+                else:
+                    brk = ("ORC", max(orc_high, cd.o[i]))
+                    if struct_floor_mode == "or_low":
+                        _vs2_floor[0] = orc_low
+                orc_high = cd.h[i]            # ratchet for the next break
+            if (brk is None and micro_pullback is not None and i >= 3
+                    and _mp_rm is not None):
+                _mpn = int(micro_pullback[0])
+                _pop = float(micro_pullback[1]) if len(micro_pullback) > 1 \
+                    else 0.0
+                _j = _mp_rm[i - 1]            # bar that made the running high
+                _pause = (i - 1) - _j
+                if (1 <= _pause <= _mpn and cd.h[i] > cd.h[i - 1]
+                        and cd.h[i - 1] < cd.h[_j]):
+                    _lo10 = cd.l[max(0, _j - 10):_j + 1].min()
+                    if _lo10 > 0 and (cd.h[_j] / _lo10 - 1) * 100 >= _pop:
+                        brk = ("micro-pullback", max(cd.h[i - 1], cd.o[i]))
+                        if struct_floor_mode == "sig_low":
+                            _vs2_floor[0] = cd.l[i - 1:i].min()
+            if (brk is None and abcd_entry is not None and i >= 6
+                    and _mp_rm is not None):
+                # A = the most recent local high before the pullback that
+                # did NOT set the running high; B = the low since A.
+                _lp = float(abcd_entry[0])
+                _mpf = float(abcd_entry[1])
+                _mw = int(abcd_entry[2])
+                _a = None
+                for _k in range(i - 2, max(0, i - _mw - 2), -1):
+                    if (cd.h[_k] >= cd.h[_k - 1] and cd.h[_k] > cd.h[_k + 1]
+                            and cd.h[_k] < cd.h[_mp_rm[_k]]):
+                        _a = _k
+                        break
+                if _a is not None and _a + 1 <= i - 1:
+                    _bl = cd.l[_a + 1:i].min()
+                    _base = cd.l[max(0, _a - 10):_a + 1].min()
+                    _leg = cd.h[_a] - _base
+                    if (_leg > 0 and _base > 0
+                            and (_leg / _base) * 100 >= _lp
+                            and _bl >= cd.h[_a] - _mpf * _leg
+                            and cd.h[i] > cd.h[_a]):
+                        brk = ("abcd", max(cd.h[_a], cd.o[i]))
+                        if struct_floor_mode == "sig_low":
+                            _vs2_floor[0] = _bl
+            if brk is None and halt_resume is not None and i >= 2:
+                _hw = int(halt_resume[0])
+                for _k in range(max(1, i - _hw), i):
+                    if _halt_gap(_k) >= 5 and cd.h[i] > cd.h[i - 1]:
+                        brk = ("halt-resume", max(cd.h[i - 1], cd.o[i]))
+                        if struct_floor_mode == "sig_low":
+                            _vs2_floor[0] = cd.l[i - 1]
+                        break
+            if (brk is None and ema_pullback is not None and i >= 12
+                    and _epb is not None):
+                _tol = float(ema_pullback[1]) if len(ema_pullback) > 1 \
+                    else 0.0
+                _e1 = _epb[i - 1]
+                if (_e1 > _epb[i - 11]                       # rising EMA
+                        and cd.c[i - 1] < cd.c[i - 2]        # down close
+                        and cd.l[i - 1] <= _e1 * (1 + _tol / 100)
+                        and cd.c[i - 1] > _e1                # held the EMA
+                        and cd.h[i] > cd.h[i - 1]):
+                    brk = ("ema-pullback", max(cd.h[i - 1], cd.o[i]))
+                    if struct_floor_mode == "sig_low":
+                        _vs2_floor[0] = cd.l[i - 1]
+            if brk is None and flag_break is not None:
+                _fn = int(flag_break[0])
+                _frng = float(flag_break[1])
+                _fpole = float(flag_break[2]) if len(flag_break) > 2 else 0.0
+                if i > _fn + 10:
+                    _wh = cd.h[i - _fn:i].max()
+                    _wl = cd.l[i - _fn:i].min()
+                    _pl = cd.l[max(0, i - _fn - 10):i - _fn].min()
+                    if (_wl > 0 and (_wh / _wl - 1) * 100 <= _frng
+                            and _pl > 0
+                            and (_wh / _pl - 1) * 100 >= _fpole
+                            and cd.h[i] > _wh):
+                        brk = ("flag-break", max(_wh, cd.o[i]))
+                        if struct_floor_mode == "sig_low":
+                            _vs2_floor[0] = _wl
+            if (brk is None and vwap_entry is not None and i >= 2
+                    and _vwe is not None):
+                _mode = vwap_entry[0]
+                if _mode == "reclaim":
+                    _a, _b = _vwe[i - 2], _vwe[i - 1]
+                    if (not np.isnan(_a) and not np.isnan(_b)
+                            and cd.c[i - 2] < _a and cd.c[i - 1] > _b):
+                        brk = ("vwap-reclaim", cd.o[i])
+                        if struct_floor_mode == "sig_low":
+                            _vs2_floor[0] = cd.l[i - 1]
+                elif _mode == "bounce":
+                    # Sean Solano's "bounce and reject": price is ABOVE
+                    # VWAP, dips to within tol% of it, and the bar closes
+                    # back above -- buy the next open.
+                    _tolv = float(vwap_entry[1]) if len(vwap_entry) > 1 \
+                        else 0.1
+                    _a, _b = _vwe[i - 2], _vwe[i - 1]
+                    if (not np.isnan(_a) and not np.isnan(_b)
+                            and cd.c[i - 2] > _a and cd.c[i - 1] > _b
+                            and cd.l[i - 1] <= _b * (1 + _tolv / 100)):
+                        brk = ("vwap-bounce", cd.o[i])
+                        if struct_floor_mode == "sig_low":
+                            _vs2_floor[0] = cd.l[i - 1]
+                elif _mode == "band" and _vwsd is not None:
+                    _k = float(vwap_entry[1])
+                    _b, _s = _vwe[i - 1], _vwsd[i - 1]
+                    if not np.isnan(_b) and not np.isnan(_s) and _s > 0:
+                        _low_band = _b - _k * _s
+                        if (cd.l[i - 1] <= _low_band < cd.c[i - 1] < _b):
+                            brk = ("vwap-band", cd.o[i])
+                            if struct_floor_mode == "sig_low":
+                                _vs2_floor[0] = cd.l[i - 1]
+            if brk is None and rand_entry is not None:
+                if _re_target[0] is None:
+                    import random as _rnd
+                    _rr = _rnd.Random(f"{rand_entry[1]}|{cd.index[i]}")
+                    _re_target[0] = i + _rr.randint(0,
+                                                    int(rand_entry[0]) - 1)
+                if i >= _re_target[0]:
+                    brk = ("rand-entry", cd.o[i])
         if brk is not None:
             pat, fill = brk
+            # consume the VS2 structure level with the trigger, so a
+            # gate-rejected trigger can never leak its stop to a later
+            # entry (the trigger and its stop are one decision)
+            _vf, _vs2_floor[0] = _vs2_floor[0], None
             if orb_fill_mode == "close":
                 fill = cd.c[i]         # pessimistic fill (X097)
-            if (_entry_ok(fill) and _pressure_gates_ok(i, fill)
+            # VS2 pullback triggers waive rule 3 (see the kwarg notes);
+            # pullback_relax defaults False so nothing else changes.
+            _relax = bool(pullback_relax) and pat in _VS2_PATS
+            if (_entry_ok(fill, _relax) and _pressure_gates_ok(i, fill)
                     and _halt_gap(i) < 5
                     and (ema_ok is None or (i > 0 and ema_ok[i - 1]))):
                 buy_budget = (budget_cur * (0.5 if add_at is not None
@@ -2404,6 +2671,11 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                                - 1)):i + 1])
                     floor_px = max(_lo3, entry * (1 - (stop_pct or 5)
                                    / 100)) if struct_stop_bars                         else entry * (1 - (stop_pct or 5) / 100)
+                    # VS2: pin the stop to the structure level the video
+                    # names (opening-range low / signal-bar low) when it
+                    # sits below the fill. Default None -> untouched.
+                    if _vf is not None and _vf < entry:
+                        floor_px = _vf
                     risk0 = max(entry - floor_px, entry * 0.001)
                     deployed += shares * entry      # cash-account budget
                     entries_done[0] += 1
@@ -2743,8 +3015,16 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     exit_px, reason = price, f"pressure-flip {pp:+.2f}"
             # ---- MX-series TA sell triggers: evaluated on the COMPLETED
             # bar i (i > entry_i), filled at bar i's close via _sell_fill.
+            # VS2: a resting LIMIT sell at session VWAP -- the VWAP-band
+            # video's "target the VWAP". Checked before the TA block so
+            # it behaves like the other limit targets.
+            if (exit_px is None and vwap_target and i > entry_i
+                    and _vwe is not None and not np.isnan(_vwe[i])
+                    and cd.h[i] >= _vwe[i]):
+                exit_px = _sell_fill(_vwe[i], i, "limit")
+                reason = f"target vwap +{exit_px - entry:.2f}"
             if exit_px is None and i > entry_i and (
-                    vwap_exit or rsi_exit or macd_exit
+                    vwap_exit or rsi_exit or macd_exit or ema_exit
                     or rand_exit is not None):
                 if vwap_exit and _vw is None:
                     # trigger-mode entry: anchor decided at first LONG bar
@@ -2772,6 +3052,11 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     if not np.isnan(m0) and m0 >= 0 > m1:
                         exit_px = _sell_fill(price, i, "close")
                         reason = "macd-cross"
+                if exit_px is None and ema_exit is not None:
+                    if (_eex is not None and i - 1 >= entry_i
+                            and cd.c[i] < _eex[i]):
+                        exit_px = _sell_fill(price, i, "close")
+                        reason = f"ema-cross {int(ema_exit)}"
                 if (exit_px is None and rand_exit is not None
                         and rand_hold is not None
                         and (cd.index[i] - cd.index[entry_i]).total_seconds()

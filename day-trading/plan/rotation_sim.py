@@ -836,6 +836,196 @@ def _mx_cfgs():
 CFGS.update(_mx_cfgs())
 
 
+# ---- VS2-SERIES (2026-09-16, video batch 2): THE MECHANICS RETAIL
+# DAY-TRADING VIDEOS ACTUALLY TEACH, made causal and priced honestly.
+# Sources: video-studies/2026-09-16-*.md (one file per video, with the
+# claim, the exact rule, and what in it would need future information).
+# Every entry trigger is a NEW flag-gated day-trading.py kwarg; with the
+# flags off the engine is byte-identical to the pre-VS2 one
+# (plan/vs2_test.py --identity, 48/48 cells) and no VS2 trigger reads a
+# bar at or after its own fill (plan/vs2_test.py poison test).
+#
+# WHAT IS NEW HERE vs the prior campaigns (dedupe, stated explicitly):
+#  * The champion's `orb` anchors the opening range on the first bars OF
+#    THE SIM WINDOW, which under rotation starts at 07:00 -- it is a
+#    PREMARKET opening range. Every ORB video means the 09:30 5-minute
+#    range. `or_clock` is that object and has never been tested here.
+#  * VWAP has only ever been an EXIT here (MX `vwap_exit`) and, long
+#    ago, a leaky-cache entry GATE. A VWAP RECLAIM entry and a VWAP-BAND
+#    FADE with a VWAP TARGET are both new, and the band fade is the only
+#    mean-reversion-with-a-defined-target rule the campaign has run.
+#  * micro-pullback / bull-flag / 9-EMA-pullback are pullback-CONTINUATION
+#    entries with a STRUCTURE stop (the signal bar's low). The engine's
+#    own dip-reversal path is a pattern-close entry with a % stop; the
+#    G-series retest family was measured on the LEAKY cache and is
+#    therefore eligible for a re-test on this harness (said out loud).
+#  * `rand_entry` is a control the campaign never had: same name, same
+#    exits, entry at a RANDOM minute in the window. It prices the
+#    TRIGGER, where -R prices the PICK.
+# Everything is long-only, halal-PASS (the rotation gate), $15k tickets,
+# same-day flat: the short side of every one of these videos is dropped.
+VS2_BASE_EXIT = {k: None for k in EXIT_KWARGS}
+VS2_BASE_EXIT.update(sell_mode="target_stop_only", wick_guard=3.0,
+                     struct_stop_bars=1, stop_pct=8)
+
+
+def _vs2_sim(**over):
+    """Fully-resolved exit kwargs for a VS2 config.
+
+    Same discipline as EXIT_HOLD: EVERY exit kwarg is named, so nothing
+    can be inherited from Z104's SIMKW silently. `exit_mode` is NOT set
+    because these configs print exit reasons outside the MX whitelist;
+    the resolved set is asserted here instead and echoed by build_simkw.
+    """
+    kw = dict(VS2_BASE_EXIT)
+    kw.update(over)
+    missing = [k for k in EXIT_KWARGS if k not in kw]
+    assert not missing, f"VS2: exit kwargs unresolved: {missing}"
+    # the entry machinery the VS2 triggers replace, turned OFF explicitly
+    kw.setdefault("orb", False)
+    kw.setdefault("buy_set", set())
+    kw.setdefault("pullback_relax", True)
+    return kw
+
+
+def _vs2_cfgs():
+    """VS2 configs. Windows follow the videos: entries open after the
+    09:30 opening range (or after the first 15 minutes for the VWAP
+    rules) and close at the end of the "first 90 minutes"; the ticket is
+    flat by 15:00 either way."""
+    T935, T945, T1100, T1200 = (dtime(9, 35), dtime(9, 45),
+                                dtime(11, 0), dtime(12, 0))
+    # sim_from 09:00: VWAP anchors at 09:30 by construction and a 9-EMA
+    # is warm in ~20 bars, so 30 minutes of lead is enough for every VS2
+    # indicator -- and it halves the bars each ticket's simulate_trades
+    # walks. (MX used 07:00 because its entries could be premarket.)
+    common = dict(sim_from=dtime(9, 0), min_px=3.0, slip=0.001,
+                  escape=None)
+    out = {}
+
+    def add(cid, desc, entry_open, cutoff, sim_extra, **rest):
+        out[cid] = dict(common, desc=desc, entry_open=entry_open,
+                        entry_cutoff=cutoff, sim_extra=sim_extra, **rest)
+
+    ORC = (dtime(9, 30), 5)
+    # --- 09:30 OPENING RANGE BREAK (Master The Market; Bullish Bears) ---
+    add("V1ORB", "09:30 5-min OR break, stop = OR low, bank +10%, "
+                 "entries 09:35-11:00", T935, T1100,
+        _vs2_sim(or_clock=ORC, struct_floor_mode="or_low",
+                 trail_pct=999, bank_all_at=10.0))
+    add("V1ORBb", "09:30 OR break, stop = OR low, bank +15%, "
+                  "entries to 12:00", T935, T1200,
+        _vs2_sim(or_clock=ORC, struct_floor_mode="or_low",
+                 trail_pct=999, bank_all_at=15.0))
+    add("V1ORBr", "09:30 OR break, stop = OR low, fixed 2R bracket",
+        T935, T1100,
+        _vs2_sim(or_clock=ORC, struct_floor_mode="or_low", target_r=2.0))
+    add("V1ORBx", "09:30 OR break + RETEST-of-the-level entry "
+                  "(the 1-min refinement), 2R", T935, T1100,
+        _vs2_sim(or_clock=ORC, orb_retest=(0.15, 20), target_r=2.0))
+    add("V1ORBe", "09:30 OR break, stop = OR low, ride the 9 EMA "
+                  "(exit on close below it)", T935, T1100,
+        _vs2_sim(or_clock=ORC, struct_floor_mode="or_low",
+                 trail_pct=999, ema_exit=9))
+    # SMB Capital teaches the SAME rule on a 15- or 30-minute range.
+    add("V1OR15", "09:30 15-min OR break (SMB), stop = OR low, 2R",
+        dtime(9, 45), T1100,
+        _vs2_sim(or_clock=(dtime(9, 30), 15),
+                 struct_floor_mode="or_low", target_r=2.0))
+    add("V1OR30", "09:30 30-min OR break (SMB), stop = OR low, 2R",
+        dtime(10, 0), T1200,
+        _vs2_sim(or_clock=(dtime(9, 30), 30),
+                 struct_floor_mode="or_low", target_r=2.0))
+    # --- MICRO PULLBACK (Ross Cameron) ---
+    add("V2MPB", "micro pullback: <=3-bar pause after a >=3% pop, buy "
+                 "the break of the prior bar's high, stop = its low, 2R",
+        T935, T1100,
+        _vs2_sim(micro_pullback=(3, 3.0), struct_floor_mode="sig_low",
+                 target_r=2.0))
+    add("V2MPBh", "micro pullback, no target: hold to the 15:00 flatten",
+        T935, T1100,
+        _vs2_sim(micro_pullback=(3, 3.0), struct_floor_mode="sig_low",
+                 trail_pct=999))
+    add("V2MPB1", "micro pullback, 1-bar pause only, 2R", T935, T1100,
+        _vs2_sim(micro_pullback=(1, 3.0), struct_floor_mode="sig_low",
+                 target_r=2.0))
+    # --- FIRST PULLBACK TO THE 9 EMA (Jdub) ---
+    add("V3EMA", "first pullback: down-close bar touching a rising 9 "
+                 "EMA, buy the break of its high, stop = its low, 2R",
+        T935, T1100,
+        _vs2_sim(ema_pullback=(9, 0.25), struct_floor_mode="sig_low",
+                 target_r=2.0))
+    # --- BULL FLAG (Ross Cameron) ---
+    add("V4FLAG", "bull flag: 6 bars inside 2% after a >=5% pole, buy "
+                  "the break of the flag high, stop = flag low, 2R",
+        T935, T1100,
+        _vs2_sim(flag_break=(6, 2.0, 5.0), struct_floor_mode="sig_low",
+                 target_r=2.0))
+    add("V4FLAGw", "bull flag, looser: 5 bars inside 3% after a >=4% "
+                   "pole, 2R", T935, T1100,
+        _vs2_sim(flag_break=(5, 3.0, 4.0), struct_floor_mode="sig_low",
+                 target_r=2.0))
+    # --- VWAP (Trader Drysdale; VWAP-bands videos) ---
+    add("V5VWR", "VWAP reclaim: buy the open after a bar closes back "
+                 "above session VWAP, stop = its low, 2R", T945, T1100,
+        _vs2_sim(vwap_entry=("reclaim",), struct_floor_mode="sig_low",
+                 target_r=2.0))
+    add("V6VWB", "VWAP-band fade (1 sigma): buy the rejection wick at "
+                 "VWAP-1sd, stop under the wick, TARGET = VWAP, 60m "
+                 "time stop", T945, T1200,
+        _vs2_sim(vwap_entry=("band", 1.0), struct_floor_mode="sig_low",
+                 trail_pct=999, vwap_target=True, time_stop_min=60))
+    add("V6VWB2", "VWAP-band fade (2 sigma), target = VWAP, 60m time "
+                  "stop", T945, T1200,
+        _vs2_sim(vwap_entry=("band", 2.0), struct_floor_mode="sig_low",
+                 trail_pct=999, vwap_target=True, time_stop_min=60))
+    add("V5VWB", "VWAP bounce (Solano): above VWAP, dip to within 0.1%, "
+                 "close back above, 2R", T945, T1100,
+        _vs2_sim(vwap_entry=("bounce", 0.1), struct_floor_mode="sig_low",
+                 target_r=2.0))
+    # --- ABCD (Ross Cameron / NetPicks / StocksToTrade) ---
+    add("V7ABCD", "ABCD: leg D = the break of the A high after a pullback "
+                  "that held, stop = B, 2R", T935, T1100,
+        _vs2_sim(abcd_entry=(3.0, 0.62, 20), struct_floor_mode="sig_low",
+                 target_r=2.0))
+    # --- HALT RESUMPTION dip & rip (Ross Cameron / TraderTV) ---
+    add("V8HALT", "halt resumption: after a >=5-min regular-session tape "
+                  "gap, buy the break of the prior bar's high, 2R",
+        T935, dtime(14, 30),
+        _vs2_sim(halt_resume=(10,), struct_floor_mode="sig_low",
+                 target_r=2.0))
+    # --- IDENTITY: the champion, run through the same batch so the pass
+    # itself is proved to reproduce the published benchmark row.
+    out["VS2ID"] = dict(desc="IDENTITY: C37F reproduction inside the "
+                             "VS2 batch (must equal C37F-hf2)",
+                        entry_cutoff=dtime(14, 30), escape=dtime(10, 0))
+    # --- CONTROLS. -R: the PICK is random (30 ROTREP seeds), machinery
+    # identical. -E: the pick is the ranked one but the ENTRY MINUTE is
+    # random inside the same window -- it prices the trigger itself.
+    # -I: the ranking is inverted. Only built for the ranked configs.
+    # The entry-shuffle control cannot ride ROTREP (that switch is wired
+    # to `rand`/`rand_exit`), so its 30 replicates are 30 CONFIGS with
+    # 30 different seeds -- `-E00`..`-E29`. They cost nothing until run.
+    for cid in [c for c in out if c != "VS2ID"]:
+        base = out[cid]
+        out[cid + "-R"] = dict(base, rand=True,
+                               desc="CONTROL random pick: " + base["desc"])
+        for r in range(30):
+            out[f"{cid}-E{r:02d}"] = dict(
+                base,
+                sim_extra=dict(base["sim_extra"], or_clock=None,
+                               micro_pullback=None, ema_pullback=None,
+                               flag_break=None, vwap_entry=None,
+                               orb_retest=None, struct_floor_mode=None,
+                               rand_entry=(30, f"vs2e-{cid}-{r}")),
+                desc=f"CONTROL random entry minute (seed {r}): "
+                     + base["desc"])
+    return out
+
+
+CFGS.update(_vs2_cfgs())
+
+
 def bars_for(sym, date):
     f = M1 / f"{sym}_{date}.csv"
     if not f.exists() or f.read_text(errors="ignore").startswith("EMPTY"):

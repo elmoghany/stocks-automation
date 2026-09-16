@@ -7985,3 +7985,111 @@ yfinance quarters), `data/halal_universe.json` (415 PASS) with
 `data/massive/rotation_results_hf2.json`,
 `rotation_trades_C37F_hf2.json`, `rotation_trades_HOLD1_hf2.json`.
 Logs `/c/tmp/hf2/` (extract, rescreen, rescreen2, rot_hf2, probe13).
+
+## VS2-SERIES PRE-REGISTRATION (2026-09-16): the mechanics retail day-trading videos actually teach
+
+Written BEFORE a single row was run. Edge-search line "video-sourced methods",
+batch 2. Batch 1 (2026-08-09/10, `video-studies/2026-08-*.md`, 11 videos in the
+watch-skill index) produced 1 novel mechanic and 0 adoptions; everything in it
+was measured on the leaky cache, so a batch-1 mechanic MAY be re-tested here --
+and one is (the break-and-retest / G-series family, as `V1ORBx`), said out loud.
+
+### HOW THIS BATCH WAS WATCHED
+The watch-skill MCP could not acquire YouTube in this session (`yt-dlp produced
+no media file`, then a 1800s idle timeout on the second call; 7 of 8 background
+jobs failed at "acquiring source"). Transcripts were therefore pulled directly
+with the same `yt-dlp` binary (`--write-auto-sub`), rendered to timestamped text
+and read in full. What that costs is the FRAME/OCR channel: chart annotations
+that are only drawn on screen are not available, so any rule that is only
+visible (never spoken) is missed. Every mechanic below was stated in words.
+
+### THE MECHANICS, AND WHAT IN EACH ONE IS NOT TESTABLE AS STATED
+1. **09:30 five-minute opening range break** (Master The Market, 2026-07-01;
+   Bullish Bears, 2026-06-11). OR = the first five 1-minute candles after 09:30;
+   entry = break of the OR high; RISK LEVEL = the OR low; "secure profits into
+   the 10-15% move above the level". TESTABLE. **The campaign has never run
+   this.** The engine's `orb` kwarg anchors the range on the first bars OF THE
+   SIM WINDOW, which under rotation is 07:00 -- the champion's "ORB" is a
+   PREMARKET opening range, a different object.
+   UNTESTABLE-AS-STATED inside it: "pay attention to daily/weekly resistance and
+   take profit there" (a discretionary level), and the stock-selection filters
+   "low float / short-sale restricted / has a catalyst" (no SSR or float-at-date
+   feed here; float was measured and rejected in the V-series).
+2. **The 1-minute refinement of the same setup**: price pushes through the OR
+   level, comes BACK to it, holds it as support, and the next leg is the entry.
+   Testable as `orb_retest` on the clock-anchored level.
+3. **Micro pullback** (Ross Cameron). Pop on news, a brief pause, "if it pushes
+   higher, that's where I'm buying" = the break of the pause bar's high.
+4. **Bull flag** (Ross Cameron, `UNoPqBWuLC0`): pole on rising volume, 1-3 light
+   -volume pullback candles, "the candle that makes a new high is the entry,
+   your stop is the low of the pullback, your target is the high of day".
+   The high-of-day target is UNTESTABLE-AS-STATED (it is the day's outcome); the
+   causal stand-in is the 2R bracket he quotes in the same breath (15c risk ->
+   35c target).
+5. **First pullback rule** (Jdub, 2025-12-28): first 90 minutes only; wait for an
+   impulsive move; buy the FIRST dip into a level -- the 5-min opening range
+   high, a down-close candle, or the 9 EMA -- on "a candle closing above the
+   previous candle"; stop below the level; "fixed 1-to-2 risk-reward".
+6. **VWAP-band fade** (Trader Drysdale, 2026-06-13): price INSIDE the 1-sigma
+   VWAP bands, a REJECTION WICK at the band, buy the lower band, "stop goes
+   below the wick", **target = VWAP**, no trades in the first 15 minutes, and
+   "if it hasn't hit VWAP in 60 minutes I close it". Fully testable, and it is
+   the only mean-reversion-with-a-defined-target rule this campaign has run.
+   (His own version is a SHORT at the upper band; that side is dropped.)
+7. **VWAP reclaim / buy pullbacks to VWAP** (VWAP-bands videos).
+8. **Ride the 9 EMA**: exit on the first close below it.
+9. **Red-to-green** (`ipmCceIxj1w`, `WZR5fl_62tc`) -- NEEDS A WIDE UNIVERSE, and
+   is structurally impossible on this pool: RS_CROSS eligibility requires a
+   regular-session +10% print, so every eligible name is already far above the
+   prior close before it can be traded. Queued for the m1w universe.
+10. **Green-on-red / relative strength vs SPY** (`DWWl8A_f0_A`) -- needs index
+    minute bars aligned to each date; only 2025-04-09 SPY exists in m1. NEEDS
+    WIDE UNIVERSE + an index feed. Queued, not run.
+11. **Premarket-high break** (`7AetQRbj7Ss`) -- already in the engine
+    (`extra_break_high`, champion parity) and premarket ENTRIES are outside the
+    RS_CROSS epoch. Not re-run.
+12. **Level 2 / tape reading** -- no historical book. NOT TESTABLE, stated.
+
+### CONFIGS (rotation_sim.CFGS, all appended; no existing function changed)
+`V1ORB` OR break, stop = OR low, bank +10%, 09:35-11:00 | `V1ORBb` bank +15% to
+12:00 | `V1ORBr` OR break, 2R | `V1ORBx` OR break + retest, 2R | `V1ORBe` OR
+break, ride the 9 EMA | `V2MPB` micro pullback <=3-bar pause, 2R | `V2MPB1`
+1-bar pause | `V2MPBh` micro pullback held to the flatten | `V3EMA` 9-EMA first
+pullback, 2R | `V4FLAG` bull flag 6/2%/5% pole, 2R | `V4FLAGw` 5/3%/4% | `V5VWR`
+VWAP reclaim, 2R | `V6VWB` VWAP-band fade 1sd, target VWAP, 60m stop | `V6VWB2`
+2sd | `VS2ID` the champion inside the same batch (must reproduce C37F-hf2).
+All: $15k tickets, k=1 sequential, halal gate, `min_px` $3, 10bps/side,
+`sim_from` 07:00 (indicators warm), same-day flat by 15:00.
+
+### ENGINE (day-trading.py, flag-gated, default OFF)
+New kwargs `or_clock`, `vwap_entry`, `micro_pullback`, `ema_pullback`,
+`flag_break`, `rand_entry`, `struct_floor_mode`, `pullback_relax`,
+`vwap_target`, `ema_exit`. Proofs in `plan/vs2_test.py`:
+**IDENTITY 48/48** cells byte-identical to the pre-edit engine (8 symbol-days x
+{PTRAIL, C37F} x 3 entry starts) and **POISON 0/5,392 breaches** -- for every
+VS2 trigger, replacing all bars at/after a cut with 9e9 / 1e-9 leaves every
+trade that closed before the cut unchanged.
+
+### CONTROLS, PRE-REGISTERED
+* `-R`: the PICK is random (30 ROTREP seeds), machinery/costs/gap allowance
+  identical -- the standard control.
+* `-E00..-E29`: **new control this campaign never had.** Same ranked pick, same
+  exits, entry at a UNIFORMLY RANDOM minute within 30 minutes of the decision
+  (`rand_entry`). `-R` prices the PICK; `-E` prices the TRIGGER. A breakout rule
+  that cannot beat entering the same name at a random minute has no trigger edge
+  whatever its P&L.
+* aug2026 out-of-sample re-run for anything that survives.
+
+### PRIORS (written down so they can be wrong)
+Baseline C37F-hf2 = -$88,784 / 414 traded days / -$55 per ticket; HOLD1-hf2
+-$182/ticket. Three corrections in a row have each removed an apparent edge, and
+`gain_now`'s IC collapsed by five sixths when the universe was made causal.
+My prior: **13 of 14 configs land between -$40 and -$120 per ticket**, i.e.
+indistinguishable from the pool's drift after costs. The one I would bet on to
+be least bad is `V6VWB` -- it is the only rule here with a MEAN-REVERSION entry
+and a MEASURED target (VWAP) rather than an open-ended hold, and the 09-02 MX
+work showed the extension axis is real even though its selection edge was leak.
+My prior on the bar (both years positive, >= $7,500/month, >= 90th percentile of
+30 random controls, aug2026 sign-consistent): **under 5%.**
+Stage A runs the 14 ranked configs only; controls are run for anything that is
+positive in BOTH years, because a 30-rep control on a losing config buys nothing.
