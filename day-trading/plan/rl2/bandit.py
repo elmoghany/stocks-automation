@@ -77,8 +77,11 @@ def shuffle_within_day(y, d, seed):
     return out
 
 
-def run(horizon_idx, variant="real", seed=0, exit_rule=None, tag=""):
+def run(horizon_idx, variant="real", seed=0, exit_rule=None, tag="",
+        min_pred=None):
     import lightgbm as lgb
+    if min_pred is None:
+        min_pred = MIN_PRED
     H = FT.HORIZONS[horizon_idx]
     if exit_rule is None:
         exit_rule = ("flatten",) if H >= 10 ** 5 else ("horizon", H)
@@ -119,7 +122,7 @@ def run(horizon_idx, variant="real", seed=0, exit_rule=None, tag=""):
             else:
                 pr = booster.predict(day.F[t_i, s_i])
             sc[t_i, s_i] = pr
-            mt += SM.run_day(day, sc, exit_rule, min_score=MIN_PRED,
+            mt += SM.run_day(day, sc, exit_rule, min_score=min_pred,
                              max_new_per_step=MAX_NEW_PER_STEP,
                              last_entry_step=last_entry_step)[0]
         s = SM.summarize(mt, len(te_dates), m)
@@ -140,7 +143,7 @@ def run(horizon_idx, variant="real", seed=0, exit_rule=None, tag=""):
     tot["variant"] = variant
     tot["seed"] = seed
     tot["exit_rule"] = list(map(str, exit_rule))
-    tot["min_pred"] = MIN_PRED
+    tot["min_pred"] = float(min_pred)
     if models and models[-1][1] is not None:
         imp = models[-1][1].feature_importance("gain")
         tot["feature_gain"] = sorted(
@@ -155,12 +158,14 @@ def main():
     H = int(a[a.index("--horizon") + 1]) if "--horizon" in a else 30
     variant = a[a.index("--variant") + 1] if "--variant" in a else "real"
     seed = int(a[a.index("--seed") + 1]) if "--seed" in a else 0
+    mp = float(a[a.index("--minpred") + 1]) if "--minpred" in a else None
     hi = FT.HORIZONS.index(H)
     RES.mkdir(parents=True, exist_ok=True)
     t0 = time.time()
-    tot, trades = run(hi, variant, seed)
+    tot, trades = run(hi, variant, seed, min_pred=mp)
     tot["wall_s"] = round(time.time() - t0, 1)
-    f = RES / f"bandit_{variant}_h{H}_s{seed}.json"
+    sfx = "" if mp is None else f"_mp{mp}"
+    f = RES / f"bandit_{variant}_h{H}_s{seed}{sfx}.json"
     f.write_text(json.dumps(tot, indent=1))
     print(json.dumps({k: v for k, v in tot.items()
                       if k not in ("per_month", "feature_gain")}, indent=1))

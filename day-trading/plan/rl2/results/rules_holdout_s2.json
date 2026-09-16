@@ -1,0 +1,71 @@
+{
+ "seed": 2,
+ "mode": "holdout",
+ "rule": {
+  "tests": [
+   [
+    "rvol30",
+    ">",
+    0.00246
+   ],
+   [
+    "print_density5",
+    "<",
+    1.0
+   ],
+   [
+    "xs_rank_ret30",
+    "<",
+    0.21429
+   ]
+  ],
+  "window": [
+   450,
+   840
+  ],
+  "exit": [
+   "rule",
+   {
+    "stop": null,
+    "take": null,
+    "trail": null,
+    "tmax": 240
+   }
+  ]
+ },
+ "train": {
+  "label": "train",
+  "days": 193,
+  "tickets": 310,
+  "total": 3866.12,
+  "per_ticket": 12.471,
+  "tickets_per_day": 1.61,
+  "sharpe": 0.317,
+  "max_dd": -10792.15,
+  "win_rate": 0.4,
+  "ext_exit_n": 259,
+  "ext_exit_pnl": 5124.1,
+  "rth_exit_n": 51,
+  "rth_exit_pnl": -1257.98,
+  "mean_hold": 222.4,
+  "forced": 211
+ },
+ "heldout": {
+  "label": "heldout",
+  "days": 255,
+  "tickets": 830,
+  "total": -10551.63,
+  "per_ticket": -12.713,
+  "tickets_per_day": 3.25,
+  "sharpe": -0.86,
+  "max_dd": -18217.78,
+  "win_rate": 0.4542,
+  "ext_exit_n": 657,
+  "ext_exit_pnl": -14260.18,
+  "rth_exit_n": 173,
+  "rth_exit_pnl": 3708.55,
+  "mean_hold": 223.5,
+  "forced": 521
+ },
+ "wall_s": 1000.2
+}

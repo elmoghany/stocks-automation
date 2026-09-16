@@ -120,25 +120,45 @@ def cost_monotone(days, seed=0):
     return out
 
 
-def foresight(days, horizon_idx=1, exit_rule=("horizon", 30)):
-    """Positive control: score = the trade's own realized net return."""
+def foresight(days, horizon_idx=1, exit_rule=("horizon", 30),
+              min_score=0.0, max_new=2):
+    """Positive control: score = the trade's own realized net return.
+
+    It must run under the SAME policy shape as approach 1 -- buy only
+    where the predicted net return is positive, at most `max_new` per
+    decision -- or it is not a control on the same harness. Scored with
+    min_score=-inf it spends all seven tickets in the first premarket
+    minute and loses money with perfect foresight, which measures the
+    policy shape, not the harness.
+    """
     trades = []
     for d in days:
         sc = np.where(d.tgt_ok[:, :, horizon_idx],
                       d.tgt[:, :, horizon_idx].astype(np.float64), -np.inf)
-        trades += SM.run_day(d, sc, exit_rule)[0]
+        trades += SM.run_day(d, sc, exit_rule, min_score=min_score,
+                             max_new_per_step=max_new)[0]
     return SM.summarize(trades, len(days), "FORESIGHT-30")
 
 
-def random_control(days, seeds=30, exit_rule=("horizon", 30)):
+def random_control(days, seeds=30, exit_rule=("horizon", 30), p_entry=1.0,
+                   max_new=2, label="RANDOM"):
+    """Uniform random scores, same eligibility / fills / costs / exit rule.
+
+    `p_entry` is the per-(step, name) probability that the random score
+    clears the buy threshold; it is how a random control is matched to a
+    policy's ticket RATE, so a selective policy is not being compared
+    with a control that trades every day to the cap.
+    """
     rows = []
     for s in range(seeds):
         trades = []
         for d in days:
             rng = np.random.default_rng(10_000 + s)
             sc = rng.random((FT.T, d.S))
-            trades += SM.run_day(d, sc, exit_rule)[0]
-        rows.append(SM.summarize(trades, len(days), f"RANDOM-s{s}"))
+            trades += SM.run_day(d, sc, exit_rule,
+                                 min_score=1.0 - p_entry,
+                                 max_new_per_step=max_new)[0]
+        rows.append(SM.summarize(trades, len(days), f"{label}-s{s}"))
     tot = np.array([r["total"] for r in rows])
     pt = np.array([r["per_ticket"] for r in rows])
     return {"seeds": seeds, "mean_total": round(float(tot.mean()), 2),
@@ -169,9 +189,17 @@ def main():
     print("cost_monotone:", res["cost_monotone"], flush=True)
     res["foresight_30"] = foresight(days)
     print("foresight_30:", res["foresight_30"], flush=True)
+    res["foresight_30_nothresh"] = foresight(days, min_score=-np.inf,
+                                             max_new=SM.MAX_TICKETS)
+    print("foresight_30_nothresh:", res["foresight_30_nothresh"], flush=True)
     rc = random_control(days)
     res["random_30seeds"] = {k: v for k, v in rc.items() if k != "rows"}
     print("random_30:", res["random_30seeds"], flush=True)
+    for p in (0.02, 0.005, 0.001):
+        r = random_control(days, p_entry=p, label=f"RANDOM-p{p}")
+        res[f"random_30seeds_p{p}"] = {k: v for k, v in r.items()
+                                       if k != "rows"}
+        print(f"random_30 p={p}:", res[f"random_30seeds_p{p}"], flush=True)
     (OUT / "honesty.json").write_text(json.dumps(res, indent=1))
     print("wrote", OUT / "honesty.json", flush=True)
 

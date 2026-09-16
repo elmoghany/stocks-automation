@@ -1,0 +1,90 @@
+{
+ "poison": {
+  "checks": 64,
+  "mismatches": 0,
+  "detail": []
+ },
+ "hold_zero": {
+  "total": 0.0,
+  "tickets": 0
+ },
+ "cost_monotone": {
+  "zero": -514.28,
+  "modelled": -52174.91,
+  "ten_x": -517120.59
+ },
+ "foresight_30": {
+  "label": "FORESIGHT-30",
+  "days": 60,
+  "tickets": 420,
+  "total": 64328.3,
+  "per_ticket": 153.163,
+  "tickets_per_day": 7.0,
+  "sharpe": 20.965,
+  "max_dd": -345.22,
+  "win_rate": 0.7833,
+  "ext_exit_n": 262,
+  "ext_exit_pnl": 31676.69,
+  "rth_exit_n": 158,
+  "rth_exit_pnl": 32651.62,
+  "mean_hold": 45.9,
+  "forced": 0
+ },
+ "foresight_30_nothresh": {
+  "label": "FORESIGHT-30",
+  "days": 60,
+  "tickets": 420,
+  "total": -35824.05,
+  "per_ticket": -85.295,
+  "tickets_per_day": 7.0,
+  "sharpe": -15.773,
+  "max_dd": -34258.3,
+  "win_rate": 0.1452,
+  "ext_exit_n": 416,
+  "ext_exit_pnl": -35522.7,
+  "rth_exit_n": 4,
+  "rth_exit_pnl": -301.35,
+  "mean_hold": 71.4,
+  "forced": 0
+ },
+ "random_30seeds": {
+  "seeds": 30,
+  "mean_total": -53742.88,
+  "min_total": -56205.61,
+  "max_total": -51407.81,
+  "mean_per_ticket": -127.959,
+  "min_per_ticket": -133.823,
+  "max_per_ticket": -122.4,
+  "mean_tickets_per_day": 7.0
+ },
+ "random_30seeds_p0.02": {
+  "seeds": 30,
+  "mean_total": -34597.38,
+  "min_total": -45787.54,
+  "max_total": -22323.77,
+  "mean_per_ticket": -82.375,
+  "min_per_ticket": -109.018,
+  "max_per_ticket": -53.152,
+  "mean_tickets_per_day": 7.0
+ },
+ "random_30seeds_p0.005": {
+  "seeds": 30,
+  "mean_total": -19342.29,
+  "min_total": -28221.71,
+  "max_total": -13277.51,
+  "mean_per_ticket": -46.056,
+  "min_per_ticket": -67.195,
+  "max_per_ticket": -31.613,
+  "mean_tickets_per_day": 7.0
+ },
+ "random_30seeds_p0.001": {
+  "seeds": 30,
+  "mean_total": -11674.97,
+  "min_total": -18881.44,
+  "max_total": -2136.86,
+  "mean_per_ticket": -45.762,
+  "min_per_ticket": -70.413,
+  "max_per_ticket": -12.352,
+  "mean_tickets_per_day": 4.25
+ }
+}
