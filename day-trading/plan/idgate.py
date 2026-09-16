@@ -178,11 +178,43 @@ EXPECT_PRE = {
 # The new anchors are the RS_DEFER=1 control -- the row the NOTES
 # baseline is quoted from -- re-measured on the fixed gate:
 #   C37F-hf / HOLD1-hf   RS_CROSS=1 RS_DEFER=1, shard `hf`
-#     (compare C37F-df -14,135 and HOLD1-df -103,158, pre-fix, from the
-#      2026-09-16 eligibility-epoch table in NOTES)
 #   C37F-hfm             RS_CROSS=0 RS_DEFER=0, shard `hf_fm`
-#     (the old C37F-fm -121,234 is NOT reproducible any more; this row
-#      records what that same env now yields)
+#
+# MEASURED 2026-09-16 (logs /c/tmp/hf/{rot_hf,rot_hfm}.log):
+#
+#   config     total      year     y2025   tkts   $/tkt   traded days
+#   C37F-hf   -42,778    -5,954   -36,824  1,337   -32     216 + 144
+#   HOLD1-hf  -44,122    -8,518   -35,604    360  -123     216 + 144
+#   C37F-hfm -118,826   -48,672   -70,154  1,460   -81     218 + 148
+#
+#   pre-fix reference (frozen, NOT reproducible on this engine):
+#   C37F-df   -14,135   -10,919    -3,216  2,038    -7     445 traded
+#   HOLD1-df -103,158   -56,412   -46,746    448  -230     445 traded
+#   C37F-fm  -121,234   -79,386   -41,848  2,148   -56     445 traded
+#
+# READ THE SIGNS CAREFULLY, THEY DO NOT ALL POINT THE SAME WAY:
+#   * C37F-hf is WORSE than C37F-df (-42,778 vs -14,135) and its
+#     per-ticket loss is unchanged at -$32 vs -$7 -- the gate removed
+#     701 tickets and the ones it removed were, on balance, the winners.
+#     Year 1 IMPROVED (-10,919 -> -5,954); year 2 got much worse
+#     (-3,216 -> -36,824). Do not quote either year alone.
+#   * HOLD1-hf is much BETTER than HOLD1-df (+59,036), on 88 fewer
+#     tickets: the halal-refused names were net losers for a
+#     hold-to-flatten rule.
+#   * C37F-hfm -118,826 CONFIRMS that RS_CROSS=0 no longer reproduces
+#     -121,234. That is the expected and intended consequence of
+#     changing the gate, not a break. The delta is small (+2,408) only
+#     because the premarket book dominates that row.
+# The traded-day count itself moved (445 -> 360 for the -hf rows):
+# 85 days no longer have a single armable name. Ticket counts, not
+# totals, are the honest unit of comparison across this epoch.
+#
+# THREE CAUSES ARE MIXED IN THESE ROWS and are NOT separated: the gate
+# doctrine (strict 10/10/20, SIC 6xxx, TTM 5%, missing-row refusal), the
+# EDGAR tier-precedence debt fix, and a pt_halal COVERAGE growth (the
+# last extract+merge predated the 2026-08-22 m1 backfill; re-running it
+# took the cache from 1,393 to 3,677 symbols and 11,990 to 33,555
+# EDGAR-side quarters). See the NOTES section of this date.
 ROT_EXPECT = {
     # (config, epoch, label): exact expected total
     ("C37F", "fm", "year"): -79_386,       # RS_CROSS=0, pre-epoch
@@ -193,7 +225,16 @@ ROT_EXPECT = {
     ("C37F", "rs", "y2025"): +6_442,
     ("HOLD1", "rs", "year"): -36_329,
     ("HOLD1", "rs", "y2025"): -14_523,
-    # --- halal-fix epoch 2026-09-16 (filled from the runs below) ---
+    # --- HALAL-FIX EPOCH 2026-09-16, measured this date ---
+    # C37F-hf / HOLD1-hf: RS_CROSS=1 RS_DEFER=1, shard `hf`
+    ("C37F", "hf", "year"): -5_954,        # 834 tkts, 216 traded days
+    ("C37F", "hf", "y2025"): -36_824,      # 503 tkts, 144 traded days
+    ("HOLD1", "hf", "year"): -8_518,       # 216 tkts
+    ("HOLD1", "hf", "y2025"): -35_604,     # 144 tkts
+    # C37F-hfm: RS_CROSS=0 RS_DEFER=0, shard `hf_fm` -- the row that
+    # replaces the un-reproducible C37F-fm
+    ("C37F", "hfm", "year"): -48_672,      # 917 tkts, 218 traded days
+    ("C37F", "hfm", "y2025"): -70_154,     # 543 tkts, 148 traded days
 }
 # Which shard file each epoch's rows live in (data/massive/).
 ROT_SHARD = {"fm": "rotation_results_rs_id.json",

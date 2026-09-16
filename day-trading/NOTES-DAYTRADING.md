@@ -7297,3 +7297,345 @@ Logs /c/tmp/rs/*.log (id, bench, bench_aug, mx, mx_aug, rA, rB, r_aug, inv0,
 def, def_aug, ic, smoke, smoke2, rule4_*). Reproduce any row with the env in
 plan/idgate.py's ROT_EXPECT comment; `python plan/idgate.py --rot` checks the
 anchors (and their env) without re-running anything.
+
+
+## HALAL-FIX EPOCH (2026-09-16): the audit's findings, ruled on and landed
+
+The 2026-09-16 audit (`halal-audit-2026-09-16.md`) found nine defects and said
+of them: *"every defect found errs toward PASSING a name that should have been
+refused, and none toward refusing a permissible one."* The user ruled on six
+points and they are now in the code. **The armable universe went 1,260 -> 393
+(-69%).** Nothing loosened except one deliberate un-banning; everything else
+narrowed.
+
+### THE SIX DECISIONS, AS IMPLEMENTED
+
+**1. STRICT 10 / 10 / 20 — all three legs bind independently.**
+`loans/mcap <= 10 AND cash/mcap <= 10 AND combined <= 20`. The old code read
+`loan_ok = loan_pct <= 10 or combined <= 20`, which made the 10% legs
+*unreachable*: `combined <= 20` made both of them unconditionally true, so
+`combined` was the only test that could ever bind. 380 of the 1,260 armable
+names were riding that (183 with loan > 10, 197 with cash > 10).
+
+**2. SIC 6000–6999 is a hard FAIL — EXCEPT 6770 blank checks.**
+The keyword screen has `bank / lending / mortgage / insurance` and no term for
+asset management, investment advice, broker, exchange, capital markets, REIT
+or royalty trust; CLOV, a health *insurance* carrier, wears the vendor label
+"Healthcare Plans". So the sector is now screened on the SEC's own
+classification. **SPACs are NOT banned by class** (explicit user decision): a
+blank check is judged on its data like anything else, and in practice it still
+almost never arms — by data, not by class (see the lifted-ruling table below).
+A non-financial company carrying a 6xxx SIC by quirk is restored only by an
+explicit PASS ruling **with a basis**.
+
+**3. The 5% test is TTM interest / TTM revenue, same periods both sides.**
+The old line divided ONE quarter of interest by FOUR quarters of revenue
+(`annual_rev = total_rev * 4`), so the threshold actually enforced was **20%**.
+The window is the last <=4 filed periods that carry revenue, and the interest
+row must cover **every** period in it — cherry-picking whichever periods happen
+to carry both numbers is wrong and was tried first: MRVL files "Interest
+Income" in only 2 of its last 4 quarters and one of those two carries a $1.9bn
+figure against a $2.1bn revenue quarter (a Yahoo mis-tag of the automotive-
+Ethernet divestiture), which scored that pair alone at 45% — a number with no
+period behind it. Full coverage means the window is always a real span, and a
+row too sparse to cover it is what it is: absent, therefore unverified. On the
+annual tier the window is ONE column (one filed year IS the twelve months) and
+there is no x4 anywhere, closing audit Bug 4 as well.
+
+**4. A missing statement row is never 0.** Absent debt / cash / revenue /
+interest income REFUSES — `unverified: missing <field>` — unless a Class-B
+(no-financials) external ruling covers the name. The old `get_val` returned 0
+for an absent row and the guard required ALL THREE of debt/cash/revenue to be
+zero, so a two-of-three miss sailed straight through. **This single rule is the
+largest cause of the shrinkage: 337 of the 867 removals.**
+
+**ZERO REVENUE, NON-ZERO INTEREST — a class the audit did not name.** 109
+armable names (pre-revenue biotechs and blank-check shells: ABVX, PVLA, RDAC …)
+file a revenue row that reads 0.00 alongside a positive interest-income row.
+Both rows are present, so this is not the missing-row case — and the old
+`if annual_rev > 0 else 0` scored them **haram_pct 0.00 and passed them**, when
+in fact 100% of their income is interest. They now score `haram_pct = 100.0`.
+Zero revenue AND zero interest carries no information and refuses as unverified.
+
+**5. The EDGAR tier-precedence debt bug (audit Bug 5).** `_debt_at` RETURNED
+the first tier that had any tag present, discarding the tier-2 aggregate.
+QCOM's 2026-06-28 10-Q tags `LongTermDebtCurrent` 1,991M + `CommercialPaper`
+498M (tier 1) *and* `LongTermDebt` 12,781M (tier 2): precedence returned
+**2,489M against a true 15,270M**. Now the maximum across tiers. Re-extract
+result:
+
+> **3,689 quarters changed across 792 of 4,750 compared symbols (16.7%), every
+> one of them UPWARD** (over-counting debt only ever refuses more).
+> QCOM 2,489M -> 15,270M; TSLA 281M -> 9,061M (x32); WFC 25,168M -> 182,139M;
+> CTEV 15M -> 4,637M; BLMN 10M -> 703M. Cases where tier 1 was present but
+> summed to exactly zero (AAP, ABOS, ARDX, BIIB …) went 0 -> the real figure.
+
+Caveat kept from the audit §2.3: even `max(components, aggregate)` is not
+universally right (MKSI tags `LongTermDebt` 2,544M *and* `ShortTermBorrowings`
+1,399M as disjoint lines). **XBRL debt does not reduce to one tag rule**; this
+is the conservative approximation, not the truth.
+
+The re-extract also added a **`miss` list** to every stored quarter naming each
+line the filing did not tag, which is what lets the backtest gate refuse a
+quarter instead of scoring a fabricated zero.
+
+**COVERAGE CHANGE RIDING ALONG (disclose, do not hide).** The last `extract` +
+`merge` ran 2026-08-14, before the 2026-08-22 full m1 backfill, so re-running
+it also grew the cache: **data/pt_halal 1,393 -> 3,677 files, EDGAR-side
+quarters 11,990 -> 33,555.** That is a *coverage* improvement (more names
+verifiable point-in-time = fewer refusals) pulling the opposite way from the
+debt fix and the missing-row rule. The halal-fix rotation rows below therefore
+carry three causes at once — gate doctrine, debt arithmetic, cache coverage —
+and no attempt is made here to separate them.
+
+**6. Two rulings.** **TPCS -> FAIL**: TechPrecision is a defense contractor *by
+trade*, not a supplier selling into defense — its own EDGAR description says it
+makes custom components for U.S. Navy submarines and aircraft carriers and USMC
+military helicopters, and the submarine components are made exclusively for the
+Navy. That is not the AMD case the 2026-08-14 ruling protects (AMD sells
+general-purpose chips that defense happens to buy); the label-only screen missed
+it because Yahoo tags it Industrials / Metal Fabrication. **CTW -> FAIL**: CTW
+Cayman operates a web-based gaming platform in Japan and Singapore —
+entertainment IS the line, functionally identical to SLE (ruled FAIL
+2026-08-21); its labels say "Gaming"/"Multimedia", neither of which is in
+`HARAM_PRIMARY_LABEL`.
+
+**THE BLANKET SPAC RULINGS ARE LIFTED.** The nine 2026-08-22 class-rule FAILs
+(RFAI MLAA OTAI SHOT VII TCGX RDAC ASPC MCAH) moved to a `_lifted` block in
+`data/halal_rulings.json` — history kept, verdict withdrawn. Judged on their
+data, every one of them still refuses:
+
+    ASPC  6770  FAIL  unverified: missing debt/cash (no recent period carries both)
+    MCAH  6770  null  no fundamentals at all
+    MLAA  6770  FAIL  unverified: missing revenue, interest income
+    OTAI  6770  FAIL  unverified: missing interest income
+    RDAC  6770  FAIL  HARAM 100% (TTM interest / TTM revenue -- zero revenue)
+    RFAI  6770  FAIL  unverified: missing debt
+    SHOT  6770  FAIL  unverified: missing revenue, interest income
+    TCGX  6770  null  no fundamentals at all
+    VII   6770  FAIL  unverified: missing cash, revenue, interest income
+
+That is the point of the decision: the class ban was doing work the data can do
+by itself, and the data says it more honestly.
+
+### SIC SOURCE AND COVERAGE
+`data/sic_codes.json`, built by `python plan/build_halal_universe.py --sic`:
+`data/edgar/company_tickers.json` (ticker -> CIK) then
+`data.sec.gov/submissions/CIK##########.json` (CIK -> `sic`). companyfacts.zip
+carries only `{cik, entityName, facts}` — no SIC — so submissions is the only
+EDGAR source. **11,134 symbols cached, 0 fetch errors**; 1,298 financial
+6000–6999 (ex 6770), 225 blank-check 6770, and **5,995 with no usable SIC**
+(no company CIK at all — ETFs and 1940-Act funds have none, itself a tell).
+Names with no SIC are **not** excluded on SIC grounds; the keyword screen and
+the ratios still decide them. Of the 1,260 previously-armable names, 86 were
+SIC 6000–6999 ex-6770, 86 were 6770, and 146 had no usable SIC. **The new
+393-name armable list contains ZERO SIC-6xxx names and 4 with no SIC.**
+
+FIRST ATTEMPT WAS WRONG AND WAS REDONE: `--sic` originally covered only
+`universe()` (today's >= $2 grouped-daily tape), which left 55 armable names —
+mostly 6770 shells that have since fallen under $2 — with no SIC at all, i.e.
+silently exempt from the sector screen. It now covers
+`universe() | halal_universe | rulings`.
+
+### UNIVERSE BEFORE / AFTER
+
+    verdict     before     after
+    PASS         1,260       393     <- armable
+    FAIL         3,437     4,300
+    null         6,064     6,068     "NO FUNDAMENTALS DATA, refusing"
+    total       10,761    10,761
+
+Evidence grade of the 393 survivors: `quarterly` 389, `external-ruling` 3,
+`annual` 1. **`info` 69 -> 0**: that tier carries no interest-income field at
+all, so under decision 4 it can no longer PASS (audit Bug 3, closed).
+
+### THE 867 REMOVALS, BY CAUSE
+
+    missing-row (unverified: missing <field>)            337
+    strict-10 (LOAN>10 or CASH>10)                       275
+    SIC 6000-6999                                         86
+    TTM 5% haram                                          79
+    strict-10, ALSO fails the old gate on today's data     75   <- drift, not doctrine
+    no fundamentals / no market cap                       11
+    TTM 5%, ALSO fails the old gate on today's data         2   <- drift
+    user ruling (TPCS, CTW)                                2
+    FAIL -> PASS                                            0
+
+The two "also fails the old gate on today's data" buckets are measured, not
+assumed: the rescreen runs a replica of the PRE-FIX arithmetic on the SAME
+fresh statements (`_legacy_probe`, report-only, never consulted by a verdict)
+and a name whose ratios blow up under both gates is attributed to drift.
+**77 of the 867 are drift; 790 are the gate change.**
+
+Every name the audit said should change did:
+FLGT (CASH>10), MBGL (LOAN>10), PVLA, ANAB, TVA (missing debt/cash),
+EARN + PSA (SIC 6798 REIT), CLOV (SIC 6324 health insurer), MAMA,
+FACT (missing debt — the SPAC filed under SIC 3728 Aircraft Parts),
+DAAQ (SIC 6022), MCGA (SIC 6199), DAVE + CHYM (SIC 6199 consumer lending /
+neobank), BLK (6211), CBOE + CME (6200), TROW (6282), LB (6792),
+MSTR (6199), the bond funds TSI/PAI/PCF/NUV (missing interest income),
+NOMA + AMAT + NET (TTM 5%), ABNB + KO (strict 10), TPCS + CTW (rulings).
+
+### THE 13-NAME PROBE
+
+    sym    before  after   why
+    AMD     PASS -> PASS   loan 0.52 cash 1.59 comb 2.11 haram 0.16
+    SWKS    PASS -> PASS   loan 5.03 cash 5.90 comb 10.93 haram 0.66
+    HLIT    PASS -> FAIL   CASH>10 (cash 17.81, comb 27.80 -- also fails the OLD gate today)
+    ASST    PASS -> FAIL   SIC 6199 Finance Services (Strive, Inc.)
+    MRVL    PASS -> FAIL   HARAM 15.84% TTM  <- the audit predicted this (its own estimate 10.6%)
+    LMT     FAIL -> FAIL   HARAM INDUSTRY (defense, aerospace)
+    NFLX    FAIL -> FAIL   HARAM INDUSTRY (entertainment)
+    SAM     FAIL -> FAIL   HARAM INDUSTRY (brewer)
+    CMG     FAIL -> FAIL   HARAM INDUSTRY (pork)
+    RRGB    FAIL -> FAIL   user ruling 2026-08-21
+    KO      PASS -> FAIL   LOAN>10 (11.41) -- the probe always expected KO to FAIL; now it does
+    RETO    FAIL -> FAIL   user ruling 2026-08-22
+    NDLS    FAIL -> FAIL   user ruling 2026-08-22
+
+Three of the five expected PASSes are gone. ASST and MRVL were flagged in
+advance by the audit; **HLIT is new** and fails on data that moved (cash/mcap
+8.37 -> 17.81 since the 2026-09-01 build), not only on the strict-10 rule.
+All eight expected FAILs FAIL, and KO — expected FAIL, previously PASSING —
+now fails on the strict 10% loan leg.
+
+### LIVE-TRADED NAMES, NEW STATUS
+
+    QCOM  PASS  loan 8.61 cash 4.68 comb 13.30 haram 1.11   <- the most recent ticket, clean
+    TH    PASS  loan 2.62 cash 0.33 comb  2.95 haram 0.09
+    BE    PASS  loan 3.40 cash 3.28 comb  6.68 haram 1.94
+    LFST  PASS  loan 9.74 cash 4.79 comb 14.53 haram 0.64
+    MRVI  PASS  loan 6.82 cash 2.70 comb  9.52 haram 3.93
+    NEOV  PASS  loan 0.74 cash 5.84 comb  6.58 haram 0.32
+    OKTA  PASS  loan 0.16 cash 7.01 comb  7.17 haram 3.09
+    ---- no longer armable ----
+    ASST  FAIL  SIC 6199 Finance Services
+    HIVE  FAIL  SIC 6199 Finance Services (and loan 45.96 / cash 26.88 anyway)
+    MRVL  FAIL  HARAM 15.84% TTM
+    MMED  FAIL  unverified: missing interest income
+    SMMT  FAIL  unverified: missing interest income
+    RDDT  FAIL  unverified: missing interest income
+    CRML  FAIL  unverified: missing revenue
+    LPTH  FAIL  CASH>10 (13.10)
+    DELL  FAIL  LOAN>10 (12.53)
+    GTLB  FAIL  CASH>10 (16.54); haram 4.50% TTM, just under the line
+    RARE  FAIL  CASH>10 (52.62)
+    ANGX  FAIL  HARAM INDUSTRY (entertainment, movie) -- already FAIL before
+    FRMI  FAIL  LOAN>10 + COMBINED>20 -- already FAIL before
+
+**Seven of the eighteen names this campaign has traded would still be armable.**
+None of the removals is a retroactive compliance claim about past tickets — the
+verdicts are today's data under today's rules — but MRVL and ASST were traded
+under a gate that has now been shown to have been 4x too lenient on the 5% test
+and blind to the financial sector respectively, exactly as the audit predicted.
+
+### THE BACKTEST GATE MOVED TOO — AND FURTHER THAN THE LIVE ONE
+
+`halal_pt` got the same four rules (`sector_clean`, `_q_miss`, `_ttm_pt`, strict
+legs). One consequence deserves stating plainly because it is an ASYMMETRY, not
+a reconciliation: **24,906 of the 33,555 EDGAR-side quarters carry at least one
+untagged line, 17,718 of them interest income.** EDGAR filers routinely do not
+tag an immaterial interest-income concept, while Yahoo publishes an
+"Interest Income" row far more often — so decision 4 bites much harder on the
+backtest gate than on the live gate. The two gates now agree on DOCTRINE and
+still disagree on DATA. That is a smaller gap than before and an honest one,
+but it is not closed.
+
+### IDENTITY: EVERY PRE-2026-09-16 ROTATION ROW IS NOW FROZEN HISTORY
+
+`halal_pt` is a different function, so `C37F-fm`, `C37F-rs`, `HOLD1-rs` and the
+`-df` rows **cannot be reproduced by re-running**. They are kept in
+`plan/idgate.py::ROT_EXPECT` because `--rot` asserts what the shard FILES still
+say, which is a real check, and because the deltas are the measurement. Same
+treatment `EXPECT_PRE` already has.
+
+### THE NEW IDENTITY ROWS (measured 2026-09-16)
+
+    config     total      year     y2025   tkts   $/tkt   traded days
+    C37F-hf   -42,778    -5,954   -36,824  1,337   -32     216 + 144
+    HOLD1-hf  -44,122    -8,518   -35,604    360  -123     216 + 144
+    C37F-hfm -118,826   -48,672   -70,154  1,460   -81     218 + 148
+    ---- pre-fix reference, FROZEN (not reproducible on this engine) ----
+    C37F-df   -14,135   -10,919    -3,216  2,038    -7     445 traded
+    HOLD1-df -103,158   -56,412   -46,746    448  -230     445 traded
+    C37F-fm  -121,234   -79,386   -41,848  2,148   -56     445 traded
+
+`-hf` = RS_CROSS=1 RS_DEFER=1 POOL_HYGIENE=1 HALAL_STRICT=1 PT_FILED=1,
+shard `hf`.  `-hfm` = the same with RS_CROSS=0 RS_DEFER=0, shard `hf_fm`.
+Reproduce with the commands in `plan/idgate.py::ROT_EXPECT`;
+`python plan/idgate.py --rot` checks all twelve rows (and their env) without
+re-running anything — **ALL EXACT** as of this write-up.
+
+**READ THE SIGNS CAREFULLY — THEY DO NOT ALL POINT THE SAME WAY.**
+
+* **C37F-hf is WORSE than C37F-df**: -42,778 vs -14,135, and the per-ticket
+  loss went from -$7 to -$32. The stricter gate removed 701 tickets and, on
+  balance, **the tickets it removed were the winners**. Year 1 improved
+  (-10,919 -> -5,954); year 2 got much worse (-3,216 -> -36,824). Quoting
+  either year alone would be cherry-picking.
+* **HOLD1-hf is much BETTER than HOLD1-df**: +59,036 on 88 fewer tickets. For a
+  hold-to-flatten rule the halal-refused names were net losers.
+* **`RS_CROSS=0 RS_DEFER=0` C37F no longer reproduces -121,234.** It now yields
+  **-118,826** (recorded as `C37F-hfm`). That is expected and intended: the gate
+  changed. The delta is small (+2,408) only because that row is dominated by the
+  premarket book, which the gate barely touches.
+* **Traded days fell 445 -> 360 for the `-hf` rows**: 85 days no longer have a
+  single armable name. Across this epoch **ticket counts, not totals, are the
+  honest unit of comparison.**
+
+A NOTE ON WHAT THIS DOES *NOT* SAY. It does not say the halal fixes cost money.
+Three causes are mixed into every one of these rows — gate doctrine, the EDGAR
+debt arithmetic, and the pt_halal coverage growth — and no attempt was made to
+separate them (each isolation would be another ~90-minute pass). It also does
+not change the standing conclusion: **no config is positive per ticket on a
+causal universe.** C37F-hf at -$32/ticket is worse than C37F-df's -$7 and
+nowhere near positive; the honest-baseline line of 2026-09-02 stands, and if
+anything the compliance-correct universe makes it harder, not easier.
+
+### ACTION REQUIRED AT THE CLOSE — SWAP THE ARMABLE LIST
+
+A live paper session (Day 23) was running during this rebuild, so
+`data/halal_list.json` was **deliberately left at the pre-fix 1,260-name list**
+and the rebuilt list is parked:
+
+> **After 16:00 ET: `cp data/halal_list.NEW.json data/halal_list.json`**
+> (393 names, `updated` 2026-09-16). The pre-fix list is preserved at
+> `data/halal_list.pre-2026-09-16.json`; `--park-list` on
+> `plan/build_halal_universe.py --rescreen` is what produced the parked copy.
+
+Until that swap the scanner is still arming off the OLD list, which contains
+867 names the corrected gate refuses — **including MRVL, ASST, HIVE, RDDT,
+SMMT, CRML, MMED, LPTH, DELL, GTLB and RARE.** The LIVE gate (`halal_check`,
+`plan/live_halal.py`) is already fixed, so any name actually live-screened
+before arming gets the correct verdict today; the stale list only matters for
+names armed on list membership alone.
+
+One thing this file owner cannot change and flags instead: `cmd_rank`'s
+`SCREEN_EPOCH` is still `"2026-08-13"`. Bumping it to `"2026-09-16"` would make
+the engine refuse any halal_list built before today's fixes, the same way it
+already refuses pre-2026-08-13 lists. `cmd_rank` is outside the owned set for
+this change.
+
+### OPS / FILES (halal-fix epoch 2026-09-16)
+Changed (code, committed): `day-trading.py` (`halal_check` rewritten + new
+`_sic_for` / `_sic_financial_fail` helpers and `SIC_CODES_FILE`),
+`plan/penny_ax11b_massive.py` (`halal_pt`, `sector_clean`, `_q_miss`,
+`_qspan`, `_ttm_pt`), `plan/edgar_backfill.py` (`_debt_at` max-across-tiers,
+`miss` flags, merge carries them), `plan/build_halal_universe.py`
+(`--sic`, `--rescreen`, `--park-list`, `cik_map`, `_cached_symbols`,
+`_legacy_probe`, cause attribution), `plan/idgate.py` (ROT_EXPECT hf/hfm rows,
+ROT_ENV per-epoch env assertion, this epoch's note), `NOTES-DAYTRADING.md`.
+Commits 45b66ee (gate fixes), a94d797 (zero-revenue class + SIC completeness +
+re-runnable rescreen), and this one.
+NOT touched, as briefed: `plan/rotation_sim.py`, `paper_watch.py`, the skill,
+the launcher, the paper-day prompt, and `cmd_rank` in `day-trading.py`.
+Data (git-ignored, on disk): `data/sic_codes.json` (11,134 symbols),
+`data/halal_universe.json` (rebuilt) with `data/halal_universe.pre-2026-09-16.json`,
+`data/halal_list.NEW.json` (393) with `data/halal_list.pre-2026-09-16.json`,
+`data/halal_flips_2026-09-16.json` (every flip with cause, before/after ratios
+and the legacy-gate probe), `data/halal_rulings.json` (`_lifted` block, TPCS,
+CTW), `data/edgar/extracted/*` re-extracted, `data/pt_halal/*` re-merged,
+`data/massive/rotation_results_hf.json`, `rotation_results_hf_fm.json`,
+`rotation_trades_C37F_hf.json`, `rotation_trades_HOLD1_hf.json`,
+`rotation_trades_C37F_hf_fm.json`, `pool_hygiene_dropped_hf*.json`.
+Logs `/c/tmp/hf/` (sic, rescreen, flips, rot_hf, rot_hfm).
