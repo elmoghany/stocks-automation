@@ -39,6 +39,10 @@
 "name": "MicroSectors -3x Short Artificial Intelligence (AI) ETNs",
 "type": "EQUITY"
 },
+"ALA": {
+"name": "Corgi ALAB 2x Daily ETF",
+"type": "EQUITY"
+},
 "ALF": {
 "name": "Centurion Acquisition Corp",
 "type": "EQUITY"
@@ -591,6 +595,10 @@
 "name": "HCW Biologics",
 "type": "EQUITY"
 },
+"HCWC": {
+"name": "Healthy Choice Wellness",
+"type": "EQUITY"
+},
 "HDLB": {
 "name": "ETRACS Monthly Pay 2x Leveraged US High Dividend Low Volatility",
 "type": "EQUITY"
@@ -701,6 +709,10 @@
 },
 "JXG": {
 "name": "JX Luxventure Group",
+"type": "EQUITY"
+},
+"KEEX": {
+"name": "Defiance Daily Target 2x Long KEEL ETF",
 "type": "EQUITY"
 },
 "KEYG": {
@@ -947,6 +959,10 @@
 "name": "Defiance Daily Target 2X Long OSS ETF",
 "type": "EQUITY"
 },
+"OUSL": {
+"name": "Defiance Daily Target 2X Long OUST ETF",
+"type": "EQUITY"
+},
 "PCTY": {
 "name": "Paylocity",
 "type": "EQUITY"
@@ -1135,6 +1151,10 @@
 "name": "ProShares Ultra SpaceX",
 "type": "EQUITY"
 },
+"SPCH": {
+"name": "Leverage Shares 2X Long SPCX Daily ETF",
+"type": "EQUITY"
+},
 "SPCM": {
 "name": "Tradr 2X Long SpaceX Daily ETF",
 "type": "EQUITY"
@@ -1243,6 +1263,10 @@
 "name": "21Shares 2x Long Sui ETF",
 "type": "EQUITY"
 },
+"UCAR": {
+"name": "U Power Limited",
+"type": "EQUITY"
+},
 "UCTX": {
 "name": "Corgi UCTT 2x Daily ETF",
 "type": "EQUITY"
@@ -1281,6 +1305,10 @@
 },
 "UPGR": {
 "name": "DBX ETF Trust Xtrackers US Green Infrastructure Select Equity ETF",
+"type": "EQUITY"
+},
+"UPLD": {
+"name": "Upland Software",
 "type": "EQUITY"
 },
 "UPSC": {

@@ -303,6 +303,22 @@
    "vol": "2688909.69049",
    "name": "AXT",
    "first_seen": "10:17"
+  },
+  "UCAR": {
+   "pct": 16.53,
+   "last": 4.37,
+   "prev_close": 3.75,
+   "vol": "55657.515029",
+   "name": "U Power Limited",
+   "first_seen": "10:48"
+  },
+  "UPLD": {
+   "pct": 10.13,
+   "last": 4.13,
+   "prev_close": 3.75,
+   "vol": "13365.780885",
+   "name": "Upland Software",
+   "first_seen": "10:48"
   }
  },
  "halal_fail": [
@@ -337,7 +353,9 @@
   "CIFR",
   "NAII",
   "PFSA",
-  "ALP"
+  "ALP",
+  "UCAR",
+  "UPLD"
  ],
  "fake_gap": [],
  "inherited_fail": [

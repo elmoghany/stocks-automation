@@ -509,6 +509,20 @@
       "note": "60 rows. TWO NEW CROSSERS and one of them is the day breaking open: PRHI +10.6% FAIL (property-and-casualty INSURANCE -- explicit haram industry, final regardless of ruling; ratios 37.27/281.42/318.68 fail anyway). AXTI +10.3% (AXT Inc, compound semiconductor substrates) is the FIRST FULL PASS OF THE DAY -- question 1 PASS (2.04/9.89/11.93, haram 3.22, SIC 3674), question 2 PASS (semiconductor materials, AMD principle), on the halal list, and LIQUID: 2.6M shares traded, book 63.67x103 / 63.73x1250 = 0.094% spread. 414 real 1-min bars ingested. rank 10:20: 1 crossed / 1 ARMABLE, TOP = AXTI, coil 0.995 press +0.05 gap7 +2.5 calm yes. Premarket-high (59.69) and 5-min ORB (62.30) triggers are both already met at 63.70 -> FILL-ARMING RULE refuses both. Trigger C 10:21: tweezer_bottom at 10:18 but [STALE 2m] -> NOT TAKEN. Entering coordinator-owned 1-minute Trigger C polling, [TAKEABLE NOW] only.",
       "rank": "1 AXTI 63.6950 +10.4% coil .995 press +0.05 gap7 +2.5 calm yes halal PASS COILED",
       "rank_top": "AXTI ARMABLE -- awaiting a fresh Trigger C signal"
+    },
+    {
+      "et": "10:48",
+      "n": 36,
+      "state": "HOLDING AXTI -- bench refresh (20-min cadence per SCAN ECONOMY)",
+      "scan_rows": 68,
+      "candidates": 2,
+      "new": [
+        "UCAR",
+        "UPLD"
+      ],
+      "note": "Bench refresh while long AXTI. 68 rows. AXTI itself fell off the scan at 63.40 = +9.9% (below the +10% filter) -- still LATCHED and still held; the cross is a latch, not a live condition. RETO exploded to +408.9% (14.25) and MEDS to +311.7% -- both long-settled halal FAILs, so the days two biggest movers were never available to us. New bench names: UCAR +16.5% (U Power Limited) and UPLD +10.1% (Upland Software), both unscreened -- they are bench only; nothing can be armed while a position is open (ONE POSITION AT A TIME). HCWC +17.0%, RAYA +13.6%, TGL +10.7% all already on inherited_fail.",
+      "posn": "AXTI 235 @ 63.59, last 63.40, peak 63.86 (10:31), P&L -$44.65 (-0.30%), stop 58.5028 HARD, no breach, lowest print 62.83.",
+      "rank_top": "n/a -- holding"
     }
   ],
   "trades": [
@@ -775,6 +789,18 @@
       "et": "10:19",
       "q1": "live_halal 10:19 (RH mcap 33.04M): HARAM INDUSTRY (insurance) -- the industry screen is final regardless of any ruling. Ratios also fail independently: loan 37.27 / cash 281.42 / combined 318.68, haram_pct 14.95.",
       "q2": "Presurance Holdings is a property-and-casualty INSURANCE holding company (Commercial Lines / Personal Lines). Conventional insurance is on the explicit haram list. Not on the halal list either. Refused."
+    },
+    "UCAR": {
+      "verdict": "FAIL",
+      "et": "11:00",
+      "q1": "live_halal 11:00 (RH mcap 7.62M): loan 324.91 / cash 288.08 / combined 612.99 -- every leg blown out by two orders of magnitude -- and the revenue row is missing on top (unverified).",
+      "q2": "not reached (U Power Ltd, Wuhu China: vehicle sourcing brokerage + EV battery-swapping tech). Bench pre-screen while holding AXTI; never a candidate."
+    },
+    "UPLD": {
+      "verdict": "FAIL",
+      "et": "11:00",
+      "q1": "live_halal 11:00 (RH mcap 14.61M): loan 1548.84 / cash 212.51 / combined 1761.35 -> FAIL outright. Also unverified on interest income: the tool flagged a vendor interest row of $18M over the TTM window as IMPLAUSIBLE against mean cash+securities of $28M (8%/yr cap = $2M) and discarded it as mis-tagged -- so the 5% test cannot be run either. RH flags financial_status CC4 Noncompliant.",
+      "q2": "not reached (Upland Software: cloud application software portfolio, Austin TX). Bench pre-screen while holding AXTI; never a candidate."
     }
   },
   "vetoes": {
