@@ -317,6 +317,16 @@
    "new": [],
    "note": "117 rows, same set; 8 rows updated. CYPH +14.9% 2.55 (new premarket high 2.59 at 08:07), halal re-probe still TypeError -> cannot-verify. HUHU/JXG still interpolated. Nothing armable.",
    "rank_top": "CYPH (halal unresolved) -> none armable"
+  },
+  {
+   "et": "08:14",
+   "n": 23,
+   "state": "FLAT-5m",
+   "scan_rows": 115,
+   "candidates": 20,
+   "new": [],
+   "note": "115 rows; ANTA and NCRA off the scan (both FAIL, latched); 7 rows updated. CYPH +14.8% 2.55, halal re-probe still TypeError -> cannot-verify. HUHU/JXG still interpolated. Nothing armable.",
+   "rank_top": "CYPH (halal unresolved) -> none armable"
   }
  ],
  "trades": [],
