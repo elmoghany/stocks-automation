@@ -8093,3 +8093,129 @@ My prior on the bar (both years positive, >= $7,500/month, >= 90th percentile of
 30 random controls, aug2026 sign-consistent): **under 5%.**
 Stage A runs the 14 ranked configs only; controls are run for anything that is
 positive in BOTH years, because a 30-rep control on a losing config buys nothing.
+
+
+---
+
+# WIDE-NET (2026-09-16)
+
+User direction: *"test buying with multiple $15k tickets -- it is OK to buy the
+top-30 per day -- until you find the pattern on which a $15k purchase usually
+wins; analyze the winning pattern; then backtest that pattern buying only ONE
+stock. Do it with Massive data."* Full write-up in `widenet-audit.md`; code in
+`plan/wn_*.py`; artefacts in `data/massive/wn/`.
+
+**VERDICT: FAIL.** Best honest one-ticket-a-day result out of sample is
+**+$314/month** against the $7,500/month bar -- 24x short.
+
+### What was run
+Built `data/massive/wn/table.npz`: **380,926 hypothetical $15,000 tickets**
+(448 days x ~61 names x 14 decision times, 222,762 causally eligible), each
+labelled with the realized NET dollar P&L at 15/30/60/120 min and to flatten.
+Universe, features, fills and cost ladder are the RL-SERIES v2 causal ones
+(10 bps/side, +50 bps extended, 20% trailing-volume cap, next-bar-open fills);
+`plan/rl2/` was never modified. Train 193 days, held-out year 251 days,
+aug2026 a 4-day stub (m1w ends 2026-08-06).
+
+### The five findings worth remembering
+1. **The toll IS the problem.** Unconditional $/ticket is -$15 to -$31 in the
+   regular session and a 20 bps round trip on $15k is $30 -- so the market part
+   of the expectancy is between zero and +$15. Extended hours is -$37..-$95.
+   Hold-to-flatten is the WORST exit at every hour (the last print lands in
+   after-hours and pays 60 bps out). **Stop testing hold-to-flatten.**
+2. **Nothing separates winners at the single-feature level.** 0 of 31 features
+   has a positive decile at any horizon (best: log_dv5 d0 at -$5.2). 0 of 700
+   top-30 ordering x time x horizon combinations is positive (best -$11.99).
+3. **A walk-forward LightGBM has REAL skill worth about +$24/ticket** -- 96.7th
+   percentile vs 30 random seeds, inverted loses (-$69), shuffled-within-day
+   labels land at the 36.7th percentile (= random, control passes). It still
+   ends the year at **-$3.35/ticket**, because the toll is $30. Early stopping
+   picks **1 round** on held-out train days (R2 = -0.00012).
+4. **Every search converges on mean reversion and none of them pays.** SHAP
+   directions (xs_breadth-, prev_day_ret-, dist_vwap30-), the beam rule search
+   and rl2's mutation search all say *buy weakness early when the tape is quiet
+   and the market is down*. Unsearched null of 2,206 same-shape rules: mean
+   -$31.59, **max +$0.04, 0.05% positive**. 24 carried patterns averaged
+   **-$65/ticket** OOS with **Spearman 0.084 (p=0.70)** train-to-OOS -- a
+   depth-3 beam of width 120 fits the train window so hard it selects pure
+   noise. (Note the contrast: rl2's WEAKER search transferred +$46/ticket.)
+5. **The gap, measured in the only currency that matters (`plan/wn_need.py`).**
+   Using the real OOS cross-sections with a synthetic score of controlled rank
+   correlation rho: **$7,500/month needs rho = 0.477 with one ticket a day**,
+   0.267 with three, **0.189 with seven**, 0.150 with seven across all nine RTH
+   times. The walk-forward model achieves **rho = 0.033**. Perfect foresight
+   with one ticket a day is only **$16,035/month**, so the target is 47% of
+   omniscience.
+
+### Closest miss
+`rvol30 > 0.0034 AND xs_breadth <= -0.0081` at **09:45**, 60-minute exit --
+*buy the highest-30-min-vol name at 09:45 on days the universe is down >= 0.8%*.
+OOS: 31 tickets, **+$121.21/ticket, +$3,758, +$314/month**, 6/9 months positive,
+Sharpe 1.93, maxDD -$3,402, ex-best still +$1,335, **100th percentile** vs both
+random controls, inverted -$52.85. Fires 31 times a year; did not fire in the
+aug2026 stub. One of 24 patterns read on the same window (~3% by chance).
+
+### The Monday trap (recorded so it is not rediscovered)
+`log_dv5>15.869 AND dist_lo>0.0346 AND dow<=0`, hold to flatten, top-10 a day
+looks like **+$100.91/ticket = $7,075/month, 8/12 months positive, 100th
+percentile**. Drop the `dow<=0` (Monday) condition and it becomes
+**-$23.27/ticket**. There is no universe-wide Monday effect (OOS Monday is among
+the WORST weekdays unconditionally). It also takes 17.8 tickets/day = $267k of
+same-day notional against the account's $100k/day, <=7 ticket,
+one-position-at-a-time rule. **Breadth does not beat concentration here.**
+
+### Honesty battery
+Poison test at the FEATURE and the PICK level: **96 array checks / 0 mismatches,
+816 pick checks / 0 mismatches, label moved 48/48.** It EARNED its keep: the
+first run failed 95/144 and exposed a real bug I had introduced -- the candidate
+gate was `printed` (minute m+1 fillable) instead of `printed_m` (bar m printed),
+silently dropping **19.4% of printed bars** using future information. Gate
+corrected (a non-filling pick now books $0 and spends the ticket, as
+rl2/sim.py does) and every number recomputed underneath it.
+
+### Robinhood as an analysis input (per user addition)
+* **Bar cross-check (`plan/wn_rhcheck.py`), the consequential one.** 10 names,
+  2026-08-27: **closes agree to 0.00 bps on every common bar**, but Massive
+  volume is **1.4x-2.7x Robinhood's**, and -- correcting the earlier belief --
+  **the gap is NOT premarket-specific**: ~2.1x premarket, 1.4x-2.6x in the
+  regular session. So the 20%-of-trailing-volume size cap is really ~40% of the
+  tape a retail account can see. Binds on 14% of rows; direction is conservative
+  (everything here already fails).
+* **Earnings calendar: full coverage, zero edge.** 24 windows, **51,140 events,
+  2024-10-01 -> 2026-10-01, all 191 universe names covered** (1,714 events,
+  median 8/name). Built two causal columns (signed days to report; announcement
+  became public between prior close and today's open). **Every bucket negative**
+  except two flat-horizon OOS cells whose TRAIN counterparts have the opposite
+  sign. LightGBM never split on either (|SHAP| = 0.00).
+* **News depth: ~6 weeks only.** 5 symbols, none hit the limit=50 cap; oldest
+  articles 2026-08-04..08-25. Catalyst classification is **impossible to
+  backtest** on a 2-year window -- live/paper only.
+* **Fundamentals: 191/191 names, 191/191 with float.** Universe is median float
+  51.0M sh, median mcap $1.53B -- small-to-mid cap, not penny stocks.
+* **Live scannability confirmed** via `get_scanner_filter_specs`: the closest
+  miss maps to `HISTORICAL_VOLATILITY` / `AVERAGE_TRUE_RANGE`(14, 30m) plus
+  `AVERAGE_VOLUME`/`CLOSE`; only `xs_breadth` must be computed client-side from
+  `PERCENT_CHANGE_FROM_CLOSE`(1d) across the watchlist. (PERCENTAGE filters take
+  decimals -- 0.05 = 5%; omitting `interval` silently returns nothing.)
+
+### Ranked next ideas
+1. **Change the information set, not the model.** Price+volume on ~50 names
+   tops out at rho ~ 0.03. Untried and available: the **live order book**
+   (`get_equity_price_book`) and **options flow** (`RELATIVE_OPTIONS_VOLUME`,
+   call/put volume, open interest). Not backtestable 2 years -- paper first.
+2. **Attack the toll, not the alpha.** $30 on $15k is the entire problem. A
+   limit-order entry that captures rather than pays the spread moves break-even
+   from rho ~ 0.10 to rho ~ 0.02, INSIDE what the model already demonstrates.
+   Needs an unexecuted-limit fill model; the RH price book could calibrate it.
+   **Highest expected value on this list.**
+3. **Widen the universe, not the net.** 61 names/day gives E[max] ~ 2.3 sigma.
+   The binding constraint is `data/pt_halal` statement coverage (4,575 liquid ->
+   728 labelled -> 61 halal-PASS), not the market. More coverage raises the
+   top-1 expectation mechanically at fixed rho.
+4. **Trade 12:00-13:00, not the open.** Best unconditional expectancy (-$13.8 at
+   12:00/h120, -$15.6 at 13:00/h60); worst is 09:35. Every search here was
+   dragged to the open by volatility; the cost arithmetic points the other way.
+5. **TA exits do not rescue these entries.** 192-combination grid fitted on
+   train transferred to +$17 / -$92 / -$75 / -$277 per ticket on four entry
+   patterns (`plan/wn_exits.py`).
+6. **Do not re-run the conjunctive-rule family.** It is exhausted (see finding 4).

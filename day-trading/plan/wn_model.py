@@ -183,7 +183,7 @@ def stage_wf(h="h30", seed=0, shuffle=False, tag=""):
         score[te] = bst.predict(t.F[te])
         info.append({"month": mo, "train_rows": int(len(tr)),
                      "test_rows": int(len(te)),
-                     "iters": int(bst.best_iteration or NROUND)})
+                     "iters": int(bst.best_iteration or (300 if shuffle else NROUND))})
         print(f"  {mo} train={len(tr):,} test={len(te):,} "
               f"iters={bst.best_iteration or NROUND}", flush=True)
     nm = f"model_scores_{h}_s{seed}{'_shuf' if shuffle else ''}{tag}.npy"
