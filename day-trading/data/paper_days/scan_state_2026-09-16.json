@@ -287,6 +287,22 @@
    "vol": "16432.363103",
    "name": "Alpha Compute Corp",
    "first_seen": "10:06"
+  },
+  "PRHI": {
+   "pct": 10.58,
+   "last": 9.12,
+   "prev_close": 8.2475,
+   "vol": "8956.468857",
+   "name": "Presurance Holdings",
+   "first_seen": "10:17"
+  },
+  "AXTI": {
+   "pct": 10.31,
+   "last": 63.65,
+   "prev_close": 57.7,
+   "vol": "2688909.69049",
+   "name": "AXT",
+   "first_seen": "10:17"
   }
  },
  "halal_fail": [

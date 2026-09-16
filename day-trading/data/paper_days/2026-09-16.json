@@ -485,6 +485,30 @@
       "note": "53 rows; COZX HUTG LITU LITX MRVU MVLL off; PFSA ATHR ALP added. THREE NEW CROSSERS. PFSA +10.9% FAIL (loan 1136.2). ALP +10.0% FAIL (debt row missing -> unverified; digital-asset treasury with validator/staking operations). ATHR +10.4% = THE FIRST AND ONLY question-1 PASS OF THE DAY (loan 6.36 / cash 5.47 / combined 11.83, haram_pct 1.08, on the halal list) -- but question 2 is unresolved (self-described fintech analytics for equity AND OPTIONS traders, revenue split undisclosed) and it is MOOT on the tape: 2 real bars all day, rank excludes it, book 3.11x134 / 3.67x8 = 16.5% spread and 8 shares offered. Escalated for a user ruling; not armed. Armable pool EMPTY.",
       "rank": "rank 10:09: ATHR excluded (only 2 bars <= 10:09); PFSA/ALP/RTB NO BARS. 0 crossed / 0 armable, TOP = none.",
       "rank_top": "none armable"
+    },
+    {
+      "et": "10:12",
+      "n": 34,
+      "state": "FLAT-5m",
+      "scan_rows": 59,
+      "candidates": 0,
+      "new": [],
+      "note": "59 rows; ALP ETS LITG RTB off; 10 added, 7 of them SpaceX-linked 2x ETFs (SPAL LOFF SPCF SPCM SPCU SPAX + WYFL). RAYA +10.3% (Erayak Power Solution) crossed but is already on the inherited_fail drop-list -- not re-litigated. ATHR is back on the scan at +10.4% on 2,066 shares; still 2 real bars, still not armable. Candidate pool 0.",
+      "rank_top": "none armable (0 candidates)"
+    },
+    {
+      "et": "10:17",
+      "n": 35,
+      "state": "FLAT-5m -> CANDIDATE",
+      "scan_rows": 60,
+      "candidates": 2,
+      "new": [
+        "PRHI",
+        "AXTI"
+      ],
+      "note": "60 rows. TWO NEW CROSSERS and one of them is the day breaking open: PRHI +10.6% FAIL (property-and-casualty INSURANCE -- explicit haram industry, final regardless of ruling; ratios 37.27/281.42/318.68 fail anyway). AXTI +10.3% (AXT Inc, compound semiconductor substrates) is the FIRST FULL PASS OF THE DAY -- question 1 PASS (2.04/9.89/11.93, haram 3.22, SIC 3674), question 2 PASS (semiconductor materials, AMD principle), on the halal list, and LIQUID: 2.6M shares traded, book 63.67x103 / 63.73x1250 = 0.094% spread. 414 real 1-min bars ingested. rank 10:20: 1 crossed / 1 ARMABLE, TOP = AXTI, coil 0.995 press +0.05 gap7 +2.5 calm yes. Premarket-high (59.69) and 5-min ORB (62.30) triggers are both already met at 63.70 -> FILL-ARMING RULE refuses both. Trigger C 10:21: tweezer_bottom at 10:18 but [STALE 2m] -> NOT TAKEN. Entering coordinator-owned 1-minute Trigger C polling, [TAKEABLE NOW] only.",
+      "rank": "1 AXTI 63.6950 +10.4% coil .995 press +0.05 gap7 +2.5 calm yes halal PASS COILED",
+      "rank_top": "AXTI ARMABLE -- awaiting a fresh Trigger C signal"
     }
   ],
   "trades": [],
@@ -715,6 +739,18 @@
       "q1": "PASS -- live_halal 10:08 with RH mcap 44.06M cached: loan 6.36 / cash 5.47 / combined 11.83 (strict 10/10/20 satisfied on every leg), haram_pct 1.08 over 4 periods, SIC 7372 Prepackaged Software, and ATHR IS on data/halal_list.json. THIS IS THE ONLY verdict PASS on question 1 all day.",
       "q2": "UNRESOLVED -> treated as FAIL under the binary rule. Aether Holdings is self-described as an emerging FINANCIAL TECHNOLOGY PLATFORM selling proprietary research analytics, data and tools to institutional and retail EQUITY AND OPTIONS traders. It is NOT a broker and takes no commissions, so the MTC (2026-09-08 introducing-broker) and ZTG (today, investment brokerage) refusals do not fit it directly, and the AMD principle would allow selling general-purpose analytics INTO a financial market. But the revenue split between plain equity research and options-specific products is undisclosed, and unverified is haram by the 2026-08-22 binary rule; a conversion needs an affirmative <5% evidence ruling in data/halal_rulings.json, which does not exist. NOT arming on a judgement call made under session time pressure. ESCALATED FOR USER RULING.",
       "tape": "MOOT TODAY regardless of question 2. ATHR printed exactly TWO real bars in the whole session -- 10:05 ET 1,431 sh 3.34->3.60 and 10:06 ET 500 sh @3.5999 -- everything else interpolated. rank 10:09 EXCLUDES it: only 2 bars <= 10:09. Book at 10:08: bid 3.11 x134 / ask 3.67 x8 = 16.5% spread against a 0.5% cap, and 8 shares at the inside ask against the 4,167 shares a $15k ticket needs. No veto is counted -- the name never reached an arming decision."
+    },
+    "AXTI": {
+      "verdict": "PASS",
+      "et": "10:19",
+      "q1": "PASS -- live_halal 10:19 with RH mcap 4.22B cached: loan 2.04 / cash 9.89 / combined 11.93 (every leg of the strict 10/10/20 satisfied), haram_pct 3.22 over 4 periods (< 5), SIC 3674 Semiconductors. On data/halal_list.json.",
+      "q2": "PASS -- AXT, Inc. designs, manufactures and sells COMPOUND AND SINGLE-ELEMENT SEMICONDUCTOR SUBSTRATES (GaAs, InP, Ge) and the raw materials used to make them. Revenue is substrate and material sales; no alcohol, gambling, conventional finance, tobacco, pure-defense, adult, pork or entertainment line. This is the AMD principle squarely: selling general-purpose semiconductor material INTO whatever end markets buy it is permissible. 1,072 employees, listed since 1998, Fremont CA."
+    },
+    "PRHI": {
+      "verdict": "FAIL",
+      "et": "10:19",
+      "q1": "live_halal 10:19 (RH mcap 33.04M): HARAM INDUSTRY (insurance) -- the industry screen is final regardless of any ruling. Ratios also fail independently: loan 37.27 / cash 281.42 / combined 318.68, haram_pct 14.95.",
+      "q2": "Presurance Holdings is a property-and-casualty INSURANCE holding company (Commercial Lines / Personal Lines). Conventional insurance is on the explicit haram list. Not on the halal list either. Refused."
     }
   },
   "vetoes": {
@@ -759,7 +795,20 @@
   ],
   "pnl": 0.0,
   "veto_log": [],
-  "armed": [],
+  "armed": [
+    {
+      "sym": "AXTI",
+      "et": "10:21",
+      "state": "CANDIDATE -- waiting for a FRESH Trigger C signal",
+      "prev_close": 57.7,
+      "rank": "rank 10:20: 1 crossed / 1 ARMABLE, TOP = AXTI. last 63.6950 gain +10.4% coil 0.995 press +0.05 gap7 +2.5 calm yes halal PASS COILED.",
+      "cross": "REGULAR-SESSION +10% cross printed on the 10:10 ET bar (high 63.85 vs prev_close 57.70 = +10.66%); session_phase would be REGULAR -- the population the -$32/day baseline is built on.",
+      "halal_at_candidacy": "live_halal 10:19 verdict PASS (2.04 / 9.89 / 11.93, haram 3.22); question 2 PASS (compound semiconductor substrates). Re-run again at the moment of arming.",
+      "book_1019": "bid 63.67 x103 / ask 63.73 x1250 -> spread 0.094% vs the 0.5% cap = SPREAD OK. Inside ask 1,250 sh vs the 235 sh a $15k ticket needs = DEPTH OK. Trailing 10-min volume ~211k sh, 20% cap ~42k sh vs 235 sh = SIZE OK. First name all day to clear the book gates.",
+      "entry_triggers": "Premarket-high stop-buy (59.69) and the 5-min ORB break (62.30) are BOTH ALREADY MET at 63.70 -- arming either would be a market order into the top of the book. FILL-ARMING RULE: refused. The only live path is Trigger C, the champion buy_set, on a FRESH 1-minute signal.",
+      "trigger_c_1021": "AXTI 10:18 tweezer_bottom [STALE (2m since close) -- DO NOT ENTER]. Not taken. Coordinator-owned 1-minute polling begins now; entry only on [TAKEABLE NOW]."
+    }
+  ],
   "trigger_c": [],
   "posn": null,
   "eod": null,

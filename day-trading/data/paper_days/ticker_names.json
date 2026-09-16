@@ -135,6 +135,10 @@
 "name": "Corgi AXTI 2x Daily ETF",
 "type": "EQUITY"
 },
+"AXTI": {
+"name": "AXT",
+"type": "EQUITY"
+},
 "AXTL": {
 "name": "Leverage Shares 2X Long AXTI Daily ETF",
 "type": "EQUITY"
@@ -763,6 +767,10 @@
 "name": "Defiance Daily Target 2X Long NOK ETF",
 "type": "EQUITY"
 },
+"LOFF": {
+"name": "Direxion Daily SpaceX Bull 2X ETF",
+"type": "EQUITY"
+},
 "LRCC": {
 "name": "Corgi LRCX 2x Daily ETF",
 "type": "EQUITY"
@@ -857,6 +865,10 @@
 },
 "MWHS": {
 "name": "Skylar Electricity Futures ETF",
+"type": "EQUITY"
+},
+"MXLL": {
+"name": "Leverage Shares 2X Long MXL Daily ETF",
 "type": "EQUITY"
 },
 "NAII": {
@@ -1019,6 +1031,10 @@
 "name": "Research Alliance Corporation IV Class A",
 "type": "EQUITY"
 },
+"RAYA": {
+"name": "Erayak Power Solution",
+"type": "EQUITY"
+},
 "RDAC": {
 "name": "Rising Dragon Acquisition Corp.",
 "type": "EQUITY"
@@ -1103,8 +1119,28 @@
 "name": "Corgi SOFI 2x Daily ETF",
 "type": "EQUITY"
 },
+"SPAL": {
+"name": "GraniteShares 2x Long SpaceX Daily ETF",
+"type": "EQUITY"
+},
 "SPAQ": {
 "name": "Listed Funds Trust Horizon Kinetics SPAC Active ETF",
+"type": "EQUITY"
+},
+"SPAX": {
+"name": "T-REX 2X Long SPCX Daily Target ETF",
+"type": "EQUITY"
+},
+"SPCF": {
+"name": "ProShares Ultra SpaceX",
+"type": "EQUITY"
+},
+"SPCM": {
+"name": "Tradr 2X Long SpaceX Daily ETF",
+"type": "EQUITY"
+},
+"SPCU": {
+"name": "Defiance Daily Target 2X Long SPCX ETF",
 "type": "EQUITY"
 },
 "SSM": {
@@ -1313,6 +1349,10 @@
 },
 "WUGI": {
 "name": "AXS Esoterica NextG Economy ETF",
+"type": "EQUITY"
+},
+"WYFL": {
+"name": "Defiance Daily Target 2X Long WYFI ETF",
 "type": "EQUITY"
 },
 "WYHG": {
