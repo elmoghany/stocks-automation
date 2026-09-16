@@ -396,6 +396,43 @@
       ],
       "note": "FIRST POST-OPEN CYCLE. Scan collapsed 115 -> 41 rows as %change reset to the regular-session basis; 89 premarket names dropped off (all still latched in the crossed set). TWO NEW REGULAR-SESSION +10% CROSSERS -- the exact population the -$32/day baseline is built on: INTJ +12.20% (last 3.22, pc 2.87) and DLHC +11.02% (last 4.03, pc 3.63). Both screened immediately at candidacy, both FAIL question 1 outright: INTJ loan 38.71 / cash 976.84 / combined 1015.54 (+ missing revenue row), DLHC loan 241.66 (debt 2.4x mcap). INTJ had also traded just 174 shares on the day -- untradeable size regardless. Armable pool still EMPTY; no ranking needed, both refused BEFORE any entry decision so no veto is counted.",
       "rank_top": "none armable (both new crossers FAIL at the halal gate)"
+    },
+    {
+      "et": "09:36",
+      "n": 27,
+      "state": "FLAT-5m",
+      "scan_rows": 39,
+      "candidates": 0,
+      "new": [],
+      "note": "39 rows; CRMU CRMX INTJ PMTL SDUR off; EAF (GrafTech) + DLLL/INT (funds) new. EAF was already on the inherited_fail drop-list seeded from 09-08, so it is not re-litigated. 19 rows updated (RETO +68.5%, FTFT +42.5% both running hard post-open, both halal FAIL). Candidate pool 0.",
+      "rank_top": "none armable (0 candidates)"
+    },
+    {
+      "et": "09:41",
+      "n": 28,
+      "state": "FLAT-5m",
+      "scan_rows": 42,
+      "candidates": 3,
+      "new": [
+        "IONR",
+        "ETS",
+        "MNOV"
+      ],
+      "note": "42 rows; DLHC DLLL KEYX LRNX MNSX UPSC off; 9 added. HVII (Hennessy Capital Investment Corp VII) caught by the SPAC pattern. THREE NEW REGULAR-SESSION CROSSERS screened at candidacy, all FAIL: IONR +12.7% (ratios would pass at 0.15/9.78/9.93 but the revenue row is missing -> unverified), ETS +12.2% (haram_pct 21.08), MNOV +11.5% (cash 22.70, combined 22.80). 19 rows updated -- RETO +94.6% and FTFT +50.5% are the days real movers and both are long-settled halal FAILs. Armable pool still EMPTY.",
+      "rank_top": "none armable (3 new crossers all FAIL at the halal gate)"
+    },
+    {
+      "et": "09:46",
+      "n": 29,
+      "state": "FLAT-5m",
+      "scan_rows": 45,
+      "candidates": 2,
+      "new": [
+        "BYAH",
+        "PSIG"
+      ],
+      "note": "45 rows; ZTG IONR SOFC TSEG off; 7 added. TWO NEW REGULAR-SESSION CROSSERS, both FAIL twice over: BYAH +21.7% (Park Ha Biological, skincare -- cash 40.54 / combined 42.47 AND missing revenue; 529k shares traded on a 35k 2-week average, so it is a genuine mover) and PSIG +10.8% (cash 23.88 / combined 32.17 AND missing revenue; RH flags financial_status CC4 Noncompliant). MEDS now +186.2%, FTFT +53.1% -- both long-settled FAILs. Armable pool EMPTY.",
+      "rank_top": "none armable (both new crossers FAIL at the halal gate)"
     }
   ],
   "trades": [],
@@ -553,6 +590,36 @@
       "et": "09:33",
       "q1": "live_halal 09:33 after caching RH mcap 58.41M: loan 241.66 / cash 0.40 / combined 242.06 -> FAIL LOAN>10 (debt is 2.4x the market cap). haram_pct 0.02 clean, irrelevant.",
       "q2": "not reached (DLH Holdings: health + readiness services to federal government customers -- VA/DoD health IT, clinical research, logistics; would have needed a defense-exposure judgement). Refused on question 1."
+    },
+    "IONR": {
+      "verdict": "FAIL",
+      "et": "09:43",
+      "q1": "live_halal 09:43 (RH mcap 256.21M): loan 0.15 / cash 9.78 / combined 9.93 -- would PASS the ratios -- but the revenue row is MISSING -> unverified, refusing (missing-row ruling 2026-09-16). The 5% test cannot be run on a pre-revenue explorer.",
+      "q2": "not reached (ioneer Ltd: Rhyolite Ridge lithium-boron development, pre-revenue mining). Closest any name has come to armable today, and it still fails."
+    },
+    "ETS": {
+      "verdict": "FAIL",
+      "et": "09:43",
+      "q1": "live_halal 09:43 (RH mcap 92.22M): loan 0.06 / cash 5.68 / combined 5.74 PASS, but haram_pct 21.08 over 4 periods -> FAIL HARAM>=5% (TTM interest income is 21% of TTM revenue).",
+      "q2": "not reached (Elite Express Holding: last-mile package delivery, Laguna Hills CA -- plain logistics, would pass). Refused on question 1."
+    },
+    "MNOV": {
+      "verdict": "FAIL",
+      "et": "09:43",
+      "q1": "live_halal 09:43 (RH mcap 111.98M): cash 22.70 / loan 0.10 / combined 22.80 -> FAIL CASH>10 AND COMBINED>20; haram_pct 122.5 as well.",
+      "q2": "not reached (MediciNova: clinical-stage biopharma, MN-166/MN-001). Refused on question 1."
+    },
+    "BYAH": {
+      "verdict": "FAIL",
+      "et": "09:48",
+      "q1": "live_halal 09:48 (RH mcap 9.34M): loan 1.93 / cash 40.54 / combined 42.47 -> FAIL CASH>10 AND COMBINED>20, and the revenue row is missing on top (unverified). Two independent failures.",
+      "q2": "not reached (Park Ha Biological Technology, Wuxi: skincare/cosmetics manufacture + franchise fees -- would pass). Refused on question 1."
+    },
+    "PSIG": {
+      "verdict": "FAIL",
+      "et": "09:48",
+      "q1": "live_halal 09:48 (RH mcap 58.29M): loan 8.29 / cash 23.88 / combined 32.17 -> FAIL CASH>10 AND COMBINED>20, plus missing revenue row (unverified). RH also flags financial_status CC4 Noncompliant.",
+      "q2": "not reached (PS International Group, HK: logistics / supply-chain). Refused on question 1."
     }
   },
   "vetoes": {

@@ -191,6 +191,46 @@
    "vol": "3710.9284",
    "name": "DLH",
    "first_seen": "09:31"
+  },
+  "IONR": {
+   "pct": 12.71,
+   "last": 3.28,
+   "prev_close": 2.91,
+   "vol": "14308.1556",
+   "name": "ioneer",
+   "first_seen": "09:41"
+  },
+  "ETS": {
+   "pct": 12.17,
+   "last": 2.12,
+   "prev_close": 1.89,
+   "vol": "75263.963638",
+   "name": "Elite Express Holding",
+   "first_seen": "09:41"
+  },
+  "MNOV": {
+   "pct": 11.46,
+   "last": 2.2514,
+   "prev_close": 2.02,
+   "vol": "68073.400417",
+   "name": "MediciNova",
+   "first_seen": "09:41"
+  },
+  "BYAH": {
+   "pct": 21.72,
+   "last": 3.335,
+   "prev_close": 2.74,
+   "vol": "368066.0116",
+   "name": "Park Ha Biological Technology Co., Ltd.",
+   "first_seen": "09:46"
+  },
+  "PSIG": {
+   "pct": 10.82,
+   "last": 3.7899,
+   "prev_close": 3.42,
+   "vol": "299844.204031",
+   "name": "PS International Group Ltd",
+   "first_seen": "09:46"
   }
  },
  "halal_fail": [
@@ -215,7 +255,12 @@
   "NRXS",
   "CYPH",
   "INTJ",
-  "DLHC"
+  "DLHC",
+  "IONR",
+  "ETS",
+  "MNOV",
+  "BYAH",
+  "PSIG"
  ],
  "fake_gap": [],
  "inherited_fail": [

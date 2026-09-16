@@ -207,6 +207,10 @@
 "name": "Bitwise Dogecoin ETF",
 "type": "EQUITY"
 },
+"BYAH": {
+"name": "Park Ha Biological Technology Co., Ltd.",
+"type": "EQUITY"
+},
 "CAMC": {
 "name": "Corgi CAMT 2x Daily ETF",
 "type": "EQUITY"
@@ -297,6 +301,10 @@
 },
 "CRDD": {
 "name": "Cardano ETF",
+"type": "EQUITY"
+},
+"CRDU": {
+"name": "Tradr 2X Long CRDO Daily ETF",
 "type": "EQUITY"
 },
 "CRK": {
@@ -425,6 +433,10 @@
 },
 "ESG": {
 "name": "Northern Trust STOXX US ESG Select ETF",
+"type": "EQUITY"
+},
+"ETS": {
+"name": "Elite Express Holding",
 "type": "EQUITY"
 },
 "EXOZ": {
@@ -563,6 +575,14 @@
 "name": "HUHUTECH International Group",
 "type": "EQUITY"
 },
+"HUTG": {
+"name": "Leverage Shares 2X Long HUT Daily ETF",
+"type": "EQUITY"
+},
+"HVII": {
+"name": "Hennessy Capital Investment Corp. VII",
+"type": "EQUITY"
+},
 "HVT.A": {
 "name": "Haverty Furniture",
 "type": "EQUITY"
@@ -597,6 +617,10 @@
 },
 "IONL": {
 "name": "GraniteShares ETF Trust GraniteShares 2x Long IONQ Daily ETF",
+"type": "EQUITY"
+},
+"IONR": {
+"name": "ioneer",
 "type": "EQUITY"
 },
 "IONX": {
@@ -683,6 +707,14 @@
 "name": "Corgi LITE 2x Daily ETF",
 "type": "EQUITY"
 },
+"LITU": {
+"name": "T-REX 2X Long LITE Daily Target ETF",
+"type": "EQUITY"
+},
+"LITX": {
+"name": "Tradr 2X Long LITE Daily ETF",
+"type": "EQUITY"
+},
 "LITZ": {
 "name": "Tradr 2X Short LITE Daily ETF",
 "type": "EQUITY"
@@ -737,6 +769,10 @@
 },
 "MMED": {
 "name": "MiniMed Group",
+"type": "EQUITY"
+},
+"MNOV": {
+"name": "MediciNova",
 "type": "EQUITY"
 },
 "MNRS": {
@@ -879,6 +915,10 @@
 "name": "ProQR Therapeutics",
 "type": "EQUITY"
 },
+"PSIG": {
+"name": "PS International Group Ltd",
+"type": "EQUITY"
+},
 "PXS": {
 "name": "Pyxis Tankers",
 "type": "EQUITY"
@@ -983,6 +1023,10 @@
 "name": "Corgi SMCI 2x Daily ETF",
 "type": "EQUITY"
 },
+"SMTG": {
+"name": "Leverage Shares 2X Long SMTC Daily ETF",
+"type": "EQUITY"
+},
 "SMZ": {
 "name": "Tradr 2X Short SMR Daily ETF",
 "type": "EQUITY"
@@ -1073,6 +1117,10 @@
 },
 "TSCM": {
 "name": "TimesSquare Quality Mid Cap Growth ETF",
+"type": "EQUITY"
+},
+"TSEG": {
+"name": "Leverage Shares 2X Long TSEM Daily ETF",
 "type": "EQUITY"
 },
 "TSEU": {
@@ -1201,6 +1249,10 @@
 },
 "WYHG": {
 "name": "Wing Yip Food Holdings Group",
+"type": "EQUITY"
+},
+"XBIX": {
+"name": "Corgi U.S. Biotech 2x Daily ETF",
 "type": "EQUITY"
 },
 "XDEF": {
