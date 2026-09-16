@@ -25,10 +25,18 @@ EXPECTATION HISTORY (every re-baseline gets a dated note):
   * C37E (rotation chain) is gated by plan/rotation_sim.py runs, not
     here; post-backfill its causal pool grows the same way (C37F is
     its full-coverage successor -- identical params + env, new data).
+  * REGULAR-SESSION ELIGIBILITY EPOCH 2026-09-16: the rotation anchors
+    now live HERE too, in ROT_EXPECT (--rot), with both the pre-epoch
+    (RS_CROSS=0) and the new (RS_CROSS=1) values. The S095/Z104 gates
+    above are UNAFFECTED by construction -- they walk gappers2 through
+    penny_x100, which has no RS_CROSS path -- and were left alone.
 
 Usage:
   python plan/idgate.py                # run all gates
   python plan/idgate.py S095 Z104     # subset
+  python plan/idgate.py --rot         # the ROTATION anchors (C37F /
+      HOLD1, both epochs) read back out of their shard result files.
+      Cheap: it re-reads, it does not re-run. See ROT_EXPECT.
   python plan/idgate.py --prepool     # replay against the PRE-backfill
       file set (data/massive/m1_prebackfill_files.txt, hardlinked into
       data/massive/m1_pre) and compare to EXPECT_PRE. This is the
@@ -117,6 +125,94 @@ EXPECT_PRE = {
     ("Z104", "y2025"): 417_040,
 }
 
+# ------------------------------------------------------------------
+# ROTATION ANCHORS (plan/rotation_sim.py), checked with --rot
+# ------------------------------------------------------------------
+# REGULAR-SESSION ELIGIBILITY EPOCH 2026-09-16 (NOTES "MX-SERIES
+# RETRACTION #2" and "REGULAR-SESSION ELIGIBILITY EPOCH"). The pool
+# files' membership is the grouped-daily REGULAR-SESSION high >= +10%
+# over prev_close, so day_candidates letting a PREMARKET cross make a
+# name eligible was future-conditioned: the name is in the file only
+# because the regular session WILL rally to +10% later. rotation_sim
+# now takes the first bar at/after 09:30 with High >= 1.10 x prev_close
+# as `cross` (RS_CROSS=1, the new default); RS_CROSS=0 reproduces the
+# pre-epoch pool.
+#
+# THE OLD VALUES ARE KEPT and are still the reference for RS_CROSS=0:
+#   C37F-fm  -121,234  (year -79,386 / y2025 -41,848, 2,148 tickets)
+#   HOLD1-fm      -903 (year -14,387 / y2025 +13,484,   448 tickets)
+# Re-verified 2026-09-16 02:35 on the current engine, shard rs_id:
+# C37F-fm = -121,234 EXACT, and /c/tmp/rs/id.log is line-for-line
+# identical to the 2026-09-02 fill-model log (/c/tmp/fm/c37.log).
+# So RS_CROSS=0 is byte-neutral and the epoch shift below is the
+# eligibility rule and only the eligibility rule.
+#
+# NEW REFERENCE (RS_CROSS=1, POOL_HYGIENE=1 HALAL_STRICT=1 PT_FILED=1),
+# shard rs_bench, measured 2026-09-16 02:43:
+#   C37F-rs  +28,352  (year +21,910 / y2025 +6,442, 2,048 tickets)
+#   HOLD1-rs -50,852  (year -36,329 / y2025 -14,523,  448 tickets)
+# C37F's whole pre-epoch loss was premarket entries (691 legs,
+# -112,494); the causal universe cannot take them. READ THE CAVEAT IN
+# NOTES BEFORE QUOTING C37F-rs AS AN EDGE: 274 of its 2,058 legs fill
+# in the eligibility bar itself and carry +31,799 -- more than the
+# whole total. The RS_DEFER=1 control (entry in the bar AFTER cross) is
+# the number to use for expectancy claims; see ROT_EXPECT below.
+ROT_EXPECT = {
+    # (config, epoch, label): exact expected total
+    ("C37F", "fm", "year"): -79_386,       # RS_CROSS=0, pre-epoch
+    ("C37F", "fm", "y2025"): -41_848,
+    ("HOLD1", "fm", "year"): -14_387,
+    ("HOLD1", "fm", "y2025"): +13_484,
+    ("C37F", "rs", "year"): +21_910,       # RS_CROSS=1, this epoch
+    ("C37F", "rs", "y2025"): +6_442,
+    ("HOLD1", "rs", "year"): -36_329,
+    ("HOLD1", "rs", "y2025"): -14_523,
+}
+# Which shard file each epoch's rows live in (data/massive/).
+ROT_SHARD = {"fm": "rotation_results_rs_id.json",
+             "rs": "rotation_results_rs_bench.json"}
+# Reproduce (from day-trading/, one process per epoch):
+#   HALAL_STRICT=1 PT_FILED=1 POOL_HYGIENE=1 ROTTRADES=1 \
+#     MASSIVE_TH_INTERVAL=0.25 RS_CROSS=0 ROTSHARD=rs_id \
+#     python plan/rotation_sim.py C37F
+#   ... RS_CROSS=1 ROTSHARD=rs_bench python plan/rotation_sim.py C37F HOLD1
+
+
+def _rot_gate():
+    """Compare the rotation anchors against the shard result files.
+
+    This does NOT re-run the ladder (a full C37F pass is ~90 min); it
+    asserts that the files those runs left behind still carry the
+    documented numbers, and that each was produced under the env the
+    epoch claims. Re-run with the commands above to refresh them."""
+    import json
+    fails, seen = [], 0
+    for epoch, fname in ROT_SHARD.items():
+        p = ROOT / "data/massive" / fname
+        if not p.exists():
+            print(f"rot {epoch:<3} {fname}: MISSING -- re-run to refresh")
+            continue
+        res = json.loads(p.read_text())
+        for (cfg, ep, lab), ref in sorted(ROT_EXPECT.items()):
+            if ep != epoch or cfg not in res or lab not in res[cfg]:
+                continue
+            seen += 1
+            v = res[cfg]
+            got = v[lab]["total"]
+            env_ok = (bool(v.get("rs_cross")) == (epoch == "rs")
+                      and v.get("pool_hygiene") and v.get("halal_strict")
+                      and not v.get("rs_defer"))
+            ok = got == ref and env_ok
+            print(f"rot {cfg}-{ep} {lab:<6} got {got:>+10,} "
+                  f"expect {ref:>+10,}  "
+                  f"{'EXACT' if ok else '** FAIL **'}"
+                  + ("" if env_ok else "  (WRONG ENV)"))
+            if not ok:
+                fails.append((f"{cfg}-{ep}", lab, got, ref))
+    if not seen:
+        print("rot: no shard rows found -- nothing checked")
+    return fails
+
 
 def _build_prepool():
     """Hardlink the snapshotted pre-backfill files into m1_pre."""
@@ -138,6 +234,18 @@ def _build_prepool():
 
 def main():
     prepool = "--prepool" in sys.argv
+    if "--rot" in sys.argv:
+        rf = _rot_gate()
+        if rf:
+            print("\nROTATION ANCHOR FAILURES -- treat as bugs until "
+                  "mechanically traced and re-baselined with a dated "
+                  "note here + NOTES:")
+            for g, lab, got, ref in rf:
+                print(f"  {g} {lab}: {got:+,} vs {ref:+,} "
+                      f"(delta {got - ref:+,})")
+            sys.exit(1)
+        print("\nrotation anchors: ALL EXACT")
+        return
     gates = [a for a in sys.argv[1:] if not a.startswith("--")] or \
         ["S095", "Z104"]
     spec_ = importlib.util.spec_from_file_location(
