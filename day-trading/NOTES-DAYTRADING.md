@@ -7639,3 +7639,269 @@ CTW), `data/edgar/extracted/*` re-extracted, `data/pt_halal/*` re-merged,
 `rotation_trades_C37F_hf.json`, `rotation_trades_HOLD1_hf.json`,
 `rotation_trades_C37F_hf_fm.json`, `pool_hygiene_dropped_hf*.json`.
 Logs `/c/tmp/hf/` (sic, rescreen, flips, rot_hf, rot_hfm).
+
+## INTEREST-LEG REFINEMENT (2026-09-16, same day): the 5% test learns to tell a mis-tag from a measurement
+
+The morning's rebuild (393 armable) was right about doctrine and wrong
+about evidence in one leg. Two defects, both in the 5% interest test,
+both found by reading what the gate actually said about real names:
+
+**A. A VENDOR MIS-TAG PASSED AS INTEREST INCOME.** MRVL FAILed at
+`HARAM>=5% (TTM interest / TTM revenue) 15.84%`. yfinance carries a
+$1.9bn "Interest Income" in the quarter ending 2025-11-01; EDGAR tags
+that same figure as `NonoperatingIncomeExpense` and tags no interest
+concept for MRVL at all. It is the automotive-Ethernet divestiture gain.
+Marvell's true interest income is under 1% of revenue. A gate that
+cannot tell a mis-tag from a measurement is not measuring.
+
+**B. 337 NAMES WERE REFUSED FOR A ROW NOBODY FILES.** Most companies
+with immaterial interest income never tag the line. **"Missing" is not
+"unverifiable" when a PROVEN UPPER BOUND exists**: interest on cash is a
+NON-OPERATING item, so it is a SUBSET of non-operating income, and a
+non-operating bucket under 5% of revenue proves the interest inside it
+is under 5% too. That is a proof, not an estimate.
+
+### THE RESOLUTION LADDER (both gates, same semantics)
+
+Documented at `day-trading.py::_edgar_flows`; `halal_pt` runs the same
+four rungs in `_interest_leg_pt`.
+
+1. **The vendor row, under a PLAUSIBILITY CAP.** TTM interest must be
+   <= 8% x mean(cash + interest-bearing securities) over the same
+   window -- nobody earns more than ~8%/yr on cash. A violation is
+   logged `intinc_implausible`.
+2. **EDGAR interest** over the same filed quarters, tag precedence
+   `InvestmentIncomeInterest`, `InterestIncomeOperating`,
+   `InterestAndDividendIncomeOperating`, `InterestIncomeOther`,
+   `InvestmentIncomeInterestAndDividend` -> `haram_src`
+   `edgar-interest`. Two tags were REMOVED from the old interest list:
+   `InterestIncomeExpenseNet` (net of interest PAID -- for a borrower
+   `|x|` measures interest paid, which the 5% income test does not ask
+   about) and `InvestmentIncomeNet` (a bound, not a measurement; it
+   moved to the bound list where it belongs).
+3. **The proven upper bound**: TTM `|NonoperatingIncomeExpense|` (or
+   `OtherNonoperatingIncomeExpense`, or `InvestmentIncomeNet`) / TTM
+   revenue < 5% -> `upper-bound (nonoperating income)`. At or over 5%,
+   or absent, the bound proves nothing and the name stays unverified.
+4. Nothing resolved -> `unverified: missing interest income`.
+
+Everything else from the morning epoch is untouched: strict 10/10/20,
+SIC 6000-6999 except 6770, a missing **debt/cash/revenue** row still
+refuses, the TTM revenue window, the zero-revenue class.
+
+### THE CAP FIRES ONLY WHERE IT IS NEEDED -- A CORRECTION MID-PASS
+
+The first v2 pass restored 26 names and **refused 20 the morning gate
+had passed** -- CHRW, JBHT, NVT, COHR, NICE, TREX and 14 more, every one
+discarded because its vendor interest row sat over the cap. That is the
+cap failing a name **on its own**, which the rule forbids, and it is
+defect B in a new hat: C.H. Robinson refused over a $61M line that is
+**0.38% of revenue**.
+
+The cap catches OVER-statements BY CONSTRUCTION: `|row| > 8% x cash`
+means the true interest is SMALLER than the row. So a row that is both
+implausible AND already under 5% is a conservative over-reading of a leg
+that is clear either way. It is now KEPT and still flagged -- the number
+is not trusted, it is simply not load-bearing. **Discarding happens only
+when the row would otherwise FAIL the name** (>= 5%, or a zero-revenue
+name where any interest scores 100%), which is exactly the MRVL case.
+**63 of the 415 armable names carry `intinc_implausible` under that
+rule** -- yfinance's interest row is not clean at a rate of about one
+name in seven, and before today every one of those numbers was scored
+as gospel.
+
+### UNIVERSE: v1 -> v2
+
+    verdict    pre-fix       v1        v2
+    PASS         1,260      393       415     <- armable
+    FAIL         3,437    4,300     4,278
+    null         6,064    6,068     6,068
+    total       10,761   10,761    10,761
+
+25 restored, 3 lost. **All three losses are `strict-10` price/data drift
+(CSGP CASH>10, RNGR and WTTR LOAN>10), not the refinement** -- the
+interest leg only ever loosens.
+
+RESTORED, BY CAUSE (largest first inside each):
+
+    upper-bound (nonoperating income)                21
+      AAPL LLY RDDT CRDO NBIX MANH CGNX HNGE GNTX BB
+      SEZL SPSC AMBA MZTI PRLB STRA AMPL AMPX MRTN IRMD LINK
+    EDGAR interest                                    2   TWLO FFIV
+    plausibility-cap rescue + EDGAR interest          1   AMAT
+    plausibility-cap rescue + upper-bound             1   QMCO
+
+AMAT and QMCO are defect A caught in the act: both FAILed the morning
+gate at `HARAM>=5%` on a vendor row the cap rejects, and both come back
+**measured** -- AMAT at 1.32% from `InvestmentIncomeInterest`, QMCO at
+0.29% from its non-operating bucket.
+
+EVIDENCE BEHIND THE 415 ARMABLE (`haram_src`, now cached per name):
+
+    yfinance (vendor row, cap-checked)                387
+    upper-bound (nonoperating income)                  19
+    upper-bound (nonoperating income) (edgar window)    3
+    edgar-interest                                      2
+    edgar-interest (edgar window)                       1
+    (external ruling, no ratio path)                    3
+
+"(edgar window)" is a **snapshot** artifact and is labelled so it can
+never be mistaken for the aligned answer: `companyfacts.zip` is dated
+2026-08-14 while yfinance is live, so a company whose fiscal quarter
+ended 2026-07-31 has a vendor window EDGAR has not seen. Those names
+fall back to EDGAR's OWN last filed TTM span with **both** sides taken
+from that span -- one quarter staler, never mixed. VEEV, AMBA and CRDO
+all failed the aligned match for that reason alone; AMBA and CRDO clear
+on the EDGAR window, VEEV does not (its bound is 8.66%).
+
+### WHAT THE RULE STILL COSTS -- 238 NAMES, LARGEST 20
+
+Still refused because the interest leg could neither be resolved nor
+bounded. This is the price of "unverified is HARAM", stated as a list
+rather than an adjective:
+
+    MRVL 206.3bn   WELL 169.4bn   VEEV  43.3bn   SMMT  14.0bn
+    AUR   12.9bn   GSAT  10.6bn   PRAX   8.7bn   URBN   6.7bn
+    MMED   6.3bn   KNSA   6.0bn   ADX    3.2bn   NEA    3.2bn
+    TR     2.9bn   GDV    2.5bn   PAYO   2.4bn   NZF    2.2bn
+    RVT    2.2bn   EMAT   2.2bn   CLM    2.0bn   TY     1.8bn
+
+ADX/NEA/GDV/NZF/RVT/CLM/TY are closed-end funds: they file N-CSR, not
+10-Q, so EDGAR has no us-gaap facts for them at all, and bond funds earn
+essentially 100% of revenue as interest. Refusing them is the rule
+working, not the rule costing. **MRVL is the honest outcome of defect
+A**: the gate no longer claims Marvell earns 15.84% of revenue as
+interest -- it says it cannot verify the leg, because the vendor row is
+a mis-tag, EDGAR tags no interest concept, and the non-operating bound
+is polluted by the same divestiture gain (flagged `bound_implausible`).
+
+A second, quieter win of the same kind: **47 names moved from
+`HARAM>=5%` to `unverified`** -- a false compliance CLAIM replaced by an
+honest refusal. MRVL, GSAT, PAYO, EMAT, GFR, MTA, GROY ... same verdict,
+truthful reason.
+
+### THE 845 REMOVALS FROM THE PRE-FIX LIST, RE-COUNTED
+
+    missing-row (debt/cash/revenue/interest)             338
+    strict-10 (LOAN>10 or CASH>10)                       365
+    SIC 6000-6999                                         86
+    TTM 5% haram (a PLAUSIBLE row, over the line)         43
+    no fundamentals / no market cap                       11
+    user ruling (TPCS, CTW)                                2
+
+(v1's 867. The `strict-10` and `TTM-5%` buckets also absorb two weeks of
+price and filing drift on every name re-screened today, so read the
+v1->v2 flip list above, not the deltas between these two tables.)
+
+### THE 13-NAME PROBE -- ZERO VERDICT CHANGES, ONE REASON CORRECTED
+
+    sym    v1      v2     why
+    AMD    PASS -> PASS   loan 0.50 cash 1.53 comb 2.03 haram 0.16 (yfinance)
+    SWKS   PASS -> PASS   loan 5.19 cash 6.09 comb 11.28 haram 0.66 (yfinance)
+    HLIT   FAIL -> FAIL   CASH>10 (17.81) -- untouched by the interest leg
+    ASST   FAIL -> FAIL   SIC 6199 Finance Services
+    MRVL   FAIL -> FAIL   was "HARAM 15.84%", NOW "unverified: missing
+                          interest income" <- the defect-A correction
+    KO     FAIL -> FAIL   LOAN>10 (11.44)
+    LMT/NFLX/SAM/CMG      FAIL -> FAIL   HARAM INDUSTRY
+    RRGB/RETO/NDLS        FAIL -> FAIL   user rulings
+
+(Run through `halal_check` directly. `plan/live_halal.py` REFUSES-TO-
+EVALUATE 11 of the 13 for want of a cached RH market cap -- that is its
+own stricter policy, not a gate disagreement, and it is not this file
+owner's to change.)
+
+### LIVE-TRADED NAMES, CONFIRMED WITH THE EVIDENCE USED
+
+    QCOM  PASS  loan 8.61 cash 4.68 comb 13.30 haram 1.11  yfinance
+    AMD   PASS  loan 0.50 cash 1.54 comb  2.04 haram 0.16  yfinance
+    SWKS  PASS  loan 5.21 cash 6.11 comb 11.31 haram 0.66  yfinance
+    TH    PASS  loan 2.59 cash 0.33 comb  2.91 haram 0.09  yfinance
+    BE    PASS  loan 3.40 cash 3.28 comb  6.68 haram 1.94  yfinance
+    LFST  PASS  loan 9.74 cash 4.79 comb 14.53 haram 0.64  yfinance
+    MRVI  PASS  loan 6.91 cash 2.74 comb  9.65 haram 3.93  yfinance
+    OKTA  PASS  loan 0.16 cash 6.93 comb  7.09 haram 3.09  yfinance
+    NEOV  PASS  loan 0.74 cash 5.84 comb  6.58 haram 0.32  yfinance
+    ---- still not armable ----
+    MRVL  FAIL  unverified: missing interest income (see above)
+    HLIT  FAIL  CASH>10 (17.81, comb 27.80)
+
+### IDENTITY: C37F-hf2 / HOLD1-hf2
+
+Same env as the `hf` rows (`RS_CROSS=1 RS_DEFER=1 POOL_HYGIENE=1
+HALAL_STRICT=1 PT_FILED=1`), shard `hf2`. Recorded in
+`plan/idgate.py::ROT_EXPECT` with the dated note; `--rot` reports
+**ALL EXACT** across all sixteen rows.
+
+    config      total      year     y2025   tkts    $/tkt  $/traded day
+    C37F-hf2  -88,784   -47,689   -41,095  1,602   -55.4      -214.5
+    HOLD1-hf2 -75,474   -31,586   -43,888    415  -181.9      -182.3
+    ---- immediately-prior epoch, FROZEN (halal_pt is a different
+         function; these cannot be reproduced by re-running) ----
+    C37F-hf   -42,778    -5,954   -36,824  1,337   -32.0      -118.8
+    HOLD1-hf  -44,122    -8,518   -35,604    360  -122.6      -122.6
+
+Traded days **360 -> 414** and C37F tickets **1,337 -> 1,602**: the
+refinement put 54 more days and 265 more tickets back in play. **Both
+configs got worse** -- C37F -$32 -> -$55 per ticket, HOLD1 -$123 ->
+-$182. That is the same signal the morning epoch recorded from the other
+direction: **on this pool the halal-refused names keep turning out to
+have been net winners.** It is not an argument against the fix.
+Compliance is a constraint, not an edge, and the standing conclusion is
+unchanged and unchallenged by these rows: **no config is positive per
+ticket on a causal universe.** The honest-baseline line of 2026-09-02
+still stands.
+
+One caveat stated rather than hidden: three causes are mixed into these
+rows -- the revenue-only TTM window, the plausibility cap, and the
+EDGAR/bound resolution -- and no attempt was made to separate them.
+Each isolation is another ~80-minute pass.
+
+### ACTION REQUIRED AT THE CLOSE -- SWAP THE ARMABLE LIST (UPDATED)
+
+The morning's instruction stands with a NEW source file: the parked list
+is now **415 names**, not 393.
+
+> **After 16:00 ET: `cp data/halal_list.NEW.json data/halal_list.json`**
+> (415 names, `updated` 2026-09-16).
+
+`data/halal_list.json` is still the pre-fix 1,260-name list and was
+never touched. Backups: `data/halal_list.pre-2026-09-16.json` (1,260),
+`data/halal_list.NEW.v1.json` (393, the morning rebuild),
+`data/halal_universe.pre-2026-09-16.json`, `data/halal_universe.v1.json`.
+
+`cmd_rank`'s `SCREEN_EPOCH` is still `"2026-08-13"` and is still outside
+this owner's set -- flagged again, unchanged.
+
+### OPS / FILES (interest-leg refinement 2026-09-16)
+Changed (code, committed): `day-trading.py` (`halal_check` interest
+ladder + new `_edgar_flows` / `_flow_over_window` / `_edgar_window`
+helpers, `EDGAR_EXTRACTED_DIR`, `INTINC_MAX_YIELD`; verdicts gain
+`haram_src`, `haram_note`, `interest_flags`),
+`plan/penny_ax11b_massive.py` (`_interest_leg_pt`, `_ttm_pt` window is
+revenue-only and returns its quarters, `halal_pt` refuses only on a
+missing debt/cash/revenue row), `plan/edgar_backfill.py` (interest tag
+precedence, `BOUND_TAGS`, `flows` key, `nonop` per quarter,
+`intinc_edgar`/`nonop` attached on merge, `extract --universe`),
+`plan/build_halal_universe.py` (`--interest-leg` v2 rescreen epoch,
+`_interest_leg_candidates`, `_restore_cause`, `.v1` stamps, `mcap` +
+`haram_src` + `interest_flags` cached, "what the rule costs" report),
+`plan/idgate.py` (ROT_EXPECT hf2 rows, ROT_SHARD/ROT_ENV, this epoch's
+note), `NOTES-DAYTRADING.md`. Commits e19529e (both gates), 64c2edd
+(rebuild tooling), d2ef762 (the cap fires only where needed), and this
+one. NOT touched, as briefed: `plan/rotation_sim.py`, `paper_watch.py`,
+`plan/live_halal.py`, the skill, the launcher, the paper-day prompt, and
+`cmd_rank`.
+Data (git-ignored, on disk): `data/edgar/extracted/*` re-extracted over
+12,532 symbols (m1 + every halal_universe name -- the m1-only extract
+covered just 925 of the 1,260 names the rescreen re-decides),
+`data/pt_halal/*` re-merged (797 created, 3,625 updated, 40,412
+EDGAR-only quarters, 625 interest/bound facts attached to legacy
+yfinance quarters), `data/halal_universe.json` (415 PASS) with
+`data/halal_universe.v1.json`, `data/halal_list.NEW.json` (415) with
+`data/halal_list.NEW.v1.json`,
+`data/halal_flips_2026-09-16.interest-leg.json` (every flip with cause,
+`haram_src`, mcap, and the still-refused list),
+`data/massive/rotation_results_hf2.json`,
+`rotation_trades_C37F_hf2.json`, `rotation_trades_HOLD1_hf2.json`.
+Logs `/c/tmp/hf2/` (extract, rescreen, rescreen2, rot_hf2, probe13).

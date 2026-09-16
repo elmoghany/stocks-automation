@@ -25,6 +25,14 @@ EXPECTATION HISTORY (every re-baseline gets a dated note):
   * C37E (rotation chain) is gated by plan/rotation_sim.py runs, not
     here; post-backfill its causal pool grows the same way (C37F is
     its full-coverage successor -- identical params + env, new data).
+  * INTEREST-LEG REFINEMENT 2026-09-16 (same day, after the four-fix
+    rebuild): halal_pt's 5% leg is now resolved by a four-rung ladder
+    (vendor row under an 8%/yr plausibility cap -> EDGAR's own tagged
+    interest -> the proven non-operating upper bound -> refuse) and its
+    TTM window is defined by revenue alone. New anchors C37F-hf2 /
+    HOLD1-hf2 in ROT_EXPECT (shard `hf2`); the -hf rows they replace
+    are frozen history, un-reproducible on this engine, and kept
+    because --rot asserts what the shard FILES say.
   * REGULAR-SESSION ELIGIBILITY EPOCH 2026-09-16: the rotation anchors
     now live HERE too, in ROT_EXPECT (--rot), with both the pre-epoch
     (RS_CROSS=0) and the new (RS_CROSS=1) values. The S095/Z104 gates
@@ -235,18 +243,55 @@ ROT_EXPECT = {
     # replaces the un-reproducible C37F-fm
     ("C37F", "hfm", "year"): -48_672,      # 917 tkts, 218 traded days
     ("C37F", "hfm", "y2025"): -70_154,     # 543 tkts, 148 traded days
+    # --- INTEREST-LEG REFINEMENT 2026-09-16, measured this date ---
+    # Same env as `hf` (RS_CROSS=1 RS_DEFER=1 POOL_HYGIENE=1
+    # HALAL_STRICT=1 PT_FILED=1), shard `hf2`. What moved is halal_pt's
+    # 5% leg ONLY: the TTM window is now defined by revenue alone (an
+    # untagged interest line used to silently shorten it, and 17,718 of
+    # 33,555 cached quarters carry no interest tag), and the leg is
+    # resolved by the four-rung ladder -- vendor row under an 8%/yr
+    # plausibility cap, EDGAR's own tagged interest (`intinc_edgar`),
+    # the proven non-operating upper bound (`nonop`), then refuse.
+    #
+    # THE -hf ROWS ABOVE ARE NOW FROZEN HISTORY for the same reason the
+    # -df rows are: halal_pt is a different function, so re-running
+    # cannot reproduce them. They are kept because --rot asserts what
+    # the shard FILES still say, and because the delta IS the
+    # measurement.
+    #
+    #   config      total      year     y2025   tkts   $/tkt   traded
+    #   C37F-hf2  -88,784   -47,689   -41,095  1,602   -55.4   236+178
+    #   HOLD1-hf2 -75,474   -31,586   -43,888    415  -181.9   236+178
+    #   ---- immediately-prior epoch, for the delta ----
+    #   C37F-hf   -42,778    -5,954   -36,824  1,337   -32.0   216+144
+    #   HOLD1-hf  -44,122    -8,518   -35,604    360  -122.6   216+144
+    #
+    # Traded days 360 -> 414 and C37F tickets 1,337 -> 1,602: the
+    # refinement put 54 more days and 265 more tickets back in play, and
+    # BOTH configs got worse -- C37F -$32 -> -$55 per ticket, HOLD1
+    # -$123 -> -$182. Read it as one more instance of the standing
+    # finding, not as an argument against the fix: on this pool the
+    # halal-refused names keep turning out to have been net winners, and
+    # NO config is positive per ticket on a causal universe either way.
+    # Compliance is not an edge and was never claimed to be one.
+    ("C37F", "hf2", "year"): -47_689,      # 923 tkts, 236 traded days
+    ("C37F", "hf2", "y2025"): -41_095,     # 679 tkts, 178 traded days
+    ("HOLD1", "hf2", "year"): -31_586,     # 237 tkts
+    ("HOLD1", "hf2", "y2025"): -43_888,    # 178 tkts
 }
 # Which shard file each epoch's rows live in (data/massive/).
 ROT_SHARD = {"fm": "rotation_results_rs_id.json",
              "rs": "rotation_results_rs_bench.json",
              "hf": "rotation_results_hf.json",
-             "hfm": "rotation_results_hf_fm.json"}
+             "hfm": "rotation_results_hf_fm.json",
+             "hf2": "rotation_results_hf2.json"}
 # The env each epoch's rows MUST have been produced under. pool_hygiene
 # and halal_strict are required True for every epoch.
 ROT_ENV = {"fm": {"rs_cross": False, "rs_defer": False},
            "rs": {"rs_cross": True, "rs_defer": False},
            "hf": {"rs_cross": True, "rs_defer": True},
-           "hfm": {"rs_cross": False, "rs_defer": False}}
+           "hfm": {"rs_cross": False, "rs_defer": False},
+           "hf2": {"rs_cross": True, "rs_defer": True}}
 # Reproduce (from day-trading/, one process per epoch):
 #   HALAL_STRICT=1 PT_FILED=1 POOL_HYGIENE=1 ROTTRADES=1 \
 #     MASSIVE_TH_INTERVAL=0.25 RS_CROSS=0 ROTSHARD=rs_id \
@@ -256,6 +301,8 @@ ROT_ENV = {"fm": {"rs_cross": False, "rs_defer": False},
 #         python plan/rotation_sim.py C37F HOLD1      # halal-fix epoch
 #   ... RS_CROSS=0 RS_DEFER=0 ROTSHARD=hf_fm \
 #         python plan/rotation_sim.py C37F            # halal-fix epoch
+#   ... RS_CROSS=1 RS_DEFER=1 ROTSHARD=hf2 \
+#         python plan/rotation_sim.py C37F HOLD1   # interest-leg 09-16
 
 
 def _rot_gate():
