@@ -157,6 +157,32 @@ EXPECT_PRE = {
 # in the eligibility bar itself and carry +31,799 -- more than the
 # whole total. The RS_DEFER=1 control (entry in the bar AFTER cross) is
 # the number to use for expectancy claims; see ROT_EXPECT below.
+#
+# HALAL-FIX EPOCH 2026-09-16 (the "hf" rows below; NOTES section of the
+# same date). The user's four halal decisions changed BOTH gates:
+# strict 10/10/20 (all three legs bind), SIC 6000-6999 a hard FAIL
+# (6770 blank checks excepted), the 5% test on TTM interest / TTM
+# revenue over the same periods, and a missing statement row refusing
+# instead of reading as 0. plan/edgar_backfill.py's tier-precedence debt
+# bug was fixed and the EDGAR cache re-extracted in the same epoch, so
+# data/pt_halal changed underneath the gate as well.
+#
+# CONSEQUENCE, STATED PLAINLY: **every pre-2026-09-16 rotation row in
+# this table is FROZEN HISTORY.** The "fm" and "rs" rows can no longer
+# be reproduced by re-running -- halal_pt is a different function now.
+# They are kept because --rot asserts what the shard FILES still say,
+# which is a real check (the files have not been rewritten), and
+# because the deltas are the measurement. Do not re-run them expecting
+# a match; the same treatment EXPECT_PRE already gets.
+#
+# The new anchors are the RS_DEFER=1 control -- the row the NOTES
+# baseline is quoted from -- re-measured on the fixed gate:
+#   C37F-hf / HOLD1-hf   RS_CROSS=1 RS_DEFER=1, shard `hf`
+#     (compare C37F-df -14,135 and HOLD1-df -103,158, pre-fix, from the
+#      2026-09-16 eligibility-epoch table in NOTES)
+#   C37F-hfm             RS_CROSS=0 RS_DEFER=0, shard `hf_fm`
+#     (the old C37F-fm -121,234 is NOT reproducible any more; this row
+#      records what that same env now yields)
 ROT_EXPECT = {
     # (config, epoch, label): exact expected total
     ("C37F", "fm", "year"): -79_386,       # RS_CROSS=0, pre-epoch
@@ -167,15 +193,28 @@ ROT_EXPECT = {
     ("C37F", "rs", "y2025"): +6_442,
     ("HOLD1", "rs", "year"): -36_329,
     ("HOLD1", "rs", "y2025"): -14_523,
+    # --- halal-fix epoch 2026-09-16 (filled from the runs below) ---
 }
 # Which shard file each epoch's rows live in (data/massive/).
 ROT_SHARD = {"fm": "rotation_results_rs_id.json",
-             "rs": "rotation_results_rs_bench.json"}
+             "rs": "rotation_results_rs_bench.json",
+             "hf": "rotation_results_hf.json",
+             "hfm": "rotation_results_hf_fm.json"}
+# The env each epoch's rows MUST have been produced under. pool_hygiene
+# and halal_strict are required True for every epoch.
+ROT_ENV = {"fm": {"rs_cross": False, "rs_defer": False},
+           "rs": {"rs_cross": True, "rs_defer": False},
+           "hf": {"rs_cross": True, "rs_defer": True},
+           "hfm": {"rs_cross": False, "rs_defer": False}}
 # Reproduce (from day-trading/, one process per epoch):
 #   HALAL_STRICT=1 PT_FILED=1 POOL_HYGIENE=1 ROTTRADES=1 \
 #     MASSIVE_TH_INTERVAL=0.25 RS_CROSS=0 ROTSHARD=rs_id \
 #     python plan/rotation_sim.py C37F
 #   ... RS_CROSS=1 ROTSHARD=rs_bench python plan/rotation_sim.py C37F HOLD1
+#   ... RS_CROSS=1 RS_DEFER=1 ROTSHARD=hf \
+#         python plan/rotation_sim.py C37F HOLD1      # halal-fix epoch
+#   ... RS_CROSS=0 RS_DEFER=0 ROTSHARD=hf_fm \
+#         python plan/rotation_sim.py C37F            # halal-fix epoch
 
 
 def _rot_gate():
@@ -199,9 +238,9 @@ def _rot_gate():
             seen += 1
             v = res[cfg]
             got = v[lab]["total"]
-            env_ok = (bool(v.get("rs_cross")) == (epoch == "rs")
-                      and v.get("pool_hygiene") and v.get("halal_strict")
-                      and not v.get("rs_defer"))
+            want = ROT_ENV.get(epoch, {})
+            env_ok = (v.get("pool_hygiene") and v.get("halal_strict")
+                      and all(bool(v.get(k)) == want[k] for k in want))
             ok = got == ref and env_ok
             print(f"rot {cfg}-{ep} {lab:<6} got {got:>+10,} "
                   f"expect {ref:>+10,}  "

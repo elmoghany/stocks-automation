@@ -150,6 +150,23 @@ def cik_map():
     return out
 
 
+def _cached_symbols():
+    """Every symbol that already has a verdict or a ruling -- the names
+    the sector screen must be able to answer for, beyond today's tape."""
+    out = set()
+    try:
+        out |= set(json.loads(UNI_F.read_text()))
+    except Exception:
+        pass
+    try:
+        r = json.loads((ROOT / "data/halal_rulings.json").read_text())
+        out |= {s for s in r if not s.startswith("_")}
+        out |= set(r.get("_lifted") or {})
+    except Exception:
+        pass
+    return out
+
+
 SIC_THREADS = 5      # SEC asks for <10 req/s; 5 in flight stays inside it
                      # and takes the full 10,908-name universe from ~3h
                      # (serial, SEC latency dominates) to ~25 min.
@@ -159,7 +176,12 @@ def cmd_sic(syms=None, pace=0.05, threads=SIC_THREADS):
     import urllib.request
     from threading import Lock
     cache = json.loads(SIC_F.read_text()) if SIC_F.exists() else {}
-    syms = syms or universe()
+    # The universe is TODAY's >= $2 grouped-daily list; halal_universe
+    # also holds names that have since dropped below $2 or off the tape,
+    # and the rescreen still has to sector-screen those. Covering only
+    # universe() left 55 armable names (mostly SIC 6770 shells) with no
+    # SIC at all -- i.e. silently exempt from the sector screen.
+    syms = syms or sorted(set(universe()) | _cached_symbols())
     cm = cik_map()
     today = time.strftime("%Y-%m-%d")
     todo = [s for s in syms if s not in cache]
@@ -320,25 +342,49 @@ def _rescreen_one(sym):
                      "fail_reason": f"ERROR: {type(e).__name__}: {e}"}, None
 
 
-def cmd_rescreen():
-    """Re-screen the names whose verdict the 2026-09-16 fixes can move."""
+def cmd_rescreen(list_f=None):
+    """Re-screen the names whose verdict the 2026-09-16 fixes can move.
+
+    `list_f` parks the rebuilt armable list somewhere OTHER than
+    data/halal_list.json. A live paper session reads halal_list.json
+    every scan cycle, so a rebuild that lands mid-session would change
+    the armable set under a running engine; --park-list writes
+    halal_list.NEW.json instead and the swap happens after the close."""
+    list_f = list_f or LIST_F
     done = json.loads(UNI_F.read_text())
     rulings = json.loads((ROOT / "data/halal_rulings.json").read_text())
     ruled = {s for s, r in rulings.items()
              if not s.startswith("_") and isinstance(r, dict)}
+    # LIFTED rulings are the ONLY loosening in this epoch -- a name whose
+    # FAIL ruling was withdrawn can legitimately return to PASS on its
+    # data, so it has to be re-screened even though it is cached FAIL.
+    ruled |= set(rulings.get("_lifted") or {})
+    # PRE-FIX SNAPSHOT: flips are measured against the verdicts the OLD
+    # gate left, not against whatever a half-finished pass wrote, so the
+    # rescreen is re-runnable and its report always says the same thing.
+    baseline = done
+    bak_u = UNI_F.with_name(f"{UNI_F.stem}.pre-2026-09-16{UNI_F.suffix}")
+    if bak_u.exists():
+        baseline = json.loads(bak_u.read_text())
     cands = sorted({s for s, r in done.items() if r.get("halal")}
+                   | {s for s, r in baseline.items()
+                      if r.get("halal") and s in done}
+                   # a crashed evaluation is NOT a verdict (same rule as
+                   # _retryable): always re-screened
+                   | {s for s, r in done.items()
+                      if r.get("source") in ("error", None)}
                    | (ruled & set(done)))
     print(f"rescreen: {len(cands):,} candidates "
-          f"({sum(1 for s in cands if done[s].get('halal')):,} currently "
-          f"PASS, rest ruled names that a lifted ruling could return)",
-          flush=True)
+          f"({sum(1 for s in cands if (baseline.get(s) or {}).get('halal')):,} "
+          f"PASS under the pre-fix gate, plus ruled/lifted names and "
+          f"any crashed evaluation)", flush=True)
     stamp = "pre-2026-09-16"
     for f in (UNI_F, LIST_F):
         bak = f.with_name(f"{f.stem}.{stamp}{f.suffix}")
         if not bak.exists():
             bak.write_text(f.read_text())
             print(f"  backup {f.name} -> {bak.name}", flush=True)
-    before = {s: dict(done[s]) for s in cands}
+    before = {s: dict((baseline.get(s) or done[s])) for s in cands}
     legacy = {}
     t0 = time.time()
     with ThreadPoolExecutor(max_workers=THREADS) as ex:
@@ -380,12 +426,17 @@ def cmd_rescreen():
                  "now": {k: done[s].get(k) for k in
                          ("loan_pct", "cash_pct", "combined", "haram_pct")}})
     halal = sorted(s for s, r in done.items() if r.get("halal"))
-    LIST_F.write_text(json.dumps(
+    list_f.write_text(json.dumps(
         {"updated": time.strftime("%Y-%m-%d"), "n": len(halal),
          "symbols": halal}))
+    if list_f != LIST_F:
+        print(f"  armable list PARKED at {list_f.name} -- "
+              f"{LIST_F.name} left untouched for the live session",
+              flush=True)
     (ROOT / "data/halal_flips_2026-09-16.json").write_text(
         json.dumps(flips, indent=1))
-    print(f"\nARMABLE {len(before):,} -> {len(halal):,}")
+    was_armable = sum(1 for r in before.values() if r.get("halal"))
+    print(f"\nARMABLE {was_armable:,} -> {len(halal):,}")
     print(f"PASS -> FAIL: {len(flips['to_fail']):,}   "
           f"FAIL -> PASS: {len(flips['to_pass']):,}")
     for c, n in sorted(flips["by_cause"].items(), key=lambda x: -x[1]):
@@ -464,6 +515,7 @@ if __name__ == "__main__":
         # only and a name missing from it is simply not SIC-screened.
         cmd_sic()
     elif "--rescreen" in sys.argv:
-        cmd_rescreen()
+        cmd_rescreen(LIST_F.with_name("halal_list.NEW.json")
+                     if "--park-list" in sys.argv else None)
     else:
         main()

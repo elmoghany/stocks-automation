@@ -923,12 +923,16 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
                 mcap = None
     mcap = float(mcap or 0)
 
-    total_debt, cash_total, bs_miss = _bs_pair(bs)
-    # ANNUAL TIER: one filed period IS the twelve months, so _ttm's
-    # single column is already TTM -- no x4 anywhere. (The old code
-    # annualized unconditionally at `annual_rev = total_rev * 4`, which
-    # under-stated the annual tier's haram_pct by a further 4x.)
-    ttm_rev, ttm_int, n_q, inc_miss = _ttm(inc)
+    # ANNUAL TIER: one filed period ALREADY IS the twelve months, so the
+    # window is ONE column, not four -- four would average four fiscal
+    # years. No x4 anywhere either: the old code annualized
+    # unconditionally at `annual_rev = total_rev * 4` and only the
+    # `info` branch reset it, so the annual tier's haram_pct came out a
+    # further 4x understated (audit Bug 4, 14 names).
+    _win_inc = 1 if src == "annual" else 4
+    _win_bs = 2 if src == "annual" else 4
+    total_debt, cash_total, bs_miss = _bs_pair(bs, _win_bs)
+    ttm_rev, ttm_int, n_q, inc_miss = _ttm(inc, _win_inc)
 
     if total_debt is None and cash_total is None and ttm_rev is None:
         # last resort: yfinance's summary `info` dict often carries
@@ -958,9 +962,22 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
         if (mcap > 0 and cash_total is not None) else None
     combined = (loan_pct + cash_pct) \
         if (loan_pct is not None and cash_pct is not None) else None
-    haram_pct = (abs(ttm_int) / ttm_rev * 100) \
-        if (ttm_int is not None and ttm_rev is not None and ttm_rev > 0) \
-        else None
+    # ZERO-REVENUE NAMES (2026-09-16). Both rows are FILED here -- this
+    # is not the missing-row case -- but revenue is 0 and interest
+    # income is not: a pre-revenue biotech or a blank-check shell whose
+    # ONLY income is the interest on its cash. The haram share of income
+    # is then 100%, not the 0 the old `if annual_rev > 0 else 0` line
+    # recorded. 109 names in the 2026-09-16 rebuild sat in this class
+    # (ABVX, PVLA, RDAC ... every one of them armable). Zero revenue AND
+    # zero interest carries no information at all and is refused below
+    # as unverified.
+    if ttm_int is not None and ttm_rev is not None and ttm_rev <= 0:
+        haram_pct = 100.0 if ttm_int else None
+        if haram_pct is None:
+            inc_miss = list(inc_miss) + ["revenue and interest both zero"]
+    else:
+        haram_pct = (abs(ttm_int) / ttm_rev * 100) \
+            if (ttm_int is not None and ttm_rev is not None) else None
 
     def _r(x):
         return None if x is None else round(x, 2)
@@ -1108,6 +1125,25 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
             "fail_reason": (f"unverified: missing {', '.join(miss)} "
                             f"-- an absent statement row is not a zero "
                             f"(user ruling 2026-09-16); refusing"),
+        })
+
+    # BELT AND BRACES: reaching here with any leg still None would mean
+    # a path above failed to refuse, and a None would raise rather than
+    # decide. Refuse instead -- a gate must never crash its way past a
+    # verdict. (This fired for real: the 109 zero-revenue names above
+    # raised TypeError on `haram_pct < 5` in the first rebuild pass and
+    # were cached as source="error" rather than as FAILs.)
+    if None in (loan_pct, cash_pct, combined, haram_pct):
+        _named = [n for n, v in (("debt", loan_pct), ("cash", cash_pct),
+                                 ("combined", combined),
+                                 ("haram share", haram_pct)) if v is None]
+        return _b_ruling_or({
+            "verdict": "FAIL",
+            "loan_pct": _r(loan_pct), "cash_pct": _r(cash_pct),
+            "combined": _r(combined), "haram_pct": _r(haram_pct),
+            "halal": False, "source": src,
+            "fail_reason": (f"unverified: {', '.join(_named)} could not "
+                            f"be computed -- refusing"),
         })
 
     # STRICT 10 / 10 / 20 -- each leg binds on its own (fix 1).
