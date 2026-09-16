@@ -41,7 +41,12 @@ def table(rows):
 
 
 def load(pat):
-    return [json.loads(p.read_text()) for p in sorted(RES.glob(pat))]
+    out = []
+    for p in sorted(RES.glob(pat)):
+        d = json.loads(p.read_text())
+        d["_file"] = p.stem
+        out.append(d)
+    return out
 
 
 def main():
@@ -97,16 +102,22 @@ def main():
             if "train" in r and isinstance(r["train"], dict):
                 for s in ("train", "val", "test"):
                     if s in r and isinstance(r[s], dict) and r[s].get("days"):
-                        flat.append(r[s])
+                        d = dict(r[s])
+                        d["label"] = f"{r['_file']} :: {s}"
+                        flat.append(d)
             elif "heldout" in r:
                 for s in ("train", "heldout"):
                     d = dict(r[s])
-                    d["label"] = f"{s} :: {json.dumps(r['rule'])[:70]}"
+                    d["label"] = f"{r['_file']} :: {s}"
                     flat.append(d)
             elif "walkforward" in r:
-                flat.append(r["walkforward"])
+                d = dict(r["walkforward"])
+                d["label"] = r["_file"]
+                flat.append(d)
             else:
-                flat.append(r)
+                d = dict(r)
+                d["label"] = r["_file"]
+                flat.append(d)
         print(table(flat) + "\n")
 
     b = load("bandit_real_h30_s*.json")

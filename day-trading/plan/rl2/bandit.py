@@ -78,7 +78,12 @@ def shuffle_within_day(y, d, seed):
 
 
 def run(horizon_idx, variant="real", seed=0, exit_rule=None, tag="",
-        min_pred=None):
+        min_pred=None, min_q=None, threads=None):
+    """`min_q` sets the buy threshold PER FOLD as a quantile of the model's
+    predictions on its own TRAINING rows -- e.g. min_q=0.995 means "buy the
+    top 0.5% of what this model would have predicted in-sample". No test
+    information touches it, and unlike a fixed dollar threshold it is not a
+    number chosen after seeing the test result."""
     import lightgbm as lgb
     if min_pred is None:
         min_pred = MIN_PRED
@@ -105,10 +110,19 @@ def run(horizon_idx, variant="real", seed=0, exit_rule=None, tag="",
         else:
             ds = lgb.Dataset(R.X[tr], label=ytr, free_raw_data=True)
             p = dict(PARAMS)
+            if threads:
+                p["num_threads"] = threads
             p["seed"] = seed
             p["bagging_seed"] = seed + 1
             p["feature_fraction_seed"] = seed + 2
             booster = lgb.train(p, ds, num_boost_round=NROUND)
+            if min_q is not None:
+                sub = np.random.default_rng(7).choice(
+                    np.flatnonzero(tr), size=min(200_000, int(tr.sum())),
+                    replace=False)
+                min_pred = float(np.quantile(booster.predict(R.X[sub]), min_q))
+                print(f"    {m}: train-q{min_q} threshold = "
+                      f"{min_pred:.5f}", flush=True)
         mt = []
         for d in te_dates:
             day = SM.Day(FEAT / f"{d}.npz")
@@ -144,6 +158,7 @@ def run(horizon_idx, variant="real", seed=0, exit_rule=None, tag="",
     tot["seed"] = seed
     tot["exit_rule"] = list(map(str, exit_rule))
     tot["min_pred"] = float(min_pred)
+    tot["min_q"] = min_q
     if models and models[-1][1] is not None:
         imp = models[-1][1].feature_importance("gain")
         tot["feature_gain"] = sorted(
@@ -159,12 +174,14 @@ def main():
     variant = a[a.index("--variant") + 1] if "--variant" in a else "real"
     seed = int(a[a.index("--seed") + 1]) if "--seed" in a else 0
     mp = float(a[a.index("--minpred") + 1]) if "--minpred" in a else None
+    mq = float(a[a.index("--minq") + 1]) if "--minq" in a else None
+    th = int(a[a.index("--threads") + 1]) if "--threads" in a else None
     hi = FT.HORIZONS.index(H)
     RES.mkdir(parents=True, exist_ok=True)
     t0 = time.time()
-    tot, trades = run(hi, variant, seed, min_pred=mp)
+    tot, trades = run(hi, variant, seed, min_pred=mp, min_q=mq, threads=th)
     tot["wall_s"] = round(time.time() - t0, 1)
-    sfx = "" if mp is None else f"_mp{mp}"
+    sfx = ("" if mp is None else f"_mp{mp}") + ("" if mq is None else f"_mq{mq}")
     f = RES / f"bandit_{variant}_h{H}_s{seed}{sfx}.json"
     f.write_text(json.dumps(tot, indent=1))
     print(json.dumps({k: v for k, v in tot.items()

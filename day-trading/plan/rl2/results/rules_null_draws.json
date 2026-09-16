@@ -1,0 +1,48 @@
+{
+ "mode": "draws",
+ "heldout_days": 255,
+ "n_draws": 1500,
+ "n_kept": 1335,
+ "per_ticket": {
+  "mean": -59.12,
+  "sd": 36.68,
+  "p50": -48.67,
+  "p90": -21.31,
+  "p95": -15.83,
+  "p99": -7.98,
+  "max": 22.71,
+  "frac_positive": 0.0037
+ },
+ "total": {
+  "mean": -97555.0,
+  "p95": -23509.0,
+  "max": 14971.0
+ },
+ "searched": {
+  "rules_holdout_s0": {
+   "heldout_per_ticket": 14.114,
+   "heldout_total": 4304.71,
+   "percentile_in_null": 99.93
+  },
+  "rules_holdout_s1": {
+   "heldout_per_ticket": -12.193,
+   "heldout_total": -9351.73,
+   "percentile_in_null": 97.83
+  },
+  "rules_holdout_s2": {
+   "heldout_per_ticket": -12.713,
+   "heldout_total": -10551.63,
+   "percentile_in_null": 97.45
+  },
+  "rules_holdout_s3": {
+   "heldout_per_ticket": -7.343,
+   "heldout_total": -7747.14,
+   "percentile_in_null": 99.03
+  },
+  "rules_holdout_s4": {
+   "heldout_per_ticket": -46.277,
+   "heldout_total": -27812.72,
+   "percentile_in_null": 52.28
+  }
+ }
+}

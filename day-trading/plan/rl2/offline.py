@@ -113,7 +113,6 @@ def main():
     ds_tr = E.Dataset(sp["train"])
     norm = ds_tr.fit_norm()
     tr_env = E.TicketEnv(ds_tr, norm=norm, seed=seed)
-    E.DayData.pred = None
     attach_bandit_preds(ds_tr.days, booster)
 
     rng = np.random.default_rng(seed)

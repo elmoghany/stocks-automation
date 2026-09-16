@@ -17,6 +17,7 @@ identical for every policy and every control, so the slotting cannot
 favour one of them.
 """
 import math
+import os as _os
 import sys
 from pathlib import Path
 
@@ -45,6 +46,13 @@ STEPS = FT.STEPS
 NSTEP = FT.T
 RTH_LO, RTH_HI = FT.RTH_LO, FT.RTH_HI
 
+# DIAGNOSTIC SWITCH (RL2_RTH_ONLY=1): mask every buy and sell outside
+# 09:30-16:00, so the only action available in premarket / after-hours is
+# hold. It exists to answer ONE question -- whether the online-RL arm's
+# failed foresight control is caused by the extended-hours action space
+# rather than by the market.
+RTH_ONLY = _os.environ.get("RL2_RTH_ONLY") == "1"
+
 TRAIN_END = "2025-06-01"
 VAL_END = "2025-08-01"
 TEST_END = "2026-08-07"
@@ -52,7 +60,8 @@ TEST_END = "2026-08-07"
 
 class DayData:
     __slots__ = ("date", "syms", "S", "feat", "mark", "printed", "fill_o",
-                 "volcap", "flat_px", "flat_min", "slots", "tgt", "tgt_ok")
+                 "volcap", "flat_px", "flat_min", "slots", "tgt", "tgt_ok",
+                 "pred")
 
     def __init__(self, path):
         z = np.load(path, allow_pickle=False)
@@ -172,10 +181,11 @@ class TicketEnv(gym.Env if gym else object):
         np.clip(f, -5.0, 5.0, out=f)
         held = set(int(s) for s in self.pos_sym if s >= 0)
         avail = np.zeros(K_SLOTS, np.float32)
+        rth_ok = (not RTH_ONLY) or (RTH_LO <= STEPS[i] < RTH_HI)
         for k in range(K_SLOTS):
             s = int(sl[k])
-            if s >= 0 and s not in held and self.tickets < MAX_TICKETS \
-                    and d.printed[i, s]:
+            if rth_ok and s >= 0 and s not in held \
+                    and self.tickets < MAX_TICKETS and d.printed[i, s]:
                 avail[k] = 1.0
         g = np.zeros((P_SLOTS, NG), np.float32)
         m = STEPS[i]
@@ -213,6 +223,8 @@ class TicketEnv(gym.Env if gym else object):
         d, i = self.d, self.i
         m = np.zeros(self.n_actions, bool)
         m[0] = True
+        if RTH_ONLY and not (RTH_LO <= STEPS[i] < RTH_HI):
+            return m
         sl = d.slots[i]
         held = set(int(s) for s in self.pos_sym if s >= 0)
         for k in range(K_SLOTS):
@@ -235,6 +247,9 @@ class TicketEnv(gym.Env if gym else object):
 
     def _buy(self, k):
         d, i = self.d, self.i
+        if RTH_ONLY and not (RTH_LO <= STEPS[i] < RTH_HI):
+            self.n_invalid += 1
+            return
         s = int(d.slots[i, k])
         if s < 0 or self.tickets >= MAX_TICKETS or \
                 any(int(x) == s for x in self.pos_sym):
@@ -270,6 +285,9 @@ class TicketEnv(gym.Env if gym else object):
                 raw, fm = d.mark[i, s], int(STEPS[i])
             self.ep["forced"] += 1
         else:
+            if RTH_ONLY and not (RTH_LO <= STEPS[i] < RTH_HI):
+                self.n_invalid += 1
+                return
             raw, fm = d.fill_o[i, s], int(STEPS[i]) + 1
             if not np.isfinite(raw) or raw <= 0:
                 return

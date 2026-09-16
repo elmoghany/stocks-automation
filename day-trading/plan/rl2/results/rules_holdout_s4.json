@@ -1,0 +1,71 @@
+{
+ "seed": 4,
+ "mode": "holdout",
+ "rule": {
+  "tests": [
+   [
+    "dist_vwap_day",
+    ">",
+    0.01321
+   ],
+   [
+    "rvol_profile",
+    ">",
+    1.57699
+   ],
+   [
+    "bar_range5",
+    ">",
+    0.00104
+   ]
+  ],
+  "window": [
+   390,
+   840
+  ],
+  "exit": [
+   "rule",
+   {
+    "stop": 0.04,
+    "take": null,
+    "trail": null,
+    "tmax": 60
+   }
+  ]
+ },
+ "train": {
+  "label": "train",
+  "days": 193,
+  "tickets": 356,
+  "total": 6180.91,
+  "per_ticket": 17.362,
+  "tickets_per_day": 1.84,
+  "sharpe": 0.632,
+  "max_dd": -8189.29,
+  "win_rate": 0.4466,
+  "ext_exit_n": 40,
+  "ext_exit_pnl": 1942.3,
+  "rth_exit_n": 316,
+  "rth_exit_pnl": 4238.61,
+  "mean_hold": 65.0,
+  "forced": 13
+ },
+ "heldout": {
+  "label": "heldout",
+  "days": 255,
+  "tickets": 601,
+  "total": -27812.72,
+  "per_ticket": -46.277,
+  "tickets_per_day": 2.36,
+  "sharpe": -2.263,
+  "max_dd": -28568.71,
+  "win_rate": 0.4443,
+  "ext_exit_n": 82,
+  "ext_exit_pnl": -3473.76,
+  "rth_exit_n": 519,
+  "rth_exit_pnl": -24338.96,
+  "mean_hold": 65.4,
+  "forced": 15
+ },
+ "wall_s": 846.4
+}

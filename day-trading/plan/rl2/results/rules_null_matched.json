@@ -1,0 +1,44 @@
+{
+ "mode": "matched",
+ "heldout_days": 255,
+ "rate_0.5": {
+  "seeds": 30,
+  "mean_total": -2353.08,
+  "min_total": -19034.86,
+  "max_total": 383.46,
+  "mean_per_ticket": -40.508,
+  "min_per_ticket": -159.347,
+  "max_per_ticket": 23.966,
+  "mean_tickets_per_day": 0.13
+ },
+ "rate_1.0": {
+  "seeds": 30,
+  "mean_total": -6183.14,
+  "min_total": -19034.86,
+  "max_total": 284.87,
+  "mean_per_ticket": -78.214,
+  "min_per_ticket": -190.098,
+  "max_per_ticket": 94.957,
+  "mean_tickets_per_day": 0.41
+ },
+ "rate_1.2": {
+  "seeds": 30,
+  "mean_total": -8557.99,
+  "min_total": -22380.18,
+  "max_total": 1945.08,
+  "mean_per_ticket": -78.318,
+  "min_per_ticket": -187.02,
+  "max_per_ticket": 14.848,
+  "mean_tickets_per_day": 0.54
+ },
+ "rate_2.0": {
+  "seeds": 30,
+  "mean_total": -11970.26,
+  "min_total": -33346.96,
+  "max_total": 1719.54,
+  "mean_per_ticket": -90.552,
+  "min_per_ticket": -588.393,
+  "max_per_ticket": 12.551,
+  "mean_tickets_per_day": 0.75
+ }
+}
