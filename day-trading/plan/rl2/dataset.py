@@ -21,10 +21,20 @@ FEAT = HERE / "out" / "feat"
 CACHE = HERE / "out" / "rows.npz"
 
 
-def build(force=False):
-    if CACHE.exists() and not force:
+def _paths(which):
+    """`which` selects the feature block: "feat" (the 26-column first
+    pass) or "feat2" (the 37-column iteration pass, plan/rl2/features2.py).
+    Two directories, two row caches, both reproducible."""
+    d = HERE / "out" / which
+    c = HERE / "out" / ("rows.npz" if which == "feat" else f"rows_{which}.npz")
+    return d, c
+
+
+def build(force=False, which="feat"):
+    FEATD, CACHEP = _paths(which)
+    if CACHEP.exists() and not force:
         return
-    files = sorted(FEAT.glob("*.npz"))
+    files = sorted(FEATD.glob("*.npz"))
     X, Y, OKY, D, TT, SS, MRK = [], [], [], [], [], [], []
     syms_all = []
     sym_id = {}
@@ -48,20 +58,21 @@ def build(force=False):
             ids.append(sym_id[s])
         SS.append(np.asarray(ids, np.int32)[s_i])
         MRK.append(z["mark"][t_i, s_i])
-    np.savez(CACHE, X=np.concatenate(X), Y=np.concatenate(Y),
+    np.savez(CACHEP, X=np.concatenate(X), Y=np.concatenate(Y),
              OKY=np.concatenate(OKY), D=np.concatenate(D),
              T=np.concatenate(TT), S=np.concatenate(SS),
              MARK=np.concatenate(MRK),
              dates=np.array([p.stem for p in files]),
              syms=np.array(syms_all))
     print(f"rows: {sum(len(x) for x in X):,} over {len(files)} days, "
-          f"{len(syms_all):,} distinct symbols -> {CACHE}", flush=True)
+          f"{len(syms_all):,} distinct symbols -> {CACHEP}", flush=True)
 
 
 class Rows:
-    def __init__(self):
-        build()
-        z = np.load(CACHE, allow_pickle=False)
+    def __init__(self, which="feat"):
+        build(which=which)
+        self.which = which
+        z = np.load(_paths(which)[1], allow_pickle=False)
         self.X = z["X"]
         self.Y = z["Y"]
         self.OKY = z["OKY"]
@@ -79,4 +90,6 @@ class Rows:
 
 
 if __name__ == "__main__":
-    build(force="--force" in sys.argv)
+    w = sys.argv[sys.argv.index("--which") + 1] \
+        if "--which" in sys.argv else "feat"
+    build(force="--force" in sys.argv, which=w)

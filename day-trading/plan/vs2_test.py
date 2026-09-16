@@ -75,6 +75,17 @@ VS2_KW = {
                  struct_floor_mode="sig_low", target_r=2.0),
     "HALT": dict(BASE, halt_resume=(10,), struct_floor_mode="sig_low",
                  target_r=2.0),
+    "FVG": dict(BASE, fvg_entry=(20, 0.1), struct_floor_mode="sig_low",
+                target_r=2.0),
+    "IB": dict(BASE, inside_bar=(1,), struct_floor_mode="sig_low",
+               target_r=2.0),
+    "SWP": dict(BASE, sweep_reclaim=(20, 3), struct_floor_mode="sig_low",
+                target_r=2.0),
+    "3BAR": dict(BASE, three_bar=(1.8, 0.5),
+                 struct_floor_mode="sig_low", target_r=2.0),
+    "ORMM": dict(BASE, or_clock=(dtime(9, 30), 5),
+                 struct_floor_mode="or_low", trail_pct=999,
+                 struct_target_mode="or_range"),
 }
 
 

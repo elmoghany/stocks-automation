@@ -988,6 +988,49 @@ def _vs2_cfgs():
                   "that held, stop = B, 2R", T935, T1100,
         _vs2_sim(abcd_entry=(3.0, 0.62, 20), struct_floor_mode="sig_low",
                  target_r=2.0))
+    # ---- WAVE 2 (same batch, second sweep of videos) ----
+    # "the target is usually the same height as the range" (ForexBee):
+    # the MEASURED MOVE, the one exit rule no prior config implements.
+    add("V1ORBm", "09:30 OR break, stop = OR low, MEASURED-MOVE target "
+                  "(= OR height)", T935, T1100,
+        _vs2_sim(or_clock=ORC, struct_floor_mode="or_low", trail_pct=999,
+                 struct_target_mode="or_range"))
+    # the "9:30 first candle" break (a 1-minute opening range)
+    add("V1OR01", "09:30 FIRST 1-MIN CANDLE break, stop = its low, 2R",
+        dtime(9, 31), T1100,
+        _vs2_sim(or_clock=(dtime(9, 30), 1), struct_floor_mode="or_low",
+                 target_r=2.0))
+    # close-confirmation entry (Usman Ashraf: "once this candle closes")
+    add("V1OR15c", "09:30 15-min OR break, CLOSE-confirmed fill, 2R",
+        dtime(9, 45), T1100,
+        _vs2_sim(or_clock=(dtime(9, 30), 15), struct_floor_mode="or_low",
+                 target_r=2.0, orb_fill_mode="close"))
+    # ICT fair value gap (confirmation variant), inside bar, liquidity
+    # sweep reclaim ("turtle soup")
+    add("V9FVG", "ICT fair value gap: retrace into a bullish 3-bar "
+                 "imbalance, then take out the prior bar's high, 2R",
+        T935, T1200,
+        _vs2_sim(fvg_entry=(20, 0.1), struct_floor_mode="sig_low",
+                 target_r=2.0))
+    add("V9IB", "inside-bar break: bar inside the prior bar's range, buy "
+                "the break of its high, stop = its low, 2R", T935, T1200,
+        _vs2_sim(inside_bar=(1,), struct_floor_mode="sig_low",
+                 target_r=2.0))
+    add("V9SWP", "liquidity sweep reclaim: new 20-bar low that closes "
+                 "back above it, buy the next bar's break, 2R",
+        T935, T1200,
+        _vs2_sim(sweep_reclaim=(20, 3), struct_floor_mode="sig_low",
+                 target_r=2.0))
+    add("V9TB", "Live Traders 3-bar play: wide-range igniting bar, "
+                "narrow-range resting bar, buy the break of the resting "
+                "bar's high, stop = its low, 2R", T935, T1200,
+        _vs2_sim(three_bar=(1.8, 0.5), struct_floor_mode="sig_low",
+                 target_r=2.0))
+    add("V9SB", "ICT AM Silver Bullet window 10:00-11:00: fair value gap "
+                "entry only inside the hour, 2R", dtime(10, 0),
+        dtime(11, 0),
+        _vs2_sim(fvg_entry=(20, 0.1), struct_floor_mode="sig_low",
+                 target_r=2.0))
     # --- HALT RESUMPTION dip & rip (Ross Cameron / TraderTV) ---
     add("V8HALT", "halt resumption: after a >=5-min regular-session tape "
                   "gap, buy the break of the prior bar's high, 2R",

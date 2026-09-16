@@ -181,6 +181,37 @@ CFGS = {
                    sim=kw(vwap_entry=("band", 2.0),
                           struct_floor_mode="sig_low", trail_pct=999,
                           vwap_target=True, time_stop_min=60)),
+    # ---- wave 2: FVG / inside bar / liquidity-sweep reclaim ----
+    "W9FVG": dict(desc="ICT fair value gap (confirmation variant), 2R",
+                  rank="gain_desc", entry_open=T935, cutoff=T1200,
+                  sim=kw(fvg_entry=(20, 0.05),
+                         struct_floor_mode="sig_low", target_r=2.0)),
+    "W9IB": dict(desc="inside-bar break, stop = its low, 2R",
+                 rank="gain_desc", entry_open=T935, cutoff=T1200,
+                 sim=kw(inside_bar=(1,), struct_floor_mode="sig_low",
+                        target_r=2.0)),
+    "W9SWP": dict(desc="liquidity sweep reclaim (20-bar low swept and "
+                       "reclaimed), 2R",
+                  rank="gain_asc", entry_open=T935, cutoff=T1200,
+                  sim=kw(sweep_reclaim=(20, 3),
+                         struct_floor_mode="sig_low", target_r=2.0)),
+    "W9TB": dict(desc="Live Traders 3-bar play (wide bar, narrow bar, "
+                      "break of the narrow bar's high), 2R",
+                 rank="gain_desc", entry_open=T935, cutoff=T1200,
+                 sim=kw(three_bar=(1.8, 0.5),
+                        struct_floor_mode="sig_low", target_r=2.0)),
+    "W9SB": dict(desc="ICT AM Silver Bullet window 10:00-11:00, FVG "
+                      "entry, 2R",
+                 rank="gain_desc", entry_open=dtime(10, 0),
+                 cutoff=dtime(11, 0),
+                 sim=kw(fvg_entry=(20, 0.05),
+                        struct_floor_mode="sig_low", target_r=2.0)),
+    "W1OR01": dict(desc="09:30 FIRST 1-MIN CANDLE break, stop = its low, "
+                        "2R",
+                   rank="gain_desc", entry_open=dtime(9, 31),
+                   cutoff=T1100,
+                   sim=kw(or_clock=(dtime(9, 30), 1),
+                          struct_floor_mode="or_low", target_r=2.0)),
     # ---- the two mechanics that only exist on a wide universe ----
     "W7RTG": dict(desc="RED-TO-GREEN: name traded below prev close today "
                        "and is now above it; buy the next print, 2R",

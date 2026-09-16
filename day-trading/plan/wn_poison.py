@@ -8,19 +8,29 @@ plan/rl2/features.compute_day and then through plan/wn_table.day_block --
 the same two functions the real table was built with -- and the test
 asserts:
 
-  1. every one of the 30 wide-net feature columns at every decision time
+  1. every one of the 32 wide-net feature columns at every decision time
      <= m is BIT-IDENTICAL,
-  2. `printed` and `notional` at those times are identical,
+  2. the CAUSAL candidate gate `printed_m` (bar m printed) is identical,
   3. the pattern's TOP-1 PICK at time m is the same ticker,
 
 for every pattern in data/massive/wn/rules_search.json plus the model
 score's feature inputs.  A single mismatch means a feature can see the
 future and every dollar in the audit is void.
 
-`fill_o`, `pnl` and `ok` are DELIBERATELY excluded: they price the fill at
-minute m+1 and are the label, not the state.  A poisoned run must change
-them -- if it did not, the label would not be reading the future it is
-supposed to read, and the test asserts that too (a sanity direction check).
+`fill_o`, `notional`, `printed` (= m+1 fillable), `pnl` and `ok` are
+DELIBERATELY excluded: every one of them reads minute m+1, which is the
+FILL, not the state.  A poisoned run MUST change them -- if it did not,
+the label would not be reading the future it is supposed to read -- and
+the test asserts that direction too.
+
+THE FIRST RUN OF THIS TEST FAILED, and the failure is recorded rather than
+patched away: 95 of 144 array checks mismatched, all of them on `printed`
+and `notional`.  `F` never mismatched once.  Chasing it showed that the
+candidate gate in the first cut of plan/wn_lib.Table.mask was `printed`
+(m+1 fillable) rather than `printed_m` (bar m printed), i.e. the selection
+was quietly skipping the 19.4% of printed bars that turned out not to be
+fillable -- future information.  The gate was corrected and every number in
+widenet-audit.md was recomputed underneath it.
 
 Usage: python plan/wn_poison.py [--days 12]
 """
@@ -44,7 +54,7 @@ from wn_rules import RTH, apply_rule                    # noqa: E402
 DAYS = HERE / "rl2" / "out" / "days"
 
 
-def top1(F, live, fidx, rule, sd, syms, ti):
+def top1(F, live, fidx, rule, sd, syms, ti):   # `live` = printed_m
     """The rule's top-1 pick at decision index ti from a feature block."""
     m = live[ti].copy()
     sc = np.zeros(len(syms))
@@ -110,7 +120,7 @@ def main(ndays=12, seed=7):
             bad = WT.day_block(date, FT.compute_day(
                 date, syms, pc, (o, h, lo, c, v), prof, daily), sic2, earn)
             keep = WT.STEPS[WT.DEC_T] <= m
-            for k in ("F", "printed", "notional"):
+            for k in ("F", "printed_m"):
                 a = np.nan_to_num(clean[k][keep], nan=-9e9)
                 b = np.nan_to_num(bad[k][keep], nan=-9e9)
                 checks += 1
@@ -124,9 +134,9 @@ def main(ndays=12, seed=7):
                                   np.nan_to_num(bad["pnl"][ci])):
                 labelmoved += 1
             for r in rules:
-                aa = top1(clean["F"], clean["printed"], t.fidx, r, sd,
+                aa = top1(clean["F"], clean["printed_m"], t.fidx, r, sd,
                           clean["syms"], ci)
-                bb = top1(bad["F"], bad["printed"], t.fidx, r, sd,
+                bb = top1(bad["F"], bad["printed_m"], t.fidx, r, sd,
                           bad["syms"], ci)
                 if aa is None:
                     continue

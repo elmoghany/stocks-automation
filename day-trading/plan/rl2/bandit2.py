@@ -116,6 +116,7 @@ def main():
     exit_spec = opt("--exit", "")
     threads = opt("--threads", None, int)
     tag = opt("--tag", "")
+    which = opt("--feat", "feat")
     exit_rule = parse_exit(exit_spec, H) if exit_spec else parse_exit("", H)
     hi = FT.HORIZONS.index(H)
 
@@ -124,7 +125,13 @@ def main():
     last_entry = int(np.searchsorted(
         FT.STEPS, RTH_LAST_ENTRY if rth else ANY_LAST_ENTRY, "right") - 1)
 
-    R = DS.Rows()
+    R = DS.Rows(which)
+    global FEAT
+    FEAT = HERE / "out" / which
+    fnames = FT.FEATURE_NAMES
+    if which != "feat":
+        import features2 as FT2
+        fnames = FT2.FEATURE_NAMES2
     y_all = R.Y[:, hi].astype(np.float64)
     ok_all = R.OKY[:, hi].copy()
     if rth:
@@ -182,7 +189,7 @@ def main():
         per_month.append(mm)
         all_trades += mt
         imp = booster.feature_importance("gain")
-        feat_gain = sorted([[FT.FEATURE_NAMES[i], round(float(imp[i]), 1)]
+        feat_gain = sorted([[fnames[i], round(float(imp[i]), 1)]
                             for i in range(len(imp))], key=lambda x: -x[1])[:10]
         print(f"  {m}: {mm['tickets']:4d} tkt  ${mm['total']:>9,.0f}  "
               f"{mm['per_ticket']:+8.2f}/tkt  thr {thr:+.5f}", flush=True)
@@ -190,7 +197,7 @@ def main():
     dates = [d for d in R.dates
              if f"{TEST_MONTHS[0]}-01" <= d < month_end(TEST_MONTHS[-1])]
     name = (f"bandit2_{variant}_h{H}_{'rth' if rth else 'any'}_{target}"
-            f"_q{q}_k{topk}_{exit_spec or 'hz'}_s{seed}{tag}")
+            f"_q{q}_k{topk}_{exit_spec or 'hz'}_{which}_s{seed}{tag}")
     mtot = BAR.metrics(all_trades, dates, name)
     rate = mtot["tickets_per_day"]
     p_entry = min(0.9, max(1e-5, rate / (FT.T * 60.0) * 8))
@@ -199,6 +206,7 @@ def main():
                             step_mask=step_mask, T=FT.T)
     out = {"config": {"horizon": H, "rth": rth, "target": target, "q": q,
                       "topk": topk, "seed": seed, "variant": variant,
+                      "feat": which,
                       "exit": exit_spec or f"horizon:{H}"},
            "overall": mtot, "verdict": BAR.verdict(mtot, rc),
            "random_control": {k: v for k, v in rc.items()

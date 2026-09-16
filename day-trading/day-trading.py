@@ -1824,7 +1824,8 @@ _USE_DEFAULT = object()  # sentinel: None must stay meaning "all patterns"
 # to decide which fills may waive rule 3 under `pullback_relax`.
 _VS2_PATS = ("ORC", "ORC-RT", "micro-pullback", "ema-pullback",
              "flag-break", "vwap-reclaim", "vwap-band", "vwap-bounce",
-             "abcd", "halt-resume", "rand-entry")
+             "abcd", "halt-resume", "rand-entry", "fvg", "inside-bar",
+             "sweep-reclaim", "three-bar")
 
 
 def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
@@ -1905,6 +1906,10 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     micro_pullback: tuple | None = None,
                     abcd_entry: tuple | None = None,
                     halt_resume: tuple | None = None,
+                    fvg_entry: tuple | None = None,
+                    inside_bar: tuple | None = None,
+                    three_bar: tuple | None = None,
+                    sweep_reclaim: tuple | None = None,
                     ema_pullback: tuple | None = None,
                     flag_break: tuple | None = None,
                     rand_entry: tuple | None = None,
@@ -2574,6 +2579,64 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                         brk = ("abcd", max(cd.h[_a], cd.o[i]))
                         if struct_floor_mode == "sig_low":
                             _vs2_floor[0] = _bl
+            # ICT fair value gap (bullish imbalance): bars j-2, j-1, j
+            # with High[j-2] < Low[j] leave an untraded zone. THE
+            # CONFIRMATION VARIANT is implemented -- price must retrace
+            # INTO the zone and then trade back up through its top --
+            # because it fills through the same stop-buy machinery as
+            # every other trigger. The canonical resting-limit-into-the-
+            # gap entry needs a buy-side limit fill model and is queued.
+            if (brk is None and fvg_entry is not None and i >= 5):
+                _fw = int(fvg_entry[0])
+                _fg = float(fvg_entry[1]) if len(fvg_entry) > 1 else 0.0
+                for _j in range(i - 1, max(1, i - _fw) - 1, -1):
+                    if _j < 2:
+                        break
+                    _top, _bot = cd.l[_j], cd.h[_j - 2]
+                    if _top <= _bot or _bot <= 0:
+                        continue
+                    if (_top / _bot - 1) * 100 < _fg:
+                        continue
+                    # retraced into the zone after it formed, and bar i
+                    # is taking out the previous bar's high again
+                    if (min(cd.l[_j + 1:i]) <= _top if i > _j + 1
+                            else False) and cd.h[i] > cd.h[i - 1]:
+                        brk = ("fvg", max(cd.h[i - 1], cd.o[i]))
+                        if struct_floor_mode == "sig_low":
+                            _vs2_floor[0] = min(cd.l[i - 1], _bot)
+                        break
+            # Live Traders' "3 bar play": bar 1 a WIDE-RANGE igniting
+            # bar, bar 2 a NARROW-RANGE resting bar, entry on the break
+            # of bar 2's high, stop below bar 2's low.
+            if (brk is None and three_bar is not None and i >= 13
+                    and cd.h[i] > cd.h[i - 1]):
+                _wm = float(three_bar[0])
+                _nm = float(three_bar[1]) if len(three_bar) > 1 else 0.5
+                _rngs = sorted(cd.h[k] - cd.l[k] for k in range(i - 12, i - 2))
+                _med = _rngs[len(_rngs) // 2] if _rngs else 0.0
+                _r1 = cd.h[i - 2] - cd.l[i - 2]
+                _r2 = cd.h[i - 1] - cd.l[i - 1]
+                if (_med > 0 and _r1 >= _wm * _med and _r2 <= _nm * _r1
+                        and cd.c[i - 2] > cd.o[i - 2]):
+                    brk = ("three-bar", max(cd.h[i - 1], cd.o[i]))
+                    if struct_floor_mode == "sig_low":
+                        _vs2_floor[0] = cd.l[i - 1]
+            if (brk is None and inside_bar is not None and i >= 3
+                    and cd.h[i - 1] < cd.h[i - 2]
+                    and cd.l[i - 1] > cd.l[i - 2]
+                    and cd.h[i] > cd.h[i - 1]):
+                brk = ("inside-bar", max(cd.h[i - 1], cd.o[i]))
+                if struct_floor_mode == "sig_low":
+                    _vs2_floor[0] = cd.l[i - 1]
+            if (brk is None and sweep_reclaim is not None
+                    and i >= int(sweep_reclaim[0]) + 2):
+                _sl = int(sweep_reclaim[0])
+                _prev_lo = cd.l[i - 1 - _sl:i - 1].min()
+                if (cd.l[i - 1] < _prev_lo <= cd.c[i - 1]
+                        and cd.h[i] > cd.h[i - 1]):
+                    brk = ("sweep-reclaim", max(cd.h[i - 1], cd.o[i]))
+                    if struct_floor_mode == "sig_low":
+                        _vs2_floor[0] = cd.l[i - 1]
             if brk is None and halt_resume is not None and i >= 2:
                 _hw = int(halt_resume[0])
                 for _k in range(max(1, i - _hw), i):

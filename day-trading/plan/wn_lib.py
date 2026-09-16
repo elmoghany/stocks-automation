@@ -38,7 +38,9 @@ class Table:
         self.dec_i = z["dec_i"].astype(np.int32)
         self.F = z["F"]
         self.notional = z["notional"]
-        self.printed = z["printed"]
+        self.printed = z["printed"]          # bar m+1 fillable (NOT causal)
+        self.printed_m = z["printed_m"]      # bar m printed  (the candidate
+                                             # gate; this one IS causal)
         self.fill_px = z["fill_px"]
         self.pnl = {h: z["pnl_" + h] for h in HNAMES}
         self.ok = {h: z["ok_" + h] for h in HNAMES}
@@ -53,7 +55,10 @@ class Table:
         return self.F[:, self.fidx[name]]
 
     def mask(self, split=None, dec=None, h="h30"):
-        m = self.ok[h].copy()
+        """The CAUSAL candidate set: bar m printed.  A candidate whose
+        minute m+1 did not print books $0 (pnl is already 0 there), which
+        is what plan/rl2/sim.py does -- the attempt is spent, not undone."""
+        m = self.printed_m.copy()
         if split is not None:
             m &= np.isin(self.split, np.atleast_1d(split))
         if dec is not None:

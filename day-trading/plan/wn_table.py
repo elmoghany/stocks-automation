@@ -21,6 +21,16 @@ the labels are read straight out of plan/rl2/out/feat/*.npz, which is the
 cache plan/rl2/honesty.py poison-tested 64/64. This file only reshapes them
 and adds the four extra columns. It never writes into plan/rl2/.
 
+ELIGIBILITY (identical to plan/rl2/sim.py::run_day, corrected 2026-09-16)
+  A name is a CANDIDATE at decision minute m iff bar m itself printed
+  (`printed_m`).  Whether minute m+1 prints -- i.e. whether the order can
+  actually fill -- is NOT knowable at m, so it must never filter the
+  candidate set.  A chosen name whose m+1 did not print simply books $0:
+  the order did not happen and the day's ticket is spent.  The first cut
+  of this table gated candidates on `printed` (= m+1 fillable), which
+  silently dropped 19.4% of printed bars using future information; the
+  poison test in plan/wn_poison.py is what caught it.
+
 P&L CONVENTION (identical to plan/rl2/sim.py::run_day)
   notional = min($15,000, 0.20 * trailing-5-minute share volume * fill price)
   a ticket below $500 of notional does not happen (the size cap killed it)
@@ -72,7 +82,8 @@ RL2_FEATURES = [
     "prev_day_ret", "log_mdv20", "dist_hi", "dist_lo",
     "xs_breadth", "xs_rank_ret30",
 ]
-EXTRA_FEATURES = ["dow", "sic2", "earn_prox", "coil"]
+EXTRA_FEATURES = ["dow", "sic2", "earn_prox", "coil",
+                  "earn_rh", "earn_fresh"]
 FEATURES = RL2_FEATURES + EXTRA_FEATURES
 
 # ET decision times -> grid minute (ET minute-of-day - 240)
@@ -136,6 +147,52 @@ def load_earn():
     return out
 
 
+def load_earn_rh():
+    """{sym: {date: timing}} from the Robinhood earnings calendar
+    (data/massive/wn/rh_earnings_calendar.json, 51,140 events, 2024-10-01
+    .. 2026-10-01, all 191 universe symbols covered, 1,714 events on them).
+
+    CAUSALITY.  A scheduled report DATE and its am/pm slot are published
+    weeks ahead, so at 09:35 on D a trader knows "this name reports before
+    the open today" or "tonight".  What is NOT knowable is the result, and
+    nothing here reads eps_actual / eps_estimate (the collector was
+    instructed not to keep them).  The CAVEAT is that this calendar was
+    pulled in 2026-09, so it is the REALISED schedule; a name that moved
+    its date after the fact would be mis-flagged on the old date.  That is
+    a small, unsigned error, and the feature is reported separately in the
+    audit for exactly this reason.
+    """
+    f = ROOT / "data" / "massive" / "wn" / "rh_earnings_calendar.json"
+    if not f.exists():
+        return {}
+    out = {}
+    for e in json.loads(f.read_text()).get("events", []):
+        s, d = e.get("symbol"), e.get("date")
+        if s and d:
+            out.setdefault(s, {})[d] = (e.get("timing") or "")[:2]
+    return out
+
+
+def earn_rh_feats(sym, date, cal, prev_date):
+    """(signed days to nearest report, clipped to +-5; 9 = none) and
+    (1 if the announcement became public between the previous close and
+    today's open: a prior-session 'pm' report or a today 'am' report)."""
+    ds = cal.get(sym)
+    if not ds:
+        return 9.0, 0.0
+    y, m, dd = (int(x) for x in date.split("-"))
+    d0 = _date(y, m, dd)
+    best = 9.0
+    for s in ds:
+        yy, mm, ddd = (int(x) for x in s.split("-"))
+        k = (_date(yy, mm, ddd) - d0).days
+        if abs(k) <= 5 and abs(k) < abs(best):
+            best = float(k)
+    fresh = float(ds.get(date, "") == "am"
+                  or (prev_date is not None and ds.get(prev_date, "") == "pm"))
+    return best, fresh
+
+
 def earn_prox(sym, date, earn):
     """Signed trading-day-ish distance to the nearest earnings date, clipped
     to +-5 calendar days; 9 = none nearby.  Negative = earnings already
@@ -155,7 +212,7 @@ def earn_prox(sym, date, earn):
 
 
 # --------------------------------------------------------------- build
-def day_block(date, z, sic2, earn):
+def day_block(date, z, sic2, earn, cal=None, prev_date=None):
     """The wide-net row block for one day, from an rl2 feature dict/npz.
 
     Factored out so plan/wn_poison.py can run the IDENTICAL code on a
@@ -184,9 +241,14 @@ def day_block(date, z, sic2, earn):
     ex[:, :, 2] = np.array([earn_prox(s, date, earn) for s in ss], np.float32)
     ex[:, :, 3] = F[:, :, RL2_FEATURES.index("rvol30")] / \
         np.maximum(F[:, :, RL2_FEATURES.index("bar_range5")], 1e-6)
+    er = np.array([earn_rh_feats(s, date, cal or {}, prev_date) for s in ss],
+                  np.float32)
+    ex[:, :, 4] = er[:, 0]
+    ex[:, :, 5] = er[:, 1]
     return {"syms": ss,
             "F": np.concatenate([F, ex], axis=2).astype(np.float32),
             "notional": np.nan_to_num(notion), "printed": live,
+            "printed_m": prn,
             "fill_px": np.nan_to_num(fo),
             "pnl": np.nan_to_num(pnl), "ok": live[:, :, None] & tok}
 
@@ -198,67 +260,47 @@ def build(smoke=0):
     files = sorted(FEAT.glob("*.npz"))
     if smoke:
         files = files[:smoke]
+    cal = load_earn_rh()
     cols = {k: [] for k in
-            ("date_i", "sym_i", "dec_i", "notional", "printed", "fill_px")}
+            ("date_i", "sym_i", "dec_i", "notional", "printed",
+             "printed_m", "fill_px")}
     for h in HNAMES:
         cols["pnl_" + h] = []
         cols["ok_" + h] = []
     Fl = []
     dates, syms_all, sidx = [], [], {}
     t0 = time.time()
+    all_dates = [p.stem for p in sorted(FEAT.glob("*.npz"))]
+    prevmap = {d: (all_dates[i - 1] if i else None)
+               for i, d in enumerate(all_dates)}
     for di, p in enumerate(files):
         date = p.stem
         z = np.load(p, allow_pickle=False)
         assert int(z["steps"][0]) == 0 and len(z["steps"]) == T, date
-        S = len(z["syms"])
-        F = z["F"][DEC_T]                                  # [NT,S,26]
-        prn = z["printed"][DEC_T]                          # [NT,S]
-        fo = z["fill_o"][DEC_T].astype(np.float64)
-        vc = z["volcap"][DEC_T].astype(np.float64)
-        tg = z["tgt"][DEC_T].astype(np.float64)            # [NT,S,5]
-        tok = z["tgt_ok"][DEC_T]
-        ss = [str(x) for x in z["syms"]]
+        b = day_block(date, z, sic2, earn, cal, prevmap.get(date))
+        ss = b["syms"]
+        S = len(ss)
         for s in ss:
             if s not in sidx:
                 sidx[s] = len(syms_all)
                 syms_all.append(s)
         si = np.array([sidx[s] for s in ss], np.int32)
-
-        mfill = np.minimum(STEPS[DEC_T] + 1, NMIN - 1)
-        cf = cost_frac(mfill)[:, None]                     # [NT,1]
-        with np.errstate(all="ignore"):
-            notion = np.where(np.isfinite(fo) & (fo > 0),
-                              np.minimum(TICKET, vc * fo), np.nan)
-        live = prn & np.isfinite(notion) & (notion >= MIN_NOTIONAL)
-        pnl = notion[:, :, None] * (1.0 + cf[:, :, None]) * tg
-
-        dow = _date(*(int(x) for x in date.split("-"))).weekday()
-        ex = np.zeros((NT, S, len(EXTRA_FEATURES)), np.float32)
-        ex[:, :, 0] = dow
-        ex[:, :, 1] = np.array([sic2.get(s, 0) for s in ss], np.float32)
-        ex[:, :, 2] = np.array([earn_prox(s, date, earn) for s in ss],
-                               np.float32)
-        # coil: 30-min realized vol relative to the name's own 5-min bar
-        # range -- small = quiet/coiled.  Both inputs are causal columns.
-        ex[:, :, 3] = F[:, :, RL2_FEATURES.index("rvol30")] / \
-            np.maximum(F[:, :, RL2_FEATURES.index("bar_range5")], 1e-6)
-
         nt, ns = np.mgrid[0:NT, 0:S]
-        Fl.append(np.concatenate([F, ex], axis=2).reshape(NT * S, -1))
+        Fl.append(b["F"].reshape(NT * S, -1))
         cols["date_i"].append(np.full(NT * S, di, np.int32))
         cols["sym_i"].append(np.tile(si, NT))
         cols["dec_i"].append(nt.reshape(-1).astype(np.int8))
-        cols["notional"].append(np.nan_to_num(notion).reshape(-1))
-        cols["printed"].append(live.reshape(-1))
-        cols["fill_px"].append(np.nan_to_num(fo).reshape(-1))
+        cols["notional"].append(b["notional"].reshape(-1))
+        cols["printed"].append(b["printed"].reshape(-1))
+        cols["printed_m"].append(b["printed_m"].reshape(-1))
+        cols["fill_px"].append(b["fill_px"].reshape(-1))
         for hi, hn in enumerate(HNAMES):
-            cols["pnl_" + hn].append(np.nan_to_num(pnl[:, :, hi]).reshape(-1))
-            cols["ok_" + hn].append((live & tok[:, :, hi]).reshape(-1))
+            cols["pnl_" + hn].append(b["pnl"][:, :, hi].reshape(-1))
+            cols["ok_" + hn].append(b["ok"][:, :, hi].reshape(-1))
         dates.append(date)
-        if (di + 1) % 50 == 0:
+        if (di + 1) % 100 == 0:
             el = time.time() - t0
-            print(f"  [{di+1}/{len(files)}] {date} {el:.0f}s "
-                  f"eta {el/(di+1)*(len(files)-di-1):.0f}s", flush=True)
+            print(f"  [{di+1}/{len(files)}] {date} {el:.0f}s", flush=True)
 
     out = {k: np.concatenate(v) for k, v in cols.items()}
     out["F"] = np.concatenate(Fl).astype(np.float32)
@@ -273,7 +315,8 @@ def build(smoke=0):
     print(json.dumps({
         "file": str(f), "rows": int(n), "dates": len(dates),
         "first": dates[0], "last": dates[-1], "symbols": len(syms_all),
-        "tradeable_rows": int(out["printed"].sum()),
+        "eligible_rows_bar_m": int(out["printed_m"].sum()),
+        "fillable_rows_bar_m1": int(out["printed"].sum()),
         "ok_h30": int(out["ok_h30"].sum()),
         "features": len(FEATURES), "dec_times": DEC_ET,
         "secs": round(time.time() - t0, 1)}, indent=1), flush=True)
