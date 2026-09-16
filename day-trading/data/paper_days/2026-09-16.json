@@ -511,7 +511,31 @@
       "rank_top": "AXTI ARMABLE -- awaiting a fresh Trigger C signal"
     }
   ],
-  "trades": [],
+  "trades": [
+    {
+      "ticket": 1,
+      "sym": "AXTI",
+      "side": "BUY",
+      "session_phase": "regular",
+      "entry_et": "10:20",
+      "entry_px": 63.59,
+      "shares": 235,
+      "notional": 14943.65,
+      "prev_close": 57.7,
+      "entry_bar_utc": "2026-09-16T14:20:00Z",
+      "trigger": "Trigger C -- tweezer_bottom on the 10:18 bar, read [TAKEABLE NOW (1m since close)] at 10:20. Champion buy_set only; no delegated pattern detection.",
+      "halal_at_arming": "live_halal 10:20 re-run: verdict PASS (loan 2.04 / cash 9.89 / combined 11.93, haram_pct 3.22, SIC 3674). Question 2 PASS (compound semiconductor substrates).",
+      "fill_arming": "Re-quoted before arming. Premarket-high (59.69) and 5-min ORB (62.30) were both already met at 63.6 -> both REFUSED as market-order-in-disguise. Entry taken as a marketable limit off the live ask: quote 14:20:52Z bid 63.45 / ask 63.59, cap = ask+0.5% = 63.91, filled at the ask 63.59 -- BELOW the signal bar close 63.69 and below the day high 64.035, so no chase.",
+      "gates": {
+        "spread": "0.220% vs the 0.5% cap -> PASS",
+        "depth": "inside ask 1,250 sh at 10:19 vs 235 sh needed -> PASS",
+        "size": "235 sh vs the 20%-of-trailing-10-min cap (~42,300 sh on ~211k) -> PASS",
+        "chase": "entry 63.59 < signal-bar close 63.69 and < day high 64.035 -> no chase"
+      },
+      "exit_mode": "c37 (watcher default): -8% hard stop 58.5028, 20/10/40 pressure trail, bank 1/3 at +25% (79.4875)",
+      "status": "OPEN"
+    }
+  ],
   "halal_detail": {
     "MEDS": {
       "verdict": "FAIL",
@@ -799,7 +823,7 @@
     {
       "sym": "AXTI",
       "et": "10:21",
-      "state": "CANDIDATE -- waiting for a FRESH Trigger C signal",
+      "state": "FILLED 10:20 -- ticket 1, 235 sh @ 63.59",
       "prev_close": 57.7,
       "rank": "rank 10:20: 1 crossed / 1 ARMABLE, TOP = AXTI. last 63.6950 gain +10.4% coil 0.995 press +0.05 gap7 +2.5 calm yes halal PASS COILED.",
       "cross": "REGULAR-SESSION +10% cross printed on the 10:10 ET bar (high 63.85 vs prev_close 57.70 = +10.66%); session_phase would be REGULAR -- the population the -$32/day baseline is built on.",
@@ -810,7 +834,13 @@
     }
   ],
   "trigger_c": [],
-  "posn": null,
+  "posn": "LONG AXTI 235 sh @ 63.59 (ticket 1, regular session). $14,943.65 of the $100k/day cap used; $85,056 left, next ticket only after this one exits (ONE POSITION AT A TIME).",
   "eod": null,
-  "watcher": null
+  "watcher": {
+    "started_et": "10:21",
+    "cmd": "python plan/paper_watch.py --book",
+    "exit_mode": "c37 (default, not overridden)",
+    "background_task": "bi29iytzt",
+    "state_file": "data/paper/position_AXTI.json"
+  }
 }
