@@ -257,6 +257,16 @@
    "note": "118 rows; CYPH NEW +10.4% (Cypherpunk Technologies, Zcash crypto-treasury; 09-08 precedent PASS-with-caveat). Crossed +10% on the 07:36-07:37 bars (high 2.52), 07:00 bar 2.37 -> gap7 +6.8 calm PASS, coil 0.973. RH mcap refreshed 238.7M. rank TOP=CYPH NEEDS-SCREEN; live_halal ERROR (TypeError in halal_check) -> cannot evaluate, NOT armable until resolved. Quote 11:39:36Z bid 2.45 / ask 2.51 = 2.4% spread (would be a SPREAD veto). 7 rows updated. HUHU/JXG still interpolated.",
    "rank": "1 CYPH 2.451 +10.4% coil .973 press +0.00 gap7 +6.8 calm yes NEEDS-SCREEN",
    "rank_top": "CYPH (halal unresolved)"
+  },
+  {
+   "et": "07:44",
+   "n": 17,
+   "state": "FLAT-5m",
+   "scan_rows": 117,
+   "candidates": 20,
+   "new": [],
+   "note": "117 rows; FTFT off; 8 rows updated. CYPH +13.1% last 2.51 (07:43 bar 31.7k sh, new premarket high 2.51 vs 2.5123 at 07:37); live_halal re-probe still TypeError -> cannot-verify, not armable; day-trading.py still uncommitted-modified by the parallel session. HUHU/JXG still interpolated.",
+   "rank_top": "CYPH (halal unresolved) -> none armable"
   }
  ],
  "trades": [],
