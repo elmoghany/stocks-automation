@@ -263,6 +263,39 @@ CFGS = {
                   rank="rs", entry_open=T935, cutoff=T1200,
                   sim=kw(entry_mode="market_at_start", trail_pct=999,
                          stop_pct=99)),
+    # DEDICATED CONTROLS FOR GREEN-ON-RED. The generic -R control
+    # shuffles the whole rank, which throws away the MARKET-RED GATE as
+    # well as the green pick and so cannot separate them. -G keeps the
+    # gate (same minutes, same trading days) and randomises the NAME;
+    # -X is the mirror image (market GREEN, name RED) and must lose.
+    "W8RSbG": dict(desc="CONTROL market-red gate kept, RANDOM name, hold",
+                   rank="rs_rand", entry_open=T935, cutoff=T1200,
+                   sim=kw(entry_mode="market_at_start", trail_pct=999,
+                          stop_pct=99)),
+    "W8RSbX": dict(desc="CONTROL mirror image: market GREEN, name RED, "
+                        "hold",
+                   rank="rs_inv", entry_open=T935, cutoff=T1200,
+                   sim=kw(entry_mode="market_at_start", trail_pct=999,
+                          stop_pct=99)),
+    "W8RSG": dict(desc="CONTROL market-red gate kept, RANDOM name, 2R",
+                  rank="rs_rand", entry_open=T935, cutoff=T1200,
+                  sim=kw(entry_mode="market_at_start", target_r=2.0)),
+    "W8RSX": dict(desc="CONTROL mirror: market GREEN, name RED, 2R",
+                  rank="rs_inv", entry_open=T935, cutoff=T1200,
+                  sim=kw(entry_mode="market_at_start", target_r=2.0)),
+    "W8RSd": dict(desc="ADJACENCY: GREEN-ON-RED, entries all day to "
+                       "14:30, hold to the flatten",
+                  rank="rs", entry_open=T935, cutoff=dtime(14, 30),
+                  sim=kw(entry_mode="market_at_start", trail_pct=999,
+                         stop_pct=99)),
+    "W8RSr": dict(desc="ADJACENCY: GREEN-ON-RED, 2R, entries all day",
+                  rank="rs", entry_open=T935, cutoff=dtime(14, 30),
+                  sim=kw(entry_mode="market_at_start", target_r=2.0)),
+    "W8RSk": dict(desc="ADJACENCY: GREEN-ON-RED all day, VWAP-target "
+                       "exit instead of a bracket",
+                  rank="rs", entry_open=T935, cutoff=dtime(14, 30),
+                  sim=kw(entry_mode="market_at_start", trail_pct=999,
+                         stop_pct=8, vwap_target=True)),
 }
 # Controls.
 #  -R   the PICK is random (VS2W_REP replicates)
@@ -386,6 +419,31 @@ def rank_at(cands, t, mode, rep, date, ticket_i, cache):
         # (low so far < prev_close) and be ABOVE it now.
         sel = [r for r in rows if r[2] < r[0]["pc"] < r[1]]
         sel.sort(key=lambda r: -r[4])
+        return [r[0] for r in sel]
+    if mode in ("rs_rand", "rs_inv"):
+        # PROPER CONTROLS FOR THE GREEN-ON-RED RULE. The plain -R control
+        # replaces the whole rank with a shuffle, which removes the
+        # MARKET-RED GATE as well as the green pick and so conflates the
+        # two. These two keep the gate and attack one leg each:
+        #   rs_rand: market red (same gate, same minutes, same trading
+        #            days), but the NAME is drawn at random from the
+        #            whole cross-section -- isolates "green".
+        #   rs_inv : market GREEN and the name RED -- the mirror image
+        #            of the rule, which must lose if the rule is real.
+        g = sorted(r[4] for r in rows)
+        med = g[len(g) // 2] if len(g) % 2 else (g[len(g) // 2 - 1]
+                                                 + g[len(g) // 2]) / 2
+        if mode == "rs_rand":
+            if med >= 0:
+                return []
+            import random as _r
+            pool = [r[0] for r in rows]
+            _r.Random(f"vs2w-rsr-{date}-{ticket_i}-{rep}").shuffle(pool)
+            return pool
+        if med <= 0:
+            return []
+        sel = [r for r in rows if r[4] < 0]
+        sel.sort(key=lambda r: r[4])
         return [r[0] for r in sel]
     if mode == "rs":
         # GREEN-ON-RED: the cross-section's own median return is the

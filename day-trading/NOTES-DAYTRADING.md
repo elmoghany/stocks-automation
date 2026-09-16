@@ -8219,3 +8219,114 @@ rl2/sim.py does) and every number recomputed underneath it.
    train transferred to +$17 / -$92 / -$75 / -$277 per ticket on four entry
    patterns (`plan/wn_exits.py`).
 6. **Do not re-run the conjunctive-rule family.** It is exhausted (see finding 4).
+
+
+## VS2 RESULTS, TABLE 1: THE WIDE CAUSAL UNIVERSE (2026-09-16)
+
+Ran exactly as pre-registered above, plus the wide-universe track the
+pre-registration queued. **Every proof first, then the numbers.**
+
+### PROOFS
+* **ENGINE IDENTITY: 48/48** cells byte-identical to the pre-edit
+  `day-trading.py` (8 symbol-days x {PTRAIL, C37F} x 3 entry starts),
+  `plan/vs2_test.py --identity`.
+* **ENGINE POISON: 0 / 10,362 breaches** across all 17 VS2 triggers --
+  replace every bar at/after a cut with 9e9 and with 1e-9, and every
+  trade that closed before the cut is byte-identical.
+* **RUNNER POISON: 112/112 cells** -- `plan/vs2_wide.py --poison`
+  poisons every bar strictly after the decision minute, across five
+  configs and twelve days, and the trades already placed never move.
+  This is the no-lookahead check at the level the mandate asks for: not
+  just the engine, the whole pick-then-trade loop.
+
+### THE UNIVERSE
+`data/massive/m1w` (built by the RL-v2 line): on date D a symbol is
+eligible iff it was halal-PASS POINT-IN-TIME at D, its median dollar
+volume over the PRIOR 60 sessions was >= $2M and its median close >= $3,
+and it printed a bar on D. **Nothing about day D's own outcome enters
+membership** -- this is deliberately not the +10% gapper pool.
+448 dates (2024-10-22 .. 2026-08-06), 191 symbols, 60.7 names/day.
+wy1 = 214 days to 2025-08-31, wy2 = 234 days after it.
+Costs: 10 bps/side, the gap-through fill model, the causal
+20%-of-trailing-volume size cap, $15k tickets, one position at a time,
+flat by 15:00. NOT comparable to the C37F-hf2 row: different universe,
+different window. Its baselines are computed here.
+
+### TABLE (23 months)
+
+    config       total       Y1       Y2   tkts  $/tkt   $/mo  negm    maxDD     best   ex_best  t/day
+    W8RSb       +5,343   +7,835   -2,492    331    +16   +232 14/23    8,141   +6,862   -6,262   1.00
+    W8RS        -2,341   +5,830   -8,171    371     -6   -102 15/23   11,005   +4,765   -9,490   1.12
+    W0HOLD      -6,573   +2,677   -9,250    444    -15   -286 10/23   14,247   +6,862  -18,179   1.00
+    W4FLAG     -10,441   -2,204   -8,237    610    -17   -454 17/23    8,589     +602  -11,645   1.52
+    W1ORBx     -11,912   -1,689  -10,223    784    -15   -518 18/23   10,487     +851  -13,600   2.08
+    W6VWB2     -14,491   -3,152  -11,339    634    -23   -630 18/23   11,444   +1,134  -16,579   2.05
+    W1ORBm     -18,097     -187  -17,910    659    -27   -787 14/23   19,467   +3,435  -24,364   1.66
+    W3EMA      -19,737   -6,130  -13,607   1008    -20   -858 16/23   13,917   +2,205  -23,033   2.39
+    W1ORB      -19,776     +707  -20,483    516    -38   -860 14/23   21,129   +3,939  -26,610   1.30
+    W7RTGb     -23,359   -5,181  -18,178    448    -52 -1,016 16/23   24,445   +6,862  -34,390   1.00
+    W7RTG      -23,551   -8,929  -14,622    480    -49 -1,024 14/23   22,303   +4,769  -33,088   1.07
+    W5VWR      -31,250  -14,639  -16,611    852    -37 -1,359 19/23   17,876   +1,681  -33,583   2.09
+    W2MPB      -32,315   -9,148  -23,167   1173    -28 -1,405 20/23   23,897   +1,694  -35,244   3.02
+    W5VWB      -34,729  -15,529  -19,200    942    -37 -1,510 21/23   19,483   +1,114  -36,676   2.37
+    W6VWB      -57,581  -23,889  -33,692   1882    -31 -2,504 23/23   35,007   +1,439  -59,810   4.30
+    ---- baseline on the same days ----
+    W0RAND#r0  -12,274   -1,235  -11,039    448    -27   -534 15/23   15,152      n/a      n/a   1.00
+
+Legend: `W1ORB` 09:30 5-min opening-range break (Master The Market, SMB,
+QuantCrawler, Bear Bull Traders); `W1ORBm` the same with the MEASURED-
+MOVE target (ForexBee: "the target is usually the same height as the
+range"); `W1ORBx` break-and-retest; `W2MPB` Ross Cameron's micro
+pullback; `W3EMA` Jdub's first pullback to a rising 9 EMA; `W4FLAG` Ross
+Cameron's bull flag; `W5VWR` Solano's VWAP reclaim; `W5VWB` the VWAP
+bounce; `W6VWB`/`W6VWB2` Drysdale's VWAP-band fade with a VWAP target at
+1 and 2 sigma; `W7RTG(b)` red-to-green; `W8RS(b)` green-on-red relative
+strength; `W0HOLD` buy the strongest mover of the cross-section at 09:35
+and hold to the flatten; `W0RAND` the same with a random name.
+
+### THE ANSWER: NOTHING REACHES THE BAR. NOT CLOSE.
+The bar is **>= $7,500/month with both years positive**. The best row on
+this universe makes **+$232/month** and its second year is negative.
+**A factor of 32 short.**
+
+### THE CLOSEST MISS, AND WHY IT DIES
+**`W8RSb` -- GREEN-ON-RED relative strength** ("buy the stock that is
+green while the market is red", Freedom Team Trading `DWWl8A_f0_A`),
+held to the 15:00 flatten. It is the only config in the batch positive
+over both years combined (+$5,343, **+$16/ticket** -- the only positive
+per-ticket number this campaign has produced on a causal universe).
+It dies on the pre-registered ex-best test, and it dies hard:
+**total +5,343, EX-BEST-DAY -6,262.** Its two best days (2024-11-08
++$4,744 and 2025-10-21 +$6,862) sum to +$11,606, more than the whole
+result. Year 2 is -$2,492 on its own. Win rate 50.3% then 44.3%.
+Its market-red gate needs no index feed: the market proxy is the
+cross-section's OWN median return at that minute, which is exactly the
+population the position is drawn from.
+
+### THE FINDING THAT MATTERS MORE THAN ANY SINGLE ROW
+Read down the `$/tkt` column: **-15, -38, -27, -15, -28, -20, -17, -37,
+-37, -31, -23, -49, -52, -6, +16.** Median **-$27**.
+A $15,000 ticket at 10 bps/side pays **$30 round-trip**.
+**Fifteen mechanics, from fifteen different channels, land within a few
+dollars of "minus the transaction cost".** Their GROSS edge is not
+small; it is indistinguishable from zero, and what the backtest reports
+is the friction. That statement is worth more than any single row, and
+it holds across the breakout family (ORB and its retest), the
+continuation family (micro pullback, bull flag, 9-EMA pullback), the
+mean-reversion family (VWAP band fade), the cross-sectional family
+(green-on-red) and the event family (red-to-green).
+The two rows that trade MOST confirm it from the other side: `W6VWB`
+(4.30 tickets/day, 1,882 tickets) loses the most in dollars while
+sitting at a middling -$31/ticket, and `W2MPB` (3.02/day) is second.
+**On zero gross edge, trading more is not a route to $375/day; it is a
+linear way to pay more in frictions.** The "seven tickets only need +$54
+each" arithmetic that motivated the adjacency rows is arithmetically
+true and economically empty: it needs a positive gross edge, and there
+is not one.
+
+### WHAT THE VIDEOS' OWN FAVOURITE NUMBER DOES HERE
+The QuantCrawler video's arithmetic is correct and worth keeping: at a
+fixed 1:2 risk-reward you break even at a 33% win rate. `W8RS` -- the 2R
+bracket version of the best row -- hit its target **13** times and its
+stop **51** times over 23 months. That is a **20% hit rate** against the
+33% it needs. The bracket is not the problem; the entry is.
