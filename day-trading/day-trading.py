@@ -1909,6 +1909,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     flag_break: tuple | None = None,
                     rand_entry: tuple | None = None,
                     struct_floor_mode: str | None = None,
+                    struct_target_mode: str | None = None,
                     pullback_relax: bool = False,
                     vwap_target: bool = False,
                     ema_exit: int | None = None) -> list[dict]:
@@ -2191,6 +2192,10 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
             orc_high = max(cd.h[k] for k in _oidx)
             orc_low = min(cd.l[k] for k in _oidx)
             orc_end = _oidx[-1]
+    # captured BEFORE any ratchet of orc_high, so the measured move is
+    # the ORIGINAL opening range, not the last break's high
+    _orc_rng = (orc_high - orc_low) if (orc_high is not None
+                                        and orc_low is not None) else None
     _vwe = _vwsd = None
     if vwap_entry is not None or vwap_target:
         # session VWAP, anchored 09:30 (the videos' "today's VWAP")
@@ -2229,6 +2234,11 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                                    adjust=False).mean().values
     _re_target = [None]        # rand_entry: bar index drawn at first bar
     _vs2_floor = [None]        # structure stop level handed to the entry
+    # struct_target_mode="or_range": the MEASURED MOVE every short-form
+    # ORB video quotes -- "the target is usually the same height as the
+    # range". Set at entry from the opening range that was complete
+    # before the fill; a resting limit, filled like any other limit.
+    _vs2_target = [None]
 
     def _entry_ok(px, relax=False):
         if not (PRICE_MIN <= px <= PRICE_MAX):
@@ -2676,6 +2686,9 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     # sits below the fill. Default None -> untouched.
                     if _vf is not None and _vf < entry:
                         floor_px = _vf
+                    if (struct_target_mode == "or_range"
+                            and _orc_rng is not None and _orc_rng > 0):
+                        _vs2_target[0] = entry + _orc_rng
                     risk0 = max(entry - floor_px, entry * 0.001)
                     deployed += shares * entry      # cash-account budget
                     entries_done[0] += 1
@@ -3015,6 +3028,12 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     exit_px, reason = price, f"pressure-flip {pp:+.2f}"
             # ---- MX-series TA sell triggers: evaluated on the COMPLETED
             # bar i (i > entry_i), filled at bar i's close via _sell_fill.
+            # VS2: the MEASURED-MOVE limit (opening-range height above the
+            # fill), set at entry and never moved.
+            if (exit_px is None and _vs2_target[0] is not None
+                    and i > entry_i and cd.h[i] >= _vs2_target[0]):
+                exit_px = _sell_fill(_vs2_target[0], i, "limit")
+                reason = f"target measured +{exit_px - entry:.2f}"
             # VS2: a resting LIMIT sell at session VWAP -- the VWAP-band
             # video's "target the VWAP". Checked before the TA block so
             # it behaves like the other limit targets.
@@ -3081,6 +3100,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                 if compound:
                     budget_cur += pnl
                 last_exit_reason = reason
+                _vs2_target[0] = None       # never survives a position
                 state = "SCAN"
 
     # HARD RULE: whatever was bought in this session's bars is sold before
