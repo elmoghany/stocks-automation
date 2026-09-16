@@ -90,6 +90,23 @@
    "rank": "1 FTFT coil .951 press -0.30 NEEDS-SCREEN | 2 ENRD coil .977 press n/a NEEDS-SCREEN | 3 LUXE coil 1.000 NEEDS-SCREEN | 4 RETO FAIL(ruling) calm-gap FAIL +48.6 | 5 MEDS calm-gap FAIL +113.6 | 6 NAMI calm-gap FAIL +34.2; 11 excluded NO BARS",
    "rank_top": "none armable (top-3 NEEDS-SCREEN)",
    "halal_after": "universe FAILs applied: MEDS NAMI ANTA SANG IMOS ARBB EHLD MOLN LCFY ATHE LUXE + RETO ruling. Live screen owed: FTFT ENRD JXG EBON (no RH mcap cached). Live 06:27: FTFT FAIL (finance business), ENRD FAIL (Q1 145/139), EBON FAIL (cash 1558), JXG PASS both (no bars). Armable pool right now: none with bars; JXG + HUHU PASS awaiting first prints."
+  },
+  {
+   "et": "06:29",
+   "n": 2,
+   "state": "FLAT-5m",
+   "scan_rows": 119,
+   "candidates": 17,
+   "dropped": {
+    "fund": 92,
+    "noncommon": 1,
+    "spac": 1,
+    "halal_fail": 15,
+    "inherited_fail": 8
+   },
+   "note": "119 rows inline; dump rebuilt from the 0623 base via new plan/scan_carry.py (live ticker list -> mechanical diff -> dump_carry): ACMM dropped, 7 stock rows updated (MEDS RETO NAMI FTFT NCRA WNW LUXE), 0 new. Eligible after halal: HUHU (list PASS) and JXG (live PASS) only -- both still have ZERO real premarket bars (all interpolated). Nothing armable.",
+   "new": [],
+   "rank_top": "none armable (HUHU/JXG NO BARS)"
   }
  ],
  "trades": [],
