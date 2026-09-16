@@ -2,11 +2,25 @@
 
 **User question:** *"is halal stocks correct or tickers calc correctly?"*
 
-**Short answer:** the *doctrine* is right and the *industry screen* is the strongest
-part of the system, but the **numbers are not fully correct**. Six real defects were
-found. One of them (the 5% haram test) is off by a factor of **4×** in every copy of
-the screen, and one (a missing statement line silently reading as `0`) still creates
-false PASSes despite the 2026-08-07 guard that was supposed to close it.
+**Short answer:** the *doctrine* is right, the ratio arithmetic errs **safe**, and the
+haram-industry keyword screen is the strongest part of the system — but the
+**numbers are not fully correct**. **Nine defects** were found, and every one of
+them biases toward *passing* a name that should have been refused.
+
+The three that matter most:
+
+1. the **5% haram test is 4× too lenient** in every copy of the screen — it
+   divides a *quarterly* interest figure by *annualized* revenue, so the
+   threshold actually enforced is 20%;
+2. a **missing statement line still silently reads as `0`** despite the
+   2026-08-07 guard, which is how **126 SPACs** (10% of the armable list) pass
+   with `haram_pct` exactly 0.00 against a ~100% interest-bearing trust;
+3. the industry screen has **no term for the non-bank financial sector**, leaving
+   **213 armable names in SIC 6000–6999** — asset managers, brokers, exchanges,
+   REITs, and a health insurance carrier (CLOV).
+
+**Net: the screen's *refusals* can be trusted; its *approvals* currently cannot,
+for any name whose statements yfinance does not fully publish.**
 
 Scope: read-only audit. Recompute tool: `plan/halal_audit.py` (new, this audit).
 Nothing in the engine was changed.
@@ -353,7 +367,7 @@ haram-suggestive SIC bucket.**
 | **financial 6000–6999** | **213** | see breakdown below |
 | alcohol/beverage 2080–2085 | 3 | BUDA, COCO, **KO** — all generic SIC 2080 "Beverages"; non-alcoholic, and KO carries an external-evidence ruling. Benign. |
 | meat/pork 2011–2013 | 1 | **MAMA** (Mama's Creations) — SIC 2013 *"Sausages & Other Prepared Meat Products"*. Genuine pork-share risk; should be CANNOT-VERIFY. |
-| aerospace-adjacent 372x | 1 | **FACT** — SIC 3728 *"Aircraft Parts"*, ratios 0.00/0.16 (a shell profile). Label-only defense screen never saw it. |
+| aerospace-adjacent 372x | 1 | **FACT** — SIC 3728 *"Aircraft Parts"*, ratios 0.00/0.16. Not an aerospace firm at all: it is **"FACT II Acquisition Corp"**, a SPAC filed under its target industry (see §4.4). |
 | eating & drinking 5810–5813 | 1 | BROS (Dutch Bros) — coffee, no alcohol. Benign. |
 | drug stores 5912 | 1 | GRDN (Guardian Pharmacy). Benign. |
 | tobacco 2111 · gambling 79xx · motion pictures 78xx · ordnance 348x · grocery 5411 | **0** | **the industry screen already catches these cleanly** |
@@ -406,15 +420,45 @@ came in through the front door.
 name regex in `plan/scan_sweep.py:16`, a different pipeline. The stated rule
 "SPAC = FAIL" is not implemented in the gate.
 
-### 4.3 The fund / non-operating-company class
+### 4.3 The fund / non-operating-company class — 98 more names
 
 `plan/build_halal_universe.py::clean_ticker` filters only on ticker **shape**
 (alphabetic, ≤5 chars, not a W/U/R suffix) and price ≥ $2. **Nothing excludes
 closed-end funds, ETFs, commodity trusts, royalty trusts, or non-common-equity
-listings**, and because none of them file yfinance statements, their ratios
-compute to 0 and they pass. Confirmed members (§2.5) plus the SIC evidence:
-Sprott trusts (CEF PHYS PSLV SPPP) at 6221, oil royalty trusts (CRT MARPS NRT PBT
-SBR) at 6792, NFJ at 6163, and the 5 no-CIK ETFs.
+listings**, and because none of them publish yfinance statements, their ratios
+compute to 0 and they pass.
+
+This class is **invisible to a SIC sweep**, which is why it needs calling out
+separately. SIC **6726** ("Investment offices NEC", the textbook closed-end-fund
+code) returns **zero** hits — EDGAR does not assign it. Instead:
+
+> of the 1,260 armable names, **1,162 carry a usable numeric SIC and 98 do not**
+> (91 blank + 7 `"0000"`). **90 of those 98 have a fund-like EDGAR name**
+> (FUND / TRUST / ETF / PORTFOLIO / SHARES / INVESTORS / MUNI).
+
+They are 1940-Act N-2/N-CSR filers, not Exchange-Act 10-K filers, so they have no
+SIC and often no company CIK at all. Members include ADX AEF AIO AOD ASG AWF AWP
+BANX BCV BDJ BGR BGY BRW BTO BTT CCIF CII CLM CRF DMA DSU DTF ECAT ECF EEA EMF
+EOD EOI EOS ETB ETG ETO ETV ETW ETX FFA FMY FUND GAM GCV GDV GF GGT GNT GRF HERZ
+IAF IFN IGD KF KTF LGI MCI MCN MHF MIY MMU MPA MQY MSD MUA MUC MXE MXF MYN NCZ
+NEA NIM NMCO NPV NUV NZF PAI PCF PDCC PEO PIM PMM RIV RMT RVT SABA SBI SPE SPXX
+SRV STEW TDF TSI TWN TY VBF VTN — overwhelmingly **municipal and high-yield bond
+funds**, whose revenue is essentially 100% interest income.
+
+A further 11 fund/trust names *do* carry a numeric SIC and are already counted in
+§4.1: CEF PHYS PSLV SPPP (6221 bullion trusts), CRT MARPS NRT PBT SBR (6792 oil
+royalty trusts), NFJ (6163, actually a Virtus closed-end fund), PRT (1311).
+**Total fund/trust/ETF-labelled armable names: ~99.**
+
+### 4.4 A SIC-6770 filter alone is not sufficient
+
+At least three blank-check shells sit under a *target-industry* SIC instead:
+**FACT** = "FACT II Acquisition Corp" (SIC 3728 Aircraft Parts — which is also
+why it showed up in the aerospace bucket), **DAAQ** = "Digital Asset Acquisition
+Corp" (SIC 6022 State Commercial Banks), **MCGA** = "Yorkville Acquisition Corp"
+(SIC 6199). Their ratio profile is the giveaway, not their SIC: FACT is
+0.00/0.16/0.16/0.00. Any SPAC rule needs the **name regex AND the
+near-zero-ratio + trust profile**, not just SIC 6770.
 
 ---
 
@@ -475,7 +519,8 @@ SBR) at 6792, NFJ at 6163, and the 5 no-CIK ETFs.
 | **CTW** | web gaming/entertainment platform; equivalent to the user-ruled-FAIL SLE |
 | **TVA** | not public common equity (PARRS bonds) — should never have been in the universe |
 | **EARN** | mortgage REIT |
-| bond/equity **CEFs & trusts**: AB BGY CEF CII CLM CRF EOI ETB ETV GRF MXE MXF NFJ PAI PCF PHYS PSLV SPE SPPP TSI, royalty trusts CRT MARPS NRT PBT SBR, ETFs HLAL MNZL SPUS | not operating companies; ratios are artifacts of absent statements |
+| **~99 fund / trust / ETF names** — the 98 with no SIC (90 fund-named: ADX AEF AIO AOD ASG AWF … NUV NZF PAI PCF … TSI TY VBF VTN, mostly **municipal and high-yield bond funds** earning ~100% interest) plus CEF PHYS PSLV SPPP CRT MARPS NRT PBT SBR NFJ PRT | not operating companies; ratios are artifacts of absent statements |
+| **EARN** (Ellington Credit) | SIC 6798 but substantively a mortgage-**interest** vehicle, showing loan/cash/haram all 0.0 |
 | **CLOV** | health **insurance** carrier (SIC 6324); insurance is haram by rule |
 | **all 126 SIC-6770 blank-check SPACs** | ~100% interest-bearing trust; all pass on `haram_pct` 0.00 / median `cash_pct` 0.15% purely because the trust is untagged |
 | **MAMA** | SIC 2013 "Sausages & Other Prepared Meat Products" — pork share unverified → CANNOT-VERIFY → FAIL |
@@ -526,21 +571,21 @@ combined 12.05–13.49%).
 
 ## 6. Recommended order of work
 
-1. **Bug 7 + Bug 9** — screen SIC 6000–6999 at universe build and hard-FAIL SIC 6770.
-   Biggest single correction available: **removes 126 SPACs and up to 213 financial
-   names**, i.e. as much as 17% of the armable list, and the SIC data is already
-   fetched and cached.
+1. **Bug 7 + Bug 9 + Bug 6** — at universe build: drop anything with **no numeric
+   SIC** (98 names, 90 of them funds), drop **SIC 6000–6999** (213), and hard-FAIL
+   blank-check shells by name-regex + trust profile as well as SIC 6770 (catches
+   FACT/DAAQ/MCGA). Biggest single correction available — **up to ~300 names,
+   roughly 24% of the armable list** — and the SIC data is already fetched and
+   cached at `data/halal_sic.json` (regenerate with `--sic`).
 2. **Bug 1** (4× haram) — one-line fix, ~44 more armable names change.
 3. **Bug 2** (`get_val` → `None`) — closes the remaining false-PASS path
    (FLGT, MBGL) and is the root cause behind the SPAC class too.
-4. **Bug 6** (fund/ETF/trust/non-common-equity exclusion) — largely subsumed by
-   step 1 via SIC 6221/6726/6792, plus the 5 no-CIK ETFs.
 5. **Bugs 3, 4** (`info` / `annual` tier haram handling).
 6. **Bug 5** (EDGAR tier precedence) — then re-extract and re-baseline any `PT_FILED=1` result.
 7. **Bug 8** (TPCS/CTW, MAMA, FACT) — route vendor-label-generic names to `halal_review_queue`.
 
 Doing steps 1–3 and rebuilding would take the armable list from 1,260 to roughly
-**900–1,000**. That is the correct direction: **every defect found in this audit
+**850–950**. That is the correct direction: **every defect found in this audit
 errs toward passing a name that should have been refused, and none toward
 refusing a permissible one.** The screen's *refusals* can be trusted; its
 *approvals* currently cannot, for any name whose statements yfinance does not

@@ -6876,3 +6876,45 @@ review queue. Steps 1-3 would take the armable list from 1,260 to roughly
 
 BOTTOM LINE FOR THE USER: the screen's REFUSALS can be trusted; its APPROVALS
 currently cannot, for any name whose statements yfinance does not fully publish.
+
+CORRECTION to bug 6 above (the fund class is much bigger than the 30 zero-ratio
+names I first counted, and it is INVISIBLE to a SIC sweep): SIC 6726
+"Investment offices NEC", the textbook closed-end-fund code, returns ZERO hits —
+EDGAR does not assign it. Instead, of the 1,260 armable names, 1,162 carry a
+usable numeric SIC and 98 do NOT (91 blank + 7 "0000"), and 90 of those 98 have
+a fund-like EDGAR name (FUND/TRUST/ETF/PORTFOLIO/SHARES/INVESTORS/MUNI). They
+are 1940-Act N-2/N-CSR filers, not Exchange-Act 10-K filers, so they have no SIC
+and often no company CIK at all. Members: ADX AEF AIO AOD ASG AWF AWP BANX BCV
+BDJ BGR BGY BRW BTO BTT CCIF CII CLM CRF DMA DSU DTF ECAT ECF EEA EMF EOD EOI
+EOS ETB ETG ETO ETV ETW ETX FFA FMY FUND GAM GCV GDV GF GGT GNT GRF HERZ IAF IFN
+IGD KF KTF LGI MCI MCN MHF MIY MMU MPA MQY MSD MUA MUC MXE MXF MYN NCZ NEA NIM
+NMCO NPV NUV NZF PAI PCF PDCC PEO PIM PMM RIV RMT RVT SABA SBI SPE SPXX SRV STEW
+TDF TSI TWN TY VBF VTN — overwhelmingly MUNICIPAL AND HIGH-YIELD BOND FUNDS,
+whose revenue is essentially 100% interest income. Plus 11 fund/trust names that
+DO carry a numeric SIC and are counted in the financial bucket: CEF PHYS PSLV
+SPPP (6221 bullion trusts), CRT MARPS NRT PBT SBR (6792 oil royalty trusts), NFJ
+(6163, actually a Virtus CEF), PRT (1311). Total fund/trust/ETF-labelled armable
+names: ~99, not ~25.
+
+A SIC-6770 FILTER ALONE IS NOT SUFFICIENT: at least three blank-check shells sit
+under a TARGET-INDUSTRY SIC instead — FACT = "FACT II Acquisition Corp" (SIC 3728
+Aircraft Parts, which is also why it showed up in the aerospace bucket, ratios
+0.00/0.16/0.16/0.00), DAAQ = "Digital Asset Acquisition Corp" (SIC 6022 State
+Commercial Banks) and MCGA = "Yorkville Acquisition Corp" (SIC 6199). The ratio
+profile is the giveaway, not the SIC. Any SPAC rule needs name-regex AND the
+near-zero-ratio/trust profile, not just SIC 6770.
+
+Also worth a manual look: EARN (Ellington Credit Co) is SIC 6798 REIT but is
+substantively a mortgage-INTEREST vehicle, and shows loan/cash/haram all 0.0.
+In SIC 6199 the genuine fintech/lending names are DAVE (cash advances), CHYM
+(Chime neobank), CRCL (Circle) and SECZ (Securitize); the rest of that bucket is
+crypto-treasury/mining (MSTR RIOT HIVE BMNR ARBK ...) whose permissibility
+question is a different one.
+
+REVISED STEP 1 of the fix order: at universe build drop anything with NO numeric
+SIC (98 names, 90 of them funds), drop SIC 6000-6999 (213), and hard-FAIL
+blank-check shells by name-regex + trust profile as well as SIC 6770. That is up
+to ~300 names, roughly 24% of the armable list. Steps 1-3 would take the list
+from 1,260 to roughly 850-950. SIC data is cached at data/halal_sic.json
+(gitignored); regenerate any time with `python plan/halal_audit.py --sic`
+(1,255/1,260 resolved, 0 errors, ~4 min at the SEC's 10 req/s limit).
