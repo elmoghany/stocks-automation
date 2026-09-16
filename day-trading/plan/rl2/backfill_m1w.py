@@ -17,8 +17,16 @@ data/massive/m1 from the gapper campaigns. Those are HARD-LINKED (falling
 back to a copy) rather than refetched -- the bytes are identical and the
 API call is pure waste. `--no-reuse` disables it.
 
+EXTENSION (UNIVERSE+QUOTES, 2026-09-16): `--universe DIR` points the
+symbol-day list at another causal universe directory of the same shape
+(plan/uq_out/universe), so the widened universe can be backfilled into
+the SAME data/massive/m1w cache without duplicating this file. The error
+log then lands next to that directory instead of in plan/rl2/out, so a
+widened run cannot clobber the rl2 run's log. Nothing else changed.
+
 Usage:
   python plan/rl2/backfill_m1w.py [--workers 40] [--limit N] [--no-reuse]
+                                  [--universe DIR]
 """
 import json
 import os
@@ -47,9 +55,9 @@ _stats = {"got": 0, "empty": 0, "link": 0, "fail": 0}
 _errors = []
 
 
-def pairs():
+def pairs(uni=None):
     out = []
-    for f in sorted(UNI.glob("*.json")):
+    for f in sorted((uni or UNI).glob("*.json")):
         d = f.stem
         for r in json.loads(f.read_text()):
             out.append((r["symbol"], d))
@@ -94,8 +102,13 @@ def fetch_one(sym, date, reuse=True):
 
 
 def main():
+    global ERR_F
     workers, limit, reuse = 40, None, True
     argv = sys.argv[1:]
+    uni = UNI
+    if "--universe" in argv:
+        uni = Path(argv[argv.index("--universe") + 1]).resolve()
+        ERR_F = uni.parent / "m1w_errors.json"
     if "--workers" in argv:
         workers = int(argv[argv.index("--workers") + 1])
     if "--limit" in argv:
@@ -105,7 +118,7 @@ def main():
     M1W.mkdir(parents=True, exist_ok=True)
     for p in M1W.glob("*.part"):
         p.unlink()
-    pr = pairs()
+    pr = pairs(uni)
     print(f"wide universe: {len(pr):,} symbol-days over "
           f"{len(set(d for _, d in pr)):,} dates, "
           f"{len(set(s for s, _ in pr)):,} distinct symbols", flush=True)
