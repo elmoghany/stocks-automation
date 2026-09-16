@@ -231,6 +231,62 @@
    "vol": "299844.204031",
    "name": "PS International Group Ltd",
    "first_seen": "09:46"
+  },
+  "PHOS": {
+   "pct": 13.29,
+   "last": 15.6,
+   "prev_close": 13.77,
+   "vol": "8597.713029",
+   "name": "First Phosphate Corp.",
+   "first_seen": "09:51"
+  },
+  "CIFR": {
+   "pct": 11.8,
+   "last": 16.87,
+   "prev_close": 15.09,
+   "vol": "12561579.551054",
+   "name": "Cipher Digital",
+   "first_seen": "09:51"
+  },
+  "NAII": {
+   "pct": 13.7,
+   "last": 2.2399,
+   "prev_close": 1.97,
+   "vol": "4672.9886",
+   "name": "Natural Alternatives International",
+   "first_seen": "09:56"
+  },
+  "RTB": {
+   "pct": 12.95,
+   "last": 8.2,
+   "prev_close": 7.26,
+   "vol": "25431.668393",
+   "name": "RTB Digital, Inc.",
+   "first_seen": "10:01"
+  },
+  "PFSA": {
+   "pct": 10.93,
+   "last": 2.03,
+   "prev_close": 1.83,
+   "vol": "91867.466133",
+   "name": "Profusa",
+   "first_seen": "10:06"
+  },
+  "ATHR": {
+   "pct": 10.43,
+   "last": 3.6,
+   "prev_close": 3.26,
+   "vol": "1565.466725",
+   "name": "Aether Holdings",
+   "first_seen": "10:06"
+  },
+  "ALP": {
+   "pct": 10.0,
+   "last": 4.4,
+   "prev_close": 4.0,
+   "vol": "16432.363103",
+   "name": "Alpha Compute Corp",
+   "first_seen": "10:06"
   }
  },
  "halal_fail": [
@@ -260,7 +316,12 @@
   "ETS",
   "MNOV",
   "BYAH",
-  "PSIG"
+  "PSIG",
+  "PHOS",
+  "CIFR",
+  "NAII",
+  "PFSA",
+  "ALP"
  ],
  "fake_gap": [],
  "inherited_fail": [
@@ -483,7 +544,9 @@
   "ZYME"
  ],
  "cannot_verify": [
-  "JXG"
+  "JXG",
+  "RTB",
+  "ATHR"
  ],
  "spac": [
   "ALF",

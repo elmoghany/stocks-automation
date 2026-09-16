@@ -433,6 +433,58 @@
       ],
       "note": "45 rows; ZTG IONR SOFC TSEG off; 7 added. TWO NEW REGULAR-SESSION CROSSERS, both FAIL twice over: BYAH +21.7% (Park Ha Biological, skincare -- cash 40.54 / combined 42.47 AND missing revenue; 529k shares traded on a 35k 2-week average, so it is a genuine mover) and PSIG +10.8% (cash 23.88 / combined 32.17 AND missing revenue; RH flags financial_status CC4 Noncompliant). MEDS now +186.2%, FTFT +53.1% -- both long-settled FAILs. Armable pool EMPTY.",
       "rank_top": "none armable (both new crossers FAIL at the halal gate)"
+    },
+    {
+      "et": "09:51",
+      "n": 30,
+      "state": "FLAT-5m",
+      "scan_rows": 49,
+      "candidates": 2,
+      "new": [
+        "PHOS",
+        "CIFR"
+      ],
+      "note": "49 rows; BYAH ENRD INT INTW LINT off; 9 added incl. CYPH and IONR re-crossing (both already FAIL, latched) and CURR (on the inherited_fail list from the 2026-09-02 precedent). TWO NEW CROSSERS screened: PHOS +13.3% (ratios clean 0.29/5.64/5.93 but haram_pct 100.0 -- pre-revenue miner, interest IS the income line; 7,972 shares traded vs a 43k average, untradeably thin) and CIFR +11.8% (SIC 6199 -> hard financial-sector FAIL, and loan 79.83 / combined 91.71 independently). MEDS now +230.8%. Armable pool EMPTY.",
+      "rank_top": "none armable (both new crossers FAIL at the halal gate)"
+    },
+    {
+      "et": "09:56",
+      "n": 31,
+      "state": "FLAT-5m",
+      "scan_rows": 56,
+      "candidates": 1,
+      "new": [
+        "NAII"
+      ],
+      "note": "56 rows; CRWX CURR ETS PSIG off; 11 added (10 of them leveraged single-stock ETFs riding CIFR/LITE/COHR/BE/APLD). ONE NEW CROSSER: NAII +13.7% (Natural Alternatives International) -- FAIL, loan 520.73 / combined 594.21. RETO now +127.1%, MEDS +234.0%. Armable pool EMPTY. LEDGER NOTE from here on: fund rows carried in the rebuilt dump keep their previous price cells unless they are new; every fund is dropped by NAME before any gate runs, so a stale ETF cell can never reach a decision. The full live ticker list is diffed every cycle, which is the part that matters for the crossed-set latch.",
+      "rank_top": "none armable (NAII FAILs at the halal gate)"
+    },
+    {
+      "et": "10:01",
+      "n": 32,
+      "state": "FLAT-5m",
+      "scan_rows": 56,
+      "candidates": 1,
+      "new": [
+        "RTB"
+      ],
+      "note": "56 rows; APLX ENRD HVII NAII NCRA off; RTB CRCD MRVU ETS MVLL added. ONE NEW CROSSER: RTB Digital +12.95% -- ratios are the cleanest of any name today (2.92 / 0.42 / 3.34) but the interest-income row is MISSING -> unverified -> FAIL, and the business is self-described fintech (CURR precedent). MEDS +261.8%, RETO +118.4% still the tape leaders, both long-settled FAILs. 10:00 RE-RANK CHECKPOINT (skill: if the pick has not entered by 10:00, re-rank and switch): there is no pick to switch to -- the armable pool has been empty every cycle since the open. Armable pool EMPTY.",
+      "rank_top": "none armable"
+    },
+    {
+      "et": "10:06",
+      "n": 33,
+      "state": "FLAT-5m",
+      "scan_rows": 53,
+      "candidates": 3,
+      "new": [
+        "PFSA",
+        "ATHR",
+        "ALP"
+      ],
+      "note": "53 rows; COZX HUTG LITU LITX MRVU MVLL off; PFSA ATHR ALP added. THREE NEW CROSSERS. PFSA +10.9% FAIL (loan 1136.2). ALP +10.0% FAIL (debt row missing -> unverified; digital-asset treasury with validator/staking operations). ATHR +10.4% = THE FIRST AND ONLY question-1 PASS OF THE DAY (loan 6.36 / cash 5.47 / combined 11.83, haram_pct 1.08, on the halal list) -- but question 2 is unresolved (self-described fintech analytics for equity AND OPTIONS traders, revenue split undisclosed) and it is MOOT on the tape: 2 real bars all day, rank excludes it, book 3.11x134 / 3.67x8 = 16.5% spread and 8 shares offered. Escalated for a user ruling; not armed. Armable pool EMPTY.",
+      "rank": "rank 10:09: ATHR excluded (only 2 bars <= 10:09); PFSA/ALP/RTB NO BARS. 0 crossed / 0 armable, TOP = none.",
+      "rank_top": "none armable"
     }
   ],
   "trades": [],
@@ -620,6 +672,49 @@
       "et": "09:48",
       "q1": "live_halal 09:48 (RH mcap 58.29M): loan 8.29 / cash 23.88 / combined 32.17 -> FAIL CASH>10 AND COMBINED>20, plus missing revenue row (unverified). RH also flags financial_status CC4 Noncompliant.",
       "q2": "not reached (PS International Group, HK: logistics / supply-chain). Refused on question 1."
+    },
+    "PHOS": {
+      "verdict": "FAIL",
+      "et": "09:53",
+      "q1": "live_halal 09:53 (RH mcap 283.47M): loan 0.29 / cash 5.64 / combined 5.93 PASS on the ratios, but haram_pct 100.0 over 4 periods -> FAIL HARAM>=5% (pre-revenue mineral developer; interest on cash is the entire income line).",
+      "q2": "not reached (First Phosphate Corp: anorthosite phosphate for LFP battery cathode material -- would pass). Refused on question 1. Tape was thin anyway: 7,972 shares on a 43k 2-week average."
+    },
+    "CIFR": {
+      "verdict": "FAIL",
+      "et": "09:53",
+      "q1": "live_halal 09:53 (RH mcap 7.00B): SIC 6199 Finance Services -> HARD FAIL under the 2026-09-16 financial-sector ruling (6000-6999), and the ratios fail independently: loan 79.83 / cash 11.89 / combined 91.71, haram_pct 45.24.",
+      "q2": "not reached (Cipher Digital, ex-Cipher Mining: bitcoin mining + HPC data centres). Refused on question 1 twice over."
+    },
+    "NAII": {
+      "verdict": "FAIL",
+      "et": "09:58",
+      "q1": "live_halal 09:58 (RH mcap 12.51M): loan 520.73 / cash 73.48 / combined 594.21 -> FAIL LOAN>10 by a factor of 50. haram_pct 0.05 clean, irrelevant.",
+      "q2": "not reached (Natural Alternatives International: private-label nutritional supplement contract manufacturing + beta-alanine licensing -- would pass). Refused on question 1."
+    },
+    "RTB": {
+      "verdict": "FAIL (unverified)",
+      "et": "10:03",
+      "q1": "live_halal 10:03 (RH mcap 117.29M): loan 2.92 / cash 0.42 / combined 3.34 -- the cleanest ratio sheet of any crosser today -- but the INTEREST INCOME row is absent, so the 5% test cannot be run. An absent statement row is not a zero (ruling 2026-09-16) -> unverified -> FAIL.",
+      "q2": "not reached, and it would have been contested anyway: RH describes RTB Digital as a FINANCIAL TECHNOLOGY company running a Web3 media platform. Undisclosed financial-services mix is the CURR precedent (2026-09-02). Not armable."
+    },
+    "PFSA": {
+      "verdict": "FAIL",
+      "et": "10:07",
+      "q1": "live_halal 10:07 (RH mcap 1.23M): loan 1136.23 / cash 58.34 / combined 1194.57 -> FAIL LOAN>10; haram_pct 100.0 as well. Debt is 11x the market cap.",
+      "q2": "not reached (Profusa: implantable biosensors / biofeedback for chronic disease, SIC 3841. RH sector label says Finance/Financial Conglomerates -- a known-unreliable label, irrelevant here). Refused on question 1."
+    },
+    "ALP": {
+      "verdict": "FAIL",
+      "et": "10:07",
+      "q1": "live_halal 10:07 (RH mcap 6.74M): the DEBT row is missing -> loan/cash/combined all uncomputable -> unverified, refusing (missing-row ruling 2026-09-16). haram_pct 100.0 on top. RH flags financial_status CC4 Noncompliant.",
+      "q2": "not reached, and it would have been contested: Alpha Compute Corp runs a digital-asset treasury with VALIDATOR OPERATIONS (staking yield) and ecosystem investments -- a yield-bearing reserve strategy, not an operating business. Not armable."
+    },
+    "ATHR": {
+      "verdict": "NOT ARMABLE -- Q1 PASS, Q2 unresolved (needs a user ruling); moot on the tape anyway",
+      "et": "10:08",
+      "q1": "PASS -- live_halal 10:08 with RH mcap 44.06M cached: loan 6.36 / cash 5.47 / combined 11.83 (strict 10/10/20 satisfied on every leg), haram_pct 1.08 over 4 periods, SIC 7372 Prepackaged Software, and ATHR IS on data/halal_list.json. THIS IS THE ONLY verdict PASS on question 1 all day.",
+      "q2": "UNRESOLVED -> treated as FAIL under the binary rule. Aether Holdings is self-described as an emerging FINANCIAL TECHNOLOGY PLATFORM selling proprietary research analytics, data and tools to institutional and retail EQUITY AND OPTIONS traders. It is NOT a broker and takes no commissions, so the MTC (2026-09-08 introducing-broker) and ZTG (today, investment brokerage) refusals do not fit it directly, and the AMD principle would allow selling general-purpose analytics INTO a financial market. But the revenue split between plain equity research and options-specific products is undisclosed, and unverified is haram by the 2026-08-22 binary rule; a conversion needs an affirmative <5% evidence ruling in data/halal_rulings.json, which does not exist. NOT arming on a judgement call made under session time pressure. ESCALATED FOR USER RULING.",
+      "tape": "MOOT TODAY regardless of question 2. ATHR printed exactly TWO real bars in the whole session -- 10:05 ET 1,431 sh 3.34->3.60 and 10:06 ET 500 sh @3.5999 -- everything else interpolated. rank 10:09 EXCLUDES it: only 2 bars <= 10:09. Book at 10:08: bid 3.11 x134 / ask 3.67 x8 = 16.5% spread against a 0.5% cap, and 8 shares at the inside ask against the 4,167 shares a $15k ticket needs. No veto is counted -- the name never reached an arming decision."
     }
   },
   "vetoes": {

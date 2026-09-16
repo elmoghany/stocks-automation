@@ -47,6 +47,10 @@
 "name": "Aligos Therapeutics",
 "type": "EQUITY"
 },
+"ALP": {
+"name": "Alpha Compute Corp",
+"type": "EQUITY"
+},
 "ALTI": {
 "name": "AlTi Global",
 "type": "EQUITY"
@@ -65,6 +69,10 @@
 },
 "ANTA": {
 "name": "Antalpha Platform Holding Company Class A",
+"type": "EQUITY"
+},
+"APLX": {
+"name": "Tradr 2X Long APLD Daily ETF",
 "type": "EQUITY"
 },
 "APMI": {
@@ -101,6 +109,10 @@
 },
 "ATHE": {
 "name": "Alterity Therapeutics",
+"type": "EQUITY"
+},
+"ATHR": {
+"name": "Aether Holdings",
 "type": "EQUITY"
 },
 "ATRA": {
@@ -255,6 +267,10 @@
 "name": "Themes ETF Trust Leverage Shares 2X Long CIFR Daily ETF",
 "type": "EQUITY"
 },
+"CIFR": {
+"name": "Cipher Digital",
+"type": "EQUITY"
+},
 "CIFU": {
 "name": "T-REX 2X Long CIFR Daily Target ETF",
 "type": "EQUITY"
@@ -279,12 +295,24 @@
 "name": "Corgi COHR 2x Daily ETF",
 "type": "EQUITY"
 },
+"COHH": {
+"name": "Leverage Shares 2X Long COHR Daily ETF",
+"type": "EQUITY"
+},
 "COHQ": {
 "name": "Tradr 2X Short COHR Daily ETF",
 "type": "EQUITY"
 },
+"COHX": {
+"name": "Tradr 2X Long COHR Daily ETF",
+"type": "EQUITY"
+},
 "COPZ": {
 "name": "Defiance Daily Target 2X Long Copper Miners ETF",
+"type": "EQUITY"
+},
+"COZX": {
+"name": "Tradr 2X Long CORZ Daily ETF",
 "type": "EQUITY"
 },
 "CPNX": {
@@ -323,6 +351,10 @@
 "name": "Corgi CRWD 2x Daily ETF",
 "type": "EQUITY"
 },
+"CRWX": {
+"name": "Corgi CRWV 2x Daily ETF",
+"type": "EQUITY"
+},
 "CSD": {
 "name": "Invesco S&P Spin-Off ETF",
 "type": "EQUITY"
@@ -333,6 +365,10 @@
 },
 "CTW": {
 "name": "CTW",
+"type": "EQUITY"
+},
+"CURR": {
+"name": "Currenc Group",
 "type": "EQUITY"
 },
 "CVR": {
@@ -707,6 +743,10 @@
 "name": "Corgi LITE 2x Daily ETF",
 "type": "EQUITY"
 },
+"LITG": {
+"name": "Leverage Shares 2X Long LITE Daily ETF",
+"type": "EQUITY"
+},
 "LITU": {
 "name": "T-REX 2X Long LITE Daily Target ETF",
 "type": "EQUITY"
@@ -795,6 +835,10 @@
 "name": "Tradr 2X Long MRAM Daily ETF",
 "type": "EQUITY"
 },
+"MRVU": {
+"name": "Direxion Daily MRVL Bull 2X ETF",
+"type": "EQUITY"
+},
 "MSTC": {
 "name": "Corgi MSTR 2x Daily ETF",
 "type": "EQUITY"
@@ -803,12 +847,20 @@
 "name": "Direxion MU Defined Income Boost ETF",
 "type": "EQUITY"
 },
+"MVLL": {
+"name": "GraniteShares 2x Long MRVL Daily ETF",
+"type": "EQUITY"
+},
 "MVRL": {
 "name": "ETRACS Monthly Pay 1.5X Leveraged Mortgage REIT",
 "type": "EQUITY"
 },
 "MWHS": {
 "name": "Skylar Electricity Futures ETF",
+"type": "EQUITY"
+},
+"NAII": {
+"name": "Natural Alternatives International",
 "type": "EQUITY"
 },
 "NAMI": {
@@ -887,6 +939,14 @@
 "name": "Paylocity",
 "type": "EQUITY"
 },
+"PFSA": {
+"name": "Profusa",
+"type": "EQUITY"
+},
+"PHOS": {
+"name": "First Phosphate Corp.",
+"type": "EQUITY"
+},
 "PHVS": {
 "name": "Pharvaris",
 "type": "EQUITY"
@@ -943,6 +1003,10 @@
 "name": "Qualcomm",
 "type": "EQUITY"
 },
+"QNTU": {
+"name": "Tradr 2X Long QNT Daily ETF",
+"type": "EQUITY"
+},
 "QUA": {
 "name": "Corgi QBTS 2x Daily ETF",
 "type": "EQUITY"
@@ -993,6 +1057,10 @@
 },
 "RTAI": {
 "name": "Rareview Tax Advantaged Income ETF",
+"type": "EQUITY"
+},
+"RTB": {
+"name": "RTB Digital, Inc.",
 "type": "EQUITY"
 },
 "RVSN": {
