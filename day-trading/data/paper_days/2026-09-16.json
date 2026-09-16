@@ -107,6 +107,16 @@
    "note": "119 rows inline; dump rebuilt from the 0623 base via new plan/scan_carry.py (live ticker list -> mechanical diff -> dump_carry): ACMM dropped, 7 stock rows updated (MEDS RETO NAMI FTFT NCRA WNW LUXE), 0 new. Eligible after halal: HUHU (list PASS) and JXG (live PASS) only -- both still have ZERO real premarket bars (all interpolated). Nothing armable.",
    "new": [],
    "rank_top": "none armable (HUHU/JXG NO BARS)"
+  },
+  {
+   "et": "06:34",
+   "n": 3,
+   "state": "FLAT-5m",
+   "scan_rows": 118,
+   "candidates": 17,
+   "new": [],
+   "note": "118 rows inline; carry from 0629 (WNW dropped -- inherited FAIL anyway; MEDS RETO NAMI FTFT LUXE updated; 0 new). Eligible: HUHU, JXG (no bars yet). Nothing armable.",
+   "rank_top": "none armable"
   }
  ],
  "trades": [],
