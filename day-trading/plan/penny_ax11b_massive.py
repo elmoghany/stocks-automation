@@ -284,7 +284,7 @@ def _qspan(a, b):
 
 
 def _ttm_pt(usable, maxq=4):
-    """(revenue, interest, n_quarters) over the last <= `maxq`
+    """(revenue, interest, n_quarters, quarters) over the last <= `maxq`
     NON-OVERLAPPING filed quarters ending at usable[-1] -- the
     period-matched 5% test (user decision 3).
 
@@ -296,19 +296,75 @@ def _ttm_pt(usable, maxq=4):
     stops at the first earlier quarter that cannot vouch for its
     revenue or interest rows; it never silently includes a zero.
     Quarters whose period ends are less than 45 days apart are the
-    yfinance/EDGAR duplicate of one period and are skipped."""
+    yfinance/EDGAR duplicate of one period and are skipped.
+
+    INTEREST-LEG REFINEMENT (2026-09-16): the window is now defined by
+    REVENUE ALONE, which is what the live gate has always done. It used
+    to stop at the first quarter missing revenue OR interest, so an
+    untagged interest line silently SHORTENED the window -- and
+    17,718 of the 33,555 cached quarters carry no interest tag, because
+    most filers never tag an immaterial one. Interest coverage is not a
+    window question; it is resolved over the finished window by
+    `_interest_leg_pt`, which can also prove the leg from the
+    non-operating bound. The picked quarters are returned so that
+    resolver sees exactly the span the revenue side used."""
     picked, last = [], None
     for q in reversed(usable):
         if last is not None and _qspan(q["date"], last) < 45:
             continue
-        if picked and ({"rev", "intinc"} & set(_q_miss(q))):
+        if picked and ("rev" in _q_miss(q)):
             break                    # window stops, what we have stands
         picked.append(q)
         last = q["date"]
         if len(picked) >= maxq:
             break
     return (sum(q["rev"] for q in picked),
-            sum(q["intinc"] for q in picked), len(picked))
+            sum(q["intinc"] for q in picked), len(picked), picked)
+
+
+# 8%/yr is the plausibility cap on what cash can earn -- see the long
+# note at day-trading.py::_edgar_flows. Same constant, same doctrine,
+# deliberately duplicated rather than imported: `ps` is the scanner
+# module, not day-trading.py, and this module must not grow a dependency
+# on the live engine's import graph.
+INTINC_MAX_YIELD = 0.08
+
+
+def _interest_leg_pt(picked, ttm_rev):
+    """(haram_pct, source) for the 5% leg, or (None, None) = unverified.
+
+    The same four-rung ladder the live gate runs (defects A and B of the
+    2026-09-16 rebuild, documented at day-trading.py::_edgar_flows):
+
+      1. the quarter's own `intinc`, IF every picked quarter tags it AND
+         the TTM sum survives the 8%/yr plausibility cap on mean cash.
+         A row that claims a yield no cash account earns is a MIS-TAG;
+         it is discarded, never used to FAIL the name.
+      2. `intinc_edgar` -- EDGAR's own reading under the five-tag
+         precedence, attached to every merged quarter by
+         plan/edgar_backfill.py.
+      3. `nonop` -- TTM |non-operating income| / TTM revenue. Interest
+         on cash is a SUBSET of non-operating income, so a bucket under
+         5% PROVES the interest inside it is under 5%. A bound at or
+         over 5% proves nothing.
+      4. nothing resolved -> unverified -> the caller refuses."""
+    if not picked or not ttm_rev or ttm_rev <= 0:
+        return None, None
+    n = len(picked)
+    base = sum(abs(q.get("cash") or 0.0) for q in picked) / n
+    cap = INTINC_MAX_YIELD * base * (n / 4.0)
+    if not any("intinc" in _q_miss(q) for q in picked):
+        v = sum(q["intinc"] for q in picked)
+        if base <= 0 or abs(v) <= cap:
+            return abs(v) / ttm_rev * 100, "filed"
+    if all(q.get("intinc_edgar") is not None for q in picked):
+        v = sum(q["intinc_edgar"] for q in picked)
+        return abs(v) / ttm_rev * 100, "edgar-interest"
+    if all(q.get("nonop") is not None for q in picked):
+        bp = abs(sum(q["nonop"] for q in picked)) / ttm_rev * 100
+        if bp < 5:
+            return bp, "upper-bound"
+    return None, None
 
 
 def halal_pt(sym, date, prev_close):
@@ -323,7 +379,14 @@ def halal_pt(sym, date, prev_close):
          quarters (_ttm_pt), not one quarter over four.
       4. A missing statement row is never 0 (_q_miss) -- refuse.
     The conservative-bounds path below is unchanged and still stricter
-    than all of this; it is reached only with HALAL_STRICT off."""
+    than all of this; it is reached only with HALAL_STRICT off.
+
+    INTEREST-LEG REFINEMENT (2026-09-16, same day): decision 4 keeps
+    refusing a missing debt/cash/revenue row, but the INTEREST row now
+    goes through the four-rung ladder in `_interest_leg_pt` -- vendor
+    row under an 8%/yr plausibility cap, then EDGAR's own tagged
+    interest, then the proven non-operating upper bound, then refuse.
+    Same semantics as the live gate, on the same doctrine."""
     if not industry_clean(sym):
         return False
     if not sector_clean(sym):
@@ -357,15 +420,24 @@ def halal_pt(sym, date, prev_close):
                       else _avail(q["date"]) <= date)]  # filed, not ended
         sel = usable[-1] if usable else None
         if sel:
-            if _q_miss(sel):
+            # INTEREST-LEG REFINEMENT (2026-09-16): a missing debt, cash
+            # or revenue row still refuses on the spot, but a missing
+            # INTEREST row no longer does -- it is resolved (or proven
+            # under 5% from the non-operating bound) over the whole
+            # window below. Untagged interest is the single commonest
+            # gap in the cache and "missing" is not "unverifiable" when
+            # a proven upper bound exists.
+            if {"debt", "cash", "rev"} & set(_q_miss(sel)):
                 return False          # unverified: missing statement row
             loan = sel["debt"] / mcap * 100
             cash = sel["cash"] / mcap * 100
             comb = loan + cash
-            rev, intinc, _n = _ttm_pt(usable)
+            rev, _intinc, _n, picked = _ttm_pt(usable)
             if rev <= 0:
                 return False          # no verifiable revenue -> no 5% test
-            haram = abs(intinc) / rev * 100
+            haram, _src = _interest_leg_pt(picked, rev)
+            if haram is None:
+                return False          # interest leg unverified -> refuse
             return (loan <= 10 and cash <= 10 and comb <= 20 and haram < 5)
     if HALAL_STRICT:
         # No FILED quarterly available point-in-time => we cannot verify.

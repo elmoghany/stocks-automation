@@ -711,6 +711,143 @@ def _sic_financial_fail(symbol: str) -> tuple[bool, str, str]:
     return (SIC_FINANCIAL_LO <= int(sic) <= SIC_FINANCIAL_HI), sic, desc
 
 
+# ---------------------------------------------------------------------
+# THE INTEREST LEG (user decisions 2026-09-16, interest-leg refinement).
+#
+# Two defects in the 2026-09-16 rebuild, both of them in the same leg:
+#
+# A. A VENDOR MIS-TAG PASSED AS INTEREST INCOME. MRVL FAILed at
+#    "HARAM>=5% (TTM interest / TTM revenue) 15.84%" because yfinance
+#    carries a $1.9bn "Interest Income" in the quarter ending 2025-11-01
+#    -- that is the automotive-Ethernet divestiture gain, which EDGAR
+#    tags as NonoperatingIncomeExpense and nothing else. Marvell's true
+#    interest income is under 1% of revenue. A gate that cannot tell a
+#    mis-tag from a measurement does not measure anything.
+#
+# B. 337 NAMES WERE REFUSED FOR A ROW NOBODY FILES. Most companies with
+#    immaterial interest income simply never tag the line. "Missing" is
+#    not "unverifiable" WHEN A PROVEN UPPER BOUND EXISTS: interest on
+#    cash is a NON-OPERATING item, so it is a SUBSET of non-operating
+#    income, and a non-operating bucket under 5% of revenue PROVES the
+#    interest inside it is under 5% too.
+#
+# The resolution ladder (_interest_leg below), in order:
+#   1. the vendor row, IF it survives the PLAUSIBILITY CAP -- TTM
+#      interest <= 8% x mean(cash + interest-bearing securities) over
+#      the same window. Nobody earns more than ~8%/yr on cash, so a row
+#      that claims to is not an interest row. A violation is logged
+#      `intinc_implausible` and FALLS THROUGH; it never FAILs a name on
+#      its own. (The cap is deliberately loose: the point is to catch
+#      order-of-magnitude mis-tags, not to second-guess treasury.)
+#   2. EDGAR: TTM over the SAME filed quarters of the interest tags in
+#      precedence (InvestmentIncomeInterest, InterestIncomeOperating,
+#      InterestAndDividendIncomeOperating, InterestIncomeOther,
+#      InvestmentIncomeInterestAndDividend) -> source "edgar-interest".
+#   3. the PROVEN UPPER BOUND: TTM |NonoperatingIncomeExpense| (or
+#      OtherNonoperatingIncomeExpense, or InvestmentIncomeNet) over the
+#      same window / TTM revenue. Under 5% -> the leg is PROVEN clear
+#      -> PASS with source "upper-bound (nonoperating income)". At or
+#      over 5%, or absent, the bound proves nothing and the name stays
+#      unverified.
+#   4. nothing resolved -> "unverified: missing interest income".
+#
+# Steps 2-3 read data/edgar/extracted/{SYM}.json (built offline by
+# plan/edgar_backfill.py from companyfacts.zip) FROM DISK ONLY -- the
+# live gate never blocks a 07:00 scan on an SEC round-trip, the same
+# rule _sic_for follows. A name with no extracted file is simply not
+# resolvable this way and refuses as before.
+EDGAR_EXTRACTED_DIR = _DIR / "data/edgar/extracted"
+INTINC_MAX_YIELD = 0.08          # 8%/yr: the plausibility cap
+_EDGAR_FLOW_CACHE: dict = {}
+
+
+def _edgar_flows(symbol: str) -> dict:
+    """{"intinc": {end: val}, "nonop": {end: val}} from the offline
+    companyfacts extract, or empty dicts. Cached per symbol+mtime."""
+    key = symbol.upper()
+    f = EDGAR_EXTRACTED_DIR / f"{key}.json"
+    try:
+        mt = f.stat().st_mtime
+    except Exception:
+        return {"intinc": {}, "nonop": {}, "rev": {}}
+    hit = _EDGAR_FLOW_CACHE.get(key)
+    if hit and hit[0] == mt:
+        return hit[1]
+    try:
+        raw = json.load(open(f)) or {}
+        fl = raw.get("flows") or {}
+        out = {k: {e: float(v[0]) for e, v in (fl.get(k) or {}).items()}
+               for k in ("intinc", "nonop")}
+        # EDGAR's own revenue, for the stale-snapshot fallback below
+        out["rev"] = {q["date"]: float(q["rev"])
+                      for q in (raw.get("quarters") or [])
+                      if "rev" not in (q.get("miss") or [])}
+    except Exception:
+        out = {"intinc": {}, "nonop": {}, "rev": {}}
+    _EDGAR_FLOW_CACHE[key] = (mt, out)
+    return out
+
+
+def _flow_over_window(series: dict, window: list, tol: int = 5):
+    """Sum `series` over EVERY period end in `window`, or None.
+
+    FULL COVERAGE IS REQUIRED, exactly as it is for the vendor row: a
+    TTM figure summed over whichever periods happen to carry a value is
+    a number with no period behind it. `tol` days of slack absorbs
+    52/53-week fiscal calendars (yfinance period ends and EDGAR period
+    ends are the same filings, days apart at most)."""
+    if not series or not window:
+        return None
+    total = 0.0
+    for w in window:
+        hit = series.get(w)
+        if hit is None:
+            for e, v in series.items():
+                try:
+                    if abs((datetime.fromisoformat(e[:10])
+                            - datetime.fromisoformat(w[:10])).days) <= tol:
+                        hit = v
+                        break
+                except ValueError:
+                    continue
+        if hit is None:
+            return None
+        total += float(hit)
+    return total
+
+
+def _edgar_window(flows: dict, need: int, maxq: int = 4) -> list:
+    """The most recent <= `maxq` NON-OVERLAPPING EDGAR period ends whose
+    revenue is filed, or [] if fewer than `need` of them exist.
+
+    WHY THIS EXISTS. data/edgar/companyfacts.zip is a SNAPSHOT (this
+    one: 2026-08-14) while yfinance is live, so a company whose fiscal
+    quarter ended 2026-07-31 has a vendor window EDGAR has not seen yet
+    -- VEEV, AMBA and CRDO all failed the aligned match for exactly that
+    reason, not for anything about their statements. Rather than refuse
+    them, the leg is resolved over EDGAR's OWN last filed TTM span, with
+    BOTH sides (interest/bound AND revenue) taken from that same span.
+    It is one quarter staler than the vendor window; it is not mixed,
+    and the `haram_src` label says so ("edgar window"). Requiring the
+    EDGAR span to be at least as long as the vendor window it replaces
+    keeps it from degrading into a one-quarter ratio."""
+    ends = sorted((flows.get("rev") or {}), reverse=True)
+    picked, last = [], None
+    for e in ends:
+        if last is not None:
+            try:
+                if abs((datetime.fromisoformat(last[:10])
+                        - datetime.fromisoformat(e[:10])).days) < 45:
+                    continue
+            except ValueError:
+                continue
+        picked.append(e)
+        last = e
+        if len(picked) >= maxq:
+            break
+    return picked if len(picked) >= max(1, need) else []
+
+
 def _halal_ruling(symbol: str) -> dict | None:
     """USER ruling for a CANNOT-VERIFY name (W-campaign Phase 4,
     2026-08-21). Schema documented in data/halal_rulings.json `_schema`;
@@ -800,6 +937,17 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
        this path -- that is the user's standing exception and the only
        one.
 
+    INTEREST-LEG REFINEMENT (2026-09-16, later the same day). Decisions
+    1-4 above stand unchanged; what changed is WHICH EVIDENCE answers
+    the 5% question, because the rebuild exposed two defects in that one
+    leg -- a vendor mis-tag scored as interest income (MRVL), and 337
+    names refused for a row most filers never tag. The resolution ladder
+    (plausibility cap -> EDGAR interest -> proven non-operating upper
+    bound -> refuse) is documented at `_edgar_flows`; `haram_src` on the
+    verdict names which rung answered. Note what did NOT change: the
+    threshold is still 5%, a missing debt/cash/revenue row still
+    refuses, and a bound at or above 5% still proves nothing.
+
     Source chain unchanged: yfinance quarterly -> annual -> info, with
     `src` recording which tier answered. Note that the `info` tier
     carries no interest-income field at all, so under (4) it can no
@@ -857,8 +1005,10 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
         return None, None, ["debt/cash (no recent period carries both)"]
 
     def _ttm(df, maxq=4):
-        """(revenue, interest, n_periods, missing[]) summed over the
+        """(revenue, interest, n_periods, missing[], window[]) over the
         SAME last <= `maxq` filed periods -- the period-matched 5% test.
+        `window` is those period ends as ISO strings, so the EDGAR
+        interest paths can be summed over the IDENTICAL span.
 
         The window is defined by REVENUE (the last <= 4 periods it is
         filed for), and the interest row must then cover EVERY period in
@@ -878,18 +1028,23 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
         AGAINST THE WINDOW: the first listed row that covers it wins."""
         rrow = _row(df, REV_ROWS)
         if rrow is None:
-            return None, None, 0, ["revenue"]
+            return None, None, 0, ["revenue"], []
         win = [c for c in _cols(df) if not pd.isna(rrow[c])][:maxq]
         if not win:
-            return None, None, 0, ["revenue (no period carries a value)"]
+            return None, None, 0, ["revenue (no period carries a value)"], []
+        iso = [str(c)[:10] for c in win]
+        rev = sum(float(rrow[c]) for c in win)
         for n in INT_ROWS:
             if n not in df.index:
                 continue
             irow = df.iloc[df.index.get_loc(n)]
             if all(not pd.isna(irow[c]) for c in win):
-                return (sum(float(rrow[c]) for c in win),
-                        sum(float(irow[c]) for c in win), len(win), [])
-        return None, None, 0, ["interest income"]
+                return (rev, sum(float(irow[c]) for c in win),
+                        len(win), [], iso)
+        # revenue IS verified; only the interest row is absent. The
+        # window is still returned -- the EDGAR paths resolve the leg
+        # over exactly this span (interest-leg refinement 2026-09-16).
+        return rev, None, len(win), ["interest income"], iso
 
     # FALLBACK CHAIN (2026-08-07). The source here is yfinance, not
     # E*TRADE -- E*TRADE has no fundamentals endpoint we use. The live
@@ -932,7 +1087,7 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
     _win_inc = 1 if src == "annual" else 4
     _win_bs = 2 if src == "annual" else 4
     total_debt, cash_total, bs_miss = _bs_pair(bs, _win_bs)
-    ttm_rev, ttm_int, n_q, inc_miss = _ttm(inc, _win_inc)
+    ttm_rev, ttm_int, n_q, inc_miss, win_iso = _ttm(inc, _win_inc)
 
     if total_debt is None and cash_total is None and ttm_rev is None:
         # last resort: yfinance's summary `info` dict often carries
@@ -955,6 +1110,7 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
             ttm_int, n_q = None, 1        # info revenue is already annual
             inc_miss = ([] if i_rev is not None else ["revenue"]) + \
                        ["interest income"]
+            win_iso = []                  # no period ends -> no EDGAR span
 
     loan_pct = (total_debt / mcap * 100) \
         if (mcap > 0 and total_debt is not None) else None
@@ -962,6 +1118,127 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
         if (mcap > 0 and cash_total is not None) else None
     combined = (loan_pct + cash_pct) \
         if (loan_pct is not None and cash_pct is not None) else None
+    # ---- THE INTEREST LEG (refinement 2026-09-16) --------------------
+    # The ladder is documented at _edgar_flows above. Everything here
+    # only ever CHANGES WHICH EVIDENCE answers the 5% question; the
+    # question, the threshold and every other leg are untouched.
+    LTI_ROWS_A, LTI_ROWS_B = ["Long Term Investments"], \
+        ["Investments And Advances"]
+    int_flags: list = []
+    haram_note = ""
+    haram_src = "yfinance" if ttm_int is not None else None
+    haram_resolved = None
+    span_years = (n_q if src == "annual" else n_q / 4.0) or 1.0
+
+    def _in_window(col) -> bool:
+        iso = str(col)[:10]
+        if not win_iso:
+            return True
+        for w in win_iso:
+            try:
+                if abs((datetime.fromisoformat(iso)
+                        - datetime.fromisoformat(w)).days) <= 5:
+                    return True
+            except ValueError:
+                return False
+        return False
+
+    def _plaus_base():
+        """mean(cash + interest-bearing securities) over the SAME window
+        -- the denominator of the plausibility cap.
+
+        Cash composite (the cash leg's own definition) plus the larger
+        of the long-dated investment rows, because long marketable
+        securities earn interest too. A GENEROUS base is the
+        CONSERVATIVE side here: it raises the cap, so fewer vendor rows
+        are excused as mis-tags and fewer names are rescued."""
+        crow = _row(bs, CASH_ROWS)
+        if crow is None:
+            return None
+        lrows = [r for r in (_row(bs, LTI_ROWS_A), _row(bs, LTI_ROWS_B))
+                 if r is not None]
+        vals = []
+        for c in _cols(bs):
+            if not _in_window(c) or pd.isna(crow[c]):
+                continue
+            extra = [float(r[c]) for r in lrows if not pd.isna(r[c])]
+            vals.append(abs(float(crow[c])) + max(extra + [0.0]))
+        if not vals:
+            return abs(float(cash_total)) if cash_total is not None else None
+        return sum(vals) / len(vals)
+
+    _cap_base = _plaus_base()
+    _cap = None if _cap_base is None else \
+        INTINC_MAX_YIELD * _cap_base * span_years
+    if ttm_int is not None and _cap is not None and abs(ttm_int) > _cap:
+        # DEFECT A. Not interest -- something else wearing the label.
+        # Never a FAIL on its own: the row is DISCARDED and the ladder
+        # continues, so the name is judged on EDGAR or on the bound, or
+        # refused as unverified. A mis-tag is absence of evidence.
+        int_flags.append("intinc_implausible")
+        haram_note = (
+            f"vendor interest row ${abs(ttm_int)/1e6:,.0f}M over the TTM "
+            f"window exceeds the {INTINC_MAX_YIELD:.0%}/yr plausibility cap "
+            f"on mean cash+securities ${_cap_base/1e6:,.0f}M "
+            f"(cap ${_cap/1e6:,.0f}M) -- discarded as mis-tagged")
+        ttm_int, haram_src = None, None
+        if "interest income" not in inc_miss:
+            inc_miss = list(inc_miss) + ["interest income"]
+
+    if ttm_int is None and win_iso:
+        _fl = _edgar_flows(symbol)
+
+        def _resolve(window, rev_ttm, tag):
+            """Rungs 2 and 3 over `window`. Returns (pct, src, note) or
+            (None, None, note). `tag` distinguishes the vendor window
+            from EDGAR's own (stale-snapshot) window in the label."""
+            _i = _flow_over_window(_fl.get("intinc") or {}, window)
+            if _i is not None:
+                return (abs(_i) / rev_ttm * 100, f"edgar-interest{tag}",
+                        "")
+            _b = _flow_over_window(_fl.get("nonop") or {}, window)
+            if _b is None:
+                return None, None, ""
+            if _cap is not None and abs(_b) > _cap:
+                int_flags.append("bound_implausible")   # print, not gate
+            _bp = abs(_b) / rev_ttm * 100
+            if _bp < 5:
+                # DEFECT B. interest income is a SUBSET of non-operating
+                # income, so a non-operating bucket under 5% of revenue
+                # PROVES the interest inside it is under 5%. That is a
+                # proof, not an estimate.
+                return (_bp, f"upper-bound (nonoperating income){tag}",
+                        f"interest income is not tagged; TTM non-operating "
+                        f"income ${abs(_b)/1e6:,.0f}M is {_bp:.2f}% of TTM "
+                        f"revenue and BOUNDS it -- the 5% leg is proven "
+                        f"clear without measuring interest itself")
+            return (None, None,
+                    f"interest income is not tagged and the non-operating "
+                    f"bound is {_bp:.2f}% of revenue (>= 5%) -- it proves "
+                    f"nothing; still unverified")
+
+        _pct = None
+        if ttm_rev is not None and ttm_rev > 0:
+            _pct, _src, _note = _resolve(win_iso, ttm_rev, "")
+            if _note:
+                haram_note = _note
+        if _pct is None and ttm_rev is not None and ttm_rev > 0:
+            # the vendor window may simply postdate the companyfacts
+            # snapshot -- retry on EDGAR's own last filed TTM span, both
+            # sides from that span (see _edgar_window).
+            _ew = _edgar_window(_fl, len(win_iso))
+            _erev = sum((_fl.get("rev") or {}).get(e, 0.0) for e in _ew)
+            if _ew and _erev > 0:
+                _p2, _s2, _n2 = _resolve(_ew, _erev, " (edgar window)")
+                if _p2 is not None:
+                    _pct, _src = _p2, _s2
+                    haram_note = _n2 or haram_note
+                elif _n2 and not haram_note:
+                    haram_note = _n2
+        if _pct is not None:
+            haram_resolved, haram_src = _pct, _src
+            inc_miss = [m for m in inc_miss if m != "interest income"]
+
     # ZERO-REVENUE NAMES (2026-09-16). Both rows are FILED here -- this
     # is not the missing-row case -- but revenue is 0 and interest
     # income is not: a pre-revenue biotech or a blank-check shell whose
@@ -971,7 +1248,14 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
     # (ABVX, PVLA, RDAC ... every one of them armable). Zero revenue AND
     # zero interest carries no information at all and is refused below
     # as unverified.
-    if ttm_int is not None and ttm_rev is not None and ttm_rev <= 0:
+    if haram_resolved is not None:
+        # EDGAR answered the leg: either a MEASUREMENT (edgar-interest)
+        # or a PROVEN CEILING (upper-bound). The same `< 5` test applies
+        # to both, which is why they can share the field -- `haram_src`
+        # says which one it is, and nothing should read the number
+        # without it.
+        haram_pct = haram_resolved
+    elif ttm_int is not None and ttm_rev is not None and ttm_rev <= 0:
         haram_pct = 100.0 if ttm_int else None
         if haram_pct is None:
             inc_miss = list(inc_miss) + ["revenue and interest both zero"]
@@ -1122,9 +1406,13 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
             "combined": _r(combined), "haram_pct": _r(haram_pct),
             "halal": False,
             "source": src,
+            "haram_src": haram_src,
+            "haram_note": haram_note,
+            "interest_flags": int_flags,
             "fail_reason": (f"unverified: missing {', '.join(miss)} "
                             f"-- an absent statement row is not a zero "
-                            f"(user ruling 2026-09-16); refusing"),
+                            f"(user ruling 2026-09-16); refusing"
+                            + (f" [{haram_note}]" if haram_note else "")),
         })
 
     # BELT AND BRACES: reaching here with any leg still None would mean
@@ -1230,15 +1518,21 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
         "combined": _r(combined),
         "haram_pct": _r(haram_pct),
         "haram_periods": n_q,
+        "haram_src": haram_src,
         "halal": halal,
         "source": src,
         "fail_reason": "" if halal else (
             "LOAN>10" if not loan_ok else
             "CASH>10" if not cash_ok else
             "COMBINED>20" if not combined_ok else
-            "HARAM>=5% (TTM interest / TTM revenue)"
+            f"HARAM>=5% (TTM interest / TTM revenue, "
+            f"source {haram_src})"
         ),
     }
+    if haram_note:
+        out["haram_note"] = haram_note
+    if int_flags:
+        out["interest_flags"] = int_flags
     if sic_code:
         out["sic"] = sic_code
     if ruling:

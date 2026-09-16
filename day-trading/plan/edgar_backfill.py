@@ -50,8 +50,20 @@ HONESTY RULES:
     arithmetic on filed numbers, counted + logged as derived).
   * foreign 20-F/6-K filers are NOT forced; they are counted.
 
+INTEREST-LEG REFINEMENT (2026-09-16). Two keys were added, neither of
+which touches a value any existing reader scores:
+  * `flows` (extracted only) -- {intinc|nonop: {period_end: [val, filed,
+    derived, tag]}}, the interest series under the five-tag precedence
+    and the non-operating-income series that upper-bounds it. Kept
+    outside `quarters` because a filed interest figure must not be lost
+    when the balance-sheet anchor for that period end is absent.
+  * `intinc_edgar` / `nonop` on merged pt_halal quarters -- EDGAR's own
+    interest reading and the bound, attached ALONGSIDE the untouched
+    vendor numbers so halal_pt can fall through a mis-tagged vendor row
+    and can PROVE an untagged interest line is under 5%.
+
 Usage:
-  python plan/edgar_backfill.py extract [--symbols A,B,...]
+  python plan/edgar_backfill.py extract [--symbols A,B,... | --universe]
   python plan/edgar_backfill.py merge
   python plan/edgar_backfill.py report
   python plan/edgar_backfill.py spot SYM [SYM...]
@@ -114,14 +126,61 @@ REV_TAGS = ["RevenueFromContractWithCustomerExcludingAssessedTax",
             "SalesRevenueGoodsNet", "SalesRevenueServicesNet",
             "RevenuesNetOfInterestExpense",
             "RegulatedAndUnregulatedOperatingRevenue"]
-INT_TAGS = ["InvestmentIncomeInterest", "InterestAndDividendIncomeOperating",
-            "InvestmentIncomeInterestAndDividend",
-            "InterestIncomeExpenseNet",       # yf 'Net Interest Income'
-            "InvestmentIncomeNet"]            # incl dividends: stricter
+# INTEREST INCOME -- TAG PRECEDENCE (user decision 2026-09-16, the
+# interest-leg refinement). These five concepts, in this order, are the
+# ones that actually mean "interest earned on our cash". The first one
+# present for a period wins; there is no summing across them (they are
+# alternative spellings of the same line, not components).
+#
+# TWO TAGS WERE REMOVED from the pre-refinement list and the removal is
+# deliberate, not an oversight:
+#   * InterestIncomeExpenseNet -- interest income MINUS interest
+#     expense. A bank concept. For a borrower it is usually NEGATIVE and
+#     |x| then measures interest PAID, which the 5% income test does not
+#     ask about. Reading it as interest income is the same class of
+#     error as yfinance's "Net Interest Income" fallback (defect A).
+#   * InvestmentIncomeNet -- total investment income net of expense,
+#     incl. dividends and realised gains. It is a BOUND on interest, not
+#     interest, so it moved to BOUND_TAGS below where it belongs.
+INT_TAGS = ["InvestmentIncomeInterest", "InterestIncomeOperating",
+            "InterestAndDividendIncomeOperating", "InterestIncomeOther",
+            "InvestmentIncomeInterestAndDividend"]
+# PROVEN UPPER BOUND on interest income (user decision 2026-09-16).
+# Interest earned on cash is a NON-OPERATING item on a US-GAAP income
+# statement, so it is a SUBSET of the non-operating bucket: if the whole
+# bucket is under 5% of revenue then the interest inside it is too,
+# whatever the filer chose to tag. That is a PROOF, not an estimate, and
+# it is what lets the gate clear the ~337 names that simply never tag an
+# immaterial interest line ("missing" is not "unverifiable" when a
+# proven upper bound exists). Precedence, not a sum -- these overlap.
+BOUND_TAGS = ["NonoperatingIncomeExpense", "OtherNonoperatingIncomeExpense",
+              "InvestmentIncomeNet"]
 
 
 def m1_symbols():
     return sorted({f.name.rsplit("_", 1)[0] for f in M1.glob("*.csv")})
+
+
+def universe_symbols():
+    """Every name the LIVE gate can be asked about (halal_universe keys
+    + today's armable list). Added 2026-09-16: the live interest-leg
+    resolver reads data/edgar/extracted/{SYM}.json from disk only, so a
+    name with no extracted file is silently unresolvable -- and the
+    m1-only extract covered just 925 of the 1,260 names the rescreen
+    re-decides. Extraction is a local zip read; widening it is cheap."""
+    out = set()
+    for f in ("data/halal_universe.json", "data/halal_list.json",
+              "data/halal_list.NEW.json"):
+        p = ROOT / f
+        if not p.exists():
+            continue
+        try:
+            d = json.loads(p.read_text())
+        except Exception:
+            continue
+        out |= set(d.get("symbols") or d) if isinstance(d, dict) else set()
+    return sorted(s for s in out if isinstance(s, str)
+                  and not s.startswith("_"))
 
 
 def cik_map():
@@ -206,8 +265,14 @@ def _derive_q4(q, ann, all_q):
 
 
 def _flow_series(facts, tags, stats, field):
-    """First-hit tag series for a flow field (rev / intinc):
-    {end: (val, filed, derived?)} + per-tag hit accounting."""
+    """First-hit tag series for a flow field (rev / intinc / nonop):
+    {end: (val, filed, derived?, tag)} + per-tag hit accounting.
+
+    `tags` is a PRECEDENCE list: the first tag that carries a period
+    wins it, and later tags only fill periods still empty. The winning
+    tag is carried in the tuple so a verdict can name its own evidence
+    (2026-09-16 -- "interest per InvestmentIncomeInterest" and "per
+    InterestIncomeOther" are not the same claim)."""
     out = {}
     for tag in tags:
         q, ann = _dur(facts, tag)
@@ -215,7 +280,7 @@ def _flow_series(facts, tags, stats, field):
         n_new = 0
         for end, (val, filed, *_rest) in {**q, **der}.items():
             if end not in out:
-                out[end] = (val, filed, end in der)
+                out[end] = (val, filed, end in der, tag)
                 n_new += 1
                 if end in der:
                     stats[f"{field}:derived_q4"] += 1
@@ -270,6 +335,12 @@ def extract_symbol(facts, stats):
     debt_cache = {t: _inst(facts, t) for t in DEBT_T1 + DEBT_T2 + DEBT_T3}
     rev = _flow_series(facts, REV_TAGS, stats, "rev")
     inti = _flow_series(facts, INT_TAGS, stats, "intinc")
+    # the proven upper bound on interest (2026-09-16 interest-leg
+    # refinement). Kept as its OWN series rather than folded into
+    # `intinc`: it is evidence about a CEILING, and a gate that cannot
+    # tell a measurement from a bound cannot honestly say which one
+    # cleared a name.
+    bound = _flow_series(facts, BOUND_TAGS, stats, "nonop")
 
     # a quarter EXISTS iff a filed balance sheet anchors it (cash tag
     # present at that period end). Absent LINES on that statement read
@@ -300,14 +371,19 @@ def extract_symbol(facts, stats):
             miss.append("debt")
         rv = rev.get(end)
         if rv is None:
-            rv = (0.0, cfil, False)            # no revenue line tagged
+            rv = (0.0, cfil, False, None)      # no revenue line tagged
             stats["zero:rev"] += 1
             miss.append("rev")
         iv = inti.get(end)
         if iv is None:
-            iv = (0.0, cfil, False)            # no interest-income line
+            iv = (0.0, cfil, False, None)      # no interest-income line
             stats["zero:intinc"] += 1
             miss.append("intinc")
+        bv = bound.get(end)
+        if bv is None:
+            bv = (0.0, cfil, False, None)      # no non-operating line
+            stats["zero:nonop"] += 1
+            miss.append("nonop")               # filtered out by _q_miss
         sval, sfil = sti.get(end, (0.0, cfil))
         if not any((d[0], cval + sval, rv[0], iv[0])):
             # all-zero row (inception-date artifacts, e.g. FRMI's
@@ -323,10 +399,12 @@ def extract_symbol(facts, stats):
             "cash": cval + sval,
             "rev": rv[0],
             "intinc": iv[0],
+            "nonop": bv[0],
             "filed": max(filed),
             "miss": miss,
             "src": {"debt_filed": d[1], "cash_filed": cfil,
-                    "rev_derived": rv[2], "intinc_derived": iv[2]},
+                    "rev_derived": rv[2], "intinc_derived": iv[2],
+                    "intinc_tag": iv[3], "nonop_tag": bv[3]},
         })
         stats["q_ok"] += 1
         if end in sti:
@@ -342,7 +420,19 @@ def extract_symbol(facts, stats):
     forms = Counter(e.get("form") for tag in (facts.get("us-gaap") or {})
                     .values() for us in tag.get("units", {}).values()
                     for e in us)
-    return quarters, (shares[1] if shares else None), forms
+    # INTEREST-LEG FLOWS (2026-09-16), stored SEPARATELY from `quarters`
+    # on purpose. A quarter only EXISTS above when a cash tag anchors a
+    # filed balance sheet at that period end; the 5% test is an INCOME
+    # question and must not lose a filed interest figure because the
+    # balance-sheet anchor for the same period end is missing or dated a
+    # few days apart. Keyed by period end -> [value, filed, derived, tag].
+    flows = {
+        "intinc": {e: [v[0], v[1], v[2], v[3]] for e, v in inti.items()
+                   if e >= MIN_END},
+        "nonop": {e: [v[0], v[1], v[2], v[3]] for e, v in bound.items()
+                  if e >= MIN_END},
+    }
+    return quarters, (shares[1] if shares else None), forms, flows
 
 
 def cmd_extract(only=None):
@@ -364,7 +454,7 @@ def cmd_extract(only=None):
                 continue
             try:
                 facts = json.loads(zf.read(name)).get("facts", {})
-                quarters, shares, forms = extract_symbol(facts, stats)
+                quarters, shares, forms, flows = extract_symbol(facts, stats)
             except Exception as e:            # never write partial junk
                 print(f"  ERROR {sym}: {e}", flush=True)
                 stats["errors"] += 1
@@ -377,6 +467,7 @@ def cmd_extract(only=None):
                 ok += 1
             (EXTR / f"{sym}.json").write_text(json.dumps({
                 "cik": cik, "quarters": quarters, "shares": shares,
+                "flows": flows,
                 "foreign_only": bool(set(forms) & FOREIGN and not domestic),
             }))
             if i % 250 == 0:
@@ -410,7 +501,7 @@ def cmd_merge():
     if not BACKUP.exists():
         shutil.copytree(PT, BACKUP)
         print(f"backup: {PT} -> {BACKUP}")
-    created = updated = side_q = filed_attached = 0
+    created = updated = side_q = filed_attached = flow_attached = 0
     for f in sorted(EXTR.glob("*.json")):
         ex = json.loads(f.read_text())
         if not ex["quarters"]:
@@ -425,6 +516,27 @@ def cmd_merge():
                   "industry": "", "err": ""}
             created_this = True
         by_date = {q["date"]: q for q in st.get("quarters", [])}
+        # INTEREST-LEG SIDE FACTS (2026-09-16). The four scored fields
+        # (debt/cash/rev/intinc) of an existing yfinance quarter stay
+        # UNTOUCHED -- that is what keeps every flag-off reader and the
+        # S095/Z104 identity gate byte-stable. What the quarter gains is
+        # EDGAR's own interest figure and the non-operating upper bound
+        # under NEW key names, so halal_pt can (a) fall through when the
+        # vendor's `intinc` is implausible and (b) prove an untagged
+        # interest line is under 5% instead of refusing the name. Both
+        # keys are REBUILT (and cleared) every run, like quarters_edgar,
+        # so the merge stays idempotent.
+        flows = ex.get("flows") or {}
+        f_int, f_non = flows.get("intinc") or {}, flows.get("nonop") or {}
+        for q in st.get("quarters", []):
+            for key, src in (("intinc_edgar", f_int), ("nonop", f_non)):
+                hit = q["date"] if q["date"] in src else \
+                    _fuzzy_match(q["date"], src)
+                if hit:
+                    q[key] = src[hit][0]
+                    flow_attached += 1
+                else:
+                    q.pop(key, None)
         side = []
         for q in sorted(ex["quarters"], key=lambda x: x["date"]):
             hit = q["date"] if q["date"] in by_date else \
@@ -435,9 +547,17 @@ def cmd_merge():
                     by_date[hit]["filed"] = q["filed"]
                     filed_attached += 1
             else:
-                side.append({k: q[k] for k in
-                             ("date", "debt", "cash", "rev",
-                              "intinc", "filed", "miss")})
+                nq = {k: q[k] for k in
+                      ("date", "debt", "cash", "rev",
+                       "intinc", "filed", "miss")}
+                # an EDGAR-only quarter IS the EDGAR reading, so its own
+                # intinc is also the "edgar-interest" answer; carrying it
+                # under both names keeps the resolver one code path.
+                if "intinc" not in q["miss"]:
+                    nq["intinc_edgar"] = q["intinc"]
+                if "nonop" not in q["miss"]:
+                    nq["nonop"] = q["nonop"]
+                side.append(nq)
         # side list rebuilt from scratch each run -> idempotent
         st["quarters_edgar"] = side
         side_q += len(side)
@@ -448,7 +568,8 @@ def cmd_merge():
         updated += not created_this
     print(f"MERGE: {created} pt_halal files created, {updated} updated, "
           f"{side_q} EDGAR-only quarters (side key), "
-          f"{filed_attached} filed dates attached to existing quarters")
+          f"{filed_attached} filed dates attached to existing quarters, "
+          f"{flow_attached} interest/bound facts attached")
 
 
 def _usable(qs, date, lag=45):
@@ -547,6 +668,8 @@ if __name__ == "__main__":
         only = None
         if "--symbols" in args:
             only = args[args.index("--symbols") + 1].split(",")
+        elif "--universe" in args:
+            only = sorted(set(m1_symbols()) | set(universe_symbols()))
         cmd_extract(only)
     elif cmd == "merge":
         cmd_merge()
