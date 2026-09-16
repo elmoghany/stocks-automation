@@ -117,6 +117,8 @@ def main():
     threads = opt("--threads", None, int)
     tag = opt("--tag", "")
     which = opt("--feat", "feat")
+    block = opt("--block", 1, int)
+    rounds = opt("--rounds", NROUND, int)
     exit_rule = parse_exit(exit_spec, H) if exit_spec else parse_exit("", H)
     hi = FT.HORIZONS.index(H)
 
@@ -141,11 +143,18 @@ def main():
         if target == "sign":
             y_all = np.sign(y_all)
 
+    # Refit cadence. block=1 is a fresh model every test month (the strict
+    # default); block=3 refits quarterly, which is still walk-forward -- the
+    # model for a block sees only rows dated before the block starts -- and
+    # costs 3x less CPU. This PC is shared with another agent's jobs, so the
+    # cadence is a compute decision, stated rather than hidden.
+    blocks = [TEST_MONTHS[i:i + block] for i in range(0, len(TEST_MONTHS), block)]
     all_trades, per_month = [], []
     feat_gain = None
     t0 = time.time()
-    for m in TEST_MONTHS:
-        lo, hiD = f"{m}-01", month_end(m)
+    for grp in blocks:
+        m = grp[0]
+        lo, hiD = f"{m}-01", month_end(grp[-1])
         tr = (R.date_of_row < lo) & ok_all
         te_dates = [d for d in R.dates if lo <= d < hiD]
         if not te_dates or tr.sum() < 50_000:
@@ -167,7 +176,7 @@ def main():
             p["num_threads"] = threads
         p.update(seed=seed, bagging_seed=seed + 1, feature_fraction_seed=seed + 2)
         booster = lgb.train(p, lgb.Dataset(R.X[tr], label=ytr),
-                            num_boost_round=NROUND)
+                            num_boost_round=rounds)
         sub = np.random.default_rng(7).choice(np.flatnonzero(tr),
                                               size=min(200_000, int(tr.sum())),
                                               replace=False)
@@ -184,20 +193,21 @@ def main():
             mt += SM.run_day(day, sc, exit_rule, min_score=thr,
                              max_new_per_step=topk,
                              last_entry_step=last_entry)[0]
-        mm = BAR.metrics(mt, te_dates, m)
+        mm = BAR.metrics(mt, te_dates, "+".join(grp))
         mm["threshold"] = round(thr, 6)
         per_month.append(mm)
         all_trades += mt
         imp = booster.feature_importance("gain")
         feat_gain = sorted([[fnames[i], round(float(imp[i]), 1)]
                             for i in range(len(imp))], key=lambda x: -x[1])[:10]
-        print(f"  {m}: {mm['tickets']:4d} tkt  ${mm['total']:>9,.0f}  "
+        print(f"  {mm['label']}: {mm['tickets']:4d} tkt  ${mm['total']:>9,.0f}  "
               f"{mm['per_ticket']:+8.2f}/tkt  thr {thr:+.5f}", flush=True)
 
     dates = [d for d in R.dates
              if f"{TEST_MONTHS[0]}-01" <= d < month_end(TEST_MONTHS[-1])]
     name = (f"bandit2_{variant}_h{H}_{'rth' if rth else 'any'}_{target}"
-            f"_q{q}_k{topk}_{exit_spec or 'hz'}_{which}_s{seed}{tag}")
+            f"_q{q}_k{topk}_{exit_spec or 'hz'}_{which}"
+            f"_b{block}r{rounds}_s{seed}{tag}")
     mtot = BAR.metrics(all_trades, dates, name)
     rate = mtot["tickets_per_day"]
     p_entry = min(0.9, max(1e-5, rate / (FT.T * 60.0) * 8))
@@ -206,7 +216,8 @@ def main():
                             step_mask=step_mask, T=FT.T)
     out = {"config": {"horizon": H, "rth": rth, "target": target, "q": q,
                       "topk": topk, "seed": seed, "variant": variant,
-                      "feat": which,
+                      "feat": which, "block": block,
+                      "rounds": rounds,
                       "exit": exit_spec or f"horizon:{H}"},
            "overall": mtot, "verdict": BAR.verdict(mtot, rc),
            "random_control": {k: v for k, v in rc.items()
