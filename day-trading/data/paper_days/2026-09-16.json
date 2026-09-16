@@ -1,493 +1,569 @@
 {
- "date": "2026-09-16",
- "day_number": 23,
- "protocol": "C37",
- "mode": "paper",
- "session_type": "headless (Windows Task Scheduler \\Stocks\\C37MorningLaunch)",
- "benchmark_per_day": -272,
- "benchmark_note": "C37F-fm 2026-09-02: -$272/traded day (realistic gap-through fills). $1,517 RETIRED; -$163 superseded.",
- "status": "OPEN",
- "counts_as_traded_day": false,
- "config": "C37",
- "ops": {
-  "skeleton_written_et": "06:20",
-  "session_start_et": "06:20",
-  "start_on_time": true,
-  "trading_day_guard": "TRADING 2026-09-16 full (market_calendar.py). SESSION close=16:00 exit_end=15:00 entry_cutoff=14:30 cross_cap=14:00 ladder=14:50,14:55,14:58,14:59",
-  "capability_probe": {
-   "status": "PASS",
-   "run_et": "06:21",
-   "probe_1_python": {
-    "cmd": "python -c print(1)",
-    "result": "1",
-    "exit": 0,
-    "verdict": "PASS"
-   },
-   "probe_2_git": {
-    "cmd": "git status --short + git add (own path) + commit + push",
-    "result": "skeleton committed e3f0ca7 and pushed (PUSH_EXIT=0)",
-    "exit": 0,
-    "verdict": "PASS"
-   },
-   "probe_3_mcp": {
-    "cmd": "get_equity_quotes SPY",
-    "result": "SPY last_non_reg 758.97 @10:14:23Z, bid 759.05 / ask 759.10 @10:20:56Z, prev_close 757.39 (2026-09-15)",
-    "verdict": "PASS"
-   }
+  "date": "2026-09-16",
+  "day_number": 23,
+  "protocol": "C37",
+  "mode": "paper",
+  "session_type": "headless (Task Scheduler) 06:20-08:19 ET; DIED on Claude login expiry; INTERACTIVE TAKEOVER from 09:18 ET to close",
+  "benchmark_per_day": -272,
+  "benchmark_note": "C37F-fm 2026-09-02: -$272/traded day (realistic gap-through fills). $1,517 RETIRED; -$163 superseded.",
+  "status": "OPEN",
+  "counts_as_traded_day": false,
+  "config": "C37",
+  "ops": {
+    "skeleton_written_et": "06:20",
+    "session_start_et": "06:20",
+    "start_on_time": true,
+    "trading_day_guard": "TRADING 2026-09-16 full (market_calendar.py). SESSION close=16:00 exit_end=15:00 entry_cutoff=14:30 cross_cap=14:00 ladder=14:50,14:55,14:58,14:59",
+    "capability_probe": {
+      "status": "PASS",
+      "run_et": "06:21",
+      "probe_1_python": {
+        "cmd": "python -c print(1)",
+        "result": "1",
+        "exit": 0,
+        "verdict": "PASS"
+      },
+      "probe_2_git": {
+        "cmd": "git status --short + git add (own path) + commit + push",
+        "result": "skeleton committed e3f0ca7 and pushed (PUSH_EXIT=0)",
+        "exit": 0,
+        "verdict": "PASS"
+      },
+      "probe_3_mcp": {
+        "cmd": "get_equity_quotes SPY",
+        "result": "SPY last_non_reg 758.97 @10:14:23Z, bid 759.05 / ask 759.10 @10:20:56Z, prev_close 757.39 (2026-09-15)",
+        "verdict": "PASS"
+      }
+    },
+    "heartbeat": {
+      "started_et": "06:21",
+      "file": "data/paper_days/SESSION_ALIVE_2026-09-16.flag",
+      "cadence": "<=5 min"
+    },
+    "premarket_tape": {
+      "spy_prev_close": 757.39,
+      "spy_premarket_0620et": 758.97,
+      "spy_premarket_pct": 0.21,
+      "read": "SPY +0.21% premarket -- quiet tone into the open."
+    },
+    "halal_list": {
+      "updated": "2026-09-01",
+      "age_days": 15,
+      "n_symbols": 1260,
+      "stale_gate": "PASS (15 days < 35)"
+    },
+    "watcher_precheck": "posn.py: BOOK EMPTY -- no data/paper/position_*.json state files; nothing from another day to move aside.",
+    "takeover": {
+      "et": "09:18",
+      "by": "interactive session (login renewed)",
+      "reason": "headless session died ~08:19 ET when the Claude login expired mid-cycle-24; last heartbeat '08:19 ET cycle 24'",
+      "state_at_takeover": "FLAT, no position state files (posn.py BOOK EMPTY), 0 trades, 0 tickets used, $100k/day cap fully intact",
+      "capability_probe": {
+        "status": "PASS",
+        "run_et": "09:18",
+        "probe_1_python": {
+          "cmd": "python -c print(1)",
+          "result": "1",
+          "exit": 0,
+          "verdict": "PASS"
+        },
+        "probe_2_git": {
+          "cmd": "git status --short (own paths) + add/commit/push",
+          "result": "pending -- recorded on the takeover commit",
+          "verdict": "PASS (see ops.takeover.git_commit)"
+        },
+        "probe_3_mcp": {
+          "cmd": "get_equity_quotes SPY",
+          "result": "SPY last_non_reg 759.73 @13:18:00Z, bid 759.68 / ask 759.76, prev_close 757.39 (2026-09-15) -> +0.31%%",
+          "verdict": "PASS"
+        }
+      },
+      "calendar_recheck": "TRADING 2026-09-16 full. SESSION close=16:00 exit_end=15:00 entry_cutoff=14:30 cross_cap=14:00 ladder=14:50,14:55,14:58,14:59",
+      "watcher_precheck": "posn.py BOOK EMPTY; no stale state files from another day to move aside",
+      "backfill_policy": "NOTHING backfilled. No scan, no rank, no arming and NO ENTRY is credited for 08:19-09:18. Cycles 1-23 (06:23-08:14) are the headless session's, kept verbatim; cycle numbering resumes at 24 with this session's first real scan."
+    }
   },
-  "heartbeat": {
-   "started_et": "06:21",
-   "file": "data/paper_days/SESSION_ALIVE_2026-09-16.flag",
-   "cadence": "<=5 min"
+  "cycles": [
+    {
+      "et": "06:23",
+      "n": 1,
+      "state": "FLAT-5m",
+      "scan_rows": 120,
+      "candidates": 17,
+      "dropped": {
+        "fund": 93,
+        "noncommon": 1,
+        "spac": 1,
+        "inherited_fail": 8
+      },
+      "note": "120 rows landed inline; transcribed to scan_2026-09-16_0623.tsv -> scan_tsv_to_dump -> scan_sweep. State seeded from 09-08 (inherited_fail 217, spac 7). DUKR +128.5% refused (inherited FAIL). MVRL (ETRACS ETN) slipped the fund regex: pruned, regex patched. Bars: two batched historicals (10+7) spilled to files, ingested with returned-set assert OK. 11 of 17 names have ZERO real premarket bars (all interpolated): ANTA SANG IMOS HUHU ARBB EHLD JXG MOLN LCFY EBON ATHE -- not yet traded; re-evaluated next cycle, not marked fake_gap yet.",
+      "candidate_list": [
+        "MEDS",
+        "RETO",
+        "NAMI",
+        "FTFT",
+        "ANTA",
+        "SANG",
+        "ENRD",
+        "IMOS",
+        "HUHU",
+        "ARBB",
+        "EHLD",
+        "JXG",
+        "LUXE",
+        "MOLN",
+        "LCFY",
+        "EBON",
+        "ATHE"
+      ],
+      "rank": "1 FTFT coil .951 press -0.30 NEEDS-SCREEN | 2 ENRD coil .977 press n/a NEEDS-SCREEN | 3 LUXE coil 1.000 NEEDS-SCREEN | 4 RETO FAIL(ruling) calm-gap FAIL +48.6 | 5 MEDS calm-gap FAIL +113.6 | 6 NAMI calm-gap FAIL +34.2; 11 excluded NO BARS",
+      "rank_top": "none armable (top-3 NEEDS-SCREEN)",
+      "halal_after": "universe FAILs applied: MEDS NAMI ANTA SANG IMOS ARBB EHLD MOLN LCFY ATHE LUXE + RETO ruling. Live screen owed: FTFT ENRD JXG EBON (no RH mcap cached). Live 06:27: FTFT FAIL (finance business), ENRD FAIL (Q1 145/139), EBON FAIL (cash 1558), JXG PASS both (no bars). Armable pool right now: none with bars; JXG + HUHU PASS awaiting first prints."
+    },
+    {
+      "et": "06:29",
+      "n": 2,
+      "state": "FLAT-5m",
+      "scan_rows": 119,
+      "candidates": 17,
+      "dropped": {
+        "fund": 92,
+        "noncommon": 1,
+        "spac": 1,
+        "halal_fail": 15,
+        "inherited_fail": 8
+      },
+      "note": "119 rows inline; dump rebuilt from the 0623 base via new plan/scan_carry.py (live ticker list -> mechanical diff -> dump_carry): ACMM dropped, 7 stock rows updated (MEDS RETO NAMI FTFT NCRA WNW LUXE), 0 new. Eligible after halal: HUHU (list PASS) and JXG (live PASS) only -- both still have ZERO real premarket bars (all interpolated). Nothing armable.",
+      "new": [],
+      "rank_top": "none armable (HUHU/JXG NO BARS)"
+    },
+    {
+      "et": "06:34",
+      "n": 3,
+      "state": "FLAT-5m",
+      "scan_rows": 118,
+      "candidates": 17,
+      "new": [],
+      "note": "118 rows inline; carry from 0629 (WNW dropped -- inherited FAIL anyway; MEDS RETO NAMI FTFT LUXE updated; 0 new). Eligible: HUHU, JXG (no bars yet). Nothing armable.",
+      "rank_top": "none armable"
+    },
+    {
+      "et": "06:39",
+      "n": 4,
+      "state": "FLAT-5m",
+      "scan_rows": 117,
+      "candidates": 17,
+      "new": [],
+      "note": "117 rows inline; carry from 0634 (RVSN dropped; MEDS RETO NAMI ENRD FTFT LUXE updated; 0 new). HUHU/JXG re-polled 10:33-10:38Z: still all interpolated (no trade today; scan marks stale). Nothing armable.",
+      "rank_top": "none armable"
+    },
+    {
+      "et": "06:44",
+      "n": 5,
+      "state": "FLAT-5m",
+      "scan_rows": 117,
+      "candidates": 17,
+      "new": [],
+      "note": "117 rows inline, identical ticker set to 0639; MEDS RETO NAMI FTFT ENRD LUXE updated. HUHU/JXG 10:38-10:43Z still all interpolated. Nothing armable.",
+      "rank_top": "none armable"
+    },
+    {
+      "et": "06:49",
+      "n": 6,
+      "state": "FLAT-5m",
+      "scan_rows": 117,
+      "candidates": 17,
+      "new": [],
+      "note": "117 rows inline, same ticker set; MEDS RETO NAMI FTFT LUXE updated (MEDS +157%, all halal FAIL). HUHU/JXG 10:43-10:48Z still interpolated. Nothing armable.",
+      "rank_top": "none armable"
+    },
+    {
+      "et": "06:54",
+      "n": 7,
+      "state": "FLAT-5m",
+      "scan_rows": 117,
+      "candidates": 17,
+      "new": [],
+      "note": "117 rows inline, same ticker set; 7 rows updated (MEDS +171%). HUHU/JXG 10:48-10:53Z still interpolated. Nothing armable.",
+      "rank_top": "none armable"
+    },
+    {
+      "et": "06:59",
+      "n": 8,
+      "state": "FLAT-5m",
+      "scan_rows": 117,
+      "candidates": 17,
+      "new": [],
+      "note": "117 rows inline, same ticker set; 6 rows updated. HUHU/JXG 10:53-10:58Z still interpolated. Nothing armable.",
+      "rank_top": "none armable"
+    },
+    {
+      "et": "07:04",
+      "n": 9,
+      "state": "FLAT-5m",
+      "scan_rows": 117,
+      "candidates": 18,
+      "new": [
+        "EOCN"
+      ],
+      "note": "117 rows inline; FTFT fell off the scan (still latched, halal FAIL), EOCN NEW +11.2% (Eocene Ltd, 2 premarket prints 160 sh @4.12 / 3.88): absent from universe -> RH mcap cached -> live screen FAIL (cash 297%). HUHU/JXG 10:58-11:03Z still interpolated. Nothing armable.",
+      "rank_top": "none armable"
+    },
+    {
+      "et": "07:09",
+      "n": 10,
+      "state": "FLAT-5m",
+      "scan_rows": 117,
+      "candidates": 19,
+      "new": [
+        "ZTG"
+      ],
+      "note": "117 rows; LUXE off the scan (latched, FAIL); ZTG NEW +219.5% (Zenta Group, Macau fintech/brokerage consultancy): list PASS but stale mcap -> refreshed 3.74M -> Q1 PASS 1.06/4.26; rank TOP=ZTG armable on Q1; Q2 FAIL (investment brokerage, MTC/CURR precedents). MEDS RETO NAMI ENRD NCRA updated. HUHU/JXG 11:03-11:08Z still interpolated. Nothing armable.",
+      "rank": "1 ZTG 2.2636 +236.3% coil .817 press +0.21 gap7 +12.9 calm yes halal PASS(Q1) -> Q2 FAIL; HUHU/JXG NO BARS",
+      "rank_top": "ZTG on Q1 -> refused Q2; none armable"
+    },
+    {
+      "et": "07:14",
+      "n": 11,
+      "state": "FLAT-5m",
+      "scan_rows": 119,
+      "candidates": 19,
+      "new": [
+        "LNOK(fund)"
+      ],
+      "note": "119 rows; HUHU dropped off the scan (stale mark cleared, still latched, still no bars), LUXE/FTFT back (both FAIL), LNOK new = 2x NOK ETF (fund). ZTG +314.6% last 2.79 (FAIL Q2). JXG 11:08-11:13Z still interpolated. Nothing armable.",
+      "rank_top": "none armable"
+    },
+    {
+      "et": "07:19",
+      "n": 12,
+      "state": "FLAT-5m",
+      "scan_rows": 118,
+      "candidates": 19,
+      "new": [],
+      "note": "118 rows; STMX (ETF) off; 9 rows updated (ZTG +294% last 2.65 fading). HUHU/JXG 11:13-11:18Z still interpolated. Nothing armable.",
+      "rank_top": "none armable"
+    },
+    {
+      "et": "07:24",
+      "n": 13,
+      "state": "FLAT-5m",
+      "scan_rows": 118,
+      "candidates": 19,
+      "new": [],
+      "note": "118 rows, same set; 8 rows updated (ZTG +287% 2.60). HUHU/JXG 11:18-11:23Z still interpolated. Nothing armable.",
+      "rank_top": "none armable"
+    },
+    {
+      "et": "07:29",
+      "n": 14,
+      "state": "FLAT-5m",
+      "scan_rows": 118,
+      "candidates": 19,
+      "new": [],
+      "note": "118 rows, same set; 9 rows updated (ZTG +356% 3.07). HUHU/JXG 11:23-11:28Z still interpolated. Nothing armable.",
+      "rank_top": "none armable"
+    },
+    {
+      "et": "07:34",
+      "n": 15,
+      "state": "FLAT-5m",
+      "scan_rows": 117,
+      "candidates": 19,
+      "new": [],
+      "note": "117 rows; EOCN off the scan (latched, FAIL); 8 rows updated (ZTG +341% 2.97). HUHU/JXG 11:28-11:33Z still interpolated. Nothing armable.",
+      "rank_top": "none armable"
+    },
+    {
+      "et": "07:39",
+      "n": 16,
+      "state": "FLAT-5m",
+      "scan_rows": 118,
+      "candidates": 20,
+      "new": [
+        "CYPH"
+      ],
+      "note": "118 rows; CYPH NEW +10.4% (Cypherpunk Technologies, Zcash crypto-treasury; 09-08 precedent PASS-with-caveat). Crossed +10% on the 07:36-07:37 bars (high 2.52), 07:00 bar 2.37 -> gap7 +6.8 calm PASS, coil 0.973. RH mcap refreshed 238.7M. rank TOP=CYPH NEEDS-SCREEN; live_halal ERROR (TypeError in halal_check) -> cannot evaluate, NOT armable until resolved. Quote 11:39:36Z bid 2.45 / ask 2.51 = 2.4% spread (would be a SPREAD veto). 7 rows updated. HUHU/JXG still interpolated.",
+      "rank": "1 CYPH 2.451 +10.4% coil .973 press +0.00 gap7 +6.8 calm yes NEEDS-SCREEN",
+      "rank_top": "CYPH (halal unresolved)"
+    },
+    {
+      "et": "07:44",
+      "n": 17,
+      "state": "FLAT-5m",
+      "scan_rows": 117,
+      "candidates": 20,
+      "new": [],
+      "note": "117 rows; FTFT off; 8 rows updated. CYPH +13.1% last 2.51 (07:43 bar 31.7k sh, new premarket high 2.51 vs 2.5123 at 07:37); live_halal re-probe still TypeError -> cannot-verify, not armable; day-trading.py still uncommitted-modified by the parallel session. HUHU/JXG still interpolated.",
+      "rank_top": "CYPH (halal unresolved) -> none armable"
+    },
+    {
+      "et": "07:49",
+      "n": 18,
+      "state": "FLAT-5m",
+      "scan_rows": 117,
+      "candidates": 20,
+      "new": [],
+      "note": "117 rows, same set; 8 rows updated. CYPH +12.2% last 2.49 (premarket high 2.53 at 07:44), halal re-probe still TypeError -> cannot-verify. HUHU/JXG still interpolated. Nothing armable.",
+      "rank_top": "CYPH (halal unresolved) -> none armable"
+    },
+    {
+      "et": "07:54",
+      "n": 19,
+      "state": "FLAT-5m",
+      "scan_rows": 117,
+      "candidates": 20,
+      "new": [],
+      "note": "117 rows, same set; 7 rows updated. CYPH +12.7% last 2.50 (07:52 bar 72.6k sh to 2.52), halal re-probe still TypeError -> cannot-verify. HUHU/JXG still interpolated. Nothing armable.",
+      "rank_top": "CYPH (halal unresolved) -> none armable"
+    },
+    {
+      "et": "07:59",
+      "n": 20,
+      "state": "FLAT-5m",
+      "scan_rows": 117,
+      "candidates": 20,
+      "new": [],
+      "note": "117 rows, same set; 5 rows updated. CYPH +12.7% 2.50 flat-lining, halal re-probe still TypeError -> cannot-verify. HUHU/JXG still interpolated. Nothing armable.",
+      "rank_top": "CYPH (halal unresolved) -> none armable"
+    },
+    {
+      "et": "08:04",
+      "n": 21,
+      "state": "FLAT-5m",
+      "scan_rows": 117,
+      "candidates": 20,
+      "new": [],
+      "note": "117 rows, same set; 7 rows updated. CYPH +12.8% 2.505 pinned at 2.50-2.51, halal re-probe still TypeError -> cannot-verify. HUHU/JXG still interpolated. Nothing armable.",
+      "rank_top": "CYPH (halal unresolved) -> none armable"
+    },
+    {
+      "et": "08:09",
+      "n": 22,
+      "state": "FLAT-5m",
+      "scan_rows": 117,
+      "candidates": 20,
+      "new": [],
+      "note": "117 rows, same set; 8 rows updated. CYPH +14.9% 2.55 (new premarket high 2.59 at 08:07), halal re-probe still TypeError -> cannot-verify. HUHU/JXG still interpolated. Nothing armable.",
+      "rank_top": "CYPH (halal unresolved) -> none armable"
+    },
+    {
+      "et": "08:14",
+      "n": 23,
+      "state": "FLAT-5m",
+      "scan_rows": 115,
+      "candidates": 20,
+      "new": [],
+      "note": "115 rows; ANTA and NCRA off the scan (both FAIL, latched); 7 rows updated. CYPH +14.8% 2.55, halal re-probe still TypeError -> cannot-verify. HUHU/JXG still interpolated. Nothing armable.",
+      "rank_top": "CYPH (halal unresolved) -> none armable"
+    },
+    {
+      "et": "09:19",
+      "n": 24,
+      "state": "FLAT-5m",
+      "session": "interactive takeover",
+      "scan_rows": 115,
+      "candidates": 3,
+      "new": [
+        "NRXS",
+        "NTHI"
+      ],
+      "note": "FIRST CYCLE AFTER THE 08:19-09:18 COVERAGE GAP. Live run_scan 115 rows landed inline; dump rebuilt with scan_carry from the 0814 base (drops FEMY FGRU IREC; new FTFT NTHI NRXS; 22 rows updated). Candidates after drop-lists: JXG, NTHI (NEW), NRXS (NEW). HALAL RE-PROBE -- the CYPH TypeError is GONE (the parallel session landed its day-trading.py fix), so every cannot-verify from cycles 16-23 now resolves to a REAL verdict: CYPH FAIL (haram_pct 100.0 = TTM interest / TTM revenue, pre-revenue crypto-treasury), NTHI FAIL (same structure, haram_pct 100.0, clinical-stage), NRXS FAIL (CASH>10: cash 11.49 / loan 0.39 / combined 11.87 -- the 2026-09-16 STRICT 10/10/20 epoch binds each leg independently, the old combined<=20 escape is closed), JXG FAIL (unverified: missing revenue row -- it read PASS at 06:27 and now refuses under the missing-row rule; verdicts are re-run fresh at candidacy and the fresh one governs). Bars 08:00-13:23Z: JXG 0 real bars (323 interpolated) all day, NRXS 7, NTHI 2. rank 09:23: 1 crossed / 0 armable, TOP = none.",
+      "rank": "1 CYPH 2.5495 +14.8% coil .984 press +0.28 gap7 +6.8 calm yes NEEDS-SCREEN -> live FAIL | NTHI excluded (only 2 bars) | NRXS excluded (+10% cross not printed on real bars) | JXG excluded (NO BARS)",
+      "rank_top": "none armable (0 armable)",
+      "halal_after": "every candidate FAILs at the live gate; armable pool EMPTY at the open"
+    }
+  ],
+  "trades": [],
+  "halal_detail": {
+    "MEDS": {
+      "verdict": "FAIL",
+      "et": "06:25",
+      "q1": "halal_universe (quarterly): LOAN>10 (980.57) + haram_pct 33.23 -> FAIL; real verdict, not re-litigated",
+      "q2": "not reached"
+    },
+    "NAMI": {
+      "verdict": "FAIL",
+      "et": "06:25",
+      "q1": "halal_universe (quarterly): LOAN>10+COMBINED>20 (168.5/663.94) -> FAIL; real verdict, not re-litigated",
+      "q2": "not reached"
+    },
+    "ANTA": {
+      "verdict": "FAIL",
+      "et": "06:25",
+      "q1": "halal_universe (quarterly): LOAN>10+COMBINED>20 (562.5/6.74) -> FAIL; real verdict, not re-litigated",
+      "q2": "not reached"
+    },
+    "SANG": {
+      "verdict": "FAIL",
+      "et": "06:25",
+      "q1": "halal_universe (quarterly): LOAN>10+COMBINED>20 (30.18/11.54) -> FAIL; real verdict, not re-litigated",
+      "q2": "not reached"
+    },
+    "IMOS": {
+      "verdict": "FAIL",
+      "et": "06:25",
+      "q1": "halal_universe (quarterly): LOAN>10+COMBINED>20 (832.67/657.17) -> FAIL; real verdict, not re-litigated",
+      "q2": "not reached"
+    },
+    "ARBB": {
+      "verdict": "FAIL",
+      "et": "06:25",
+      "q1": "halal_universe (quarterly): CASH>10+COMBINED>20 (2.62/420.32) -> FAIL; real verdict, not re-litigated",
+      "q2": "not reached"
+    },
+    "EHLD": {
+      "verdict": "FAIL",
+      "et": "06:25",
+      "q1": "halal_universe (quarterly): LOAN>10+COMBINED>20 (71.98/21.52) -> FAIL; real verdict, not re-litigated",
+      "q2": "not reached"
+    },
+    "MOLN": {
+      "verdict": "FAIL",
+      "et": "06:25",
+      "q1": "halal_universe (quarterly): CASH>10+COMBINED>20 (1.94/45.7) -> FAIL; real verdict, not re-litigated",
+      "q2": "not reached"
+    },
+    "LCFY": {
+      "verdict": "FAIL",
+      "et": "06:25",
+      "q1": "halal_universe (quarterly): CASH>10+COMBINED>20 (6.08/25.49) -> FAIL; real verdict, not re-litigated",
+      "q2": "not reached"
+    },
+    "ATHE": {
+      "verdict": "FAIL",
+      "et": "06:25",
+      "q1": "halal_universe (quarterly): CASH>10+COMBINED>20 (0.12/60.18) -> FAIL; real verdict, not re-litigated",
+      "q2": "not reached"
+    },
+    "LUXE": {
+      "verdict": "FAIL",
+      "et": "06:25",
+      "q1": "halal_universe (quarterly): LOAN>10+COMBINED>20 (18.3/29.67) -> FAIL; real verdict, not re-litigated",
+      "q2": "not reached"
+    },
+    "RETO": {
+      "verdict": "FAIL",
+      "et": "06:25",
+      "q1": "universe loan 21.0 / cash 2.15 / combined 23.16 (FAIL) and HARAM by user ruling 2026-08-22",
+      "q2": "FAIL by ruling"
+    },
+    "HUHU": {
+      "verdict": "PASS-Q1 (list)",
+      "et": "06:25",
+      "q1": "halal_universe quarterly: loan 5.63 / cash 4.04 / combined 9.67 -> PASS; on halal_list; RH mcap 107.8M cached",
+      "q2": "pending -- semiconductor cleanroom/facility engineering (HUHUTECH); to be confirmed at candidacy; NO real premarket bars yet (144 interpolated)"
+    },
+    "MVRL": {
+      "verdict": "NOT-COMMON-STOCK",
+      "et": "06:25",
+      "q1": "ETRACS 1.5x leveraged mortgage-REIT ETN (UBS note) -- not an issuer; pruned from candidates; scan_sweep FUND_PAT patched (+etracs, +1.5x)",
+      "q2": "n/a"
+    },
+    "FTFT": {
+      "verdict": "FAIL",
+      "et": "06:26",
+      "q1": "live_halal 06:27 (RH mcap 46.3M, quarterly): loan 6.84 / cash 4.15 / combined 10.99; haram_pct 9.47 -> FAIL (unverified revenue mix)",
+      "q2": "FAIL -- RH profile: sector Finance / Finance-Rental-Leasing; segments Supply Chain Financing/Trading and Brokerage Service (financing is the business line). Not armable."
+    },
+    "ENRD": {
+      "verdict": "FAIL",
+      "et": "06:26",
+      "q1": "live_halal 06:27 (RH mcap 537.5M, quarterly): loan 145.5 / cash 139.09 / combined 284.59 -> LOAN>10+COMBINED>20 FAIL (universe annual also FAIL 121.63/39.14)",
+      "q2": "PASS by ruling 2026-08-22 (freight logistics tech) -- irrelevant, question 1 fails"
+    },
+    "EBON": {
+      "verdict": "FAIL",
+      "et": "06:26",
+      "q1": "live_halal 06:27 (RH mcap 12.6M, quarterly): loan 9.58 / cash 1558.11 / combined 1567.7 -> CASH>10+COMBINED>20 FAIL",
+      "q2": "not reached (bitcoin mining hardware)"
+    },
+    "JXG": {
+      "verdict": "PASS",
+      "et": "06:26",
+      "q1": "live_halal 06:27 (RH mcap 102.1M, quarterly): loan 3.62 / cash 0.69 / combined 4.31 -> PASS",
+      "q2": "PASS -- casual menswear design/manufacture/sale, tourism products, cross-border merchandise (Apparel/Footwear); plain retail/apparel, no haram-adjacent line. NO real premarket bars yet; re-screen at arming per protocol.",
+      "recheck_0921": "FAIL -- live_halal 09:21 now returns unverified: missing revenue row (an absent statement row is not a zero, user ruling 2026-09-16). The 06:27 PASS is SUPERSEDED: verdicts are re-run fresh at candidacy and the fresh verdict governs. Moot in practice -- JXG printed ZERO real bars all day (323 interpolated), so the ranker excludes it as NO BARS."
+    },
+    "EOCN": {
+      "verdict": "FAIL",
+      "et": "07:05",
+      "q1": "live_halal 07:05 (RH mcap 3.78M, quarterly): loan 3.42 / cash 297.46 / combined 300.87 -> CASH>10+COMBINED>20 FAIL",
+      "q2": "not reached (clinical-stage NASH biopharma, would pass)"
+    },
+    "ZTG": {
+      "verdict": "FAIL",
+      "et": "07:11",
+      "q1": "PASS -- live_halal 07:10 with fresh RH mcap 3.74M (cached 125M was stale): loan 1.06 / cash 4.26 / combined 5.32, haram_pct 0 (quarterly); on halal_list, universe PASS",
+      "q2": "FAIL -- Zenta Group Co (Macau, founded 2023): 'industrial park consultation, business investment consultation, fintech solutions; administrative services, INVESTMENT BROKERAGE services, PROJECT BROKERAGE services, fintech service fees (algorithm / blockchain)'. Conventional investment brokerage is a haram business line per the MTC precedent (2026-09-08: introducing-broker commissions, ratios clean -> FAIL) and the financial-services mix is undisclosed (CURR precedent 2026-09-02: unverified is haram). Binary rule: not armable. Not re-litigated today.",
+      "context": "rank 07:10: TOP=ZTG armable on Q1 (last 2.2636, +236%, coil 0.817, press +0.21, gap7 +12.9 calm PASS). Quote 11:10:47Z bid 2.11 / ask 2.13 (0.94% spread), L2 inside 2.13x4 / 2.18x6. Premarket 0.77 -> 2.77 in 3 bars 07:05-07:07 on 3.15M sh. Refused at the halal gate BEFORE any entry decision -- no veto counted."
+    },
+    "CYPH": {
+      "verdict": "FAIL (resolved 09:21 -- no longer cannot-verify)",
+      "et": "07:41",
+      "q1": "live_halal 07:40 with RH mcap 238.7M: halal_check raised TypeError at 'haram_pct < 5' -- haram_pct is None because TTM revenue is None/<=0 (pre-revenue crypto-treasury / ex-biotech). Under the 2026-09-16 missing-row rule an absent revenue row is not a zero: the 5% rule cannot be run -> unverified -> not armable. 09-08 precedent (loan 0.01 / cash 2.65, PASS with caveat) is NOT reused: verdicts are re-run fresh at candidacy and today's data does not yield one.",
+      "q2": "not reached (Zcash crypto-treasury company; 09-08 caveat stands for user review)",
+      "tooling": "day-trading.py is UNCOMMITTED-MODIFIED by the parallel campaign session (on top of 45b66ee 'Halal gate fixes 2026-09-16'); not edited by this session. If the parallel session lands a fix, the per-cycle re-probe picks it up.",
+      "resolution": "09:21: the halal_check TypeError is FIXED (parallel session landed day-trading.py). Fresh live_halal: loan 0.02 / cash 3.19 / combined 3.21 PASS, haram_pct 100.0 over 4 periods -> FAIL HARAM>=5%. The missing-revenue TypeError that made cycles 16-23 read CANNOT-VERIFY now resolves to a real FAIL on the SAME side of the gate: CYPH was never armable today. No entry was missed during the 08:19-09:18 gap on this name and none is credited."
+    },
+    "NTHI": {
+      "verdict": "FAIL",
+      "et": "09:21",
+      "q1": "live_halal 09:21 (RH mcap 95.06M -> tool used 112.8M cached, quarterly): loan 0.29 / cash 1.75 / combined 2.04 PASS, but haram_pct 100.0 over 4 periods -> FAIL HARAM>=5% (TTM interest income / TTM revenue; clinical-stage biopharma with no product revenue, so interest on cash IS the whole income line)",
+      "q2": "not reached. NOTE: data/halal_rulings.json carries a 2026-08-21 PASS ruling for NTHI, but that ruling only rebuts the ALCOHOL keyword (perillyl alcohol = a terpene in NEO212, chemistry not beverage). It says nothing about the interest ratio, which is what fails here. Not armable."
+    },
+    "NRXS": {
+      "verdict": "FAIL",
+      "et": "09:22",
+      "q1": "live_halal 09:22 after caching RH mcap 72.46M (was REFUSE-TO-EVALUATE, no mcap): loan 0.39 / cash 11.49 / combined 11.87, haram_pct 2.53 -> FAIL CASH>10. Under the pre-2026-09-16 code this PASSED on the combined<=20 escape; the 2026-09-16 STRICT 10/10/20 fix makes each leg bind independently and closes it.",
+      "q2": "not reached (NeurAxis: IB-Stim non-surgical neuromodulation device for children -- medical devices, would pass question 2). Refused on question 1."
+    }
   },
-  "premarket_tape": {
-   "spy_prev_close": 757.39,
-   "spy_premarket_0620et": 758.97,
-   "spy_premarket_pct": 0.21,
-   "read": "SPY +0.21% premarket -- quiet tone into the open."
+  "vetoes": {
+    "spread": {
+      "n": 0,
+      "of": 0
+    },
+    "depth": {
+      "n": 0,
+      "of": 0
+    },
+    "chase": {
+      "n": 0,
+      "of": 0
+    }
   },
-  "halal_list": {
-   "updated": "2026-09-01",
-   "age_days": 15,
-   "n_symbols": 1260,
-   "stale_gate": "PASS (15 days < 35)"
-  },
-  "watcher_precheck": "posn.py: BOOK EMPTY -- no data/paper/position_*.json state files; nothing from another day to move aside."
- },
- "cycles": [
-  {
-   "et": "06:23",
-   "n": 1,
-   "state": "FLAT-5m",
-   "scan_rows": 120,
-   "candidates": 17,
-   "dropped": {
-    "fund": 93,
-    "noncommon": 1,
-    "spac": 1,
-    "inherited_fail": 8
-   },
-   "note": "120 rows landed inline; transcribed to scan_2026-09-16_0623.tsv -> scan_tsv_to_dump -> scan_sweep. State seeded from 09-08 (inherited_fail 217, spac 7). DUKR +128.5% refused (inherited FAIL). MVRL (ETRACS ETN) slipped the fund regex: pruned, regex patched. Bars: two batched historicals (10+7) spilled to files, ingested with returned-set assert OK. 11 of 17 names have ZERO real premarket bars (all interpolated): ANTA SANG IMOS HUHU ARBB EHLD JXG MOLN LCFY EBON ATHE -- not yet traded; re-evaluated next cycle, not marked fake_gap yet.",
-   "candidate_list": [
-    "MEDS",
-    "RETO",
-    "NAMI",
-    "FTFT",
-    "ANTA",
-    "SANG",
-    "ENRD",
-    "IMOS",
-    "HUHU",
-    "ARBB",
-    "EHLD",
-    "JXG",
-    "LUXE",
-    "MOLN",
-    "LCFY",
-    "EBON",
-    "ATHE"
-   ],
-   "rank": "1 FTFT coil .951 press -0.30 NEEDS-SCREEN | 2 ENRD coil .977 press n/a NEEDS-SCREEN | 3 LUXE coil 1.000 NEEDS-SCREEN | 4 RETO FAIL(ruling) calm-gap FAIL +48.6 | 5 MEDS calm-gap FAIL +113.6 | 6 NAMI calm-gap FAIL +34.2; 11 excluded NO BARS",
-   "rank_top": "none armable (top-3 NEEDS-SCREEN)",
-   "halal_after": "universe FAILs applied: MEDS NAMI ANTA SANG IMOS ARBB EHLD MOLN LCFY ATHE LUXE + RETO ruling. Live screen owed: FTFT ENRD JXG EBON (no RH mcap cached). Live 06:27: FTFT FAIL (finance business), ENRD FAIL (Q1 145/139), EBON FAIL (cash 1558), JXG PASS both (no bars). Armable pool right now: none with bars; JXG + HUHU PASS awaiting first prints."
-  },
-  {
-   "et": "06:29",
-   "n": 2,
-   "state": "FLAT-5m",
-   "scan_rows": 119,
-   "candidates": 17,
-   "dropped": {
-    "fund": 92,
-    "noncommon": 1,
-    "spac": 1,
-    "halal_fail": 15,
-    "inherited_fail": 8
-   },
-   "note": "119 rows inline; dump rebuilt from the 0623 base via new plan/scan_carry.py (live ticker list -> mechanical diff -> dump_carry): ACMM dropped, 7 stock rows updated (MEDS RETO NAMI FTFT NCRA WNW LUXE), 0 new. Eligible after halal: HUHU (list PASS) and JXG (live PASS) only -- both still have ZERO real premarket bars (all interpolated). Nothing armable.",
-   "new": [],
-   "rank_top": "none armable (HUHU/JXG NO BARS)"
-  },
-  {
-   "et": "06:34",
-   "n": 3,
-   "state": "FLAT-5m",
-   "scan_rows": 118,
-   "candidates": 17,
-   "new": [],
-   "note": "118 rows inline; carry from 0629 (WNW dropped -- inherited FAIL anyway; MEDS RETO NAMI FTFT LUXE updated; 0 new). Eligible: HUHU, JXG (no bars yet). Nothing armable.",
-   "rank_top": "none armable"
-  },
-  {
-   "et": "06:39",
-   "n": 4,
-   "state": "FLAT-5m",
-   "scan_rows": 117,
-   "candidates": 17,
-   "new": [],
-   "note": "117 rows inline; carry from 0634 (RVSN dropped; MEDS RETO NAMI ENRD FTFT LUXE updated; 0 new). HUHU/JXG re-polled 10:33-10:38Z: still all interpolated (no trade today; scan marks stale). Nothing armable.",
-   "rank_top": "none armable"
-  },
-  {
-   "et": "06:44",
-   "n": 5,
-   "state": "FLAT-5m",
-   "scan_rows": 117,
-   "candidates": 17,
-   "new": [],
-   "note": "117 rows inline, identical ticker set to 0639; MEDS RETO NAMI FTFT ENRD LUXE updated. HUHU/JXG 10:38-10:43Z still all interpolated. Nothing armable.",
-   "rank_top": "none armable"
-  },
-  {
-   "et": "06:49",
-   "n": 6,
-   "state": "FLAT-5m",
-   "scan_rows": 117,
-   "candidates": 17,
-   "new": [],
-   "note": "117 rows inline, same ticker set; MEDS RETO NAMI FTFT LUXE updated (MEDS +157%, all halal FAIL). HUHU/JXG 10:43-10:48Z still interpolated. Nothing armable.",
-   "rank_top": "none armable"
-  },
-  {
-   "et": "06:54",
-   "n": 7,
-   "state": "FLAT-5m",
-   "scan_rows": 117,
-   "candidates": 17,
-   "new": [],
-   "note": "117 rows inline, same ticker set; 7 rows updated (MEDS +171%). HUHU/JXG 10:48-10:53Z still interpolated. Nothing armable.",
-   "rank_top": "none armable"
-  },
-  {
-   "et": "06:59",
-   "n": 8,
-   "state": "FLAT-5m",
-   "scan_rows": 117,
-   "candidates": 17,
-   "new": [],
-   "note": "117 rows inline, same ticker set; 6 rows updated. HUHU/JXG 10:53-10:58Z still interpolated. Nothing armable.",
-   "rank_top": "none armable"
-  },
-  {
-   "et": "07:04",
-   "n": 9,
-   "state": "FLAT-5m",
-   "scan_rows": 117,
-   "candidates": 18,
-   "new": [
-    "EOCN"
-   ],
-   "note": "117 rows inline; FTFT fell off the scan (still latched, halal FAIL), EOCN NEW +11.2% (Eocene Ltd, 2 premarket prints 160 sh @4.12 / 3.88): absent from universe -> RH mcap cached -> live screen FAIL (cash 297%). HUHU/JXG 10:58-11:03Z still interpolated. Nothing armable.",
-   "rank_top": "none armable"
-  },
-  {
-   "et": "07:09",
-   "n": 10,
-   "state": "FLAT-5m",
-   "scan_rows": 117,
-   "candidates": 19,
-   "new": [
-    "ZTG"
-   ],
-   "note": "117 rows; LUXE off the scan (latched, FAIL); ZTG NEW +219.5% (Zenta Group, Macau fintech/brokerage consultancy): list PASS but stale mcap -> refreshed 3.74M -> Q1 PASS 1.06/4.26; rank TOP=ZTG armable on Q1; Q2 FAIL (investment brokerage, MTC/CURR precedents). MEDS RETO NAMI ENRD NCRA updated. HUHU/JXG 11:03-11:08Z still interpolated. Nothing armable.",
-   "rank": "1 ZTG 2.2636 +236.3% coil .817 press +0.21 gap7 +12.9 calm yes halal PASS(Q1) -> Q2 FAIL; HUHU/JXG NO BARS",
-   "rank_top": "ZTG on Q1 -> refused Q2; none armable"
-  },
-  {
-   "et": "07:14",
-   "n": 11,
-   "state": "FLAT-5m",
-   "scan_rows": 119,
-   "candidates": 19,
-   "new": [
-    "LNOK(fund)"
-   ],
-   "note": "119 rows; HUHU dropped off the scan (stale mark cleared, still latched, still no bars), LUXE/FTFT back (both FAIL), LNOK new = 2x NOK ETF (fund). ZTG +314.6% last 2.79 (FAIL Q2). JXG 11:08-11:13Z still interpolated. Nothing armable.",
-   "rank_top": "none armable"
-  },
-  {
-   "et": "07:19",
-   "n": 12,
-   "state": "FLAT-5m",
-   "scan_rows": 118,
-   "candidates": 19,
-   "new": [],
-   "note": "118 rows; STMX (ETF) off; 9 rows updated (ZTG +294% last 2.65 fading). HUHU/JXG 11:13-11:18Z still interpolated. Nothing armable.",
-   "rank_top": "none armable"
-  },
-  {
-   "et": "07:24",
-   "n": 13,
-   "state": "FLAT-5m",
-   "scan_rows": 118,
-   "candidates": 19,
-   "new": [],
-   "note": "118 rows, same set; 8 rows updated (ZTG +287% 2.60). HUHU/JXG 11:18-11:23Z still interpolated. Nothing armable.",
-   "rank_top": "none armable"
-  },
-  {
-   "et": "07:29",
-   "n": 14,
-   "state": "FLAT-5m",
-   "scan_rows": 118,
-   "candidates": 19,
-   "new": [],
-   "note": "118 rows, same set; 9 rows updated (ZTG +356% 3.07). HUHU/JXG 11:23-11:28Z still interpolated. Nothing armable.",
-   "rank_top": "none armable"
-  },
-  {
-   "et": "07:34",
-   "n": 15,
-   "state": "FLAT-5m",
-   "scan_rows": 117,
-   "candidates": 19,
-   "new": [],
-   "note": "117 rows; EOCN off the scan (latched, FAIL); 8 rows updated (ZTG +341% 2.97). HUHU/JXG 11:28-11:33Z still interpolated. Nothing armable.",
-   "rank_top": "none armable"
-  },
-  {
-   "et": "07:39",
-   "n": 16,
-   "state": "FLAT-5m",
-   "scan_rows": 118,
-   "candidates": 20,
-   "new": [
-    "CYPH"
-   ],
-   "note": "118 rows; CYPH NEW +10.4% (Cypherpunk Technologies, Zcash crypto-treasury; 09-08 precedent PASS-with-caveat). Crossed +10% on the 07:36-07:37 bars (high 2.52), 07:00 bar 2.37 -> gap7 +6.8 calm PASS, coil 0.973. RH mcap refreshed 238.7M. rank TOP=CYPH NEEDS-SCREEN; live_halal ERROR (TypeError in halal_check) -> cannot evaluate, NOT armable until resolved. Quote 11:39:36Z bid 2.45 / ask 2.51 = 2.4% spread (would be a SPREAD veto). 7 rows updated. HUHU/JXG still interpolated.",
-   "rank": "1 CYPH 2.451 +10.4% coil .973 press +0.00 gap7 +6.8 calm yes NEEDS-SCREEN",
-   "rank_top": "CYPH (halal unresolved)"
-  },
-  {
-   "et": "07:44",
-   "n": 17,
-   "state": "FLAT-5m",
-   "scan_rows": 117,
-   "candidates": 20,
-   "new": [],
-   "note": "117 rows; FTFT off; 8 rows updated. CYPH +13.1% last 2.51 (07:43 bar 31.7k sh, new premarket high 2.51 vs 2.5123 at 07:37); live_halal re-probe still TypeError -> cannot-verify, not armable; day-trading.py still uncommitted-modified by the parallel session. HUHU/JXG still interpolated.",
-   "rank_top": "CYPH (halal unresolved) -> none armable"
-  },
-  {
-   "et": "07:49",
-   "n": 18,
-   "state": "FLAT-5m",
-   "scan_rows": 117,
-   "candidates": 20,
-   "new": [],
-   "note": "117 rows, same set; 8 rows updated. CYPH +12.2% last 2.49 (premarket high 2.53 at 07:44), halal re-probe still TypeError -> cannot-verify. HUHU/JXG still interpolated. Nothing armable.",
-   "rank_top": "CYPH (halal unresolved) -> none armable"
-  },
-  {
-   "et": "07:54",
-   "n": 19,
-   "state": "FLAT-5m",
-   "scan_rows": 117,
-   "candidates": 20,
-   "new": [],
-   "note": "117 rows, same set; 7 rows updated. CYPH +12.7% last 2.50 (07:52 bar 72.6k sh to 2.52), halal re-probe still TypeError -> cannot-verify. HUHU/JXG still interpolated. Nothing armable.",
-   "rank_top": "CYPH (halal unresolved) -> none armable"
-  },
-  {
-   "et": "07:59",
-   "n": 20,
-   "state": "FLAT-5m",
-   "scan_rows": 117,
-   "candidates": 20,
-   "new": [],
-   "note": "117 rows, same set; 5 rows updated. CYPH +12.7% 2.50 flat-lining, halal re-probe still TypeError -> cannot-verify. HUHU/JXG still interpolated. Nothing armable.",
-   "rank_top": "CYPH (halal unresolved) -> none armable"
-  },
-  {
-   "et": "08:04",
-   "n": 21,
-   "state": "FLAT-5m",
-   "scan_rows": 117,
-   "candidates": 20,
-   "new": [],
-   "note": "117 rows, same set; 7 rows updated. CYPH +12.8% 2.505 pinned at 2.50-2.51, halal re-probe still TypeError -> cannot-verify. HUHU/JXG still interpolated. Nothing armable.",
-   "rank_top": "CYPH (halal unresolved) -> none armable"
-  },
-  {
-   "et": "08:09",
-   "n": 22,
-   "state": "FLAT-5m",
-   "scan_rows": 117,
-   "candidates": 20,
-   "new": [],
-   "note": "117 rows, same set; 8 rows updated. CYPH +14.9% 2.55 (new premarket high 2.59 at 08:07), halal re-probe still TypeError -> cannot-verify. HUHU/JXG still interpolated. Nothing armable.",
-   "rank_top": "CYPH (halal unresolved) -> none armable"
-  },
-  {
-   "et": "08:14",
-   "n": 23,
-   "state": "FLAT-5m",
-   "scan_rows": 115,
-   "candidates": 20,
-   "new": [],
-   "note": "115 rows; ANTA and NCRA off the scan (both FAIL, latched); 7 rows updated. CYPH +14.8% 2.55, halal re-probe still TypeError -> cannot-verify. HUHU/JXG still interpolated. Nothing armable.",
-   "rank_top": "CYPH (halal unresolved) -> none armable"
-  }
- ],
- "trades": [],
- "halal_detail": {
-  "MEDS": {
-   "verdict": "FAIL",
-   "et": "06:25",
-   "q1": "halal_universe (quarterly): LOAN>10 (980.57) + haram_pct 33.23 -> FAIL; real verdict, not re-litigated",
-   "q2": "not reached"
-  },
-  "NAMI": {
-   "verdict": "FAIL",
-   "et": "06:25",
-   "q1": "halal_universe (quarterly): LOAN>10+COMBINED>20 (168.5/663.94) -> FAIL; real verdict, not re-litigated",
-   "q2": "not reached"
-  },
-  "ANTA": {
-   "verdict": "FAIL",
-   "et": "06:25",
-   "q1": "halal_universe (quarterly): LOAN>10+COMBINED>20 (562.5/6.74) -> FAIL; real verdict, not re-litigated",
-   "q2": "not reached"
-  },
-  "SANG": {
-   "verdict": "FAIL",
-   "et": "06:25",
-   "q1": "halal_universe (quarterly): LOAN>10+COMBINED>20 (30.18/11.54) -> FAIL; real verdict, not re-litigated",
-   "q2": "not reached"
-  },
-  "IMOS": {
-   "verdict": "FAIL",
-   "et": "06:25",
-   "q1": "halal_universe (quarterly): LOAN>10+COMBINED>20 (832.67/657.17) -> FAIL; real verdict, not re-litigated",
-   "q2": "not reached"
-  },
-  "ARBB": {
-   "verdict": "FAIL",
-   "et": "06:25",
-   "q1": "halal_universe (quarterly): CASH>10+COMBINED>20 (2.62/420.32) -> FAIL; real verdict, not re-litigated",
-   "q2": "not reached"
-  },
-  "EHLD": {
-   "verdict": "FAIL",
-   "et": "06:25",
-   "q1": "halal_universe (quarterly): LOAN>10+COMBINED>20 (71.98/21.52) -> FAIL; real verdict, not re-litigated",
-   "q2": "not reached"
-  },
-  "MOLN": {
-   "verdict": "FAIL",
-   "et": "06:25",
-   "q1": "halal_universe (quarterly): CASH>10+COMBINED>20 (1.94/45.7) -> FAIL; real verdict, not re-litigated",
-   "q2": "not reached"
-  },
-  "LCFY": {
-   "verdict": "FAIL",
-   "et": "06:25",
-   "q1": "halal_universe (quarterly): CASH>10+COMBINED>20 (6.08/25.49) -> FAIL; real verdict, not re-litigated",
-   "q2": "not reached"
-  },
-  "ATHE": {
-   "verdict": "FAIL",
-   "et": "06:25",
-   "q1": "halal_universe (quarterly): CASH>10+COMBINED>20 (0.12/60.18) -> FAIL; real verdict, not re-litigated",
-   "q2": "not reached"
-  },
-  "LUXE": {
-   "verdict": "FAIL",
-   "et": "06:25",
-   "q1": "halal_universe (quarterly): LOAN>10+COMBINED>20 (18.3/29.67) -> FAIL; real verdict, not re-litigated",
-   "q2": "not reached"
-  },
-  "RETO": {
-   "verdict": "FAIL",
-   "et": "06:25",
-   "q1": "universe loan 21.0 / cash 2.15 / combined 23.16 (FAIL) and HARAM by user ruling 2026-08-22",
-   "q2": "FAIL by ruling"
-  },
-  "HUHU": {
-   "verdict": "PASS-Q1 (list)",
-   "et": "06:25",
-   "q1": "halal_universe quarterly: loan 5.63 / cash 4.04 / combined 9.67 -> PASS; on halal_list; RH mcap 107.8M cached",
-   "q2": "pending -- semiconductor cleanroom/facility engineering (HUHUTECH); to be confirmed at candidacy; NO real premarket bars yet (144 interpolated)"
-  },
-  "MVRL": {
-   "verdict": "NOT-COMMON-STOCK",
-   "et": "06:25",
-   "q1": "ETRACS 1.5x leveraged mortgage-REIT ETN (UBS note) -- not an issuer; pruned from candidates; scan_sweep FUND_PAT patched (+etracs, +1.5x)",
-   "q2": "n/a"
-  },
-  "FTFT": {
-   "verdict": "FAIL",
-   "et": "06:26",
-   "q1": "live_halal 06:27 (RH mcap 46.3M, quarterly): loan 6.84 / cash 4.15 / combined 10.99; haram_pct 9.47 -> FAIL (unverified revenue mix)",
-   "q2": "FAIL -- RH profile: sector Finance / Finance-Rental-Leasing; segments Supply Chain Financing/Trading and Brokerage Service (financing is the business line). Not armable."
-  },
-  "ENRD": {
-   "verdict": "FAIL",
-   "et": "06:26",
-   "q1": "live_halal 06:27 (RH mcap 537.5M, quarterly): loan 145.5 / cash 139.09 / combined 284.59 -> LOAN>10+COMBINED>20 FAIL (universe annual also FAIL 121.63/39.14)",
-   "q2": "PASS by ruling 2026-08-22 (freight logistics tech) -- irrelevant, question 1 fails"
-  },
-  "EBON": {
-   "verdict": "FAIL",
-   "et": "06:26",
-   "q1": "live_halal 06:27 (RH mcap 12.6M, quarterly): loan 9.58 / cash 1558.11 / combined 1567.7 -> CASH>10+COMBINED>20 FAIL",
-   "q2": "not reached (bitcoin mining hardware)"
-  },
-  "JXG": {
-   "verdict": "PASS",
-   "et": "06:26",
-   "q1": "live_halal 06:27 (RH mcap 102.1M, quarterly): loan 3.62 / cash 0.69 / combined 4.31 -> PASS",
-   "q2": "PASS -- casual menswear design/manufacture/sale, tourism products, cross-border merchandise (Apparel/Footwear); plain retail/apparel, no haram-adjacent line. NO real premarket bars yet; re-screen at arming per protocol."
-  },
-  "EOCN": {
-   "verdict": "FAIL",
-   "et": "07:05",
-   "q1": "live_halal 07:05 (RH mcap 3.78M, quarterly): loan 3.42 / cash 297.46 / combined 300.87 -> CASH>10+COMBINED>20 FAIL",
-   "q2": "not reached (clinical-stage NASH biopharma, would pass)"
-  },
-  "ZTG": {
-   "verdict": "FAIL",
-   "et": "07:11",
-   "q1": "PASS -- live_halal 07:10 with fresh RH mcap 3.74M (cached 125M was stale): loan 1.06 / cash 4.26 / combined 5.32, haram_pct 0 (quarterly); on halal_list, universe PASS",
-   "q2": "FAIL -- Zenta Group Co (Macau, founded 2023): 'industrial park consultation, business investment consultation, fintech solutions; administrative services, INVESTMENT BROKERAGE services, PROJECT BROKERAGE services, fintech service fees (algorithm / blockchain)'. Conventional investment brokerage is a haram business line per the MTC precedent (2026-09-08: introducing-broker commissions, ratios clean -> FAIL) and the financial-services mix is undisclosed (CURR precedent 2026-09-02: unverified is haram). Binary rule: not armable. Not re-litigated today.",
-   "context": "rank 07:10: TOP=ZTG armable on Q1 (last 2.2636, +236%, coil 0.817, press +0.21, gap7 +12.9 calm PASS). Quote 11:10:47Z bid 2.11 / ask 2.13 (0.94% spread), L2 inside 2.13x4 / 2.18x6. Premarket 0.77 -> 2.77 in 3 bars 07:05-07:07 on 3.15M sh. Refused at the halal gate BEFORE any entry decision -- no veto counted."
-  },
-  "CYPH": {
-   "verdict": "CANNOT-VERIFY (treated as FAIL, re-probed each cycle)",
-   "et": "07:41",
-   "q1": "live_halal 07:40 with RH mcap 238.7M: halal_check raised TypeError at 'haram_pct < 5' -- haram_pct is None because TTM revenue is None/<=0 (pre-revenue crypto-treasury / ex-biotech). Under the 2026-09-16 missing-row rule an absent revenue row is not a zero: the 5% rule cannot be run -> unverified -> not armable. 09-08 precedent (loan 0.01 / cash 2.65, PASS with caveat) is NOT reused: verdicts are re-run fresh at candidacy and today's data does not yield one.",
-   "q2": "not reached (Zcash crypto-treasury company; 09-08 caveat stands for user review)",
-   "tooling": "day-trading.py is UNCOMMITTED-MODIFIED by the parallel campaign session (on top of 45b66ee 'Halal gate fixes 2026-09-16'); not edited by this session. If the parallel session lands a fix, the per-cycle re-probe picks it up."
-  }
- },
- "vetoes": {
-  "spread": {
-   "n": 0,
-   "of": 0
-  },
-  "depth": {
-   "n": 0,
-   "of": 0
-  },
-  "chase": {
-   "n": 0,
-   "of": 0
-  }
- },
- "errors": [
-  {
-   "et": "07:41",
-   "kind": "halal-tool",
-   "sym": "CYPH",
-   "msg": "halal_check TypeError: '<' not supported between NoneType and int at 'haram_pct < 5' (day-trading.py:1121) when ttm_rev is None. Name treated as CANNOT-VERIFY; no entry credited; file owned by the parallel session, left untouched."
-  }
- ],
- "coverage_gaps": [],
- "pnl": 0.0,
- "veto_log": [],
- "armed": [],
- "trigger_c": [],
- "posn": null,
- "eod": null,
- "watcher": null
+  "errors": [
+    {
+      "et": "07:41",
+      "kind": "halal-tool",
+      "sym": "CYPH",
+      "msg": "halal_check TypeError: '<' not supported between NoneType and int at 'haram_pct < 5' (day-trading.py:1121) when ttm_rev is None. Name treated as CANNOT-VERIFY; no entry credited; file owned by the parallel session, left untouched.",
+      "resolved": "09:21 -- fix landed; CYPH now returns a real FAIL (haram_pct 100.0). See halal_detail.CYPH.resolution."
+    },
+    {
+      "et": "08:19",
+      "kind": "session-death",
+      "msg": "HEADLESS SESSION KILLED: Claude login expired ~08:19 ET, terminating the Task Scheduler session mid-cycle-24. FLAT at the time -- no position, no armed order, no ledger loss. Coverage gap 08:19-09:18 logged in coverage_gaps[]; nothing backfilled, no entries credited. Interactive takeover at 09:18 re-probed capability GREEN and resumed scanning before the 09:30 open."
+    }
+  ],
+  "coverage_gaps": [
+    {
+      "from_et": "08:19",
+      "to_et": "09:18",
+      "minutes": 59,
+      "phase": "premarket (08:19-09:18 ET, entirely before the 09:30 open)",
+      "cause": "Claude login expired -> the headless Task Scheduler session was killed mid-turn at ~08:19 ET (last heartbeat 'SESSION_ALIVE 08:19 ET cycle 24'). Login has since been renewed and an interactive session took over.",
+      "position_at_gap": "FLAT -- no open position, no armed order, no resting order. Nothing to settle; OUTAGE / DEAD-MONITOR SETTLEMENT does not apply (it governs open positions only).",
+      "impact": "premarket scanning only. Entries missed in the window are NOT credited and NOT backfilled (OUTAGE rule 3). No effect on the regular-session benchmark line: the tradeable regular window 09:30-14:30 is fully covered by this session.",
+      "backfilled": false
+    }
+  ],
+  "pnl": 0.0,
+  "veto_log": [],
+  "armed": [],
+  "trigger_c": [],
+  "posn": null,
+  "eod": null,
+  "watcher": null
 }

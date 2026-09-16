@@ -159,6 +159,22 @@
    "vol": "11443672.28",
    "name": "Cypherpunk Technologies",
    "first_seen": "07:39"
+  },
+  "NTHI": {
+   "pct": 11.78,
+   "last": 3.7,
+   "prev_close": 3.31,
+   "vol": "285991.670362",
+   "name": "NeOnc Technologies Holdings, Inc. Common",
+   "first_seen": "09:19"
+  },
+  "NRXS": {
+   "pct": 11.05,
+   "last": 6.33,
+   "prev_close": 5.7,
+   "vol": "77312.528551",
+   "name": "Neuraxis",
+   "first_seen": "09:19"
   }
  },
  "halal_fail": [
@@ -178,7 +194,10 @@
   "ENRD",
   "EBON",
   "EOCN",
-  "ZTG"
+  "ZTG",
+  "NTHI",
+  "NRXS",
+  "CYPH"
  ],
  "fake_gap": [],
  "inherited_fail": [
@@ -401,7 +420,7 @@
   "ZYME"
  ],
  "cannot_verify": [
-  "CYPH"
+  "JXG"
  ],
  "spac": [
   "ALF",
