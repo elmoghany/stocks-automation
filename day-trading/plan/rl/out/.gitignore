@@ -1,0 +1,6 @@
+# RL-SERIES: the per-day tensors are ~77 MB and fully reproducible in ~10
+# minutes with `python plan/rl/build_days.py` from data/massive/m1 + the pool
+# files + data/pt_shares + data/pt_halal. Results, stats and the honesty
+# report ARE tracked.
+days/
+*.log
