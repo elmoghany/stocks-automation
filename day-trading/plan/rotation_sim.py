@@ -928,7 +928,29 @@ POOL_HYGIENE = _os.environ.get("POOL_HYGIENE") == "1"
 # the identity chain. See day_candidates' docstring. Under RS_CROSS=1 the
 # hygiene layer also applies its intraday split/relist rule (rule 4).
 RS_CROSS = _os.environ.get("RS_CROSS", "1") == "1"
+# RS_DEFER (2026-09-16, the one-bar control on the RS_CROSS epoch):
+# `cross` is the bar whose HIGH established eligibility, and the engine
+# may still fill INSIDE that bar on a trigger level known before it. At
+# the START of that bar the name was not yet eligible, so a fill in it
+# is the same species of one-bar look-ahead that MX retraction #1 fixed
+# for market_at_start. RS_DEFER=1 makes the earliest fillable bar the
+# one AFTER the cross (entry_start = cross + 1 minute, the fwd_flat_nx
+# convention). DEFAULT OFF: every RS_CROSS row already published stays
+# reproducible; the deferred run is reported as its own control row.
+RS_DEFER = _os.environ.get("RS_DEFER") == "1"
 _HYG = []
+
+
+def _entry_start(t, cross):
+    """Earliest bar a ticket taken at clock time `t` may fill on.
+
+    max(t, cross) is the epoch default. Under RS_DEFER the cross bar
+    itself is excluded: eligibility was only proven by that bar's high,
+    so the first print we may claim is the next one."""
+    if RS_DEFER:
+        m = cross.hour * 60 + cross.minute + 1
+        cross = dtime(m // 60, m % 60) if m < 24 * 60 else dtime(23, 59)
+    return max(t, cross)
 
 
 def _hygiene():
@@ -1202,7 +1224,7 @@ def run_day(cands, date, cfg, stats=None, fc=None, rep=None, memo=None):
                 if r.get("pmh"):
                     kwk["extra_break_high"] = r["pmh"]
                 _mk = _rand_exit_kw(cfg, kwk, rep)
-                _es, _bud = max(t, r["cross"]), TICKETS[ticket_i]
+                _es, _bud = _entry_start(t, r["cross"]), TICKETS[ticket_i]
                 trk = _memo_sim(
                     memo, ("sim", r["c"]["symbol"], _es, _bud) + _mk,
                     lambda: dt.simulate_trades(
@@ -1238,7 +1260,7 @@ def run_day(cands, date, cfg, stats=None, fc=None, rep=None, memo=None):
             kw["extra_break_high"] = pick["pmh"]   # champion parity:
             # the premarket-high stop-buy travels OUTSIDE the sim dict
         _mk = _rand_exit_kw(cfg, kw, rep)
-        _es, _bud = max(t, pick["cross"]), TICKETS[ticket_i]
+        _es, _bud = _entry_start(t, pick["cross"]), TICKETS[ticket_i]
         tr = _memo_sim(
             memo, ("sim", pick["c"]["symbol"], _es, _bud) + _mk,
             lambda: dt.simulate_trades(
@@ -1629,6 +1651,7 @@ def run_many(cfg_ids, max_days=None):
                 "exit_mode": cfg.get("exit_mode"),
                 "pool_hygiene": POOL_HYGIENE,
                 "rs_cross": RS_CROSS,
+                "rs_defer": RS_DEFER,
                 "halal_strict": _os.environ.get("HALAL_STRICT") == "1",
                 "labels": list(LABELS), **out[cid][rep]}
     RES_F.write_text(json.dumps(res, indent=1))
