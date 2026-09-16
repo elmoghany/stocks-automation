@@ -89,7 +89,7 @@
    ],
    "rank": "1 FTFT coil .951 press -0.30 NEEDS-SCREEN | 2 ENRD coil .977 press n/a NEEDS-SCREEN | 3 LUXE coil 1.000 NEEDS-SCREEN | 4 RETO FAIL(ruling) calm-gap FAIL +48.6 | 5 MEDS calm-gap FAIL +113.6 | 6 NAMI calm-gap FAIL +34.2; 11 excluded NO BARS",
    "rank_top": "none armable (top-3 NEEDS-SCREEN)",
-   "halal_after": "universe FAILs applied: MEDS NAMI ANTA SANG IMOS ARBB EHLD MOLN LCFY ATHE LUXE + RETO ruling. Live screen owed: FTFT ENRD JXG EBON (no RH mcap cached)."
+   "halal_after": "universe FAILs applied: MEDS NAMI ANTA SANG IMOS ARBB EHLD MOLN LCFY ATHE LUXE + RETO ruling. Live screen owed: FTFT ENRD JXG EBON (no RH mcap cached). Live 06:27: FTFT FAIL (finance business), ENRD FAIL (Q1 145/139), EBON FAIL (cash 1558), JXG PASS both (no bars). Armable pool right now: none with bars; JXG + HUHU PASS awaiting first prints."
   }
  ],
  "trades": [],
@@ -177,6 +177,30 @@
    "et": "06:25",
    "q1": "ETRACS 1.5x leveraged mortgage-REIT ETN (UBS note) -- not an issuer; pruned from candidates; scan_sweep FUND_PAT patched (+etracs, +1.5x)",
    "q2": "n/a"
+  },
+  "FTFT": {
+   "verdict": "FAIL",
+   "et": "06:26",
+   "q1": "live_halal 06:27 (RH mcap 46.3M, quarterly): loan 6.84 / cash 4.15 / combined 10.99; haram_pct 9.47 -> FAIL (unverified revenue mix)",
+   "q2": "FAIL -- RH profile: sector Finance / Finance-Rental-Leasing; segments Supply Chain Financing/Trading and Brokerage Service (financing is the business line). Not armable."
+  },
+  "ENRD": {
+   "verdict": "FAIL",
+   "et": "06:26",
+   "q1": "live_halal 06:27 (RH mcap 537.5M, quarterly): loan 145.5 / cash 139.09 / combined 284.59 -> LOAN>10+COMBINED>20 FAIL (universe annual also FAIL 121.63/39.14)",
+   "q2": "PASS by ruling 2026-08-22 (freight logistics tech) -- irrelevant, question 1 fails"
+  },
+  "EBON": {
+   "verdict": "FAIL",
+   "et": "06:26",
+   "q1": "live_halal 06:27 (RH mcap 12.6M, quarterly): loan 9.58 / cash 1558.11 / combined 1567.7 -> CASH>10+COMBINED>20 FAIL",
+   "q2": "not reached (bitcoin mining hardware)"
+  },
+  "JXG": {
+   "verdict": "PASS",
+   "et": "06:26",
+   "q1": "live_halal 06:27 (RH mcap 102.1M, quarterly): loan 3.62 / cash 0.69 / combined 4.31 -> PASS",
+   "q2": "PASS -- casual menswear design/manufacture/sale, tourism products, cross-border merchandise (Apparel/Footwear); plain retail/apparel, no haram-adjacent line. NO real premarket bars yet; re-screen at arming per protocol."
   }
  },
  "vetoes": {
