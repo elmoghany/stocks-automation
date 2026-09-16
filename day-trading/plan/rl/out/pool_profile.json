@@ -1,0 +1,170 @@
+{
+ "train": {
+  "hold_5min": {
+   "n": 161422,
+   "mean_pnl_per_ticket": -35.07,
+   "std": 302.9,
+   "t_stat": -46.52
+  },
+  "hold_15min": {
+   "n": 155879,
+   "mean_pnl_per_ticket": -42.25,
+   "std": 499.2,
+   "t_stat": -33.42
+  },
+  "hold_30min": {
+   "n": 149325,
+   "mean_pnl_per_ticket": -48.93,
+   "std": 676.7,
+   "t_stat": -27.94
+  },
+  "hold_60min": {
+   "n": 137555,
+   "mean_pnl_per_ticket": -56.43,
+   "std": 907.4,
+   "t_stat": -23.06
+  },
+  "hold_120min": {
+   "n": 115968,
+   "mean_pnl_per_ticket": -58.28,
+   "std": 1253.6,
+   "t_stat": -15.83
+  },
+  "hold_240min": {
+   "n": 75193,
+   "mean_pnl_per_ticket": -70.16,
+   "std": 1805.5,
+   "t_stat": -10.66
+  },
+  "hold_to_flatten": {
+   "n": 187830,
+   "mean_pnl_per_ticket": -88.9
+  }
+ },
+ "val": {
+  "hold_5min": {
+   "n": 59722,
+   "mean_pnl_per_ticket": -39.02,
+   "std": 297.0,
+   "t_stat": -32.11
+  },
+  "hold_15min": {
+   "n": 57770,
+   "mean_pnl_per_ticket": -42.06,
+   "std": 481.4,
+   "t_stat": -21.0
+  },
+  "hold_30min": {
+   "n": 55307,
+   "mean_pnl_per_ticket": -46.06,
+   "std": 654.4,
+   "t_stat": -16.55
+  },
+  "hold_60min": {
+   "n": 51097,
+   "mean_pnl_per_ticket": -54.15,
+   "std": 890.2,
+   "t_stat": -13.75
+  },
+  "hold_120min": {
+   "n": 43795,
+   "mean_pnl_per_ticket": -73.63,
+   "std": 1170.8,
+   "t_stat": -13.16
+  },
+  "hold_240min": {
+   "n": 30259,
+   "mean_pnl_per_ticket": -137.37,
+   "std": 1552.4,
+   "t_stat": -15.39
+  },
+  "hold_to_flatten": {
+   "n": 68922,
+   "mean_pnl_per_ticket": -99.76
+  }
+ },
+ "test": {
+  "hold_5min": {
+   "n": 316892,
+   "mean_pnl_per_ticket": -38.56,
+   "std": 256.8,
+   "t_stat": -84.54
+  },
+  "hold_15min": {
+   "n": 306214,
+   "mean_pnl_per_ticket": -43.19,
+   "std": 424.0,
+   "t_stat": -56.36
+  },
+  "hold_30min": {
+   "n": 293192,
+   "mean_pnl_per_ticket": -47.86,
+   "std": 585.9,
+   "t_stat": -44.23
+  },
+  "hold_60min": {
+   "n": 269916,
+   "mean_pnl_per_ticket": -54.26,
+   "std": 799.5,
+   "t_stat": -35.26
+  },
+  "hold_120min": {
+   "n": 227448,
+   "mean_pnl_per_ticket": -58.62,
+   "std": 1099.8,
+   "t_stat": -25.42
+  },
+  "hold_240min": {
+   "n": 148654,
+   "mean_pnl_per_ticket": -53.97,
+   "std": 1896.1,
+   "t_stat": -10.98
+  },
+  "hold_to_flatten": {
+   "n": 362209,
+   "mean_pnl_per_ticket": -74.94
+  }
+ },
+ "extra": {
+  "hold_5min": {
+   "n": 17996,
+   "mean_pnl_per_ticket": -40.0,
+   "std": 272.3,
+   "t_stat": -19.71
+  },
+  "hold_15min": {
+   "n": 17403,
+   "mean_pnl_per_ticket": -39.54,
+   "std": 444.5,
+   "t_stat": -11.73
+  },
+  "hold_30min": {
+   "n": 16690,
+   "mean_pnl_per_ticket": -41.95,
+   "std": 636.5,
+   "t_stat": -8.51
+  },
+  "hold_60min": {
+   "n": 15367,
+   "mean_pnl_per_ticket": -39.74,
+   "std": 899.8,
+   "t_stat": -5.48
+  },
+  "hold_120min": {
+   "n": 12910,
+   "mean_pnl_per_ticket": -20.41,
+   "std": 1329.2,
+   "t_stat": -1.74
+  },
+  "hold_240min": {
+   "n": 8436,
+   "mean_pnl_per_ticket": 35.55,
+   "std": 1824.5,
+   "t_stat": 1.79
+  },
+  "hold_to_flatten": {
+   "n": 20542,
+   "mean_pnl_per_ticket": -22.37
+  }
+ }
+}
