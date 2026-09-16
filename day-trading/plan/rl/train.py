@@ -101,6 +101,19 @@ def load_splits(variant, seed, max_days=None):
 def build_model(algo, env, seed, device="cpu"):
     from stable_baselines3 import A2C, DQN, PPO, SAC
     common = dict(seed=seed, verbose=0, device=device)
+    if algo == "eiieppo":
+        from eiie import EIIE_KW
+        return PPO("MlpPolicy", env, n_steps=1260, batch_size=252, n_epochs=8,
+                   learning_rate=3e-4, gamma=0.999, gae_lambda=0.95,
+                   ent_coef=0.01, clip_range=0.2,
+                   policy_kwargs=dict(EIIE_KW), **common)
+    if algo == "eiiemask":
+        from eiie import EIIE_KW
+        from sb3_contrib import MaskablePPO
+        return MaskablePPO("MlpPolicy", env, n_steps=1260, batch_size=252,
+                           n_epochs=8, learning_rate=3e-4, gamma=0.999,
+                           gae_lambda=0.95, ent_coef=0.01, clip_range=0.2,
+                           policy_kwargs=dict(EIIE_KW), **common)
     if algo == "ppo":
         return PPO("MlpPolicy", env, n_steps=1260, batch_size=252, n_epochs=8,
                    learning_rate=3e-4, gamma=0.999, gae_lambda=0.95,
@@ -133,7 +146,7 @@ def build_model(algo, env, seed, device="cpu"):
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--algo", default="ppo",
-                    choices=["ppo", "maskppo", "dqn", "a2c", "sac"])
+                    choices=["ppo", "maskppo", "eiieppo", "eiiemask", "dqn", "a2c", "sac"])
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--steps", type=int, default=400_000)
     ap.add_argument("--variant", default="real",
@@ -152,7 +165,7 @@ def main():
     cls = ContinuousWrap if cont else E.TicketEnv
     kw = dict(norm=norm, leak=leak, seed=a.seed)
     train_env = cls(ds["train"], shuffle_days=True, **kw)
-    if a.algo == "maskppo":
+    if a.algo in ("maskppo", "eiiemask"):
         from sb3_contrib.common.wrappers import ActionMasker
         train_env = ActionMasker(train_env, lambda e: e.action_masks())
     model = build_model(a.algo, train_env, a.seed, a.device)
@@ -160,7 +173,7 @@ def main():
     def eval_on(split, m, record=False):
         e = cls(ds[split], shuffle_days=False, **kw)
         pol = cont_model_policy(m) if cont else \
-            model_policy(m, masked=(a.algo == "maskppo"))
+            model_policy(m, masked=(a.algo in ("maskppo", "eiiemask")))
         return E.run_epoch(e, pol, record=record)
 
     chunk = max(a.steps // a.evals, 1)
