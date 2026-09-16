@@ -234,6 +234,16 @@
    "new": [],
    "note": "118 rows, same set; 9 rows updated (ZTG +356% 3.07). HUHU/JXG 11:23-11:28Z still interpolated. Nothing armable.",
    "rank_top": "none armable"
+  },
+  {
+   "et": "07:34",
+   "n": 15,
+   "state": "FLAT-5m",
+   "scan_rows": 117,
+   "candidates": 19,
+   "new": [],
+   "note": "117 rows; EOCN off the scan (latched, FAIL); 8 rows updated (ZTG +341% 2.97). HUHU/JXG 11:28-11:33Z still interpolated. Nothing armable.",
+   "rank_top": "none armable"
   }
  ],
  "trades": [],
