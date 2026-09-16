@@ -192,6 +192,18 @@
    "note": "117 rows; LUXE off the scan (latched, FAIL); ZTG NEW +219.5% (Zenta Group, Macau fintech/brokerage consultancy): list PASS but stale mcap -> refreshed 3.74M -> Q1 PASS 1.06/4.26; rank TOP=ZTG armable on Q1; Q2 FAIL (investment brokerage, MTC/CURR precedents). MEDS RETO NAMI ENRD NCRA updated. HUHU/JXG 11:03-11:08Z still interpolated. Nothing armable.",
    "rank": "1 ZTG 2.2636 +236.3% coil .817 press +0.21 gap7 +12.9 calm yes halal PASS(Q1) -> Q2 FAIL; HUHU/JXG NO BARS",
    "rank_top": "ZTG on Q1 -> refused Q2; none armable"
+  },
+  {
+   "et": "07:14",
+   "n": 11,
+   "state": "FLAT-5m",
+   "scan_rows": 119,
+   "candidates": 19,
+   "new": [
+    "LNOK(fund)"
+   ],
+   "note": "119 rows; HUHU dropped off the scan (stale mark cleared, still latched, still no bars), LUXE/FTFT back (both FAIL), LNOK new = 2x NOK ETF (fund). ZTG +314.6% last 2.79 (FAIL Q2). JXG 11:08-11:13Z still interpolated. Nothing armable.",
+   "rank_top": "none armable"
   }
  ],
  "trades": [],
