@@ -179,6 +179,19 @@
    ],
    "note": "117 rows inline; FTFT fell off the scan (still latched, halal FAIL), EOCN NEW +11.2% (Eocene Ltd, 2 premarket prints 160 sh @4.12 / 3.88): absent from universe -> RH mcap cached -> live screen FAIL (cash 297%). HUHU/JXG 10:58-11:03Z still interpolated. Nothing armable.",
    "rank_top": "none armable"
+  },
+  {
+   "et": "07:09",
+   "n": 10,
+   "state": "FLAT-5m",
+   "scan_rows": 117,
+   "candidates": 19,
+   "new": [
+    "ZTG"
+   ],
+   "note": "117 rows; LUXE off the scan (latched, FAIL); ZTG NEW +219.5% (Zenta Group, Macau fintech/brokerage consultancy): list PASS but stale mcap -> refreshed 3.74M -> Q1 PASS 1.06/4.26; rank TOP=ZTG armable on Q1; Q2 FAIL (investment brokerage, MTC/CURR precedents). MEDS RETO NAMI ENRD NCRA updated. HUHU/JXG 11:03-11:08Z still interpolated. Nothing armable.",
+   "rank": "1 ZTG 2.2636 +236.3% coil .817 press +0.21 gap7 +12.9 calm yes halal PASS(Q1) -> Q2 FAIL; HUHU/JXG NO BARS",
+   "rank_top": "ZTG on Q1 -> refused Q2; none armable"
   }
  ],
  "trades": [],
@@ -296,6 +309,13 @@
    "et": "07:05",
    "q1": "live_halal 07:05 (RH mcap 3.78M, quarterly): loan 3.42 / cash 297.46 / combined 300.87 -> CASH>10+COMBINED>20 FAIL",
    "q2": "not reached (clinical-stage NASH biopharma, would pass)"
+  },
+  "ZTG": {
+   "verdict": "FAIL",
+   "et": "07:11",
+   "q1": "PASS -- live_halal 07:10 with fresh RH mcap 3.74M (cached 125M was stale): loan 1.06 / cash 4.26 / combined 5.32, haram_pct 0 (quarterly); on halal_list, universe PASS",
+   "q2": "FAIL -- Zenta Group Co (Macau, founded 2023): 'industrial park consultation, business investment consultation, fintech solutions; administrative services, INVESTMENT BROKERAGE services, PROJECT BROKERAGE services, fintech service fees (algorithm / blockchain)'. Conventional investment brokerage is a haram business line per the MTC precedent (2026-09-08: introducing-broker commissions, ratios clean -> FAIL) and the financial-services mix is undisclosed (CURR precedent 2026-09-02: unverified is haram). Binary rule: not armable. Not re-litigated today.",
+   "context": "rank 07:10: TOP=ZTG armable on Q1 (last 2.2636, +236%, coil 0.817, press +0.21, gap7 +12.9 calm PASS). Quote 11:10:47Z bid 2.11 / ask 2.13 (0.94% spread), L2 inside 2.13x4 / 2.18x6. Premarket 0.77 -> 2.77 in 3 bars 07:05-07:07 on 3.15M sh. Refused at the halal gate BEFORE any entry decision -- no veto counted."
   }
  },
  "vetoes": {

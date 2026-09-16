@@ -143,6 +143,14 @@
    "vol": "14002.25",
    "name": "Eocene Ltd.",
    "first_seen": "07:04"
+  },
+  "ZTG": {
+   "pct": 219.51,
+   "last": 2.1503,
+   "prev_close": 0.673,
+   "vol": "168370.46",
+   "name": "Zenta Group Co Ltd Class A",
+   "first_seen": "07:09"
   }
  },
  "halal_fail": [
@@ -161,7 +169,8 @@
   "FTFT",
   "ENRD",
   "EBON",
-  "EOCN"
+  "EOCN",
+  "ZTG"
  ],
  "fake_gap": [],
  "inherited_fail": [
