@@ -6918,3 +6918,123 @@ to ~300 names, roughly 24% of the armable list. Steps 1-3 would take the list
 from 1,260 to roughly 850-950. SIC data is cached at data/halal_sic.json
 (gitignored); regenerate any time with `python plan/halal_audit.py --sic`
 (1,255/1,260 resolved, 0 errors, ~4 min at the SEC's 10 req/s limit).
+
+## RL-SERIES (2026-09-16): ONLINE RL FOR PORTFOLIO MANAGEMENT, TESTED HONESTLY — NULL
+Full write-up: `rl-audit.md`. Code: `plan/rl/`. 56 training runs on the Cornell
+cluster, 4 adversarial controls, 62 baseline rollouts.
+
+SURVEY (rl-audit.md Part 1). FinRL/FinRL-Meta, Qlib RL, TradeMaster, SB3 +
+gym-anytrading / Gym-Trading-Env, EIIE/PGPortfolio, DeepTrader, the FinRL
+ensemble strategy, 2024-26 work and the Hugging Face Hub. Nothing off the
+shelf fits flat $15k same-day tickets with a 7-position cap, a forced
+flatten and a session-dependent cost tier. Two findings worth remembering:
+gym-anytrading's `_calculate_reward` has NO fee term (fees live only in
+`_update_profit`), so its agents are trained cost-free and scored at a 1.5%
+round trip; and AI4Finance's own FinRL-X paper now lists "instant fills at
+bar prices, unrealistic transaction cost modeling... survivorship bias" as
+defects of the prior FinRL stack. DeepTrader has no LICENSE file at all.
+Nothing on Hugging Face is usable -- the flagship trading-RL model reports a
+164% max drawdown on an unlevered long book. Decision: write our own env,
+drive it with SB3 PPO / sb3-contrib MaskablePPO, borrow EIIE's shared
+per-candidate scorer.
+
+ENV (plan/rl/env.py). Episode = one trading day; decisions every 5 min
+09:30-19:55 ET; fills at the NEXT bar's open; $15k x6 then $10k, <=7
+concurrent, <=$100k/day, one ticket per symbol, long only; 10 bps/side plus
+50 bps outside 09:30-16:00; 20%-of-trailing-5-min-volume size cap; no-print
+minutes untradeable; forced flatten at each symbol's last printed bar.
+ELIGIBILITY IS THE RETRACTION #2 RULE: a name may be looked at only once a
+REGULAR-SESSION bar at or before t has printed >= +10% over prev_close, so
+no premarket entries are reachable anywhere in this study. Universe after
+the point-in-time halal gate: 7,185 / 9,698 / 590 symbol-days over 194 / 251
+/ 22 days, ~37 names/day. `no_onset` was 4 / 16 / 2 rows -- independent
+corroboration that the pool's `high` IS the regular-session high.
+
+HONESTY. Poison test (garbage in every bar after minute m): 64/64 checks on
+train and 64/64 on test, zero mismatches in the causal arrays, the
+observation, the ACTION MASK and the action. hold-is-zero exact. Cost
+monotonic. CLAIRVOYANT POSITIVE CONTROL with 30 min of foresight:
+MaskablePPO +$328,381 (+$186.9/ticket, Sharpe 7.0), EIIE-Mask +$924,964
+(+$526.4/ticket, Sharpe 13.2) on the same test split -- the harness can see
+an edge when one exists, so the null below is informative.
+
+THE SHUFFLED-LABELS CONTROL WAS MIS-SPECIFIED AND IT MATTERED. PPO trained
+and tested on the time-shuffled panel printed +$479,687 (+$279.6/ticket,
+Sharpe 4.26), which by our own rule is proof of leakage. It is not. A
+PERMUTATION of a symbol-day's 1-min log returns preserves their SUM, so the
+day's terminal price is unchanged while the path is randomized -- a Brownian
+bridge pinned at both ends, and entries at the randomly-depressed points get
+dragged back to the fixed endpoint. With NO agent and NO learning, one $15k
+ticket at a random eligible minute on 60 test days: real panel -$44.46 held
+to flatten, permuted panel +$235.21. Scripted BUYFIRST on the shuffled test
+panel makes +$258.6/ticket; PPO-shuffle makes +$279.6 and the other two
+shuffled agents make LESS than their panel's random baseline. So: control
+defect, not env leak. Lesson for future controls: a return-permutation null
+is structurally wrong for a path-dependent env; use a resampling null.
+
+RESULT (test = 251 days, 2025-08-01 -> 2026-07-31, touched once), $/ticket:
+  HOLD              0.0     (0 tickets)
+  DQN             -32.8     5 seeds, spread -168,677 .. +14,010
+  CHURN           -37.1     buy and flip 5 min later -- NO information
+  PPO             -37.8     5 seeds, spread  -93,403 .. -35,087
+  EIIE-Mask       -41.5     5 seeds, spread -190,769 .. -24,428
+  MaskablePPO     -47.9     5 seeds, spread -199,121 .. +86,100
+  EIIE-PPO        -70.2     5 seeds, spread -145,784 ..  -8,560
+  RANDOM x30     -101.6     spread -288,062 .. +26,500
+  BUYFIRST       -289.6
+  SAC              0.0      DEGENERATE: all 5 seeds trade zero tickets
+Every learned agent LOSES. They beat random only by trading less badly, and
+they land ON TOP of CHURN -- i.e. they pay the round trip and add nothing.
+What they actually learned is "be flat before 16:00": regular-session exits
+cost about -$7 each, extended-hours exits cost -$119 to -$715 each, and the
+ranking of the agents is the ranking of how few extended exits they take.
+
+WHY NO POSITIVE ROW IS BELIEVABLE. Over the 25 `real` runs,
+corr(validation P&L, test P&L) = -0.126. 16 runs had POSITIVE validation;
+ZERO of those 16 were positive on test. Only 2 of 25 were positive on test
+and BOTH had negative validation. Best-validation run -> -$78,709 on test.
+CLOSEST MISS: MaskablePPO seed 1, test +$86,100 (+$49.0/ticket, Sharpe 0.95)
+AND +$26,931 on aug-2026 -- the only row positive on both. Its validation was
+-$5,681, so our own selection rule discards it; its four sibling seeds lost
+$63k-$199k each; the multiple-testing count behind it is ~300 looks.
+Recorded as the closest miss, NOT as a candidate.
+
+THE UNIVERSE ITSELF IS NEGATIVE (plan/rl/pool_profile.py). One $15k ticket at
+every eligible minute, no ranking, no policy: -$38.56 at 5 min, -$47.86 at 30
+min, -$54.26 at 60 min, -$74.94 held to flatten, per ticket on test (t-stats
+-10 to -85; the same sign on all four splits). A 20 bps round trip on $15k is
+$30, so most of the 5-min figure is cost and the rest is real post-onset
+fade. Any long-only policy here needs ~+$40/ticket of selection alpha to
+reach break-even.
+
+MECHANICAL FINDINGS WORTH KEEPING. (1) SAC through a continuous-score ->
+masked-argmax wrapper parks permanently on the always-legal "hold" index --
+do not discretize SAC/TD3 this way. (2) Unmasked PPO/DQN waste ~84% of their
+decisions (26-28k of 31,626) on illegal actions that silently no-op;
+MaskablePPO and both EIIE variants record ZERO invalid actions. Action
+masking is worth more here than the algorithm choice.
+
+CONFOUND, STATED UP FRONT. The point-in-time halal gate needs
+data/pt_shares + data/pt_halal, which earlier campaigns populated for the
+names their (later-retracted) rankers surfaced -- so WHICH symbols have
+cached fundamentals is campaign-shaped. Absolute levels are not portable.
+The RL-vs-baseline comparison is unaffected: random, the controls and every
+agent draw from the SAME eligible set with the SAME fills. Fixing it means
+backfilling pt_shares/pt_halal across the whole pool.
+
+VS THE PARALLEL rs_cross RE-BASELINE (rotation_results_rs_bench*.json, NOT
+audited here, different universe/engine/fills): C37F-rs is +$21,910 on
+`year` (1,107 tickets, +$19.8/ticket, 52.6% win days) and +$6,442 on y2025;
+HOLD1-rs is -$36,329 on `year` (-$144.2/ticket). So the hand-built rule
+system is positive on the same window where every RL agent is -$33 to -$70
+per ticket.
+
+NEXT (in value order, none attempted): Qlib RL on the EXECUTION layer rather
+than selection -- the cost table says fill quality is 10-100x anything
+selection found; make the flatten deadline an action; redesign the shuffled
+control as a resampling null; backfill the halal caches.
+
+Compute: Cornell SLURM, /share/taylor/me484/stocks-rl, 56 array tasks
+(4 CPU / 24 GB), env throughput 4,357 steps/s. Local venv C:\cornell\venvs\rl
+(gymnasium 1.3.0, SB3 2.9.0, sb3-contrib 2.9.0, torch 2.14 CPU). The engine's
+Python was never touched and no broker call or order was made.

@@ -1,0 +1,260 @@
+{
+ "n_random": 10,
+ "note": "RL-SERIES (2026-09-16): make the shuffled-labels control interpretable.\n\nWHAT WENT WRONG THE FIRST TIME. `DayData.shuffled` permutes each symbol-day's\n1-minute log returns and rebuilds the price path. A permutation preserves the\nSUM of the returns, so the day's terminal price is unchanged while the path\nbetween is randomized -- a Brownian bridge pinned at both ends. Entries at\nthe randomly-depressed points of such a path are mechanically pulled back up\nto the fixed endpoint. Measured directly on 60 test days, with NO agent and\nNO learning, one $15k ticket opened at a random eligible minute and held:\n\n                       real panel      permuted panel\n    hold 30 min        -$44.91         -$2.94\n    hold 120 min       -$50.19         +$96.24\n    hold to flatten    -$44.46         +$235.21   per ticket\n\nSo a positive P&L on the permuted panel is a property of the PANEL, not\nevidence that the agent is reading the future. PPO-shuffle's +$280/ticket on\ntest sits essentially on top of the +$235/ticket that a scripted\nbuy-and-hold gets on the same panel.\n\nTHE CORRECT TEST is therefore not \"is the shuffled agent positive\" but\n\"does the shuffled agent BEAT ITS OWN PANEL'S BASELINES\". This script\ncomputes RANDOM x N and BUYFIRST on the shuffled panels, on the same splits\nand with the same costs, so the RL rows can be read against them.\n\n  python plan/rl/shuffle_control.py\n",
+ "train": {},
+ "val": {
+  "RANDOM_shuffled": {
+   "total_pnl": {
+    "mean": 57082.05153044106,
+    "std": 19534.625119714987,
+    "min": 19481.64372195968,
+    "max": 78246.90686319293,
+    "median": 62735.16278672239
+   },
+   "pnl_per_ticket": {
+    "mean": 212.44511396740558,
+    "std": 71.3259346851012,
+    "min": 73.23926211263039,
+    "max": 289.4851627518964,
+    "median": 234.30815714751702
+   },
+   "sharpe_daily_ann": {
+    "mean": 3.1189594038114334,
+    "std": 1.127707053750751,
+    "min": 1.1689749007683143,
+    "max": 4.471437834893636,
+    "median": 3.50629391884151
+   },
+   "tickets_per_day": {
+    "mean": 6.383333333333333,
+    "std": 0.11291338763218448,
+    "min": 6.214285714285714,
+    "max": 6.619047619047619,
+    "median": 6.357142857142857
+   },
+   "max_dd": {
+    "mean": -23278.44160035978,
+    "std": 6458.688436793782,
+    "min": -34191.43674274794,
+    "max": -14542.303725257821,
+    "median": -22885.6518725888
+   },
+   "n": 10
+  },
+  "RANDOM_EAGER_shuffled": {
+   "total_pnl": {
+    "mean": -22777.42779715168,
+    "std": 19426.4554492829,
+    "min": -58189.31147576518,
+    "max": -5169.011715486031,
+    "median": -11893.221693112086
+   },
+   "pnl_per_ticket": {
+    "mean": -77.47424420799892,
+    "std": 66.07637907919356,
+    "min": -197.92282814886116,
+    "max": -17.581672501653166,
+    "median": -40.45313501058533
+   },
+   "sharpe_daily_ann": {
+    "mean": -2.6631938251847034,
+    "std": 2.558979506417117,
+    "min": -7.067312566199491,
+    "max": -0.5000064270431197,
+    "median": -1.281986331745233
+   },
+   "tickets_per_day": {
+    "mean": 7.0,
+    "std": 0.0,
+    "min": 7.0,
+    "max": 7.0,
+    "median": 7.0
+   },
+   "max_dd": {
+    "mean": -34418.46915416733,
+    "std": 13534.548483010318,
+    "min": -61543.59627413721,
+    "max": -19321.470058625047,
+    "median": -30535.69423172423
+   },
+   "n": 10
+  },
+  "BUYFIRST_shuffled": {
+   "total_pnl": -56105.71954631184,
+   "pnl_per_ticket": -190.83578076976818,
+   "tickets": 294,
+   "sharpe_daily_ann": -2.334003235251467,
+   "max_dd": -56105.719546311804
+  }
+ },
+ "test": {
+  "RANDOM_shuffled": {
+   "total_pnl": {
+    "mean": 260981.0064338087,
+    "std": 78755.39384993473,
+    "min": 102663.34951725278,
+    "max": 364354.2173000953,
+    "median": 265487.549909469
+   },
+   "pnl_per_ticket": {
+    "mean": 166.00079501944197,
+    "std": 50.30875316663591,
+    "min": 66.53489923347556,
+    "max": 232.36876103322405,
+    "median": 168.55113180978577
+   },
+   "sharpe_daily_ann": {
+    "mean": 2.5521377993305885,
+    "std": 0.7866868513924474,
+    "min": 1.3254081615522786,
+    "max": 4.395986976848889,
+    "median": 2.482220101144027
+   },
+   "tickets_per_day": {
+    "mean": 6.260956175298804,
+    "std": 0.06848071335389767,
+    "min": 6.147410358565737,
+    "max": 6.362549800796812,
+    "median": 6.239043824701195
+   },
+   "max_dd": {
+    "mean": -43430.52846336961,
+    "std": 14899.001541290827,
+    "min": -65307.17326596287,
+    "max": -27156.145039472263,
+    "median": -36798.30974839015
+   },
+   "n": 10
+  },
+  "RANDOM_EAGER_shuffled": {
+   "total_pnl": {
+    "mean": 4087.4332872129526,
+    "std": 41798.36864378603,
+    "min": -62742.577636470174,
+    "max": 63476.15107259286,
+    "median": 10481.668616445178
+   },
+   "pnl_per_ticket": {
+    "mean": 2.3263706813961043,
+    "std": 23.7896235878122,
+    "min": -35.71006126150835,
+    "max": 36.12757602310351,
+    "median": 5.96566227458462
+   },
+   "sharpe_daily_ann": {
+    "mean": 0.06657603475558309,
+    "std": 0.7827547741088016,
+    "min": -1.2024872326203497,
+    "max": 1.1670761209360105,
+    "median": 0.17673089078274912
+   },
+   "tickets_per_day": {
+    "mean": 7.0,
+    "std": 0.0,
+    "min": 7.0,
+    "max": 7.0,
+    "median": 7.0
+   },
+   "max_dd": {
+    "mean": -60108.32987634097,
+    "std": 20170.128910459745,
+    "min": -91635.7208947944,
+    "max": -28074.42477709629,
+    "median": -60445.232796947625
+   },
+   "n": 10
+  },
+  "BUYFIRST_shuffled": {
+   "total_pnl": 453021.3625573326,
+   "pnl_per_ticket": 258.5738370761031,
+   "tickets": 1752,
+   "sharpe_daily_ann": 2.365729774057967,
+   "max_dd": -76335.82669930195
+  }
+ },
+ "extra": {
+  "RANDOM_shuffled": {
+   "total_pnl": {
+    "mean": 13629.61741398008,
+    "std": 22055.1939070621,
+    "min": -14455.73563292466,
+    "max": 71006.9121329195,
+    "median": 7660.15301269958
+   },
+   "pnl_per_ticket": {
+    "mean": 105.06255708624295,
+    "std": 171.58972020331265,
+    "min": -111.19796640711276,
+    "max": 554.7415010384336,
+    "median": 56.9680480249034
+   },
+   "sharpe_daily_ann": {
+    "mean": 2.131961506151986,
+    "std": 2.7942549287948673,
+    "min": -2.6622175618788337,
+    "max": 7.549301231242755,
+    "median": 2.063679206258832
+   },
+   "tickets_per_day": {
+    "mean": 5.9772727272727275,
+    "std": 0.15514589241705462,
+    "min": 5.7272727272727275,
+    "max": 6.2727272727272725,
+    "median": 5.954545454545455
+   },
+   "max_dd": {
+    "mean": -10712.094719639379,
+    "std": 4906.4783826490475,
+    "min": -21219.29200015226,
+    "max": -3137.4746928472705,
+    "median": -8995.853640589645
+   },
+   "n": 10
+  },
+  "RANDOM_EAGER_shuffled": {
+   "total_pnl": {
+    "mean": 6632.614456967733,
+    "std": 13007.158344039917,
+    "min": -6964.483846188492,
+    "max": 31005.729477066445,
+    "median": 4116.000358846788
+   },
+   "pnl_per_ticket": {
+    "mean": 43.068925045245024,
+    "std": 84.46206716909037,
+    "min": -45.22392107914605,
+    "max": 201.33590569523665,
+    "median": 26.727275057446676
+   },
+   "sharpe_daily_ann": {
+    "mean": 1.7437220548778274,
+    "std": 3.254965170876808,
+    "min": -1.8113649203862037,
+    "max": 6.54503261306031,
+    "median": 1.4318549131312421
+   },
+   "tickets_per_day": {
+    "mean": 7.0,
+    "std": 0.0,
+    "min": 7.0,
+    "max": 7.0,
+    "median": 7.0
+   },
+   "max_dd": {
+    "mean": -9992.949906514195,
+    "std": 5703.115059382026,
+    "min": -19146.905131257117,
+    "max": -2986.1565803881954,
+    "median": -8387.17682862054
+   },
+   "n": 10
+  },
+  "BUYFIRST_shuffled": {
+   "total_pnl": 59741.715040256924,
+   "pnl_per_ticket": 398.2781002683795,
+   "tickets": 150,
+   "sharpe_daily_ann": 5.694514600307089,
+   "max_dd": -8260.672875421766
+  }
+ }
+}
