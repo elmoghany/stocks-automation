@@ -137,6 +137,16 @@
    "new": [],
    "note": "117 rows inline, identical ticker set to 0639; MEDS RETO NAMI FTFT ENRD LUXE updated. HUHU/JXG 10:38-10:43Z still all interpolated. Nothing armable.",
    "rank_top": "none armable"
+  },
+  {
+   "et": "06:49",
+   "n": 6,
+   "state": "FLAT-5m",
+   "scan_rows": 117,
+   "candidates": 17,
+   "new": [],
+   "note": "117 rows inline, same ticker set; MEDS RETO NAMI FTFT LUXE updated (MEDS +157%, all halal FAIL). HUHU/JXG 10:43-10:48Z still interpolated. Nothing armable.",
+   "rank_top": "none armable"
   }
  ],
  "trades": [],
