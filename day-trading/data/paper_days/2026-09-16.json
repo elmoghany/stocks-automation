@@ -267,6 +267,16 @@
    "new": [],
    "note": "117 rows; FTFT off; 8 rows updated. CYPH +13.1% last 2.51 (07:43 bar 31.7k sh, new premarket high 2.51 vs 2.5123 at 07:37); live_halal re-probe still TypeError -> cannot-verify, not armable; day-trading.py still uncommitted-modified by the parallel session. HUHU/JXG still interpolated.",
    "rank_top": "CYPH (halal unresolved) -> none armable"
+  },
+  {
+   "et": "07:49",
+   "n": 18,
+   "state": "FLAT-5m",
+   "scan_rows": 117,
+   "candidates": 20,
+   "new": [],
+   "note": "117 rows, same set; 8 rows updated. CYPH +12.2% last 2.49 (premarket high 2.53 at 07:44), halal re-probe still TypeError -> cannot-verify. HUHU/JXG still interpolated. Nothing armable.",
+   "rank_top": "CYPH (halal unresolved) -> none armable"
   }
  ],
  "trades": [],
