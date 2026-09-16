@@ -342,19 +342,79 @@ corroboration, but looser than the written rule.
 
 ## 4. Blind-spot sweep by SIC / business description
 
-See §5c/§5d. The fund/trust class (§2.5) is the dominant structural blind spot:
-`plan/build_halal_universe.py::clean_ticker` filters only on ticker shape
-(alphabetic, ≤5 chars, not W/U/R suffix) and price ≥ $2. **Nothing excludes
-closed-end funds, ETFs, commodity trusts, or non-common-equity listings**, and
-because those file no yfinance statements their ratios compute to 0 and pass.
+SIC codes fetched live from EDGAR `data.sec.gov/submissions/CIK##########.json`
+for all 1,260 armable names: **1,255 resolved, 0 fetch errors, 5 with no CIK**
+(HLAL JPO MNZL RISE SPUS — ETFs and funds, which have no company CIK at all,
+itself a tell). 1,169 carry a usable SIC. **220 armable names hit a
+haram-suggestive SIC bucket.**
 
-There is also **no SPAC screen in `halal_check` at all**. `NOTES-DAYTRADING.md:4850-4855`
-already records the diagnosis — "a SPAC is ~100% interest-bearing trust; yfinance
-just omits 'investments held in trust' and interest income lines… the SSP bug
-class wearing a new hat" — and the recommendation was *"CANNOT-VERIFY at merge"*,
-handled by hand in `plan/merge_needs_mcap_backfill.py` rather than in the gate.
-SPAC detection exists only in `plan/scan_sweep.py:16` (a name regex), which is a
-different pipeline. **The stated rule "SPAC = FAIL" is not implemented in the gate.**
+| bucket | n | note |
+|---|---|---|
+| **financial 6000–6999** | **213** | see breakdown below |
+| alcohol/beverage 2080–2085 | 3 | BUDA, COCO, **KO** — all generic SIC 2080 "Beverages"; non-alcoholic, and KO carries an external-evidence ruling. Benign. |
+| meat/pork 2011–2013 | 1 | **MAMA** (Mama's Creations) — SIC 2013 *"Sausages & Other Prepared Meat Products"*. Genuine pork-share risk; should be CANNOT-VERIFY. |
+| aerospace-adjacent 372x | 1 | **FACT** — SIC 3728 *"Aircraft Parts"*, ratios 0.00/0.16 (a shell profile). Label-only defense screen never saw it. |
+| eating & drinking 5810–5813 | 1 | BROS (Dutch Bros) — coffee, no alcohol. Benign. |
+| drug stores 5912 | 1 | GRDN (Guardian Pharmacy). Benign. |
+| tobacco 2111 · gambling 79xx · motion pictures 78xx · ordnance 348x · grocery 5411 | **0** | **the industry screen already catches these cleanly** |
+
+**Zero hits** in tobacco, gambling, motion pictures, ordnance and grocery is a
+genuine endorsement of the keyword screen — those are the buckets it was built
+for and it is holding.
+
+### 4.1 The financial bucket — 213 armable names
+
+| SIC | description | n | armable examples |
+|---|---|---|---|
+| **6770** | **Blank Checks (SPACs)** | **126** | TDAC TVA DTSQ PAII TONT TRAD ACAA AEAQ APXT … |
+| 6199 | Finance Services | 26 | **DAVE** (cash-advance lender), **CHYM** (Chime, neobank), MSTR RIOT HIVE ARBK ASST DGXX … |
+| 6282 | Investment Advice | 19 | **TROW BAM TPG EVR MC PJT HLI CNS FHI HLNE VCTR AAMI AB ALTI WHG** |
+| 6211 | Security Brokers & Dealers | 7 | **BLK** (BlackRock), BULL (Webull), MKTX, MIAX, SEIC |
+| 6792 | Oil Royalty Traders | 7 | CRT MARPS NRT PBT SBR (royalty **trusts**), LB, TPL |
+| 6798 | REITs | 6 | PSA WELL EGP AHR JAN, **EARN** (Ellington **Credit**) |
+| 6200 | Security & Commodity Exchanges | 5 | **CBOE CME** TW TOP WTF |
+| 6221 | Commodity Contracts Brokers | 5 | CEF PHYS PSLV SPPP (Sprott **trusts**), UROY |
+| 6795 / 6794 / 6500 / 6531 | mineral royalty, patent lessors, real estate | 8 | RGLD TFPM VMET IDCC RMCO CHCI TRNO AGNT |
+| **6324** | **Hospital & Medical Service Plans** | **1** | **CLOV (Clover Health)** — a health **insurer**, armable PASS |
+| 6022 / 6099 / 6163 | bank / depository NEC / loan brokers | 3 | DAAQ (a SPAC mis-coded), USIO (payments), **NFJ** (a Virtus closed-end fund) |
+
+The keyword screen tests for `bank`, `lending`, `mortgage`, `insurance`,
+`gambling`, `casino` — it has **no term for** `asset management`,
+`investment advice`, `broker`, `exchange`, `capital markets`, `blank check`,
+`SPAC`, `REIT`, or `royalty trust`. That is precisely the shape of this 213-name
+gap. **CLOV** is the sharpest single miss: a health insurance carrier whose
+vendor label ("Healthcare Plans") never contains the word *insurance*.
+
+### 4.2 The SPAC finding — 126 armable blank-check companies
+
+103 of the 126 also match a SPAC name pattern (`acquisition` / `blank check` /
+`capital corp`). Their cached ratio profile:
+
+> **all 126 have `haram_pct` exactly 0.00** · median `cash_pct` **0.15%** ·
+> median `combined` **0.21%** · 81 of 126 have `loan_pct` exactly 0.00
+
+A SPAC holds essentially 100% of its assets in an interest-bearing trust, so the
+true `cash_pct` is ~100% and the true `haram_pct` is ~100%. They pass because
+yfinance omits the "Investments held in Trust" and trust-interest lines — Bug 2
+at scale. This is exactly the diagnosis already written at
+`NOTES-DAYTRADING.md:4850-4855` ("a SPAC is ~100% interest-bearing trust… the SSP
+bug class wearing a new hat"), which recommended *CANNOT-VERIFY at merge* and was
+handled by hand in `plan/merge_needs_mcap_backfill.py` for 4 names — while 126
+came in through the front door.
+
+**There is no SPAC screen in `halal_check` at all.** Detection exists only as a
+name regex in `plan/scan_sweep.py:16`, a different pipeline. The stated rule
+"SPAC = FAIL" is not implemented in the gate.
+
+### 4.3 The fund / non-operating-company class
+
+`plan/build_halal_universe.py::clean_ticker` filters only on ticker **shape**
+(alphabetic, ≤5 chars, not a W/U/R suffix) and price ≥ $2. **Nothing excludes
+closed-end funds, ETFs, commodity trusts, royalty trusts, or non-common-equity
+listings**, and because none of them file yfinance statements, their ratios
+compute to 0 and they pass. Confirmed members (§2.5) plus the SIC evidence:
+Sprott trusts (CEF PHYS PSLV SPPP) at 6221, oil royalty trusts (CRT MARPS NRT PBT
+SBR) at 6792, NFJ at 6163, and the 5 no-CIK ETFs.
 
 ---
 
@@ -369,7 +429,11 @@ different pipeline. **The stated rule "SPAC = FAIL" is not implemented in the ga
    (183 and 197 armable names respectively rely on this).
 3. **The no-market-cap refusal** (`day-trading.py:789-805`) correctly refuses rather
    than dividing by zero, and says so in `fail_reason`.
-4. **The industry screen is the strongest component.** 340 bank + 108 insurance +
+4. **The industry screen is the strongest component, and the SIC sweep proves it.**
+   Across all 1,260 armable names there are **zero** SIC hits in tobacco (2111),
+   gambling/amusement (79xx), motion pictures (78xx), ordnance (348x) and grocery
+   (5411) — the five buckets the keyword list was built for. It is holding.
+   Counts on the FAIL side: 340 bank + 108 insurance +
    80 defense/aerospace + 41 mortgage + 39 entertainment + 13 pork FAILs. The
    label-only design for "defense/aerospace/entertainment" correctly preserves the
    user's AMD ruling, and `_kw_hits`' prefix-anchored word-boundary matching
@@ -393,7 +457,8 @@ different pipeline. **The stated rule "SPAC = FAIL" is not implemented in the ga
 | **4** | **`source="annual"` still multiplies by 4.** `:755` annualizes unconditionally; only the `info` branch resets it (`:772`). Annual revenue × 4 → haram_pct 4× understated *again*. 14 names. | **LOW** | Set `annual_rev = total_rev` when `src == "annual"`. |
 | **5** | **EDGAR debt tier precedence under-counts** (`plan/edgar_backfill.py:250-258`). **4.5%** of symbols affected at their latest quarter; TSLA ×27.5, QCOM ×6.1, WFC ×7.2. | **MED** (backtest only, `PT_FILED=1`) | `max(sum(components), best aggregate)` — and re-extract. Note §2.3: no tag rule is fully safe. |
 | **6** | **Funds, ETFs, trusts and non-common-equity listings are armable.** `clean_ticker` filters ticker shape only. ~25–30 CEFs/ETFs/trusts in the armable 1,260, incl. bond funds (TSI, PAI, PCF) whose revenue is ~100% interest, a mortgage REIT (EARN), and **TVA**, which has no public common equity at all (already documented at `NOTES-DAYTRADING.md:4856`). | **MED** | Exclude by SIC 6726/6798 and by `rh_fundamentals` fund industries at universe build. |
-| **7** | **"SPAC = FAIL" is not implemented in the gate.** Only a name regex in `plan/scan_sweep.py:16`, a different pipeline. SPACs pass on `cash_pct ≈ 0 / haram_pct = 0` because the trust and its interest are untagged in yfinance. | **MED** | Add a blank-check test (SIC 6770 / name regex) to `halal_check` as a hard FAIL. |
+| **7** | **"SPAC = FAIL" is not implemented in the gate — and 126 armable names are SIC 6770 blank checks** (10% of the list). All 126 have `haram_pct` exactly 0.00, median `cash_pct` 0.15%, median combined 0.21%, against a true ~100% interest-bearing trust. Only a name regex in `plan/scan_sweep.py:16`, a different pipeline. | **HIGH** (was scored MED before the SIC sweep) | Add a blank-check test (SIC 6770 + name regex) to `halal_check` as a hard FAIL. |
+| **9** | **The industry screen has no term for the non-bank financial sector.** 213 armable names sit in SIC 6000–6999: 126 SPACs, 19 asset managers/investment banks (TROW BAM TPG EVR MC PJT HLI BLK …), 12 brokers/exchanges (CBOE CME MKTX BULL …), 6 REITs, and **CLOV — a health insurance carrier** whose vendor label says "Healthcare Plans", never "insurance". The word list has `bank`/`lending`/`mortgage`/`insurance` but nothing for `asset management`, `investment advice`, `broker`, `exchange`, `capital markets`, `REIT` or `royalty trust`. | **HIGH** | Screen on SIC 6000–6999 directly at universe build; keep the keyword list for everything else. |
 | **8** | **Industry label-only screen leaks two real names.** `"defense"`/`"aerospace"`/`"gaming"` are checked against the vendor label only; TPCS (Navy submarine / USMC helicopter components) and CTW (web gaming platform) pass. | **MED** | Keep the AMD label-only rule, but add a **self-referential** full-text test (e.g. "we design and manufacture … for defense") or route vendor-label-generic names to the review queue. |
 
 ### (c) Names whose verdict should change
@@ -410,7 +475,12 @@ different pipeline. **The stated rule "SPAC = FAIL" is not implemented in the ga
 | **CTW** | web gaming/entertainment platform; equivalent to the user-ruled-FAIL SLE |
 | **TVA** | not public common equity (PARRS bonds) — should never have been in the universe |
 | **EARN** | mortgage REIT |
-| bond/equity **CEFs & trusts**: AB BGY CEF CII CLM CRF EOI ETB ETV GRF MXE MXF PAI PCF PHYS PSLV SPE SPPP TSI, ETFs HLAL MNZL SPUS | not operating companies; ratios are artifacts of absent statements |
+| bond/equity **CEFs & trusts**: AB BGY CEF CII CLM CRF EOI ETB ETV GRF MXE MXF NFJ PAI PCF PHYS PSLV SPE SPPP TSI, royalty trusts CRT MARPS NRT PBT SBR, ETFs HLAL MNZL SPUS | not operating companies; ratios are artifacts of absent statements |
+| **CLOV** | health **insurance** carrier (SIC 6324); insurance is haram by rule |
+| **all 126 SIC-6770 blank-check SPACs** | ~100% interest-bearing trust; all pass on `haram_pct` 0.00 / median `cash_pct` 0.15% purely because the trust is untagged |
+| **MAMA** | SIC 2013 "Sausages & Other Prepared Meat Products" — pork share unverified → CANNOT-VERIFY → FAIL |
+| the 19 SIC-6282 asset managers / investment banks (**TROW BAM TPG EVR MC PJT HLI CNS FHI HLNE VCTR AAMI AB ALTI WHG** …), 12 SIC-6200/6211 brokers & exchanges (**BLK CBOE CME MKTX BULL MIAX SEIC TW** …), 6 SIC-6798 REITs (**PSA WELL EGP AHR JAN EARN**) | financial-sector activity the keyword list has no term for — needs a user ruling on scope |
+| **DAVE**, **CHYM** | SIC 6199 but substantively consumer lending / neobanking |
 
 **Plus the 42 remaining names of the 44 whose true interest/revenue ≥ 5%** once
 Bug 1 is fixed — highest first: NOMA 17.2%, BSP 14.8%, LB 13.8%, PROF 13.5%,
@@ -456,19 +526,25 @@ combined 12.05–13.49%).
 
 ## 6. Recommended order of work
 
-1. **Bug 1** (4× haram) — one-line fix, largest correctness gain, ~44 armable names change.
-2. **Bug 2** (`get_val` → `None`) — closes the remaining false-PASS path (FLGT, MBGL).
-3. **Bug 6** (fund/ETF/non-common-equity exclusion at universe build) — removes ~25 names
-   that were never screenable.
-4. **Bug 7** (SPAC hard FAIL in the gate).
-5. **Bugs 3, 4** (`info`/`annual` tier haram handling).
+1. **Bug 7 + Bug 9** — screen SIC 6000–6999 at universe build and hard-FAIL SIC 6770.
+   Biggest single correction available: **removes 126 SPACs and up to 213 financial
+   names**, i.e. as much as 17% of the armable list, and the SIC data is already
+   fetched and cached.
+2. **Bug 1** (4× haram) — one-line fix, ~44 more armable names change.
+3. **Bug 2** (`get_val` → `None`) — closes the remaining false-PASS path
+   (FLGT, MBGL) and is the root cause behind the SPAC class too.
+4. **Bug 6** (fund/ETF/trust/non-common-equity exclusion) — largely subsumed by
+   step 1 via SIC 6221/6726/6792, plus the 5 no-CIK ETFs.
+5. **Bugs 3, 4** (`info` / `annual` tier haram handling).
 6. **Bug 5** (EDGAR tier precedence) — then re-extract and re-baseline any `PT_FILED=1` result.
-7. **Bug 8** (TPCS/CTW) — route vendor-label-generic names to `halal_review_queue`.
+7. **Bug 8** (TPCS/CTW, MAMA, FACT) — route vendor-label-generic names to `halal_review_queue`.
 
-Fixing 1 + 2 + 6 + 7 and rebuilding the universe will drop the armable list
-materially below 1,260. That is the correct direction: **every defect found in
-this audit errs toward passing a name that should have been refused, and none
-toward refusing a permissible one.**
+Doing steps 1–3 and rebuilding would take the armable list from 1,260 to roughly
+**900–1,000**. That is the correct direction: **every defect found in this audit
+errs toward passing a name that should have been refused, and none toward
+refusing a permissible one.** The screen's *refusals* can be trusted; its
+*approvals* currently cannot, for any name whose statements yfinance does not
+fully publish.
 
 ---
 

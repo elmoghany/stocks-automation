@@ -438,13 +438,114 @@ TRADED = ["ANGX", "ASST", "BE", "CRML", "DELL", "FRMI", "GTLB", "HIVE",
           "RDDT", "SMMT"]
 
 
+# ---- SIC blind-spot sweep -------------------------------------------------
+# Haram-suggestive SIC ranges. The 2026-09-16 sweep over all 1,260 armable
+# names found 220 hits, 213 of them financial -- including 126 SIC 6770
+# blank-check SPACs -- and ZERO hits in tobacco / gambling / motion pictures /
+# ordnance / grocery, which is the keyword screen doing its job.
+SIC_BUCKETS = [
+    ("blank_check_SPAC", lambda s: s == "6770"),
+    ("financial", lambda s: s.startswith("6")),
+    ("alcohol_beverage", lambda s: "2080" <= s <= "2085"),
+    ("tobacco", lambda s: s == "2111"),
+    ("meat_pork", lambda s: s in ("2011", "2013")),
+    ("gambling_amusement", lambda s: s in ("7990", "7993", "7999")),
+    ("motion_pictures", lambda s: "7812" <= s <= "7841"),
+    ("ordnance", lambda s: s in ("3480", "3489")),
+    ("aerospace_adjacent", lambda s: s in ("3721", "3724", "3728", "3760",
+                                           "3761", "3764", "3769")),
+    ("eating_drinking", lambda s: "5810" <= s <= "5813"),
+    ("grocery", lambda s: s == "5411"),
+    ("drug_stores", lambda s: s == "5912"),
+]
+SIC_CACHE = ROOT / "data/halal_sic.json"
+
+
+def fetch_sic(syms, ua="halal-audit m.osama.elmoghany@gmail.com"):
+    """{SYM: {sic, sicDescription, name}} from EDGAR submissions, cached and
+    resumable. SEC returns 403 without a descriptive User-Agent, and asks for
+    <10 req/s -- hence the sleep. 2026-09-16 run: 1,255/1,260 resolved, 0
+    errors, 5 with no company CIK at all (HLAL JPO MNZL RISE SPUS -- ETFs)."""
+    import time
+    import urllib.request
+    cache = {}
+    if SIC_CACHE.exists():
+        cache = json.loads(SIC_CACHE.read_text())
+    cm = cik_map()
+    todo = [s for s in syms if s not in cache]
+    for i, s in enumerate(todo, 1):
+        cik = cm.get(s)
+        if cik is None:
+            cache[s] = {"error": "no-cik"}
+            continue
+        url = f"https://data.sec.gov/submissions/CIK{cik:010d}.json"
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": ua})
+            with urllib.request.urlopen(req, timeout=30) as r:
+                d = json.loads(r.read().decode())
+            cache[s] = {"sic": d.get("sic") or "",
+                        "sicDescription": d.get("sicDescription") or "",
+                        "name": d.get("name") or ""}
+        except Exception as e:
+            cache[s] = {"error": f"{type(e).__name__}: {e}"}
+        time.sleep(0.15)
+        if i % 100 == 0:
+            SIC_CACHE.write_text(json.dumps(cache))
+            print(f"  sic {i}/{len(todo)}", flush=True)
+    SIC_CACHE.write_text(json.dumps(cache))
+    return cache
+
+
+def sic_sweep(armable, uni):
+    cache = fetch_sic(sorted(armable))
+    from collections import Counter
+    hits, counts, by_sic = [], Counter(), Counter()
+    for s in sorted(armable):
+        e = cache.get(s) or {}
+        sic = (e.get("sic") or "").strip()
+        if not sic:
+            continue
+        by_sic[(sic, e.get("sicDescription", ""))] += 1
+        b = [n for n, f in SIC_BUCKETS if f(sic)]
+        if b:
+            counts.update(b)
+            v = uni.get(s, {})
+            hits.append({"symbol": s, "sic": sic,
+                         "desc": e.get("sicDescription"), "name": e.get("name"),
+                         "buckets": b, "verdict": v.get("verdict"),
+                         "loan_pct": v.get("loan_pct"),
+                         "cash_pct": v.get("cash_pct"),
+                         "combined": v.get("combined"),
+                         "haram_pct": v.get("haram_pct")})
+    return {"n_armable": len(armable), "n_with_sic": sum(by_sic.values()),
+            "bucket_counts": dict(counts),
+            "by_sic": {f"{k[0]} {k[1]}": v for k, v in sorted(by_sic.items())},
+            "hits": hits}
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--sample", action="store_true")
     ap.add_argument("--zero-ratio", action="store_true")
+    ap.add_argument("--sic", action="store_true",
+                    help="SIC blind-spot sweep over the armable list "
+                         "(fetches EDGAR submissions, caches to "
+                         "data/halal_sic.json, resumable)")
     ap.add_argument("--syms", default="")
     ap.add_argument("--out", default="")
     a = ap.parse_args()
+
+    if a.sic:
+        uni = json.loads(UNI_F.read_text())
+        armable = set(json.loads(LIST_F.read_text())["symbols"])
+        res = sic_sweep(armable, uni)
+        txt = json.dumps(res, indent=1)
+        if a.out:
+            Path(a.out).write_text(txt)
+            print(f"wrote {a.out}: {res['bucket_counts']}")
+        else:
+            print(txt)
+        return
 
     uni = json.loads(UNI_F.read_text())
     armable = set(json.loads(LIST_F.read_text())["symbols"])

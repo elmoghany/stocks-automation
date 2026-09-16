@@ -6824,3 +6824,55 @@ bug 6 (exclude funds at universe build) -> bug 7 (SPAC hard FAIL) -> bugs 3/4 ->
 bug 5 (then re-extract and re-baseline any PT_FILED=1 result) -> bug 8 (route
 vendor-label-generic names to the review queue). Fixing 1+2+6+7 and rebuilding
 will drop the armable list materially below 1,260 — the correct direction.
+
+SIC BLIND-SPOT SWEEP (same audit, completed after the first NOTES entry). SIC
+codes fetched live from data.sec.gov/submissions for all 1,260 armable names:
+1,255 resolved, 0 errors, 5 with no company CIK at all (HLAL JPO MNZL RISE SPUS
+— ETFs, which is itself the tell). 220 armable names hit a haram-suggestive SIC.
+
+THE BIG ONE — 126 ARMABLE SPACs. SIC 6770 "Blank Checks", 10% of the armable
+list, 103 of them also matching an `acquisition`/`blank check`/`capital corp`
+name pattern. Cached profile: ALL 126 have haram_pct exactly 0.00, median
+cash_pct 0.15%, median combined 0.21%, 81/126 have loan_pct exactly 0.00. A SPAC
+is ~100% interest-bearing trust, so the true numbers are ~100% on both legs.
+They pass because yfinance omits "Investments held in Trust" and the trust
+interest line — bug 2 at scale, and exactly the diagnosis already written at
+NOTES:4850-4855, which was handled by hand for 4 names while 126 walked in the
+front door. Includes TDAC TVA DTSQ PAII TONT TRAD, the zero-ratio names above.
+This upgrades bug 7 from MED to HIGH.
+
+NEW BUG 9 (HIGH) — THE INDUSTRY SCREEN HAS NO TERM FOR THE NON-BANK FINANCIAL
+SECTOR. 213 armable names are SIC 6000-6999: the 126 SPACs, plus 19 asset
+managers / investment banks at 6282 (TROW BAM TPG EVR MC PJT HLI CNS FHI HLNE
+VCTR AAMI AB ALTI WHG), 12 brokers and exchanges at 6200/6211 (BLK CBOE CME
+MKTX BULL MIAX SEIC TW), 6 REITs at 6798 (PSA WELL EGP AHR JAN EARN), 7 oil
+royalty TRUSTS at 6792 (CRT MARPS NRT PBT SBR), 5 commodity trusts at 6221
+(CEF PHYS PSLV SPPP), 26 at 6199 including DAVE (cash-advance lender) and CHYM
+(Chime, neobank) — and CLOV at 6324 "Hospital & Medical Service Plans", a HEALTH
+INSURANCE CARRIER whose vendor label says "Healthcare Plans" and therefore never
+contains the word "insurance". The word list has bank/lending/mortgage/insurance
+but NOTHING for asset management, investment advice, broker, exchange, capital
+markets, blank check, SPAC, REIT or royalty trust. FIX: screen SIC 6000-6999
+directly at universe build; keep the keyword list for everything else.
+
+THE SWEEP ALSO VINDICATES THE KEYWORD SCREEN: across all 1,260 armable names
+there are ZERO SIC hits in tobacco (2111), gambling/amusement (79xx), motion
+pictures (78xx), ordnance (348x) and grocery (5411) — the five buckets the list
+was built for. Non-financial flags were only: MAMA (SIC 2013 "Sausages & Other
+Prepared Meat Products" — genuine pork-share risk, should be CANNOT-VERIFY),
+FACT (SIC 3728 Aircraft Parts, ratios 0.00/0.16 = a shell profile, missed by the
+label-only defense screen), and three benign SIC 2080 "Beverages" names
+(BUDA COCO KO — non-alcoholic; KO carries an external-evidence ruling), BROS
+(coffee) and GRDN (pharmacy).
+
+REVISED FIX ORDER: (1) screen SIC 6000-6999 at universe build + hard-FAIL SIC
+6770 — biggest single correction available, removes 126 SPACs and up to 213
+financial names (~17% of the list), and the SIC data is already fetched and
+cached; (2) bug 1, the 4x haram; (3) bug 2, get_val -> None (the root cause
+behind the SPAC class too); (4) bug 6, funds/trusts, largely subsumed by (1);
+(5) bugs 3/4; (6) bug 5 + re-extract; (7) bug 8 (TPCS CTW MAMA FACT) to the
+review queue. Steps 1-3 would take the armable list from 1,260 to roughly
+900-1,000.
+
+BOTTOM LINE FOR THE USER: the screen's REFUSALS can be trusted; its APPROVALS
+currently cannot, for any name whose statements yfinance does not fully publish.
