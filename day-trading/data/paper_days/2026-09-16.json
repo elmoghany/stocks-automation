@@ -244,6 +244,19 @@
    "new": [],
    "note": "117 rows; EOCN off the scan (latched, FAIL); 8 rows updated (ZTG +341% 2.97). HUHU/JXG 11:28-11:33Z still interpolated. Nothing armable.",
    "rank_top": "none armable"
+  },
+  {
+   "et": "07:39",
+   "n": 16,
+   "state": "FLAT-5m",
+   "scan_rows": 118,
+   "candidates": 20,
+   "new": [
+    "CYPH"
+   ],
+   "note": "118 rows; CYPH NEW +10.4% (Cypherpunk Technologies, Zcash crypto-treasury; 09-08 precedent PASS-with-caveat). Crossed +10% on the 07:36-07:37 bars (high 2.52), 07:00 bar 2.37 -> gap7 +6.8 calm PASS, coil 0.973. RH mcap refreshed 238.7M. rank TOP=CYPH NEEDS-SCREEN; live_halal ERROR (TypeError in halal_check) -> cannot evaluate, NOT armable until resolved. Quote 11:39:36Z bid 2.45 / ask 2.51 = 2.4% spread (would be a SPREAD veto). 7 rows updated. HUHU/JXG still interpolated.",
+   "rank": "1 CYPH 2.451 +10.4% coil .973 press +0.00 gap7 +6.8 calm yes NEEDS-SCREEN",
+   "rank_top": "CYPH (halal unresolved)"
   }
  ],
  "trades": [],
@@ -368,6 +381,13 @@
    "q1": "PASS -- live_halal 07:10 with fresh RH mcap 3.74M (cached 125M was stale): loan 1.06 / cash 4.26 / combined 5.32, haram_pct 0 (quarterly); on halal_list, universe PASS",
    "q2": "FAIL -- Zenta Group Co (Macau, founded 2023): 'industrial park consultation, business investment consultation, fintech solutions; administrative services, INVESTMENT BROKERAGE services, PROJECT BROKERAGE services, fintech service fees (algorithm / blockchain)'. Conventional investment brokerage is a haram business line per the MTC precedent (2026-09-08: introducing-broker commissions, ratios clean -> FAIL) and the financial-services mix is undisclosed (CURR precedent 2026-09-02: unverified is haram). Binary rule: not armable. Not re-litigated today.",
    "context": "rank 07:10: TOP=ZTG armable on Q1 (last 2.2636, +236%, coil 0.817, press +0.21, gap7 +12.9 calm PASS). Quote 11:10:47Z bid 2.11 / ask 2.13 (0.94% spread), L2 inside 2.13x4 / 2.18x6. Premarket 0.77 -> 2.77 in 3 bars 07:05-07:07 on 3.15M sh. Refused at the halal gate BEFORE any entry decision -- no veto counted."
+  },
+  "CYPH": {
+   "verdict": "CANNOT-VERIFY (treated as FAIL, re-probed each cycle)",
+   "et": "07:41",
+   "q1": "live_halal 07:40 with RH mcap 238.7M: halal_check raised TypeError at 'haram_pct < 5' -- haram_pct is None because TTM revenue is None/<=0 (pre-revenue crypto-treasury / ex-biotech). Under the 2026-09-16 missing-row rule an absent revenue row is not a zero: the 5% rule cannot be run -> unverified -> not armable. 09-08 precedent (loan 0.01 / cash 2.65, PASS with caveat) is NOT reused: verdicts are re-run fresh at candidacy and today's data does not yield one.",
+   "q2": "not reached (Zcash crypto-treasury company; 09-08 caveat stands for user review)",
+   "tooling": "day-trading.py is UNCOMMITTED-MODIFIED by the parallel campaign session (on top of 45b66ee 'Halal gate fixes 2026-09-16'); not edited by this session. If the parallel session lands a fix, the per-cycle re-probe picks it up."
   }
  },
  "vetoes": {
@@ -384,7 +404,14 @@
    "of": 0
   }
  },
- "errors": [],
+ "errors": [
+  {
+   "et": "07:41",
+   "kind": "halal-tool",
+   "sym": "CYPH",
+   "msg": "halal_check TypeError: '<' not supported between NoneType and int at 'haram_pct < 5' (day-trading.py:1121) when ttm_rev is None. Name treated as CANNOT-VERIFY; no entry credited; file owned by the parallel session, left untouched."
+  }
+ ],
  "coverage_gaps": [],
  "pnl": 0.0,
  "veto_log": [],

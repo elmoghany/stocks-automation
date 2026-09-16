@@ -151,6 +151,14 @@
    "vol": "168370.46",
    "name": "Zenta Group Co Ltd Class A",
    "first_seen": "07:09"
+  },
+  "CYPH": {
+   "pct": 10.36,
+   "last": 2.45,
+   "prev_close": 2.22,
+   "vol": "11443672.28",
+   "name": "Cypherpunk Technologies",
+   "first_seen": "07:39"
   }
  },
  "halal_fail": [
@@ -392,7 +400,9 @@
   "ZSTK",
   "ZYME"
  ],
- "cannot_verify": [],
+ "cannot_verify": [
+  "CYPH"
+ ],
  "spac": [
   "ALF",
   "BCAR",
