@@ -135,6 +135,14 @@
    "vol": "14573.3416",
    "name": "Alterity Therapeutics",
    "first_seen": "06:23"
+  },
+  "EOCN": {
+   "pct": 11.17,
+   "last": 4.03,
+   "prev_close": 3.6251,
+   "vol": "14002.25",
+   "name": "Eocene Ltd.",
+   "first_seen": "07:04"
   }
  },
  "halal_fail": [
@@ -152,7 +160,8 @@
   "RETO",
   "FTFT",
   "ENRD",
-  "EBON"
+  "EBON",
+  "EOCN"
  ],
  "fake_gap": [],
  "inherited_fail": [

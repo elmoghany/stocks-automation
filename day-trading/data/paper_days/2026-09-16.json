@@ -167,6 +167,18 @@
    "new": [],
    "note": "117 rows inline, same ticker set; 6 rows updated. HUHU/JXG 10:53-10:58Z still interpolated. Nothing armable.",
    "rank_top": "none armable"
+  },
+  {
+   "et": "07:04",
+   "n": 9,
+   "state": "FLAT-5m",
+   "scan_rows": 117,
+   "candidates": 18,
+   "new": [
+    "EOCN"
+   ],
+   "note": "117 rows inline; FTFT fell off the scan (still latched, halal FAIL), EOCN NEW +11.2% (Eocene Ltd, 2 premarket prints 160 sh @4.12 / 3.88): absent from universe -> RH mcap cached -> live screen FAIL (cash 297%). HUHU/JXG 10:58-11:03Z still interpolated. Nothing armable.",
+   "rank_top": "none armable"
   }
  ],
  "trades": [],
@@ -278,6 +290,12 @@
    "et": "06:26",
    "q1": "live_halal 06:27 (RH mcap 102.1M, quarterly): loan 3.62 / cash 0.69 / combined 4.31 -> PASS",
    "q2": "PASS -- casual menswear design/manufacture/sale, tourism products, cross-border merchandise (Apparel/Footwear); plain retail/apparel, no haram-adjacent line. NO real premarket bars yet; re-screen at arming per protocol."
+  },
+  "EOCN": {
+   "verdict": "FAIL",
+   "et": "07:05",
+   "q1": "live_halal 07:05 (RH mcap 3.78M, quarterly): loan 3.42 / cash 297.46 / combined 300.87 -> CASH>10+COMBINED>20 FAIL",
+   "q2": "not reached (clinical-stage NASH biopharma, would pass)"
   }
  },
  "vetoes": {
