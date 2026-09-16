@@ -192,7 +192,12 @@ class DayData:
         rank_key = np.where(self.elig, win(cdv, 30), -1.0)
         order = np.argsort(-rank_key, axis=1, kind="stable")[:, :K_SLOTS]
         keep = np.take_along_axis(rank_key, order, axis=1) >= 0
-        self.slots = np.where(keep, order, -1).astype(np.int32)
+        sl = np.where(keep, order, -1).astype(np.int32)
+        if sl.shape[1] < K_SLOTS:        # thin day: fewer names than slots
+            sl = np.concatenate(
+                [sl, np.full((sl.shape[0], K_SLOTS - sl.shape[1]), -1,
+                             np.int32)], axis=1)
+        self.slots = sl
 
         # forced flatten reference: last printed bar of the day per symbol
         last = np.where(printed.any(axis=1), printed.shape[1] - 1 -
