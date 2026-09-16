@@ -499,6 +499,23 @@ every conclusion here is a FAIL, so the direction is conservative. Post-market
 comparison is meaningless because Robinhood bundles the closing cross into one
 bar (e.g. BB: 133 Massive bars vs 22 RH bars).
 
+
+**Sensitivity, so the finding is quantified rather than merely noted.** Re-pricing
+the walk-forward single pick with the participation cap cut to reflect the
+Robinhood-visible tape (the cap already binds on **19.1%** of the picks at 20%
+of Massive volume):
+
+| effective cap | mean notional | $/ticket | total | $/month |
+|---|---|---|---|---|
+| 20% of Massive volume (the headline) | $13,416 | -3.35 | -842 | -70 |
+| **20% of RH-visible volume (= 10% of Massive)** | $12,774 | **-3.62** | -907 | -76 |
+| 40% of Massive volume (a looser cap) | $14,181 | -2.32 | -582 | -49 |
+| every notional halved outright | $6,708 | -1.68 | — | -35 |
+
+**The verdict does not move.** The gap matters for position sizing in live
+trading — you will get less stock than this table assumes on a fifth of the
+picks — but it changes no conclusion in this document.
+
 ### 9.2 Earnings calendar — a real causal catalyst feature, and it is flat
 
 `get_earnings_calendar`, 24 consecutive 31-day windows, **2024-10-01 →
