@@ -1031,6 +1031,21 @@ def _vs2_cfgs():
         dtime(11, 0),
         _vs2_sim(fvg_entry=(20, 0.1), struct_floor_mode="sig_low",
                  target_r=2.0))
+    # ADJACENCY (not video-faithful): the same triggers with an ALL-DAY
+    # entry window, so the day can fill its seven tickets. At $15k a
+    # ticket, seven tickets need only +$54 each to clear $375/day.
+    add("V2MPBd", "ADJACENCY: micro pullback, entries to 14:30, 2R",
+        T935, dtime(14, 30),
+        _vs2_sim(micro_pullback=(3, 3.0), struct_floor_mode="sig_low",
+                 target_r=2.0))
+    add("V9TBd", "ADJACENCY: 3-bar play, entries to 14:30, 2R",
+        T935, dtime(14, 30),
+        _vs2_sim(three_bar=(1.8, 0.5), struct_floor_mode="sig_low",
+                 target_r=2.0))
+    add("V9IBd", "ADJACENCY: inside-bar break, entries to 14:30, 2R",
+        T935, dtime(14, 30),
+        _vs2_sim(inside_bar=(1,), struct_floor_mode="sig_low",
+                 target_r=2.0))
     # --- HALT RESUMPTION dip & rip (Ross Cameron / TraderTV) ---
     add("V8HALT", "halt resumption: after a >=5-min regular-session tape "
                   "gap, buy the break of the prior bar's high, 2R",

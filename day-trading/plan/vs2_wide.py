@@ -212,6 +212,34 @@ CFGS = {
                    cutoff=T1100,
                    sim=kw(or_clock=(dtime(9, 30), 1),
                           struct_floor_mode="or_low", target_r=2.0)),
+    # ---- ADJACENCY: the same triggers with an ALL-DAY entry window.
+    # The videos say "first 90 minutes"; that is a claim about WHERE the
+    # edge is, and it caps the day at one or two tickets. The cash rule
+    # allows seven. At $15k a ticket, seven tickets need only +$54 each
+    # to clear $375/day, where one ticket needs +$375. These rows are
+    # labelled ADJACENCY, not video-faithful.
+    "W2MPBd": dict(desc="ADJACENCY: micro pullback, entries all day to "
+                        "14:30, 2R",
+                   rank="gain_desc", entry_open=T935, cutoff=dtime(14, 30),
+                   sim=kw(micro_pullback=(3, 1.0),
+                          struct_floor_mode="sig_low", target_r=2.0)),
+    "W9TBd": dict(desc="ADJACENCY: 3-bar play, entries all day to 14:30",
+                  rank="gain_desc", entry_open=T935, cutoff=dtime(14, 30),
+                  sim=kw(three_bar=(1.8, 0.5),
+                         struct_floor_mode="sig_low", target_r=2.0)),
+    "W9IBd": dict(desc="ADJACENCY: inside-bar break, all day to 14:30",
+                  rank="gain_desc", entry_open=T935, cutoff=dtime(14, 30),
+                  sim=kw(inside_bar=(1,), struct_floor_mode="sig_low",
+                         target_r=2.0)),
+    "W5VWBd": dict(desc="ADJACENCY: VWAP bounce, all day to 14:30",
+                   rank="gain_desc", entry_open=T945, cutoff=dtime(14, 30),
+                   sim=kw(vwap_entry=("bounce", 0.1),
+                          struct_floor_mode="sig_low", target_r=2.0)),
+    "W6VWBd": dict(desc="ADJACENCY: VWAP-band fade 1sd, all day to 14:30",
+                   rank="gain_asc", entry_open=T945, cutoff=dtime(14, 30),
+                   sim=kw(vwap_entry=("band", 1.0),
+                          struct_floor_mode="sig_low", trail_pct=999,
+                          vwap_target=True, time_stop_min=60)),
     # ---- the two mechanics that only exist on a wide universe ----
     "W7RTG": dict(desc="RED-TO-GREEN: name traded below prev close today "
                        "and is now above it; buy the next print, 2R",
@@ -230,7 +258,19 @@ CFGS = {
                   sim=kw(entry_mode="market_at_start", trail_pct=999,
                          stop_pct=99)),
 }
-# Controls: -R random pick (VS2W_REP replicates), -I inverted ranking.
+# Controls.
+#  -R   the PICK is random (VS2W_REP replicates)
+#  -I   the ranking is inverted
+#  -Enn the pick is the ranked one but the ENTRY MINUTE is random inside
+#       30 minutes of the decision, with every trigger switched OFF.
+#       -R prices the PICK; -E prices the TRIGGER. A breakout rule that
+#       cannot beat entering the same name at a random minute has no
+#       trigger edge whatever its P&L.
+_TRIGGER_KEYS = ("or_clock", "micro_pullback", "ema_pullback",
+                 "flag_break", "vwap_entry", "orb_retest", "abcd_entry",
+                 "halt_resume", "fvg_entry", "inside_bar",
+                 "sweep_reclaim", "three_bar", "struct_floor_mode",
+                 "struct_target_mode", "entry_mode")
 for _cid in [c for c in list(CFGS) if not c.startswith("W0")]:
     _b = CFGS[_cid]
     CFGS[_cid + "-R"] = dict(_b, rank="random",
@@ -240,6 +280,14 @@ for _cid in [c for c in list(CFGS) if not c.startswith("W0")]:
             _b, rank=("gain_asc" if _b["rank"] == "gain_desc"
                       else "gain_desc"),
             desc="CONTROL inverted ranking: " + _b["desc"])
+    for _r in range(30):
+        _s = {k: v for k, v in _b["sim"].items()
+              if k not in _TRIGGER_KEYS}
+        _s["rand_entry"] = (30, f"vs2we-{_cid}-{_r}")
+        CFGS[f"{_cid}-E{_r:02d}"] = dict(
+            _b, sim=_s,
+            desc=f"CONTROL random entry minute (seed {_r}): "
+                 + _b["desc"])
 
 
 def dates_for(label):
@@ -298,7 +346,13 @@ def _upto(c, t):
             float(w["High"].max()))
 
 
-def rank_at(cands, t, mode, rep, date, ticket_i):
+def _rows_at(cands, t, cache):
+    """(candidate, last, low-so-far, high-so-far, gain_now) for every
+    name with a bar <= t. CONFIG-INDEPENDENT, so it is computed once per
+    (date, t) and shared by every config and replicate in the pass --
+    a pure accelerator, identical values either way."""
+    if t in cache:
+        return cache[t]
     rows = []
     for c in cands:
         u = _upto(c, t)
@@ -308,6 +362,12 @@ def rank_at(cands, t, mode, rep, date, ticket_i):
         if last < 3.0 or c["pc"] <= 0:
             continue
         rows.append((c, last, lo, hi, (last / c["pc"] - 1) * 100))
+    cache[t] = rows
+    return rows
+
+
+def rank_at(cands, t, mode, rep, date, ticket_i, cache):
+    rows = _rows_at(cands, t, cache)
     if not rows:
         return []
     if mode == "random":
@@ -333,16 +393,18 @@ def rank_at(cands, t, mode, rep, date, ticket_i):
         sel = [r for r in rows if r[4] > 0]
         sel.sort(key=lambda r: -r[4])
         return [r[0] for r in sel]
-    rows.sort(key=lambda r: (-r[4] if mode == "gain_desc" else r[4]))
+    rows = sorted(rows, key=lambda r: (-r[4] if mode == "gain_desc"
+                                       else r[4]))
     return [r[0] for r in rows]
 
 
-def run_day(cands, date, cfg, rep):
+def run_day(cands, date, cfg, rep, cache):
     trades = []
     t = cfg["entry_open"]
     ticket_i = 0
     while ticket_i < len(TICKETS) and t < cfg["cutoff"]:
-        pool = rank_at(cands, t, cfg["rank"], rep, date, ticket_i)
+        pool = rank_at(cands, t, cfg["rank"], rep, date,
+                       ticket_i, cache)
         if not pool:
             t = _step(t)
             continue
@@ -437,9 +499,10 @@ def main(ids, max_days=None):
             cands = day_cands(date, sim_from)
             if not cands:
                 continue
+            cache = {}      # (t -> rows) shared by every config
             for c, v in cfgs.items():
                 for rep in reps[c]:
-                    tr = run_day(cands, date, v, rep)
+                    tr = run_day(cands, date, v, rep, cache)
                     if not tr:
                         continue
                     s = st[c][rep]
