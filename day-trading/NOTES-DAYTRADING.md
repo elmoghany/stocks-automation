@@ -6668,3 +6668,42 @@ late (StartWhenAvailable) is governed by the prompt's OUTAGE rules: log the
 gap, backfill nothing, trade only the remaining window.
 Live scoreboard unchanged: 19 scored days, cumulative −$4,428.41 (−$233/day)
 vs the −$272/day honest baseline (C37F-fm).
+
+## MX-SERIES RETRACTION #2 (2026-09-16): POOL MEMBERSHIP IS FUTURE-CONDITIONED
+Adversarial audit of MXB1130H (+$181,210, +$369/ticket). Engine, ranker,
+fill and exit are clean. The leak is in the UNIVERSE: gappers_novol_*.json
+rows come from Polygon grouped-daily whose `h` is the REGULAR-SESSION
+(09:30-16:00) high (verified: pool high == regular high 393/399 samples,
+== full-session high 313/399; 0/399 rows are in the pool on a premarket-only
+cross). So a name is in the candidate file iff it prints >= +10% over
+prev_close at SOME point between 09:30 and 16:00. day_candidates then lets
+a PREMARKET cross make the name eligible, and rank_mode=gain_asc picks the
+name that has faded furthest below +10% -- which is in the list only
+because the regular session WILL rally to +10% later.
+Quantified (446 unique MXB1130H tickets): membership causally established
+by 09:35 (regular-session high >= +10% already printed): 155 tickets,
+-$33,128, 42% win; membership established only by a print AFTER 09:35:
+291 tickets, +$214,337, 82% win. Every dollar of the edge is in the
+future-conditioned bucket; the causal subset is negative like every
+other family. Canonical: AIOS 2026-05-05 (+$12,664), premarket cross 09:11,
++5.9% at 09:35, first regular-session bar >= +10% is the 09:36 fill bar.
+Aug-2026 OOS reproduces the split (+$762 causal vs +$15,420 future).
+Mean entry price = 0.911 x the +10% line; 414/447 entries below it carry
++$195,438, the 33 above it -$14,228.
+WHY THE CONTROLS ARE BLIND: random / gain_desc / shuffled-exit draw from the
+SAME contaminated eligible set; only least-extended selection cashes the
+leak. WHY THE IC STUDY IS NOT INDEPENDENT: same universe, same conditioning
+(IC-STUDY-honest-pool.md:1261 concedes it); its +2.52% corner measures the
+same artifact.
+SCOPE: this also touches C37F and every earlier family -- any PREMARKET
+entry (07:00-09:30) on this pool is survivorship-conditioned (a premarket
+gapper that faded before the regular session reached +10% is not in the
+pool). Premarket entries in the backtest were selected with hindsight; live
+premarket vetoes were being scored against a flattered baseline.
+FIX (self-consistent with the pool's own definition, no new data): a name
+is eligible at t only if a REGULAR-SESSION bar (>= 09:30, <= t) printed
+>= +10% over prev_close. Membership is then implied by past information.
+Cost: no premarket entries anywhere in the backtest. Deeper fix (later):
+rebuild the universe from premarket-inclusive minute data (Polygon flat
+files) so fade-and-die premarket gappers exist in the pool.
+RETRACTED: every MX ranked row and the IC-study corner as evidence of edge.
