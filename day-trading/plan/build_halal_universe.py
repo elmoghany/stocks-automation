@@ -100,6 +100,18 @@ def _retryable(res):
             or "NO FUNDAMENTALS DATA" in (res.get("fail_reason") or ""))
 
 
+# KEY NAMES MUST MATCH halal_check's OUTPUT (see the note in screen_one).
+# `haram_src` and `interest_flags` joined on 2026-09-16 with the
+# interest-leg refinement: the 5% verdict is no longer answerable from
+# the percentage alone -- 2.16% MEASURED from a filer's own interest tag
+# and 2.16% PROVEN as a ceiling from its non-operating bucket are
+# different claims, and a cache that stores only the number cannot tell
+# a later reader which one it holds.
+CACHED_KEYS = ("halal", "verdict", "source", "loan_pct", "cash_pct",
+               "combined", "haram_pct", "haram_src", "interest_flags",
+               "fail_reason")
+
+
 def screen_one(sym):
     time.sleep(PACE_SEC)
     try:
@@ -111,9 +123,7 @@ def screen_one(sym):
         # them back. Also cache "verdict" so CANNOT-VERIFY (reviewable)
         # stays distinguishable from FAIL (permanently out); both set
         # halal=False, so the flag alone conflates them.
-        return sym, {k: r.get(k) for k in
-                     ("halal", "verdict", "source", "loan_pct", "cash_pct",
-                      "combined", "haram_pct", "fail_reason")}
+        return sym, {k: r.get(k) for k in CACHED_KEYS}
     except Exception as e:
         return sym, {"halal": False, "source": "error",
                      "fail_reason": f"ERROR: {type(e).__name__}: {e}"}
@@ -320,15 +330,28 @@ def _cause(reason):
     return "other"
 
 
+def _restore_cause(rec):
+    """Which rung of the interest-leg ladder brought a name back."""
+    src = rec.get("haram_src") or "none"
+    pre = ("plausibility-cap rescue + "
+           if "intinc_implausible" in (rec.get("interest_flags") or [])
+           else "")
+    if src.startswith("upper-bound"):
+        return f"{pre}upper-bound (nonoperating income)"
+    if src.startswith("edgar-interest"):
+        return f"{pre}EDGAR interest"
+    if src == "yfinance":
+        return f"{pre}vendor row (data drift, not the refinement)"
+    return f"{pre}{src}"
+
+
 def _rescreen_one(sym):
     import yfinance as yf
     time.sleep(PACE_SEC)
     try:
         t = yf.Ticker(sym)
         r = dt.halal_check(sym, t)
-        rec = {k: r.get(k) for k in
-               ("halal", "verdict", "source", "loan_pct", "cash_pct",
-                "combined", "haram_pct", "fail_reason")}
+        rec = {k: r.get(k) for k in CACHED_KEYS}
         mc = (dt.load_rh_fundamentals().get(sym.upper()) or {}).get(
             "market_cap")
         if not mc:
@@ -336,20 +359,59 @@ def _rescreen_one(sym):
                 mc = (t.info or {}).get("marketCap")
             except Exception:
                 mc = None
+        rec["mcap"] = float(mc or 0) or None
         return sym, rec, _legacy_probe(sym, t, float(mc or 0))
     except Exception as e:
         return sym, {"halal": False, "source": "error",
                      "fail_reason": f"ERROR: {type(e).__name__}: {e}"}, None
 
 
-def cmd_rescreen(list_f=None):
+# --------------------------------------------- INTEREST-LEG EPOCH (v2)
+# The refinement of 2026-09-16 (same day, after the v1 rebuild) touches
+# EXACTLY ONE leg -- the 5% interest test -- and only ever LOOSENS it,
+# in two ways and no others:
+#   * a vendor "interest income" row that fails an 8%/yr plausibility
+#     cap on mean cash is discarded as a mis-tag instead of failing the
+#     name (MRVL's $1.9bn divestiture gain);
+#   * an untagged interest row can be PROVEN under 5% from EDGAR's
+#     non-operating bucket instead of refusing the name.
+# So the names whose verdict can move are: everything v1 refused on the
+# interest leg (missing interest income, or HARAM>=5% under either
+# gate's wording), plus every v1 PASS -- a PASS can flip the OTHER way
+# if its vendor row is implausible and EDGAR then measures the leg over
+# 5%, and re-running them is also how every armable name gets its
+# `haram_src` recorded. Nothing else is re-fetched: a name refused for
+# SIC 6xxx, a strict-10 leg, a missing debt/cash/revenue row or no
+# fundamentals at all cannot be moved by a change to the interest leg,
+# and re-screening it would cost two yfinance round-trips to confirm a
+# verdict that is already correct.
+INTEREST_KEYS = ("interest income", "HARAM>=5%")
+
+
+def _interest_leg_candidates(done, ruled):
+    return sorted({s for s, r in done.items() if r.get("halal")}
+                  | {s for s, r in done.items()
+                     if any(k in (r.get("fail_reason") or "")
+                            for k in INTEREST_KEYS)}
+                  | {s for s, r in done.items()
+                     if r.get("source") in ("error", None)}
+                  | (ruled & set(done)))
+
+
+def cmd_rescreen(list_f=None, epoch="2026-09-16"):
     """Re-screen the names whose verdict the 2026-09-16 fixes can move.
 
     `list_f` parks the rebuilt armable list somewhere OTHER than
     data/halal_list.json. A live paper session reads halal_list.json
     every scan cycle, so a rebuild that lands mid-session would change
     the armable set under a running engine; --park-list writes
-    halal_list.NEW.json instead and the swap happens after the close."""
+    halal_list.NEW.json instead and the swap happens after the close.
+
+    `epoch` selects the candidate rule and the backup/report stamps:
+    "2026-09-16" is the four-fix rebuild (v1, candidates = everything
+    the PRE-FIX gate passed) and "interest-leg" is the same-day
+    refinement (v2, candidates = whatever the interest leg can move --
+    see _interest_leg_candidates)."""
     list_f = list_f or LIST_F
     done = json.loads(UNI_F.read_text())
     rulings = json.loads((ROOT / "data/halal_rulings.json").read_text())
@@ -362,24 +424,39 @@ def cmd_rescreen(list_f=None):
     # PRE-FIX SNAPSHOT: flips are measured against the verdicts the OLD
     # gate left, not against whatever a half-finished pass wrote, so the
     # rescreen is re-runnable and its report always says the same thing.
-    baseline = done
-    bak_u = UNI_F.with_name(f"{UNI_F.stem}.pre-2026-09-16{UNI_F.suffix}")
-    if bak_u.exists():
-        baseline = json.loads(bak_u.read_text())
-    cands = sorted({s for s, r in done.items() if r.get("halal")}
-                   | {s for s, r in baseline.items()
-                      if r.get("halal") and s in done}
-                   # a crashed evaluation is NOT a verdict (same rule as
-                   # _retryable): always re-screened
-                   | {s for s, r in done.items()
-                      if r.get("source") in ("error", None)}
-                   | (ruled & set(done)))
-    print(f"rescreen: {len(cands):,} candidates "
-          f"({sum(1 for s in cands if (baseline.get(s) or {}).get('halal')):,} "
-          f"PASS under the pre-fix gate, plus ruled/lifted names and "
-          f"any crashed evaluation)", flush=True)
-    stamp = "pre-2026-09-16"
-    for f in (UNI_F, LIST_F):
+    if epoch == "interest-leg":
+        # v2 baseline is v1 -- the flips this pass reports are the ones
+        # the INTEREST-LEG change caused, not the four-fix rebuild's,
+        # which is already written up in the pre-2026-09-16 report.
+        stamp, flips_f = "v1", \
+            ROOT / "data/halal_flips_2026-09-16.interest-leg.json"
+        baseline = dict(done)
+        cands = _interest_leg_candidates(done, ruled)
+        print(f"rescreen (interest-leg v2): {len(cands):,} candidates "
+              f"({sum(1 for s in cands if done[s].get('halal')):,} v1 PASS, "
+              f"{sum(1 for s in cands if any(k in (done[s].get('fail_reason') or '') for k in INTEREST_KEYS)):,} "
+              f"refused on the interest leg, plus ruled/lifted names and "
+              f"any crashed evaluation)", flush=True)
+    else:
+        stamp, flips_f = "pre-2026-09-16", \
+            ROOT / "data/halal_flips_2026-09-16.json"
+        baseline = done
+        bak_u = UNI_F.with_name(f"{UNI_F.stem}.{stamp}{UNI_F.suffix}")
+        if bak_u.exists():
+            baseline = json.loads(bak_u.read_text())
+        cands = sorted({s for s, r in done.items() if r.get("halal")}
+                       | {s for s, r in baseline.items()
+                          if r.get("halal") and s in done}
+                       # a crashed evaluation is NOT a verdict (same rule
+                       # as _retryable): always re-screened
+                       | {s for s, r in done.items()
+                          if r.get("source") in ("error", None)}
+                       | (ruled & set(done)))
+        print(f"rescreen: {len(cands):,} candidates "
+              f"({sum(1 for s in cands if (baseline.get(s) or {}).get('halal')):,}"
+              f" PASS under the pre-fix gate, plus ruled/lifted names and "
+              f"any crashed evaluation)", flush=True)
+    for f in (UNI_F, list_f if list_f.exists() else LIST_F):
         bak = f.with_name(f"{f.stem}.{stamp}{f.suffix}")
         if not bak.exists():
             bak.write_text(f.read_text())
@@ -421,10 +498,39 @@ def cmd_rescreen(list_f=None):
                  "reason": done[s].get("fail_reason")})
             flips["by_cause"][c] = flips["by_cause"].get(c, 0) + 1
         elif now and not was:
+            # RESTORED-BY-CAUSE (interest-leg epoch). Which rung of the
+            # resolution ladder answered is the whole point of the
+            # report: "restored" is not a result, "restored because
+            # EDGAR tags the interest at 1.15% of revenue" is.
+            rc = _restore_cause(done[s])
             flips["to_pass"].append(
                 {"symbol": s, "was_reason": before[s].get("fail_reason"),
+                 "cause": rc, "haram_src": done[s].get("haram_src"),
+                 "interest_flags": done[s].get("interest_flags"),
+                 "mcap": done[s].get("mcap"),
                  "now": {k: done[s].get(k) for k in
                          ("loan_pct", "cash_pct", "combined", "haram_pct")}})
+            flips["by_cause"][f"RESTORED: {rc}"] = \
+                flips["by_cause"].get(f"RESTORED: {rc}", 0) + 1
+    # WHAT THE RULE STILL COSTS: every name still refused because the
+    # interest leg could not be resolved AND could not be bounded,
+    # largest first, so the price of "unverified is HARAM" is a list
+    # and not an adjective.
+    flips["still_missing_interest"] = sorted(
+        ({"symbol": s, "mcap": done[s].get("mcap"),
+          "haram_src": done[s].get("haram_src"),
+          "interest_flags": done[s].get("interest_flags"),
+          "reason": done[s].get("fail_reason")}
+         for s in cands
+         if not done[s].get("halal")
+         and "interest income" in (done[s].get("fail_reason") or "")),
+        key=lambda r: -(r["mcap"] or 0))
+    flips["haram_src_of_armable"] = {}
+    for s, r in done.items():
+        if r.get("halal"):
+            k = r.get("haram_src") or "none"
+            flips["haram_src_of_armable"][k] = \
+                flips["haram_src_of_armable"].get(k, 0) + 1
     halal = sorted(s for s, r in done.items() if r.get("halal"))
     list_f.write_text(json.dumps(
         {"updated": time.strftime("%Y-%m-%d"), "n": len(halal),
@@ -433,15 +539,21 @@ def cmd_rescreen(list_f=None):
         print(f"  armable list PARKED at {list_f.name} -- "
               f"{LIST_F.name} left untouched for the live session",
               flush=True)
-    (ROOT / "data/halal_flips_2026-09-16.json").write_text(
-        json.dumps(flips, indent=1))
+    flips_f.write_text(json.dumps(flips, indent=1))
     was_armable = sum(1 for r in before.values() if r.get("halal"))
     print(f"\nARMABLE {was_armable:,} -> {len(halal):,}")
     print(f"PASS -> FAIL: {len(flips['to_fail']):,}   "
           f"FAIL -> PASS: {len(flips['to_pass']):,}")
     for c, n in sorted(flips["by_cause"].items(), key=lambda x: -x[1]):
         print(f"  {c:<48} {n:,}")
-    print("flip report -> data/halal_flips_2026-09-16.json")
+    print(f"armable by interest-leg evidence: "
+          f"{flips['haram_src_of_armable']}")
+    print(f"still refused for a missing interest row: "
+          f"{len(flips['still_missing_interest']):,}")
+    for r in flips["still_missing_interest"][:20]:
+        print(f"  {r['symbol']:<6} mcap "
+              f"{(r['mcap'] or 0)/1e9:>8,.2f}bn  {(r['reason'] or '')[:90]}")
+    print(f"flip report -> {flips_f.name}")
 
 
 def main():
@@ -516,6 +628,8 @@ if __name__ == "__main__":
         cmd_sic()
     elif "--rescreen" in sys.argv:
         cmd_rescreen(LIST_F.with_name("halal_list.NEW.json")
-                     if "--park-list" in sys.argv else None)
+                     if "--park-list" in sys.argv else None,
+                     epoch=("interest-leg" if "--interest-leg" in sys.argv
+                            else "2026-09-16"))
     else:
         main()
