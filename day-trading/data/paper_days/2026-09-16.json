@@ -6,8 +6,8 @@
   "session_type": "headless (Task Scheduler) 06:20-08:19 ET; DIED on Claude login expiry; INTERACTIVE TAKEOVER from 09:18 ET to close",
   "benchmark_per_day": -272,
   "benchmark_note": "C37F-fm 2026-09-02: -$272/traded day (realistic gap-through fills). $1,517 RETIRED; -$163 superseded.",
-  "status": "OPEN",
-  "counts_as_traded_day": false,
+  "status": "CLOSED",
+  "counts_as_traded_day": true,
   "config": "C37",
   "ops": {
     "skeleton_written_et": "06:20",
@@ -82,7 +82,8 @@
       "watcher_precheck": "posn.py BOOK EMPTY; no stale state files from another day to move aside",
       "backfill_policy": "NOTHING backfilled. No scan, no rank, no arming and NO ENTRY is credited for 08:19-09:18. Cycles 1-23 (06:23-08:14) are the headless session's, kept verbatim; cycle numbering resumes at 24 with this session's first real scan.",
       "git_commit": "09:24 ET: day JSON + new day .md + heartbeat + scan state/dump + bars committed and pushed, own paths only (git add of specific files, never -A; plan/ and day-trading.py left to the parallel session)"
-    }
+    },
+    "entry_cutoff": "14:30 ET reached with ticket 1 (AXTI) still OPEN. NO SECOND TICKET was possible at any point today: C37 is one position at a time and AXTI has been held since 10:20. Tickets used 1 of 7; $14,943.65 of the $100,000/day cap. From here the watcher owns the book -- no new entries, exits only, ladder 14:50/14:55/14:58/14:59, flat by 15:00."
   },
   "cycles": [
     {
@@ -547,8 +548,28 @@
         "chase": "entry 63.59 < signal-bar close 63.69 and < day high 64.035 -> no chase"
       },
       "exit_mode": "c37 (watcher default): -8% hard stop 58.5028, 20/10/40 pressure trail, bank 1/3 at +25% (79.4875)",
-      "status": "OPEN",
-      "progress": "11:48: AXTI ran to a new day high 65.48. Open P&L +$411.25 (+2.75%) on 235 sh. Peak 65.48 at 11:47. 10-bar pressure +0.327 -> the C37 trail WIDENED to 40% (39.29), so the -8% hard stop 58.5028 stays the binding leg. No breach since entry; lowest print 62.83 at 10:32."
+      "status": "CLOSED",
+      "progress": "11:48: AXTI ran to a new day high 65.48. Open P&L +$411.25 (+2.75%) on 235 sh. Peak 65.48 at 11:47. 10-bar pressure +0.327 -> the C37 trail WIDENED to 40% (39.29), so the -8% hard stop 58.5028 stays the binding leg. No breach since entry; lowest print 62.83 at 10:32.",
+      "exit": {
+        "exit_et": "14:55",
+        "exit_px": 63.6563,
+        "shares": 235,
+        "exit_kind": "ladder rung 2 (watcher-owned, EXIT_MODE c37)",
+        "src": "priced off the REAL bid 63.72 from data/paper/quotes_2026-09-16.json (bid_src=quote, not bid-proxy)",
+        "limit": 63.0828,
+        "booked_at": "14:57:30",
+        "rung1": "14:50 rung 1 limit 64.5357 UNFILLED (engine: bar 14:50 low 64.4800 < limit) -> 235 sh rolled forward. Its bid came from a BID-PROXY (bar 14:48 close) because the quotes file was not yet fresh at that instant; rung 2 priced off a real quote.",
+        "peak": 66.58,
+        "peak_et": "14:09",
+        "pnl": 15.58,
+        "pnl_pct": 0.104,
+        "status": "CLOSED"
+      },
+      "fill_realism": {
+        "entry": "filled 63.59 at 10:20:52 off the live ask; the +60s mark (14:21Z bar close) was 63.50 -> we paid 14.2 bps ABOVE the mark. Entry sat inside the 14:20 bar range 63.46-63.64, so the fill is achievable, not fictional.",
+        "exit": "ladder vwap 63.6563 at 14:55; the +60s mark (14:56 bar close) was 63.60 -> we sold 8.8 bps ABOVE the mark.",
+        "exit_parity": "watcher EXIT-PARITY: live 63.6563 vs backtest exit 63.7272 = -$16.66 (-11.1 bps). 14:59 close 63.791. The live ladder booked slightly WORSE than the backtest model, i.e. the ledger is not flattered."
+      }
     }
   ],
   "halal_detail": {
@@ -805,18 +826,25 @@
     }
   },
   "vetoes": {
+    "note": "Exactly ONE name reached an arming decision today (AXTI at 10:20). It passed all three book gates, so all three rates are 0 of 1. Every other refusal happened at the HALAL gate, which is upstream of the book and is never counted as a veto (same convention as ZTG on the 07:10 cycle).",
     "spread": {
       "n": 0,
-      "of": 0
+      "of": 1,
+      "rate": "0%"
     },
     "depth": {
       "n": 0,
-      "of": 0
+      "of": 1,
+      "rate": "0%"
     },
     "chase": {
       "n": 0,
-      "of": 0
-    }
+      "of": 1,
+      "rate": "0%"
+    },
+    "premarket_split": "premarket 0 of 0 on every rate -- no premarket arming was reached all day.",
+    "regular_split": "regular 0 of 3 gates failed on the single arming.",
+    "observation_not_counted": "ATHR at 10:08 would have been a hard SPREAD veto (bid 3.11 / ask 3.67 = 16.5% vs the 0.5% cap) and a hard DEPTH veto (8 sh at the inside ask vs the 4,167 a $15k ticket needs), but the ranker excluded it first (only 2 real bars), so no arming decision was reached and no veto is counted."
   },
   "errors": [
     {
@@ -844,7 +872,7 @@
       "backfilled": false
     }
   ],
-  "pnl": 0.0,
+  "pnl": 15.58,
   "veto_log": [],
   "armed": [
     {
@@ -861,13 +889,91 @@
     }
   ],
   "trigger_c": [],
-  "posn": "LONG AXTI 235 sh @ 63.59 (ticket 1, regular session). $14,943.65 of the $100k/day cap used; $85,056 left, next ticket only after this one exits (ONE POSITION AT A TIME).",
-  "eod": null,
+  "posn": "FLAT from 14:55 (booked 14:57:30). Book empty, no position state files, watcher state unlinked.",
+  "eod": {
+    "session_end_et": "15:00",
+    "state": "FLAT, book empty, watcher state unlinked",
+    "tickets": {
+      "used": 1,
+      "of": 7,
+      "deployed": 14943.65,
+      "cap": 100000,
+      "unused": 85056.35,
+      "reason_only_one": "ONE POSITION AT A TIME. AXTI was armed at 10:20 and held until the 14:55 ladder fill, which spans essentially the whole tradeable window; the 14:30 entry cutoff had passed by the time the book was flat, so no rotation was possible."
+    },
+    "pnl_total": 15.58,
+    "regular_session_line": {
+      "tickets": 1,
+      "pnl": 15.58,
+      "per_ticket": 15.58,
+      "baseline_per_day": -32,
+      "baseline_per_ticket": -7,
+      "vs_baseline_day": "+$47.58 better than the -$32/traded-day benchmark",
+      "vs_baseline_ticket": "+$22.58 better than the -$7/ticket benchmark",
+      "vs_breakeven": "+$15.58"
+    },
+    "premarket_line": {
+      "tickets": 0,
+      "pnl": 0,
+      "per_ticket": null,
+      "vs_breakeven": "n/a -- zero premarket tickets. The 06:20-08:19 headless block and the 09:18-09:30 takeover block produced NO premarket arming: every premarket crosser failed the halal gate. Nothing to score, and nothing was lost to the 08:19-09:18 coverage gap because there was nothing armable on either side of it.",
+      "note": "This is the first day under the 2026-09-16 split-reporting decision and the premarket line is empty, which is the cleanest possible start for it."
+    },
+    "trade_record": [
+      {
+        "ticket": 1,
+        "sym": "AXTI",
+        "name": "AXT Inc (compound semiconductor substrates)",
+        "session_phase": "regular",
+        "entry_et": "10:20",
+        "entry_px": 63.59,
+        "shares": 235,
+        "exit_et": "14:55",
+        "exit_px": 63.6563,
+        "pnl": 15.58,
+        "pnl_pct": 0.104,
+        "hold_min": 275,
+        "peak": 66.58,
+        "peak_pnl": "+$702 unrealised at the 14:09 peak",
+        "trigger": "Trigger C tweezer_bottom [TAKEABLE NOW]",
+        "exit_kind": "14:55 ladder rung 2"
+      }
+    ],
+    "halal_ledger": {
+      "names_screened_live": 41,
+      "verdict_PASS_q1": [
+        "AXTI",
+        "HUHU",
+        "JXG (06:27 only, superseded)"
+      ],
+      "fully_armable": [
+        "AXTI"
+      ],
+      "refused": 38,
+      "refusal_reasons": "ratio blowouts (INTJ 1015%, PFSA 1195%, NAII 594%, UCAR 613%, UPLD 1761%, DLHC 242%, CIFR 92%), CASH>10 under the new strict 10/10/20 (NRXS, MNOV, BYAH, PSIG), haram_pct>=5 on pre-revenue names whose only income line is interest (CYPH, NTHI, PHOS, ETS), missing statement rows -> unverified (IONR, JXG, RTB, ALP, BYAH, PSIG, UCAR), hard industry FAILs (PRHI insurance, CIFR SIC 6199), business-line FAILs (ZTG investment brokerage, FTFT financing), and the 217-name inherited drop-list.",
+      "note": "41 live screens produced exactly ONE tradeable name. That is the single largest determinant of the day."
+    },
+    "coverage": {
+      "gaps": 1,
+      "detail": "08:19-09:18 ET (59 min, premarket only) -- headless session killed by a Claude login expiry. FLAT throughout, nothing backfilled, no entry credited. The tradeable regular window 09:30-14:30 was fully covered.",
+      "monitoring": "Continuous from 09:18. Heartbeat every cycle (>=1 per 5 min) all day. Bars fed to data/rh_bars/AXTI_2026-09-16.csv on a ~2-4 minute cadence while in position (695 real bars), tightened to ~1-2 minutes from 14:44, and data/paper/quotes_2026-09-16.json written every minute from 14:44 so the ladder could price off a real bid -- which rung 2 did."
+    },
+    "process_notes": [
+      "The 2026-09-16 halal epoch (strict 10/10/20 + SIC 6000-6999 hard fail + TTM 5% test + absent-row-is-not-a-zero) is FAR more restrictive in live use than the old gate. 41 names screened, 1 armable. Several names that would have passed the old combined<=20 escape (NRXS at 0.39/11.49/11.87) are now refused.",
+      "The CYPH TypeError that blocked cycles 16-23 was fixed by the parallel session during the coverage gap; every cannot-verify from the headless block resolved to a real FAIL, so nothing was missed while it was broken.",
+      "The fill-arming rule did real work: at 10:20 both the premarket-high stop (59.69) and the 5-min ORB (62.30) were already met at 63.70. Arming either would have been a market order into the top of the book. Refusing both and waiting for a fresh Trigger C signal produced an entry at 63.59, BELOW the signal bar close.",
+      "Trigger C staleness is clock-sensitive. A trigger run with --as-of 10:23 while the true ET clock read 10:20 reported the 10:18 tweezer_bottom as STALE (4m); re-run against the real zoneinfo clock it read [TAKEABLE NOW (1m)]. ALWAYS pass the real clock to --as-of. No look-ahead occurred (the bar set ended at 14:20Z either way), but the mistake nearly cost the only trade of the day.",
+      "Ladder rung 1 at 14:50 priced off a BID-PROXY (bar 14:48 close) because the quotes file was not fresh at that instant, and went UNFILLED. Rung 2 at 14:55 priced off a real quote and filled. Writing quotes_{date}.json from 14:45 is doing exactly what it was added for -- start it a minute or two earlier.",
+      "ATHR (Aether Holdings) is the day open question: question 1 PASS (6.36/5.47/11.83, haram 1.08, on the halal list) but question 2 unresolved -- self-described fintech analytics for equity AND OPTIONS traders with an undisclosed revenue split. Refused under the binary rule and ESCALATED FOR A USER RULING. It was moot on the tape (2 real bars, 16.5% spread, 8 shares offered), so the ruling costs nothing today, but it will recur.",
+      "A no-trade day would have been a no-loss day; today was better than that -- a small positive on the one name the gate allowed."
+    ]
+  },
   "watcher": {
     "started_et": "10:21",
     "cmd": "python plan/paper_watch.py --book",
     "exit_mode": "c37 (default, not overridden)",
     "background_task": "bi29iytzt",
-    "state_file": "data/paper/position_AXTI.json"
+    "state_file": "data/paper/position_AXTI.json",
+    "ended": "15:00 -- watcher exited cleanly (exit 0) after EXIT-PARITY, book empty, state files unlinked. WATCH_ALIVE_2026-09-16.json final: open [], book_pnl 15.58."
   }
 }

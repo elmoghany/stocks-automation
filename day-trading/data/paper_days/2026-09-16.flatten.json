@@ -1,0 +1,66 @@
+{
+ "date": "2026-09-16",
+ "records": [
+  {
+   "sym": "AXTI",
+   "ticket": 1,
+   "date": "2026-09-16",
+   "mode": "c37",
+   "entry": 63.59,
+   "shares_initial": 235,
+   "entry_bar_utc": "2026-09-16T14:20:00Z",
+   "prev_close": 57.7,
+   "exit_kind": "ladder",
+   "fills": [
+    {
+     "kind": "rung2",
+     "time": "14:55",
+     "shares": 235,
+     "px": 63.6563,
+     "src": "quote"
+    }
+   ],
+   "vwap": 63.6563,
+   "shares_exited": 235,
+   "scale_out": null,
+   "banked": 0.0,
+   "pnl": 15.58,
+   "peak": 66.58,
+   "rungs": [
+    {
+     "k": 0,
+     "time": "14:50",
+     "shares": 235,
+     "limit": 64.5357,
+     "fill": 64.7951,
+     "bid": 64.86,
+     "bid_src": "BID-PROXY bar 14:48 close",
+     "status": "UNFILLED",
+     "note": "UNFILLED (limit above market: bar 14:50 low 64.4800 < limit 64.5357)"
+    },
+    {
+     "k": 1,
+     "time": "14:55",
+     "shares": 235,
+     "limit": 63.0828,
+     "fill": 63.6563,
+     "bid": 63.72,
+     "bid_src": "quote",
+     "status": "FILLED",
+     "note": "confirmed by bar 14:55"
+    }
+   ],
+   "deployed": 14943.65,
+   "exit_time": "14:55",
+   "booked_at": "2026-09-16T14:57:30.135164-04:00",
+   "exit_parity": {
+    "close_1459": 63.791,
+    "backtest_exit": 63.7272,
+    "live_vwap": 63.6563,
+    "delta_usd": -16.66,
+    "delta_bps": -11.1,
+    "proxy": null
+   }
+  }
+ ]
+}

@@ -1,5 +1,85 @@
 # Penny Stocks Trading Notes
 
+## PAPER DAY 23 (2026-09-16) — AXTI +$15.58, and the first day the split scoreboard opens
+
+**1 ticket: AXTI 235 @ 63.59 → 63.6563 (+$15.58, +0.10%, 14:55 ladder rung 2).
+Flat at 14:55, zero real orders.** `counts_as_traded_day: true`.
+
+**THE SCOREBOARD SPLITS FROM TODAY** (user decision 2026-09-16). Two lines, kept apart:
+
+| line | today | vs benchmark |
+|---|---|---|
+| **REGULAR-session tickets** | 1 ticket, **+$15.58**, +$15.58/ticket | **+$47.58 vs the −$32/traded day (C37F-df); +$22.58 vs −$7/ticket** |
+| **PREMARKET tickets** | **0 tickets, $0.00** | n/a — scored only against break-even, and there is nothing to score |
+
+Legacy combined view for continuity: −$4,428.41 over 19 days → **−$4,412.83 over 20 scored
+days = −$220.64/day**. Full detail in `data/paper_days/2026-09-16.{json,md}`.
+
+### Ops: the headless session died mid-morning and an interactive one took over
+
+The 06:20 Task Scheduler launch ran 23 clean cycles (06:23–08:14, FLAT, nothing armable) and was
+then **killed at ~08:19 when the Claude login expired**. Last heartbeat: `08:19 ET cycle 24`. An
+interactive session took over at **09:18**, re-probed capability GREEN, logged a
+**COVERAGE GAP 08:19→09:18 (59 min, premarket only)** in `coverage_gaps[]`, **backfilled nothing**
+and **credited no entry** for the window (OUTAGE rule 3), then resumed scanning 12 minutes before
+the open. The book was FLAT across the whole gap, so OUTAGE / DEAD-MONITOR SETTLEMENT — which
+governs open positions — never applied. The tradeable window 09:30–14:30 was fully covered.
+
+### The day in one line
+
+Forty-one names were live-screened at candidacy and **exactly one was armable**: AXTI (AXT Inc,
+compound semiconductor substrates) crossed +10% in the REGULAR session on the 10:10 bar; the 10:18
+`tweezer_bottom` read TAKEABLE NOW at 10:20 and filled at the live ask 63.59 on a 0.220% spread;
+it ran to 66.58 (+4.7%, +$702 unrealised) at 14:09, round-tripped to flat and back, and the
+watcher's 14:55 ladder rung booked it at 63.6563 for +$15.58.
+
+### What the new halal epoch actually does live
+
+The 2026-09-16 gate (strict 10/10/20, SIC 6000–6999 hard fail, TTM 5% test, absent-row-is-not-a-zero)
+turned **41 live screens into 1 tradeable name**. The day's two biggest movers, RETO +409% and
+MEDS +312%, were settled FAILs. Names that passed under the old `combined<=20` escape are now
+refused outright (NRXS at 0.39 / 11.49 / 11.87 → CASH>10). Pre-revenue names whose only income line
+is interest now fail the TTM 5% test mechanically (CYPH, NTHI, PHOS, ETS all at haram_pct 100%).
+This is the single largest determinant of live P&L and it is working as designed, not misfiring.
+
+### Three things worth keeping
+
+1. **The fill-arming rule earned its place.** At 10:20 the premarket-high stop (59.69) and the
+   5-minute ORB (62.30) were *both already met* at 63.70. Arming either would have been a market
+   order into the top of the book. Refusing both and waiting for a fresh Trigger C signal bought
+   the name at 63.59 — **below** the signal bar's close.
+2. **Trigger C staleness is clock-sensitive, and the clock rule is not optional.** A `trigger
+   --as-of 10:23` run while the true ET clock read 10:20 reported the 10:18 signal as
+   `[STALE (4m)]`; re-run against the real zoneinfo clock it read `[TAKEABLE NOW (1m)]`. No
+   look-ahead occurred, but the slip nearly cost the only trade of the day.
+3. **`quotes_{date}.json` should start before 14:45.** Ladder rung 1 at 14:50 fell back to a
+   BID-PROXY (bar 14:48 close), placed its limit at 64.5357 and went **UNFILLED**; rung 2 at 14:55
+   priced off a real quote (bid 63.72) and filled. The quotes file is what makes the ladder honest.
+
+### Fill realism and parity
+
+Entry 63.59 vs the +60 s mark 63.50 → **14.2 bps worse** than the mark, and inside the 14:20 bar
+range 63.46–63.64. Exit 63.6563 vs the +60 s mark 63.60 → **8.8 bps better**. Watcher `EXIT-PARITY`:
+live 63.6563 vs backtest 63.7272 = **−$16.66 (−11.1 bps)** — the live ladder booked *worse* than the
+backtest model, so the ledger is not flattered.
+
+### Veto ledger
+
+One arming decision all day, and it cleared every book gate: **SPREAD 0/1, DEPTH 0/1, CHASE 0/1.**
+Every other refusal was at the halal gate, upstream of the book, and is not counted as a veto.
+
+### Open question for the user — ATHR
+
+**Aether Holdings passed question 1 cleanly** (loan 6.36 / cash 5.47 / combined 11.83, haram_pct
+1.08, on `halal_list.json`) and is **refused on question 2 as unverified**: RH describes it as a
+fintech platform selling research analytics and tools to *equity and options* traders, with the
+revenue split undisclosed. It is not a broker and takes no commissions, so the MTC (introducing-broker)
+and ZTG (investment brokerage) refusals do not fit it directly, and the AMD principle would arguably
+allow a data vendor selling into a financial market. Under the binary rule unverified is haram, and
+converting that needs a dated evidence ruling in `data/halal_rulings.json`. **A ruling is requested.**
+It was moot today (2 real bars, 16.5% spread, 8 shares at the inside ask) but it will recur.
+
+
 ## PAPER DAY 22 (2026-09-08) — one ticket, QCOM, −$912.37: a large-cap premarket pop bought one bar off the high
 
 **1 ticket: QCOM 81 @ 184.89 → 173.6262 (−$912.37, −6.09%, 14:50 ladder rung 1).
