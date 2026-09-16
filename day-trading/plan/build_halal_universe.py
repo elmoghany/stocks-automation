@@ -430,11 +430,22 @@ def cmd_rescreen(list_f=None, epoch="2026-09-16"):
         # which is already written up in the pre-2026-09-16 report.
         stamp, flips_f = "v1", \
             ROOT / "data/halal_flips_2026-09-16.interest-leg.json"
+        # V1 SNAPSHOT, same rule the v1 pass follows: flips are measured
+        # against the verdicts the FOUR-FIX gate left, not against
+        # whatever a previous v2 attempt wrote -- so this pass is
+        # re-runnable and its report always says the same thing. The
+        # candidate set is derived from the SNAPSHOT for the same
+        # reason: a name v2 has already restored must not drop out of
+        # the candidate set on the next run.
         baseline = dict(done)
-        cands = _interest_leg_candidates(done, ruled)
+        bak_u = UNI_F.with_name(f"{UNI_F.stem}.{stamp}{UNI_F.suffix}")
+        if bak_u.exists():
+            baseline = json.loads(bak_u.read_text())
+        cands = _interest_leg_candidates(
+            {s: (baseline.get(s) or done[s]) for s in done}, ruled)
         print(f"rescreen (interest-leg v2): {len(cands):,} candidates "
-              f"({sum(1 for s in cands if done[s].get('halal')):,} v1 PASS, "
-              f"{sum(1 for s in cands if any(k in (done[s].get('fail_reason') or '') for k in INTEREST_KEYS)):,} "
+              f"({sum(1 for s in cands if (baseline.get(s) or {}).get('halal')):,} v1 PASS, "
+              f"{sum(1 for s in cands if any(k in ((baseline.get(s) or {}).get('fail_reason') or '') for k in INTEREST_KEYS)):,} "
               f"refused on the interest leg, plus ruled/lifted names and "
               f"any crashed evaluation)", flush=True)
     else:
@@ -523,7 +534,10 @@ def cmd_rescreen(list_f=None, epoch="2026-09-16"):
           "reason": done[s].get("fail_reason")}
          for s in cands
          if not done[s].get("halal")
-         and "interest income" in (done[s].get("fail_reason") or "")),
+         # the MISS LIST, not the whole reason -- the interest-leg note
+         # appended in brackets also contains the words
+         and "interest income" in
+         (done[s].get("fail_reason") or "").split(" -- ")[0]),
         key=lambda r: -(r["mcap"] or 0))
     flips["haram_src_of_armable"] = {}
     for s, r in done.items():

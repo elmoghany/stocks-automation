@@ -1172,18 +1172,37 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
         INTINC_MAX_YIELD * _cap_base * span_years
     if ttm_int is not None and _cap is not None and abs(ttm_int) > _cap:
         # DEFECT A. Not interest -- something else wearing the label.
-        # Never a FAIL on its own: the row is DISCARDED and the ladder
-        # continues, so the name is judged on EDGAR or on the bound, or
-        # refused as unverified. A mis-tag is absence of evidence.
         int_flags.append("intinc_implausible")
+        _face = (abs(ttm_int) / ttm_rev * 100
+                 if (ttm_rev or 0) > 0 else None)
         haram_note = (
             f"vendor interest row ${abs(ttm_int)/1e6:,.0f}M over the TTM "
             f"window exceeds the {INTINC_MAX_YIELD:.0%}/yr plausibility cap "
             f"on mean cash+securities ${_cap_base/1e6:,.0f}M "
-            f"(cap ${_cap/1e6:,.0f}M) -- discarded as mis-tagged")
-        ttm_int, haram_src = None, None
-        if "interest income" not in inc_miss:
-            inc_miss = list(inc_miss) + ["interest income"]
+            f"(cap ${_cap/1e6:,.0f}M)")
+        if _face is not None and _face < 5:
+            # THE CAP FIRES ONLY WHERE IT IS NEEDED -- "never let it
+            # FAIL a name on its own" (user, 2026-09-16). The cap
+            # catches OVER-statements by construction: |row| > 8% x cash
+            # means the true interest is SMALLER than the row. So a row
+            # that is both implausible AND already under 5% is a
+            # conservative over-reading of a leg that is clear either
+            # way, and discarding it would turn a provably-clear name
+            # into a refusal -- the same "missing is not unverifiable"
+            # error this refinement exists to end, wearing a new hat.
+            # The flag is still recorded: the number is not trusted, it
+            # is simply not load-bearing. Discarding happens only when
+            # the row would otherwise FAIL the name (>= 5%, or a
+            # zero-revenue name where any interest scores 100%), which
+            # is exactly the MRVL case.
+            haram_note += (f" -- KEPT: it already clears the 5% leg at "
+                           f"{_face:.2f}%, and a row too large to be "
+                           f"interest can only be over-stating it")
+        else:
+            haram_note += " -- discarded as mis-tagged"
+            ttm_int, haram_src = None, None
+            if "interest income" not in inc_miss:
+                inc_miss = list(inc_miss) + ["interest income"]
 
     if ttm_int is None and win_iso:
         _fl = _edgar_flows(symbol)

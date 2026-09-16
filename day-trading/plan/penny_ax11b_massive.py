@@ -355,8 +355,17 @@ def _interest_leg_pt(picked, ttm_rev):
     cap = INTINC_MAX_YIELD * base * (n / 4.0)
     if not any("intinc" in _q_miss(q) for q in picked):
         v = sum(q["intinc"] for q in picked)
+        pct = abs(v) / ttm_rev * 100
+        # the cap fires only where it is NEEDED -- see the long note at
+        # the same branch in day-trading.py::halal_check. It catches
+        # OVER-statements by construction, so a row that is implausible
+        # AND already under 5% is a conservative over-reading of a leg
+        # that is clear either way; discarding it would refuse a name
+        # that is provably clear.
         if base <= 0 or abs(v) <= cap:
-            return abs(v) / ttm_rev * 100, "filed"
+            return pct, "filed"
+        if pct < 5:
+            return pct, "filed (over the plausibility cap, kept)"
     if all(q.get("intinc_edgar") is not None for q in picked):
         v = sum(q["intinc_edgar"] for q in picked)
         return abs(v) / ttm_rev * 100, "edgar-interest"
