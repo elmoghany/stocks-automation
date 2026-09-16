@@ -6655,3 +6655,16 @@ across a batch; pressure skipped in gain rank modes -- both pure caches,
 checkpoints identical to the dollar): shards mx_r1 (MXA 1030/1100), mx_r2
 (MXA 1130/1200), mx_r3 (MXB, MTA, K3), mx_oos1 (aug2026 for all ranked).
 Controls follow once the ranked rows land.
+
+## OPS GAP 2026-09-09 → 2026-09-15: five trading days never launched (machine off/asleep)
+Task Scheduler last fired 09-08 06:20 (Day 22). The Windows System log shows
+unclean reboots / standby on 09-09 10:43, 09-13 19:17, 09-14 03:20 and session
+transitions on 09-15 — the PC was not awake at 06:20 on 09-09, 09-10, 09-11,
+09-14, 09-15. Recorded as OPS GAPS (not traded days, denominator unchanged).
+Fix applied 2026-09-16 00:30: both \Stocks\C37MorningLaunch and \Stocks\C37Watchdog
+now carry WakeToRun + StartWhenAvailable (+ run on battery); wake timers are
+enabled in the active power scheme (RTCWAKE index 1). A launch that starts
+late (StartWhenAvailable) is governed by the prompt's OUTAGE rules: log the
+gap, backfill nothing, trade only the remaining window.
+Live scoreboard unchanged: 19 scored days, cumulative −$4,428.41 (−$233/day)
+vs the −$272/day honest baseline (C37F-fm).
