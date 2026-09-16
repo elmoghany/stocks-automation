@@ -7038,3 +7038,262 @@ Compute: Cornell SLURM, /share/taylor/me484/stocks-rl, 56 array tasks
 (4 CPU / 24 GB), env throughput 4,357 steps/s. Local venv C:\cornell\venvs\rl
 (gymnasium 1.3.0, SB3 2.9.0, sb3-contrib 2.9.0, torch 2.14 CPU). The engine's
 Python was never touched and no broker call or order was made.
+
+## REGULAR-SESSION ELIGIBILITY EPOCH (2026-09-16): the universe leak closed, and what survives it
+The fix named in MX RETRACTION #2, applied and measured. A name is eligible
+at t only if a REGULAR-SESSION bar (>= 09:30, <= t) has printed High >=
+1.10 x prev_close -- the pool files' own membership rule -- so membership is
+implied by PAST information and nothing can be entered before 09:30
+(entry_start = max(t, cross)). Env gate `RS_CROSS`, DEFAULT 1; RS_CROSS=0
+reproduces the pre-epoch full-frame scan for the identity chain.
+
+CODE (all four files are this owner's; day-trading.py's engine, paper_watch.py,
+the skill, the launcher and the prompt were NOT touched):
+  * plan/rotation_sim.py `day_candidates`: the cross scan skips bars before
+    09:30 under RS_CROSS. `run_many` records rs_cross (and rs_defer) in every
+    result row, so no number can be quoted out of the wrong epoch.
+  * plan/rotation_sim.py `_entry_start(t, cross)` + `RS_DEFER` -- see THE
+    CROSS BAR below.
+  * plan/pool_hygiene.py rule 4 (`rs_epoch=True` only): a regular-session bar
+    whose Open breaks [0.5x, 2.0x] the previous bar's Close, on below-median
+    regular-session volume, with that Open >= 3x away from prev_close, is an
+    intraday reverse-split/relist -- drop and log as "intraday-split".
+  * plan/ic_study.py: the same eligibility; the premarket decision times
+    (07:30, 08:30) cannot have a row by construction and are dropped; outputs
+    go to their own cache/report so the pre-epoch study stays reproducible.
+  * plan/idgate.py: ROT_EXPECT + `--rot`, both epochs, old values kept.
+
+IDENTITY (the whole epoch rests on this): RS_CROSS=0 POOL_HYGIENE=1
+HALAL_STRICT=1 PT_FILED=1, shard rs_id -> C37F year -79,386 / y2025 -41,848
+= **-121,234 EXACT** (C37F-fm), 2,148 tickets, and /c/tmp/rs/id.log is
+line-for-line identical to the 2026-09-02 fill-model log /c/tmp/fm/c37.log
+(checkpoints, exit columns, deployed, ex_best, 2,171 dump legs). RS_DEFER's
+default-off refactor was separately proved byte-neutral on the 12-day smoke
+(C37F year -7,639 / y2025 -1,149, log identical). The epoch shift below is
+the eligibility rule and only the eligibility rule.
+
+### THE TABLE (both years, 445 traded days, POOL_HYGIENE=1 HALAL_STRICT=1 PT_FILED=1)
+  -fm = RS_CROSS=0 (a premarket cross makes a name eligible -- the leak)
+  -rs = RS_CROSS=1 (first REGULAR-SESSION +10% bar)
+  -df = RS_CROSS=1 + RS_DEFER=1 (entry in the bar AFTER that one)
+
+   config      total         Y1         Y2   tkts  $/tkt  $/t Y1  $/t Y2  $/day   negm   maxDD     best    worst   ex_best
+  C37F-fm   -121,234    -79,386    -41,848   2148    -56     -66     -44   -272  17/23  88,564  +11,667  -11,382  -132,901
+  C37F-rs    +28,352    +21,910     +6,442   2048    +14     +20      +7    +64  12/23  24,245  +13,379   -5,012   +14,973
+  C37F-df    -14,135    -10,919     -3,216   2038     -7     -10      -3    -32  10/23  42,348  +12,803   -5,012   -26,938
+  HOLD1-fm      -903    -14,387    +13,484    448     -2     -57     +69     -2  12/23  31,963  +26,832  -13,425   -27,735
+  HOLD1-rs   -50,852    -36,329    -14,523    448   -114    -144     -74   -114  11/23  45,494   +6,066  -13,323   -56,918
+  HOLD1-df  -103,158    -56,412    -46,746    448   -230    -224    -238   -232  15/23  66,424   +6,100  -13,263  -109,258
+  exits C37F-fm: bearish 1305/+479,100  stop 561/-539,345  scale-out 23/+23,103  window-close 282/-84,093
+  exits C37F-rs: bearish 1336/+502,762  stop 415/-401,585  scale-out 10/+10,878  window-close 297/-83,704
+  exits C37F-df: bearish 1329/+477,597  stop 414/-414,485  scale-out  8/+11,310  window-close 295/-88,557
+  exits HOLD1-*: window-close ONLY (asserted), 448 legs every epoch
+
+WHERE C37F's LOSS ACTUALLY WAS. Per-leg, by entry window, on the pre-epoch
+dump (rs_id, 2,171 legs): **premarket entries 691 legs / -112,494 (-$163/leg)**;
+all 1,480 regular-session legs together -8,740. C37F-fm's entire two-year loss
+was the premarket book, and the causal universe cannot take those trades -- a
+premarket gapper that faded before the regular session reached +10% is not in
+the pool at all, so the backtest only ever saw the premarket names that went
+on to work. Removing them is not a tweak; it deletes the column the -$272/day
+benchmark was made of.
+
+### THE CROSS BAR: why C37F-rs is NOT an edge
+`cross` is the bar whose HIGH proved eligibility, and the engine may still
+fill INSIDE that bar on a trigger level known before it. At the START of that
+bar the name was not eligible. Attribution on the C37F-rs dump, by entry
+offset from cross:
+   cross bar (+0)   274 legs  +31,799  (+$116/leg)
+   cross+1          148 legs   -3,237  (-$22)
+   cross+2..5       175 legs   -6,624  (-$38)
+   cross+6..30      571 legs     -917  (-$2)
+   cross+31..120    556 legs   -5,981  (-$11)
+   cross+>120       334 legs  +13,312  (+$40)
+The cross bar alone carries **more than the whole +28,352**. So RS_DEFER=1
+(entry_start = cross + 1 minute, the fwd_flat_nx convention that MX
+retraction #1 already imposed on market_at_start) was run as the control:
+0 legs in the cross bar by construction, and the cross+1 bucket -- the same
+names, one bar later -- turns into 363 legs / -16,659 (-$46/leg). C37F on a
+causally-defined universe AND a causally-defined fill is **-14,135 / -$7 per
+ticket / -$32 per traded day**. The +$14/ticket of C37F-rs was the one-bar
+look-ahead and nothing else.
+
+RESIDUAL CONDITIONING, SIZED NOT HAND-WAVED. discover_novol also requires the
+grouped-daily close > $0.20 and high >= $2.00. The $2 leg is already proven by
+the bar we act on whenever 1.10 x prev_close >= 2.00. On the C37F-rs dump that
+is 2,006 of 2,058 legs (97.5%); the 52 residual legs carry +5,506, so C37F-rs
+restricted to fully-causal membership is +22,846 (and C37F-df stays negative
+either way). MXB1130H-rs is 445/445 fully causal. The deep fix (rebuild the
+universe from premarket-inclusive flat files so fade-and-die gappers exist in
+the pool) is still not done and is still the only way to score a premarket
+entry honestly.
+
+POOL HYGIENE RULE 4 FIRED ZERO TIMES -- and the reason is worth keeping.
+Swept over every pool row that has bars (year 60,479 rows, plus y2025 and
+aug2026's 5,189): 0 intraday-split drops in the sweep and 0 across all 13
+shard runs. Only 21 rows in both years have ANY regular-session
+Open/prev-bar-Close break at all, and rule 4's three legs never co-occur:
+   DKI  2025-09-30 12:30  ratio 0.216  gap 5.12x  vol 19,753 vs med 508
+   CAPR 2025-12-03 09:30  ratio 4.115  gap 4.72x  vol 1,521,932 vs med 45,946
+   TCGL 2026-01-29 14:49  ratio 0.442  gap 5.78x  vol 65,878 vs med 4,621
+   CCTG 2026-06-09 11:22  ratio 0.453  gap 3.99x  vol 963,854 vs med 21,250
+   PGHL 2024-11-26 16:00  ratio 5.728  gap 11.39x vol 33,477 vs med 6,152
+   (+ ORIS, SPHL; the other 14 fail the 3x gap leg)
+Every plausible intraday split/relist prints on ABOVE-median volume -- which
+is what a relist bar should look like -- so the "below-median volume" leg is
+exactly what keeps rule 4 silent. The two rows that DO print quiet (CEAD,
+FOXO) are 1.0x gaps, i.e. not splits. Meanwhile rule 2 already catches these
+at the FIRST bar (1,339 ratio drops + 14,048 type drops per two-year pass;
+67 + 1,454 on aug2026). The rule is implemented, logged and inert on this
+universe; the volume leg is recorded as a spec question rather than quietly
+loosened, because loosening it would start dropping real high-volume moves.
+
+### MX-SERIES UNDER RS_CROSS=1: the prediction, tested
+   config      total         Y1         Y2   tkts  $/tkt   negm    maxDD   ex_best
+MXB1130H-fm  +181,210    +93,351    +87,859    447   +405   2/23   13,983  +168,546
+MXB1130H-rs   -73,784    -64,331     -9,453    445   -166  15/23   64,332   -80,734
+MXB1100H-fm  +159,158    +86,007    +73,151    443   +359   3/23   12,536  +146,956
+MXB1100H-rs   -77,667    -51,456    -26,211    445   -175  16/23   52,640   -85,939
+MXB1200H-fm  +178,900    +83,324    +95,576    447   +400   3/23   14,263  +170,537
+MXB1200H-rs  -104,945    -79,059    -25,886    445   -236  16/23   79,102  -110,569
+MXA1130H-fm   +51,864    +19,703    +32,161    443   +117   8/23   15,414   +46,097
+MXA1130H-rs   -50,033    -41,798     -8,235    442   -113  15/23   48,424   -55,800
+MXA1200H-fm   +61,885    +24,699    +37,186    444   +139   8/23   16,429   +56,546
+MXA1200H-rs   -43,649    -42,859       -790    442    -99  14/23   48,781   -48,477
+
+THE ASYMMETRY IS THERE, AND IT IS THE WHOLE ARGUMENT. The two inverted
+controls that had no pre-epoch leg were run under RS_CROSS=0 for this
+purpose (shard rs_inv0), so both halves are like-for-like:
+   config      ranked fm  ranked rs   delta  |   inv fm   inv rs   delta
+   MXB1130H         +405       -166    -571  |     -520     -526      -6
+   MXB1100H         +359       -175    -534  |        -     -508       -
+   MXB1200H         +400       -236    -636  |        -     -529       -
+   MXA1130H         +117       -113    -230  |     -338     -343      -5
+   MXA1200H         +139        -99    -238  |        -     -364       -
+The ranked (gain_asc, least-extended-first) configs move by $230-$636 per
+ticket. The inverted (gain_desc, most-extended-first) controls move by $5-$6.
+That is the retraction's mechanism made visible: only least-extended selection
+was cashing the future-conditioned membership -- buying the MOST extended
+crosser never depended on a print that had not happened yet, so closing the
+leak costs it nothing. The controls were blind precisely because they drew
+from the same contaminated set without exploiting the contamination.
+
+MXB1130H lands where the retraction's causal subset said it would: the audit
+measured -$33,128 over the 155 causally-established tickets (-$214/ticket);
+the re-run measures -$73,784 over 445 (-$166/ticket). Same sign, same size.
+Against its own 30-rep random control (median -94,052 / -$211 per ticket) it
+now sits at the **80th percentile** on total and ex_best -- inside the control
+band, under the pre-registered 90th-percentile bar. MXA1130H-rs is at the
+43rd. Not one MX row clears the pass bar; not one is positive in either year.
+
+AUGUST 2026 (22 sessions, RS_CROSS=1) is the one place the MX rows survive,
+and it does not rescue them: MXA1200H-rs +13,909 (+$632/tkt, 22 tickets),
+MXB1100H-rs +14,599 (+$695, 21), MXA1130H-rs +10,578 (+$529, 20),
+MXB1130H-rs +4,222 (+$201, 21), MXB1200H-rs +1,220 (+$55, 22). But the aug
+random control's OWN median is +$171 to +$269 per ticket -- August was kind to
+every hold -- and MXB1130H-rs@aug sits at the **37th percentile** of it.
+MXA1130H-rs@aug is at the 100th on 20 tickets. C37F-rs@aug -666, C37F-df@aug
+-4,884 (-$53/tkt), HOLD1-df@aug -3,382.
+
+### IC STUDY RE-RUN ON THE CAUSAL UNIVERSE (IC-STUDY-honest-pool-rs.md)
+189,965 rows over 444 days and FOUR decision times (the pre-epoch study had
+240,439 over six; 07:30 and 08:30 cannot exist now). Per decision time, new
+vs old: 09:35 26,535 / 33,208 ; 10:00 43,122 / 47,362 ; 10:30 53,796 / 56,959
+; 11:30 66,512 / 68,581. Surviving (feature, dt, target) cells: **209 of 864
+(24%) vs 526 of 1,296 (41%)**.
+
+`gain_now` -- the feature the whole MX/IC line was built on -- collapses:
+   dt     vs fwd_flat_nx (old -> new, t)        vs fwd_flat        survives?
+   09:35  -0.1820 (-26.6) -> -0.0300 (-4.1)   -0.2016 -> -0.0374   yes -> yes
+   10:00  -0.0996 (-16.5) -> -0.0123 (-2.0)   -0.1173 -> -0.0270   yes -> NO
+   10:30  -0.0610 (-10.7) -> -0.0054 (-0.9)   -0.0789 -> -0.0213   yes -> NO
+   11:30  -0.0319  (-6.1) -> -0.0016 (-0.3)   -0.0500 -> -0.0185   yes -> NO
+Five sixths of the |IC| at every liquid decision point was the leak.
+
+`c37_rank_score` FLIPS SIGN. The pre-epoch study's sharpest claim -- "the
+champion does not rank at random, it ranks BACKWARDS" -- does not survive:
+   dt     vs fwd_flat_nx (old -> new, t)
+   09:35  -0.0786 (-11.8) -> +0.0500 (+6.6)
+   10:00  -0.0329  (-5.6) -> +0.0366 (+5.9)
+   10:30  -0.0140  (-2.5) -> +0.0309 (+5.3)
+   11:30  -0.0087  (-1.7) -> +0.0162 (+3.1)
+Mean over the decision times -0.0433 -> **+0.0334**. C37's ordering key was
+measured as anti-predictive only because the names it put LAST were the ones
+the leaked universe was quietly guaranteeing. RETRACT that finding too.
+
+THE +2.52% CORNER IS GONE. Same cut, same code, same target (`gain_now` at
+10:00 ET, halal-PASS, price >= $3, top-1 pick, entry at the next print, hold
+to the 15:00 flatten):
+   pre-epoch:  +2.52% mean / +2.26% median / 60% win / 432 days / random -0.47% / median px $13.15
+   causal:     -2.06% mean / -1.05% median / 41% win / 429 days / random -1.29% / median px $14.70
+It does not merely shrink -- it inverts AND loses to a random pick from the
+same names on the same days. At 09:35 the same cut goes +5.50%/+6.04%/70% ->
+-2.40%/-1.99%/41%. The measurement was validated before it was believed: run
+against the OLD cache the same script reproduces +2.52 / +2.26 / 60% / 432
+days / -0.47% / $13.15 to the digit.
+The new report's own top feature is `corwin_schultz` (lowest first), whose
+10:00 halal >$3 corner is -0.74% mean against a -1.43% random pick: better
+than random, still money-losing gross, before the 0.11% median spread.
+NOTE on the report text: ic_study's section-7 prose is templated ("a positive
+median with a win rate above half...") and now reads against its own negative
+numbers. That template is not eligibility code and was left alone; read the
+figures, not the sentence.
+
+### VERDICT
+**On a causally-defined universe, does ANY config have positive expectancy per
+ticket? No.** Ranked by $/ticket with both the universe and the fill made
+causal (-df / RS_CROSS=1 + RS_DEFER=1, and for the MX family RS_CROSS=1, whose
+market_at_start fill is already deferred by retraction #1):
+   C37F-df       -7 /tkt  (-14,135 ; Y1 -10, Y2 -3)   <- least bad
+   MXA1200H-rs  -99 /tkt  (-43,649 ; Y1 -171, Y2 -4)
+   MXA1130H-rs -113 /tkt  (-50,033)
+   HOLD1-rs    -114 /tkt  (-50,852)
+   MXB1130H-rs -166 /tkt  (-73,784)
+   MXB1100H-rs -175 /tkt  (-77,667)
+   HOLD1-df    -230 /tkt  (-103,158)
+   MXB1200H-rs -236 /tkt  (-104,945)
+   every -I    -343 .. -529 /tkt
+Nothing is positive in both years. Nothing clears its random control's 90th
+percentile. The only positive two-year row in the whole set, C37F-rs at
++$14/ticket, is negative once the cross-bar fill is taken away. Three
+successive corrections -- the coverage backfill, the fill model, and now the
+universe -- have each removed an apparent edge and none has revealed one.
+The honest reading is unchanged in direction and firmer in evidence: the C37
+entry ruleset has no positive per-trade expectancy on this universe, and the
+mean-reversion re-rank that looked like the exception was reading tomorrow's
+tape.
+
+**NEW HONEST LIVE BASELINE for C37 rules: -$32 per traded day**
+(C37F-df, -14,135 over 445 traded days, -$7/ticket, 4.6 tickets/day).
+It REPLACES the -$272/day figure (C37F-fm), which is withdrawn: that number
+was three quarters premarket entries the causal pool is not entitled to make.
+Consequences the live campaign must absorb:
+  * The live scoreboard (19 scored days, cumulative -$4,428.41 = -$233/day)
+    was being read as "$39/day better than benchmark". Against -$32/day it is
+    **$201/day WORSE**. The live line is not beating the backtest; it was
+    being marked against a flattered one.
+  * The -df baseline contains NO premarket entries at all. Live sessions do
+    take them (Day 22 QCOM Trigger C is the most recent). Those trades have
+    no honest backtest baseline on this pool and must not be scored against
+    one until the premarket-inclusive universe is rebuilt.
+  * The live scorer is not this file owner's to change; flagged here, as the
+    2026-09-02 baseline note flagged its predecessor.
+
+## OPS / FILES (regular-session eligibility epoch 2026-09-16)
+Changed: plan/rotation_sim.py (RS_CROSS eligibility, _entry_start/RS_DEFER,
+rs_cross+rs_defer in every result row), plan/pool_hygiene.py (rule 4 +
+rs_epoch), plan/ic_study.py (eligibility, premarket decision times dropped,
+own cache/report/CSV), plan/idgate.py (ROT_EXPECT + --rot, both epochs, old
+values kept), NOTES-DAYTRADING.md (this section). Commits b87d6f5
+(eligibility), c858bd6 (RS_DEFER + byte-neutrality smoke), 52d415d (idgate).
+Nothing outside the owned set was touched: day-trading.py's engine,
+paper_watch.py, the skill, the launcher and the paper-day prompt are
+unmodified.
+Data: rotation_results_rs_{id,bench,bench_aug,mx,mx_aug,rA,rB,r_aug,inv0,def,
+def_aug,smoke,smoke2}.json, rotation_trades_*_rs_*.json,
+pool_hygiene_dropped_rs_*.json, data/massive/ic_study_rs/ (2 parquet shards +
+halal_flags + extract_meta), IC-STUDY-honest-pool-rs.md, ic_study_all_ics_rs.csv.
+Logs /c/tmp/rs/*.log (id, bench, bench_aug, mx, mx_aug, rA, rB, r_aug, inv0,
+def, def_aug, ic, smoke, smoke2, rule4_*). Reproduce any row with the env in
+plan/idgate.py's ROT_EXPECT comment; `python plan/idgate.py --rot` checks the
+anchors (and their env) without re-running anything.
