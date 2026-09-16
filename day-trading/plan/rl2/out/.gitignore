@@ -1,0 +1,13 @@
+# RL-SERIES v2: bulk intermediates are reproducible from
+# data/massive/gd + data/massive/m1w + the halal caches.
+# Small result tables, stats and the honesty report ARE tracked.
+days/
+universe/
+*.log
+*.npz
+screen.json.gz
+screen_syms.json
+rows.npz
+vol_profile.npy
+models/
+feat/

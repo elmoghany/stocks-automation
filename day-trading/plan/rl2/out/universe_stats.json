@@ -1,0 +1,3295 @@
+{
+ "rule": {
+  "start": "2024-10-22",
+  "end": "2026-08-06",
+  "lookback": 60,
+  "min_obs": 40,
+  "min_mdv": 2000000.0,
+  "min_mpx": 3.0
+ },
+ "shares_cache_calls": {
+  "exact": 35596,
+  "earlier": 616994,
+  "miss": 58,
+  "rl2": 543166,
+  "legacy": 109424
+ },
+ "per_date": {
+  "2024-10-22": {
+   "screen": 4041,
+   "labelled": 599,
+   "pt_halal": 538,
+   "shares": 599,
+   "pass": 45
+  },
+  "2024-10-23": {
+   "screen": 4042,
+   "labelled": 600,
+   "pt_halal": 539,
+   "shares": 600,
+   "pass": 44
+  },
+  "2024-10-24": {
+   "screen": 4041,
+   "labelled": 598,
+   "pt_halal": 537,
+   "shares": 598,
+   "pass": 43
+  },
+  "2024-10-25": {
+   "screen": 4039,
+   "labelled": 599,
+   "pt_halal": 538,
+   "shares": 599,
+   "pass": 43
+  },
+  "2024-10-28": {
+   "screen": 4038,
+   "labelled": 600,
+   "pt_halal": 539,
+   "shares": 600,
+   "pass": 43
+  },
+  "2024-10-29": {
+   "screen": 4031,
+   "labelled": 598,
+   "pt_halal": 538,
+   "shares": 598,
+   "pass": 45
+  },
+  "2024-10-30": {
+   "screen": 4023,
+   "labelled": 596,
+   "pt_halal": 536,
+   "shares": 596,
+   "pass": 45
+  },
+  "2024-10-31": {
+   "screen": 4020,
+   "labelled": 596,
+   "pt_halal": 537,
+   "shares": 596,
+   "pass": 43
+  },
+  "2024-11-01": {
+   "screen": 4022,
+   "labelled": 596,
+   "pt_halal": 536,
+   "shares": 596,
+   "pass": 43
+  },
+  "2024-11-04": {
+   "screen": 4027,
+   "labelled": 597,
+   "pt_halal": 537,
+   "shares": 597,
+   "pass": 44
+  },
+  "2024-11-05": {
+   "screen": 4031,
+   "labelled": 595,
+   "pt_halal": 535,
+   "shares": 595,
+   "pass": 44
+  },
+  "2024-11-06": {
+   "screen": 4030,
+   "labelled": 594,
+   "pt_halal": 533,
+   "shares": 594,
+   "pass": 44
+  },
+  "2024-11-07": {
+   "screen": 4043,
+   "labelled": 595,
+   "pt_halal": 533,
+   "shares": 595,
+   "pass": 47
+  },
+  "2024-11-08": {
+   "screen": 4052,
+   "labelled": 600,
+   "pt_halal": 538,
+   "shares": 600,
+   "pass": 44
+  },
+  "2024-11-11": {
+   "screen": 4060,
+   "labelled": 601,
+   "pt_halal": 538,
+   "shares": 601,
+   "pass": 41
+  },
+  "2024-11-12": {
+   "screen": 4068,
+   "labelled": 602,
+   "pt_halal": 539,
+   "shares": 602,
+   "pass": 43
+  },
+  "2024-11-13": {
+   "screen": 4079,
+   "labelled": 605,
+   "pt_halal": 542,
+   "shares": 605,
+   "pass": 39
+  },
+  "2024-11-14": {
+   "screen": 4082,
+   "labelled": 606,
+   "pt_halal": 543,
+   "shares": 606,
+   "pass": 39
+  },
+  "2024-11-15": {
+   "screen": 4093,
+   "labelled": 607,
+   "pt_halal": 544,
+   "shares": 607,
+   "pass": 41
+  },
+  "2024-11-18": {
+   "screen": 4100,
+   "labelled": 608,
+   "pt_halal": 545,
+   "shares": 608,
+   "pass": 38
+  },
+  "2024-11-19": {
+   "screen": 4101,
+   "labelled": 609,
+   "pt_halal": 546,
+   "shares": 609,
+   "pass": 40
+  },
+  "2024-11-20": {
+   "screen": 4108,
+   "labelled": 611,
+   "pt_halal": 548,
+   "shares": 611,
+   "pass": 40
+  },
+  "2024-11-21": {
+   "screen": 4113,
+   "labelled": 612,
+   "pt_halal": 549,
+   "shares": 612,
+   "pass": 40
+  },
+  "2024-11-22": {
+   "screen": 4118,
+   "labelled": 614,
+   "pt_halal": 551,
+   "shares": 614,
+   "pass": 42
+  },
+  "2024-11-25": {
+   "screen": 4118,
+   "labelled": 616,
+   "pt_halal": 553,
+   "shares": 616,
+   "pass": 43
+  },
+  "2024-11-26": {
+   "screen": 4130,
+   "labelled": 620,
+   "pt_halal": 556,
+   "shares": 620,
+   "pass": 49
+  },
+  "2024-11-27": {
+   "screen": 4136,
+   "labelled": 622,
+   "pt_halal": 556,
+   "shares": 622,
+   "pass": 46
+  },
+  "2024-11-28": {
+   "screen": 4140,
+   "labelled": 624,
+   "pt_halal": 558,
+   "shares": 624,
+   "pass": 50
+  },
+  "2024-11-29": {
+   "screen": 4140,
+   "labelled": 0,
+   "pt_halal": 0,
+   "shares": 0,
+   "pass": 0
+  },
+  "2024-12-02": {
+   "screen": 4132,
+   "labelled": 627,
+   "pt_halal": 561,
+   "shares": 627,
+   "pass": 48
+  },
+  "2024-12-03": {
+   "screen": 4136,
+   "labelled": 627,
+   "pt_halal": 561,
+   "shares": 627,
+   "pass": 49
+  },
+  "2024-12-04": {
+   "screen": 4145,
+   "labelled": 629,
+   "pt_halal": 563,
+   "shares": 629,
+   "pass": 49
+  },
+  "2024-12-05": {
+   "screen": 4153,
+   "labelled": 632,
+   "pt_halal": 566,
+   "shares": 632,
+   "pass": 48
+  },
+  "2024-12-06": {
+   "screen": 4156,
+   "labelled": 630,
+   "pt_halal": 563,
+   "shares": 630,
+   "pass": 48
+  },
+  "2024-12-09": {
+   "screen": 4158,
+   "labelled": 631,
+   "pt_halal": 564,
+   "shares": 631,
+   "pass": 49
+  },
+  "2024-12-10": {
+   "screen": 4163,
+   "labelled": 632,
+   "pt_halal": 564,
+   "shares": 632,
+   "pass": 49
+  },
+  "2024-12-11": {
+   "screen": 4173,
+   "labelled": 638,
+   "pt_halal": 568,
+   "shares": 638,
+   "pass": 50
+  },
+  "2024-12-12": {
+   "screen": 4177,
+   "labelled": 640,
+   "pt_halal": 570,
+   "shares": 640,
+   "pass": 51
+  },
+  "2024-12-13": {
+   "screen": 4180,
+   "labelled": 641,
+   "pt_halal": 571,
+   "shares": 641,
+   "pass": 50
+  },
+  "2024-12-16": {
+   "screen": 4180,
+   "labelled": 637,
+   "pt_halal": 567,
+   "shares": 637,
+   "pass": 51
+  },
+  "2024-12-17": {
+   "screen": 4190,
+   "labelled": 640,
+   "pt_halal": 568,
+   "shares": 640,
+   "pass": 50
+  },
+  "2024-12-18": {
+   "screen": 4194,
+   "labelled": 641,
+   "pt_halal": 568,
+   "shares": 641,
+   "pass": 49
+  },
+  "2024-12-19": {
+   "screen": 4195,
+   "labelled": 643,
+   "pt_halal": 570,
+   "shares": 643,
+   "pass": 47
+  },
+  "2024-12-20": {
+   "screen": 4207,
+   "labelled": 647,
+   "pt_halal": 574,
+   "shares": 647,
+   "pass": 47
+  },
+  "2024-12-23": {
+   "screen": 4212,
+   "labelled": 649,
+   "pt_halal": 576,
+   "shares": 649,
+   "pass": 45
+  },
+  "2024-12-24": {
+   "screen": 4217,
+   "labelled": 649,
+   "pt_halal": 576,
+   "shares": 649,
+   "pass": 47
+  },
+  "2024-12-25": {
+   "screen": 4211,
+   "labelled": 649,
+   "pt_halal": 577,
+   "shares": 649,
+   "pass": 48
+  },
+  "2024-12-26": {
+   "screen": 4215,
+   "labelled": 0,
+   "pt_halal": 0,
+   "shares": 0,
+   "pass": 0
+  },
+  "2024-12-27": {
+   "screen": 4218,
+   "labelled": 654,
+   "pt_halal": 581,
+   "shares": 654,
+   "pass": 49
+  },
+  "2024-12-30": {
+   "screen": 4224,
+   "labelled": 653,
+   "pt_halal": 581,
+   "shares": 653,
+   "pass": 46
+  },
+  "2024-12-31": {
+   "screen": 4235,
+   "labelled": 652,
+   "pt_halal": 580,
+   "shares": 652,
+   "pass": 43
+  },
+  "2025-01-01": {
+   "screen": 4242,
+   "labelled": 655,
+   "pt_halal": 581,
+   "shares": 655,
+   "pass": 45
+  },
+  "2025-01-02": {
+   "screen": 4254,
+   "labelled": 0,
+   "pt_halal": 0,
+   "shares": 0,
+   "pass": 0
+  },
+  "2025-01-03": {
+   "screen": 4264,
+   "labelled": 659,
+   "pt_halal": 585,
+   "shares": 659,
+   "pass": 48
+  },
+  "2025-01-06": {
+   "screen": 4273,
+   "labelled": 663,
+   "pt_halal": 589,
+   "shares": 663,
+   "pass": 50
+  },
+  "2025-01-07": {
+   "screen": 4285,
+   "labelled": 666,
+   "pt_halal": 592,
+   "shares": 666,
+   "pass": 52
+  },
+  "2025-01-08": {
+   "screen": 4294,
+   "labelled": 667,
+   "pt_halal": 593,
+   "shares": 667,
+   "pass": 50
+  },
+  "2025-01-09": {
+   "screen": 4289,
+   "labelled": 667,
+   "pt_halal": 592,
+   "shares": 667,
+   "pass": 49
+  },
+  "2025-01-10": {
+   "screen": 4291,
+   "labelled": 0,
+   "pt_halal": 0,
+   "shares": 0,
+   "pass": 0
+  },
+  "2025-01-13": {
+   "screen": 4294,
+   "labelled": 669,
+   "pt_halal": 593,
+   "shares": 668,
+   "pass": 45
+  },
+  "2025-01-14": {
+   "screen": 4298,
+   "labelled": 669,
+   "pt_halal": 592,
+   "shares": 668,
+   "pass": 44
+  },
+  "2025-01-15": {
+   "screen": 4302,
+   "labelled": 671,
+   "pt_halal": 593,
+   "shares": 670,
+   "pass": 44
+  },
+  "2025-01-16": {
+   "screen": 4312,
+   "labelled": 671,
+   "pt_halal": 593,
+   "shares": 670,
+   "pass": 45
+  },
+  "2025-01-17": {
+   "screen": 4321,
+   "labelled": 674,
+   "pt_halal": 596,
+   "shares": 673,
+   "pass": 45
+  },
+  "2025-01-20": {
+   "screen": 4321,
+   "labelled": 674,
+   "pt_halal": 597,
+   "shares": 673,
+   "pass": 46
+  },
+  "2025-01-21": {
+   "screen": 4326,
+   "labelled": 0,
+   "pt_halal": 0,
+   "shares": 0,
+   "pass": 0
+  },
+  "2025-01-22": {
+   "screen": 4333,
+   "labelled": 672,
+   "pt_halal": 595,
+   "shares": 671,
+   "pass": 45
+  },
+  "2025-01-23": {
+   "screen": 4332,
+   "labelled": 670,
+   "pt_halal": 593,
+   "shares": 670,
+   "pass": 44
+  },
+  "2025-01-24": {
+   "screen": 4338,
+   "labelled": 674,
+   "pt_halal": 595,
+   "shares": 674,
+   "pass": 43
+  },
+  "2025-01-27": {
+   "screen": 4346,
+   "labelled": 677,
+   "pt_halal": 597,
+   "shares": 677,
+   "pass": 43
+  },
+  "2025-01-28": {
+   "screen": 4342,
+   "labelled": 677,
+   "pt_halal": 596,
+   "shares": 677,
+   "pass": 44
+  },
+  "2025-01-29": {
+   "screen": 4344,
+   "labelled": 680,
+   "pt_halal": 598,
+   "shares": 680,
+   "pass": 47
+  },
+  "2025-01-30": {
+   "screen": 4338,
+   "labelled": 679,
+   "pt_halal": 597,
+   "shares": 679,
+   "pass": 45
+  },
+  "2025-01-31": {
+   "screen": 4334,
+   "labelled": 675,
+   "pt_halal": 594,
+   "shares": 675,
+   "pass": 45
+  },
+  "2025-02-03": {
+   "screen": 4333,
+   "labelled": 675,
+   "pt_halal": 593,
+   "shares": 675,
+   "pass": 44
+  },
+  "2025-02-04": {
+   "screen": 4337,
+   "labelled": 674,
+   "pt_halal": 591,
+   "shares": 674,
+   "pass": 44
+  },
+  "2025-02-05": {
+   "screen": 4335,
+   "labelled": 673,
+   "pt_halal": 590,
+   "shares": 673,
+   "pass": 44
+  },
+  "2025-02-06": {
+   "screen": 4332,
+   "labelled": 672,
+   "pt_halal": 589,
+   "shares": 672,
+   "pass": 44
+  },
+  "2025-02-07": {
+   "screen": 4334,
+   "labelled": 672,
+   "pt_halal": 589,
+   "shares": 672,
+   "pass": 44
+  },
+  "2025-02-10": {
+   "screen": 4335,
+   "labelled": 671,
+   "pt_halal": 588,
+   "shares": 671,
+   "pass": 45
+  },
+  "2025-02-11": {
+   "screen": 4332,
+   "labelled": 670,
+   "pt_halal": 589,
+   "shares": 670,
+   "pass": 46
+  },
+  "2025-02-12": {
+   "screen": 4337,
+   "labelled": 673,
+   "pt_halal": 591,
+   "shares": 673,
+   "pass": 46
+  },
+  "2025-02-13": {
+   "screen": 4342,
+   "labelled": 673,
+   "pt_halal": 591,
+   "shares": 673,
+   "pass": 48
+  },
+  "2025-02-14": {
+   "screen": 4345,
+   "labelled": 676,
+   "pt_halal": 595,
+   "shares": 676,
+   "pass": 49
+  },
+  "2025-02-17": {
+   "screen": 4347,
+   "labelled": 675,
+   "pt_halal": 595,
+   "shares": 675,
+   "pass": 48
+  },
+  "2025-02-18": {
+   "screen": 4344,
+   "labelled": 0,
+   "pt_halal": 0,
+   "shares": 0,
+   "pass": 0
+  },
+  "2025-02-19": {
+   "screen": 4342,
+   "labelled": 675,
+   "pt_halal": 594,
+   "shares": 675,
+   "pass": 51
+  },
+  "2025-02-20": {
+   "screen": 4345,
+   "labelled": 674,
+   "pt_halal": 593,
+   "shares": 674,
+   "pass": 53
+  },
+  "2025-02-21": {
+   "screen": 4346,
+   "labelled": 673,
+   "pt_halal": 591,
+   "shares": 673,
+   "pass": 54
+  },
+  "2025-02-24": {
+   "screen": 4350,
+   "labelled": 674,
+   "pt_halal": 593,
+   "shares": 674,
+   "pass": 48
+  },
+  "2025-02-25": {
+   "screen": 4344,
+   "labelled": 672,
+   "pt_halal": 592,
+   "shares": 672,
+   "pass": 48
+  },
+  "2025-02-26": {
+   "screen": 4346,
+   "labelled": 669,
+   "pt_halal": 589,
+   "shares": 669,
+   "pass": 47
+  },
+  "2025-02-27": {
+   "screen": 4344,
+   "labelled": 668,
+   "pt_halal": 589,
+   "shares": 668,
+   "pass": 49
+  },
+  "2025-02-28": {
+   "screen": 4335,
+   "labelled": 667,
+   "pt_halal": 588,
+   "shares": 667,
+   "pass": 47
+  },
+  "2025-03-03": {
+   "screen": 4342,
+   "labelled": 664,
+   "pt_halal": 585,
+   "shares": 664,
+   "pass": 47
+  },
+  "2025-03-04": {
+   "screen": 4349,
+   "labelled": 665,
+   "pt_halal": 586,
+   "shares": 665,
+   "pass": 44
+  },
+  "2025-03-05": {
+   "screen": 4352,
+   "labelled": 664,
+   "pt_halal": 585,
+   "shares": 664,
+   "pass": 44
+  },
+  "2025-03-06": {
+   "screen": 4353,
+   "labelled": 666,
+   "pt_halal": 588,
+   "shares": 666,
+   "pass": 46
+  },
+  "2025-03-07": {
+   "screen": 4361,
+   "labelled": 667,
+   "pt_halal": 589,
+   "shares": 667,
+   "pass": 46
+  },
+  "2025-03-10": {
+   "screen": 4362,
+   "labelled": 668,
+   "pt_halal": 590,
+   "shares": 668,
+   "pass": 47
+  },
+  "2025-03-11": {
+   "screen": 4366,
+   "labelled": 670,
+   "pt_halal": 593,
+   "shares": 670,
+   "pass": 42
+  },
+  "2025-03-12": {
+   "screen": 4370,
+   "labelled": 669,
+   "pt_halal": 592,
+   "shares": 669,
+   "pass": 42
+  },
+  "2025-03-13": {
+   "screen": 4368,
+   "labelled": 671,
+   "pt_halal": 594,
+   "shares": 671,
+   "pass": 44
+  },
+  "2025-03-14": {
+   "screen": 4363,
+   "labelled": 670,
+   "pt_halal": 593,
+   "shares": 670,
+   "pass": 41
+  },
+  "2025-03-17": {
+   "screen": 4359,
+   "labelled": 668,
+   "pt_halal": 591,
+   "shares": 668,
+   "pass": 44
+  },
+  "2025-03-18": {
+   "screen": 4357,
+   "labelled": 669,
+   "pt_halal": 592,
+   "shares": 669,
+   "pass": 44
+  },
+  "2025-03-19": {
+   "screen": 4357,
+   "labelled": 671,
+   "pt_halal": 594,
+   "shares": 671,
+   "pass": 42
+  },
+  "2025-03-20": {
+   "screen": 4357,
+   "labelled": 672,
+   "pt_halal": 594,
+   "shares": 672,
+   "pass": 44
+  },
+  "2025-03-21": {
+   "screen": 4358,
+   "labelled": 669,
+   "pt_halal": 591,
+   "shares": 669,
+   "pass": 44
+  },
+  "2025-03-24": {
+   "screen": 4365,
+   "labelled": 672,
+   "pt_halal": 593,
+   "shares": 672,
+   "pass": 44
+  },
+  "2025-03-25": {
+   "screen": 4353,
+   "labelled": 669,
+   "pt_halal": 592,
+   "shares": 669,
+   "pass": 45
+  },
+  "2025-03-26": {
+   "screen": 4338,
+   "labelled": 668,
+   "pt_halal": 591,
+   "shares": 668,
+   "pass": 45
+  },
+  "2025-03-27": {
+   "screen": 4332,
+   "labelled": 668,
+   "pt_halal": 591,
+   "shares": 668,
+   "pass": 44
+  },
+  "2025-03-28": {
+   "screen": 4327,
+   "labelled": 668,
+   "pt_halal": 592,
+   "shares": 668,
+   "pass": 44
+  },
+  "2025-03-31": {
+   "screen": 4332,
+   "labelled": 669,
+   "pt_halal": 592,
+   "shares": 669,
+   "pass": 42
+  },
+  "2025-04-01": {
+   "screen": 4332,
+   "labelled": 666,
+   "pt_halal": 590,
+   "shares": 666,
+   "pass": 42
+  },
+  "2025-04-02": {
+   "screen": 4328,
+   "labelled": 664,
+   "pt_halal": 589,
+   "shares": 664,
+   "pass": 42
+  },
+  "2025-04-03": {
+   "screen": 4333,
+   "labelled": 665,
+   "pt_halal": 590,
+   "shares": 665,
+   "pass": 43
+  },
+  "2025-04-04": {
+   "screen": 4341,
+   "labelled": 664,
+   "pt_halal": 590,
+   "shares": 664,
+   "pass": 39
+  },
+  "2025-04-07": {
+   "screen": 4342,
+   "labelled": 662,
+   "pt_halal": 588,
+   "shares": 662,
+   "pass": 32
+  },
+  "2025-04-08": {
+   "screen": 4350,
+   "labelled": 660,
+   "pt_halal": 587,
+   "shares": 660,
+   "pass": 34
+  },
+  "2025-04-09": {
+   "screen": 4359,
+   "labelled": 660,
+   "pt_halal": 586,
+   "shares": 660,
+   "pass": 30
+  },
+  "2025-04-10": {
+   "screen": 4372,
+   "labelled": 659,
+   "pt_halal": 585,
+   "shares": 659,
+   "pass": 39
+  },
+  "2025-04-11": {
+   "screen": 4377,
+   "labelled": 661,
+   "pt_halal": 587,
+   "shares": 661,
+   "pass": 33
+  },
+  "2025-04-14": {
+   "screen": 4371,
+   "labelled": 654,
+   "pt_halal": 581,
+   "shares": 654,
+   "pass": 34
+  },
+  "2025-04-15": {
+   "screen": 4369,
+   "labelled": 651,
+   "pt_halal": 579,
+   "shares": 651,
+   "pass": 35
+  },
+  "2025-04-16": {
+   "screen": 4366,
+   "labelled": 650,
+   "pt_halal": 578,
+   "shares": 650,
+   "pass": 36
+  },
+  "2025-04-17": {
+   "screen": 4358,
+   "labelled": 647,
+   "pt_halal": 575,
+   "shares": 647,
+   "pass": 33
+  },
+  "2025-04-18": {
+   "screen": 4356,
+   "labelled": 643,
+   "pt_halal": 572,
+   "shares": 643,
+   "pass": 35
+  },
+  "2025-04-21": {
+   "screen": 4360,
+   "labelled": 0,
+   "pt_halal": 0,
+   "shares": 0,
+   "pass": 0
+  },
+  "2025-04-22": {
+   "screen": 4363,
+   "labelled": 641,
+   "pt_halal": 571,
+   "shares": 641,
+   "pass": 32
+  },
+  "2025-04-23": {
+   "screen": 4363,
+   "labelled": 641,
+   "pt_halal": 571,
+   "shares": 641,
+   "pass": 36
+  },
+  "2025-04-24": {
+   "screen": 4363,
+   "labelled": 639,
+   "pt_halal": 569,
+   "shares": 639,
+   "pass": 38
+  },
+  "2025-04-25": {
+   "screen": 4364,
+   "labelled": 639,
+   "pt_halal": 568,
+   "shares": 639,
+   "pass": 40
+  },
+  "2025-04-28": {
+   "screen": 4356,
+   "labelled": 638,
+   "pt_halal": 568,
+   "shares": 638,
+   "pass": 40
+  },
+  "2025-04-29": {
+   "screen": 4348,
+   "labelled": 638,
+   "pt_halal": 568,
+   "shares": 638,
+   "pass": 40
+  },
+  "2025-04-30": {
+   "screen": 4344,
+   "labelled": 636,
+   "pt_halal": 566,
+   "shares": 636,
+   "pass": 40
+  },
+  "2025-05-01": {
+   "screen": 4341,
+   "labelled": 636,
+   "pt_halal": 567,
+   "shares": 636,
+   "pass": 39
+  },
+  "2025-05-02": {
+   "screen": 4335,
+   "labelled": 637,
+   "pt_halal": 567,
+   "shares": 637,
+   "pass": 41
+  },
+  "2025-05-05": {
+   "screen": 4333,
+   "labelled": 637,
+   "pt_halal": 567,
+   "shares": 637,
+   "pass": 40
+  },
+  "2025-05-06": {
+   "screen": 4335,
+   "labelled": 638,
+   "pt_halal": 568,
+   "shares": 638,
+   "pass": 39
+  },
+  "2025-05-07": {
+   "screen": 4332,
+   "labelled": 636,
+   "pt_halal": 566,
+   "shares": 636,
+   "pass": 37
+  },
+  "2025-05-08": {
+   "screen": 4332,
+   "labelled": 636,
+   "pt_halal": 567,
+   "shares": 636,
+   "pass": 36
+  },
+  "2025-05-09": {
+   "screen": 4336,
+   "labelled": 638,
+   "pt_halal": 569,
+   "shares": 638,
+   "pass": 39
+  },
+  "2025-05-12": {
+   "screen": 4335,
+   "labelled": 638,
+   "pt_halal": 569,
+   "shares": 638,
+   "pass": 40
+  },
+  "2025-05-13": {
+   "screen": 4343,
+   "labelled": 639,
+   "pt_halal": 570,
+   "shares": 639,
+   "pass": 45
+  },
+  "2025-05-14": {
+   "screen": 4338,
+   "labelled": 640,
+   "pt_halal": 570,
+   "shares": 640,
+   "pass": 44
+  },
+  "2025-05-15": {
+   "screen": 4341,
+   "labelled": 640,
+   "pt_halal": 570,
+   "shares": 640,
+   "pass": 44
+  },
+  "2025-05-16": {
+   "screen": 4332,
+   "labelled": 635,
+   "pt_halal": 564,
+   "shares": 635,
+   "pass": 43
+  },
+  "2025-05-19": {
+   "screen": 4325,
+   "labelled": 636,
+   "pt_halal": 564,
+   "shares": 636,
+   "pass": 45
+  },
+  "2025-05-20": {
+   "screen": 4324,
+   "labelled": 632,
+   "pt_halal": 561,
+   "shares": 632,
+   "pass": 46
+  },
+  "2025-05-21": {
+   "screen": 4317,
+   "labelled": 632,
+   "pt_halal": 561,
+   "shares": 632,
+   "pass": 46
+  },
+  "2025-05-22": {
+   "screen": 4328,
+   "labelled": 635,
+   "pt_halal": 564,
+   "shares": 635,
+   "pass": 43
+  },
+  "2025-05-23": {
+   "screen": 4331,
+   "labelled": 636,
+   "pt_halal": 564,
+   "shares": 636,
+   "pass": 44
+  },
+  "2025-05-26": {
+   "screen": 4332,
+   "labelled": 636,
+   "pt_halal": 564,
+   "shares": 636,
+   "pass": 43
+  },
+  "2025-05-27": {
+   "screen": 4326,
+   "labelled": 0,
+   "pt_halal": 0,
+   "shares": 0,
+   "pass": 0
+  },
+  "2025-05-28": {
+   "screen": 4320,
+   "labelled": 635,
+   "pt_halal": 563,
+   "shares": 635,
+   "pass": 46
+  },
+  "2025-05-29": {
+   "screen": 4322,
+   "labelled": 636,
+   "pt_halal": 564,
+   "shares": 636,
+   "pass": 46
+  },
+  "2025-05-30": {
+   "screen": 4315,
+   "labelled": 634,
+   "pt_halal": 561,
+   "shares": 634,
+   "pass": 45
+  },
+  "2025-06-02": {
+   "screen": 4310,
+   "labelled": 630,
+   "pt_halal": 558,
+   "shares": 630,
+   "pass": 44
+  },
+  "2025-06-03": {
+   "screen": 4313,
+   "labelled": 633,
+   "pt_halal": 560,
+   "shares": 633,
+   "pass": 45
+  },
+  "2025-06-04": {
+   "screen": 4305,
+   "labelled": 633,
+   "pt_halal": 560,
+   "shares": 633,
+   "pass": 46
+  },
+  "2025-06-05": {
+   "screen": 4313,
+   "labelled": 636,
+   "pt_halal": 561,
+   "shares": 636,
+   "pass": 46
+  },
+  "2025-06-06": {
+   "screen": 4312,
+   "labelled": 637,
+   "pt_halal": 562,
+   "shares": 637,
+   "pass": 46
+  },
+  "2025-06-09": {
+   "screen": 4311,
+   "labelled": 638,
+   "pt_halal": 563,
+   "shares": 638,
+   "pass": 46
+  },
+  "2025-06-10": {
+   "screen": 4306,
+   "labelled": 639,
+   "pt_halal": 563,
+   "shares": 639,
+   "pass": 45
+  },
+  "2025-06-11": {
+   "screen": 4304,
+   "labelled": 639,
+   "pt_halal": 564,
+   "shares": 639,
+   "pass": 47
+  },
+  "2025-06-12": {
+   "screen": 4301,
+   "labelled": 640,
+   "pt_halal": 565,
+   "shares": 640,
+   "pass": 46
+  },
+  "2025-06-13": {
+   "screen": 4301,
+   "labelled": 638,
+   "pt_halal": 564,
+   "shares": 638,
+   "pass": 47
+  },
+  "2025-06-16": {
+   "screen": 4303,
+   "labelled": 637,
+   "pt_halal": 563,
+   "shares": 637,
+   "pass": 46
+  },
+  "2025-06-17": {
+   "screen": 4302,
+   "labelled": 639,
+   "pt_halal": 565,
+   "shares": 639,
+   "pass": 48
+  },
+  "2025-06-18": {
+   "screen": 4304,
+   "labelled": 640,
+   "pt_halal": 566,
+   "shares": 640,
+   "pass": 47
+  },
+  "2025-06-19": {
+   "screen": 4309,
+   "labelled": 640,
+   "pt_halal": 565,
+   "shares": 640,
+   "pass": 47
+  },
+  "2025-06-20": {
+   "screen": 4319,
+   "labelled": 0,
+   "pt_halal": 0,
+   "shares": 0,
+   "pass": 0
+  },
+  "2025-06-23": {
+   "screen": 4319,
+   "labelled": 645,
+   "pt_halal": 570,
+   "shares": 645,
+   "pass": 47
+  },
+  "2025-06-24": {
+   "screen": 4318,
+   "labelled": 646,
+   "pt_halal": 571,
+   "shares": 646,
+   "pass": 50
+  },
+  "2025-06-25": {
+   "screen": 4319,
+   "labelled": 647,
+   "pt_halal": 573,
+   "shares": 647,
+   "pass": 50
+  },
+  "2025-06-26": {
+   "screen": 4317,
+   "labelled": 648,
+   "pt_halal": 574,
+   "shares": 648,
+   "pass": 49
+  },
+  "2025-06-27": {
+   "screen": 4312,
+   "labelled": 646,
+   "pt_halal": 573,
+   "shares": 646,
+   "pass": 50
+  },
+  "2025-06-30": {
+   "screen": 4313,
+   "labelled": 646,
+   "pt_halal": 573,
+   "shares": 646,
+   "pass": 50
+  },
+  "2025-07-01": {
+   "screen": 4313,
+   "labelled": 646,
+   "pt_halal": 572,
+   "shares": 646,
+   "pass": 51
+  },
+  "2025-07-02": {
+   "screen": 4314,
+   "labelled": 647,
+   "pt_halal": 572,
+   "shares": 647,
+   "pass": 50
+  },
+  "2025-07-03": {
+   "screen": 4312,
+   "labelled": 648,
+   "pt_halal": 573,
+   "shares": 648,
+   "pass": 52
+  },
+  "2025-07-04": {
+   "screen": 4309,
+   "labelled": 651,
+   "pt_halal": 576,
+   "shares": 651,
+   "pass": 53
+  },
+  "2025-07-07": {
+   "screen": 4308,
+   "labelled": 0,
+   "pt_halal": 0,
+   "shares": 0,
+   "pass": 0
+  },
+  "2025-07-08": {
+   "screen": 4310,
+   "labelled": 653,
+   "pt_halal": 578,
+   "shares": 653,
+   "pass": 52
+  },
+  "2025-07-09": {
+   "screen": 4316,
+   "labelled": 654,
+   "pt_halal": 578,
+   "shares": 654,
+   "pass": 52
+  },
+  "2025-07-10": {
+   "screen": 4323,
+   "labelled": 656,
+   "pt_halal": 580,
+   "shares": 656,
+   "pass": 53
+  },
+  "2025-07-11": {
+   "screen": 4327,
+   "labelled": 658,
+   "pt_halal": 582,
+   "shares": 658,
+   "pass": 53
+  },
+  "2025-07-14": {
+   "screen": 4329,
+   "labelled": 658,
+   "pt_halal": 582,
+   "shares": 658,
+   "pass": 52
+  },
+  "2025-07-15": {
+   "screen": 4334,
+   "labelled": 661,
+   "pt_halal": 585,
+   "shares": 661,
+   "pass": 52
+  },
+  "2025-07-16": {
+   "screen": 4349,
+   "labelled": 668,
+   "pt_halal": 588,
+   "shares": 668,
+   "pass": 52
+  },
+  "2025-07-17": {
+   "screen": 4347,
+   "labelled": 670,
+   "pt_halal": 590,
+   "shares": 670,
+   "pass": 52
+  },
+  "2025-07-18": {
+   "screen": 4346,
+   "labelled": 672,
+   "pt_halal": 591,
+   "shares": 672,
+   "pass": 53
+  },
+  "2025-07-21": {
+   "screen": 4354,
+   "labelled": 675,
+   "pt_halal": 594,
+   "shares": 675,
+   "pass": 53
+  },
+  "2025-07-22": {
+   "screen": 4361,
+   "labelled": 679,
+   "pt_halal": 598,
+   "shares": 679,
+   "pass": 54
+  },
+  "2025-07-23": {
+   "screen": 4366,
+   "labelled": 679,
+   "pt_halal": 598,
+   "shares": 679,
+   "pass": 54
+  },
+  "2025-07-24": {
+   "screen": 4369,
+   "labelled": 680,
+   "pt_halal": 598,
+   "shares": 680,
+   "pass": 54
+  },
+  "2025-07-25": {
+   "screen": 4371,
+   "labelled": 682,
+   "pt_halal": 599,
+   "shares": 682,
+   "pass": 54
+  },
+  "2025-07-28": {
+   "screen": 4366,
+   "labelled": 685,
+   "pt_halal": 602,
+   "shares": 685,
+   "pass": 54
+  },
+  "2025-07-29": {
+   "screen": 4372,
+   "labelled": 686,
+   "pt_halal": 603,
+   "shares": 686,
+   "pass": 53
+  },
+  "2025-07-30": {
+   "screen": 4378,
+   "labelled": 686,
+   "pt_halal": 603,
+   "shares": 686,
+   "pass": 54
+  },
+  "2025-07-31": {
+   "screen": 4381,
+   "labelled": 687,
+   "pt_halal": 604,
+   "shares": 687,
+   "pass": 53
+  },
+  "2025-08-01": {
+   "screen": 4391,
+   "labelled": 689,
+   "pt_halal": 606,
+   "shares": 689,
+   "pass": 54
+  },
+  "2025-08-04": {
+   "screen": 4399,
+   "labelled": 690,
+   "pt_halal": 606,
+   "shares": 690,
+   "pass": 52
+  },
+  "2025-08-05": {
+   "screen": 4391,
+   "labelled": 689,
+   "pt_halal": 606,
+   "shares": 689,
+   "pass": 55
+  },
+  "2025-08-06": {
+   "screen": 4391,
+   "labelled": 688,
+   "pt_halal": 605,
+   "shares": 688,
+   "pass": 55
+  },
+  "2025-08-07": {
+   "screen": 4392,
+   "labelled": 688,
+   "pt_halal": 604,
+   "shares": 688,
+   "pass": 52
+  },
+  "2025-08-08": {
+   "screen": 4400,
+   "labelled": 690,
+   "pt_halal": 606,
+   "shares": 690,
+   "pass": 51
+  },
+  "2025-08-11": {
+   "screen": 4404,
+   "labelled": 692,
+   "pt_halal": 608,
+   "shares": 692,
+   "pass": 59
+  },
+  "2025-08-12": {
+   "screen": 4407,
+   "labelled": 693,
+   "pt_halal": 607,
+   "shares": 693,
+   "pass": 58
+  },
+  "2025-08-13": {
+   "screen": 4408,
+   "labelled": 695,
+   "pt_halal": 609,
+   "shares": 695,
+   "pass": 60
+  },
+  "2025-08-14": {
+   "screen": 4408,
+   "labelled": 697,
+   "pt_halal": 610,
+   "shares": 697,
+   "pass": 61
+  },
+  "2025-08-15": {
+   "screen": 4414,
+   "labelled": 697,
+   "pt_halal": 610,
+   "shares": 697,
+   "pass": 60
+  },
+  "2025-08-18": {
+   "screen": 4410,
+   "labelled": 701,
+   "pt_halal": 615,
+   "shares": 701,
+   "pass": 60
+  },
+  "2025-08-19": {
+   "screen": 4417,
+   "labelled": 702,
+   "pt_halal": 616,
+   "shares": 702,
+   "pass": 60
+  },
+  "2025-08-20": {
+   "screen": 4419,
+   "labelled": 703,
+   "pt_halal": 616,
+   "shares": 703,
+   "pass": 60
+  },
+  "2025-08-21": {
+   "screen": 4430,
+   "labelled": 706,
+   "pt_halal": 619,
+   "shares": 706,
+   "pass": 61
+  },
+  "2025-08-22": {
+   "screen": 4433,
+   "labelled": 708,
+   "pt_halal": 621,
+   "shares": 708,
+   "pass": 62
+  },
+  "2025-08-25": {
+   "screen": 4432,
+   "labelled": 709,
+   "pt_halal": 623,
+   "shares": 709,
+   "pass": 65
+  },
+  "2025-08-26": {
+   "screen": 4442,
+   "labelled": 712,
+   "pt_halal": 626,
+   "shares": 712,
+   "pass": 66
+  },
+  "2025-08-27": {
+   "screen": 4448,
+   "labelled": 715,
+   "pt_halal": 629,
+   "shares": 715,
+   "pass": 66
+  },
+  "2025-08-28": {
+   "screen": 4452,
+   "labelled": 717,
+   "pt_halal": 631,
+   "shares": 717,
+   "pass": 67
+  },
+  "2025-08-29": {
+   "screen": 4449,
+   "labelled": 719,
+   "pt_halal": 633,
+   "shares": 719,
+   "pass": 66
+  },
+  "2025-09-01": {
+   "screen": 4456,
+   "labelled": 718,
+   "pt_halal": 632,
+   "shares": 718,
+   "pass": 66
+  },
+  "2025-09-02": {
+   "screen": 4460,
+   "labelled": 0,
+   "pt_halal": 0,
+   "shares": 0,
+   "pass": 0
+  },
+  "2025-09-03": {
+   "screen": 4463,
+   "labelled": 720,
+   "pt_halal": 634,
+   "shares": 720,
+   "pass": 65
+  },
+  "2025-09-04": {
+   "screen": 4469,
+   "labelled": 722,
+   "pt_halal": 635,
+   "shares": 722,
+   "pass": 64
+  },
+  "2025-09-05": {
+   "screen": 4474,
+   "labelled": 721,
+   "pt_halal": 635,
+   "shares": 721,
+   "pass": 66
+  },
+  "2025-09-08": {
+   "screen": 4479,
+   "labelled": 722,
+   "pt_halal": 636,
+   "shares": 722,
+   "pass": 66
+  },
+  "2025-09-09": {
+   "screen": 4487,
+   "labelled": 725,
+   "pt_halal": 638,
+   "shares": 725,
+   "pass": 66
+  },
+  "2025-09-10": {
+   "screen": 4495,
+   "labelled": 727,
+   "pt_halal": 640,
+   "shares": 727,
+   "pass": 66
+  },
+  "2025-09-11": {
+   "screen": 4495,
+   "labelled": 725,
+   "pt_halal": 638,
+   "shares": 725,
+   "pass": 65
+  },
+  "2025-09-12": {
+   "screen": 4504,
+   "labelled": 728,
+   "pt_halal": 640,
+   "shares": 728,
+   "pass": 68
+  },
+  "2025-09-15": {
+   "screen": 4498,
+   "labelled": 726,
+   "pt_halal": 637,
+   "shares": 726,
+   "pass": 66
+  },
+  "2025-09-16": {
+   "screen": 4499,
+   "labelled": 726,
+   "pt_halal": 637,
+   "shares": 726,
+   "pass": 67
+  },
+  "2025-09-17": {
+   "screen": 4504,
+   "labelled": 728,
+   "pt_halal": 639,
+   "shares": 728,
+   "pass": 68
+  },
+  "2025-09-18": {
+   "screen": 4511,
+   "labelled": 731,
+   "pt_halal": 640,
+   "shares": 731,
+   "pass": 68
+  },
+  "2025-09-19": {
+   "screen": 4520,
+   "labelled": 736,
+   "pt_halal": 645,
+   "shares": 736,
+   "pass": 71
+  },
+  "2025-09-22": {
+   "screen": 4527,
+   "labelled": 739,
+   "pt_halal": 646,
+   "shares": 739,
+   "pass": 70
+  },
+  "2025-09-23": {
+   "screen": 4523,
+   "labelled": 739,
+   "pt_halal": 645,
+   "shares": 739,
+   "pass": 71
+  },
+  "2025-09-24": {
+   "screen": 4529,
+   "labelled": 738,
+   "pt_halal": 644,
+   "shares": 738,
+   "pass": 72
+  },
+  "2025-09-25": {
+   "screen": 4532,
+   "labelled": 741,
+   "pt_halal": 648,
+   "shares": 741,
+   "pass": 71
+  },
+  "2025-09-26": {
+   "screen": 4544,
+   "labelled": 742,
+   "pt_halal": 649,
+   "shares": 742,
+   "pass": 73
+  },
+  "2025-09-29": {
+   "screen": 4539,
+   "labelled": 742,
+   "pt_halal": 649,
+   "shares": 742,
+   "pass": 74
+  },
+  "2025-09-30": {
+   "screen": 4534,
+   "labelled": 743,
+   "pt_halal": 650,
+   "shares": 743,
+   "pass": 75
+  },
+  "2025-10-01": {
+   "screen": 4542,
+   "labelled": 745,
+   "pt_halal": 652,
+   "shares": 745,
+   "pass": 74
+  },
+  "2025-10-02": {
+   "screen": 4543,
+   "labelled": 745,
+   "pt_halal": 651,
+   "shares": 745,
+   "pass": 73
+  },
+  "2025-10-03": {
+   "screen": 4552,
+   "labelled": 746,
+   "pt_halal": 652,
+   "shares": 746,
+   "pass": 74
+  },
+  "2025-10-06": {
+   "screen": 4563,
+   "labelled": 748,
+   "pt_halal": 653,
+   "shares": 748,
+   "pass": 75
+  },
+  "2025-10-07": {
+   "screen": 4578,
+   "labelled": 751,
+   "pt_halal": 655,
+   "shares": 751,
+   "pass": 75
+  },
+  "2025-10-08": {
+   "screen": 4582,
+   "labelled": 753,
+   "pt_halal": 657,
+   "shares": 753,
+   "pass": 74
+  },
+  "2025-10-09": {
+   "screen": 4589,
+   "labelled": 758,
+   "pt_halal": 660,
+   "shares": 758,
+   "pass": 77
+  },
+  "2025-10-10": {
+   "screen": 4593,
+   "labelled": 757,
+   "pt_halal": 659,
+   "shares": 757,
+   "pass": 75
+  },
+  "2025-10-13": {
+   "screen": 4605,
+   "labelled": 762,
+   "pt_halal": 661,
+   "shares": 762,
+   "pass": 75
+  },
+  "2025-10-14": {
+   "screen": 4598,
+   "labelled": 758,
+   "pt_halal": 659,
+   "shares": 758,
+   "pass": 76
+  },
+  "2025-10-15": {
+   "screen": 4603,
+   "labelled": 762,
+   "pt_halal": 663,
+   "shares": 762,
+   "pass": 76
+  },
+  "2025-10-16": {
+   "screen": 4605,
+   "labelled": 762,
+   "pt_halal": 664,
+   "shares": 762,
+   "pass": 78
+  },
+  "2025-10-17": {
+   "screen": 4617,
+   "labelled": 766,
+   "pt_halal": 668,
+   "shares": 766,
+   "pass": 77
+  },
+  "2025-10-20": {
+   "screen": 4626,
+   "labelled": 766,
+   "pt_halal": 669,
+   "shares": 766,
+   "pass": 77
+  },
+  "2025-10-21": {
+   "screen": 4630,
+   "labelled": 767,
+   "pt_halal": 670,
+   "shares": 767,
+   "pass": 78
+  },
+  "2025-10-22": {
+   "screen": 4635,
+   "labelled": 767,
+   "pt_halal": 671,
+   "shares": 767,
+   "pass": 79
+  },
+  "2025-10-23": {
+   "screen": 4636,
+   "labelled": 767,
+   "pt_halal": 671,
+   "shares": 767,
+   "pass": 77
+  },
+  "2025-10-24": {
+   "screen": 4637,
+   "labelled": 770,
+   "pt_halal": 674,
+   "shares": 770,
+   "pass": 78
+  },
+  "2025-10-27": {
+   "screen": 4627,
+   "labelled": 767,
+   "pt_halal": 671,
+   "shares": 767,
+   "pass": 78
+  },
+  "2025-10-28": {
+   "screen": 4632,
+   "labelled": 768,
+   "pt_halal": 672,
+   "shares": 768,
+   "pass": 77
+  },
+  "2025-10-29": {
+   "screen": 4628,
+   "labelled": 768,
+   "pt_halal": 673,
+   "shares": 768,
+   "pass": 76
+  },
+  "2025-10-30": {
+   "screen": 4642,
+   "labelled": 772,
+   "pt_halal": 675,
+   "shares": 772,
+   "pass": 76
+  },
+  "2025-10-31": {
+   "screen": 4643,
+   "labelled": 770,
+   "pt_halal": 674,
+   "shares": 770,
+   "pass": 75
+  },
+  "2025-11-03": {
+   "screen": 4646,
+   "labelled": 771,
+   "pt_halal": 675,
+   "shares": 771,
+   "pass": 75
+  },
+  "2025-11-04": {
+   "screen": 4656,
+   "labelled": 770,
+   "pt_halal": 674,
+   "shares": 770,
+   "pass": 77
+  },
+  "2025-11-05": {
+   "screen": 4667,
+   "labelled": 772,
+   "pt_halal": 675,
+   "shares": 772,
+   "pass": 73
+  },
+  "2025-11-06": {
+   "screen": 4672,
+   "labelled": 776,
+   "pt_halal": 680,
+   "shares": 776,
+   "pass": 73
+  },
+  "2025-11-07": {
+   "screen": 4683,
+   "labelled": 778,
+   "pt_halal": 681,
+   "shares": 778,
+   "pass": 73
+  },
+  "2025-11-10": {
+   "screen": 4691,
+   "labelled": 781,
+   "pt_halal": 685,
+   "shares": 781,
+   "pass": 73
+  },
+  "2025-11-11": {
+   "screen": 4700,
+   "labelled": 783,
+   "pt_halal": 687,
+   "shares": 783,
+   "pass": 73
+  },
+  "2025-11-12": {
+   "screen": 4706,
+   "labelled": 787,
+   "pt_halal": 691,
+   "shares": 787,
+   "pass": 76
+  },
+  "2025-11-13": {
+   "screen": 4712,
+   "labelled": 787,
+   "pt_halal": 692,
+   "shares": 787,
+   "pass": 73
+  },
+  "2025-11-14": {
+   "screen": 4719,
+   "labelled": 790,
+   "pt_halal": 693,
+   "shares": 790,
+   "pass": 64
+  },
+  "2025-11-17": {
+   "screen": 4716,
+   "labelled": 791,
+   "pt_halal": 693,
+   "shares": 791,
+   "pass": 64
+  },
+  "2025-11-18": {
+   "screen": 4721,
+   "labelled": 792,
+   "pt_halal": 694,
+   "shares": 792,
+   "pass": 65
+  },
+  "2025-11-19": {
+   "screen": 4730,
+   "labelled": 795,
+   "pt_halal": 697,
+   "shares": 795,
+   "pass": 65
+  },
+  "2025-11-20": {
+   "screen": 4729,
+   "labelled": 796,
+   "pt_halal": 698,
+   "shares": 796,
+   "pass": 65
+  },
+  "2025-11-21": {
+   "screen": 4741,
+   "labelled": 796,
+   "pt_halal": 698,
+   "shares": 796,
+   "pass": 64
+  },
+  "2025-11-24": {
+   "screen": 4742,
+   "labelled": 798,
+   "pt_halal": 700,
+   "shares": 798,
+   "pass": 63
+  },
+  "2025-11-25": {
+   "screen": 4742,
+   "labelled": 798,
+   "pt_halal": 700,
+   "shares": 798,
+   "pass": 67
+  },
+  "2025-11-26": {
+   "screen": 4747,
+   "labelled": 799,
+   "pt_halal": 701,
+   "shares": 799,
+   "pass": 69
+  },
+  "2025-11-27": {
+   "screen": 4748,
+   "labelled": 798,
+   "pt_halal": 701,
+   "shares": 798,
+   "pass": 70
+  },
+  "2025-11-28": {
+   "screen": 4749,
+   "labelled": 0,
+   "pt_halal": 0,
+   "shares": 0,
+   "pass": 0
+  },
+  "2025-12-01": {
+   "screen": 4743,
+   "labelled": 797,
+   "pt_halal": 701,
+   "shares": 797,
+   "pass": 70
+  },
+  "2025-12-02": {
+   "screen": 4741,
+   "labelled": 796,
+   "pt_halal": 700,
+   "shares": 796,
+   "pass": 68
+  },
+  "2025-12-03": {
+   "screen": 4743,
+   "labelled": 796,
+   "pt_halal": 700,
+   "shares": 796,
+   "pass": 66
+  },
+  "2025-12-04": {
+   "screen": 4748,
+   "labelled": 796,
+   "pt_halal": 700,
+   "shares": 796,
+   "pass": 68
+  },
+  "2025-12-05": {
+   "screen": 4754,
+   "labelled": 794,
+   "pt_halal": 699,
+   "shares": 794,
+   "pass": 69
+  },
+  "2025-12-08": {
+   "screen": 4759,
+   "labelled": 795,
+   "pt_halal": 700,
+   "shares": 795,
+   "pass": 69
+  },
+  "2025-12-09": {
+   "screen": 4754,
+   "labelled": 795,
+   "pt_halal": 701,
+   "shares": 795,
+   "pass": 69
+  },
+  "2025-12-10": {
+   "screen": 4754,
+   "labelled": 795,
+   "pt_halal": 701,
+   "shares": 795,
+   "pass": 70
+  },
+  "2025-12-11": {
+   "screen": 4756,
+   "labelled": 797,
+   "pt_halal": 703,
+   "shares": 797,
+   "pass": 70
+  },
+  "2025-12-12": {
+   "screen": 4754,
+   "labelled": 795,
+   "pt_halal": 701,
+   "shares": 795,
+   "pass": 71
+  },
+  "2025-12-15": {
+   "screen": 4752,
+   "labelled": 793,
+   "pt_halal": 701,
+   "shares": 793,
+   "pass": 67
+  },
+  "2025-12-16": {
+   "screen": 4749,
+   "labelled": 793,
+   "pt_halal": 701,
+   "shares": 793,
+   "pass": 66
+  },
+  "2025-12-17": {
+   "screen": 4751,
+   "labelled": 792,
+   "pt_halal": 700,
+   "shares": 792,
+   "pass": 67
+  },
+  "2025-12-18": {
+   "screen": 4755,
+   "labelled": 792,
+   "pt_halal": 700,
+   "shares": 792,
+   "pass": 69
+  },
+  "2025-12-19": {
+   "screen": 4754,
+   "labelled": 790,
+   "pt_halal": 697,
+   "shares": 790,
+   "pass": 68
+  },
+  "2025-12-22": {
+   "screen": 4762,
+   "labelled": 793,
+   "pt_halal": 699,
+   "shares": 793,
+   "pass": 68
+  },
+  "2025-12-23": {
+   "screen": 4771,
+   "labelled": 796,
+   "pt_halal": 702,
+   "shares": 796,
+   "pass": 71
+  },
+  "2025-12-24": {
+   "screen": 4763,
+   "labelled": 795,
+   "pt_halal": 700,
+   "shares": 795,
+   "pass": 72
+  },
+  "2025-12-25": {
+   "screen": 4763,
+   "labelled": 795,
+   "pt_halal": 700,
+   "shares": 795,
+   "pass": 73
+  },
+  "2025-12-26": {
+   "screen": 4767,
+   "labelled": 0,
+   "pt_halal": 0,
+   "shares": 0,
+   "pass": 0
+  },
+  "2025-12-29": {
+   "screen": 4761,
+   "labelled": 791,
+   "pt_halal": 698,
+   "shares": 791,
+   "pass": 73
+  },
+  "2025-12-30": {
+   "screen": 4757,
+   "labelled": 788,
+   "pt_halal": 696,
+   "shares": 788,
+   "pass": 72
+  },
+  "2025-12-31": {
+   "screen": 4759,
+   "labelled": 790,
+   "pt_halal": 698,
+   "shares": 790,
+   "pass": 70
+  },
+  "2026-01-01": {
+   "screen": 4758,
+   "labelled": 790,
+   "pt_halal": 697,
+   "shares": 790,
+   "pass": 69
+  },
+  "2026-01-02": {
+   "screen": 4767,
+   "labelled": 0,
+   "pt_halal": 0,
+   "shares": 0,
+   "pass": 0
+  },
+  "2026-01-05": {
+   "screen": 4758,
+   "labelled": 786,
+   "pt_halal": 695,
+   "shares": 786,
+   "pass": 69
+  },
+  "2026-01-06": {
+   "screen": 4765,
+   "labelled": 788,
+   "pt_halal": 697,
+   "shares": 788,
+   "pass": 72
+  },
+  "2026-01-07": {
+   "screen": 4769,
+   "labelled": 788,
+   "pt_halal": 697,
+   "shares": 788,
+   "pass": 71
+  },
+  "2026-01-08": {
+   "screen": 4772,
+   "labelled": 789,
+   "pt_halal": 697,
+   "shares": 789,
+   "pass": 72
+  },
+  "2026-01-09": {
+   "screen": 4769,
+   "labelled": 788,
+   "pt_halal": 697,
+   "shares": 788,
+   "pass": 71
+  },
+  "2026-01-12": {
+   "screen": 4772,
+   "labelled": 788,
+   "pt_halal": 698,
+   "shares": 788,
+   "pass": 72
+  },
+  "2026-01-13": {
+   "screen": 4781,
+   "labelled": 789,
+   "pt_halal": 698,
+   "shares": 789,
+   "pass": 73
+  },
+  "2026-01-14": {
+   "screen": 4785,
+   "labelled": 790,
+   "pt_halal": 700,
+   "shares": 790,
+   "pass": 72
+  },
+  "2026-01-15": {
+   "screen": 4792,
+   "labelled": 790,
+   "pt_halal": 700,
+   "shares": 790,
+   "pass": 71
+  },
+  "2026-01-16": {
+   "screen": 4803,
+   "labelled": 790,
+   "pt_halal": 700,
+   "shares": 790,
+   "pass": 72
+  },
+  "2026-01-19": {
+   "screen": 4815,
+   "labelled": 794,
+   "pt_halal": 703,
+   "shares": 794,
+   "pass": 70
+  },
+  "2026-01-20": {
+   "screen": 4815,
+   "labelled": 0,
+   "pt_halal": 0,
+   "shares": 0,
+   "pass": 0
+  },
+  "2026-01-21": {
+   "screen": 4826,
+   "labelled": 796,
+   "pt_halal": 705,
+   "shares": 796,
+   "pass": 70
+  },
+  "2026-01-22": {
+   "screen": 4830,
+   "labelled": 795,
+   "pt_halal": 704,
+   "shares": 795,
+   "pass": 72
+  },
+  "2026-01-23": {
+   "screen": 4835,
+   "labelled": 794,
+   "pt_halal": 704,
+   "shares": 794,
+   "pass": 73
+  },
+  "2026-01-26": {
+   "screen": 4837,
+   "labelled": 795,
+   "pt_halal": 704,
+   "shares": 795,
+   "pass": 73
+  },
+  "2026-01-27": {
+   "screen": 4837,
+   "labelled": 794,
+   "pt_halal": 703,
+   "shares": 794,
+   "pass": 71
+  },
+  "2026-01-28": {
+   "screen": 4842,
+   "labelled": 795,
+   "pt_halal": 704,
+   "shares": 795,
+   "pass": 70
+  },
+  "2026-01-29": {
+   "screen": 4846,
+   "labelled": 796,
+   "pt_halal": 705,
+   "shares": 796,
+   "pass": 71
+  },
+  "2026-01-30": {
+   "screen": 4848,
+   "labelled": 793,
+   "pt_halal": 702,
+   "shares": 793,
+   "pass": 68
+  },
+  "2026-02-02": {
+   "screen": 4851,
+   "labelled": 796,
+   "pt_halal": 704,
+   "shares": 796,
+   "pass": 68
+  },
+  "2026-02-03": {
+   "screen": 4860,
+   "labelled": 795,
+   "pt_halal": 703,
+   "shares": 795,
+   "pass": 72
+  },
+  "2026-02-04": {
+   "screen": 4858,
+   "labelled": 792,
+   "pt_halal": 700,
+   "shares": 792,
+   "pass": 71
+  },
+  "2026-02-05": {
+   "screen": 4863,
+   "labelled": 794,
+   "pt_halal": 701,
+   "shares": 794,
+   "pass": 72
+  },
+  "2026-02-06": {
+   "screen": 4867,
+   "labelled": 794,
+   "pt_halal": 701,
+   "shares": 794,
+   "pass": 65
+  },
+  "2026-02-09": {
+   "screen": 4866,
+   "labelled": 794,
+   "pt_halal": 700,
+   "shares": 794,
+   "pass": 69
+  },
+  "2026-02-10": {
+   "screen": 4868,
+   "labelled": 793,
+   "pt_halal": 699,
+   "shares": 793,
+   "pass": 69
+  },
+  "2026-02-11": {
+   "screen": 4874,
+   "labelled": 794,
+   "pt_halal": 700,
+   "shares": 794,
+   "pass": 71
+  },
+  "2026-02-12": {
+   "screen": 4879,
+   "labelled": 793,
+   "pt_halal": 699,
+   "shares": 793,
+   "pass": 69
+  },
+  "2026-02-13": {
+   "screen": 4891,
+   "labelled": 794,
+   "pt_halal": 700,
+   "shares": 794,
+   "pass": 67
+  },
+  "2026-02-16": {
+   "screen": 4894,
+   "labelled": 797,
+   "pt_halal": 701,
+   "shares": 797,
+   "pass": 68
+  },
+  "2026-02-17": {
+   "screen": 4890,
+   "labelled": 0,
+   "pt_halal": 0,
+   "shares": 0,
+   "pass": 0
+  },
+  "2026-02-18": {
+   "screen": 4893,
+   "labelled": 795,
+   "pt_halal": 699,
+   "shares": 795,
+   "pass": 67
+  },
+  "2026-02-19": {
+   "screen": 4900,
+   "labelled": 795,
+   "pt_halal": 699,
+   "shares": 795,
+   "pass": 70
+  },
+  "2026-02-20": {
+   "screen": 4904,
+   "labelled": 794,
+   "pt_halal": 698,
+   "shares": 794,
+   "pass": 69
+  },
+  "2026-02-23": {
+   "screen": 4914,
+   "labelled": 795,
+   "pt_halal": 699,
+   "shares": 795,
+   "pass": 66
+  },
+  "2026-02-24": {
+   "screen": 4912,
+   "labelled": 795,
+   "pt_halal": 699,
+   "shares": 795,
+   "pass": 62
+  },
+  "2026-02-25": {
+   "screen": 4908,
+   "labelled": 794,
+   "pt_halal": 699,
+   "shares": 794,
+   "pass": 67
+  },
+  "2026-02-26": {
+   "screen": 4911,
+   "labelled": 795,
+   "pt_halal": 699,
+   "shares": 795,
+   "pass": 70
+  },
+  "2026-02-27": {
+   "screen": 4919,
+   "labelled": 793,
+   "pt_halal": 697,
+   "shares": 793,
+   "pass": 69
+  },
+  "2026-03-02": {
+   "screen": 4926,
+   "labelled": 793,
+   "pt_halal": 696,
+   "shares": 792,
+   "pass": 66
+  },
+  "2026-03-03": {
+   "screen": 4929,
+   "labelled": 791,
+   "pt_halal": 694,
+   "shares": 790,
+   "pass": 68
+  },
+  "2026-03-04": {
+   "screen": 4947,
+   "labelled": 792,
+   "pt_halal": 694,
+   "shares": 791,
+   "pass": 64
+  },
+  "2026-03-05": {
+   "screen": 4940,
+   "labelled": 791,
+   "pt_halal": 694,
+   "shares": 790,
+   "pass": 68
+  },
+  "2026-03-06": {
+   "screen": 4943,
+   "labelled": 793,
+   "pt_halal": 696,
+   "shares": 792,
+   "pass": 64
+  },
+  "2026-03-09": {
+   "screen": 4937,
+   "labelled": 792,
+   "pt_halal": 695,
+   "shares": 791,
+   "pass": 62
+  },
+  "2026-03-10": {
+   "screen": 4945,
+   "labelled": 792,
+   "pt_halal": 695,
+   "shares": 791,
+   "pass": 63
+  },
+  "2026-03-11": {
+   "screen": 4945,
+   "labelled": 791,
+   "pt_halal": 694,
+   "shares": 790,
+   "pass": 65
+  },
+  "2026-03-12": {
+   "screen": 4946,
+   "labelled": 791,
+   "pt_halal": 694,
+   "shares": 790,
+   "pass": 68
+  },
+  "2026-03-13": {
+   "screen": 4948,
+   "labelled": 792,
+   "pt_halal": 695,
+   "shares": 791,
+   "pass": 63
+  },
+  "2026-03-16": {
+   "screen": 4951,
+   "labelled": 790,
+   "pt_halal": 694,
+   "shares": 789,
+   "pass": 64
+  },
+  "2026-03-17": {
+   "screen": 4950,
+   "labelled": 791,
+   "pt_halal": 695,
+   "shares": 790,
+   "pass": 66
+  },
+  "2026-03-18": {
+   "screen": 4952,
+   "labelled": 792,
+   "pt_halal": 696,
+   "shares": 791,
+   "pass": 67
+  },
+  "2026-03-19": {
+   "screen": 4953,
+   "labelled": 794,
+   "pt_halal": 696,
+   "shares": 793,
+   "pass": 64
+  },
+  "2026-03-20": {
+   "screen": 4959,
+   "labelled": 799,
+   "pt_halal": 701,
+   "shares": 798,
+   "pass": 63
+  },
+  "2026-03-23": {
+   "screen": 4962,
+   "labelled": 799,
+   "pt_halal": 701,
+   "shares": 798,
+   "pass": 61
+  },
+  "2026-03-24": {
+   "screen": 4962,
+   "labelled": 800,
+   "pt_halal": 701,
+   "shares": 799,
+   "pass": 62
+  },
+  "2026-03-25": {
+   "screen": 4971,
+   "labelled": 803,
+   "pt_halal": 704,
+   "shares": 802,
+   "pass": 64
+  },
+  "2026-03-26": {
+   "screen": 4965,
+   "labelled": 802,
+   "pt_halal": 703,
+   "shares": 801,
+   "pass": 65
+  },
+  "2026-03-27": {
+   "screen": 4963,
+   "labelled": 802,
+   "pt_halal": 703,
+   "shares": 801,
+   "pass": 64
+  },
+  "2026-03-30": {
+   "screen": 4962,
+   "labelled": 803,
+   "pt_halal": 704,
+   "shares": 802,
+   "pass": 63
+  },
+  "2026-03-31": {
+   "screen": 4957,
+   "labelled": 801,
+   "pt_halal": 702,
+   "shares": 800,
+   "pass": 63
+  },
+  "2026-04-01": {
+   "screen": 4955,
+   "labelled": 798,
+   "pt_halal": 702,
+   "shares": 798,
+   "pass": 64
+  },
+  "2026-04-02": {
+   "screen": 4958,
+   "labelled": 802,
+   "pt_halal": 705,
+   "shares": 802,
+   "pass": 65
+  },
+  "2026-04-03": {
+   "screen": 4958,
+   "labelled": 803,
+   "pt_halal": 706,
+   "shares": 803,
+   "pass": 67
+  },
+  "2026-04-06": {
+   "screen": 4956,
+   "labelled": 0,
+   "pt_halal": 0,
+   "shares": 0,
+   "pass": 0
+  },
+  "2026-04-07": {
+   "screen": 4959,
+   "labelled": 804,
+   "pt_halal": 706,
+   "shares": 804,
+   "pass": 67
+  },
+  "2026-04-08": {
+   "screen": 4956,
+   "labelled": 803,
+   "pt_halal": 705,
+   "shares": 803,
+   "pass": 66
+  },
+  "2026-04-09": {
+   "screen": 4960,
+   "labelled": 802,
+   "pt_halal": 704,
+   "shares": 802,
+   "pass": 67
+  },
+  "2026-04-10": {
+   "screen": 4960,
+   "labelled": 803,
+   "pt_halal": 705,
+   "shares": 803,
+   "pass": 70
+  },
+  "2026-04-13": {
+   "screen": 4960,
+   "labelled": 800,
+   "pt_halal": 703,
+   "shares": 800,
+   "pass": 66
+  },
+  "2026-04-14": {
+   "screen": 4959,
+   "labelled": 798,
+   "pt_halal": 701,
+   "shares": 798,
+   "pass": 71
+  },
+  "2026-04-15": {
+   "screen": 4962,
+   "labelled": 800,
+   "pt_halal": 702,
+   "shares": 800,
+   "pass": 72
+  },
+  "2026-04-16": {
+   "screen": 4961,
+   "labelled": 800,
+   "pt_halal": 702,
+   "shares": 800,
+   "pass": 72
+  },
+  "2026-04-17": {
+   "screen": 4959,
+   "labelled": 802,
+   "pt_halal": 702,
+   "shares": 802,
+   "pass": 74
+  },
+  "2026-04-20": {
+   "screen": 4955,
+   "labelled": 800,
+   "pt_halal": 701,
+   "shares": 800,
+   "pass": 74
+  },
+  "2026-04-21": {
+   "screen": 4959,
+   "labelled": 802,
+   "pt_halal": 702,
+   "shares": 802,
+   "pass": 74
+  },
+  "2026-04-22": {
+   "screen": 4958,
+   "labelled": 800,
+   "pt_halal": 702,
+   "shares": 800,
+   "pass": 75
+  },
+  "2026-04-23": {
+   "screen": 4960,
+   "labelled": 800,
+   "pt_halal": 702,
+   "shares": 800,
+   "pass": 75
+  },
+  "2026-04-24": {
+   "screen": 4955,
+   "labelled": 801,
+   "pt_halal": 703,
+   "shares": 801,
+   "pass": 75
+  },
+  "2026-04-27": {
+   "screen": 4944,
+   "labelled": 800,
+   "pt_halal": 704,
+   "shares": 800,
+   "pass": 74
+  },
+  "2026-04-28": {
+   "screen": 4944,
+   "labelled": 801,
+   "pt_halal": 704,
+   "shares": 801,
+   "pass": 72
+  },
+  "2026-04-29": {
+   "screen": 4935,
+   "labelled": 798,
+   "pt_halal": 702,
+   "shares": 798,
+   "pass": 73
+  },
+  "2026-04-30": {
+   "screen": 4927,
+   "labelled": 796,
+   "pt_halal": 701,
+   "shares": 796,
+   "pass": 70
+  },
+  "2026-05-01": {
+   "screen": 4931,
+   "labelled": 798,
+   "pt_halal": 703,
+   "shares": 798,
+   "pass": 75
+  },
+  "2026-05-04": {
+   "screen": 4930,
+   "labelled": 800,
+   "pt_halal": 706,
+   "shares": 800,
+   "pass": 76
+  },
+  "2026-05-05": {
+   "screen": 4926,
+   "labelled": 801,
+   "pt_halal": 706,
+   "shares": 801,
+   "pass": 74
+  },
+  "2026-05-06": {
+   "screen": 4933,
+   "labelled": 804,
+   "pt_halal": 709,
+   "shares": 804,
+   "pass": 77
+  },
+  "2026-05-07": {
+   "screen": 4932,
+   "labelled": 805,
+   "pt_halal": 710,
+   "shares": 805,
+   "pass": 81
+  },
+  "2026-05-08": {
+   "screen": 4940,
+   "labelled": 806,
+   "pt_halal": 711,
+   "shares": 806,
+   "pass": 74
+  },
+  "2026-05-11": {
+   "screen": 4942,
+   "labelled": 809,
+   "pt_halal": 714,
+   "shares": 809,
+   "pass": 78
+  },
+  "2026-05-12": {
+   "screen": 4943,
+   "labelled": 809,
+   "pt_halal": 714,
+   "shares": 809,
+   "pass": 77
+  },
+  "2026-05-13": {
+   "screen": 4952,
+   "labelled": 812,
+   "pt_halal": 716,
+   "shares": 812,
+   "pass": 78
+  },
+  "2026-05-14": {
+   "screen": 4956,
+   "labelled": 812,
+   "pt_halal": 715,
+   "shares": 812,
+   "pass": 79
+  },
+  "2026-05-15": {
+   "screen": 4963,
+   "labelled": 819,
+   "pt_halal": 720,
+   "shares": 819,
+   "pass": 79
+  },
+  "2026-05-18": {
+   "screen": 4967,
+   "labelled": 820,
+   "pt_halal": 721,
+   "shares": 820,
+   "pass": 79
+  },
+  "2026-05-19": {
+   "screen": 4967,
+   "labelled": 818,
+   "pt_halal": 719,
+   "shares": 818,
+   "pass": 80
+  },
+  "2026-05-20": {
+   "screen": 4972,
+   "labelled": 820,
+   "pt_halal": 722,
+   "shares": 820,
+   "pass": 78
+  },
+  "2026-05-21": {
+   "screen": 4971,
+   "labelled": 819,
+   "pt_halal": 721,
+   "shares": 819,
+   "pass": 80
+  },
+  "2026-05-22": {
+   "screen": 4969,
+   "labelled": 819,
+   "pt_halal": 722,
+   "shares": 819,
+   "pass": 79
+  },
+  "2026-05-25": {
+   "screen": 4970,
+   "labelled": 821,
+   "pt_halal": 723,
+   "shares": 821,
+   "pass": 80
+  },
+  "2026-05-26": {
+   "screen": 4961,
+   "labelled": 0,
+   "pt_halal": 0,
+   "shares": 0,
+   "pass": 0
+  },
+  "2026-05-27": {
+   "screen": 4957,
+   "labelled": 824,
+   "pt_halal": 725,
+   "shares": 824,
+   "pass": 82
+  },
+  "2026-05-28": {
+   "screen": 4962,
+   "labelled": 823,
+   "pt_halal": 724,
+   "shares": 823,
+   "pass": 79
+  },
+  "2026-05-29": {
+   "screen": 4965,
+   "labelled": 827,
+   "pt_halal": 726,
+   "shares": 827,
+   "pass": 82
+  },
+  "2026-06-01": {
+   "screen": 4973,
+   "labelled": 828,
+   "pt_halal": 727,
+   "shares": 828,
+   "pass": 83
+  },
+  "2026-06-02": {
+   "screen": 4974,
+   "labelled": 829,
+   "pt_halal": 728,
+   "shares": 829,
+   "pass": 85
+  },
+  "2026-06-03": {
+   "screen": 4972,
+   "labelled": 834,
+   "pt_halal": 732,
+   "shares": 834,
+   "pass": 88
+  },
+  "2026-06-04": {
+   "screen": 4974,
+   "labelled": 833,
+   "pt_halal": 731,
+   "shares": 833,
+   "pass": 82
+  },
+  "2026-06-05": {
+   "screen": 4968,
+   "labelled": 833,
+   "pt_halal": 732,
+   "shares": 833,
+   "pass": 82
+  },
+  "2026-06-08": {
+   "screen": 4961,
+   "labelled": 833,
+   "pt_halal": 732,
+   "shares": 833,
+   "pass": 80
+  },
+  "2026-06-09": {
+   "screen": 4960,
+   "labelled": 830,
+   "pt_halal": 730,
+   "shares": 830,
+   "pass": 79
+  },
+  "2026-06-10": {
+   "screen": 4963,
+   "labelled": 829,
+   "pt_halal": 729,
+   "shares": 829,
+   "pass": 81
+  },
+  "2026-06-11": {
+   "screen": 4968,
+   "labelled": 830,
+   "pt_halal": 729,
+   "shares": 830,
+   "pass": 79
+  },
+  "2026-06-12": {
+   "screen": 4971,
+   "labelled": 830,
+   "pt_halal": 729,
+   "shares": 830,
+   "pass": 83
+  },
+  "2026-06-15": {
+   "screen": 4982,
+   "labelled": 832,
+   "pt_halal": 731,
+   "shares": 832,
+   "pass": 84
+  },
+  "2026-06-16": {
+   "screen": 4983,
+   "labelled": 835,
+   "pt_halal": 733,
+   "shares": 835,
+   "pass": 84
+  },
+  "2026-06-17": {
+   "screen": 4987,
+   "labelled": 838,
+   "pt_halal": 736,
+   "shares": 838,
+   "pass": 84
+  },
+  "2026-06-18": {
+   "screen": 4990,
+   "labelled": 841,
+   "pt_halal": 738,
+   "shares": 841,
+   "pass": 84
+  },
+  "2026-06-19": {
+   "screen": 4997,
+   "labelled": 843,
+   "pt_halal": 738,
+   "shares": 843,
+   "pass": 88
+  },
+  "2026-06-22": {
+   "screen": 5001,
+   "labelled": 0,
+   "pt_halal": 0,
+   "shares": 0,
+   "pass": 0
+  },
+  "2026-06-23": {
+   "screen": 5013,
+   "labelled": 844,
+   "pt_halal": 739,
+   "shares": 844,
+   "pass": 87
+  },
+  "2026-06-24": {
+   "screen": 5012,
+   "labelled": 846,
+   "pt_halal": 740,
+   "shares": 846,
+   "pass": 88
+  },
+  "2026-06-25": {
+   "screen": 5019,
+   "labelled": 847,
+   "pt_halal": 741,
+   "shares": 847,
+   "pass": 87
+  },
+  "2026-06-26": {
+   "screen": 5019,
+   "labelled": 850,
+   "pt_halal": 743,
+   "shares": 850,
+   "pass": 87
+  },
+  "2026-06-29": {
+   "screen": 5013,
+   "labelled": 847,
+   "pt_halal": 742,
+   "shares": 847,
+   "pass": 89
+  },
+  "2026-06-30": {
+   "screen": 5022,
+   "labelled": 851,
+   "pt_halal": 745,
+   "shares": 851,
+   "pass": 88
+  },
+  "2026-07-01": {
+   "screen": 5026,
+   "labelled": 851,
+   "pt_halal": 745,
+   "shares": 851,
+   "pass": 92
+  },
+  "2026-07-02": {
+   "screen": 5032,
+   "labelled": 850,
+   "pt_halal": 746,
+   "shares": 850,
+   "pass": 91
+  },
+  "2026-07-03": {
+   "screen": 5036,
+   "labelled": 851,
+   "pt_halal": 747,
+   "shares": 851,
+   "pass": 89
+  },
+  "2026-07-06": {
+   "screen": 5045,
+   "labelled": 0,
+   "pt_halal": 0,
+   "shares": 0,
+   "pass": 0
+  },
+  "2026-07-07": {
+   "screen": 5047,
+   "labelled": 853,
+   "pt_halal": 748,
+   "shares": 853,
+   "pass": 90
+  },
+  "2026-07-08": {
+   "screen": 5045,
+   "labelled": 854,
+   "pt_halal": 748,
+   "shares": 854,
+   "pass": 90
+  },
+  "2026-07-09": {
+   "screen": 5051,
+   "labelled": 853,
+   "pt_halal": 747,
+   "shares": 853,
+   "pass": 88
+  },
+  "2026-07-10": {
+   "screen": 5056,
+   "labelled": 852,
+   "pt_halal": 746,
+   "shares": 852,
+   "pass": 91
+  },
+  "2026-07-13": {
+   "screen": 5053,
+   "labelled": 853,
+   "pt_halal": 747,
+   "shares": 853,
+   "pass": 87
+  },
+  "2026-07-14": {
+   "screen": 5055,
+   "labelled": 854,
+   "pt_halal": 748,
+   "shares": 854,
+   "pass": 85
+  },
+  "2026-07-15": {
+   "screen": 5055,
+   "labelled": 856,
+   "pt_halal": 749,
+   "shares": 856,
+   "pass": 87
+  },
+  "2026-07-16": {
+   "screen": 5061,
+   "labelled": 859,
+   "pt_halal": 753,
+   "shares": 859,
+   "pass": 88
+  },
+  "2026-07-17": {
+   "screen": 5053,
+   "labelled": 855,
+   "pt_halal": 749,
+   "shares": 855,
+   "pass": 86
+  },
+  "2026-07-20": {
+   "screen": 5052,
+   "labelled": 853,
+   "pt_halal": 749,
+   "shares": 853,
+   "pass": 88
+  },
+  "2026-07-21": {
+   "screen": 5052,
+   "labelled": 854,
+   "pt_halal": 749,
+   "shares": 854,
+   "pass": 89
+  },
+  "2026-07-22": {
+   "screen": 5049,
+   "labelled": 852,
+   "pt_halal": 748,
+   "shares": 852,
+   "pass": 89
+  },
+  "2026-07-23": {
+   "screen": 5039,
+   "labelled": 851,
+   "pt_halal": 746,
+   "shares": 851,
+   "pass": 86
+  },
+  "2026-07-24": {
+   "screen": 5037,
+   "labelled": 853,
+   "pt_halal": 747,
+   "shares": 853,
+   "pass": 83
+  },
+  "2026-07-27": {
+   "screen": 5044,
+   "labelled": 854,
+   "pt_halal": 748,
+   "shares": 854,
+   "pass": 82
+  },
+  "2026-07-28": {
+   "screen": 5037,
+   "labelled": 855,
+   "pt_halal": 748,
+   "shares": 855,
+   "pass": 81
+  },
+  "2026-07-29": {
+   "screen": 5034,
+   "labelled": 854,
+   "pt_halal": 748,
+   "shares": 854,
+   "pass": 81
+  },
+  "2026-07-30": {
+   "screen": 5034,
+   "labelled": 855,
+   "pt_halal": 749,
+   "shares": 855,
+   "pass": 80
+  },
+  "2026-07-31": {
+   "screen": 5028,
+   "labelled": 853,
+   "pt_halal": 748,
+   "shares": 853,
+   "pass": 82
+  },
+  "2026-08-03": {
+   "screen": 5027,
+   "labelled": 850,
+   "pt_halal": 746,
+   "shares": 850,
+   "pass": 79
+  },
+  "2026-08-04": {
+   "screen": 5024,
+   "labelled": 847,
+   "pt_halal": 744,
+   "shares": 847,
+   "pass": 81
+  },
+  "2026-08-05": {
+   "screen": 5028,
+   "labelled": 846,
+   "pt_halal": 744,
+   "shares": 846,
+   "pass": 84
+  },
+  "2026-08-06": {
+   "screen": 5027,
+   "labelled": 844,
+   "pt_halal": 745,
+   "shares": 844,
+   "pass": 83
+  }
+ }
+}
