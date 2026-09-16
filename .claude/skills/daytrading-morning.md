@@ -15,7 +15,13 @@ baseline contains NO premarket entries — the pool cannot measure them
 honestly (a premarket gapper that fades before the regular session reaches
 +10% is not in the pool). The retired −$272/day figure's entire loss was its
 premarket book (−$112,494 on 691 premarket legs; regular-session legs
-−$8,740). Live premarket entries currently have NO honest baseline.
+−$8,740). Live premarket entries currently have NO honest baseline. **User decision
+2026-09-16: premarket entries stay, reported SEPARATELY.** Tag every trade
+`session_phase` = premarket (fill < 09:30) | regular | extended; the EOD
+carries two lines — regular-session tickets scored against −$32/day
+(−$7/ticket), premarket tickets scored only against break-even with their
+own count, P&L, $/ticket and veto rates — and the cumulative scoreboard
+keeps the two lines apart from 2026-09-16 on.
 Earlier figures (−$163, −$182)
 were flattered by a stop-fill defect that booked exits at levels the exit
 bar never traded (fixed 2026-09-02, plan/fillmodel_test.py).**
