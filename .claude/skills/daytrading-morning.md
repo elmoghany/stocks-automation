@@ -6,11 +6,12 @@ description: C37 halal day-trading session — sequential ticket rotation, one p
 # background; nothing there overrides this section.
 
 Champion: **C37** sequential ticket rotation.
-**Benchmark (regular-session epoch 2026-09-16): score the day against
-−$32/traded day (C37F-df: C37's own rules on the full-coverage,
-hygiene-cleaned pool, realistic fills, eligibility only after a
-REGULAR-SESSION +10% print, entry deferred one bar past the proving bar
-— −$14,135 over 445 days, −$7/ticket) and against break-even. NOTE: this
+**Benchmark (halal-fix epoch 2026-09-16, effective Day 24): score the day
+against −$215/traded day (C37F-hf2: C37's own rules on the corrected
+415-name halal universe — strict 10/10/20, SIC 6xxx excluded, TTM 5% test,
+missing rows refused — full-coverage hygiene-cleaned pool, realistic fills,
+eligibility only after a REGULAR-SESSION +10% print; −$88,784 over 414 days,
+−$55/ticket) and against break-even. NOTE: this
 baseline contains NO premarket entries — the pool cannot measure them
 honestly (a premarket gapper that fades before the regular session reaches
 +10% is not in the pool). The retired −$272/day figure's entire loss was its

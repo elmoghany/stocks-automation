@@ -3519,7 +3519,7 @@ def cmd_rank(pairs, as_of=None, date=None, top=None, as_json=False,
     # honour it: every name reads NEEDS-SCREEN until the list is rebuilt.
     # Enforced here rather than in the protocol text, because a rule that
     # depends on an agent noticing a date is a rule that will be missed.
-    SCREEN_EPOCH = "2026-08-13"
+    SCREEN_EPOCH = "2026-09-16"  # halal-fix epoch: strict 10/10/20, SIC 6xxx, TTM 5%, missing-row refusal
     # LIST-AGE GATE (2026-09-01 live-tool fixes). The universe is a
     # monthly refresh (plan/refresh_halal_universe.cmd); balance sheets
     # and market caps move, so a list older than 35 days is evidence of
