@@ -18,6 +18,15 @@ off):
      via shared.massive.ticker_details and cached in
      data/massive/ticker_types.json; a symbol the reference endpoint
      does not know is KEPT (unknown != non-equity) and cached as "?".
+  4. (REGULAR-SESSION EPOCH 2026-09-16, `rs_epoch=True` only -- rule 2
+     misses a split/relist that happens AFTER the first bar): any
+     REGULAR-SESSION bar (>= 09:30) whose Open is < 0.5x or > 2x the
+     previous bar's Close, printed on below-median regular-session
+     volume, while that Open sits >= 3x away from prev_close in either
+     direction                                        -> drop
+     (intraday reverse split / relist, not a move). Logged as
+     "intraday-split" with the bar, ratio and gap. With rs_epoch=False
+     (the RS_CROSS=0 identity chain) rules 1-3 run exactly as before.
 
 Every drop is logged with its ratio/type to
 data/massive/pool_hygiene_dropped[_{ROTSHARD}].json (per-shard files so
@@ -29,13 +38,18 @@ import os
 import re
 import sys
 import time
+from datetime import time as dtime
 from pathlib import Path
+
+import numpy as np
 
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT.parent))
 
 TEST_RE = re.compile(r"^Z[A-Z]ZZT$")
 RATIO_LO, RATIO_HI = 0.5, 2.0
+SPLIT_GAP = 3.0            # rule 4: max(open/prev_close, prev_close/open)
+_REG_OPEN = dtime(9, 30)
 KEEP_TYPES = {"CS", "ADRC"}
 TYPES_F = ROOT / "data/massive/ticker_types.json"
 _SHARD = os.environ.get("ROTSHARD", "")
@@ -168,9 +182,42 @@ import atexit
 atexit.register(flush)
 
 
-def clean(cands, date):
+def intraday_split(df, pc):
+    """Rule 4. Returns None, or a dict describing the first offending
+    regular-session bar: Open/prev-bar-Close outside [RATIO_LO,
+    RATIO_HI], bar volume below the regular-session median, and
+    max(Open/pc, pc/Open) >= SPLIT_GAP. Pure function of (df, pc)."""
+    if df is None or len(df) < 2 or not pc or pc <= 0:
+        return None
+    tt = df.index.time
+    reg = np.fromiter((t >= _REG_OPEN for t in tt), bool, len(tt))
+    if reg.sum() < 2:
+        return None
+    o = df["Open"].to_numpy(float)
+    c = df["Close"].to_numpy(float)
+    v = df["Volume"].to_numpy(float)
+    med = float(np.median(v[reg]))
+    for i in np.nonzero(reg)[0]:
+        if i == 0 or c[i - 1] <= 0 or o[i] <= 0:
+            continue
+        ratio = o[i] / c[i - 1]
+        if RATIO_LO <= ratio <= RATIO_HI:
+            continue
+        gap = max(o[i] / pc, pc / o[i])
+        if v[i] < med and gap >= SPLIT_GAP:
+            return dict(bar=str(df.index[i]), open=float(o[i]),
+                        prev_bar_close=float(c[i - 1]),
+                        ratio=round(ratio, 3),
+                        gap_to_prev_close=round(gap, 3),
+                        vol=float(v[i]), median_vol=med, prev_close=pc)
+    return None
+
+
+def clean(cands, date, rs_epoch=False):
     """Filter rotation_sim.day_candidates rows (dicts with "c", "df",
-    "pc"). Returns the kept rows in the same order."""
+    "pc"). Returns the kept rows in the same order. `rs_epoch=True`
+    (rotation_sim RS_CROSS=1) adds rule 4; False is byte-identical to
+    the 2026-09-01 behaviour."""
     kept = []
     for r in cands:
         sym = r["c"]["symbol"]
@@ -187,6 +234,11 @@ def clean(cands, date):
                           ratio=round(ratio, 3), first_open=o, prev_close=pc,
                           first_bar=str(df.index[0]))
                 continue
+            if rs_epoch:
+                hit = intraday_split(df, pc)
+                if hit:
+                    _log_drop(date, sym, "intraday-split", **hit)
+                    continue
         typ = ticker_type(sym, date)
         if typ is not None and typ != "?" and typ not in KEEP_TYPES:
             _log_drop(date, sym, "type", type=typ)

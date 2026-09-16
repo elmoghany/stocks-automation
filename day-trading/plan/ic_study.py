@@ -102,12 +102,28 @@ from causal import CausalView                      # noqa: E402
 import liquidity_estimators as LE                   # noqa: E402
 
 M1 = ROOT / "data/massive/m1"
-OUT = ROOT / "data/massive/ic_study"
+# REGULAR-SESSION ELIGIBILITY EPOCH (2026-09-16, NOTES "MX-SERIES
+# RETRACTION #2"): the pool files' membership is the grouped-daily
+# REGULAR-SESSION high >= +10% over prev_close, so a premarket cross does
+# not prove membership. RS_CROSS=1 (DEFAULT): the cross that creates a
+# row is the first bar at/after 09:30 with High >= 1.10 x prev_close,
+# rows exist only at decision times >= that bar, and the premarket
+# decision times (07:30, 08:30) cannot have a row by construction, so
+# they are dropped from DECISIONS. Outputs go to their own cache and
+# report so the pre-epoch study stays reproducible. RS_CROSS=0 = the
+# 2026-08-27 study exactly.
+RS_CROSS = os.environ.get("RS_CROSS", "1") == "1"
+OUT = ROOT / ("data/massive/ic_study_rs" if RS_CROSS
+              else "data/massive/ic_study")
 POOLS = {"y2025": "gappers_novol_y2025.json",      # 2024-10-22..2025-08-01
          "year": "gappers_novol_year.json"}        # 2025-08-01..2026-07-31
 
-DECISIONS = [dtime(7, 30), dtime(8, 30), dtime(9, 35),
-             dtime(10, 0), dtime(10, 30), dtime(11, 30)]
+REG_OPEN = dtime(9, 30)
+if RS_CROSS:
+    DECISIONS = [dtime(9, 35), dtime(10, 0), dtime(10, 30), dtime(11, 30)]
+else:
+    DECISIONS = [dtime(7, 30), dtime(8, 30), dtime(9, 35),
+                 dtime(10, 0), dtime(10, 30), dtime(11, 30)]
 FLATTEN = dtime(15, 0)
 CROSS_MULT = 1.10            # the +10% cross that defines the universe
 MIN_FWD_BARS = 5             # drop rows with fewer bars left to 15:00
@@ -400,7 +416,12 @@ def rows_for(sym, date_str, prev_close, pool, verify_every=0, vstate=None):
     cv = df["Close"].to_numpy()
 
     thr = CROSS_MULT * prev_close
-    hit = np.nonzero(hv >= thr)[0]
+    crossed = hv >= thr
+    if RS_CROSS:
+        # membership is proven only by a REGULAR-SESSION print
+        crossed &= (idx.hour * 60 + idx.minute) >= (REG_OPEN.hour * 60
+                                                    + REG_OPEN.minute)
+    hit = np.nonzero(crossed)[0]
     if not len(hit):
         return []
     cross_ts = idx[hit[0]]
@@ -857,8 +878,10 @@ def quantiles(df, feat, target, nq=10, halal=None, min_names=10,
 # ------------------------------------------------------------------
 # report
 # ------------------------------------------------------------------
-MD = ROOT / "IC-STUDY-honest-pool.md"
-CSV = ROOT / "ic_study_all_ics.csv"
+MD = ROOT / ("IC-STUDY-honest-pool-rs.md" if RS_CROSS
+             else "IC-STUDY-honest-pool.md")
+CSV = ROOT / ("ic_study_all_ics_rs.csv" if RS_CROSS
+              else "ic_study_all_ics.csv")
 PRIMARY_TARGETS = [PRIMARY, "fwd_flat"]
 
 # SURVIVAL BAR, fixed before looking at the numbers.  A feature is a
@@ -1191,8 +1214,13 @@ def _intro(reuse=False):
       f"observations. A row exists only when the name's +10% cross had "
       f"ALREADY printed at or before the decision time and at least "
       f"{MIN_FWD_BARS} bars remained before the 15:00 ET flatten.")
-    A("* **Decision times (ET)** -- 07:30, 08:30, 09:35, 10:00, 10:30, "
-      "11:30.")
+    A("* **Decision times (ET)** -- "
+      + ", ".join(f"{d:%H:%M}" for d in DECISIONS) + "."
+      + (" REGULAR-SESSION ELIGIBILITY EPOCH (2026-09-16): a row exists "
+         "only after the first bar at/after 09:30 printed >= +10% over "
+         "prev_close (the pool's own membership rule); premarket "
+         "decision times cannot have rows and are omitted."
+         if RS_CROSS else ""))
     A("* **Targets** -- log returns from the decision-time close to "
       "+30min (`fwd30`), +60min (`fwd60`) and the 15:00 flatten "
       "(`fwd_flat`); peak-forward `max(High)/close` over the "
@@ -1677,8 +1705,9 @@ def report(reuse=False):
         A("")
     A(f"### 6.{len(top3)+1} the same three features at 10:00 ET")
     A("")
-    A("07:30 and 08:30 cross-sections are small and premarket-thin. "
-      "10:00 is the session's first liquid decision point and the one "
+    A(("" if RS_CROSS else
+       "07:30 and 08:30 cross-sections are small and premarket-thin. ")
+      + "10:00 is the session's first liquid decision point and the one "
       "the live harness actually arms into, so the same feature is "
       "shown there as a robustness check.")
     A("")

@@ -861,7 +861,19 @@ def day_candidates(cs, date, dfs, top=16, causal_pool=True):
     full-day-gain depth, so the universe itself is coverage-biased.
     causal_pool=True drops the hindsight sort and takes every candidate
     that has bars -- it cannot repair the upstream coverage bias, but it
-    removes the one leak this file controls."""
+    removes the one leak this file controls.
+
+    REGULAR-SESSION ELIGIBILITY EPOCH (2026-09-16, MX retraction #2):
+    pool membership is the grouped-daily REGULAR-SESSION high >= +10%
+    over prev_close (verified 393/399), so a PREMARKET cross does not
+    imply the name is in the file -- a premarket gapper that faded
+    before the regular session reached +10% is absent from the pool,
+    and any premarket entry on this pool is survivorship-conditioned.
+    With RS_CROSS=1 (DEFAULT) `cross` is the first bar at/after 09:30
+    with High >= 1.10 x prev_close: membership is then implied by past
+    information and nothing can be entered before 09:30 (entry_start =
+    max(t, cross)). RS_CROSS=0 keeps the pre-epoch full-frame scan for
+    the identity chain (C37F-fm -121,234)."""
     # DEFAULT CHANGED 2026-08-13: causal pool is now the default. Every
     # rotation number produced BEFORE this date (R0xx, B0xx, V0xx incl.
     # the adopted "C37 = $774,534") was measured on the hindsight-cut
@@ -886,6 +898,8 @@ def day_candidates(cs, date, dfs, top=16, causal_pool=True):
         thr = 1.10 * pc
         cross = None
         for ts, hi in zip(df.index, df["High"].values):
+            if RS_CROSS and ts.time() < dtime(9, 30):
+                continue        # premarket prints do not prove membership
             if ts.time() > dtime(14, 0):
                 break
             if float(hi) >= thr:
@@ -904,11 +918,16 @@ def day_candidates(cs, date, dfs, top=16, causal_pool=True):
     # and non-equity types dropped -- see plan/pool_hygiene.py. OPT-IN
     # via POOL_HYGIENE=1; default OFF keeps C37F's -72,673 identity.
     if POOL_HYGIENE:
-        out = _hygiene().clean(out, date)
+        out = _hygiene().clean(out, date, rs_epoch=RS_CROSS)
     return out
 
 
 POOL_HYGIENE = _os.environ.get("POOL_HYGIENE") == "1"
+# RS_CROSS (2026-09-16): regular-session eligibility, DEFAULT ON for every
+# new run; RS_CROSS=0 reproduces the pre-epoch (premarket-cross) pool for
+# the identity chain. See day_candidates' docstring. Under RS_CROSS=1 the
+# hygiene layer also applies its intraday split/relist rule (rule 4).
+RS_CROSS = _os.environ.get("RS_CROSS", "1") == "1"
 _HYG = []
 
 
@@ -1609,6 +1628,7 @@ def run_many(cfg_ids, max_days=None):
                 "desc": cfg["desc"], "rep": rep,
                 "exit_mode": cfg.get("exit_mode"),
                 "pool_hygiene": POOL_HYGIENE,
+                "rs_cross": RS_CROSS,
                 "halal_strict": _os.environ.get("HALAL_STRICT") == "1",
                 "labels": list(LABELS), **out[cid][rep]}
     RES_F.write_text(json.dumps(res, indent=1))
