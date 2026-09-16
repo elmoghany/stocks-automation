@@ -175,6 +175,22 @@
    "vol": "77312.528551",
    "name": "Neuraxis",
    "first_seen": "09:19"
+  },
+  "INTJ": {
+   "pct": 12.2,
+   "last": 3.22,
+   "prev_close": 2.87,
+   "vol": "175.687",
+   "name": "Intelligent Group",
+   "first_seen": "09:31"
+  },
+  "DLHC": {
+   "pct": 11.02,
+   "last": 4.03,
+   "prev_close": 3.63,
+   "vol": "3710.9284",
+   "name": "DLH",
+   "first_seen": "09:31"
   }
  },
  "halal_fail": [
@@ -197,7 +213,9 @@
   "ZTG",
   "NTHI",
   "NRXS",
-  "CYPH"
+  "CYPH",
+  "INTJ",
+  "DLHC"
  ],
  "fake_gap": [],
  "inherited_fail": [

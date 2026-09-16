@@ -69,7 +69,7 @@
         },
         "probe_2_git": {
           "cmd": "git status --short (own paths) + add/commit/push",
-          "result": "pending -- recorded on the takeover commit",
+          "result": "takeover commit + push OK (PUSH_EXIT=0) at 09:24 ET",
           "verdict": "PASS (see ops.takeover.git_commit)"
         },
         "probe_3_mcp": {
@@ -80,7 +80,8 @@
       },
       "calendar_recheck": "TRADING 2026-09-16 full. SESSION close=16:00 exit_end=15:00 entry_cutoff=14:30 cross_cap=14:00 ladder=14:50,14:55,14:58,14:59",
       "watcher_precheck": "posn.py BOOK EMPTY; no stale state files from another day to move aside",
-      "backfill_policy": "NOTHING backfilled. No scan, no rank, no arming and NO ENTRY is credited for 08:19-09:18. Cycles 1-23 (06:23-08:14) are the headless session's, kept verbatim; cycle numbering resumes at 24 with this session's first real scan."
+      "backfill_policy": "NOTHING backfilled. No scan, no rank, no arming and NO ENTRY is credited for 08:19-09:18. Cycles 1-23 (06:23-08:14) are the headless session's, kept verbatim; cycle numbering resumes at 24 with this session's first real scan.",
+      "git_commit": "09:24 ET: day JSON + new day .md + heartbeat + scan state/dump + bars committed and pushed, own paths only (git add of specific files, never -A; plan/ and day-trading.py left to the parallel session)"
     }
   },
   "cycles": [
@@ -372,6 +373,29 @@
       "rank": "1 CYPH 2.5495 +14.8% coil .984 press +0.28 gap7 +6.8 calm yes NEEDS-SCREEN -> live FAIL | NTHI excluded (only 2 bars) | NRXS excluded (+10% cross not printed on real bars) | JXG excluded (NO BARS)",
       "rank_top": "none armable (0 armable)",
       "halal_after": "every candidate FAILs at the live gate; armable pool EMPTY at the open"
+    },
+    {
+      "et": "09:26",
+      "n": 25,
+      "state": "FLAT-5m",
+      "scan_rows": 115,
+      "candidates": 0,
+      "new": [],
+      "note": "115 rows; NTHI off the scan (latched, FAIL), CRMX new (Tradr 2X CRML ETF = fund), 10 rows updated. Candidate pool EMPTY -- every crossed name is now on a drop-list: 17 halal_fail, 4 inherited_fail, 1 cannot_verify (JXG), 1 SPAC (RACD), 1 warrant (EOSEW), 91 funds. Nothing armable into the open.",
+      "rank_top": "none armable (0 candidates)"
+    },
+    {
+      "et": "09:31",
+      "n": 26,
+      "state": "FLAT-5m",
+      "scan_rows": 41,
+      "candidates": 2,
+      "new": [
+        "INTJ",
+        "DLHC"
+      ],
+      "note": "FIRST POST-OPEN CYCLE. Scan collapsed 115 -> 41 rows as %change reset to the regular-session basis; 89 premarket names dropped off (all still latched in the crossed set). TWO NEW REGULAR-SESSION +10% CROSSERS -- the exact population the -$32/day baseline is built on: INTJ +12.20% (last 3.22, pc 2.87) and DLHC +11.02% (last 4.03, pc 3.63). Both screened immediately at candidacy, both FAIL question 1 outright: INTJ loan 38.71 / cash 976.84 / combined 1015.54 (+ missing revenue row), DLHC loan 241.66 (debt 2.4x mcap). INTJ had also traded just 174 shares on the day -- untradeable size regardless. Armable pool still EMPTY; no ranking needed, both refused BEFORE any entry decision so no veto is counted.",
+      "rank_top": "none armable (both new crossers FAIL at the halal gate)"
     }
   ],
   "trades": [],
@@ -517,6 +541,18 @@
       "et": "09:22",
       "q1": "live_halal 09:22 after caching RH mcap 72.46M (was REFUSE-TO-EVALUATE, no mcap): loan 0.39 / cash 11.49 / combined 11.87, haram_pct 2.53 -> FAIL CASH>10. Under the pre-2026-09-16 code this PASSED on the combined<=20 escape; the 2026-09-16 STRICT 10/10/20 fix makes each leg bind independently and closes it.",
       "q2": "not reached (NeurAxis: IB-Stim non-surgical neuromodulation device for children -- medical devices, would pass question 2). Refused on question 1."
+    },
+    "INTJ": {
+      "verdict": "FAIL",
+      "et": "09:33",
+      "q1": "live_halal 09:33 after caching RH mcap 6.91M: loan 38.71 / cash 976.84 / combined 1015.54 -- an order of magnitude past every leg, and revenue row missing on top (unverified). FAIL.",
+      "q2": "not reached (Intelligent Group Ltd, HK: financial public-relations / investor-relations services). Also note the tape: 174 shares traded on the day at 09:31 -- untradeable size even if it had passed."
+    },
+    "DLHC": {
+      "verdict": "FAIL",
+      "et": "09:33",
+      "q1": "live_halal 09:33 after caching RH mcap 58.41M: loan 241.66 / cash 0.40 / combined 242.06 -> FAIL LOAN>10 (debt is 2.4x the market cap). haram_pct 0.02 clean, irrelevant.",
+      "q2": "not reached (DLH Holdings: health + readiness services to federal government customers -- VA/DoD health IT, clinical research, logistics; would have needed a defense-exposure judgement). Refused on question 1."
     }
   },
   "vetoes": {

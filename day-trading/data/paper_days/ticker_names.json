@@ -123,8 +123,20 @@
 "name": "Corgi AXTI 2x Daily ETF",
 "type": "EQUITY"
 },
+"AXTL": {
+"name": "Leverage Shares 2X Long AXTI Daily ETF",
+"type": "EQUITY"
+},
 "AXTQ": {
 "name": "Tradr 2X Short AXTI Daily ETF",
+"type": "EQUITY"
+},
+"AXTU": {
+"name": "T-REX 2X Long AXTI Daily Target ETF",
+"type": "EQUITY"
+},
+"AXTX": {
+"name": "Tradr 2X Long AXTI Daily ETF",
 "type": "EQUITY"
 },
 "BABC": {
@@ -153,6 +165,10 @@
 },
 "BIAF": {
 "name": "bioAffinity Technologies",
+"type": "EQUITY"
+},
+"BLCK": {
+"name": "Corgi Crypto Infrastructure ETF",
 "type": "EQUITY"
 },
 "BMNZ": {
@@ -231,6 +247,14 @@
 "name": "Corgi CIFR 2x Daily ETF",
 "type": "EQUITY"
 },
+"CIFG": {
+"name": "Themes ETF Trust Leverage Shares 2X Long CIFR Daily ETF",
+"type": "EQUITY"
+},
+"CIFU": {
+"name": "T-REX 2X Long CIFR Daily Target ETF",
+"type": "EQUITY"
+},
 "CKX": {
 "name": "CKX Lands",
 "type": "EQUITY"
@@ -279,6 +303,14 @@
 "name": "Comstock Resources",
 "type": "EQUITY"
 },
+"CRMU": {
+"name": "Leverage Shares 2x Long CRML Daily ETF",
+"type": "EQUITY"
+},
+"CRMX": {
+"name": "Tradr 2X Long CRML Daily ETF",
+"type": "EQUITY"
+},
 "CRWC": {
 "name": "Corgi CRWD 2x Daily ETF",
 "type": "EQUITY"
@@ -317,6 +349,10 @@
 },
 "DIPR": {
 "name": "Corgi Space & Satellite Communications ETF",
+"type": "EQUITY"
+},
+"DLHC": {
+"name": "DLH",
 "type": "EQUITY"
 },
 "DLLL": {
@@ -429,6 +465,10 @@
 },
 "FOMG": {
 "name": "Leverage Shares 2X Long FORM Daily ETF",
+"type": "EQUITY"
+},
+"FPSX": {
+"name": "Leverage Shares 2X Long FPS Daily ETF",
 "type": "EQUITY"
 },
 "FRUT": {
@@ -545,6 +585,10 @@
 },
 "INT": {
 "name": "Corgi INTC 2x Daily ETF",
+"type": "EQUITY"
+},
+"INTJ": {
+"name": "Intelligent Group",
 "type": "EQUITY"
 },
 "INTW": {
