@@ -204,6 +204,16 @@
    ],
    "note": "119 rows; HUHU dropped off the scan (stale mark cleared, still latched, still no bars), LUXE/FTFT back (both FAIL), LNOK new = 2x NOK ETF (fund). ZTG +314.6% last 2.79 (FAIL Q2). JXG 11:08-11:13Z still interpolated. Nothing armable.",
    "rank_top": "none armable"
+  },
+  {
+   "et": "07:19",
+   "n": 12,
+   "state": "FLAT-5m",
+   "scan_rows": 118,
+   "candidates": 19,
+   "new": [],
+   "note": "118 rows; STMX (ETF) off; 9 rows updated (ZTG +294% last 2.65 fading). HUHU/JXG 11:13-11:18Z still interpolated. Nothing armable.",
+   "rank_top": "none armable"
   }
  ],
  "trades": [],
