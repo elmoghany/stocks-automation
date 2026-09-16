@@ -161,6 +161,12 @@ CFGS = {
                    rank="gain_desc", entry_open=T935, cutoff=T1100,
                    sim=kw(flag_break=(5, 1.0, 1.5),
                           struct_floor_mode="sig_low", target_r=2.0)),
+    "W3E50": dict(desc="bullish 50/200 EMA cross, pullback to the 50 "
+                       "EMA, 1.5R (the standard 1-min scalping template)",
+                  rank="gain_desc", entry_open=T935, cutoff=dtime(14, 30),
+                  sim=kw(ema_pullback=(50, 0.15),
+                         struct_floor_mode="sig_low", target_r=1.5,
+                         ema_gate=(50, 200))),
     # ---- VWAP ----
     "W5VWR": dict(desc="VWAP reclaim, stop = signal low, 2R",
                   rank="gain_desc", entry_open=T945, cutoff=T1100,
@@ -532,8 +538,62 @@ def main(ids, max_days=None):
     print(f"-> {RES_F.name}", flush=True)
 
 
+def poison_selftest(ids, n_days=6):
+    """RUNNER-LEVEL POISON TEST (the mandate's no-lookahead proof).
+
+    For each config and each of the first n_days days, run the day
+    normally, then re-run it with EVERY BAR AT OR AFTER each decision
+    minute replaced by absurd values (9e9 and 1e-9) and assert the
+    trades that were already CLOSED before that minute are unchanged --
+    and, separately, that the FIRST trade of the day is unchanged when
+    only bars after its own entry are poisoned. A rule that reads the
+    future cannot survive either.
+    """
+    import copy
+    ok = bad = 0
+    for label in LABELS:
+        for date in dates_for(label)[:n_days]:
+            base = day_cands(date, dtime(9, 0))
+            if not base:
+                continue
+            for cid in ids:
+                cfg = CFGS[cid]
+                clean = run_day(base, date, cfg, 0, {})
+                if not clean:
+                    continue
+                cut = min(x["entry_time"] for x in clean)
+                for val in (9e9, 1e-9):
+                    pois = []
+                    for c in base:
+                        d = c["df"].astype(float).copy()
+                        d.loc[d.index > cut, :] = val
+                        pois.append({**c, "df": d, "tt": d.index.time})
+                    tr = run_day(pois, date, cfg, 0, {})
+                    a = [(str(x["entry_time"]), x["entry"],
+                          x.get("symbol")) for x in clean
+                         if x["entry_time"] <= cut]
+                    b = [(str(x["entry_time"]), x["entry"],
+                          x.get("symbol")) for x in tr
+                         if x["entry_time"] <= cut]
+                    if a == b:
+                        ok += 1
+                    else:
+                        bad += 1
+                        print(f"  BREACH {cid} {date} val={val}")
+                        print(f"    clean {a}")
+                        print(f"    pois  {b}")
+    print(f"  WIDE POISON: {ok}/{ok + bad} (config, day, variant) cells "
+          f"unchanged when every bar after the decision is poisoned")
+    assert bad == 0, "CAUSALITY BREACH in the wide runner"
+
+
 if __name__ == "__main__":
     argv = sys.argv[1:]
+    if "--poison" in argv:
+        argv.remove("--poison")
+        poison_selftest([a for a in argv if not a.startswith("--")]
+                        or ["W1ORB"])
+        sys.exit(0)
     md = None
     if "--days" in argv:
         i = argv.index("--days")

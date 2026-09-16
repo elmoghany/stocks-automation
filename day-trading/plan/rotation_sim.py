@@ -955,6 +955,12 @@ def _vs2_cfgs():
         T935, T1100,
         _vs2_sim(ema_pullback=(9, 0.25), struct_floor_mode="sig_low",
                  target_r=2.0))
+    # --- 50/200 EMA cross + pullback to the 50 EMA (the single most
+    # common "1-minute scalping strategy" template on YouTube) ---
+    add("V3E50", "bullish 50/200 EMA cross, then a pullback to the 50 "
+                 "EMA, 1.5R", T935, dtime(14, 30),
+        _vs2_sim(ema_pullback=(50, 0.15), struct_floor_mode="sig_low",
+                 target_r=1.5, ema_gate=(50, 200)))
     # --- BULL FLAG (Ross Cameron) ---
     add("V4FLAG", "bull flag: 6 bars inside 2% after a >=5% pole, buy "
                   "the break of the flag high, stop = flag low, 2R",
