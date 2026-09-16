@@ -6707,3 +6707,120 @@ Cost: no premarket entries anywhere in the backtest. Deeper fix (later):
 rebuild the universe from premarket-inclusive minute data (Polygon flat
 files) so fade-and-die premarket gappers exist in the pool.
 RETRACTED: every MX ranked row and the IC-study corner as evidence of edge.
+
+## HALAL GATE AUDIT (2026-09-16) — "is halal stocks correct or tickers calc correctly?"
+
+Full write-up: `halal-audit-2026-09-16.md`. Recompute tool: `plan/halal_audit.py`
+(independent of `halal_check` AND of `edgar_backfill.py`, so a shared bug cannot
+hide by agreeing with itself). Method: formula audit with file:line, then a
+seeded (20260916) 25 PASS + 25 FAIL sample + all 18 live-traded symbols + the 30
+armable names with `loan_pct == cash_pct == 0.00`, recomputed from
+`data/edgar/companyfacts.zip` + `data/massive/gd`; external cross-check vs
+Zoya/Musaffa; SIC/description blind-spot sweep. Read-only; no verdicts changed.
+
+VERDICT: the doctrine is right and the ratio arithmetic errs SAFE, but the
+numbers are not fully correct. Every defect found biases toward PASSING a name
+that should have been refused; none toward refusing a permissible one.
+
+STRUCTURAL FACT worth pinning: the LIVE gate never reads EDGAR. It reads yfinance
+composites — `Total Debt` and `Cash Cash Equivalents And Short Term Investments`
+(day-trading.py:749-750). EDGAR feeds only the BACKTEST. This turned out to be a
+strength: on every name where the two disagreed materially, Yahoo's curated
+aggregate was right and our own XBRL tag arithmetic was the undercount.
+
+CONFIRMED CORRECT: 10/10/20 implemented as stated and conservative (on every
+sampled PASS name cached loan_pct >= the EDGAR recompute — no PASS name was
+hiding debt); no-mcap refuses loudly; the industry screen is the strongest
+component (340 bank / 108 insurance / 80 defense / 41 mortgage / 39
+entertainment / 13 pork FAILs) and the AMD label-only rule is correctly
+preserved; unverified=FAIL is binary; a FAIL ruling is final on every path;
+56.4% of the universe is refused for lack of data rather than passed; external
+FAIL-side concordance 459/531 = 86%.
+
+ANSWER TO "one side >10 with combined <=20": PASSED, as the rule allows — and
+note the 10% legs are DEAD CODE. `halal` requires `combined_ok`, and
+`combined <= 20` makes `loan_ok`/`cash_ok` unconditionally true
+(day-trading.py:854-857). The only binding ratio test is combined <= 20.
+183 armable names have loan_pct > 10; 197 have cash_pct > 10.
+
+BUGS (severity, fix):
+1. HIGH — THE 5% TEST IS 4x TOO LENIENT. `interest_inc` is ONE QUARTER,
+   `annual_rev = total_rev * 4` is FOUR (day-trading.py:755,760), so
+   haram_pct = 1/4 x the true ratio; the threshold actually enforced is 20%.
+   Same mismatch in full_screen.py:48,53, full_screen_46.py:42,46,
+   penny_ax11_pt_halal.py:111, penny_ax11b_massive.py:290-292. Verified against
+   filings: cached == EDGAR-through-live-formula on nearly every row, so it is
+   the FORMULA not the data. 44 armable names have a true interest/revenue >= 5%
+   (NOMA 17.2, BSP 14.8, LB 13.8, ... MRVL 10.6, ANAB 10.4, AMAT 9.8, ASST 8.8).
+2. HIGH — A MISSING STATEMENT ROW STILL BECOMES 0 AND PASSES. `get_val` returns
+   0 for an absent row (day-trading.py:716) and the 2026-08-07 guard requires ALL
+   THREE of debt/cash/rev to be zero (:787), so a two-of-three miss survives.
+   Real false PASSes: FLGT cached cash_pct 0.00 vs true 47.68; MBGL cached
+   0.00/0.00 vs true loan 33.88. (PNC/HRZN/MFA/BWFG show the same 0.00 cash but
+   still FAIL on loan, so they only prove the mechanism.) FIX: get_val -> None.
+3. MED — `source="info"` names NEVER get a haram test: all 103 have
+   haram_pct == 0 by construction (69 armable).
+4. LOW — `source="annual"` still multiplies annual revenue by 4 (:755 is not
+   reset the way the info branch resets it at :772). 14 names.
+5. MED (backtest only) — EDGAR DEBT TIER PRECEDENCE UNDERCOUNTS.
+   edgar_backfill.py:250-258 never reads the tier-2 aggregate once any tier-1
+   component is present. Shipped cache proof, data/edgar/extracted/QCOM.json:
+   2026-03-29 debt 15,270,000,000 -> 2026-06-28 debt 2,489,000,000, a silent
+   6.1x collapse (QCOM tags LongTermDebt 12,781M in tier 2 that quarter).
+   Prevalence over 500 sampled extracted symbols: 20/449 = 4.5% understated at
+   their latest quarter — TSLA x27.5, GPN x19.8, HBAN x11.5, WFC x7.2, ETN x8.9.
+   Affects `quarters_edgar`, read only under PT_FILED=1, biasing strict ladder
+   runs LENIENT. Caveat: max(components, aggregate) is not fully safe either
+   (MKSI tags LongTermDebt 2,544M and ShortTermBorrowings 1,399M as disjoint
+   lines) — XBRL debt does not reduce to a fixed tag rule.
+6. MED — FUNDS/ETFs/TRUSTS/NON-COMMON-EQUITY ARE ARMABLE. `clean_ticker` filters
+   ticker SHAPE only. The 30 armable names with loan==cash==0.00 are almost all
+   closed-end funds (AB BGY CEF CII CLM CRF EOI ETB ETV GRF MXE MXF PAI PCF SPE
+   TSI), commodity trusts (PHYS PSLV SPPP), ETFs (HLAL MNZL SPUS), a mortgage
+   REIT (EARN), and TVA — which NOTES:4856 already records as having no public
+   common equity (PARRS bonds). Bond CEFs earn ~100% of revenue as interest and
+   pass only because yfinance publishes no statements for them.
+7. MED — "SPAC = FAIL" IS NOT IMPLEMENTED IN THE GATE. Only a name regex in
+   scan_sweep.py:16, a different pipeline. NOTES:4850-4855 already diagnosed it
+   ("a SPAC is ~100% interest-bearing trust... the SSP bug class wearing a new
+   hat") and handled it by hand at merge rather than in halal_check.
+8. MED — THE LABEL-ONLY INDUSTRY SCREEN LEAKS TWO REAL NAMES (both armable, both
+   flagged by external screeners): TPCS (TechPrecision — its own summary says
+   components for "U.S. Navy submarines and aircraft carriers, USMC military
+   helicopters, and defense and aerospace programs"; Yahoo labels it
+   Industrials/Metal Fabrication, and "defense"/"aerospace" are LABEL-ONLY terms
+   so the summary is never read) and CTW (web-based gaming platform, labelled
+   Gaming/Multimedia — neither word is in HARAM_PRIMARY_LABEL). The AMD
+   exemption is load-bearing and it leaks.
+
+EXTERNAL CROSS-CHECK: 630 usable Zoya/Musaffa verdicts. Sample coverage is thin
+(4 of 68). Contingency over all 630: ours PASS x theirs non-compliant = 6, ALL
+ARMABLE — TPCS and CTW are genuine business-activity gaps; CTSH/UBER/WDAY carry
+Class-A rulings (Musaffa dissents, attributed to their looser ratio legs — note
+SOURCES.md rule 2 says a Class-A PASS requires "no conflicting screener verdict",
+so this is a looser application than the written rule); VISN is screener noise
+(Zoya says no, Musaffa says halal, and it sells gear INTO entertainment networks
+— an AMD-principle case). ALKS is the one sample DISAGREE and is the EXPECTED
+bucket (combined 26.56: we FAIL at 20, they PASS at ~33).
+
+LIVE-CAMPAIGN IMPACT (18 traded symbols): MRVL (true haram 10.6%) and ASST (8.8%)
+would fail a corrected 5% test; GTLB (4.52%) sits just under. ANGX (Paper Day 8)
+is already correctly FAIL today — HARAM INDUSTRY (entertainment, movie) — armed
+before the industry screen was hardened. QCOM, the most recent ticket, is clean
+on every leg (true haram 0.98%, combined 12.05-13.49%).
+
+NOT BUGS (systematic limitations): haram_pct is interest-income-only and blind to
+alcohol/pork/gaming REVENUE (compensated by REVENUE_SENSITIVE_WORDS ->
+CANNOT-VERIFY -> FAIL); mcap is a present-day snapshot against quarter-old
+statements; ~45-day filing lag plus up to 30 more days of monthly-refresh
+staleness; present-day industry labels applied to historical decisions, and
+vendor labels are unreliable; half-year foreign filers (6-K/20-F) land in
+yfinance's QUARTERLY table and get annualized x4, a 2x revenue overstatement
+(11 of 68 sampled names have no 10-Q at all); external coverage is a single
+stale snapshot; Yahoo's Total Debt excludes operating leases (a choice).
+
+RECOMMENDED ORDER: bug 1 (one line, largest gain) -> bug 2 (get_val -> None) ->
+bug 6 (exclude funds at universe build) -> bug 7 (SPAC hard FAIL) -> bugs 3/4 ->
+bug 5 (then re-extract and re-baseline any PT_FILED=1 result) -> bug 8 (route
+vendor-label-generic names to the review queue). Fixing 1+2+6+7 and rebuilding
+will drop the armable list materially below 1,260 — the correct direction.
