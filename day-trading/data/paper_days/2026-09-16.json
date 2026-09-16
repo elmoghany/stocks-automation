@@ -12,11 +12,173 @@
  "ops": {
   "skeleton_written_et": "06:20",
   "session_start_et": "06:20",
-  "start_on_time": true
+  "start_on_time": true,
+  "trading_day_guard": "TRADING 2026-09-16 full (market_calendar.py). SESSION close=16:00 exit_end=15:00 entry_cutoff=14:30 cross_cap=14:00 ladder=14:50,14:55,14:58,14:59",
+  "capability_probe": {
+   "status": "PASS",
+   "run_et": "06:21",
+   "probe_1_python": {
+    "cmd": "python -c print(1)",
+    "result": "1",
+    "exit": 0,
+    "verdict": "PASS"
+   },
+   "probe_2_git": {
+    "cmd": "git status --short + git add (own path) + commit + push",
+    "result": "skeleton committed e3f0ca7 and pushed (PUSH_EXIT=0)",
+    "exit": 0,
+    "verdict": "PASS"
+   },
+   "probe_3_mcp": {
+    "cmd": "get_equity_quotes SPY",
+    "result": "SPY last_non_reg 758.97 @10:14:23Z, bid 759.05 / ask 759.10 @10:20:56Z, prev_close 757.39 (2026-09-15)",
+    "verdict": "PASS"
+   }
+  },
+  "heartbeat": {
+   "started_et": "06:21",
+   "file": "data/paper_days/SESSION_ALIVE_2026-09-16.flag",
+   "cadence": "<=5 min"
+  },
+  "premarket_tape": {
+   "spy_prev_close": 757.39,
+   "spy_premarket_0620et": 758.97,
+   "spy_premarket_pct": 0.21,
+   "read": "SPY +0.21% premarket -- quiet tone into the open."
+  },
+  "halal_list": {
+   "updated": "2026-09-01",
+   "age_days": 15,
+   "n_symbols": 1260,
+   "stale_gate": "PASS (15 days < 35)"
+  },
+  "watcher_precheck": "posn.py: BOOK EMPTY -- no data/paper/position_*.json state files; nothing from another day to move aside."
  },
- "cycles": [],
+ "cycles": [
+  {
+   "et": "06:23",
+   "n": 1,
+   "state": "FLAT-5m",
+   "scan_rows": 120,
+   "candidates": 17,
+   "dropped": {
+    "fund": 93,
+    "noncommon": 1,
+    "spac": 1,
+    "inherited_fail": 8
+   },
+   "note": "120 rows landed inline; transcribed to scan_2026-09-16_0623.tsv -> scan_tsv_to_dump -> scan_sweep. State seeded from 09-08 (inherited_fail 217, spac 7). DUKR +128.5% refused (inherited FAIL). MVRL (ETRACS ETN) slipped the fund regex: pruned, regex patched. Bars: two batched historicals (10+7) spilled to files, ingested with returned-set assert OK. 11 of 17 names have ZERO real premarket bars (all interpolated): ANTA SANG IMOS HUHU ARBB EHLD JXG MOLN LCFY EBON ATHE -- not yet traded; re-evaluated next cycle, not marked fake_gap yet.",
+   "candidate_list": [
+    "MEDS",
+    "RETO",
+    "NAMI",
+    "FTFT",
+    "ANTA",
+    "SANG",
+    "ENRD",
+    "IMOS",
+    "HUHU",
+    "ARBB",
+    "EHLD",
+    "JXG",
+    "LUXE",
+    "MOLN",
+    "LCFY",
+    "EBON",
+    "ATHE"
+   ],
+   "rank": "1 FTFT coil .951 press -0.30 NEEDS-SCREEN | 2 ENRD coil .977 press n/a NEEDS-SCREEN | 3 LUXE coil 1.000 NEEDS-SCREEN | 4 RETO FAIL(ruling) calm-gap FAIL +48.6 | 5 MEDS calm-gap FAIL +113.6 | 6 NAMI calm-gap FAIL +34.2; 11 excluded NO BARS",
+   "rank_top": "none armable (top-3 NEEDS-SCREEN)",
+   "halal_after": "universe FAILs applied: MEDS NAMI ANTA SANG IMOS ARBB EHLD MOLN LCFY ATHE LUXE + RETO ruling. Live screen owed: FTFT ENRD JXG EBON (no RH mcap cached)."
+  }
+ ],
  "trades": [],
- "halal_detail": {},
+ "halal_detail": {
+  "MEDS": {
+   "verdict": "FAIL",
+   "et": "06:25",
+   "q1": "halal_universe (quarterly): LOAN>10 (980.57) + haram_pct 33.23 -> FAIL; real verdict, not re-litigated",
+   "q2": "not reached"
+  },
+  "NAMI": {
+   "verdict": "FAIL",
+   "et": "06:25",
+   "q1": "halal_universe (quarterly): LOAN>10+COMBINED>20 (168.5/663.94) -> FAIL; real verdict, not re-litigated",
+   "q2": "not reached"
+  },
+  "ANTA": {
+   "verdict": "FAIL",
+   "et": "06:25",
+   "q1": "halal_universe (quarterly): LOAN>10+COMBINED>20 (562.5/6.74) -> FAIL; real verdict, not re-litigated",
+   "q2": "not reached"
+  },
+  "SANG": {
+   "verdict": "FAIL",
+   "et": "06:25",
+   "q1": "halal_universe (quarterly): LOAN>10+COMBINED>20 (30.18/11.54) -> FAIL; real verdict, not re-litigated",
+   "q2": "not reached"
+  },
+  "IMOS": {
+   "verdict": "FAIL",
+   "et": "06:25",
+   "q1": "halal_universe (quarterly): LOAN>10+COMBINED>20 (832.67/657.17) -> FAIL; real verdict, not re-litigated",
+   "q2": "not reached"
+  },
+  "ARBB": {
+   "verdict": "FAIL",
+   "et": "06:25",
+   "q1": "halal_universe (quarterly): CASH>10+COMBINED>20 (2.62/420.32) -> FAIL; real verdict, not re-litigated",
+   "q2": "not reached"
+  },
+  "EHLD": {
+   "verdict": "FAIL",
+   "et": "06:25",
+   "q1": "halal_universe (quarterly): LOAN>10+COMBINED>20 (71.98/21.52) -> FAIL; real verdict, not re-litigated",
+   "q2": "not reached"
+  },
+  "MOLN": {
+   "verdict": "FAIL",
+   "et": "06:25",
+   "q1": "halal_universe (quarterly): CASH>10+COMBINED>20 (1.94/45.7) -> FAIL; real verdict, not re-litigated",
+   "q2": "not reached"
+  },
+  "LCFY": {
+   "verdict": "FAIL",
+   "et": "06:25",
+   "q1": "halal_universe (quarterly): CASH>10+COMBINED>20 (6.08/25.49) -> FAIL; real verdict, not re-litigated",
+   "q2": "not reached"
+  },
+  "ATHE": {
+   "verdict": "FAIL",
+   "et": "06:25",
+   "q1": "halal_universe (quarterly): CASH>10+COMBINED>20 (0.12/60.18) -> FAIL; real verdict, not re-litigated",
+   "q2": "not reached"
+  },
+  "LUXE": {
+   "verdict": "FAIL",
+   "et": "06:25",
+   "q1": "halal_universe (quarterly): LOAN>10+COMBINED>20 (18.3/29.67) -> FAIL; real verdict, not re-litigated",
+   "q2": "not reached"
+  },
+  "RETO": {
+   "verdict": "FAIL",
+   "et": "06:25",
+   "q1": "universe loan 21.0 / cash 2.15 / combined 23.16 (FAIL) and HARAM by user ruling 2026-08-22",
+   "q2": "FAIL by ruling"
+  },
+  "HUHU": {
+   "verdict": "PASS-Q1 (list)",
+   "et": "06:25",
+   "q1": "halal_universe quarterly: loan 5.63 / cash 4.04 / combined 9.67 -> PASS; on halal_list; RH mcap 107.8M cached",
+   "q2": "pending -- semiconductor cleanroom/facility engineering (HUHUTECH); to be confirmed at candidacy; NO real premarket bars yet (144 interpolated)"
+  },
+  "MVRL": {
+   "verdict": "NOT-COMMON-STOCK",
+   "et": "06:25",
+   "q1": "ETRACS 1.5x leveraged mortgage-REIT ETN (UBS note) -- not an issuer; pruned from candidates; scan_sweep FUND_PAT patched (+etracs, +1.5x)",
+   "q2": "n/a"
+  }
+ },
  "vetoes": {
   "spread": {
    "n": 0,

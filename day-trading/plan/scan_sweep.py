@@ -32,6 +32,9 @@ FUND_PAT = re.compile(
     r"ETF|ETN|\bfund\b|\btrust\b|ishares|proshares|direxion|vanguard|invesco|franklin|spdr"
     r"|microsectors|leverage shares|defiance|graniteshares|tradr |corgi |themes|tidal"
     r"|vistashares|webs |21shares|kraneshares|listed funds|ea series|first trust"
+    # ETRACS (2026-09-16, Day 23): "ETRACS Monthly Pay 1.5X Leveraged Mortgage
+    # REIT" (MVRL) is a UBS exchange-traded NOTE; 1.5X escapes the [23]x rule.
+    r"|etracs|1\.5x"
     r"|allspring|amplify|virtus|dbx|legg mason|pinnacle focused|\b[23]x\b|ultrashort|yieldboost", re.I)
 
 def main():
