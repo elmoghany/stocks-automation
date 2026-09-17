@@ -8769,3 +8769,203 @@ AAOI 26 bps wide) -- recorded as attempted, not as evidence.
    experiment worth running on it is retuning the ranker for a 4.6x larger
    cross-section; the random control says there is no free expectancy in the
    extra names.
+
+---
+
+## CLOSE-MOMENTUM (2026-09-16)
+
+The last hour had never been traded in this campaign -- every prior config
+flattened at 15:00 -- and the one published, peer-reviewed effect that speaks
+to it is Gao, Han, Li & Zhou (2018, JFE): the market's FIRST half-hour return
+and its SECOND-TO-LAST half-hour return predict the LAST half-hour return.
+This line tested it, and three neighbouring hypotheses, on the causal wide
+halal universe (448 dates, 191 names) and on the halal index ETFs.
+
+**Verdict: FAIL, and the reason is not the toll.** At ZERO cost the best
+configuration found earns **+$1,949/month against a bar of $7,500** -- 3.8x
+short before a single basis point is charged. Full write-up in
+`close-momentum-audit.md`; code in `plan/cm_*.py`; tables regenerate with
+`python plan/cm_report.py`.
+
+### The published effect is absent, and not just on halal instruments
+Newey-West(5) regressions of the last half-hour return on the two predictors,
+448 sessions:
+
+| instrument | slope on r_first | t | slope on r_2last | t | mean r_last |
+|---|---|---|---|---|---|
+| SPUS | +0.0347 | +0.85 | +0.0316 | +0.40 | +0.32 bp |
+| HLAL | +0.0092 | +0.24 | -0.0431 | -0.47 | +0.40 bp |
+| **SPY (reference, not halal, never traded)** | +0.0420 | **+0.77** | +0.0308 | **+0.40** | +0.02 bp |
+
+It is not in SPY either, so this is a decayed effect in this window, not a
+quirk of the Sharia screens. Sign-match between the first and last half hour
+is BELOW 50% on every instrument. The only |t| > 2 rows are NEGATIVE and sit
+on SPSK/SPRE/UMMA ($0.9-2.7M/day) -- bid-ask bounce in thin closing prints.
+Every tradeable ETF row lands at -$28 to -$31 on a $15,000 ticket, i.e. the
+$30 round trip and nothing else, and each is within $2 of its own mirror.
+1-minute bars for the six halal ETFs + SPY are cached in a SEPARATE
+`data/massive/m1etf` so the m1w manifest's coverage accounting stays true.
+
+### What the afternoon actually looks like (new; nothing before now measured it)
+Unconditional gross return of every eligible row, 448 days:
+
+| entry -> exit | gross bp | t | both years? |
+|---|---|---|---|
+| 13:00 -> 14:00 | **+6.35** | +7.06 | yes (+5.93 / +6.48) |
+| 14:00 -> 15:30 | **-6.05** | -5.99 | yes (-7.46 / -5.13) |
+| 15:15 -> 15:30 | -2.91 | -6.93 | yes |
+| **15:30 -> 15:59** | **+3.41** | **+5.01** | yes (+1.26 / +5.18) |
+| 15:45 -> 15:59 | +2.21 | +4.51 | yes |
+
+The session sags into ~15:15 and lifts into the close. The last-half-hour
+drift is REAL and survives a split-sample -- and it is +3.41 bp = **$5.12 on a
+$15,000 ticket**, against a bar that needs **+54 bps gross**. Selection would
+have to multiply it 16x. Note also that the zero-cost random top-7 pick at
+15:30->15:59 earns **+$4.56/ticket**: the entire loss on this window is the
+toll, exactly as WIDE-NET and RL-v2 found for the rest of the day.
+
+### The sweep: 510 configs, median -$22.00/ticket
+Hypothesis 1 (momentum) is dead with its own controls. `H1-first|15:59|k7`
+pays -$21.42 against a random -$22.31 -- an edge of **+$0.89** -- and **its
+INVERTED mirror pays -$19.56, i.e. better than the config**. The largest edge
+over random in the whole H1/H4 family is +$1.61 and it belongs to
+`H4-flat@15:30`, the config with NO SIGNAL that just buys seven arbitrary
+names at 15:30. Market timing (`breadth > 0`) and the paper's own
+high-volatility conditioning do not rescue it. The cross-sectional form is
+arithmetically the same ordering within a day and returns the same numbers.
+
+### The one thing that IS there: late-session REVERSAL, with the wrong sign
+Rank IC against the ticket's realized net return:
+
+* **`r_mid` at 15:00 (the published second-to-last half-hour predictor):
+  IC -0.045, Y1 -0.038, Y2 -0.050.** Stable, and the exact NEGATION of the
+  hypothesis. The last half hour REVERSES the one before it on this universe.
+* **`r_first` at 15:30 is the one feature whose sign FLIPS between the halves
+  of the sample: +0.029 (Y1) -> -0.039 (Y2).** That is hypothesis 1, and it is
+  the least stable thing in the table.
+* Everything else that clears 0.02 in the last hour is also negative:
+  `dist_hi` -0.036, `ret_open` -0.032, `breadth` -0.030, `dist_vwap` -0.029.
+
+A composite with sign AND membership chosen on Y1 alone (|IC_y1| >= 0.02,
+unit weights on within-day z-scores, no coefficient fitted), seven $15k
+tickets a day, decide on the 15:29 bar, fill at the 15:30 open, flat at the
+15:59 close:
+
+**`REV|15:30->15:59|k7`: -$13.27/ticket, -$1,925/month, 3,095 tickets,
+Y1 -$12.02 / Y2 -$12.10, 100th pct of 30 random seeds on total AND ex-best,
+mirror -$23.01, shuffled -$23.25, edge over random +$9.04/ticket.**
+
+The controls all land on the random pick and the config sits $9 above them:
+this is genuine, reproducible, both-years-stable selection skill in the last
+half hour. It is also $64.29/ticket away from the bar, which would need an
+edge over random of +$73.33 -- **8.1x the premium demonstrated**.
+
+The fitted arm agrees. LightGBM on Y1 only, read on Y2, three seeds: at 15:30
+its out-of-sample IC is **negative on all three seeds** (-0.016, -0.010,
+-0.013) -- what Y1 taught it about the last half hour was wrong for Y2, which
+is `r_first`'s sign flip again. At 15:00 it achieves a consistent
+**+0.016...+0.024**, which is the honest ceiling of this information set and
+lands exactly where WIDE-NET (0.03) and UNIVERSE+QUOTES (0.033) left it,
+against a break-even of 0.126-0.15.
+
+### What the toll is worth -- and why it does not save this
+The same composite, repriced (UQ measured the real inside spread at 2-6 bps,
+so the incumbent 10 bps/side is 2-5x conservative):
+
+| fee bps/side | $/ticket | $/month | Y1 | Y2 |
+|---|---|---|---|---|
+| 10 (incumbent) | -13.27 | -1,925 | -12.02 | -12.10 |
+| 5 | +0.08 | +12 | +1.30 | +1.26 |
+| 2 (measured spread) | **+8.09** | **+1,174** | +9.29 | +9.28 |
+| **0 (frictionless)** | **+13.43** | **+1,949** | +14.62 | +14.63 |
+
+**This is the number that closes the question.** Give this line a perfect
+broker -- zero spread, zero fees, zero impact -- and it earns 26% of the bar.
+No cost re-baselining, universe widening or better estimator bridges a 3.8x
+gap that exists BEFORE any cost is charged. (Of the +$13.43 frictionless
+total, $4.56 is the window and $8.87 is the selection: two thirds is real
+ranking skill, and it is still nowhere near enough.)
+
+### The gapper pool as the second universe: NOT A RESULT
+Built as asked (`rows_gap.npz`, 94,293 rows, 2,836 symbols, +10% RS cross
+re-derived from bars so arming is causal; bar coverage 96.9%). It produces
+`H3-flat@12:00->15:59|k7` at **+$65.47/ticket, +$9,268/month**, which clears
+the bar. It is discarded, and the harness's own controls say so first:
+
+1. **The SHUFFLED control beats the real config** (+$77.94 vs +$65.47) and the
+   random control is +$31.00/ticket. Across the gap sweep shuffled lands at
+   +$41...+$116. When a control with all information destroyed outperforms the
+   signal, the P&L is the row population, not the ranking.
+2. **10 of 3,020 tickets carry 116.9% of the total.** Median ticket -8.0 bp,
+   mean +99.7 bp. The winners are INHD 7.375 -> 43.37, BMGL 21.59 -> 72.12,
+   MTC 0.63 -> 1.97: single-afternoon 2x-6x micro-cap squeezes priced at 10 bps
+   a side with no spread widening.
+3. Pool MEMBERSHIP is still conditioned on the day's own outcome (MX-SERIES
+   RETRACTION #2). Re-deriving the cross makes ARMING causal, not membership.
+4. **94% of it is not halal.** Only 1,107 of 94,293 rows (1.2%) are both
+   halal-PASS point-in-time and RS-crossed -- ~0.25 tickets/day, best row
+   +$487/month on 77 tickets, t = +1.10, shuffled control +$205.
+
+### The adversarial battery
+* **poison** (garbage on every bar strictly after the decision minute, panel
+  rebuilt from scratch, 20 days x 5 cuts at 12:00/13:00/15:00/15:30/15:45):
+  **1,900 array checks / 0 mismatches**, and -- the stronger form the mandate
+  asked for -- **2,400 SELECTION checks / 0 mismatches**: the identity of the
+  top-1/3/7 names chosen is bit-identical under poisoning.
+* **hold-is-zero** 0 tickets $0.00; **cost monotone** 0x +$4,558 > 1x
+  -$79,300 > 10x -$834,029.
+* **identity gate**: 15,529 tickets recomputed from (px_in, px_out, shares,
+  minutes) alone, **0 mismatches, worst |diff| $0.0000000000**.
+* **foresight**: 15:30->15:59 k7 **+$154.07/ticket, +$21,825/month**;
+  12:00->15:59 k7 +$358.54/ticket, +$50,050/month. The bar is 34% of
+  foresight; the harness can learn and the null has power.
+* **early closes**: 5 half days in the window (2024-11-29, 2024-12-24,
+  2025-07-03, 2025-11-28, 2025-12-24). `plan/market_calendar.HALF_DAYS` covers
+  2026-2027 ONLY and is EMPTY here, so they are detected from the bars. 15:30
+  and 15:00 decisions have 0 eligible rows on them (no print, the causal gate
+  drops them); 178 rows at 12:00 have a "15:59" exit that is really the
+  official 13:00 close -- honest price, mislabelled clock, 1.1% of dates.
+
+### A look-ahead this line introduced, caught by its own poison test
+`Panel._derive` took the session-open reference to be the open of the day's
+FIRST regular-session print, whenever it happened. For a name whose first
+print was at 15:00, a 10:00 decision would have been handed a price five hours
+in its future, contaminating `ret_open`, `gap` and `r_first`.
+`Panel.open_ref(m)` now masks the reference to names that have printed by
+minute m. Caught because the poison test was written before the results, not
+after. Every number above is post-fix.
+
+### Ranked next ideas
+1. **Stop searching price-and-volume features on this universe. The ceiling is
+   now measured FOUR ways and it is the same number.** WIDE-NET 0.03,
+   UNIVERSE+QUOTES 0.033, RL-v2's learned rows ~0, CLOSE-MOMENTUM's fitted arm
+   +0.016...+0.024 -- against a break-even of 0.126-0.15. Four lines, four
+   different hypothesis families, one information ceiling. The binding
+   constraint is the INPUTS.
+2. **Re-baseline the cost ladder on live fills -- but size the prize
+   honestly.** This line puts a number on UQ's ranked idea #1 that the campaign
+   did not have: at the measured 2 bps half-spread the best configuration moves
+   -$1,925 -> +$1,174/month, a $3,099/month swing, the largest single move any
+   change has produced here. It is still 6.4x short. Do it because every
+   historical number is wrong without it, not because it is a strategy.
+3. **Measure the closing auction.** Every positive gross drift found here is
+   concentrated in the final minutes, and the harness never takes the 16:00
+   print because the ladder charges 60 bps for it. Whether the closing cross
+   really costs 60 bps is an ASSUMPTION with no measurement behind it, worth
+   ~$75/ticket. Measure it with live MOC/LOC paper fills on SPUS and two
+   wide-universe names before any backtest prices a through-16:00 exit either
+   way.
+4. **`r_mid` at 15:00 with the REVERSAL sign is the most stable relationship in
+   this repo** (IC -0.038 Y1, -0.050 Y2). It does not pay at 10 bps a side. It
+   is the right PRE-REGISTERED candidate for the day idea 2 or 3 changes the
+   toll, and it should be re-run unchanged rather than re-searched.
+5. **Do not re-run hypothesis 1 in any form.** Index level on two halal ETFs
+   and on SPY (t <= 0.9 everywhere), cross-sectional, market-timed, with the
+   paper's own volatility conditioning, at three exit bars, three ticket rates,
+   two universes. Its key predictor's IC flips sign between the halves of the
+   sample. Exhausted.
+6. **The noon window is exhausted as a SELECTION problem.** Its only positive
+   rows are one ticket a day; the identical rule at k=3 is -$2.20/ticket and at
+   k=7 is -$13.62. An edge that lives in the single most-active name and dies
+   on the second ticket cannot be sized to a $100k/day account, whatever its
+   t-statistic.

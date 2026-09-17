@@ -90,10 +90,57 @@ def build(t, dec, exit_lab):
     return sc, members
 
 
+def stage_cost(t):
+    """What the TOLL is worth, and whether removing it would be enough.
+
+    The same Y1-selected composite priced at 10 (incumbent), 5, 2 and 0 bps a
+    side. UNIVERSE+QUOTES measured the real inside spread on this universe at
+    2-6 bps (half-spread 1-3), so the incumbent ladder is 2-5x conservative;
+    this turns the consequence into a number instead of an argument -- and the
+    0 bps row is the frictionless ceiling, the honest upper bound on anything
+    this line could ever earn.
+    """
+    out = {}
+    base = L.FEE_BPS
+    for dec, ex in (("15:00", "15:59"), ("15:30", "15:59")):
+        sc, _ = build(t, dec, ex)
+        if sc is None:
+            continue
+        for k in (1, 7):
+            rows = {}
+            for fee in (10.0, 5.0, 2.0, 0.0):
+                L.FEE_BPS = fee
+                r = L.split_rows(S.run(t, sc, ex, [dec], topk=k), t.dates, "")
+                rows[f"{fee:g}bps"] = {
+                    "tickets": r["all"]["tickets"],
+                    "per_ticket": r["all"]["per_ticket"],
+                    "per_month": r["all"]["per_month"],
+                    "y1": r["y1"]["per_ticket"], "y2": r["y2"]["per_ticket"]}
+            L.FEE_BPS = base
+            out[f"REV|{dec}->{ex}|k{k}"] = rows
+    rows = {}
+    for fee in (10.0, 0.0):
+        L.FEE_BPS = fee
+        pt = [L.summarize(S.run(t, np.random.default_rng(90_000 + s)
+                                .random(len(t.px_in)), "15:59", ["15:30"],
+                                topk=7), len(t.dates), "")["per_ticket"]
+              for s in range(8)]
+        rows[f"{fee:g}bps"] = {"per_ticket": round(float(np.mean(pt)), 2)}
+    L.FEE_BPS = base
+    out["RANDOM|15:30->15:59|k7"] = rows
+    return out
+
+
 def main():
     uni = sys.argv[sys.argv.index("--universe") + 1] \
         if "--universe" in sys.argv else "wide"
     t = S.Table(uni)
+    if "--stage" in sys.argv and \
+            sys.argv[sys.argv.index("--stage") + 1] == "cost":
+        c = stage_cost(t)
+        L.write_json(f"rev_cost_{uni}.json", c)
+        print(json.dumps(c, indent=1))
+        return
     res = {}
     for dec, ex in PAIRS:
         sc, members = build(t, dec, ex)

@@ -204,6 +204,22 @@ def t8_honesty():
           f"{e['eligible_rows_at_12:00_on_half_days']} at 12:00")
 
 
+def t9_cost():
+    d = j("rev_cost_wide.json")
+    if not d:
+        return
+    print("\n### T9. What the toll is worth: the same composite at "
+          "different fee ladders\n")
+    print("| config | fee bps/side | tickets | $/ticket | $/month | Y1 | Y2 |")
+    print("|---|---|---|---|---|---|---|")
+    for cfg, rows in d.items():
+        for fee, v in rows.items():
+            print(f"| {cfg} | {fee} | {v.get('tickets','')} | "
+                  f"{v['per_ticket']:+.2f} | "
+                  f"{v.get('per_month', 0):+.1f} | "
+                  f"{v.get('y1', 0):+.2f} | {v.get('y2', 0):+.2f} |")
+
+
 if __name__ == "__main__":
     t1_etf()
     t2_uncond()
@@ -213,6 +229,7 @@ if __name__ == "__main__":
     t6_ic()
     t7_model()
     t8_honesty()
+    t9_cost()
     if (OUT / "configs_gap.json").exists():
         t3_configs("gap", 12)
         t4_controls("gap")
