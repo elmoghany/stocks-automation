@@ -270,7 +270,80 @@ and `+5 bps` deeper.
 
 ## Part 5 — The demonstrated-skill policies, account-legal
 
-POLICIES_PLACEHOLDER
+`plan/lx_tables.py` — one position at a time, ≤ 7 tickets a day, $15,000,
+post the top `post_k` and take the first fill; the exit ladder starts at
+fill + H. Every policy is first reproduced under market fills through this
+walker (Part 2), then run under the ladders with its own controls.
+
+### 5.1 WIDE-NET's walk-forward model and UNIVERSE-QUOTES' relabelled refit
+
+Held-out year 2025-08-01..2026-07-31, post 3, h30, `open_next` exit
+convention. `model` = `data/massive/wn/model_scores_h30_s0.npy`; `relabel` =
+UNIVERSE-QUOTES' refit on the entry-limit label; `*_shuf` = the shuffled-label
+refits; `*_inv` = the sign flipped. The `mkt/mkt` block reproduces
+`universe-quotes-audit.md` §4.2 to the cent (random −$30.45 ± 4.05, model
+−$13.26, inverted −$37.01, shuffled −$24.23, 5.98 tickets/day).
+
+**WIDE-NET / UQ relabel / LX refit (OOS year, post 3, h30)** — 251 days, 30 random seeds
+
+| ladder | policy | tickets | tkts/day | fill rate | **flat $/tkt** | $/month | edge vs random | pct | measured $/tkt | edge (meas) | pct (meas) | zero | months + | ex-best | y1 / y2 $/tkt | aug2026 |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---:|---|---|
+| `mkt/mkt` | random ×30 | | 5.98 | | -30.45 ± 4.0 | -3,821.60 | — | — | -42.91 | — | — | -2.37 | | | | |
+| | model | 1500 | 5.98 | 0.333 | **-13.26** | -1,664.30 | +17.19 | 100 | -45.70 | -2.79 | 27 | +4.62 | 3/12 | -22,008.23 | +0.00 / -13.26 | 0 tk +0.00 |
+| | relabel | 1500 | 5.98 | 0.333 | **-17.92** | -2,249.20 | +12.53 | 100 | -73.54 | -30.63 | 0 | +8.94 | 3/12 | -28,999.89 | +0.00 / -17.92 | 0 tk +0.00 |
+| | relabel_shuf | 1502 | 5.98 | 0.333 | **-33.02** | -4,149.30 | -2.57 | 23 | -56.05 | -13.14 | 0 | -5.45 | 0/12 | -51,101.53 | +0.00 / -33.02 | 0 tk +0.00 |
+| | model_shuf | 1500 | 5.98 | 0.333 | **-24.23** | -3,041.00 | +6.22 | 93 | -46.56 | -3.65 | 17 | +3.35 | 2/12 | -38,502.79 | +0.00 / -24.23 | 0 tk +0.00 |
+| | model_inv | 1500 | 5.98 | 0.333 | **-37.01** | -4,644.30 | -6.56 | 3 | -82.98 | -40.07 | 0 | -7.05 | 1/12 | -56,982.00 | +0.00 / -37.01 | 0 tk +0.00 |
+| | relabel_inv | 1502 | 5.98 | 0.333 | **-31.71** | -3,984.40 | -1.26 | 30 | -58.33 | -15.42 | 0 | -2.19 | 1/12 | -49,326.08 | +0.00 / -31.71 | 0 tk +0.00 |
+| `bid-rest3-cancel/mkt` | random ×30 | | 5.83 | | -14.95 ± 4.2 | -1,832.10 | — | — | -27.02 | — | — | -1.32 | | | | |
+| | model | 1427 | 5.68 | 0.314 | **-9.80** | -1,170.60 | +5.15 | 87 | -31.44 | -4.42 | 23 | -0.75 | 3/12 | -16,099.16 | +0.00 / -9.80 | 0 tk +0.00 |
+| | relabel | 1454 | 5.79 | 0.319 | **-7.09** | -862.00 | +7.86 | 100 | -35.88 | -8.86 | 0 | +5.48 | 4/12 | -11,611.72 | +0.00 / -7.09 | 0 tk +0.00 |
+| | relabel_shuf | 1440 | 5.74 | 0.315 | **-14.70** | -1,771.00 | +0.25 | 57 | -31.41 | -4.39 | 23 | -1.40 | 2/12 | -22,368.52 | +0.00 / -14.70 | 0 tk +0.00 |
+| | model_shuf | 1471 | 5.86 | 0.325 | **-18.71** | -2,302.40 | -3.76 | 23 | -34.32 | -7.30 | 3 | -5.33 | 1/12 | -29,893.94 | +0.00 / -18.71 | 0 tk +0.00 |
+| | model_inv | 1467 | 5.84 | 0.323 | **-23.48** | -2,881.80 | -8.53 | 0 | -47.68 | -20.66 | 0 | -9.41 | 1/12 | -36,412.76 | +0.00 / -23.48 | 0 tk +0.00 |
+| | relabel_inv | 1482 | 5.90 | 0.328 | **-19.86** | -2,462.00 | -4.91 | 17 | -35.18 | -8.16 | 0 | -5.56 | 3/12 | -31,320.49 | +0.00 / -19.86 | 0 tk +0.00 |
+| `bid-rest3-mkt/tick3` | random ×30 | | 5.97 | | -16.97 ± 4.2 | -2,129.20 | — | — | -38.01 | — | — | -4.61 | | | | |
+| | model | 1500 | 5.98 | 0.333 | **-5.21** | -653.40 | +11.76 | 100 | -37.69 | +0.32 | 57 | +2.63 | 6/12 | -9,994.08 | +0.00 / -5.21 | 0 tk +0.00 |
+| | relabel | 1499 | 5.97 | 0.333 | **-15.24** | -1,910.80 | +1.73 | 67 | -68.17 | -30.16 | 0 | -2.16 | 3/12 | -24,475.03 | +0.00 / -15.24 | 0 tk +0.00 |
+| | relabel_shuf | 1500 | 5.98 | 0.333 | **-21.49** | -2,696.90 | -4.52 | 10 | -51.64 | -13.63 | 0 | -8.31 | 1/12 | -34,237.55 | +0.00 / -21.49 | 0 tk +0.00 |
+| | model_shuf | 1500 | 5.98 | 0.333 | **-16.08** | -2,017.60 | +0.89 | 60 | -42.69 | -4.68 | 17 | -3.70 | 2/12 | -26,603.59 | +0.00 / -16.08 | 0 tk +0.00 |
+| | model_inv | 1499 | 5.97 | 0.333 | **-23.07** | -2,893.30 | -6.10 | 3 | -65.78 | -27.77 | 0 | -10.28 | 0/12 | -36,728.97 | +0.00 / -23.07 | 0 tk +0.00 |
+| | relabel_inv | 1502 | 5.98 | 0.333 | **-21.93** | -2,756.20 | -4.96 | 10 | -51.78 | -13.77 | 0 | -11.05 | 3/12 | -34,602.18 | +0.00 / -21.93 | 0 tk +0.00 |
+| `bid-rest3-cancel/ask-rest3` | random ×30 | | 5.83 | | -6.15 ± 3.9 | -753.80 | — | — | -23.39 | — | — | -2.06 | | | | |
+| | model | 1427 | 5.68 | 0.314 | **-4.95** | -590.40 | +1.20 | 60 | -27.57 | -4.18 | 17 | -2.07 | 5/12 | -9,242.16 | +0.00 / -4.95 | 0 tk +0.00 |
+| | relabel | 1454 | 5.79 | 0.319 | **-2.75** | -334.50 | +3.40 | 83 | -33.63 | -10.24 | 0 | +1.48 | 5/12 | -5,495.93 | +0.00 / -2.75 | 0 tk +0.00 |
+| | relabel_shuf | 1440 | 5.74 | 0.315 | **-6.00** | -722.50 | +0.15 | 50 | -27.26 | -3.87 | 20 | -1.96 | 3/12 | -9,845.63 | +0.00 / -6.00 | 0 tk +0.00 |
+| | model_shuf | 1471 | 5.86 | 0.325 | **-9.53** | -1,173.40 | -3.38 | 20 | -29.67 | -6.28 | 10 | -5.55 | 3/12 | -16,513.30 | +0.00 / -9.53 | 0 tk +0.00 |
+| | model_inv | 1467 | 5.84 | 0.323 | **-13.24** | -1,624.60 | -7.09 | 3 | -40.47 | -17.08 | 0 | -9.50 | 3/12 | -21,579.34 | +0.00 / -13.24 | 0 tk +0.00 |
+| | relabel_inv | 1482 | 5.90 | 0.328 | **-8.37** | -1,037.40 | -2.22 | 27 | -27.72 | -4.33 | 13 | -5.13 | 4/12 | -14,549.42 | +0.00 / -8.37 | 0 tk +0.00 |
+
+**What the resting ladders do to a ranker.** The random control moves from
+−$30.45 to −$6.15 under `bid-rest3-cancel/ask-rest3` (the account-legal
+version of Part 3's move), and the ranking's edge over it goes from **+$17.19
+(100th percentile) to +$1.20 (60th)** for the market-labelled model and from
++$12.53 to **+$3.40 (83rd)** for the entry-limit relabel; the inverted
+controls fall to the 3rd percentile and the shuffled ones sit on the random
+mean, so the harness is clean and the conclusion is UNIVERSE-QUOTES' §4.1
+again with the exit included: **a ranker fitted on market fills does not
+survive a resting-order execution** — the names it likes most are the names
+that run away from the bid. Under `bid-rest3-mkt/tick3` (rest, then cross)
+the market-labelled model keeps +$11.76 (100th pct) at −$5.21/ticket,
+−$653/month — the best row of this block and the account-legal closest miss
+before the refit. The `measured` columns are −$28…−$38 for every row and
+every percentile collapses under them, as in COST-REBASE §4.4.
+
+### 5.2 Rank for the END-TO-END fill (`plan/lx_relabel.py`)
+
+REFIT_PLACEHOLDER
+
+### 5.3 CLOSE-MOMENTUM's REV 15:30 → 15:59 composite, k = 7
+
+REV_PLACEHOLDER
+
+### 5.4 The catalyst veto (ANY_NEG_3d), 1/day at 09:35, h60
+
+VETO_PLACEHOLDER
+
 
 ## Part 6 — C37's ORB entry (wide universe and the gapper pool)
 
