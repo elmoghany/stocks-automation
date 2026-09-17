@@ -102,11 +102,28 @@
         "size_cap": "trail10vol 46,248 -> 20% cap 9,250 sh vs 70 needed. Unambiguous now that the regular session is trading -- the 08:25 premarket ambiguity does not arise here",
         "rank": "TOP = VICR, coil 0.981, 30-bar pressure +0.08 (now TRUSTED, >20k sh), calm-gap yes"
       },
-      "status": "ARMED",
+      "status": "FILLED 09:41",
       "note": "PAPER resting order only -- no real order was or will be placed."
     }
   ],
-  "trades": [],
+  "trades": [
+    {
+      "ticket": 1,
+      "symbol": "VICR",
+      "side": "long",
+      "session_phase": "regular",
+      "entry_trigger": "A -- 5-minute ORB break (ORB high 211.975)",
+      "entry_et": "09:41",
+      "entry_bar_utc": "2026-09-17T13:41:00Z",
+      "entry_price": 211.98,
+      "shares": 70,
+      "notional": 14838.6,
+      "prev_close": 183.91,
+      "fill_realism": "The 13:41Z bar opened 209.89 (BELOW the 211.98 stop) and ran to 212.98, so the stop was traversed intrabar and fills AT the stop price -- not a gap-through, and not a level the bar never traded. Confirmed mechanically by bars_paste.py --stop VICR:211.98 --after=<arm time>, which refuses to credit any bar before the arm.",
+      "watcher": "plan/paper_watch.py --open recorded state; --book started as ONE background task at 09:44, EXIT_MODE default c37 (no --exit-mode passed)",
+      "status": "OPEN"
+    }
+  ],
   "halal_detail": {
     "INLX": {"q1": "PASS", "loan_pct": 6.92, "cash_pct": 7.48, "combined": 14.4, "mcap": 22924469.0, "q2": "PASS", "screened_et": "06:40"},
     "VICR": {"q1": "PASS", "loan_pct": 0.09, "cash_pct": 5.35, "combined": 5.44, "mcap": 8479489081.0, "q2": "PASS", "screened_et": "06:40"},
