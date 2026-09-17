@@ -17,7 +17,8 @@ $/ticket of the chosen name?**
 **Verdict: FAIL — Part 9.** The catalyst block moves the out-of-sample IC
 by +0.0008 / −0.0038 / −0.0007 (h30 / h60 / h120), inside seed noise; every
 model row is negative; the closest miss is a post-hoc one-name earnings rule
-at +$674/month, 11× short; the corpus is worth +$7–27 a ticket as a veto.
+at +$674/month, 11× short; the corpus is worth +$21 ± 5 a ticket as a veto on
+one-hour holds and nothing elsewhere.
 
 Read `widenet-audit.md` first: the ticket table, the fills, the cost ladder,
 the walk-forward protocol and the honest-harness conventions are inherited
@@ -581,7 +582,21 @@ It is real — the vetoed universe's random pick does not move, so the gain is
 selection, not universe shrinkage — and it leaves every row negative: the
 best vetoed configuration is **−$13.52/ticket, −$1,988/month**.
 
-VETO_SEEDS_LINE
+**Across seeds and horizons** (`veto.json`, composite veto {8-K 5.02, Form 4 sale, analyst headline, 10-Q in 3d}):
+
+| h | pick | seeds | vetoed $/tkt (mean) | Δ vs unvetoed (mean [per seed]) | edge vs random on vetoed universe | Y1 / Y2 $/tkt |
+|---|---|---|---|---|---|---|
+| h30 | 1/day@09:35 | 3 | -14.51 | +0.88 [-2.3, +7.6, -2.7] | +10.71 | -27.7 / -11.9 |
+| h30 | 7/day@09:35 | 3 | -21.20 | +1.29 [+0.9, +3.0, -0.1] | +2.79 | -26.8 / -20.5 |
+| h30 | 1/slot all decs | 3 | -17.36 | -0.07 [-0.5, +1.4, -1.1] | +15.06 | -19.2 / -17.4 |
+| h60 | 1/day@09:35 | 3 | -23.11 | +21.10 [+27.4, +16.7, +19.2] | +6.85 | -16.3 / -33.6 |
+| h60 | 7/day@09:35 | 3 | -17.66 | +3.38 [+7.5, +1.4, +1.3] | +8.37 | -16.1 / -24.7 |
+| h60 | 1/slot all decs | 3 | -17.83 | +5.08 [+4.8, +6.4, +4.1] | +13.92 | -8.2 / -23.7 |
+| h120 | 1/day@09:35 | 3 | -47.13 | -3.83 [-1.8, -3.0, -6.7] | -9.95 | -12.2 / -73.3 |
+| h120 | 7/day@09:35 | 3 | -35.13 | -2.60 [+0.8, -1.6, -7.0] | -2.90 | -14.6 / -49.7 |
+| h120 | 1/slot all decs | 3 | -17.30 | +2.66 [+1.9, +0.4, +5.7] | +14.97 | -17.8 / -18.5 |
+
+**The veto is an h60 result.** At h60 it holds on all three seeds (1/day +$17 to +$27, 7/day +$1 to +$7, 1/slot +$4 to +$6); at h30 it is worth nothing (−$3 to +$8, mean ≈ 0); at h120 it is *negative* on every pick (−$2 to −$7). The bucket table that suggested it was dominated by hold-to-flatten rows, and the flags mark names whose losses arrive in the first hour and mean-revert after — so the refusal helps a one-hour hold and hurts a two-hour one. The s0/h60 numbers quoted above are the best case, not the typical one; the honest summary is **+$21 ± 5 per ticket on the one-a-day h60 pick, +$3 ± 3 on seven-a-day, zero or worse elsewhere.**
 
 ---
 
@@ -691,11 +706,13 @@ percentile against random, i.e. skill worth $5 a ticket against a $30 toll.
 Nothing passes; the index bar needs ≥ $7,500/month, both years positive,
 ≥ 90th percentile on total and ex-best.
 
-The catalyst corpus is not worthless — it is **worth about $27 a ticket as a
-veto** on the one-a-day price ranker and +$7.47 a ticket on seven a day
-(6.4), which is the largest single improvement any input has produced on
-this universe since the honest harness landed; but a veto cannot make a
-negative book positive, and the best vetoed row is −$13.52/ticket.
+The catalyst corpus is not worthless — as a **veto** it is worth **+$21 ± 5
+a ticket on the one-a-day h60 pick and +$3 ± 3 on seven-a-day** across
+three seeds (6.4; s0 read +$27 / +$7.47), which is the largest single
+improvement any input has produced on this universe since the honest
+harness landed — but only at the one-hour horizon (≈ 0 at h30, negative at
+h120), and a veto cannot make a negative book positive: the best vetoed row
+is −$13.52/ticket.
 
 ### The closest miss
 
@@ -720,7 +737,7 @@ stated, and not re-searched.
 
 ### What each input class bought
 
-| input class | IC delta at h60 (base+X − base, ex-15:30) | best bucket / rule it produced ($/month, k = 1) | as a veto (Δ $/tkt, 1/day) |
+| input class | IC delta at h60 (base+X − base, ex-15:30) | best bucket / rule it produced ($/month, k = 1) | as a veto (Δ $/tkt, 1/day h60, seed 0) |
 |---|---|---|---|
 | news (16 classes, PR flag, sentiment, recency) | **+0.0001** | analyst / M&A / FDA / index / sentiment rules all ≤ random; best +$0 | analyst headline in 3d: +$6.63 |
 | EDGAR filings (8-K items, 424B/S-3/S-1, 13D/G, Form 4 direction, 144) | **−0.0029** | 8-K 1.01 in 18h @09:35 h120: +$17/tkt, t = 0.2; R8 (13D) −$689/mo; R6 (dilution) −$498/mo | 8-K 7.01 in 18h: +$26.24; 10-Q in 18h: +$20.21; composite {5.02, Form 4 sale, analyst, 10-Q}: **+$27.38** |
@@ -760,12 +777,14 @@ press-release wires being absent from it.
    post-announcement continuation or a 93-draw artefact. Cost: one paper
    session rule, zero new code. It is the only positive, both-years,
    100th-percentile object this line produced.
-2. **Use the composite veto in the live rules now.** Refusing any name with
-   an 8-K 5.02, a Form 4 sale, an analyst headline or a 10-Q/10-K in the
-   trailing 3 days is causal, free, and worth +$7–27 a ticket on the
-   honest table. It will not make C37 positive; it will make it less
-   negative, and `data/filings_hist/` + `plan/cat_events.features_for` can
-   compute it at 09:34 from EDGAR's live submissions feed.
+2. **Use the composite veto in the live rules — for one-hour holds only.**
+   Refusing any name with an 8-K 5.02, a Form 4 sale, an analyst headline
+   or a 10-Q/10-K in the trailing 3 days is causal, free, and worth +$21 ± 5
+   a ticket on the one-a-day h60 pick (three seeds), ≈ 0 at h30 and
+   negative at h120. It will not make C37 positive; it will make its
+   one-hour tickets less negative, and `data/filings_hist/` +
+   `plan/cat_events.features_for` can compute it at 09:34 from EDGAR's live
+   submissions feed.
 3. **Do not buy a bigger news feed expecting the IC to move.** The corpus
    was thin, but the arithmetic in "why" (1) says even a complete feed
    changes at most the 7% of rows that carry a catalyst; the ceiling of a

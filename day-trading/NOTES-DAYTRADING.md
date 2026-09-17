@@ -9406,3 +9406,161 @@ The conclusion is therefore **robust to the cost model in both
 directions**: no plausible re-pricing turns any of these 46 configs into
 $7,500/month. What a re-pricing would change is the DIAGNOSIS (zero gross
 edge vs slightly negative vs slightly positive), not the VERDICT.
+
+## CATALYST-MINER (2026-09-16)
+
+Four lines on the causal wide universe (WIDE-NET, UNIVERSE+QUOTES, RL-v2,
+CLOSE-MOMENTUM) measured the same price-and-volume IC ceiling of ~0.03
+against a break-even of 0.126-0.15 and all ranked "change the information
+set" first. This line built the cheapest genuinely new information set the
+account can reach -- a TIMESTAMPED CATALYST CORPUS -- and asked one
+question: does adding it to the SAME ranker on the SAME table move the
+out-of-sample IC and the $/ticket of the chosen name?
+
+**Verdict: FAIL.** The catalyst block moves the OOS IC by **+0.0008 /
+-0.0038 / -0.0007 at h30 / h60 / h120** (3 seeds each; seed spread
++-0.001-0.003) -- nothing. Every model row is negative with or without it.
+The closest miss is a post-hoc one-name earnings rule at **+$674/month
+(11x short)** that the measured cost model reprices to **+$3/month**. The
+corpus is worth **+$7-27 a ticket as a VETO**, which is real and leaves
+the book negative. Full write-up: `catalyst-audit.md`; code `plan/cat_*.py`;
+caches `data/news_hist/`, `data/filings_hist/` (gitignored, resumable);
+tables and every JSON in `data/massive/cat/`.
+
+### The corpus (all causal by construction: an event is usable only after its public timestamp)
+* **Polygon news** (`/v2/reference/news`, paid tier): history reaches back to
+  2021 -- the two-year window is fully covered, no cutoff. 2,850 symbols
+  pulled (191 wide + 2,659 gapper), 57,013 articles; on the 191 wide names
+  **9,546 articles = 24 per symbol-year, 18 per day across the universe**.
+  Publishers: Motley Fool 4,001, GlobeNewswire 3,486, Benzinga 1,370,
+  Investing.com 609, Zacks 78. **PR Newswire and Business Wire are absent.**
+  At 09:35 only **5.5%** of eligible rows have any article in the trailing
+  18h, 2.1% a press release, 1.9% a fresh earnings report.
+* **EDGAR** via `data.sec.gov/submissions` (free, no key): every filing with
+  the SEC's `acceptanceDateTime` AND the 8-K `items` string -- strictly
+  better than the daily index the mandate named. 2,612 symbols / 468,578
+  filings; wide names 37,187. **All 17,262 Form 4s of the wide names were
+  fetched and parsed: 282 open-market buys, 2,415 sales** (insider buying is
+  1.4 per name per year).
+* **Earnings**: 191 Robinhood `get_earnings_results` calls (1,295 reported
+  quarters with EPS actual, 1,153 with estimate, am/pm slot; the tool
+  returns only 8 trailing quarters so RH history starts ~2025-02), merged
+  with the older yfinance and earnings_dates caches -> 3,145 events on the
+  wide names. `am` -> 07:30 ET, `pm` -> 16:30 ET (next session), unknown ->
+  `pm` (conservative).
+* **Taxonomy**: 16 rule classes over headline+description. On the wide
+  names: earnings 3,700, crypto_ai 2,846 (over-triggers), **legal 2,214
+  (law-firm "shareholder alert" releases)**, analyst 1,361, contract 1,307,
+  M&A 721, index 508, FDA 494, offering 224, insider 83, guidance 27.
+  Guidance changes are essentially never headlined in this feed; the 8-K
+  item codes are cleaner labels than any headline pattern.
+
+### The table and the harness
+`data/massive/cat/table.npz`: 163,254 rows (448 dates x 6 decisions x
+universe), 131,772 eligible, **32 wide-net + 137 catalyst columns**
+(counts per class over 18h/3d/10d, hours-since, sentiment, surprise sign
+and size, dilution/insider/13D flags). Fills, size cap, cost ladder and
+labels are `plan/wn_table.day_block` byte-for-byte with the mandate's grid
+(09:35 10:00 10:30 11:00 13:00 15:30). Gapper arm: `table_gap.npz` on
+`plan/cm_rows.py`'s RS_CROSS rows.
+
+### Bucket tables (2,768 buckets, no fitting)
+164 have a positive mean, **1 has t > +2, 1,831 have t < -2**. The 19
+positive-in-both-years buckets are all "424B/S-3 in the last 3-10 days held
+to the flatten" at t < 1.2 -- noise, and the wrong sign of prior. **The
+information is on the negative side**: 8-K 5.02 in 3d @13:00 flat -$144/tkt
+(t -7.0), analyst headline in 3d @09:35 flat -$150 (t -6.7), Form 4 sale in
+3d -$149 (t -4.7), fresh earnings held to the close -$169 (t -4.5), 10-Q in
+18h -$183 (t -3.9) -- each $60-100 below its complement, both years.
+
+### Rules (14 pre-registered, k=1, matched random on the same slots, mirror = complement)
+**12 of 14 negative.** FDA, contract, M&A, insider-buy, 13D, index-inclusion,
+positive-sentiment and "no dilution" rules all sit at or below random;
+R10 (index-inclusion headline @15:30) is -$1,593/month. The only both-years
+positive pre-registered rule: **R1 pre-open beat AND green @09:35 h60:
++$71.24/tkt, +$317/mo, Y1 +137 / Y2 +39, 100th pct on total and ex-best,
+mirror -$126**. Its ablation said the BEAT was the wrong half, which opened
+the post-hoc family R15.
+
+### Closest miss (post-hoc): `R15 | fresh earnings AND green since open @09:35 | exit 10:35`
+112 tickets / 448 days, **+$128.35/tkt, +$14,375, +$674/month, Y1 +$145 /
+Y2 +$120**, 14/22 months, Sharpe 2.69, ex-best +$12,403, **100th pct on
+total AND ex-best** (random -$35.57 +- 25.92), mirror (fresh AND red)
+-$57.59, aug2026 +$397 (3 tkts). Both years positive at h60/h120/flat.
+Why it is a miss, not a strategy: post-hoc (one family read after ~100 rule
+rows); a coin among the qualifiers already earns +$69.82 +- 46 (the ordering
+is half of it, 1.3 sd); k=7 -> +$56.51 with **Y2 -$18.6**; 10:30 -$12.67,
+11:00 -$121; five tickets = 61% of P&L; the engine is LAST NIGHT's
+reporters that opened green (+$150, n=93) not this morning's (+$12, n=42);
+the surprise adds nothing (largest-surprise is the worst tie-break, "beat"
+is worse than "any report"); **under the measured cost model +$0.54/tkt,
++$3/month** (76 bps of impact charged at 09:36). 11x short before that.
+Pre-registered for one paper test, as stated: buy at 09:35 the name that
+reported after yesterday's close and is green since the open; sell 10:35.
+
+### The model (plan/cat_model.py = wn_model's LightGBM, monthly walk-forward from 2025-02, 3 seeds per row)
+OOS IC ex-15:30 (see caveat): **base 0.0580 / 0.0358 / 0.0250 at
+h30/h60/h120; base+cat 0.0588 / 0.0320 / 0.0243; catalyst-only 0.0122 /
+0.0078 / 0.0049**; base+news 0.0359, base+fil 0.0329, base+earn 0.0341 (h60).
+The first catalyst column by gain is `days_since_earn` at #17. Every row
+negative: best model row base+cat h30 7/day -$20.62/tkt, -$3,032/mo, 87th
+pct; the 1/day pick swings $50 between seeds (noise at 379 tickets).
+Shuffled labels: IC 0.000, -$21.84 = random (63rd pct). Inverted loses
+everywhere. Foresight 7/day h60 **+$447/tkt, +$65,749/mo** (bar = 11% of
+omniscience). Measured cost turns -$3,085/mo into -$10,282/mo (the impact
+term charges 44-50 bps at the open).
+
+**Caveat found and recorded:** at 15:30 every horizon >= 30 min exits after
+16:00, so h30/h60/h120 there are forced flattens through the extended-hours
+ladder (mean label -$73.63); the ranker's "IC" of 0.16 in that slot is
+predictable COST, excluded from every headline. CLOSE-MOMENTUM's engine is
+the right tool for 15:30.
+
+### The veto (plan/cat_veto.py) -- the one thing the corpus is worth
+Base (price-only) h60 s0, re-picked after refusing flagged names, vs random
+on the SAME vetoed universe: composite {8-K 5.02, Form 4 sale, analyst
+headline, 10-Q in 3d} -> 1/day@09:35 **-$42.92 -> -$15.54 (+$27.38/tkt)**,
+7/day -$20.99 -> -$13.52 (+$7.47/tkt, ~+$1,100/mo), both years; the random
+pick on the vetoed universe does not move, so it is selection not
+shrinkage. Real, free, causal from EDGAR's live feed -- and it leaves every
+row negative. **Across 3 seeds and 3 horizons it is an h60 result**: 1/day
+h60 +$17..+$27 (mean +$21), 7/day h60 +$1..+$7 (mean +$3), h30 ~0 (-$3..+$8),
+h120 NEGATIVE on every pick (-$2..-$7). The flags mark names whose losses
+come in the first hour and revert after; s0/h60 above is the best case.
+
+### Gapper pool arm: run as asked, not a result
+Random control **+$160-344/tkt** at 10:00-11:00 (outcome-conditioned
+membership, CM Part 6), only 4-52 scored cross-sections with >= 10 names,
+Y1 has no OOS row, one-a-day swings -$1,341..+$2,645 between column sets,
+94% not halal. Catalyst delta there is noise on noise.
+
+### Honesty battery
+Poison on BOTH sources at the level of the picks: bars **144 array checks /
+0 mismatches**; events (1,520,884 removed, 462,441 garbage added after the
+decision instant) **72 block checks / 0 mismatches**; **504 top-1/top-7 pick
+checks / 0 mismatches**; label moved 72/72; catalyst block at later
+decisions moved 60/60. Fills/labels inherited byte-for-byte from
+`wn_table.day_block`. Defects recorded: duplicate `earn_fresh` column name
+(renamed `earn_fresh_ev`, tables rebuilt), Windows-illegal score filenames,
+the 15:30 label caveat, LightGBM 8 threads 7x slower than 1 on this shared
+4-core host. COST-REBASE not landed -> flat 10 bps is the headline,
+`cr_cost` numbers secondary.
+
+### What each input class bought (IC delta at h60 / best $/month / as a veto)
+news +0.0001 / +$0 / +$7; filings -0.0029 / -$498 (dilution) / **+$27
+(composite)**; earnings -0.0017 / +$674 (post-hoc R15) / +$3; all together
+-0.0038. Sparsity is the arithmetic: a feature that is zero on 93% of rows
+can move a cross-sectional IC by at most its share times its within-subset
+correlation, ~0.01, which is what catalyst-only measured.
+
+### Ranked next ideas
+1. Paper-test R15 once, as pre-registered (the `pm`-reporter subset:
+   +$150/tkt, n=93, Y1 +328 / Y2 +76).
+2. Put the composite veto into the live rules for ONE-HOUR holds (+$21+-5/tkt
+   at h60, ~0 at h30, negative at h120; free, causal from EDGAR live).
+3. Do not buy a bigger news feed expecting the IC to move; the ceiling of
+   catalyst counts on a 60-name cross-section is ~0.01-0.02 by sparsity.
+4. Stop adding columns to the wide-universe ranker: five input families,
+   one ceiling. The next input must be DENSE across the cross-section every
+   morning (order book, options flow) or the objective must change.
+5. Never quote the 15:30 slot from this table; use the CM engine.
