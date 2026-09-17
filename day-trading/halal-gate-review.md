@@ -14,7 +14,7 @@ Of the remainder, three causes account for essentially everything:
 
 | cause | names | is it what the user asked for? |
 |---|---|---|
-| **strict 10/10/20** (the user's own choice, 3× stricter than AAOIFI) | **2,693** refused on a ratio leg | **YES — deliberate.** 210 of the 456 names professional screens pass are refused *only* because a leg sits in the 10–33 band those screens allow |
+| **strict 10/10/20** (the user's own choice, 3× stricter than AAOIFI) | **2,693** refused on a ratio leg | **YES — deliberate.** 210 of the 456 names professional screens pass (217 of 524 after today's rebuild) are refused *only* because a leg sits in the 10–33 band those screens allow |
 | **"a missing row is never a zero"** applied to ONE table | **376** refused as `unverified` | **NO — over-applied.** The gate read the newest yfinance quarterly column and nothing else. AAPL, LLY, ISRG, ANET, MRVL were refused for rows that are in the annual statement, in an older column, or in EDGAR |
 | **the 5% interest leg with no interest tag** | 238 of those 376 | **NO — provable.** 15 of the 16 large names in that bucket tag **no interest concept in any EDGAR period**, because the line is immaterial. Immaterial is provable, not unverifiable |
 
@@ -115,7 +115,7 @@ The 1,260 → 415 removals, from `data/halal_flips_2026-09-16.json`
 |---|---:|---:|---|
 | missing-row refusal | 337 | 338 | **over-applied — fixed today** |
 | strict-10 (`LOAN>10` or `CASH>10`) | 275 | 365 | **intended** |
-| SIC 6000–6999 | 86 | 86 | **mostly intended, 4 false positives** |
+| SIC 6000–6999 | 86 | 86 | **mostly intended — 97 of 104 are exactly what the rule named; 5 mis-codes** |
 | TTM 5% haram | 79 | 43 | intended |
 | strict-10, also fails the OLD gate on today's data (drift) | 75 | — | **data drift, not doctrine** |
 | no fundamentals / no market cap | 11 | 11 | data |
