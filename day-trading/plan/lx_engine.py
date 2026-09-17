@@ -84,6 +84,7 @@ ADVERSE SELECTION ACCOUNTING (per filled limit leg)
 import gzip
 import json
 import math
+import os
 from datetime import datetime, time as dtime
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -124,31 +125,33 @@ def minute_time(m):
 
 
 # ------------------------------------------------------------------ tape
-class Tape:
-    """One symbol-day of 1-second bars as dense arrays indexed by second
-    since 09:30 (NaN where no bar printed)."""
-    __slots__ = ("sec", "o", "h", "l", "c", "v", "n")
+TAPE_CACHE = ROOT / "data" / "massive" / "lx_tape"     # per-day npz mirror
 
-    def __init__(self, rows):
-        t0 = None
-        sec, o, h, l, c, v, n = [], [], [], [], [], [], []
-        for r in rows:
-            if r[3] is None or r[2] is None or r[1] is None:
-                continue
-            sec.append(r[0]); o.append(r[1]); h.append(r[2]); l.append(r[3])
-            c.append(r[4] if r[4] is not None else r[1])
-            v.append(r[5] if r[5] is not None else 0.0)
-            n.append(r[6] if r[6] is not None else 0)
-        self.sec = np.asarray(sec, np.int64)
-        self.o = np.asarray(o, float)
-        self.h = np.asarray(h, float)
-        self.l = np.asarray(l, float)
-        self.c = np.asarray(c, float)
-        self.v = np.asarray(v, float)
-        self.n = np.asarray(n, np.int64)
+
+class Tape:
+    """One symbol-day of 1-second bars: `sec` = seconds since 09:30,
+    o/h/l/c/v aligned, ascending."""
+    __slots__ = ("sec", "o", "h", "l", "c", "v")
+
+    def __init__(self, sec, o, h, l, c, v):
+        self.sec, self.o, self.h, self.l, self.c, self.v = sec, o, h, l, c, v
 
     def __len__(self):
         return int(self.sec.size)
+
+
+def _parse_rows(rows, t0_0930_ms):
+    a = np.asarray(rows, dtype=np.float64)          # None -> nan
+    if a.ndim != 2 or a.shape[0] == 0:
+        return None
+    ok = np.isfinite(a[:, 1]) & np.isfinite(a[:, 2]) & np.isfinite(a[:, 3])
+    a = a[ok]
+    if a.shape[0] == 0:
+        return None
+    sec = ((a[:, 0] - t0_0930_ms) // 1000).astype(np.int32)
+    c = np.where(np.isfinite(a[:, 4]), a[:, 4], a[:, 1])
+    v = np.where(np.isfinite(a[:, 5]), a[:, 5], 0.0)
+    return Tape(sec, a[:, 1].copy(), a[:, 2].copy(), a[:, 3].copy(), c, v)
 
 
 def load_tape(sym, date, t0_0930_ms):
@@ -162,11 +165,177 @@ def load_tape(sym, date, t0_0930_ms):
         return None
     if not rows:
         return None
-    tp = Tape(rows)
-    if len(tp) == 0:
+    return _parse_rows(rows, t0_0930_ms)
+
+
+def load_day_tapes(date, syms, t0_0930_ms):
+    """{sym: Tape or None} for a whole day, through a per-day npz mirror
+    of the json.gz cache (same numbers, one file, ~10x faster to read)."""
+    f = TAPE_CACHE / f"{date}.npz"
+    out = {}
+    if f.exists():
+        try:
+            z = np.load(f)
+            have = set(str(s) for s in z["syms"])
+            for s in syms:
+                if s in have:
+                    out[s] = Tape(z[s + "__sec"], z[s + "__o"], z[s + "__h"],
+                                  z[s + "__l"], z[s + "__c"], z[s + "__v"])
+                else:
+                    out[s] = None
+            return out
+        except Exception:
+            pass
+    arrs = {}
+    keep = []
+    for s in syms:
+        tp = load_tape(s, date, t0_0930_ms)
+        out[s] = tp
+        if tp is not None:
+            keep.append(s)
+            arrs[s + "__sec"] = tp.sec
+            arrs[s + "__o"] = tp.o
+            arrs[s + "__h"] = tp.h
+            arrs[s + "__l"] = tp.l
+            arrs[s + "__c"] = tp.c
+            arrs[s + "__v"] = tp.v.astype(np.float32)
+    try:
+        TAPE_CACHE.mkdir(parents=True, exist_ok=True)
+        tmp = TAPE_CACHE / f"{date}.{np.random.randint(1 << 30)}.part"
+        np.savez(tmp, syms=np.array(keep), **arrs)
+        tmp.replace(f)
+    except Exception:
+        pass
+    return out
+
+
+# ------------------------------------------------------------ fast cost
+class FastCost:
+    """plan/cr_cost.CostModel's `parts()` for ONE posting minute, computed
+    from the same per-minute statistics (data/massive/cost1) with the
+    same estimators (cr_cost.cs_bps / ar_bps, the scalar reference forms
+    that cr_cost --selftest proves equal to the cumulative ones).
+
+    Identical to CostModel.parts for tier "win" (asserted in
+    plan/lx_poison.py --stage cost).  The PRIOR-session fallback -- used
+    only when no trailing window exists yet, i.e. posts in the first
+    minutes of the session -- is the prior day's max(median HL2, whole-day
+    CS, whole-day AR) instead of CostModel's median of per-minute maxima:
+    cheaper by two orders of magnitude, same ingredients, stated here.
+    """
+
+    def __init__(self, coef=cr_cost.IMPACT_COEF):
+        self.coef = float(coef)
+        self._d = {}
+        self._idx = None
+
+    def index(self):
+        if self._idx is None:
+            d = {}
+            with os.scandir(cr_cost.CDIR) as it:
+                for e in it:
+                    n = e.name
+                    if n.endswith(".npz") and "_" in n:
+                        s, dt = n[:-4].split("_", 1)
+                        d.setdefault(s, []).append(dt)
+            for v in d.values():
+                v.sort()
+            self._idx = d
+        return self._idx
+
+    def day(self, sym, date):
+        k = (sym, date)
+        if k in self._d:
+            return self._d[k]
+        f = cr_cost.cfile(sym, date)
+        d = None
+        if not f.exists() and (XDIR / f"{sym}_{date}.json.gz").exists():
+            try:
+                cr_cost.build_one(sym, date)
+            except Exception:
+                pass
+        if f.exists():
+            try:
+                with np.load(f) as z:
+                    d = {kk: z[kk].astype(np.float64) for kk in
+                         ("o", "h", "l", "c", "dv", "hl2")}
+            except Exception:
+                d = None
+        if len(self._d) > 4000:
+            self._d.clear()
+        self._d[k] = d
+        return d
+
+    @staticmethod
+    def _spread_at(d, k):
+        hl2 = d["hl2"]
+        w = hl2[max(0, k - cr_cost.SPREAD_WIN):k]
+        w = w[np.isfinite(w)]
+        hl = float(np.median(w)) if len(w) >= cr_cost.MIN_MIN_HL2 else None
+        if hl is None:
+            w = hl2[max(0, k - cr_cost.WIDE_WIN):k]
+            w = w[np.isfinite(w)]
+            hl = float(np.median(w)) if len(w) >= cr_cost.MIN_MIN_HL2 else None
+        b0 = max(0, k - cr_cost.CSAR_WIN)
+        cs = cr_cost.cs_bps(d["o"], d["h"], d["l"], b0, k)
+        ar = cr_cost.ar_bps(d["h"], d["l"], d["c"], b0, k)
+        vals = [v for v in (hl, cs, ar) if v is not None]
+        return max(vals) if vals else None
+
+    def _prior(self, sym, date):
+        ds = self.index().get(sym, [])
+        from bisect import bisect_left
+        i = bisect_left(ds, date)
+        for j in range(i - 1, max(-1, i - 6), -1):
+            d = self.day(sym, ds[j])
+            if d is None:
+                continue
+            w = d["hl2"][np.isfinite(d["hl2"])]
+            hl = float(np.median(w)) if len(w) >= cr_cost.MIN_MIN_HL2 else None
+            n = len(d["o"])
+            cs = cr_cost.cs_bps(d["o"], d["h"], d["l"], 0, n)
+            ar = cr_cost.ar_bps(d["h"], d["l"], d["c"], 0, n)
+            vals = [v for v in (hl, cs, ar) if v is not None]
+            if vals:
+                return max(vals)
         return None
-    tp.sec = (tp.sec - t0_0930_ms) // 1000          # seconds since 09:30
-    return tp
+
+    def parts(self, sym, date, m_post, notional):
+        """(half_spread_bps, impact_bps, tier) for an order posted at the
+        start of minute m_post (04:00-based grid); windows end strictly
+        before it."""
+        k = m_post - SEC0_MIN                    # cost1 index: 0 == 09:30
+        d = self.day(sym, date) if 0 <= k < cr_cost.NMIN else None
+        sp, tier = None, "legacy"
+        if d is not None:
+            sp = self._spread_at(d, k)
+            if sp is not None:
+                tier = "win"
+        if sp is None:
+            pv = self._prior(sym, date)
+            if pv is not None:
+                sp, tier = pv, "prior"
+        if sp is None:
+            sp = cr_cost.LEGACY_BPS * 2.0
+        half = max(cr_cost.FLOOR_BPS, sp / 2.0)
+        imp = 0.0
+        if d is not None and notional > 0:
+            a = max(0, k - cr_cost.IMPACT_WIN)
+            dvw = float(d["dv"][a:k].sum())
+            cc = d["c"][a:k]
+            cc = cc[cc > 0]
+            sg = np.nan
+            if len(cc) >= 3:
+                r = np.diff(np.log(cc))
+                if len(r) >= 2:
+                    sg = float(np.std(r, ddof=1)) * math.sqrt(max(1, k - a)) * 1e4
+            if dvw > 0 and np.isfinite(sg):
+                imp = self.coef * sg * math.sqrt(notional / dvw)
+            else:
+                imp = cr_cost.LEGACY_BPS
+        elif notional > 0:
+            imp = cr_cost.LEGACY_BPS
+        return half, imp, tier
 
 
 # ------------------------------------------------------------------- day
@@ -203,14 +372,12 @@ class Day:
         last = np.where(any_p, NMIN - 1 - np.argmax(self.printed[:, ::-1],
                                                    axis=1), -1)
         self.flat_min = last.astype(np.int32)
-        self._tape = {}
-        self.cm = cost_model if cost_model is not None else cr_cost.CostModel()
+        self._tape = load_day_tapes(date, self.syms, self.t0_0930)
+        self.cm = cost_model if cost_model is not None else FastCost()
 
     # ---- tape
     def tape(self, si):
-        if si not in self._tape:
-            self._tape[si] = load_tape(self.syms[si], self.date, self.t0_0930)
-        return self._tape[si]
+        return self._tape.get(self.syms[si])
 
     def has_tape(self, si):
         return self.tape(si) is not None
@@ -226,9 +393,8 @@ class Day:
     def half_spread_bps(self, si, m_post, notional):
         """(half_spread_bps, impact_bps, tier) from bars strictly before
         minute m_post (the minute the order is posted at the start of)."""
-        t = minute_time(m_post)
         try:
-            half, imp, tier = self.cm.parts(self.syms[si], self.date, t,
+            half, imp, tier = self.cm.parts(self.syms[si], self.date, m_post,
                                             notional)
         except Exception:
             half, imp, tier = cr_cost.LEGACY_BPS, cr_cost.LEGACY_BPS, "legacy"
@@ -453,6 +619,20 @@ def execute_leg(day, si, side, m_dec, shares, spec, hard_flat=None):
     return out
 
 
+def _market_exit(day, si, m_from, hold, flat_m, exit_dec, exit_conv):
+    """(price, minute) of the incumbent MARKET exit for a position opened
+    at minute m_from."""
+    if exit_dec is not None:
+        return float(day.cf[si, flat_m]), int(flat_m)
+    want = min(m_from + hold, flat_m)
+    if exit_conv == "open_next":
+        xm = int(day.nxt[si, want])
+        if xm >= NMIN or xm > flat_m:
+            return float(day.cf[si, flat_m]), int(flat_m)
+        return float(day.o[si, xm]), xm
+    return float(day.cf[si, want]), int(want)
+
+
 def markout(day, si, sec, px, side, minutes=MARKOUT_MIN):
     """bps of (mid after `minutes` - px) signed so negative = adverse."""
     if sec < 0 or not np.isfinite(px) or px <= 0:
@@ -465,7 +645,7 @@ def markout(day, si, sec, px, side, minutes=MARKOUT_MIN):
 
 # ------------------------------------------------------------ the ticket
 def ticket(day, si, m_dec, hold, entry, exit_, flat_m, ticket_usd=TICKET,
-           volcap=True, cap_shares=None, exit_dec=None):
+           volcap=True, cap_shares=None, exit_dec=None, exit_conv="close"):
     """One end-to-end limit ticket.
 
     m_dec     decision minute (info <= m_dec); the entry ladder posts at
@@ -502,6 +682,15 @@ def ticket(day, si, m_dec, hold, entry, exit_, flat_m, ticket_usd=TICKET,
     if entry is None:
         if ref_m < 0 or ref_m > flat_m - 1 or not np.isfinite(ref_px):
             return None
+        # the incumbent MARKET ticket sizes on the fill open itself
+        # (plan/hd_foresight, plan/wn_table, plan/uq_strat -- non-causal,
+        # reproduced here so their rows are recovered to the cent); the
+        # LIMIT ticket above sizes on mark(m_dec), which is causal
+        shares = ticket_usd / ref_px
+        if np.isfinite(cap_shares) and cap_shares > 0:
+            shares = min(shares, cap_shares)
+        if shares * ref_px < MIN_NOTIONAL:
+            return None
         e = {"filled": shares, "px": ref_px, "mkt_px": ref_px,
              "mkt_shares": shares, "passive_shares": 0.0, "m_fill": ref_m,
              "m_done": ref_m, "first_sec": (ref_m - SEC0_MIN) * 60,
@@ -533,13 +722,12 @@ def ticket(day, si, m_dec, hold, entry, exit_, flat_m, ticket_usd=TICKET,
     x_dec = max(x_dec, e["m_fill"])
     rec["x_dec"] = int(x_dec)
     if exit_ is None:
-        # incumbent: market at the CLOSE of the exit bar (fill + hold),
-        # or the hard flatten close
-        xm = min(x_dec + 1, flat_m) if exit_dec is None else flat_m
-        if exit_dec is None:
-            # hd_foresight convention: exit at the close of bar m_fill+hold
-            xm = min(e["m_fill"] + hold, flat_m)
-        px = float(day.cf[si, xm])
+        # incumbent market exit: "close" = the CLOSE of bar fill+hold
+        # (plan/hd_foresight, plan/cm_lib); "open_next" = the OPEN of the
+        # first printed minute at or after fill+hold, else the flatten
+        # price (plan/rl2/features._targets, plan/uq_fills.exit_leg)
+        px, xm = _market_exit(day, si, e["m_fill"], hold, flat_m, exit_dec,
+                              exit_conv)
         if not np.isfinite(px) or px <= 0:
             return None
         x = {"filled": sh, "px": px, "mkt_px": px, "mkt_shares": sh,
@@ -600,11 +788,8 @@ def ticket(day, si, m_dec, hold, entry, exit_, flat_m, ticket_usd=TICKET,
     # ---------------- the market counterfactual on the SAME name/decision
     mkt = None
     if ref_m >= 0 and ref_m < flat_m and np.isfinite(ref_px) and ref_px > 0:
-        if exit_dec is None:
-            xm = min(ref_m + hold, flat_m)
-        else:
-            xm = flat_m
-        pxo = float(day.cf[si, xm])
+        pxo, xm = _market_exit(day, si, ref_m, hold, flat_m, exit_dec,
+                               exit_conv)
         if np.isfinite(pxo) and pxo > 0:
             shm = min(ticket_usd / ref_px, cap_shares) if np.isfinite(cap_shares) \
                 else ticket_usd / ref_px
