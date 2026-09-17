@@ -1,0 +1,329 @@
+{
+ "h": "h30",
+ "dec": [
+  "09:35",
+  "09:45",
+  "10:00",
+  "10:30",
+  "11:00",
+  "12:00",
+  "13:00",
+  "14:00",
+  "15:00"
+ ],
+ "exit_bps": 10.0,
+ "days": 20,
+ "tickets": 6099,
+ "baseline": {
+  "label": "market m+1",
+  "tickets": 6099,
+  "total": -127901.47,
+  "per_ticket": -20.97,
+  "per_month": -134296.54,
+  "months_pos": "0/2",
+  "months_pos_frac": 0.0,
+  "max_dd": -115446.86,
+  "win_rate": 0.3232,
+  "sharpe": -16.88,
+  "days": 20,
+  "trade_days": 20,
+  "best": 2810.61,
+  "ex_best_total": -130712.07,
+  "monthly": {
+   "2024-10": -49170.8,
+   "2024-11": -78730.7
+  }
+ },
+ "ladder": [
+  {
+   "offset_bps": 0.0,
+   "wait_min": 1,
+   "fill_rate": 0.6334,
+   "per_ticket_all": -4.26,
+   "per_ticket_filled": -6.73,
+   "cap_binds": 0.1755,
+   "px_improve_bps": 3.99,
+   "gross_ret_filled_bps": 4.88,
+   "gross_ret_base_all_bps": 2.02,
+   "gross_ret_base_on_filled_bps": 0.89
+  },
+  {
+   "offset_bps": 0.0,
+   "wait_min": 3,
+   "fill_rate": 0.7837,
+   "per_ticket_all": -6.47,
+   "per_ticket_filled": -8.26,
+   "cap_binds": 0.1983,
+   "px_improve_bps": 5.15,
+   "gross_ret_filled_bps": 3.97,
+   "gross_ret_base_all_bps": 2.02,
+   "gross_ret_base_on_filled_bps": -1.33
+  },
+  {
+   "offset_bps": 0.0,
+   "wait_min": 5,
+   "fill_rate": 0.8319,
+   "per_ticket_all": -6.79,
+   "per_ticket_filled": -8.16,
+   "cap_binds": 0.2061,
+   "px_improve_bps": 5.52,
+   "gross_ret_filled_bps": 4.16,
+   "gross_ret_base_all_bps": 2.02,
+   "gross_ret_base_on_filled_bps": -1.74
+  },
+  {
+   "offset_bps": 5.0,
+   "wait_min": 1,
+   "fill_rate": 0.4317,
+   "per_ticket_all": -1.15,
+   "per_ticket_filled": -2.66,
+   "cap_binds": 0.1751,
+   "px_improve_bps": 7.7,
+   "gross_ret_filled_bps": 7.85,
+   "gross_ret_base_all_bps": 2.02,
+   "gross_ret_base_on_filled_bps": 0.16
+  },
+  {
+   "offset_bps": 5.0,
+   "wait_min": 3,
+   "fill_rate": 0.6252,
+   "per_ticket_all": -4.38,
+   "per_ticket_filled": -7.01,
+   "cap_binds": 0.1998,
+   "px_improve_bps": 9.21,
+   "gross_ret_filled_bps": 5.08,
+   "gross_ret_base_all_bps": 2.02,
+   "gross_ret_base_on_filled_bps": -4.25
+  },
+  {
+   "offset_bps": 5.0,
+   "wait_min": 5,
+   "fill_rate": 0.7018,
+   "per_ticket_all": -5.01,
+   "per_ticket_filled": -7.14,
+   "cap_binds": 0.2086,
+   "px_improve_bps": 9.74,
+   "gross_ret_filled_bps": 4.98,
+   "gross_ret_base_all_bps": 2.02,
+   "gross_ret_base_on_filled_bps": -5.25
+  },
+  {
+   "offset_bps": 10.0,
+   "wait_min": 1,
+   "fill_rate": 0.3273,
+   "per_ticket_all": 0.72,
+   "per_ticket_filled": 2.19,
+   "cap_binds": 0.1844,
+   "px_improve_bps": 11.22,
+   "gross_ret_filled_bps": 11.18,
+   "gross_ret_base_all_bps": 2.02,
+   "gross_ret_base_on_filled_bps": -0.02
+  },
+  {
+   "offset_bps": 10.0,
+   "wait_min": 3,
+   "fill_rate": 0.5137,
+   "per_ticket_all": -2.43,
+   "per_ticket_filled": -4.73,
+   "cap_binds": 0.2056,
+   "px_improve_bps": 12.97,
+   "gross_ret_filled_bps": 6.71,
+   "gross_ret_base_all_bps": 2.02,
+   "gross_ret_base_on_filled_bps": -5.88
+  },
+  {
+   "offset_bps": 10.0,
+   "wait_min": 5,
+   "fill_rate": 0.5934,
+   "per_ticket_all": -3.05,
+   "per_ticket_filled": -5.14,
+   "cap_binds": 0.2106,
+   "px_improve_bps": 13.62,
+   "gross_ret_filled_bps": 6.44,
+   "gross_ret_base_all_bps": 2.02,
+   "gross_ret_base_on_filled_bps": -7.43
+  },
+  {
+   "offset_bps": 15.0,
+   "wait_min": 1,
+   "fill_rate": 0.2568,
+   "per_ticket_all": 1.28,
+   "per_ticket_filled": 5.0,
+   "cap_binds": 0.1916,
+   "px_improve_bps": 14.62,
+   "gross_ret_filled_bps": 13.07,
+   "gross_ret_base_all_bps": 2.02,
+   "gross_ret_base_on_filled_bps": -1.53
+  },
+  {
+   "offset_bps": 15.0,
+   "wait_min": 3,
+   "fill_rate": 0.4248,
+   "per_ticket_all": -1.24,
+   "per_ticket_filled": -2.91,
+   "cap_binds": 0.2061,
+   "px_improve_bps": 16.94,
+   "gross_ret_filled_bps": 8.05,
+   "gross_ret_base_all_bps": 2.02,
+   "gross_ret_base_on_filled_bps": -8.55
+  },
+  {
+   "offset_bps": 15.0,
+   "wait_min": 5,
+   "fill_rate": 0.5017,
+   "per_ticket_all": -1.59,
+   "per_ticket_filled": -3.16,
+   "cap_binds": 0.2098,
+   "px_improve_bps": 17.76,
+   "gross_ret_filled_bps": 7.71,
+   "gross_ret_base_all_bps": 2.02,
+   "gross_ret_base_on_filled_bps": -9.9
+  },
+  {
+   "offset_bps": 20.0,
+   "wait_min": 1,
+   "fill_rate": 0.2035,
+   "per_ticket_all": 1.54,
+   "per_ticket_filled": 7.58,
+   "cap_binds": 0.1861,
+   "px_improve_bps": 18.14,
+   "gross_ret_filled_bps": 14.8,
+   "gross_ret_base_all_bps": 2.02,
+   "gross_ret_base_on_filled_bps": -3.32
+  },
+  {
+   "offset_bps": 20.0,
+   "wait_min": 3,
+   "fill_rate": 0.3504,
+   "per_ticket_all": -0.65,
+   "per_ticket_filled": -1.86,
+   "cap_binds": 0.2068,
+   "px_improve_bps": 21.02,
+   "gross_ret_filled_bps": 8.99,
+   "gross_ret_base_all_bps": 2.02,
+   "gross_ret_base_on_filled_bps": -11.98
+  },
+  {
+   "offset_bps": 20.0,
+   "wait_min": 5,
+   "fill_rate": 0.425,
+   "per_ticket_all": -1.52,
+   "per_ticket_filled": -3.58,
+   "cap_binds": 0.2095,
+   "px_improve_bps": 21.96,
+   "gross_ret_filled_bps": 7.57,
+   "gross_ret_base_all_bps": 2.02,
+   "gross_ret_base_on_filled_bps": -14.26
+  },
+  {
+   "offset_bps": 30.0,
+   "wait_min": 1,
+   "fill_rate": 0.1415,
+   "per_ticket_all": 2.39,
+   "per_ticket_filled": 16.91,
+   "cap_binds": 0.1831,
+   "px_improve_bps": 24.32,
+   "gross_ret_filled_bps": 21.49,
+   "gross_ret_base_all_bps": 2.02,
+   "gross_ret_base_on_filled_bps": -2.8
+  },
+  {
+   "offset_bps": 30.0,
+   "wait_min": 3,
+   "fill_rate": 0.253,
+   "per_ticket_all": 1.27,
+   "per_ticket_filled": 5.01,
+   "cap_binds": 0.1977,
+   "px_improve_bps": 29.05,
+   "gross_ret_filled_bps": 14.18,
+   "gross_ret_base_all_bps": 2.02,
+   "gross_ret_base_on_filled_bps": -15.71
+  },
+  {
+   "offset_bps": 30.0,
+   "wait_min": 5,
+   "fill_rate": 0.3217,
+   "per_ticket_all": 0.52,
+   "per_ticket_filled": 1.62,
+   "cap_binds": 0.208,
+   "px_improve_bps": 30.33,
+   "gross_ret_filled_bps": 11.64,
+   "gross_ret_base_all_bps": 2.02,
+   "gross_ret_base_on_filled_bps": -19.11
+  },
+  {
+   "offset_bps": 50.0,
+   "wait_min": 1,
+   "fill_rate": 0.0597,
+   "per_ticket_all": -0.44,
+   "per_ticket_filled": -7.4,
+   "cap_binds": 0.1786,
+   "px_improve_bps": 37.23,
+   "gross_ret_filled_bps": 3.89,
+   "gross_ret_base_all_bps": 2.02,
+   "gross_ret_base_on_filled_bps": -33.19
+  },
+  {
+   "offset_bps": 50.0,
+   "wait_min": 3,
+   "fill_rate": 0.1315,
+   "per_ticket_all": 0.44,
+   "per_ticket_filled": 3.35,
+   "cap_binds": 0.1746,
+   "px_improve_bps": 45.71,
+   "gross_ret_filled_bps": 13.08,
+   "gross_ret_base_all_bps": 2.02,
+   "gross_ret_base_on_filled_bps": -34.62
+  },
+  {
+   "offset_bps": 50.0,
+   "wait_min": 5,
+   "fill_rate": 0.1805,
+   "per_ticket_all": 0.38,
+   "per_ticket_filled": 2.13,
+   "cap_binds": 0.1862,
+   "px_improve_bps": 47.8,
+   "gross_ret_filled_bps": 11.72,
+   "gross_ret_base_all_bps": 2.02,
+   "gross_ret_base_on_filled_bps": -37.77
+  }
+ ],
+ "obs_spread_bps": {
+  "n": 5315,
+  "p10": 0.0,
+  "p25": 0.71,
+  "p50": 4.26,
+  "p75": 11.79,
+  "p90": 27.87,
+  "mean": 9.65
+ },
+ "through_cents": 0.0,
+ "est_half_spread_bps": {
+  "n": 6073,
+  "p10": 0.0,
+  "p25": 0.33,
+  "p50": 2.28,
+  "p75": 6.55,
+  "p90": 15.17
+ },
+ "at_est_bid": [
+  {
+   "wait_min": 1,
+   "fill_rate": 0.4027,
+   "per_ticket_all": -1.24,
+   "per_ticket_filled": -3.09
+  },
+  {
+   "wait_min": 3,
+   "fill_rate": 0.537,
+   "per_ticket_all": -3.57,
+   "per_ticket_filled": -6.65
+  },
+  {
+   "wait_min": 5,
+   "fill_rate": 0.5858,
+   "per_ticket_all": -3.96,
+   "per_ticket_filled": -6.76
+  }
+ ]
+}

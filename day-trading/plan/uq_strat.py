@@ -169,25 +169,43 @@ def stage_run(h="h30", split=1, offset=10.0, wait=1, post_k=3, seeds=30,
            "post_k": post_k, "exit_bps": exit_bps,
            "passive_bps": passive_bps, "days": nd,
            "first": days[0], "last": days[-1]}
-    main = run_policy(t, days, sc, **kw)
-    rep["model_limit"] = _summ(main, nd, "model, limit entry")
-    mk = run_policy(t, days, sc, market=True, **kw)
-    rep["model_market"] = _summ(mk, nd, "model, market entry (incumbent)")
-    inv = run_policy(t, days, -sc, **kw)
-    rep["inverted"] = _summ(inv, nd, "inverted score, limit entry")
+    fin = np.isfinite(sc)
+    scores = [sc, -sc]
+    names = ["model_limit", "inverted"]
     shf = WNOUT / f"model_scores_{h}_s0_shuf.npy"
     if shf.exists():
-        s2 = np.load(shf).astype(float)
-        rep["shuffled"] = _summ(run_policy(t, days, s2, **kw), nd,
-                                "shuffled-label model, limit entry")
-    rnd = []
-    fin = np.isfinite(sc)
+        scores.append(np.where(fin, np.load(shf).astype(float), np.nan))
+        names.append("shuffled")
     for s in range(seeds):
         rg = np.random.default_rng(1000 + s)
-        r = np.where(fin, rg.random(len(sc)), np.nan)
-        rnd.append(_summ(run_policy(t, days, r, **kw), nd, f"random {s}"))
-        if (s + 1) % 5 == 0:
-            print(f"  ..random seed {s+1}/{seeds}", flush=True)
+        scores.append(np.where(fin, rg.random(len(sc)), np.nan))
+    configs = [dict(kw), dict(kw, market=True)]
+    acc = run_many(t, days, scores, configs)
+    rep["model_limit"] = _summ(acc[(0, 0)], nd, "model, limit entry")
+    rep["model_market"] = _summ(acc[(1, 0)], nd,
+                                "model, market entry (incumbent)")
+    rep["inverted"] = _summ(acc[(0, 1)], nd, "inverted score, limit entry")
+    rep["inverted_market"] = _summ(acc[(1, 1)], nd,
+                                   "inverted score, market entry")
+    j = 2
+    if "shuffled" in names:
+        rep["shuffled"] = _summ(acc[(0, 2)], nd,
+                                "shuffled-label model, limit entry")
+        rep["shuffled_market"] = _summ(acc[(1, 2)], nd,
+                                       "shuffled-label model, market entry")
+        j = 3
+    rnd = [_summ(acc[(0, j + s)], nd, f"random {s}") for s in range(seeds)]
+    rnd_mk = [_summ(acc[(1, j + s)], nd, f"random-mkt {s}")
+              for s in range(seeds)]
+    pmm = np.array([x["per_month"] for x in rnd_mk])
+    ptm = np.array([x["per_ticket"] for x in rnd_mk])
+    rep["random_market"] = {
+        "seeds": seeds,
+        "per_ticket_mean": round(float(ptm.mean()), 2),
+        "per_ticket_sd": round(float(ptm.std(ddof=1)), 2),
+        "per_month_mean": round(float(pmm.mean()), 1)}
+    rep["percentile_vs_random_market_per_month"] = round(
+        100.0 * float(np.mean(pmm < rep["model_market"]["per_month"])), 1)
     pm = np.array([x["per_month"] for x in rnd])
     pt = np.array([x["per_ticket"] for x in rnd])
     rep["random"] = {
@@ -205,9 +223,10 @@ def stage_run(h="h30", split=1, offset=10.0, wait=1, post_k=3, seeds=30,
     OUT.mkdir(parents=True, exist_ok=True)
     nm = (f"strat_{h}_s{split}_o{offset:.0f}_w{wait}_k{post_k}"
           f"_x{exit_bps:.0f}{tag}.json")
-    (OUT / nm).write_text(json.dumps({**rep, "tickets": main[:3000]},
-                                     indent=1, default=str))
-    for k in ("model_limit", "model_market", "inverted", "shuffled"):
+    (OUT / nm).write_text(json.dumps(
+        {**rep, "tickets": acc[(0, 0)][:3000]}, indent=1, default=str))
+    for k in ("model_limit", "model_market", "inverted",
+              "inverted_market", "shuffled", "shuffled_market"):
         if k in rep:
             v = rep[k]
             print(f"{k:>16}: {v['tickets']:>5} tkts "

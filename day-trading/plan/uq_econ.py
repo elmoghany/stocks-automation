@@ -211,8 +211,11 @@ def price_rows(t, rows, h, offsets=OFFSETS, nwait=NWAIT,
             ref = day.mark[ti, si]
             if not np.isfinite(ref) or ref <= 0:
                 continue
-            est = uf.spread_at(day, si, ti)
-            ob, _nb = uf.obs_spread_sec(day, sym, ti)
+            if spread_offset:
+                est = uf.spread_at(day, si, ti)
+                ob, _nb = uf.obs_spread_sec(day, sym, ti)
+            else:
+                est, ob = {"ar": np.nan}, np.nan     # skip: pure cost
             sobs[i] = ob
             # The limit "at the bid" uses the OBSERVED intra-second range
             # when the tape offers one and falls back to the Abdi-Ranaldo
