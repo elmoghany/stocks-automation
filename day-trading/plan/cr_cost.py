@@ -118,6 +118,7 @@ IMPACT_WIN = 10         # minutes, trailing dollar volume + vol
 IMPACT_COEF = 1.0       # square-root-law Y, top of the published range
 FLOOR_BPS = 1.0         # never charge less than 1 bp a side
 LEGACY_BPS = 10.0       # the incumbent assumption = the last-resort tier
+MAX_DAYS_CACHED = 3000  # in-memory symbol-day cap (see CostModel._day)
 MIN_N2 = 2              # prints in a second before its range is usable
 MIN_MIN_HL2 = 2         # minutes with an HL2 before the window counts
 MIN_PAIRS = 5           # CS / AR pairs (same as liquidity_estimators)
@@ -452,6 +453,14 @@ class CostModel:
             d = None
         if d is not None:
             self._rolling(d)
+        # bounded cache: a full pass over the wide universe touches
+        # 27k symbol-days at ~22 KB each, which is 600 MB if nothing is
+        # ever evicted. Callers walk the cross-section grouped by
+        # (date, symbol), so a plain flush is as good as an LRU here and
+        # cannot change a single number -- only how often a day is
+        # re-read from its own cache file.
+        if len(self._days) > MAX_DAYS_CACHED:
+            self._days.clear()
         self._days[k] = d
         return d
 

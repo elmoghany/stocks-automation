@@ -132,14 +132,22 @@ def verify(h="h30"):
     got = flat_pnl(z)
     d = np.abs(got - ref)
     m = z["good"]
+    # TOLERANCE, and why it is not 0: table.npz's pnl descends from the
+    # float32 `tgt` in plan/rl2/out/feat/*.npz, so float32 rounding alone
+    # is ~1e-4 of a dollar on a $15,000 ticket. This reconstruction is
+    # float64 throughout, i.e. MORE precise than the reference. The
+    # tolerance is uq_fills.stage_selftest's: max(1e-3, 2e-5*|want|).
+    tol = np.maximum(1e-3, 2e-5 * np.abs(ref))
     print(f"identity vs table.npz[{h}]: {int(m.sum()):,} rows, "
           f"worst |diff| ${d[m].max():.6f}, "
-          f"n>1e-6: {int((d[m] > 1e-6).sum()):,}")
+          f"n over tol: {int((d[m] > tol[m]).sum()):,} "
+          f"(n>1e-6, float32 noise: {int((d[m] > 1e-6).sum()):,})")
     # rows we could not reconstruct must be $0 in the table too
     bad = (~m) & (np.abs(ref) > 1e-9)
     print(f"unreconstructed rows with non-zero table pnl: {int(bad.sum()):,}")
     return dict(worst=float(d[m].max()),
-                n_mismatch=int((d[m] > 1e-6).sum()),
+                n_over_tol=int((d[m] > tol[m]).sum()),
+                n_over_1e6_float32_noise=int((d[m] > 1e-6).sum()),
                 n_rows=int(m.sum()), n_bad=int(bad.sum()))
 
 

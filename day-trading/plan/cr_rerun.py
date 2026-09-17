@@ -78,11 +78,11 @@ def stage_wn(h="h30", refit=True):
 
     def table(kind):
         t = WL.Table()
-        if kind == "measured":
-            t.pnl[h] = p["pnl_measured"].astype(np.float64)
+        if kind != "flat10":
+            t.pnl[h] = p[f"pnl_{kind}"].astype(np.float64)
         return t
 
-    for kind in ("flat10", "measured"):
+    for kind in ("flat10", "measured", "spreadonly", "imp03"):
         t = table(kind)
         for f in sorted(WN.glob("model_scores_h30_s0.npy")):
             sc0 = np.load(f).astype(np.float64)
@@ -176,83 +176,94 @@ def _print_legs(legs):
 # rl2 -- re-price the ledger (path is cost-independent; proved)
 # ======================================================================
 
-def stage_rl2():
+def stage_rl2(seeds=30):
+    """RL-SCOUT v2, approach 4, seed 0 -- its published rule, re-priced.
+
+    The rl2 harness's PATH is cost-independent (exits compare mark /
+    px_in on RAW fill prices, sizing is notional/px, the $500 minimum
+    tests sh*px), so the ledger `sim.run_day` returns can be re-priced
+    exactly. `assert_path_cost_free` proves the premise by re-running
+    with the fee tripled and asserting every entry and exit minute and
+    price is unchanged.
+    """
     r2 = HERE / "rl2"
     sys.path.insert(0, str(r2))
     FT = _load("features", r2 / "features.py")
     SM = _load("sim", r2 / "sim.py")
-    HO = _load("honesty", r2 / "honesty.py")
+    RL = _load("rules", r2 / "rules.py")
+    TR_END, TE_END = "2025-08-01", "2026-08-07"      # rules.py:182
     dates = sorted((r2 / "out" / "feat").glob("*.npz"))
-    TR_END, TE_END = "2025-08-01", "2026-08-07"
-    hold = [SM.Day(p) for p in dates if TR_END <= p.stem < TE_END]
+    hold = [SM.Day(p_) for p_ in dates if TR_END <= p_.stem < TE_END]
     print(f"held-out days: {len(hold)}", flush=True)
     chk, bad = CE.assert_path_cost_free(SM, hold, n=8)
     print(f"path-cost-free proof: {chk} legs, {bad} moved", flush=True)
 
     best = json.loads((r2 / "results" / "rules_holdout_s0.json").read_text())
-    rule = best["best_rule"] if "best_rule" in best else best.get("rule")
-    if rule is None:
-        for k in ("best", "heldout_rule"):
-            if k in best:
-                rule = best[k]
-    assert rule is not None, list(best)
-    RL = _load("rules", r2 / "rules.py")
-    cand = RL.Cand(rule) if hasattr(RL, "Cand") else None
-    cm = CC.CostModel(ext_floor_bps=60.0)   # 10 fee + 50 ext ladder
-    rep = {"rule": rule, "path_checks": chk, "path_moved": bad, "legs": []}
+    rd = best["rule"]
+    tests = [(FT.FEATURE_NAMES.index(n), 1 if op == ">" else -1, float(v))
+             for n, op, v in rd["tests"]]
+    cand = RL.Cand(tests, tuple(rd["window"]),
+                   (rd["exit"][0], rd["exit"][1]) if len(rd["exit"]) > 1
+                   else (rd["exit"][0],))
+    cm = CC.CostModel(ext_floor_bps=60.0)    # the 10 fee + 50 ext ladder
+    rep = {"rule": rd, "path_checks": chk, "path_moved": bad, "legs": [],
+           "published_heldout": best["heldout"]}
 
-    def run(score_fn, label, seeds=(None,)):
-        for sd in seeds:
-            tr = []
-            for d in hold:
-                sc = score_fn(d, sd)
-                t_, _ = SM.run_day(d, sc, _exit_of(rule))
-                tr += t_
-            for kind in ("flat10", "measured"):
-                pr = CE.reprice(tr, cm,
-                                flat_bps=10.0 if kind == "flat10" else None)
-                rep["legs"].append(_sum_rl2(pr, len(hold),
-                                            f"{label}:{kind}", sd))
+    tr = RL.evaluate(cand, hold)
+    variants = [("flat10", dict(flat_bps=10.0)),
+                ("measured", dict()),
+                ("spreadonly", dict(cm=CC.CostModel(
+                    ext_floor_bps=60.0, impact_coef=0.0,
+                    enable_impact=False)))]
+    for name, kw in variants:
+        c = kw.pop("cm", cm)
+        pr = CE.reprice(tr, c, **kw)
+        rep["legs"].append(_sum_rl2(pr, len(hold), f"rules_s0:{name}"))
 
-    def _exit_of(r):
-        e = r.get("exit")
-        return (e[0], e[1]) if isinstance(e, list) else e
-
-    run(lambda d, sd: cand.score_matrix(d), "rules_s0")
-    # 30-seed random control at the same ticket rate
-    base = [x for x in rep["legs"] if x["label"].startswith("rules_s0")]
-    rate = base[0]["tickets"] / max(len(hold), 1) if base else 1.2
-    for kind in ("flat10", "measured"):
+    # 30-seed random control, matched to the rule's ticket RATE, through
+    # plan/rl2/honesty.py's own machinery (imported, not reimplemented)
+    HO = _load("honesty", r2 / "honesty.py")
+    rate = len(tr) / max(len(hold), 1)
+    p_entry = rate / (SM.T * 1.0)
+    for name, kw in [("flat10", dict(flat_bps=10.0)), ("measured", dict()),
+                     ("spreadonly", dict(cm=CC.CostModel(
+                         ext_floor_bps=60.0, impact_coef=0.0,
+                         enable_impact=False)))]:
+        c = kw.pop("cm", cm)
         vals = []
-        for s in range(30):
-            tr = []
+        for s_ in range(seeds):
+            trs = []
             for d in hold:
-                rng = np.random.default_rng(20_000 + s)
-                sc = np.where(rng.random((SM.T, d.S))
-                              < rate / (SM.T * 1.0), 1.0, -np.inf)
-                t_, _ = SM.run_day(d, sc, ("horizon", 180))
-                tr += t_
-            pr = CE.reprice(tr, cm,
-                            flat_bps=10.0 if kind == "flat10" else None)
-            vals.append(_sum_rl2(pr, len(hold), f"random:{kind}", s))
+                rng = np.random.default_rng(10_000 + s_)
+                sc = rng.random((SM.T, d.S))
+                trs += SM.run_day(d, sc, cand.exit,
+                                  min_score=1.0 - p_entry,
+                                  max_new_per_step=2)[0]
+            pr = CE.reprice(trs, c, **kw)
+            vals.append(_sum_rl2(pr, len(hold), f"random:{name}", s_))
         pt = np.array([v["per_ticket"] for v in vals])
-        rep["legs"].append({"label": f"random30:{kind}", "cost": kind,
-                            "tickets": int(np.mean([v["tickets"]
-                                                    for v in vals])),
-                            "per_ticket": round(float(pt.mean()), 2),
-                            "per_ticket_sd": round(float(pt.std(ddof=1)), 2),
-                            "per_month": round(float(np.mean(
-                                [v["per_month"] for v in vals])), 2),
-                            "months_pos": "-", "ex_best_total": 0.0,
-                            "_vals": [float(x) for x in pt]})
-    for kind in ("flat10", "measured"):
-        b = [x for x in rep["legs"] if x["label"] == f"rules_s0:{kind}"][0]
-        r30 = [x for x in rep["legs"] if x["label"] == f"random30:{kind}"][0]
-        b["random_mean"] = r30["per_ticket"]
-        b["percentile"] = float(100.0 * np.mean(
-            np.array(r30["_vals"]) < b["per_ticket"]))
-    (OUT / "rerun_rl2.json").write_text(json.dumps(rep, indent=1, default=str))
-    _print_legs([x for x in rep["legs"] if not x["label"].startswith("random:")])
+        pm = np.array([v["per_month"] for v in vals])
+        row = {"label": f"random{seeds}:{name}", "cost": name,
+               "tickets": int(np.mean([v["tickets"] for v in vals])),
+               "per_ticket": round(float(pt.mean()), 2),
+               "per_ticket_sd": round(float(pt.std(ddof=1)), 2),
+               "per_month": round(float(pm.mean()), 2),
+               "months_pos": "-", "ex_best_total": 0.0,
+               "_vals": [float(x) for x in pt]}
+        rep["legs"].append(row)
+        b = [x for x in rep["legs"] if x["label"] == f"rules_s0:{name}"][0]
+        b["cost"] = name
+        b["random_mean"] = row["per_ticket"]
+        b["percentile"] = round(float(100.0 * np.mean(
+            np.array(row["_vals"]) < b["per_ticket"])), 1)
+
+    (OUT / "rerun_rl2.json").write_text(json.dumps(rep, indent=1,
+                                                   default=str))
+    _print_legs([x for x in rep["legs"] if "_vals" not in x])
+    for x in rep["legs"]:
+        if "_vals" in x:
+            print(f"{x['label']:>28} {x['per_ticket']:>8.2f} "
+                  f"+/- {x['per_ticket_sd']:.2f}  ${x['per_month']:,.0f}/mo")
     return rep
 
 
@@ -273,6 +284,7 @@ def _sum_rl2(tr, ndays, label, seed=None):
             "per_month": round(float(p.sum()) / max(ndays / 21.0, 1e-9), 2),
             "months_pos": f"{int((mv>0).sum())}/{len(mv)}",
             "ex_best_total": round(float(p.sum() - p.max()), 2),
+            "sharpe": 0.0,
             "mean_c_in_bps": round(float(np.mean(
                 [x["c_in_bps"] for x in tr])), 2),
             "mean_c_out_bps": round(float(np.mean(
@@ -359,6 +371,41 @@ def stage_uq(h="h30", offset=10.0, wait=1, post_k=3, split=1, seeds=30):
     return rep
 
 
+def stage_uqrefit(h="h30", offset=10.0, wait=1, post_k=3, split=1,
+                  seeds=30):
+    """The UQ leg, made symmetric with the wide-net leg: rebuild the
+    limit-fill LABEL under measured costs, refit the ranker on it, and
+    evaluate. Every artifact is redirected into plan/cr_out so not one
+    byte of plan/uq_out is overwritten -- uq_label.path and
+    uq_relabel.score_path are monkeypatched, the modules are not
+    edited."""
+    UF = _load("uq_fills", HERE / "uq_fills.py")
+    UE = _load("uq_econ", HERE / "uq_econ.py")
+    UL = _load("uq_label", HERE / "uq_label.py")
+    UR = _load("uq_relabel", HERE / "uq_relabel.py")
+    UL.UE, UL.UF = UE, UF
+    UR.UE, UR.UF, UR.UL = UE, UF, UL
+    cm = CC.CostModel(ext_floor_bps=60.0)
+    patch_uq(UE, UF, cm)
+    US = sys.modules.get("uq_strat")
+    if US is not None:
+        US.UE, US.UF = UE, UF
+    OUT.mkdir(exist_ok=True)
+    UL.path = lambda *a, **k: OUT / "limlabel_measured_h30_o10_w1.npz"
+    UR.score_path = lambda h_, o_, w_, x_, sp_: (
+        OUT / f"relabel_scores_measured_s{sp_}.npy")
+    lab = UL.path()
+    if not lab.exists():
+        UL.build(h, offset, wait, UF.FEE_BPS)
+    if not UR.score_path(h, offset, wait, UF.FEE_BPS, 1).exists():
+        UR.stage_scores(h, offset, wait, UF.FEE_BPS)
+    rep = UR.stage_eval(h, offset, wait, UF.FEE_BPS, split, seeds, post_k)
+    (OUT / "rerun_uq_refit.json").write_text(
+        json.dumps({"report": rep, "cost_tally": cm.report()}, indent=1,
+                   default=str))
+    return rep
+
+
 # ======================================================================
 # need -- the break-even information coefficient under measured costs
 # ======================================================================
@@ -368,10 +415,11 @@ def stage_need(h="h30"):
     WN_ = _load("wn_need", HERE / "wn_need.py")
     z, p = _priced(h)
     rep = {"h": h, "target": WN_.TARGET, "curves": {}}
-    for kind in ("flat10", "measured"):
+    KINDS = ("flat10", "measured", "spreadonly", "imp03")
+    for kind in KINDS:
         t = WL.Table()
-        if kind == "measured":
-            t.pnl[h] = p["pnl_measured"].astype(np.float64)
+        if kind != "flat10":
+            t.pnl[h] = p[f"pnl_{kind}"].astype(np.float64)
         # 1 ticket a day among any RTH slot, and top-k per slot
         c_any = WN_.curve(t, WN_.RTH, h, ks=(1, 3, 7), split=1)
         rep["curves"][kind] = {
@@ -380,7 +428,7 @@ def stage_need(h="h30"):
             str(k): WN_.needed_rho(v) for k, v in c_any.items()}
     (OUT / "rerun_need.json").write_text(json.dumps(rep, indent=1,
                                                     default=str))
-    for kind in ("flat10", "measured"):
+    for kind in KINDS:
         print(kind, json.dumps(rep[f"needed_rho_{kind}"]))
         for k, rows in rep["curves"][kind].items():
             print(f"  k={k}: " + "  ".join(
@@ -397,9 +445,7 @@ def stage_vs2(cfgs=("W8RSd",), shard="crm", days=None):
     VW = _load("vs2_wide", HERE / "vs2_wide.py")
     ec = CE.EngineCost(cm=CC.CostModel(ext_floor_bps=10.0))
     CE.patch_vs2(VW, ec)
-    argv = list(cfgs) + ([] if days is None else ["--days", str(days)])
-    sys.argv = ["vs2_wide.py"] + argv
-    VW.main()
+    VW.main(list(cfgs), days)
     print(json.dumps(ec.cm.report(), indent=1))
     (OUT / f"rerun_vs2_{shard}.json").write_text(
         json.dumps({"cfgs": list(cfgs), "shard": shard,
@@ -434,6 +480,9 @@ def main():
     elif st == "uq":
         pk = int(a[a.index("--postk") + 1]) if "--postk" in a else 3
         stage_uq(post_k=pk)
+    elif st == "uqrefit":
+        pk = int(a[a.index("--postk") + 1]) if "--postk" in a else 3
+        stage_uqrefit(post_k=pk)
     elif st == "need":
         stage_need()
     elif st == "vs2":
