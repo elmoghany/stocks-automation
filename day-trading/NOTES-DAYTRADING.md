@@ -9316,3 +9316,48 @@ supplement), `plan/hd_frame.py` (control 5).
 Outputs: `data/massive/hd/{decomp,recon,foresight,intraday_h30,frame}.json`.
 Logs: `data/massive/hd_{foresight,frame}.log`. Write-up:
 `harness-diagnostic.md`.
+
+
+## VS2 RESULTS, TABLE 5: THE ENTRY-SHUFFLE CONTROL -- WHAT IS THE TRIGGER ITSELF WORTH?
+
+This control is new to the campaign. `-R` prices the PICK (which name);
+**`-E` prices the TRIGGER (which minute)**: same ranked name, same exit
+family, every trigger switched OFF, and the entry taken at a UNIFORMLY
+RANDOM minute within 30 minutes of the decision (`rand_entry`). If a
+breakout rule cannot beat entering the same name at a random minute, the
+shape on the chart is decoration.
+
+Wide universe, wy1 (214 days), three seeds:
+
+    config           total   tkts  $/tkt      what it is
+    W1ORB           +  707    245   +2.9   09:30 OR break, OR-low stop, 2R
+    W1ORB-E00       -33,934   870  -39.0   same name, RANDOM entry minute
+    W1ORB-E01       -23,398   870  -26.9   same, seed 1
+    W2MPB           - 9,148    474  -19.3   micro pullback, 2R
+    W2MPB-E00       -32,735   866  -37.8   same name, RANDOM entry minute
+
+**The triggers are worth something, and it is roughly the size of the
+friction.** The opening-range break beats a random entry minute on the
+same name by **$30-42 per ticket**; the micro pullback beats it by
+**$18**. Both effects are far larger than anything the -R (pick) control
+ever showed in this campaign.
+
+Two honest caveats, both of which cut the same way:
+1. **The comparison is not purely the trigger.** A VS2 trigger carries
+   its structure stop (the opening-range low, the signal bar's low) and
+   the shuffled control cannot -- there is no structure to attach to a
+   random minute -- so it falls back to the fill bar's low. Part of the
+   $30-42 is a better-placed stop, which is still part of what the video
+   teaches, but it is not all "timing".
+2. **The control trades 3.5x as often** (870 vs 245 tickets), because a
+   random minute always fires while a breakout does not. Much of its
+   worse total is simply more tickets at a negative rate.
+
+**What this changes, and what it does not.** It changes the diagnosis:
+these mechanics are not noise-on-a-chart. They pick moments that are
+measurably better than random moments in the same stock. It does not
+change the verdict: the moment they pick is better by about the cost of
+trading, and the level they are lifting from is below zero, so the sum
+is the friction band in TABLE 1 and TABLE 4. **A real but
+cost-sized edge is exactly the thing a retail trader would experience as
+"this works when I paper trade it and loses when I go live".**
