@@ -1,0 +1,37 @@
+[
+ {
+  "endpoint": "/v3/quotes",
+  "code": 403,
+  "body": "{\"status\":\"NOT_AUTHORIZED\",\"request_id\":\"8ec0f8717c7cb46baca416ad88e2624c\",\"message\":\"You are not entitled to this data. Please upgrade your plan at https://massive.com/pricing\"}"
+ },
+ {
+  "endpoint": "/v3/trades",
+  "code": 403,
+  "body": "{\"status\":\"NOT_AUTHORIZED\",\"request_id\":\"18dd871ce71be80a0a3060492b3d8e06\",\"message\":\"You are not entitled to this data. Please upgrade your plan at https://massive.com/pricing\"}"
+ },
+ {
+  "endpoint": "/v2/last/nbbo",
+  "code": 403,
+  "body": "{\"status\":\"NOT_AUTHORIZED\",\"request_id\":\"9c1da20325371bd74d47042d26338144\",\"message\":\"You are not entitled to this data. Please upgrade your plan at https://massive.com/pricing\"}"
+ },
+ {
+  "endpoint": "/v2/last/trade",
+  "code": 403,
+  "body": "{\"status\":\"NOT_AUTHORIZED\",\"request_id\":\"d8e19af32c73f0efca0c844cf8b32b7e\",\"message\":\"You are not entitled to this data. Please upgrade your plan at https://massive.com/pricing\"}"
+ },
+ {
+  "endpoint": "/v2/ticks/nbbo",
+  "code": 403,
+  "body": "{\"status\":\"NOT_AUTHORIZED\",\"request_id\":\"e88406d12270033bef8aac75227a8b6d\",\"message\":\"You are not entitled to this data. Please upgrade your plan at https://massive.com/pricing\"}"
+ },
+ {
+  "endpoint": "/v2/aggs 1-second",
+  "code": 200,
+  "results": 10096
+ },
+ {
+  "endpoint": "/v3/snapshot",
+  "code": 200,
+  "results": 1
+ }
+]

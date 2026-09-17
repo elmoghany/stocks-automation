@@ -1,0 +1,20 @@
+{
+ "days": 8,
+ "cuts": [
+  "09:35",
+  "10:30",
+  "13:00",
+  "15:00"
+ ],
+ "array_checks": 128,
+ "array_mismatches": 0,
+ "order_checks": 192,
+ "order_mismatches": 0,
+ "fill_tested": 1588,
+ "fill_moved": 887,
+ "fill_moved_frac": 0.5586,
+ "pre_t0_checks": 1588,
+ "pre_t0_leaks": 0,
+ "detail": [],
+ "PASS": true
+}

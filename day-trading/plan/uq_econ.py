@@ -58,17 +58,19 @@ PASSIVE = [0.0, 2.0, 5.0]
 
 # ------------------------------------------------------------ fill scans
 def fill_scan(day, sym, me, maxmin=5):
-    """(ts, running-min-low) over (t0, t0+maxmin], improvements only.
+    """(ts, running-min-low, open) over [t0, t0+maxmin), improvements only.
 
-    The array is strictly decreasing, so the first second at which a limit
-    L would be hit is one searchsorted away, for EVERY L at once.
+    The running-min array is strictly decreasing, so the first second at
+    which a limit L would be hit is one searchsorted away -- for EVERY L
+    at once. The OPEN of that second is carried alongside because it is
+    what decides the fill PRICE (see `fill_at`).
     """
     rows = day.tape(sym)
     if not rows:
         return None
     lo = day.ms_of_min(me)
     hi = lo + maxmin * 60_000
-    ts, rm, cur = [], [], float("inf")
+    ts, rm, op, cur = [], [], [], float("inf")
     for r in rows:
         t = r[0]
         if t < lo:
@@ -82,24 +84,63 @@ def fill_scan(day, sym, me, maxmin=5):
             cur = lw
             ts.append(t)
             rm.append(cur)
+            op.append(r[1] if r[1] is not None else lw)
     if not ts:
         return None
-    return np.asarray(ts, np.int64), np.asarray(rm, float)
+    return (np.asarray(ts, np.int64), np.asarray(rm, float),
+            np.asarray(op, float))
 
 
 def fill_ms(scan, L):
     """First timestamp whose running-min low is <= L, or None."""
     if scan is None:
         return None
-    ts, rm = scan
+    ts, rm = scan[0], scan[1]
     i = int(np.searchsorted(-rm, -L, side="left"))
     return int(ts[i]) if i < len(ts) else None
 
 
+def fill_at(scan, L):
+    """(timestamp, FILL PRICE) for a buy limit at L, or (None, None).
+
+    THE FILL PRICE IS NOT ALWAYS L, and getting this wrong is the single
+    biggest way a limit backtest lies to itself. An exchange fills a buy
+    limit at the BETTER of the limit and the market:
+
+      * the filling second OPENED ABOVE L -- price came down to us during
+        that second, our order was resting at L, we get L;
+      * the filling second OPENED AT OR BELOW L -- the market was already
+        there when we posted, so the order was marketable on arrival and
+        we get the market, not our (worse) limit.
+
+    min(L, open of the filling second) is exactly those two cases. The
+    first version of this module filled at L unconditionally, and because
+    `mark(m)` is the last printed close -- which can be STALE by minutes
+    on a thin name -- that charged the stale price for a marketable order
+    and made the limit entry look WORSE than a market order at a zero
+    offset. The symptom was a NEGATIVE price-improvement column (`pxImp`)
+    at offset 0, which is arithmetically impossible for a real limit
+    order, and that is what exposed it.
+    """
+    if scan is None:
+        return None, None
+    ts, rm, op = scan
+    i = int(np.searchsorted(-rm, -L, side="left"))
+    if i >= len(ts):
+        return None, None
+    o = float(op[i])
+    return int(ts[i]), (min(L, o) if np.isfinite(o) and o > 0 else L)
+
+
 def price_ticket(day, ti, si, h, L, fill_t_ms, passive_bps, exit_bps,
-                 cap_mult=1.0):
-    """$ P&L of a filled limit ticket. Mirrors uq_fills.DayTape.limit."""
+                 cap_mult=1.0, fill_px=None):
+    """$ P&L of a filled limit ticket.
+
+    `L` is the POSTED limit; it sizes the ticket (notional = min($15,000,
+    volcap * L), a quantity knowable at t0). `fill_px` is what the order
+    actually paid -- min(L, market) per `fill_at` -- and defaults to L."""
     mf = int((fill_t_ms - day.t0_04) // 60_000)
+    fp = float(L if fill_px is None else fill_px)
     cap = day.volcap[ti, si] * cap_mult
     notion = min(uf.TICKET, cap * L)
     if not np.isfinite(notion):
@@ -109,9 +150,10 @@ def price_ticket(day, ti, si, h, L, fill_t_ms, passive_bps, exit_bps,
         return None
     ent_c = float(uf.cost_frac(mf, passive_bps))
     ex_c = float(uf.cost_frac(ex_m, exit_bps))
-    r = (ex_px * (1 - ex_c)) / (L * (1 + ent_c)) - 1
+    r = (ex_px * (1 - ex_c)) / (fp * (1 + ent_c)) - 1
     return {"pnl": notion * (1 + ent_c) * r, "notional": notion,
-            "fill_min": mf, "capped": bool(cap * L < uf.TICKET)}
+            "fill_min": mf, "fill_px": fp,
+            "capped": bool(cap * L < uf.TICKET)}
 
 
 # ------------------------------------------------------------ row engine
@@ -186,15 +228,16 @@ def price_rows(t, rows, h, offsets=OFFSETS, nwait=NWAIT,
                 # before the fill is believed. 0 = a touch fills (front of
                 # queue); 0.01 = a full cent through (the book at L had to
                 # be cleared first). The queue-position sensitivity.
-                ft = fill_ms(scan, L - through)
+                ft, fpx = fill_at(scan, L - through)
                 if ft is None:
                     continue
+                fpx = min(L, fpx)
                 wait = ft - day.ms_of_min(me)
                 for N in nwait:
                     if wait >= N * 60_000:
                         continue
                     pt = price_ticket(day, ti, si, h, L, ft, passive_bps,
-                                      exit_bps, cap_mult)
+                                      exit_bps, cap_mult, fill_px=fpx)
                     if pt is None:
                         continue
                     lim[(k, N)][i] = pt["pnl"]
@@ -202,22 +245,23 @@ def price_rows(t, rows, h, offsets=OFFSETS, nwait=NWAIT,
                     cap[(k, N)][i] = pt["capped"]
                     gx, gm = day.exit_leg(si, pt["fill_min"], uf.HORIZ[h])
                     if np.isfinite(gx) and gm >= pt["fill_min"]:
-                        gross[(k, N)][i] = (gx / L - 1.0) * 1e4
+                        gross[(k, N)][i] = (gx / pt["fill_px"] - 1.0) * 1e4
                     if day.printed[si, me]:
-                        pximp[(k, N)][i] = (float(day.o[si, me]) / L
-                                            - 1.0) * 1e4
+                        pximp[(k, N)][i] = (float(day.o[si, me])
+                                            / pt["fill_px"] - 1.0) * 1e4
                     if k == 0.0:
                         notn[i] = pt["notional"]
             if spread_offset and np.isfinite(half) and half > 0:
                 L = float(ref) * (1 - half / 1e4)
-                ft = fill_ms(scan, L - through)
+                ft, fpx = fill_at(scan, L - through)
+                fpx = None if ft is None else min(L, fpx)
                 if ft is not None:
                     wait = ft - day.ms_of_min(me)
                     for N in nwait:
                         if wait >= N * 60_000:
                             continue
                         pt = price_ticket(day, ti, si, h, L, ft, passive_bps,
-                                          exit_bps, cap_mult)
+                                          exit_bps, cap_mult, fill_px=fpx)
                         if pt is None:
                             continue
                         slim[N][i] = pt["pnl"]
