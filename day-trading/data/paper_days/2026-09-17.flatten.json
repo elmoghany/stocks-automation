@@ -1,0 +1,48 @@
+{
+ "date": "2026-09-17",
+ "records": [
+  {
+   "sym": "VICR",
+   "ticket": 1,
+   "date": "2026-09-17",
+   "mode": "c37",
+   "entry": 211.98,
+   "shares_initial": 70,
+   "entry_bar_utc": "2026-09-17T13:41:00Z",
+   "prev_close": 183.91,
+   "exit_kind": "ladder",
+   "fills": [
+    {
+     "kind": "rung1",
+     "time": "14:50",
+     "shares": 70,
+     "px": 217.6122,
+     "src": "quote"
+    }
+   ],
+   "vwap": 217.6122,
+   "shares_exited": 70,
+   "scale_out": null,
+   "banked": 0.0,
+   "pnl": 394.25,
+   "peak": 218.36,
+   "rungs": [
+    {
+     "k": 0,
+     "time": "14:50",
+     "shares": 70,
+     "limit": 216.7409,
+     "fill": 217.6122,
+     "bid": 217.83,
+     "bid_src": "quote",
+     "status": "FILLED",
+     "note": "confirmed by bar 14:50"
+    }
+   ],
+   "deployed": 14838.6,
+   "exit_time": "14:50",
+   "booked_at": "2026-09-17T14:51:33.393369-04:00",
+   "exit_parity": null
+  }
+ ]
+}

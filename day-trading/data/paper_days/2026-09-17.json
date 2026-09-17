@@ -121,7 +121,20 @@
       "prev_close": 183.91,
       "fill_realism": "The 13:41Z bar opened 209.89 (BELOW the 211.98 stop) and ran to 212.98, so the stop was traversed intrabar and fills AT the stop price -- not a gap-through, and not a level the bar never traded. Confirmed mechanically by bars_paste.py --stop VICR:211.98 --after=<arm time>, which refuses to credit any bar before the arm.",
       "watcher": "plan/paper_watch.py --open recorded state; --book started as ONE background task at 09:44, EXIT_MODE default c37 (no --exit-mode passed)",
-      "status": "OPEN"
+      "exit_et": "14:50",
+      "exit_kind": "ladder rung 1",
+      "exit_price": 217.6122,
+      "exit_shares": 70,
+      "exit_src": "quote -- rung 1 priced off the live bid 217.83, NOT a bar proxy. This is the Day-23 process fix working: writing data/paper/quotes_{date}.json from 14:30 rather than 14:45 is exactly what kept rung 1 off a stale proxy and got it filled.",
+      "exit_confirmation": "flatten.json records rung 0 status FILLED, note 'confirmed by bar 14:50'",
+      "pnl": 394.25,
+      "pnl_pct": 2.66,
+      "peak": 218.36,
+      "banked": 0.0,
+      "scaled_out": false,
+      "hold_minutes": 309,
+      "stops_never_touched": "hard -8% (195.0216) and the pressure trail were never approached; closest the position came was -1.64% at 11:44. Exit was the time ladder, not a stop.",
+      "status": "CLOSED"
     }
   ],
   "halal_detail": {
