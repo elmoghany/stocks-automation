@@ -28,8 +28,9 @@ measured model.
 
 **The best net $/month any existing policy reaches under measured costs is
 −$559/month** (wide-net refit, one ticket a day). Under the most generous
-variant of the model — spread only, no impact at all — no row clears
-+$500/month either. **FAIL, by more than $8,000/month.**
+variant of the model — spread only, no impact at all — every row is still
+negative (best: the wide-net model at −$696/month). **FAIL, by more than
+$8,000/month.**
 
 Three findings, in the order that matters:
 
@@ -136,9 +137,12 @@ Four judgement calls, all stated rather than buried:
 * **`max` of three estimators, not the mean.** The conservative choice; it
   charges drift as spread when the tape is drifting. Part 3 reports the
   spread-only variant so the reader can see the other end.
-* **Roll (1984) is computed and reported but excluded from the max.** Its
-  median on this data is 18.6 bps — three times every other estimator — which
-  is the known high-frequency breakdown of the serial-covariance estimator.
+* **Roll (1984) is computed and reported but excluded from the max.**
+  UNIVERSE-QUOTES measured its median at 18.6 bps on 1-minute bars; on the
+  tape-derived 1-minute closes used here it is 8.1 bps — still 1.6–4× every
+  other estimator, which is the known high-frequency breakdown of the
+  serial-covariance estimator. Excluding it is the one judgement call that
+  makes the model CHEAPER, and it is stated here rather than buried.
 * **Y = 1.0** is the top of the published range for the square-root law
   (Almgren et al. 2005 and the Torre/BARRA line put it at roughly 0.3–1.0).
   The form is horizon-invariant: `sigma_T · sqrt(Q/V_T)` is the same number
@@ -250,7 +254,7 @@ minutes were bucketed by the model's predicted half-spread and compared with
 the median distance from the mark (last printed close ≤ m−1) to the first print
 of minute m:
 
-| predicted half-spread (bps) | observed |mark → first print| (bps) | n |
+| predicted half-spread (bps) | observed mark-to-first-print (bps) | n |
 |---|---|---|
 | 0.01 | 4.41 | 1,215 |
 | 1.23 | 2.10 | 1,215 |

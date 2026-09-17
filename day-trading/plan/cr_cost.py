@@ -30,10 +30,12 @@ WHAT IS MEASURED, AND FROM WHAT
             bars built from the same tape
       AR  = Abdi-Ranaldo (2017) on the same bars
       (Roll (1984) is computed and REPORTED but not used in the max:
-       its median on this data is 18.6 bps, three times every other
-       estimator, which is the known high-frequency breakdown of the
-       serial-covariance estimator. Excluding it is the one judgement
-       call in this model and it is stated here, not buried.)
+       UNIVERSE-QUOTES put its median at 18.6 bps on 1-minute bars and
+       it is 8.1 bps on the tape-derived closes used here -- still
+       1.6-4x every other estimator, the known high-frequency breakdown
+       of the serial-covariance estimator. Excluding it is the one
+       judgement call that makes this model CHEAPER, and it is stated
+       here, not buried.)
 
     half_spread_bps = spread_bps / 2, floored at FLOOR_BPS
 
