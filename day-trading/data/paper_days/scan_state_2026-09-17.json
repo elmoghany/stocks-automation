@@ -89,10 +89,10 @@
    "first_seen": "06:28"
   },
   "VICR": {
-   "pct": 15.55,
-   "last": 212.5,
+   "pct": 15.38,
+   "last": 212.19,
    "prev_close": 183.91,
-   "vol": "346408.882957",
+   "vol": "605489.164378",
    "name": "Vicor",
    "first_seen": "06:28"
   },
@@ -225,10 +225,10 @@
    "first_seen": "10:23"
   },
   "AIAI": {
-   "pct": 20.18,
-   "last": 4.11,
+   "pct": 18.57,
+   "last": 4.055,
    "prev_close": 3.42,
-   "vol": "78420.958821",
+   "vol": "252011.753108",
    "name": "AIAI Holdings Corporation",
    "first_seen": "10:23"
   },
@@ -241,18 +241,18 @@
    "first_seen": "10:23"
   },
   "IPDN": {
-   "pct": 16.99,
-   "last": 3.58,
+   "pct": 26.14,
+   "last": 3.86,
    "prev_close": 3.06,
-   "vol": "24874.657867",
+   "vol": "129501.122496",
    "name": "Professional Diversity Network",
    "first_seen": "10:23"
   },
   "LGHL": {
-   "pct": 16.52,
-   "last": 6.7,
+   "pct": 14.09,
+   "last": 6.56,
    "prev_close": 5.75,
-   "vol": "35470.271931",
+   "vol": "47681.817131",
    "name": "Lion Group Holding Ltd.",
    "first_seen": "10:23"
   },
@@ -273,26 +273,26 @@
    "first_seen": "10:23"
   },
   "CNXU": {
-   "pct": 13.85,
-   "last": 5.2601,
+   "pct": 12.77,
+   "last": 5.21,
    "prev_close": 4.62,
-   "vol": "53942.612027",
+   "vol": "92985.583089",
    "name": "Conexeu Sciences",
    "first_seen": "10:23"
   },
   "TWST": {
-   "pct": 12.89,
-   "last": 161.505,
+   "pct": 11.5,
+   "last": 159.52,
    "prev_close": 143.07,
-   "vol": "724453.728704",
+   "vol": "1.407383551112e+06",
    "name": "Twist Bioscience",
    "first_seen": "10:23"
   },
   "CLGN": {
-   "pct": 12.64,
-   "last": 3.92,
+   "pct": 15.66,
+   "last": 4.025,
    "prev_close": 3.48,
-   "vol": "60705.765355",
+   "vol": "110644.799883",
    "name": "CollPlant Biotechnologies",
    "first_seen": "10:23"
   },
@@ -337,10 +337,10 @@
    "first_seen": "10:23"
   },
   "FAC": {
-   "pct": 11.6,
-   "last": 5.58,
+   "pct": 11.4,
+   "last": 5.57,
    "prev_close": 5.0,
-   "vol": "55949.336675",
+   "vol": "127895.246255",
    "name": "Factorial Energy Inc.",
    "first_seen": "10:23"
   },
@@ -409,18 +409,18 @@
    "first_seen": "10:23"
   },
   "GOSS": {
-   "pct": 10.31,
-   "last": 12.09,
+   "pct": 11.59,
+   "last": 12.23,
    "prev_close": 10.96,
-   "vol": "130227.340191",
+   "vol": "151492.086338",
    "name": "Gossamer Bio",
    "first_seen": "10:23"
   },
   "RXT": {
-   "pct": 10.3,
-   "last": 3.8386,
+   "pct": 13.94,
+   "last": 3.965,
    "prev_close": 3.48,
-   "vol": "2.206198761907e+06",
+   "vol": "3.983355873375e+06",
    "name": "Rackspace Technology",
    "first_seen": "10:23"
   },
@@ -439,35 +439,232 @@
    "vol": "1.229892011292e+06",
    "name": "Intellia Therapeutics",
    "first_seen": "10:23"
+  },
+  "DTSS": {
+   "pct": 243.37,
+   "last": 2.03,
+   "prev_close": 0.5912,
+   "vol": "8.2521180025759e+07",
+   "name": "Datasea Intelligent Technology Ltd.",
+   "first_seen": "11:30"
+  },
+  "WFF": {
+   "pct": 21.89,
+   "last": 2.389,
+   "prev_close": 1.96,
+   "vol": "193522.952583",
+   "name": "WF Holding Limited",
+   "first_seen": "11:30"
+  },
+  "AIFU": {
+   "pct": 19.16,
+   "last": 12.81,
+   "prev_close": 10.75,
+   "vol": "20460.990886",
+   "name": "AIFU Inc.",
+   "first_seen": "11:30"
+  },
+  "SMXT": {
+   "pct": 18.56,
+   "last": 2.3,
+   "prev_close": 1.94,
+   "vol": "24263.0953",
+   "name": "Solarmax Technology",
+   "first_seen": "11:30"
+  },
+  "PBLS": {
+   "pct": 13.46,
+   "last": 41.845,
+   "prev_close": 36.88,
+   "vol": "311478.832484",
+   "name": "Parabilis Medicines",
+   "first_seen": "11:30"
+  },
+  "LEXX": {
+   "pct": 13.46,
+   "last": 3.5115,
+   "prev_close": 3.095,
+   "vol": "23240.738435",
+   "name": "Lexaria Bioscience",
+   "first_seen": "11:30"
+  },
+  "PTHS": {
+   "pct": 12.98,
+   "last": 21.94,
+   "prev_close": 19.42,
+   "vol": "20577.19488",
+   "name": "Pelthos Therapeutics",
+   "first_seen": "11:30"
+  },
+  "TRT": {
+   "pct": 12.81,
+   "last": 11.3827,
+   "prev_close": 10.09,
+   "vol": "111649.762812",
+   "name": "Trio-Tech International",
+   "first_seen": "11:30"
+  },
+  "ABCL": {
+   "pct": 12.34,
+   "last": 13.11,
+   "prev_close": 11.67,
+   "vol": "3.617631679886e+06",
+   "name": "Abcellera Biologics",
+   "first_seen": "11:30"
+  },
+  "BMGL": {
+   "pct": 12.2,
+   "last": 4.6,
+   "prev_close": 4.1,
+   "vol": "77297.2775",
+   "name": "Basel Medical Group Ltd",
+   "first_seen": "11:30"
+  },
+  "DDD": {
+   "pct": 11.94,
+   "last": 3.515,
+   "prev_close": 3.14,
+   "vol": "1.054326677746e+06",
+   "name": "3D Systems Corporation",
+   "first_seen": "11:30"
+  },
+  "EYPT": {
+   "pct": 11.45,
+   "last": 3.845,
+   "prev_close": 3.45,
+   "vol": "3.13617148642e+06",
+   "name": "EyePoint",
+   "first_seen": "11:30"
+  },
+  "BRUN": {
+   "pct": 11.41,
+   "last": 16.89,
+   "prev_close": 15.16,
+   "vol": "1.021682789752e+06",
+   "name": "Boost Run Inc.",
+   "first_seen": "11:30"
+  },
+  "VERA": {
+   "pct": 11.39,
+   "last": 35.39,
+   "prev_close": 31.77,
+   "vol": "1.143680135992e+06",
+   "name": "Vera Therapeutics",
+   "first_seen": "11:30"
+  },
+  "MASS": {
+   "pct": 11.39,
+   "last": 11.05,
+   "prev_close": 9.92,
+   "vol": "280674.813013",
+   "name": "908 Devices",
+   "first_seen": "11:30"
+  },
+  "RXRX": {
+   "pct": 11.13,
+   "last": 3.545,
+   "prev_close": 3.19,
+   "vol": "1.0862555444662e+07",
+   "name": "Recursion Pharmaceuticals",
+   "first_seen": "11:30"
+  },
+  "FGNX": {
+   "pct": 11.01,
+   "last": 7.16,
+   "prev_close": 6.45,
+   "vol": "55395.909836",
+   "name": "FG Nexus",
+   "first_seen": "11:30"
+  },
+  "XE": {
+   "pct": 10.81,
+   "last": 16.145,
+   "prev_close": 14.57,
+   "vol": "3.991299303941e+06",
+   "name": "X-Energy",
+   "first_seen": "11:30"
+  },
+  "MLEC": {
+   "pct": 10.78,
+   "last": 6.68,
+   "prev_close": 6.03,
+   "vol": "3128.9285",
+   "name": "Moolec Science",
+   "first_seen": "11:30"
+  },
+  "INDP": {
+   "pct": 10.59,
+   "last": 3.55,
+   "prev_close": 3.21,
+   "vol": "350290.043285",
+   "name": "Indaptus Therapeutics",
+   "first_seen": "11:30"
+  },
+  "DNA": {
+   "pct": 10.48,
+   "last": 7.8,
+   "prev_close": 7.06,
+   "vol": "1.10069863293e+06",
+   "name": "Ginkgo Bioworks",
+   "first_seen": "11:30"
+  },
+  "EMAT": {
+   "pct": 10.26,
+   "last": 4.19,
+   "prev_close": 3.8,
+   "vol": "532875.384099",
+   "name": "Evolution Metals & Technologies Corp",
+   "first_seen": "11:30"
   }
  },
  "halal_fail": [
+  "ABCL",
   "ABSI",
+  "AIAI",
+  "AIFU",
   "AKAN",
   "ARL",
   "AXG",
   "BOLT",
   "CENN",
+  "CLGN",
+  "CNXU",
   "COE",
+  "DDD",
+  "DNA",
+  "DTSS",
+  "EYPT",
+  "FAC",
+  "FGNX",
   "GENB",
   "GLAS",
   "GNRC",
+  "GOSS",
   "IMDX",
   "KFFB",
   "LCID",
+  "LEXX",
   "LRHC",
   "LTRX",
+  "MASS",
   "MRNA",
   "NTLA",
+  "PBLS",
   "PRME",
   "PSIX",
   "RAPP",
+  "RXRX",
+  "RXT",
   "SANA",
   "SECZ",
+  "SMXT",
   "TEM",
+  "TRT",
   "USDE",
   "VEEA",
+  "VERA",
   "WATT",
+  "XE",
   "YI"
  ],
  "fake_gap": [
@@ -730,17 +927,31 @@
   "ZYME"
  ],
  "cannot_verify": [
+  "BMGL",
   "BNAI",
   "BRTX",
+  "BRUN",
+  "CHGA",
   "CHNR",
   "CRSP",
   "DETX",
+  "DOMH",
+  "EMAT",
   "GLOO",
+  "GWAV",
+  "INDP",
   "JL",
   "KXIN",
+  "LGHL",
   "MKDW",
+  "MLEC",
+  "PTHS",
+  "PURR",
   "SDGR",
-  "SPPL"
+  "SPPL",
+  "VELO",
+  "VNCE",
+  "WFF"
  ],
  "spac": [
   "ALF",
@@ -750,7 +961,8 @@
   "RACD",
   "RDAC",
   "RFAI",
-  "VACI"
+  "VACI",
+  "TCGX"
  ],
  "_seed": "seeded 2026-09-17 from scan_state_2026-09-16 (inherited_fail + halal_fail + cannot_verify)"
 }
