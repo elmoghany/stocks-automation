@@ -89,8 +89,8 @@
    "first_seen": "06:28"
   },
   "VICR": {
-   "pct": 11.47,
-   "last": 205.0,
+   "pct": 12.22,
+   "last": 206.3893,
    "prev_close": 183.91,
    "vol": "573847.226479",
    "name": "Vicor",
@@ -167,6 +167,14 @@
    "vol": "4814",
    "name": "China Natural Resources",
    "first_seen": "06:28"
+  },
+  "VEEA": {
+   "pct": 20.16,
+   "last": 7.33,
+   "prev_close": 6.1,
+   "vol": "14106812.677891",
+   "name": "Veea",
+   "first_seen": "07:27"
   }
  },
  "halal_fail": [
@@ -180,6 +188,7 @@
   "KFFB",
   "LRHC",
   "RAPP",
+  "VEEA",
   "WATT",
   "YI"
  ],

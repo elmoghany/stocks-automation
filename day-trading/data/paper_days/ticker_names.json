@@ -1491,6 +1491,10 @@
 "name": "Leverage Shares 2X Long VALE Daily ETF",
 "type": "EQUITY"
 },
+"VEEA": {
+"name": "Veea",
+"type": "EQUITY"
+},
 "VERU": {
 "name": "Veru",
 "type": "EQUITY"
@@ -1545,6 +1549,10 @@
 },
 "WUGI": {
 "name": "AXS Esoterica NextG Economy ETF",
+"type": "EQUITY"
+},
+"WULX": {
+"name": "Tradr 2X Long WULF Daily ETF",
 "type": "EQUITY"
 },
 "WYFL": {
