@@ -1,0 +1,89 @@
+{
+ "ndays": 40,
+ "tally": {
+  "n": 380619,
+  "mean_bps": 64.35123580395826,
+  "frac_gt_10bps": 0.7727727727727728,
+  "tiers": {
+   "legacy": 1606,
+   "legacy+ext": 29088,
+   "prior": 49001,
+   "prior+ext": 38290,
+   "win": 262634
+  }
+ },
+ "rows": [
+  {
+   "cost": "flat",
+   "cfg": "C37F",
+   "label": "year",
+   "total": -2796,
+   "days": 37,
+   "tickets": 162,
+   "pnl_per_ticket": -17.3
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F",
+   "label": "y2025",
+   "total": -2594,
+   "days": 37,
+   "tickets": 134,
+   "pnl_per_ticket": -19.4
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1",
+   "label": "year",
+   "total": 4096,
+   "days": 37,
+   "tickets": 38,
+   "pnl_per_ticket": 107.8
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1",
+   "label": "y2025",
+   "total": -11760,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -317.8
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F",
+   "label": "year",
+   "total": -23538,
+   "days": 37,
+   "tickets": 148,
+   "pnl_per_ticket": -159.0
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F",
+   "label": "y2025",
+   "total": -35259,
+   "days": 37,
+   "tickets": 132,
+   "pnl_per_ticket": -267.1
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1",
+   "label": "year",
+   "total": -1211,
+   "days": 37,
+   "tickets": 38,
+   "pnl_per_ticket": -31.9
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1",
+   "label": "y2025",
+   "total": -18789,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -507.8
+  }
+ ]
+}

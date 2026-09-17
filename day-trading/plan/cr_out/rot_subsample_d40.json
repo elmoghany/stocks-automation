@@ -1,0 +1,817 @@
+{
+ "ndays": 40,
+ "tally": {
+  "n": 910588,
+  "mean_bps": 87.61125859639118,
+  "frac_gt_10bps": 0.8002170026400524,
+  "tiers": {
+   "legacy": 14692,
+   "legacy+ext": 44614,
+   "prior": 125305,
+   "prior+ext": 121678,
+   "win": 604299
+  }
+ },
+ "rows": [
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 0,
+   "label": "year",
+   "total": 11785,
+   "days": 38,
+   "tickets": 161,
+   "pnl_per_ticket": 73.2
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 0,
+   "label": "y2025",
+   "total": -2397,
+   "days": 37,
+   "tickets": 130,
+   "pnl_per_ticket": -18.4
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 1,
+   "label": "year",
+   "total": 11337,
+   "days": 38,
+   "tickets": 143,
+   "pnl_per_ticket": 79.3
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 1,
+   "label": "y2025",
+   "total": -4710,
+   "days": 37,
+   "tickets": 124,
+   "pnl_per_ticket": -38.0
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 2,
+   "label": "year",
+   "total": 2401,
+   "days": 38,
+   "tickets": 152,
+   "pnl_per_ticket": 15.8
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 2,
+   "label": "y2025",
+   "total": -9712,
+   "days": 37,
+   "tickets": 131,
+   "pnl_per_ticket": -74.1
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 3,
+   "label": "year",
+   "total": -4324,
+   "days": 38,
+   "tickets": 153,
+   "pnl_per_ticket": -28.3
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 3,
+   "label": "y2025",
+   "total": -2696,
+   "days": 37,
+   "tickets": 126,
+   "pnl_per_ticket": -21.4
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 4,
+   "label": "year",
+   "total": 9212,
+   "days": 38,
+   "tickets": 151,
+   "pnl_per_ticket": 61.0
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 4,
+   "label": "y2025",
+   "total": -5777,
+   "days": 37,
+   "tickets": 121,
+   "pnl_per_ticket": -47.7
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 5,
+   "label": "year",
+   "total": 10682,
+   "days": 38,
+   "tickets": 156,
+   "pnl_per_ticket": 68.5
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 5,
+   "label": "y2025",
+   "total": -2638,
+   "days": 37,
+   "tickets": 123,
+   "pnl_per_ticket": -21.5
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 6,
+   "label": "year",
+   "total": -142,
+   "days": 38,
+   "tickets": 147,
+   "pnl_per_ticket": -1.0
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 6,
+   "label": "y2025",
+   "total": -965,
+   "days": 37,
+   "tickets": 135,
+   "pnl_per_ticket": -7.2
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 7,
+   "label": "year",
+   "total": 1123,
+   "days": 38,
+   "tickets": 151,
+   "pnl_per_ticket": 7.4
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 7,
+   "label": "y2025",
+   "total": -6939,
+   "days": 37,
+   "tickets": 123,
+   "pnl_per_ticket": -56.4
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 8,
+   "label": "year",
+   "total": 13462,
+   "days": 38,
+   "tickets": 154,
+   "pnl_per_ticket": 87.4
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 8,
+   "label": "y2025",
+   "total": -12656,
+   "days": 37,
+   "tickets": 128,
+   "pnl_per_ticket": -98.9
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 9,
+   "label": "year",
+   "total": -5016,
+   "days": 38,
+   "tickets": 161,
+   "pnl_per_ticket": -31.2
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 9,
+   "label": "y2025",
+   "total": -4391,
+   "days": 37,
+   "tickets": 133,
+   "pnl_per_ticket": -33.0
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 0,
+   "label": "year",
+   "total": -4681,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": -123.2
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 0,
+   "label": "y2025",
+   "total": -10436,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -282.0
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 1,
+   "label": "year",
+   "total": -585,
+   "days": 38,
+   "tickets": 39,
+   "pnl_per_ticket": -15.0
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 1,
+   "label": "y2025",
+   "total": -14641,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -395.7
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 2,
+   "label": "year",
+   "total": 3959,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": 104.2
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 2,
+   "label": "y2025",
+   "total": -10470,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -283.0
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 3,
+   "label": "year",
+   "total": -3102,
+   "days": 38,
+   "tickets": 39,
+   "pnl_per_ticket": -79.5
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 3,
+   "label": "y2025",
+   "total": -14650,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -395.9
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 4,
+   "label": "year",
+   "total": -4156,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": -109.4
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 4,
+   "label": "y2025",
+   "total": -10164,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -274.7
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 5,
+   "label": "year",
+   "total": 452,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": 11.9
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 5,
+   "label": "y2025",
+   "total": -14641,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -395.7
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 6,
+   "label": "year",
+   "total": 2363,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": 62.2
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 6,
+   "label": "y2025",
+   "total": -11052,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -298.7
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 7,
+   "label": "year",
+   "total": 1716,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": 45.2
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 7,
+   "label": "y2025",
+   "total": -10563,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -285.5
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 8,
+   "label": "year",
+   "total": -4368,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": -115.0
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 8,
+   "label": "y2025",
+   "total": -15145,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -409.3
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 9,
+   "label": "year",
+   "total": 3958,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": 104.2
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 9,
+   "label": "y2025",
+   "total": -15013,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -405.8
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 0,
+   "label": "year",
+   "total": -24058,
+   "days": 38,
+   "tickets": 144,
+   "pnl_per_ticket": -167.1
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 0,
+   "label": "y2025",
+   "total": -33614,
+   "days": 37,
+   "tickets": 131,
+   "pnl_per_ticket": -256.6
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 1,
+   "label": "year",
+   "total": -37845,
+   "days": 38,
+   "tickets": 138,
+   "pnl_per_ticket": -274.2
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 1,
+   "label": "y2025",
+   "total": -29814,
+   "days": 37,
+   "tickets": 125,
+   "pnl_per_ticket": -238.5
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 2,
+   "label": "year",
+   "total": -28052,
+   "days": 38,
+   "tickets": 143,
+   "pnl_per_ticket": -196.2
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 2,
+   "label": "y2025",
+   "total": -51302,
+   "days": 37,
+   "tickets": 132,
+   "pnl_per_ticket": -388.6
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 3,
+   "label": "year",
+   "total": -30109,
+   "days": 38,
+   "tickets": 129,
+   "pnl_per_ticket": -233.4
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 3,
+   "label": "y2025",
+   "total": -36562,
+   "days": 37,
+   "tickets": 142,
+   "pnl_per_ticket": -257.5
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 4,
+   "label": "year",
+   "total": -25786,
+   "days": 38,
+   "tickets": 129,
+   "pnl_per_ticket": -199.9
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 4,
+   "label": "y2025",
+   "total": -34083,
+   "days": 37,
+   "tickets": 125,
+   "pnl_per_ticket": -272.7
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 5,
+   "label": "year",
+   "total": -9167,
+   "days": 38,
+   "tickets": 140,
+   "pnl_per_ticket": -65.5
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 5,
+   "label": "y2025",
+   "total": -32685,
+   "days": 37,
+   "tickets": 134,
+   "pnl_per_ticket": -243.9
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 6,
+   "label": "year",
+   "total": -25994,
+   "days": 38,
+   "tickets": 132,
+   "pnl_per_ticket": -196.9
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 6,
+   "label": "y2025",
+   "total": -38807,
+   "days": 37,
+   "tickets": 129,
+   "pnl_per_ticket": -300.8
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 7,
+   "label": "year",
+   "total": -28819,
+   "days": 38,
+   "tickets": 150,
+   "pnl_per_ticket": -192.1
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 7,
+   "label": "y2025",
+   "total": -35571,
+   "days": 37,
+   "tickets": 126,
+   "pnl_per_ticket": -282.3
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 8,
+   "label": "year",
+   "total": -30955,
+   "days": 38,
+   "tickets": 147,
+   "pnl_per_ticket": -210.6
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 8,
+   "label": "y2025",
+   "total": -42235,
+   "days": 37,
+   "tickets": 129,
+   "pnl_per_ticket": -327.4
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 9,
+   "label": "year",
+   "total": -36910,
+   "days": 38,
+   "tickets": 147,
+   "pnl_per_ticket": -251.1
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 9,
+   "label": "y2025",
+   "total": -42465,
+   "days": 37,
+   "tickets": 131,
+   "pnl_per_ticket": -324.2
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 0,
+   "label": "year",
+   "total": -9439,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": -248.4
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 0,
+   "label": "y2025",
+   "total": -17944,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -485.0
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 1,
+   "label": "year",
+   "total": -6552,
+   "days": 38,
+   "tickets": 39,
+   "pnl_per_ticket": -168.0
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 1,
+   "label": "y2025",
+   "total": -22192,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -599.8
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 2,
+   "label": "year",
+   "total": -1275,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": -33.5
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 2,
+   "label": "y2025",
+   "total": -18100,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -489.2
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 3,
+   "label": "year",
+   "total": -8160,
+   "days": 38,
+   "tickets": 39,
+   "pnl_per_ticket": -209.2
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 3,
+   "label": "y2025",
+   "total": -22316,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -603.1
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 4,
+   "label": "year",
+   "total": -8756,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": -230.4
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 4,
+   "label": "y2025",
+   "total": -17712,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -478.7
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 5,
+   "label": "year",
+   "total": -4499,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": -118.4
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 5,
+   "label": "y2025",
+   "total": -22192,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -599.8
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 6,
+   "label": "year",
+   "total": -2778,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": -73.1
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 6,
+   "label": "y2025",
+   "total": -18486,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -499.6
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 7,
+   "label": "year",
+   "total": -2972,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": -78.2
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 7,
+   "label": "y2025",
+   "total": -18192,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -491.7
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 8,
+   "label": "year",
+   "total": -9039,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": -237.9
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 8,
+   "label": "y2025",
+   "total": -22611,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -611.1
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 9,
+   "label": "year",
+   "total": -1485,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": -39.1
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 9,
+   "label": "y2025",
+   "total": -22500,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -608.1
+  }
+ ]
+}

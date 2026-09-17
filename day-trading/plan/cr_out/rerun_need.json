@@ -1,0 +1,982 @@
+{
+ "h": "h30",
+ "target": 7500.0,
+ "curves": {
+  "flat10": {
+   "1": [
+    {
+     "rho": 0.0,
+     "per_month": -524.0,
+     "per_month_sd": 207.0,
+     "per_ticket": -24.96,
+     "tickets": 251
+    },
+    {
+     "rho": 0.02,
+     "per_month": -345.0,
+     "per_month_sd": 220.0,
+     "per_ticket": -16.43,
+     "tickets": 251
+    },
+    {
+     "rho": 0.05,
+     "per_month": 46.0,
+     "per_month_sd": 260.0,
+     "per_ticket": 2.18,
+     "tickets": 251
+    },
+    {
+     "rho": 0.1,
+     "per_month": 768.0,
+     "per_month_sd": 317.0,
+     "per_ticket": 36.55,
+     "tickets": 251
+    },
+    {
+     "rho": 0.15,
+     "per_month": 1708.0,
+     "per_month_sd": 384.0,
+     "per_ticket": 81.33,
+     "tickets": 251
+    },
+    {
+     "rho": 0.2,
+     "per_month": 3004.0,
+     "per_month_sd": 439.0,
+     "per_ticket": 143.03,
+     "tickets": 251
+    },
+    {
+     "rho": 0.3,
+     "per_month": 6624.0,
+     "per_month_sd": 571.0,
+     "per_ticket": 315.43,
+     "tickets": 251
+    },
+    {
+     "rho": 0.4,
+     "per_month": 11023.0,
+     "per_month_sd": 373.0,
+     "per_ticket": 524.9,
+     "tickets": 251
+    },
+    {
+     "rho": 0.5,
+     "per_month": 14528.0,
+     "per_month_sd": 208.0,
+     "per_ticket": 691.79,
+     "tickets": 251
+    },
+    {
+     "rho": 0.7,
+     "per_month": 18297.0,
+     "per_month_sd": 177.0,
+     "per_ticket": 871.3,
+     "tickets": 251
+    },
+    {
+     "rho": 1.0,
+     "per_month": 20268.0,
+     "per_month_sd": 0.0,
+     "per_ticket": 965.14,
+     "tickets": 251
+    }
+   ],
+   "3": [
+    {
+     "rho": 0.0,
+     "per_month": -1558.0,
+     "per_month_sd": 353.0,
+     "per_ticket": -24.73,
+     "tickets": 753
+    },
+    {
+     "rho": 0.02,
+     "per_month": -1074.0,
+     "per_month_sd": 451.0,
+     "per_ticket": -17.04,
+     "tickets": 753
+    },
+    {
+     "rho": 0.05,
+     "per_month": -174.0,
+     "per_month_sd": 509.0,
+     "per_ticket": -2.77,
+     "tickets": 753
+    },
+    {
+     "rho": 0.1,
+     "per_month": 1784.0,
+     "per_month_sd": 513.0,
+     "per_ticket": 28.32,
+     "tickets": 753
+    },
+    {
+     "rho": 0.15,
+     "per_month": 3941.0,
+     "per_month_sd": 542.0,
+     "per_ticket": 62.56,
+     "tickets": 753
+    },
+    {
+     "rho": 0.2,
+     "per_month": 6933.0,
+     "per_month_sd": 633.0,
+     "per_ticket": 110.05,
+     "tickets": 753
+    },
+    {
+     "rho": 0.3,
+     "per_month": 14499.0,
+     "per_month_sd": 339.0,
+     "per_ticket": 230.14,
+     "tickets": 753
+    },
+    {
+     "rho": 0.4,
+     "per_month": 23756.0,
+     "per_month_sd": 502.0,
+     "per_ticket": 377.09,
+     "tickets": 753
+    },
+    {
+     "rho": 0.5,
+     "per_month": 32114.0,
+     "per_month_sd": 516.0,
+     "per_ticket": 509.75,
+     "tickets": 753
+    },
+    {
+     "rho": 0.7,
+     "per_month": 43575.0,
+     "per_month_sd": 213.0,
+     "per_ticket": 691.66,
+     "tickets": 753
+    },
+    {
+     "rho": 1.0,
+     "per_month": 49733.0,
+     "per_month_sd": 0.0,
+     "per_ticket": 789.41,
+     "tickets": 753
+    }
+   ],
+   "7": [
+    {
+     "rho": 0.0,
+     "per_month": -3823.0,
+     "per_month_sd": 684.0,
+     "per_ticket": -26.0,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.02,
+     "per_month": -2684.0,
+     "per_month_sd": 741.0,
+     "per_ticket": -18.26,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.05,
+     "per_month": -703.0,
+     "per_month_sd": 820.0,
+     "per_ticket": -4.78,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.1,
+     "per_month": 3011.0,
+     "per_month_sd": 576.0,
+     "per_ticket": 20.48,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.15,
+     "per_month": 7506.0,
+     "per_month_sd": 691.0,
+     "per_ticket": 51.06,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.2,
+     "per_month": 12756.0,
+     "per_month_sd": 568.0,
+     "per_ticket": 86.78,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.3,
+     "per_month": 24950.0,
+     "per_month_sd": 629.0,
+     "per_ticket": 169.73,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.4,
+     "per_month": 39133.0,
+     "per_month_sd": 797.0,
+     "per_ticket": 266.21,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.5,
+     "per_month": 53352.0,
+     "per_month_sd": 788.0,
+     "per_ticket": 362.94,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.7,
+     "per_month": 76526.0,
+     "per_month_sd": 555.0,
+     "per_ticket": 520.59,
+     "tickets": 1757
+    },
+    {
+     "rho": 1.0,
+     "per_month": 92474.0,
+     "per_month_sd": 0.0,
+     "per_ticket": 629.07,
+     "tickets": 1757
+    }
+   ]
+  },
+  "measured": {
+   "1": [
+    {
+     "rho": 0.0,
+     "per_month": -882.0,
+     "per_month_sd": 202.0,
+     "per_ticket": -42.02,
+     "tickets": 251
+    },
+    {
+     "rho": 0.02,
+     "per_month": -683.0,
+     "per_month_sd": 230.0,
+     "per_ticket": -32.53,
+     "tickets": 251
+    },
+    {
+     "rho": 0.05,
+     "per_month": -332.0,
+     "per_month_sd": 243.0,
+     "per_ticket": -15.79,
+     "tickets": 251
+    },
+    {
+     "rho": 0.1,
+     "per_month": 279.0,
+     "per_month_sd": 251.0,
+     "per_ticket": 13.3,
+     "tickets": 251
+    },
+    {
+     "rho": 0.15,
+     "per_month": 1065.0,
+     "per_month_sd": 395.0,
+     "per_ticket": 50.69,
+     "tickets": 251
+    },
+    {
+     "rho": 0.2,
+     "per_month": 2067.0,
+     "per_month_sd": 415.0,
+     "per_ticket": 98.41,
+     "tickets": 251
+    },
+    {
+     "rho": 0.3,
+     "per_month": 5035.0,
+     "per_month_sd": 468.0,
+     "per_ticket": 239.77,
+     "tickets": 251
+    },
+    {
+     "rho": 0.4,
+     "per_month": 8690.0,
+     "per_month_sd": 351.0,
+     "per_ticket": 413.8,
+     "tickets": 251
+    },
+    {
+     "rho": 0.5,
+     "per_month": 12060.0,
+     "per_month_sd": 321.0,
+     "per_ticket": 574.28,
+     "tickets": 251
+    },
+    {
+     "rho": 0.7,
+     "per_month": 16265.0,
+     "per_month_sd": 239.0,
+     "per_ticket": 774.54,
+     "tickets": 251
+    },
+    {
+     "rho": 1.0,
+     "per_month": 18681.0,
+     "per_month_sd": 0.0,
+     "per_ticket": 889.57,
+     "tickets": 251
+    }
+   ],
+   "3": [
+    {
+     "rho": 0.0,
+     "per_month": -2617.0,
+     "per_month_sd": 366.0,
+     "per_ticket": -41.54,
+     "tickets": 753
+    },
+    {
+     "rho": 0.02,
+     "per_month": -2175.0,
+     "per_month_sd": 449.0,
+     "per_ticket": -34.52,
+     "tickets": 753
+    },
+    {
+     "rho": 0.05,
+     "per_month": -1242.0,
+     "per_month_sd": 506.0,
+     "per_ticket": -19.72,
+     "tickets": 753
+    },
+    {
+     "rho": 0.1,
+     "per_month": 454.0,
+     "per_month_sd": 545.0,
+     "per_ticket": 7.21,
+     "tickets": 753
+    },
+    {
+     "rho": 0.15,
+     "per_month": 2376.0,
+     "per_month_sd": 572.0,
+     "per_ticket": 37.71,
+     "tickets": 753
+    },
+    {
+     "rho": 0.2,
+     "per_month": 4880.0,
+     "per_month_sd": 587.0,
+     "per_ticket": 77.46,
+     "tickets": 753
+    },
+    {
+     "rho": 0.3,
+     "per_month": 10986.0,
+     "per_month_sd": 415.0,
+     "per_ticket": 174.38,
+     "tickets": 753
+    },
+    {
+     "rho": 0.4,
+     "per_month": 18585.0,
+     "per_month_sd": 513.0,
+     "per_ticket": 295.01,
+     "tickets": 753
+    },
+    {
+     "rho": 0.5,
+     "per_month": 26187.0,
+     "per_month_sd": 480.0,
+     "per_ticket": 415.67,
+     "tickets": 753
+    },
+    {
+     "rho": 0.7,
+     "per_month": 37975.0,
+     "per_month_sd": 426.0,
+     "per_ticket": 602.78,
+     "tickets": 753
+    },
+    {
+     "rho": 1.0,
+     "per_month": 45482.0,
+     "per_month_sd": 0.0,
+     "per_ticket": 721.93,
+     "tickets": 753
+    }
+   ],
+   "7": [
+    {
+     "rho": 0.0,
+     "per_month": -6272.0,
+     "per_month_sd": 779.0,
+     "per_ticket": -42.67,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.02,
+     "per_month": -5144.0,
+     "per_month_sd": 764.0,
+     "per_ticket": -34.99,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.05,
+     "per_month": -3185.0,
+     "per_month_sd": 855.0,
+     "per_ticket": -21.67,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.1,
+     "per_month": 263.0,
+     "per_month_sd": 644.0,
+     "per_ticket": 1.79,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.15,
+     "per_month": 4200.0,
+     "per_month_sd": 686.0,
+     "per_ticket": 28.57,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.2,
+     "per_month": 8516.0,
+     "per_month_sd": 655.0,
+     "per_ticket": 57.93,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.3,
+     "per_month": 18674.0,
+     "per_month_sd": 437.0,
+     "per_ticket": 127.04,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.4,
+     "per_month": 30232.0,
+     "per_month_sd": 718.0,
+     "per_ticket": 205.66,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.5,
+     "per_month": 42855.0,
+     "per_month_sd": 790.0,
+     "per_ticket": 291.53,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.7,
+     "per_month": 65105.0,
+     "per_month_sd": 627.0,
+     "per_ticket": 442.89,
+     "tickets": 1757
+    },
+    {
+     "rho": 1.0,
+     "per_month": 83915.0,
+     "per_month_sd": 0.0,
+     "per_ticket": 570.85,
+     "tickets": 1757
+    }
+   ]
+  },
+  "spreadonly": {
+   "1": [
+    {
+     "rho": 0.0,
+     "per_month": -355.0,
+     "per_month_sd": 203.0,
+     "per_ticket": -16.93,
+     "tickets": 251
+    },
+    {
+     "rho": 0.02,
+     "per_month": -177.0,
+     "per_month_sd": 228.0,
+     "per_ticket": -8.42,
+     "tickets": 251
+    },
+    {
+     "rho": 0.05,
+     "per_month": 206.0,
+     "per_month_sd": 259.0,
+     "per_ticket": 9.81,
+     "tickets": 251
+    },
+    {
+     "rho": 0.1,
+     "per_month": 874.0,
+     "per_month_sd": 286.0,
+     "per_ticket": 41.6,
+     "tickets": 251
+    },
+    {
+     "rho": 0.15,
+     "per_month": 1757.0,
+     "per_month_sd": 394.0,
+     "per_ticket": 83.65,
+     "tickets": 251
+    },
+    {
+     "rho": 0.2,
+     "per_month": 2881.0,
+     "per_month_sd": 401.0,
+     "per_ticket": 137.19,
+     "tickets": 251
+    },
+    {
+     "rho": 0.3,
+     "per_month": 6207.0,
+     "per_month_sd": 493.0,
+     "per_ticket": 295.57,
+     "tickets": 251
+    },
+    {
+     "rho": 0.4,
+     "per_month": 10184.0,
+     "per_month_sd": 287.0,
+     "per_ticket": 484.96,
+     "tickets": 251
+    },
+    {
+     "rho": 0.5,
+     "per_month": 13703.0,
+     "per_month_sd": 259.0,
+     "per_ticket": 652.51,
+     "tickets": 251
+    },
+    {
+     "rho": 0.7,
+     "per_month": 17635.0,
+     "per_month_sd": 209.0,
+     "per_ticket": 839.76,
+     "tickets": 251
+    },
+    {
+     "rho": 1.0,
+     "per_month": 19727.0,
+     "per_month_sd": 0.0,
+     "per_ticket": 939.36,
+     "tickets": 251
+    }
+   ],
+   "3": [
+    {
+     "rho": 0.0,
+     "per_month": -1038.0,
+     "per_month_sd": 354.0,
+     "per_ticket": -16.48,
+     "tickets": 753
+    },
+    {
+     "rho": 0.02,
+     "per_month": -566.0,
+     "per_month_sd": 464.0,
+     "per_ticket": -8.98,
+     "tickets": 753
+    },
+    {
+     "rho": 0.05,
+     "per_month": 355.0,
+     "per_month_sd": 479.0,
+     "per_ticket": 5.63,
+     "tickets": 753
+    },
+    {
+     "rho": 0.1,
+     "per_month": 2148.0,
+     "per_month_sd": 525.0,
+     "per_ticket": 34.09,
+     "tickets": 753
+    },
+    {
+     "rho": 0.15,
+     "per_month": 4196.0,
+     "per_month_sd": 611.0,
+     "per_ticket": 66.61,
+     "tickets": 753
+    },
+    {
+     "rho": 0.2,
+     "per_month": 6951.0,
+     "per_month_sd": 567.0,
+     "per_ticket": 110.33,
+     "tickets": 753
+    },
+    {
+     "rho": 0.3,
+     "per_month": 13976.0,
+     "per_month_sd": 453.0,
+     "per_ticket": 221.84,
+     "tickets": 753
+    },
+    {
+     "rho": 0.4,
+     "per_month": 22202.0,
+     "per_month_sd": 578.0,
+     "per_ticket": 352.41,
+     "tickets": 753
+    },
+    {
+     "rho": 0.5,
+     "per_month": 30120.0,
+     "per_month_sd": 521.0,
+     "per_ticket": 478.09,
+     "tickets": 753
+    },
+    {
+     "rho": 0.7,
+     "per_month": 41746.0,
+     "per_month_sd": 309.0,
+     "per_ticket": 662.64,
+     "tickets": 753
+    },
+    {
+     "rho": 1.0,
+     "per_month": 48360.0,
+     "per_month_sd": 0.0,
+     "per_ticket": 767.61,
+     "tickets": 753
+    }
+   ],
+   "7": [
+    {
+     "rho": 0.0,
+     "per_month": -2588.0,
+     "per_month_sd": 706.0,
+     "per_ticket": -17.61,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.02,
+     "per_month": -1437.0,
+     "per_month_sd": 744.0,
+     "per_ticket": -9.78,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.05,
+     "per_month": 472.0,
+     "per_month_sd": 880.0,
+     "per_ticket": 3.21,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.1,
+     "per_month": 4059.0,
+     "per_month_sd": 602.0,
+     "per_ticket": 27.61,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.15,
+     "per_month": 8282.0,
+     "per_month_sd": 731.0,
+     "per_ticket": 56.34,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.2,
+     "per_month": 13085.0,
+     "per_month_sd": 575.0,
+     "per_ticket": 89.01,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.3,
+     "per_month": 24216.0,
+     "per_month_sd": 544.0,
+     "per_ticket": 164.74,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.4,
+     "per_month": 37181.0,
+     "per_month_sd": 932.0,
+     "per_ticket": 252.93,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.5,
+     "per_month": 50562.0,
+     "per_month_sd": 595.0,
+     "per_ticket": 343.96,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.7,
+     "per_month": 73400.0,
+     "per_month_sd": 614.0,
+     "per_ticket": 499.32,
+     "tickets": 1757
+    },
+    {
+     "rho": 1.0,
+     "per_month": 90128.0,
+     "per_month_sd": 0.0,
+     "per_ticket": 613.11,
+     "tickets": 1757
+    }
+   ]
+  },
+  "imp03": {
+   "1": [
+    {
+     "rho": 0.0,
+     "per_month": -514.0,
+     "per_month_sd": 201.0,
+     "per_ticket": -24.46,
+     "tickets": 251
+    },
+    {
+     "rho": 0.02,
+     "per_month": -336.0,
+     "per_month_sd": 225.0,
+     "per_ticket": -15.99,
+     "tickets": 251
+    },
+    {
+     "rho": 0.05,
+     "per_month": 42.0,
+     "per_month_sd": 255.0,
+     "per_ticket": 2.01,
+     "tickets": 251
+    },
+    {
+     "rho": 0.1,
+     "per_month": 659.0,
+     "per_month_sd": 263.0,
+     "per_ticket": 31.36,
+     "tickets": 251
+    },
+    {
+     "rho": 0.15,
+     "per_month": 1513.0,
+     "per_month_sd": 387.0,
+     "per_ticket": 72.05,
+     "tickets": 251
+    },
+    {
+     "rho": 0.2,
+     "per_month": 2600.0,
+     "per_month_sd": 395.0,
+     "per_ticket": 123.8,
+     "tickets": 251
+    },
+    {
+     "rho": 0.3,
+     "per_month": 5829.0,
+     "per_month_sd": 495.0,
+     "per_ticket": 277.56,
+     "tickets": 251
+    },
+    {
+     "rho": 0.4,
+     "per_month": 9739.0,
+     "per_month_sd": 324.0,
+     "per_ticket": 463.76,
+     "tickets": 251
+    },
+    {
+     "rho": 0.5,
+     "per_month": 13173.0,
+     "per_month_sd": 255.0,
+     "per_ticket": 627.29,
+     "tickets": 251
+    },
+    {
+     "rho": 0.7,
+     "per_month": 17236.0,
+     "per_month_sd": 187.0,
+     "per_ticket": 820.76,
+     "tickets": 251
+    },
+    {
+     "rho": 1.0,
+     "per_month": 19390.0,
+     "per_month_sd": 0.0,
+     "per_ticket": 923.31,
+     "tickets": 251
+    }
+   ],
+   "3": [
+    {
+     "rho": 0.0,
+     "per_month": -1512.0,
+     "per_month_sd": 355.0,
+     "per_ticket": -24.0,
+     "tickets": 753
+    },
+    {
+     "rho": 0.02,
+     "per_month": -1059.0,
+     "per_month_sd": 440.0,
+     "per_ticket": -16.82,
+     "tickets": 753
+    },
+    {
+     "rho": 0.05,
+     "per_month": -154.0,
+     "per_month_sd": 504.0,
+     "per_ticket": -2.45,
+     "tickets": 753
+    },
+    {
+     "rho": 0.1,
+     "per_month": 1607.0,
+     "per_month_sd": 575.0,
+     "per_ticket": 25.5,
+     "tickets": 753
+    },
+    {
+     "rho": 0.15,
+     "per_month": 3648.0,
+     "per_month_sd": 618.0,
+     "per_ticket": 57.9,
+     "tickets": 753
+    },
+    {
+     "rho": 0.2,
+     "per_month": 6310.0,
+     "per_month_sd": 593.0,
+     "per_ticket": 100.16,
+     "tickets": 753
+    },
+    {
+     "rho": 0.3,
+     "per_month": 13079.0,
+     "per_month_sd": 498.0,
+     "per_ticket": 207.61,
+     "tickets": 753
+    },
+    {
+     "rho": 0.4,
+     "per_month": 21021.0,
+     "per_month_sd": 530.0,
+     "per_ticket": 333.67,
+     "tickets": 753
+    },
+    {
+     "rho": 0.5,
+     "per_month": 29001.0,
+     "per_month_sd": 520.0,
+     "per_ticket": 460.34,
+     "tickets": 753
+    },
+    {
+     "rho": 0.7,
+     "per_month": 40657.0,
+     "per_month_sd": 373.0,
+     "per_ticket": 645.35,
+     "tickets": 753
+    },
+    {
+     "rho": 1.0,
+     "per_month": 47414.0,
+     "per_month_sd": 0.0,
+     "per_ticket": 752.6,
+     "tickets": 753
+    }
+   ],
+   "7": [
+    {
+     "rho": 0.0,
+     "per_month": -3693.0,
+     "per_month_sd": 726.0,
+     "per_ticket": -25.13,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.02,
+     "per_month": -2542.0,
+     "per_month_sd": 738.0,
+     "per_ticket": -17.29,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.05,
+     "per_month": -621.0,
+     "per_month_sd": 863.0,
+     "per_ticket": -4.23,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.1,
+     "per_month": 2957.0,
+     "per_month_sd": 621.0,
+     "per_ticket": 20.11,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.15,
+     "per_month": 7015.0,
+     "per_month_sd": 707.0,
+     "per_ticket": 47.72,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.2,
+     "per_month": 11677.0,
+     "per_month_sd": 582.0,
+     "per_ticket": 79.43,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.3,
+     "per_month": 22445.0,
+     "per_month_sd": 530.0,
+     "per_ticket": 152.69,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.4,
+     "per_month": 35069.0,
+     "per_month_sd": 945.0,
+     "per_ticket": 238.56,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.5,
+     "per_month": 48165.0,
+     "per_month_sd": 699.0,
+     "per_ticket": 327.65,
+     "tickets": 1757
+    },
+    {
+     "rho": 0.7,
+     "per_month": 70940.0,
+     "per_month_sd": 641.0,
+     "per_ticket": 482.59,
+     "tickets": 1757
+    },
+    {
+     "rho": 1.0,
+     "per_month": 88100.0,
+     "per_month_sd": 0.0,
+     "per_ticket": 599.32,
+     "tickets": 1757
+    }
+   ]
+  }
+ },
+ "needed_rho_flat10": {
+  "1": 0.32,
+  "3": 0.207,
+  "7": 0.15
+ },
+ "needed_rho_measured": {
+  "1": 0.367,
+  "3": 0.243,
+  "7": 0.188
+ },
+ "needed_rho_spreadonly": {
+  "1": 0.333,
+  "3": 0.208,
+  "7": 0.141
+ },
+ "needed_rho_imp03": {
+  "1": 0.343,
+  "3": 0.218,
+  "7": 0.155
+ }
+}

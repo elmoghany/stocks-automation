@@ -1,0 +1,48 @@
+--- flat10 (reproduces the published row) ---
+relabel eval: 251 days, split 1, offset 10.0, wait 1, post_k 3
+  ..20/251 days
+  ..40/251 days
+  ..60/251 days
+  ..80/251 days
+  ..100/251 days
+  ..120/251 days
+  ..140/251 days
+  ..160/251 days
+  ..180/251 days
+  ..200/251 days
+  ..220/251 days
+  ..240/251 days
+   model_limit:  1210 tkts (4.82/day) $    0.06/tkt $        7/mo  mo+ 8/12
+  model_market:  1492 tkts (5.94/day) $  -17.93/tkt $    -2238/mo  mo+ 3/12
+      inverted:  1316 tkts (5.24/day) $  -21.61/tkt $    -2380/mo  mo+ 2/12
+random: {"seeds": 30, "per_ticket_mean": -15.67, "per_ticket_sd": 6.71, "per_month_mean": -1362.2, "per_month_sd": 581.6}
+edge vs random $+15.73/tkt; percentile 100.0
+--- measured ---
+relabel eval: 251 days, split 1, offset 10.0, wait 1, post_k 3
+  ..20/251 days
+  ..40/251 days
+  ..60/251 days
+  ..80/251 days
+  ..100/251 days
+  ..120/251 days
+  ..140/251 days
+  ..160/251 days
+  ..180/251 days
+  ..200/251 days
+  ..220/251 days
+  ..240/251 days
+   model_limit:  1210 tkts (4.82/day) $  -44.34/tkt $    -4489/mo  mo+ 0/12
+  model_market:  1492 tkts (5.94/day) $  -77.29/tkt $    -9647/mo  mo+ 0/12
+      inverted:  1316 tkts (5.24/day) $  -43.25/tkt $    -4762/mo  mo+ 1/12
+random: {"seeds": 30, "per_ticket_mean": -40.55, "per_ticket_sd": 6.41, "per_month_mean": -3526.7, "per_month_sd": 549.3}
+edge vs random $-3.79/tkt; percentile 3.3
+{
+ "n": 163276,
+ "mean_bps": 17.019766802804945,
+ "frac_gt_10bps": 0.48514784781596804,
+ "tiers": {
+  "legacy": 1,
+  "prior": 208,
+  "win": 163067
+ }
+}

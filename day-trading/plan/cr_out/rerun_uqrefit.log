@@ -1,0 +1,55 @@
+label: 448 tape-complete days
+  ..40/448 days, 12,397 rows, fill 0.335
+  ..80/448 days, 25,377 rows, fill 0.340
+  ..120/448 days, 38,202 rows, fill 0.351
+  ..160/448 days, 49,956 rows, fill 0.339
+  ..200/448 days, 64,726 rows, fill 0.335
+  ..240/448 days, 83,643 rows, fill 0.333
+  ..280/448 days, 103,596 rows, fill 0.340
+  ..320/448 days, 123,085 rows, fill 0.341
+  ..360/448 days, 142,247 rows, fill 0.342
+  ..400/448 days, 164,024 rows, fill 0.347
+  ..440/448 days, 189,261 rows, fill 0.356
+  ..448/448 days, 194,010 rows, fill 0.356
+saved limlabel_measured_h30_o10_w1.npz: 194,010 labelled rows, fill rate 0.3564, mean $-15.90/attempt, $-44.61/filled
+relabel: 194,010 labelled eligible rows
+  [0] 2025-01 train=15,108 test=6,626 iters=50
+  [0] 2025-02 train=21,734 test=6,627 iters=10
+  [0] 2025-03 train=28,361 test=6,864 iters=37
+  [0] 2025-04 train=35,225 test=5,530 iters=94
+  [0] 2025-05 train=40,755 test=6,244 iters=63
+  [0] 2025-06 train=46,999 test=6,744 iters=30
+  [0] 2025-07 train=53,743 test=8,204 iters=22
+  -> relabel_scores_measured_s0.npy: 46,839 scored rows
+  [1] 2025-08 train=61,947 test=8,958 iters=25
+  [1] 2025-09 train=70,905 test=10,095 iters=29
+  [1] 2025-10 train=81,000 test=12,084 iters=100
+  [1] 2025-11 train=93,084 test=9,133 iters=38
+  [1] 2025-12 train=102,217 test=10,208 iters=30
+  [1] 2026-01 train=112,425 test=10,143 iters=53
+  [1] 2026-02 train=122,568 test=9,466 iters=78
+  [1] 2026-03 train=132,034 test=10,213 iters=72
+  [1] 2026-04 train=142,247 test=10,529 iters=20
+  [1] 2026-05 train=152,776 test=11,868 iters=41
+  [1] 2026-06 train=164,644 test=13,205 iters=31
+  [1] 2026-07 train=177,849 test=13,771 iters=29
+  [1] 2026-08 train=191,620 test=2,390 iters=52
+  -> relabel_scores_measured_s1.npy: 132,063 scored rows
+relabel eval: 251 days, split 1, offset 10.0, wait 1, post_k 3
+  ..20/251 days
+  ..40/251 days
+  ..60/251 days
+  ..80/251 days
+  ..100/251 days
+  ..120/251 days
+  ..140/251 days
+  ..160/251 days
+  ..180/251 days
+  ..200/251 days
+  ..220/251 days
+  ..240/251 days
+   model_limit:   941 tkts (3.75/day) $  -22.76/tkt $    -1792/mo  mo+ 3/12
+  model_market:  1500 tkts (5.98/day) $  -23.41/tkt $    -2938/mo  mo+ 1/12
+      inverted:  1324 tkts (5.28/day) $  -85.01/tkt $    -9417/mo  mo+ 1/12
+random: {"seeds": 30, "per_ticket_mean": -40.55, "per_ticket_sd": 6.41, "per_month_mean": -3526.7, "per_month_sd": 549.3}
+edge vs random $+17.79/tkt; percentile 100.0

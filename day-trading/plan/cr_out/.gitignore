@@ -1,0 +1,9 @@
+# COST-REBASE: big derived arrays and pair lists stay off git; the small
+# JSON reports the audit quotes are committed.
+*.npz
+*.npy
+gapper_pairs_*.json
+pool_pairs.json
+_ratetest.json
+tape_*.log
+wide_pairs.json

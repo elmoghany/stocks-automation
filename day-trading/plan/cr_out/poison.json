@@ -1,0 +1,16 @@
+{
+ "p1_checks": 150,
+ "p1_leaks": 0,
+ "p2_checks": 150,
+ "p2_moved": 148,
+ "p3_days": 160,
+ "p3_identical": 160,
+ "p4_monotone": true,
+ "p4_sums": {
+  "0.0": 1423.4,
+  "1.0": 5337.5,
+  "3.0": 13165.9
+ },
+ "p5_lookups": 340,
+ "p5_bad": 0
+}

@@ -1,0 +1,9 @@
+held-out days: 255
+path-cost-free proof: 56 legs, 0 moved
+                                     label           cost   k    tkt    $/tkt      $/mo     mo+     rand   pct    ex-best
+                           rules_s0:flat10         flat10   1    305    14.11       355    6/11   -47.18 100.0      2,263
+                         rules_s0:measured       measured   1    305   -59.97     -1506    2/11  -129.83 100.0    -20,351
+                       rules_s0:spreadonly     spreadonly   1    305   -37.98      -954    2/11  -121.48 100.0    -13,651
+             random30:flat10   -47.18 +/- 9.00  $-6,935/mo
+           random30:measured  -129.83 +/- 8.51  $-19,084/mo
+         random30:spreadonly  -121.48 +/- 8.61  $-17,857/mo

@@ -1,0 +1,5 @@
+    C37F: legacy slip 0 bps/side, 252 symbol-days, 247 legs, flag-off identical 252/252, measured-with-legacy-fn identical 252/252
+   HOLD1: legacy slip 10 bps/side, 252 symbol-days, 245 legs, flag-off identical 252/252, measured-with-legacy-fn identical 252/252
+   W8RSd: legacy slip 10 bps/side, 252 symbol-days, 250 legs, flag-off identical 252/252, measured-with-legacy-fn identical 252/252
+
+ENGINE IDENTITY: PASS (0 mismatched symbol-days flag-off, 0 with the measured path fed the legacy ladder)

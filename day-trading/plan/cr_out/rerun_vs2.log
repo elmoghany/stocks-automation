@@ -1,0 +1,33 @@
+W8RSd: ADJACENCY: GREEN-ON-RED, entries all day to 14:30, hold to the flatten
+  ..wy1 25/214 [W8RSd] (16d $+6,414)
+  ..wy1 50/214 [W8RSd] (36d $+374)
+  ..wy1 75/214 [W8RSd] (50d $-1,091)
+  ..wy1 100/214 [W8RSd] (72d $-6,339)
+  ..wy1 125/214 [W8RSd] (93d $-9,213)
+  ..wy1 150/214 [W8RSd] (112d $-6,300)
+  ..wy1 175/214 [W8RSd] (131d $-9,337)
+  ..wy1 200/214 [W8RSd] (152d $-10,604)
+ W8RSd        wy1   162d $    -12,382 tkts   162 $/tkt -76.4 negm 7/11 maxDD $18,796 ex_best -17,075
+  ..wy2 25/234 [W8RSd] (19d $-6,867)
+  ..wy2 50/234 [W8RSd] (37d $-7,995)
+  ..wy2 75/234 [W8RSd] (57d $-9,198)
+  ..wy2 100/234 [W8RSd] (76d $-8,384)
+  ..wy2 125/234 [W8RSd] (96d $-9,481)
+  ..wy2 150/234 [W8RSd] (115d $-12,532)
+  ..wy2 175/234 [W8RSd] (132d $-10,041)
+  ..wy2 200/234 [W8RSd] (151d $-9,741)
+  ..wy2 225/234 [W8RSd] (170d $-14,640)
+ W8RSd        wy2   177d $    -15,417 tkts   177 $/tkt -87.1 negm 8/12 maxDD $16,160 ex_best -21,974
+-> vs2wide_results_crm.json
+{
+ "n": 111856,
+ "mean_bps": 46.26038499858042,
+ "frac_gt_10bps": 0.680544628808468,
+ "tiers": {
+  "legacy": 11,
+  "legacy+ext": 21,
+  "prior": 1831,
+  "prior+ext": 4757,
+  "win": 105236
+ }
+}

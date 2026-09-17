@@ -1,0 +1,260 @@
+{
+ "legacy_slip_bps": {
+  "C37F": 0.0,
+  "HOLD1": 10.0
+ },
+ "rows": [
+  {
+   "label": "C37F-hf2:published",
+   "tickets": 1607,
+   "total": -88509.0,
+   "per_ticket": -55.08,
+   "per_month": -4023.0,
+   "months_pos": "5/22",
+   "traded_days": 414,
+   "per_day": -213.79,
+   "max_dd": -88457.0,
+   "best_day": 9583.0,
+   "ex_best_day_total": -98092.0,
+   "mean_c_in_bps": 0.0,
+   "mean_c_out_bps": 0.0,
+   "median_c_in_bps": 0.0,
+   "p90_c_in_bps": 0.0
+  },
+  {
+   "label": "C37F-hf2:measured",
+   "tickets": 1607,
+   "total": -396820.0,
+   "per_ticket": -246.93,
+   "per_month": -18037.0,
+   "months_pos": "0/22",
+   "traded_days": 414,
+   "per_day": -958.5,
+   "max_dd": -396564.0,
+   "best_day": 7192.0,
+   "ex_best_day_total": -404012.0,
+   "mean_c_in_bps": 82.12,
+   "mean_c_out_bps": 81.44,
+   "median_c_in_bps": 31.92,
+   "p90_c_in_bps": 204.35,
+   "tier_mix": {
+    "n": 3214,
+    "mean_bps": 81.78157544354427,
+    "frac_gt_10bps": 0.864965774735532,
+    "tiers": {
+     "legacy": 30,
+     "prior": 137,
+     "win": 3047
+    }
+   }
+  },
+  {
+   "label": "C37F-hf2:spreadonly",
+   "tickets": 1607,
+   "total": -187164.0,
+   "per_ticket": -116.47,
+   "per_month": -8507.0,
+   "months_pos": "1/22",
+   "traded_days": 414,
+   "per_day": -452.09,
+   "max_dd": -187033.0,
+   "best_day": 7928.0,
+   "ex_best_day_total": -195092.0,
+   "mean_c_in_bps": 24.17,
+   "mean_c_out_bps": 23.47,
+   "median_c_in_bps": 13.57,
+   "p90_c_in_bps": 56.84,
+   "tier_mix": {
+    "n": 3214,
+    "mean_bps": 23.816969231593763,
+    "frac_gt_10bps": 0.5983198506533914,
+    "tiers": {
+     "legacy": 30,
+     "prior": 137,
+     "win": 3047
+    }
+   }
+  },
+  {
+   "label": "C37F-hf2:imp03",
+   "tickets": 1607,
+   "total": -252106.0,
+   "per_ticket": -156.88,
+   "per_month": -11459.0,
+   "months_pos": "0/22",
+   "traded_days": 414,
+   "per_day": -608.95,
+   "max_dd": -251933.0,
+   "best_day": 7697.0,
+   "ex_best_day_total": -259803.0,
+   "mean_c_in_bps": 42.38,
+   "mean_c_out_bps": 41.07,
+   "median_c_in_bps": 20.99,
+   "p90_c_in_bps": 104.23,
+   "tier_mix": {
+    "n": 3214,
+    "mean_bps": 41.72906422523507,
+    "frac_gt_10bps": 0.7706907280647168,
+    "tiers": {
+     "legacy": 30,
+     "prior": 137,
+     "win": 3047
+    }
+   }
+  },
+  {
+   "label": "C37F-hf2:imp05",
+   "tickets": 1607,
+   "total": -293453.0,
+   "per_ticket": -182.61,
+   "per_month": -13339.0,
+   "months_pos": "0/22",
+   "traded_days": 414,
+   "per_day": -708.82,
+   "max_dd": -293256.0,
+   "best_day": 7552.0,
+   "ex_best_day_total": -301005.0,
+   "mean_c_in_bps": 53.74,
+   "mean_c_out_bps": 52.61,
+   "median_c_in_bps": 24.33,
+   "p90_c_in_bps": 132.89,
+   "tier_mix": {
+    "n": 3214,
+    "mean_bps": 53.172638859037676,
+    "frac_gt_10bps": 0.8042937149968886,
+    "tiers": {
+     "legacy": 30,
+     "prior": 137,
+     "win": 3047
+    }
+   }
+  },
+  {
+   "label": "HOLD1-hf2:published",
+   "tickets": 415,
+   "total": -75016.0,
+   "per_ticket": -180.76,
+   "per_month": -3410.0,
+   "months_pos": "7/22",
+   "traded_days": 414,
+   "per_day": -181.2,
+   "max_dd": -84345.0,
+   "best_day": 5458.0,
+   "ex_best_day_total": -80474.0,
+   "mean_c_in_bps": 10.0,
+   "mean_c_out_bps": 10.0,
+   "median_c_in_bps": 10.0,
+   "p90_c_in_bps": 10.0
+  },
+  {
+   "label": "HOLD1-hf2:measured",
+   "tickets": 415,
+   "total": -146740.0,
+   "per_ticket": -353.59,
+   "per_month": -6670.0,
+   "months_pos": "3/22",
+   "traded_days": 414,
+   "per_day": -354.44,
+   "max_dd": -151295.0,
+   "best_day": 5250.0,
+   "ex_best_day_total": -151990.0,
+   "mean_c_in_bps": 81.67,
+   "mean_c_out_bps": 94.87,
+   "median_c_in_bps": 25.68,
+   "p90_c_in_bps": 211.21,
+   "tier_mix": {
+    "n": 830,
+    "mean_bps": 88.26659618416134,
+    "frac_gt_10bps": 0.8698795180722891,
+    "tiers": {
+     "legacy": 26,
+     "prior": 134,
+     "win": 670
+    }
+   }
+  },
+  {
+   "label": "HOLD1-hf2:spreadonly",
+   "tickets": 415,
+   "total": -82489.0,
+   "per_ticket": -198.77,
+   "per_month": -3749.0,
+   "months_pos": "6/22",
+   "traded_days": 414,
+   "per_day": -199.25,
+   "max_dd": -91168.0,
+   "best_day": 5361.0,
+   "ex_best_day_total": -87850.0,
+   "mean_c_in_bps": 22.14,
+   "mean_c_out_bps": 13.94,
+   "median_c_in_bps": 11.26,
+   "p90_c_in_bps": 51.26,
+   "tier_mix": {
+    "n": 830,
+    "mean_bps": 18.040858250649627,
+    "frac_gt_10bps": 0.4795180722891566,
+    "tiers": {
+     "legacy": 26,
+     "prior": 134,
+     "win": 670
+    }
+   }
+  },
+  {
+   "label": "HOLD1-hf2:imp03",
+   "tickets": 415,
+   "total": -103630.0,
+   "per_ticket": -249.71,
+   "per_month": -4710.0,
+   "months_pos": "5/22",
+   "traded_days": 414,
+   "per_day": -250.31,
+   "max_dd": -110856.0,
+   "best_day": 5317.0,
+   "ex_best_day_total": -108948.0,
+   "mean_c_in_bps": 42.9,
+   "mean_c_out_bps": 38.73,
+   "median_c_in_bps": 20.99,
+   "p90_c_in_bps": 96.59,
+   "tier_mix": {
+    "n": 830,
+    "mean_bps": 40.812194088534476,
+    "frac_gt_10bps": 0.7807228915662651,
+    "tiers": {
+     "legacy": 26,
+     "prior": 134,
+     "win": 670
+    }
+   }
+  },
+  {
+   "label": "HOLD1-hf2:imp05",
+   "tickets": 415,
+   "total": -115947.0,
+   "per_ticket": -279.39,
+   "per_month": -5270.0,
+   "months_pos": "5/22",
+   "traded_days": 414,
+   "per_day": -280.07,
+   "max_dd": -122410.0,
+   "best_day": 5298.0,
+   "ex_best_day_total": -121246.0,
+   "mean_c_in_bps": 53.97,
+   "mean_c_out_bps": 54.77,
+   "median_c_in_bps": 23.02,
+   "p90_c_in_bps": 127.52,
+   "tier_mix": {
+    "n": 830,
+    "mean_bps": 54.37059468728493,
+    "frac_gt_10bps": 0.810843373493976,
+    "tiers": {
+     "legacy": 26,
+     "prior": 134,
+     "win": 670
+    }
+   }
+  }
+ ],
+ "implied_slip_bps_C37F": 0.0,
+ "implied_slip_bps_HOLD1": 10.071
+}

@@ -1,0 +1,29 @@
+{
+ "pre_engine": "C:\\Users\\MYPC~1\\AppData\\Local\\Temp\\dt_pre_costrebase.py",
+ "brackets": {
+  "C37F": {
+   "symbol_days": 252,
+   "legs": 247,
+   "legacy_slippage_bps": 0.0,
+   "pm_spread_bps": 50.0,
+   "identical_flag_off": 252,
+   "identical_measured_legacy_fn": 252
+  },
+  "HOLD1": {
+   "symbol_days": 252,
+   "legs": 245,
+   "legacy_slippage_bps": 10.0,
+   "pm_spread_bps": 50.0,
+   "identical_flag_off": 252,
+   "identical_measured_legacy_fn": 252
+  },
+  "W8RSd": {
+   "symbol_days": 252,
+   "legs": 250,
+   "legacy_slippage_bps": 10.0,
+   "pm_spread_bps": 50.0,
+   "identical_flag_off": 252,
+   "identical_measured_legacy_fn": 252
+  }
+ }
+}

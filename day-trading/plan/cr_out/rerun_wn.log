@@ -1,0 +1,40 @@
+  2025-08 train=61,947 test=8,958 iters=48
+  2025-09 train=70,905 test=10,095 iters=65
+  2025-10 train=81,000 test=12,084 iters=101
+  2025-11 train=93,084 test=9,133 iters=57
+  2025-12 train=102,217 test=10,208 iters=36
+  2026-01 train=112,425 test=10,143 iters=77
+  2026-02 train=122,568 test=9,466 iters=69
+  2026-03 train=132,034 test=10,213 iters=54
+  2026-04 train=142,247 test=10,529 iters=26
+  2026-05 train=152,776 test=11,868 iters=35
+  2026-06 train=164,644 test=13,205 iters=53
+  2026-07 train=177,849 test=13,771 iters=56
+  2026-08 train=191,620 test=2,390 iters=83
+{"file": "model_scores_h30_s0_crmeas.npy", "months": 13, "scored_rows": 132063}
+refit 8.3m
+                                     label           cost   k    tkt    $/tkt      $/mo     mo+     rand   pct    ex-best
+                model_scores_h30_s0:flat10         flat10   1    251    -3.35       -70    5/12   -27.66  96.7     -2,788
+                      top3_allslots:flat10         flat10   3   6759   -20.73    -11721    0/12   -26.38 100.0   -142,210
+                      top5_allslots:flat10         flat10   5  11265   -20.79    -19599    0/12   -26.65 100.0   -236,370
+                      top7_allslots:flat10         flat10   7  15771   -22.45    -29623    0/12   -26.62 100.0   -356,177
+                     top10_allslots:flat10         flat10  10  22530   -24.18    -45584    0/12   -26.26 100.0   -546,957
+              model_scores_h30_s0:measured       measured   1    251   -85.15     -1788    2/12   -74.43  33.3    -23,111
+                    top3_allslots:measured       measured   3   6759   -56.36    -31869    0/12   -42.71   0.0   -382,893
+                    top5_allslots:measured       measured   5  11265   -53.88    -50783    0/12   -42.99   0.0   -608,960
+                    top7_allslots:measured       measured   7  15771   -53.88    -71099    0/12   -43.01   0.0   -851,786
+                   top10_allslots:measured       measured  10  22530   -53.28   -100428    0/12   -42.69   0.0 -1,202,336
+            model_scores_h30_s0:spreadonly     spreadonly   1    251   -33.16      -696    5/12   -36.04  46.7    -10,121
+                  top3_allslots:spreadonly     spreadonly   3   6759   -23.50    -13291    0/12   -18.00   0.0   -160,961
+                  top5_allslots:spreadonly     spreadonly   5  11265   -21.10    -19886    0/12   -18.23   8.3   -239,784
+                  top7_allslots:spreadonly     spreadonly   7  15771   -20.85    -27513    0/12   -18.22   8.3   -330,941
+                 top10_allslots:spreadonly     spreadonly  10  22530   -20.43    -38506    0/12   -17.87   0.0   -462,338
+                 model_scores_h30_s0:imp03          imp03   1    251   -48.76     -1024    3/12   -47.56  36.7    -14,018
+                       top3_allslots:imp03          imp03   3   6759   -33.36    -18865    0/12   -25.41   0.0   -227,537
+                       top5_allslots:imp03          imp03   5  11265   -30.93    -29155    0/12   -25.66   0.0   -350,534
+                       top7_allslots:imp03          imp03   7  15771   -30.76    -40589    0/12   -25.66   0.0   -487,191
+                      top10_allslots:imp03          imp03  10  22530   -30.28    -57083    0/12   -25.31   0.0   -684,334
+                         refit_on_measured measured_refit   1    251   -26.61      -559    3/12   -74.43 100.0     -7,664
+                                refit_top3 measured_refit   3   6765   -15.08     -8536    0/12   -42.68 100.0   -103,400
+                                refit_top5 measured_refit   5  11275   -15.52    -14644    0/12   -42.96 100.0   -176,403
+                                refit_top7 measured_refit   7  15785   -15.92    -21029    0/12   -42.97 100.0   -252,716

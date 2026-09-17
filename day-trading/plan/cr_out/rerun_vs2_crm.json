@@ -1,0 +1,18 @@
+{
+ "cfgs": [
+  "W8RSd"
+ ],
+ "shard": "crm",
+ "cost_tally": {
+  "n": 111856,
+  "mean_bps": 46.26038499858042,
+  "frac_gt_10bps": 0.680544628808468,
+  "tiers": {
+   "legacy": 11,
+   "legacy+ext": 21,
+   "prior": 1831,
+   "prior+ext": 4757,
+   "win": 105236
+  }
+ }
+}

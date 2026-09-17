@@ -1,0 +1,1071 @@
+--- flag OFF, 40 days ---
+C37F-R: CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)
+  exit kwargs [C37F-R] mode=inherited: {'trail_pct': 20, 'stop_pct': 8, 'pressure_trail': (10, 0.3, 0.3, 10, 40), 'scale_out_at': 25.0, 'scale_out_pressure_skip': 0.3, 'wick_guard': 3.0}
+HOLD1-R: CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps
+  exit kwargs [HOLD1-R] mode=HOLD: {'trail_pct': 999, 'stop_pct': 99, 'sell_mode': 'target_stop_only'}
+  replicates [C37F-R]: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  replicates [HOLD1-R]: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+ C37F-R#r0 year     38d $     +11,785 1/2  maxDD $    5,762  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r0 year]: bearish:115/$+35,435  scale-out:1/$+1,147  stop:25/$-19,742  window-close:21/$-5,055
+   fair  [C37F-R#r0 year]: tickets 161 deployed $2,190,731 ret 0.538% per_ticket $73.2 best +6,391 (2025-09-22) worst -2,062 ex_best +5,394 negm_ex_best 1/2
+ C37F-R#r1 year     38d $     +11,337 0/2  maxDD $    6,067  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r1 year]: bearish:98/$+29,292  scale-out:2/$+2,382  stop:19/$-13,356  window-close:26/$-6,981
+   fair  [C37F-R#r1 year]: tickets 143 deployed $1,951,675 ret 0.581% per_ticket $79.3 best +6,819 (2025-09-22) worst -2,242 ex_best +4,517 negm_ex_best 0/2
+ C37F-R#r2 year     38d $      +2,401 1/2  maxDD $    8,478  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r2 year]: bearish:102/$+34,009  stop:24/$-24,588  window-close:26/$-7,019
+   fair  [C37F-R#r2 year]: tickets 152 deployed $2,122,162 ret 0.113% per_ticket $15.8 best +3,470 (2025-09-19) worst -2,326 ex_best -1,069 negm_ex_best 1/2
+ C37F-R#r3 year     38d $      -4,324 1/2  maxDD $   10,594  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r3 year]: bearish:100/$+26,098  scale-out:2/$+1,682  stop:28/$-25,332  window-close:25/$-6,772
+   fair  [C37F-R#r3 year]: tickets 153 deployed $2,100,577 ret -0.206% per_ticket $-28.3 best +4,757 (2025-09-08) worst -2,398 ex_best -9,082 negm_ex_best 1/2
+ C37F-R#r4 year     38d $      +9,212 1/2  maxDD $    5,384  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r4 year]: bearish:104/$+29,585  scale-out:1/$+1,209  stop:22/$-15,742  window-close:25/$-5,841
+   fair  [C37F-R#r4 year]: tickets 151 deployed $2,105,048 ret 0.438% per_ticket $61.0 best +3,918 (2025-09-19) worst -3,224 ex_best +5,293 negm_ex_best 1/2
+ C37F-R#r5 year     38d $     +10,682 1/2  maxDD $    4,471  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r5 year]: bearish:113/$+29,671  scale-out:1/$+1,147  stop:20/$-14,567  window-close:23/$-5,569
+   fair  [C37F-R#r5 year]: tickets 156 deployed $2,188,847 ret 0.488% per_ticket $68.5 best +4,946 (2025-09-22) worst -1,762 ex_best +5,736 negm_ex_best 1/2
+ C37F-R#r6 year     38d $        -142 1/2  maxDD $    7,810  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r6 year]: bearish:96/$+25,164  scale-out:2/$+2,445  stop:25/$-19,364  window-close:26/$-8,387
+   fair  [C37F-R#r6 year]: tickets 147 deployed $2,027,403 ret -0.007% per_ticket $-1.0 best +5,135 (2025-09-22) worst -1,659 ex_best -5,277 negm_ex_best 1/2
+ C37F-R#r7 year     38d $      +1,123 1/2  maxDD $   11,275  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r7 year]: bearish:101/$+25,927  scale-out:1/$+1,147  stop:24/$-18,993  window-close:26/$-6,958
+   fair  [C37F-R#r7 year]: tickets 151 deployed $2,112,144 ret 0.053% per_ticket $7.4 best +5,977 (2025-09-22) worst -2,296 ex_best -4,855 negm_ex_best 2/2
+ C37F-R#r8 year     38d $     +13,462 1/2  maxDD $    6,097  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r8 year]: bearish:110/$+33,816  scale-out:1/$+1,147  stop:22/$-15,614  window-close:22/$-5,886
+   fair  [C37F-R#r8 year]: tickets 154 deployed $2,120,515 ret 0.635% per_ticket $87.4 best +6,819 (2025-09-22) worst -1,669 ex_best +6,643 negm_ex_best 1/2
+ C37F-R#r9 year     38d $      -5,016 1/2  maxDD $    7,272  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r9 year]: bearish:110/$+25,617  stop:24/$-24,950  window-close:27/$-5,683
+   fair  [C37F-R#r9 year]: tickets 161 deployed $2,237,747 ret -0.224% per_ticket $-31.2 best +2,982 (2025-09-08) worst -2,242 ex_best -7,998 negm_ex_best 2/2
+ HOLD1-R#r0 year     38d $      -4,681 1/2  maxDD $    9,749  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r0 year]: window-close:38/$-4,681
+   fair  [HOLD1-R#r0 year]: tickets 38 deployed $533,401 ret -0.878% per_ticket $-123.2 best +3,443 (2025-09-19) worst -4,290 ex_best -8,124 negm_ex_best 2/2
+ HOLD1-R#r1 year     38d $        -585 1/2  maxDD $    6,666  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r1 year]: window-close:39/$-585
+   fair  [HOLD1-R#r1 year]: tickets 39 deployed $526,019 ret -0.111% per_ticket $-15.0 best +3,443 (2025-09-19) worst -4,478 ex_best -4,028 negm_ex_best 2/2
+ HOLD1-R#r2 year     38d $      +3,959 1/2  maxDD $    5,751  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r2 year]: window-close:38/$+3,959
+   fair  [HOLD1-R#r2 year]: tickets 38 deployed $532,214 ret 0.744% per_ticket $104.2 best +3,443 (2025-09-19) worst -4,256 ex_best +515 negm_ex_best 1/2
+ HOLD1-R#r3 year     38d $      -3,102 2/2  maxDD $    8,574  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r3 year]: window-close:39/$-3,102
+   fair  [HOLD1-R#r3 year]: tickets 39 deployed $539,274 ret -0.575% per_ticket $-79.5 best +3,443 (2025-09-19) worst -4,480 ex_best -6,546 negm_ex_best 2/2
+ HOLD1-R#r4 year     38d $      -4,156 2/2  maxDD $    9,846  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r4 year]: window-close:38/$-4,156
+   fair  [HOLD1-R#r4 year]: tickets 38 deployed $533,427 ret -0.779% per_ticket $-109.4 best +3,443 (2025-09-19) worst -4,290 ex_best -7,600 negm_ex_best 2/2
+ HOLD1-R#r5 year     38d $        +452 1/2  maxDD $    8,009  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r5 year]: window-close:38/$+452
+   fair  [HOLD1-R#r5 year]: tickets 38 deployed $524,240 ret 0.086% per_ticket $11.9 best +3,443 (2025-09-19) worst -4,162 ex_best -2,991 negm_ex_best 1/2
+ HOLD1-R#r6 year     38d $      +2,363 1/2  maxDD $    6,115  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r6 year]: window-close:38/$+2,363
+   fair  [HOLD1-R#r6 year]: tickets 38 deployed $532,168 ret 0.444% per_ticket $62.2 best +3,443 (2025-09-19) worst -4,290 ex_best -1,081 negm_ex_best 1/2
+ HOLD1-R#r7 year     38d $      +1,716 1/2  maxDD $    7,433  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r7 year]: window-close:38/$+1,716
+   fair  [HOLD1-R#r7 year]: tickets 38 deployed $524,224 ret 0.327% per_ticket $45.2 best +3,443 (2025-09-19) worst -4,173 ex_best -1,727 negm_ex_best 1/2
+ HOLD1-R#r8 year     38d $      -4,368 2/2  maxDD $    9,591  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r8 year]: window-close:38/$-4,368
+   fair  [HOLD1-R#r8 year]: tickets 38 deployed $532,246 ret -0.821% per_ticket $-115.0 best +3,443 (2025-09-19) worst -4,173 ex_best -7,812 negm_ex_best 2/2
+ HOLD1-R#r9 year     38d $      +3,958 1/2  maxDD $    4,911  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r9 year]: window-close:38/$+3,958
+   fair  [HOLD1-R#r9 year]: tickets 38 deployed $523,067 ret 0.757% per_ticket $104.2 best +3,443 (2025-09-19) worst -4,256 ex_best +515 negm_ex_best 1/2
+ C37F-R#r0 y2025    37d $      -2,397 2/3  maxDD $   10,288  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r0 y2025]: bearish:81/$+25,771  scale-out:4/$+2,924  stop:26/$-25,081  window-close:23/$-6,010
+   fair  [C37F-R#r0 y2025]: tickets 130 deployed $1,682,345 ret -0.142% per_ticket $-18.4 best +4,831 (2024-12-17) worst -2,812 ex_best -7,228 negm_ex_best 2/3
+ C37F-R#r1 y2025    37d $      -4,710 2/3  maxDD $   10,431  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r1 y2025]: bearish:73/$+24,012  scale-out:2/$+1,495  stop:28/$-23,669  window-close:23/$-6,548
+   fair  [C37F-R#r1 y2025]: tickets 124 deployed $1,525,867 ret -0.309% per_ticket $-38.0 best +4,255 (2024-12-17) worst -3,457 ex_best -8,965 negm_ex_best 2/3
+ C37F-R#r2 y2025    37d $      -9,712 2/3  maxDD $   15,704  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r2 y2025]: bearish:72/$+24,078  scale-out:3/$+2,726  stop:35/$-30,561  window-close:24/$-5,956
+   fair  [C37F-R#r2 y2025]: tickets 131 deployed $1,628,887 ret -0.596% per_ticket $-74.1 best +4,578 (2024-12-17) worst -2,812 ex_best -14,290 negm_ex_best 3/3
+ C37F-R#r3 y2025    37d $      -2,696 2/3  maxDD $   10,338  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r3 y2025]: bearish:74/$+24,574  scale-out:4/$+2,921  stop:26/$-24,267  window-close:26/$-5,924
+   fair  [C37F-R#r3 y2025]: tickets 126 deployed $1,571,234 ret -0.172% per_ticket $-21.4 best +6,197 (2024-12-17) worst -2,812 ex_best -8,892 negm_ex_best 3/3
+ C37F-R#r4 y2025    37d $      -5,777 2/3  maxDD $   11,614  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r4 y2025]: bearish:69/$+23,649  scale-out:3/$+1,766  stop:27/$-24,093  window-close:25/$-7,100
+   fair  [C37F-R#r4 y2025]: tickets 121 deployed $1,503,383 ret -0.384% per_ticket $-47.7 best +4,416 (2024-12-17) worst -2,812 ex_best -10,194 negm_ex_best 3/3
+ C37F-R#r5 y2025    37d $      -2,638 2/3  maxDD $   10,389  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r5 y2025]: bearish:71/$+24,045  scale-out:3/$+2,729  stop:24/$-21,547  window-close:28/$-7,865
+   fair  [C37F-R#r5 y2025]: tickets 123 deployed $1,537,445 ret -0.172% per_ticket $-21.5 best +6,140 (2024-12-17) worst -2,812 ex_best -8,779 negm_ex_best 2/3
+ C37F-R#r6 y2025    37d $        -965 1/3  maxDD $    7,847  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r6 y2025]: bearish:82/$+28,127  scale-out:4/$+3,015  stop:29/$-26,004  window-close:24/$-6,103
+   fair  [C37F-R#r6 y2025]: tickets 135 deployed $1,703,642 ret -0.057% per_ticket $-7.2 best +5,929 (2024-11-11) worst -2,812 ex_best -6,895 negm_ex_best 2/3
+ C37F-R#r7 y2025    37d $      -6,939 2/3  maxDD $   11,355  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r7 y2025]: bearish:71/$+24,808  scale-out:2/$+1,493  stop:26/$-24,198  window-close:26/$-9,041
+   fair  [C37F-R#r7 y2025]: tickets 123 deployed $1,603,871 ret -0.433% per_ticket $-56.4 best +4,416 (2024-12-17) worst -2,812 ex_best -11,355 negm_ex_best 3/3
+ C37F-R#r8 y2025    37d $     -12,656 2/3  maxDD $   18,660  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r8 y2025]: bearish:69/$+22,622  scale-out:3/$+1,782  stop:31/$-29,111  window-close:28/$-7,949
+   fair  [C37F-R#r8 y2025]: tickets 128 deployed $1,641,507 ret -0.771% per_ticket $-98.9 best +4,568 (2024-12-17) worst -2,888 ex_best -17,223 negm_ex_best 3/3
+ C37F-R#r9 y2025    37d $      -4,391 2/3  maxDD $   11,211  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r9 y2025]: bearish:80/$+25,010  scale-out:3/$+2,665  stop:28/$-25,444  window-close:25/$-6,622
+   fair  [C37F-R#r9 y2025]: tickets 133 deployed $1,709,756 ret -0.257% per_ticket $-33.0 best +6,140 (2024-12-17) worst -2,812 ex_best -10,531 negm_ex_best 2/3
+ HOLD1-R#r0 y2025    37d $     -10,436 3/3  maxDD $   10,446  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r0 y2025]: window-close:37/$-10,436
+   fair  [HOLD1-R#r0 y2025]: tickets 37 deployed $466,620 ret -2.236% per_ticket $-282.0 best +4,893 (2024-11-08) worst -2,966 ex_best -15,329 negm_ex_best 3/3
+ HOLD1-R#r1 y2025    37d $     -14,641 3/3  maxDD $   14,652  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r1 y2025]: window-close:37/$-14,641
+   fair  [HOLD1-R#r1 y2025]: tickets 37 deployed $466,622 ret -3.138% per_ticket $-395.7 best +4,893 (2024-11-08) worst -3,686 ex_best -19,535 negm_ex_best 3/3
+ HOLD1-R#r2 y2025    37d $     -10,470 3/3  maxDD $   10,481  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r2 y2025]: window-close:37/$-10,470
+   fair  [HOLD1-R#r2 y2025]: tickets 37 deployed $466,562 ret -2.244% per_ticket $-283.0 best +4,893 (2024-11-08) worst -2,966 ex_best -15,364 negm_ex_best 3/3
+ HOLD1-R#r3 y2025    37d $     -14,650 3/3  maxDD $   14,660  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r3 y2025]: window-close:37/$-14,650
+   fair  [HOLD1-R#r3 y2025]: tickets 37 deployed $466,153 ret -3.143% per_ticket $-395.9 best +4,893 (2024-11-08) worst -3,686 ex_best -19,543 negm_ex_best 3/3
+ HOLD1-R#r4 y2025    37d $     -10,164 3/3  maxDD $   10,174  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r4 y2025]: window-close:37/$-10,164
+   fair  [HOLD1-R#r4 y2025]: tickets 37 deployed $467,487 ret -2.174% per_ticket $-274.7 best +4,893 (2024-11-08) worst -2,966 ex_best -15,057 negm_ex_best 3/3
+ HOLD1-R#r5 y2025    37d $     -14,641 3/3  maxDD $   14,652  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r5 y2025]: window-close:37/$-14,641
+   fair  [HOLD1-R#r5 y2025]: tickets 37 deployed $466,622 ret -3.138% per_ticket $-395.7 best +4,893 (2024-11-08) worst -3,686 ex_best -19,535 negm_ex_best 3/3
+ HOLD1-R#r6 y2025    37d $     -11,052 3/3  maxDD $   11,063  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r6 y2025]: window-close:37/$-11,052
+   fair  [HOLD1-R#r6 y2025]: tickets 37 deployed $478,457 ret -2.31% per_ticket $-298.7 best +4,893 (2024-11-08) worst -2,966 ex_best -15,945 negm_ex_best 3/3
+ HOLD1-R#r7 y2025    37d $     -10,563 3/3  maxDD $   10,574  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r7 y2025]: window-close:37/$-10,563
+   fair  [HOLD1-R#r7 y2025]: tickets 37 deployed $466,148 ret -2.266% per_ticket $-285.5 best +4,893 (2024-11-08) worst -2,966 ex_best -15,456 negm_ex_best 3/3
+ HOLD1-R#r8 y2025    37d $     -15,145 3/3  maxDD $   15,156  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r8 y2025]: window-close:37/$-15,145
+   fair  [HOLD1-R#r8 y2025]: tickets 37 deployed $478,454 ret -3.165% per_ticket $-409.3 best +4,893 (2024-11-08) worst -3,686 ex_best -20,039 negm_ex_best 3/3
+ HOLD1-R#r9 y2025    37d $     -15,013 3/3  maxDD $   15,024  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r9 y2025]: window-close:37/$-15,013
+   fair  [HOLD1-R#r9 y2025]: tickets 37 deployed $478,423 ret -3.138% per_ticket $-405.8 best +4,893 (2024-11-08) worst -3,686 ex_best -19,907 negm_ex_best 3/3
+--- flag ON (measured), 40 days ---
+C37F-R: CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)
+  exit kwargs [C37F-R] mode=inherited: {'trail_pct': 20, 'stop_pct': 8, 'pressure_trail': (10, 0.3, 0.3, 10, 40), 'scale_out_at': 25.0, 'scale_out_pressure_skip': 0.3, 'wick_guard': 3.0}
+HOLD1-R: CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps
+  exit kwargs [HOLD1-R] mode=HOLD: {'trail_pct': 999, 'stop_pct': 99, 'sell_mode': 'target_stop_only'}
+  replicates [C37F-R]: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+  replicates [HOLD1-R]: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+ C37F-R#r0 year     38d $     -24,058 2/2  maxDD $   26,277  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r0 year]: bearish:82/$+23,645  stop:36/$-37,352  window-close:26/$-10,350
+   fair  [C37F-R#r0 year]: tickets 144 deployed $1,959,745 ret -1.228% per_ticket $-167.1 best +3,386 (2025-09-08) worst -3,202 ex_best -27,444 negm_ex_best 2/2
+ C37F-R#r1 year     38d $     -37,845 2/2  maxDD $   39,901  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r1 year]: bearish:74/$+15,424  stop:37/$-41,945  window-close:27/$-11,324
+   fair  [C37F-R#r1 year]: tickets 138 deployed $1,906,007 ret -1.986% per_ticket $-274.2 best +1,573 (2025-09-24) worst -4,238 ex_best -39,418 negm_ex_best 2/2
+ C37F-R#r2 year     38d $     -28,052 2/2  maxDD $   28,626  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r2 year]: bearish:79/$+22,538  stop:36/$-39,829  window-close:28/$-10,761
+   fair  [C37F-R#r2 year]: tickets 143 deployed $1,985,901 ret -1.413% per_ticket $-196.2 best +1,728 (2025-09-15) worst -2,856 ex_best -29,780 negm_ex_best 2/2
+ C37F-R#r3 year     38d $     -30,109 2/2  maxDD $   30,777  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r3 year]: bearish:65/$+16,258  scale-out:1/$+1,190  stop:33/$-36,548  window-close:31/$-11,009
+   fair  [C37F-R#r3 year]: tickets 129 deployed $1,751,261 ret -1.719% per_ticket $-233.4 best +4,695 (2025-09-19) worst -4,664 ex_best -34,804 negm_ex_best 2/2
+ C37F-R#r4 year     38d $     -25,786 2/2  maxDD $   26,219  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r4 year]: bearish:66/$+18,008  scale-out:1/$+1,167  stop:35/$-33,670  window-close:28/$-11,291
+   fair  [C37F-R#r4 year]: tickets 129 deployed $1,785,318 ret -1.444% per_ticket $-199.9 best +2,407 (2025-09-08) worst -3,601 ex_best -28,193 negm_ex_best 2/2
+ C37F-R#r5 year     38d $      -9,167 2/2  maxDD $   14,026  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r5 year]: bearish:88/$+23,858  scale-out:1/$+1,190  stop:24/$-25,703  window-close:28/$-8,512
+   fair  [C37F-R#r5 year]: tickets 140 deployed $1,950,895 ret -0.47% per_ticket $-65.5 best +5,336 (2025-09-19) worst -2,714 ex_best -14,503 negm_ex_best 2/2
+ C37F-R#r6 year     38d $     -25,994 2/2  maxDD $   27,887  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r6 year]: bearish:69/$+15,713  scale-out:1/$+1,167  stop:35/$-33,131  window-close:28/$-9,743
+   fair  [C37F-R#r6 year]: tickets 132 deployed $1,772,576 ret -1.466% per_ticket $-196.9 best +3,071 (2025-09-22) worst -4,599 ex_best -29,065 negm_ex_best 2/2
+ C37F-R#r7 year     38d $     -28,819 2/2  maxDD $   29,935  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r7 year]: bearish:84/$+21,492  scale-out:1/$+1,190  stop:36/$-40,754  window-close:30/$-10,748
+   fair  [C37F-R#r7 year]: tickets 150 deployed $2,065,992 ret -1.395% per_ticket $-192.1 best +4,218 (2025-09-19) worst -4,599 ex_best -33,037 negm_ex_best 2/2
+ C37F-R#r8 year     38d $     -30,955 2/2  maxDD $   32,537  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r8 year]: bearish:79/$+20,797  scale-out:1/$+445  stop:42/$-45,890  window-close:26/$-6,307
+   fair  [C37F-R#r8 year]: tickets 147 deployed $1,994,007 ret -1.552% per_ticket $-210.6 best +2,345 (2025-09-08) worst -6,322 ex_best -33,300 negm_ex_best 2/2
+ C37F-R#r9 year     38d $     -36,910 2/2  maxDD $   37,503  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r9 year]: bearish:79/$+17,923  stop:39/$-44,793  window-close:29/$-10,040
+   fair  [C37F-R#r9 year]: tickets 147 deployed $2,024,598 ret -1.823% per_ticket $-251.1 best +776 (2025-08-22) worst -3,969 ex_best -37,686 negm_ex_best 2/2
+ HOLD1-R#r0 year     38d $      -9,439 2/2  maxDD $   14,091  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r0 year]: window-close:38/$-9,439
+   fair  [HOLD1-R#r0 year]: tickets 38 deployed $535,100 ret -1.764% per_ticket $-248.4 best +3,286 (2025-09-19) worst -4,712 ex_best -12,724 negm_ex_best 2/2
+ HOLD1-R#r1 year     38d $      -6,552 2/2  maxDD $   11,357  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r1 year]: window-close:39/$-6,552
+   fair  [HOLD1-R#r1 year]: tickets 39 deployed $528,422 ret -1.24% per_ticket $-168.0 best +3,286 (2025-09-19) worst -4,837 ex_best -9,838 negm_ex_best 2/2
+ HOLD1-R#r2 year     38d $      -1,275 1/2  maxDD $    7,632  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r2 year]: window-close:38/$-1,275
+   fair  [HOLD1-R#r2 year]: tickets 38 deployed $533,961 ret -0.239% per_ticket $-33.5 best +3,286 (2025-09-19) worst -4,607 ex_best -4,560 negm_ex_best 2/2
+ HOLD1-R#r3 year     38d $      -8,160 2/2  maxDD $   13,248  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r3 year]: window-close:39/$-8,160
+   fair  [HOLD1-R#r3 year]: tickets 39 deployed $541,196 ret -1.508% per_ticket $-209.2 best +3,286 (2025-09-19) worst -4,827 ex_best -11,445 negm_ex_best 2/2
+ HOLD1-R#r4 year     38d $      -8,756 2/2  maxDD $   13,882  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r4 year]: window-close:38/$-8,756
+   fair  [HOLD1-R#r4 year]: tickets 38 deployed $535,149 ret -1.636% per_ticket $-230.4 best +3,286 (2025-09-19) worst -4,712 ex_best -12,042 negm_ex_best 2/2
+ HOLD1-R#r5 year     38d $      -4,499 2/2  maxDD $   10,254  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r5 year]: window-close:38/$-4,499
+   fair  [HOLD1-R#r5 year]: tickets 38 deployed $526,133 ret -0.855% per_ticket $-118.4 best +3,286 (2025-09-19) worst -4,532 ex_best -7,784 negm_ex_best 2/2
+ HOLD1-R#r6 year     38d $      -2,778 1/2  maxDD $    8,077  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r6 year]: window-close:38/$-2,778
+   fair  [HOLD1-R#r6 year]: tickets 38 deployed $534,280 ret -0.52% per_ticket $-73.1 best +3,286 (2025-09-19) worst -4,712 ex_best -6,063 negm_ex_best 2/2
+ HOLD1-R#r7 year     38d $      -2,972 1/2  maxDD $    9,525  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r7 year]: window-close:38/$-2,972
+   fair  [HOLD1-R#r7 year]: tickets 38 deployed $525,979 ret -0.565% per_ticket $-78.2 best +3,286 (2025-09-19) worst -4,502 ex_best -6,257 negm_ex_best 2/2
+ HOLD1-R#r8 year     38d $      -9,039 2/2  maxDD $   13,844  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r8 year]: window-close:38/$-9,039
+   fair  [HOLD1-R#r8 year]: tickets 38 deployed $534,048 ret -1.693% per_ticket $-237.9 best +3,286 (2025-09-19) worst -4,502 ex_best -12,325 negm_ex_best 2/2
+ HOLD1-R#r9 year     38d $      -1,485 1/2  maxDD $    6,812  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r9 year]: window-close:38/$-1,485
+   fair  [HOLD1-R#r9 year]: tickets 38 deployed $524,934 ret -0.283% per_ticket $-39.1 best +3,286 (2025-09-19) worst -4,607 ex_best -4,770 negm_ex_best 2/2
+ C37F-R#r0 y2025    37d $     -33,614 3/3  maxDD $   36,073  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r0 y2025]: bearish:68/$+17,443  scale-out:2/$+1,297  stop:40/$-42,980  window-close:23/$-9,374
+   fair  [C37F-R#r0 y2025]: tickets 131 deployed $1,609,065 ret -2.089% per_ticket $-256.6 best +2,458 (2024-12-17) worst -5,608 ex_best -36,073 negm_ex_best 3/3
+ C37F-R#r1 y2025    37d $     -29,814 3/3  maxDD $   32,853  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r1 y2025]: bearish:64/$+14,664  scale-out:2/$+1,297  stop:40/$-39,244  window-close:21/$-6,531
+   fair  [C37F-R#r1 y2025]: tickets 125 deployed $1,509,034 ret -1.976% per_ticket $-238.5 best +3,039 (2024-12-17) worst -4,366 ex_best -32,853 negm_ex_best 3/3
+ C37F-R#r2 y2025    37d $     -51,302 3/3  maxDD $   53,525  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r2 y2025]: bearish:59/$+15,341  scale-out:2/$+1,300  stop:50/$-59,746  window-close:23/$-8,198
+   fair  [C37F-R#r2 y2025]: tickets 132 deployed $1,533,050 ret -3.346% per_ticket $-388.6 best +2,382 (2024-11-08) worst -12,730 ex_best -53,684 negm_ex_best 3/3
+ C37F-R#r3 y2025    37d $     -36,562 3/3  maxDD $   41,140  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r3 y2025]: bearish:76/$+19,950  scale-out:2/$+1,300  stop:44/$-51,073  window-close:22/$-6,740
+   fair  [C37F-R#r3 y2025]: tickets 142 deployed $1,752,762 ret -2.086% per_ticket $-257.5 best +4,578 (2024-12-17) worst -12,730 ex_best -41,140 negm_ex_best 3/3
+ C37F-R#r4 y2025    37d $     -34,083 3/3  maxDD $   36,757  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r4 y2025]: bearish:59/$+17,167  scale-out:2/$+1,333  stop:43/$-45,393  window-close:23/$-7,189
+   fair  [C37F-R#r4 y2025]: tickets 125 deployed $1,460,072 ret -2.334% per_ticket $-272.7 best +2,677 (2024-11-08) worst -6,035 ex_best -36,760 negm_ex_best 3/3
+ C37F-R#r5 y2025    37d $     -32,685 3/3  maxDD $   36,159  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r5 y2025]: bearish:70/$+16,218  scale-out:2/$+1,297  stop:41/$-41,936  window-close:23/$-8,264
+   fair  [C37F-R#r5 y2025]: tickets 134 deployed $1,616,588 ret -2.022% per_ticket $-243.9 best +3,474 (2024-12-17) worst -4,289 ex_best -36,159 negm_ex_best 3/3
+ C37F-R#r6 y2025    37d $     -38,807 3/3  maxDD $   41,846  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r6 y2025]: bearish:64/$+15,264  scale-out:2/$+1,347  stop:40/$-45,128  window-close:25/$-10,290
+   fair  [C37F-R#r6 y2025]: tickets 129 deployed $1,591,086 ret -2.439% per_ticket $-300.8 best +3,039 (2024-12-17) worst -5,335 ex_best -41,846 negm_ex_best 3/3
+ C37F-R#r7 y2025    37d $     -35,571 3/3  maxDD $   38,610  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r7 y2025]: bearish:66/$+13,518  scale-out:2/$+1,300  stop:38/$-40,400  window-close:22/$-9,990
+   fair  [C37F-R#r7 y2025]: tickets 126 deployed $1,535,863 ret -2.316% per_ticket $-282.3 best +3,039 (2024-12-17) worst -4,289 ex_best -38,610 negm_ex_best 3/3
+ C37F-R#r8 y2025    37d $     -42,235 3/3  maxDD $   45,274  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r8 y2025]: bearish:62/$+13,082  scale-out:2/$+1,347  stop:43/$-46,898  window-close:24/$-9,765
+   fair  [C37F-R#r8 y2025]: tickets 129 deployed $1,583,208 ret -2.668% per_ticket $-327.4 best +3,039 (2024-12-17) worst -6,183 ex_best -45,274 negm_ex_best 3/3
+ C37F-R#r9 y2025    37d $     -42,465 3/3  maxDD $   45,867  [CONTROL random pick: C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F-R#r9 y2025]: bearish:64/$+16,340  scale-out:1/$+1,175  stop:43/$-51,376  window-close:24/$-8,605
+   fair  [C37F-R#r9 y2025]: tickets 131 deployed $1,635,635 ret -2.596% per_ticket $-324.2 best +3,402 (2024-12-17) worst -6,558 ex_best -45,867 negm_ex_best 3/3
+ HOLD1-R#r0 y2025    37d $     -17,944 3/3  maxDD $   17,944  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r0 y2025]: window-close:37/$-17,944
+   fair  [HOLD1-R#r0 y2025]: tickets 37 deployed $470,359 ret -3.815% per_ticket $-485.0 best +4,837 (2024-11-08) worst -3,228 ex_best -22,782 negm_ex_best 3/3
+ HOLD1-R#r1 y2025    37d $     -22,192 3/3  maxDD $   22,192  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r1 y2025]: window-close:37/$-22,192
+   fair  [HOLD1-R#r1 y2025]: tickets 37 deployed $470,377 ret -4.718% per_ticket $-599.8 best +4,837 (2024-11-08) worst -3,719 ex_best -27,030 negm_ex_best 3/3
+ HOLD1-R#r2 y2025    37d $     -18,100 3/3  maxDD $   18,100  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r2 y2025]: window-close:37/$-18,100
+   fair  [HOLD1-R#r2 y2025]: tickets 37 deployed $470,422 ret -3.848% per_ticket $-489.2 best +4,837 (2024-11-08) worst -3,228 ex_best -22,937 negm_ex_best 3/3
+ HOLD1-R#r3 y2025    37d $     -22,316 3/3  maxDD $   22,316  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r3 y2025]: window-close:37/$-22,316
+   fair  [HOLD1-R#r3 y2025]: tickets 37 deployed $470,019 ret -4.748% per_ticket $-603.1 best +4,837 (2024-11-08) worst -3,719 ex_best -27,153 negm_ex_best 3/3
+ HOLD1-R#r4 y2025    37d $     -17,712 3/3  maxDD $   17,712  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r4 y2025]: window-close:37/$-17,712
+   fair  [HOLD1-R#r4 y2025]: tickets 37 deployed $471,245 ret -3.759% per_ticket $-478.7 best +4,837 (2024-11-08) worst -3,228 ex_best -22,549 negm_ex_best 3/3
+ HOLD1-R#r5 y2025    37d $     -22,192 3/3  maxDD $   22,192  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r5 y2025]: window-close:37/$-22,192
+   fair  [HOLD1-R#r5 y2025]: tickets 37 deployed $470,377 ret -4.718% per_ticket $-599.8 best +4,837 (2024-11-08) worst -3,719 ex_best -27,030 negm_ex_best 3/3
+ HOLD1-R#r6 y2025    37d $     -18,486 3/3  maxDD $   18,486  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r6 y2025]: window-close:37/$-18,486
+   fair  [HOLD1-R#r6 y2025]: tickets 37 deployed $482,204 ret -3.834% per_ticket $-499.6 best +4,837 (2024-11-08) worst -3,228 ex_best -23,323 negm_ex_best 3/3
+ HOLD1-R#r7 y2025    37d $     -18,192 3/3  maxDD $   18,192  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r7 y2025]: window-close:37/$-18,192
+   fair  [HOLD1-R#r7 y2025]: tickets 37 deployed $470,006 ret -3.871% per_ticket $-491.7 best +4,837 (2024-11-08) worst -3,228 ex_best -23,029 negm_ex_best 3/3
+ HOLD1-R#r8 y2025    37d $     -22,611 3/3  maxDD $   22,611  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r8 y2025]: window-close:37/$-22,611
+   fair  [HOLD1-R#r8 y2025]: tickets 37 deployed $482,215 ret -4.689% per_ticket $-611.1 best +4,837 (2024-11-08) worst -3,719 ex_best -27,448 negm_ex_best 3/3
+ HOLD1-R#r9 y2025    37d $     -22,500 3/3  maxDD $   22,500  [CONTROL random pick: rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1-R#r9 y2025]: window-close:37/$-22,500
+   fair  [HOLD1-R#r9 y2025]: tickets 37 deployed $482,193 ret -4.666% per_ticket $-608.1 best +4,837 (2024-11-08) worst -3,719 ex_best -27,337 negm_ex_best 3/3
+{
+ "ndays": 40,
+ "tally": {
+  "n": 910588,
+  "mean_bps": 87.61125859639118,
+  "frac_gt_10bps": 0.8002170026400524,
+  "tiers": {
+   "legacy": 14692,
+   "legacy+ext": 44614,
+   "prior": 125305,
+   "prior+ext": 121678,
+   "win": 604299
+  }
+ },
+ "rows": [
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 0,
+   "label": "year",
+   "total": 11785,
+   "days": 38,
+   "tickets": 161,
+   "pnl_per_ticket": 73.2
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 0,
+   "label": "y2025",
+   "total": -2397,
+   "days": 37,
+   "tickets": 130,
+   "pnl_per_ticket": -18.4
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 1,
+   "label": "year",
+   "total": 11337,
+   "days": 38,
+   "tickets": 143,
+   "pnl_per_ticket": 79.3
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 1,
+   "label": "y2025",
+   "total": -4710,
+   "days": 37,
+   "tickets": 124,
+   "pnl_per_ticket": -38.0
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 2,
+   "label": "year",
+   "total": 2401,
+   "days": 38,
+   "tickets": 152,
+   "pnl_per_ticket": 15.8
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 2,
+   "label": "y2025",
+   "total": -9712,
+   "days": 37,
+   "tickets": 131,
+   "pnl_per_ticket": -74.1
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 3,
+   "label": "year",
+   "total": -4324,
+   "days": 38,
+   "tickets": 153,
+   "pnl_per_ticket": -28.3
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 3,
+   "label": "y2025",
+   "total": -2696,
+   "days": 37,
+   "tickets": 126,
+   "pnl_per_ticket": -21.4
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 4,
+   "label": "year",
+   "total": 9212,
+   "days": 38,
+   "tickets": 151,
+   "pnl_per_ticket": 61.0
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 4,
+   "label": "y2025",
+   "total": -5777,
+   "days": 37,
+   "tickets": 121,
+   "pnl_per_ticket": -47.7
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 5,
+   "label": "year",
+   "total": 10682,
+   "days": 38,
+   "tickets": 156,
+   "pnl_per_ticket": 68.5
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 5,
+   "label": "y2025",
+   "total": -2638,
+   "days": 37,
+   "tickets": 123,
+   "pnl_per_ticket": -21.5
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 6,
+   "label": "year",
+   "total": -142,
+   "days": 38,
+   "tickets": 147,
+   "pnl_per_ticket": -1.0
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 6,
+   "label": "y2025",
+   "total": -965,
+   "days": 37,
+   "tickets": 135,
+   "pnl_per_ticket": -7.2
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 7,
+   "label": "year",
+   "total": 1123,
+   "days": 38,
+   "tickets": 151,
+   "pnl_per_ticket": 7.4
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 7,
+   "label": "y2025",
+   "total": -6939,
+   "days": 37,
+   "tickets": 123,
+   "pnl_per_ticket": -56.4
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 8,
+   "label": "year",
+   "total": 13462,
+   "days": 38,
+   "tickets": 154,
+   "pnl_per_ticket": 87.4
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 8,
+   "label": "y2025",
+   "total": -12656,
+   "days": 37,
+   "tickets": 128,
+   "pnl_per_ticket": -98.9
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 9,
+   "label": "year",
+   "total": -5016,
+   "days": 38,
+   "tickets": 161,
+   "pnl_per_ticket": -31.2
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F-R",
+   "rep": 9,
+   "label": "y2025",
+   "total": -4391,
+   "days": 37,
+   "tickets": 133,
+   "pnl_per_ticket": -33.0
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 0,
+   "label": "year",
+   "total": -4681,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": -123.2
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 0,
+   "label": "y2025",
+   "total": -10436,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -282.0
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 1,
+   "label": "year",
+   "total": -585,
+   "days": 38,
+   "tickets": 39,
+   "pnl_per_ticket": -15.0
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 1,
+   "label": "y2025",
+   "total": -14641,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -395.7
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 2,
+   "label": "year",
+   "total": 3959,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": 104.2
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 2,
+   "label": "y2025",
+   "total": -10470,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -283.0
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 3,
+   "label": "year",
+   "total": -3102,
+   "days": 38,
+   "tickets": 39,
+   "pnl_per_ticket": -79.5
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 3,
+   "label": "y2025",
+   "total": -14650,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -395.9
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 4,
+   "label": "year",
+   "total": -4156,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": -109.4
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 4,
+   "label": "y2025",
+   "total": -10164,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -274.7
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 5,
+   "label": "year",
+   "total": 452,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": 11.9
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 5,
+   "label": "y2025",
+   "total": -14641,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -395.7
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 6,
+   "label": "year",
+   "total": 2363,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": 62.2
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 6,
+   "label": "y2025",
+   "total": -11052,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -298.7
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 7,
+   "label": "year",
+   "total": 1716,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": 45.2
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 7,
+   "label": "y2025",
+   "total": -10563,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -285.5
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 8,
+   "label": "year",
+   "total": -4368,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": -115.0
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 8,
+   "label": "y2025",
+   "total": -15145,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -409.3
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 9,
+   "label": "year",
+   "total": 3958,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": 104.2
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1-R",
+   "rep": 9,
+   "label": "y2025",
+   "total": -15013,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -405.8
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 0,
+   "label": "year",
+   "total": -24058,
+   "days": 38,
+   "tickets": 144,
+   "pnl_per_ticket": -167.1
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 0,
+   "label": "y2025",
+   "total": -33614,
+   "days": 37,
+   "tickets": 131,
+   "pnl_per_ticket": -256.6
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 1,
+   "label": "year",
+   "total": -37845,
+   "days": 38,
+   "tickets": 138,
+   "pnl_per_ticket": -274.2
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 1,
+   "label": "y2025",
+   "total": -29814,
+   "days": 37,
+   "tickets": 125,
+   "pnl_per_ticket": -238.5
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 2,
+   "label": "year",
+   "total": -28052,
+   "days": 38,
+   "tickets": 143,
+   "pnl_per_ticket": -196.2
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 2,
+   "label": "y2025",
+   "total": -51302,
+   "days": 37,
+   "tickets": 132,
+   "pnl_per_ticket": -388.6
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 3,
+   "label": "year",
+   "total": -30109,
+   "days": 38,
+   "tickets": 129,
+   "pnl_per_ticket": -233.4
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 3,
+   "label": "y2025",
+   "total": -36562,
+   "days": 37,
+   "tickets": 142,
+   "pnl_per_ticket": -257.5
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 4,
+   "label": "year",
+   "total": -25786,
+   "days": 38,
+   "tickets": 129,
+   "pnl_per_ticket": -199.9
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 4,
+   "label": "y2025",
+   "total": -34083,
+   "days": 37,
+   "tickets": 125,
+   "pnl_per_ticket": -272.7
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 5,
+   "label": "year",
+   "total": -9167,
+   "days": 38,
+   "tickets": 140,
+   "pnl_per_ticket": -65.5
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 5,
+   "label": "y2025",
+   "total": -32685,
+   "days": 37,
+   "tickets": 134,
+   "pnl_per_ticket": -243.9
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 6,
+   "label": "year",
+   "total": -25994,
+   "days": 38,
+   "tickets": 132,
+   "pnl_per_ticket": -196.9
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 6,
+   "label": "y2025",
+   "total": -38807,
+   "days": 37,
+   "tickets": 129,
+   "pnl_per_ticket": -300.8
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 7,
+   "label": "year",
+   "total": -28819,
+   "days": 38,
+   "tickets": 150,
+   "pnl_per_ticket": -192.1
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 7,
+   "label": "y2025",
+   "total": -35571,
+   "days": 37,
+   "tickets": 126,
+   "pnl_per_ticket": -282.3
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 8,
+   "label": "year",
+   "total": -30955,
+   "days": 38,
+   "tickets": 147,
+   "pnl_per_ticket": -210.6
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 8,
+   "label": "y2025",
+   "total": -42235,
+   "days": 37,
+   "tickets": 129,
+   "pnl_per_ticket": -327.4
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 9,
+   "label": "year",
+   "total": -36910,
+   "days": 38,
+   "tickets": 147,
+   "pnl_per_ticket": -251.1
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F-R",
+   "rep": 9,
+   "label": "y2025",
+   "total": -42465,
+   "days": 37,
+   "tickets": 131,
+   "pnl_per_ticket": -324.2
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 0,
+   "label": "year",
+   "total": -9439,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": -248.4
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 0,
+   "label": "y2025",
+   "total": -17944,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -485.0
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 1,
+   "label": "year",
+   "total": -6552,
+   "days": 38,
+   "tickets": 39,
+   "pnl_per_ticket": -168.0
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 1,
+   "label": "y2025",
+   "total": -22192,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -599.8
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 2,
+   "label": "year",
+   "total": -1275,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": -33.5
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 2,
+   "label": "y2025",
+   "total": -18100,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -489.2
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 3,
+   "label": "year",
+   "total": -8160,
+   "days": 38,
+   "tickets": 39,
+   "pnl_per_ticket": -209.2
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 3,
+   "label": "y2025",
+   "total": -22316,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -603.1
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 4,
+   "label": "year",
+   "total": -8756,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": -230.4
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 4,
+   "label": "y2025",
+   "total": -17712,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -478.7
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 5,
+   "label": "year",
+   "total": -4499,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": -118.4
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 5,
+   "label": "y2025",
+   "total": -22192,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -599.8
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 6,
+   "label": "year",
+   "total": -2778,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": -73.1
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 6,
+   "label": "y2025",
+   "total": -18486,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -499.6
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 7,
+   "label": "year",
+   "total": -2972,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": -78.2
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 7,
+   "label": "y2025",
+   "total": -18192,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -491.7
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 8,
+   "label": "year",
+   "total": -9039,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": -237.9
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 8,
+   "label": "y2025",
+   "total": -22611,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -611.1
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 9,
+   "label": "year",
+   "total": -1485,
+   "days": 38,
+   "tickets": 38,
+   "pnl_per_ticket": -39.1
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1-R",
+   "rep": 9,
+   "label": "y2025",
+   "total": -22500,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -608.1
+  }
+ ]
+}

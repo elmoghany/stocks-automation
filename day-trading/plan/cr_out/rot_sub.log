@@ -1,0 +1,123 @@
+--- flag OFF, 40 days ---
+C37F: C37 on the FULL-coverage pool (post-backfill benchmark)
+  exit kwargs [C37F] mode=inherited: {'trail_pct': 20, 'stop_pct': 8, 'pressure_trail': (10, 0.3, 0.3, 10, 40), 'scale_out_at': 25.0, 'scale_out_pressure_skip': 0.3, 'wick_guard': 3.0}
+HOLD1: rank + HOLD-to-flatten, sequential, 10bps
+  exit kwargs [HOLD1] mode=HOLD: {'trail_pct': 999, 'stop_pct': 99, 'sell_mode': 'target_stop_only'}
+ C37F year     37d $      -2,796 1/2  maxDD $    5,777  [C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F year]: bearish:115/$+26,982  stop:21/$-21,866  window-close:26/$-7,912
+   fair  [C37F year]: tickets 162 deployed $2,311,672 ret -0.121% per_ticket $-17.3 best +1,624 (2025-09-26) worst -2,029 ex_best -4,420 negm_ex_best 2/2
+ HOLD1 year     37d $      +4,096 1/2  maxDD $    6,413  [rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1 year]: window-close:38/$+4,096
+   fair  [HOLD1 year]: tickets 38 deployed $524,204 ret 0.781% per_ticket $107.8 best +3,443 (2025-09-19) worst -2,023 ex_best +652 negm_ex_best 1/2
+ C37F y2025    37d $      -2,594 1/3  maxDD $    7,231  [C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F y2025]: bearish:83/$+27,608  scale-out:2/$+1,495  stop:26/$-22,861  window-close:25/$-8,836
+   fair  [C37F y2025]: tickets 134 deployed $1,762,265 ret -0.147% per_ticket $-19.4 best +4,416 (2024-12-17) worst -2,812 ex_best -7,011 negm_ex_best 2/3
+ HOLD1 y2025    37d $     -11,760 3/3  maxDD $   11,770  [rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1 y2025]: window-close:37/$-11,760
+   fair  [HOLD1 y2025]: tickets 37 deployed $479,353 ret -2.453% per_ticket $-317.8 best +4,893 (2024-11-08) worst -3,686 ex_best -16,653 negm_ex_best 3/3
+--- flag ON (measured), 40 days ---
+C37F: C37 on the FULL-coverage pool (post-backfill benchmark)
+  exit kwargs [C37F] mode=inherited: {'trail_pct': 20, 'stop_pct': 8, 'pressure_trail': (10, 0.3, 0.3, 10, 40), 'scale_out_at': 25.0, 'scale_out_pressure_skip': 0.3, 'wick_guard': 3.0}
+HOLD1: rank + HOLD-to-flatten, sequential, 10bps
+  exit kwargs [HOLD1] mode=HOLD: {'trail_pct': 999, 'stop_pct': 99, 'sell_mode': 'target_stop_only'}
+ C37F year     37d $     -23,538 2/2  maxDD $   25,033  [C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F year]: bearish:89/$+21,550  stop:32/$-35,360  window-close:27/$-9,728
+   fair  [C37F year]: tickets 148 deployed $2,089,850 ret -1.126% per_ticket $-159.0 best +2,420 (2025-09-08) worst -2,899 ex_best -25,958 negm_ex_best 2/2
+ HOLD1 year     37d $      -1,211 1/2  maxDD $    9,087  [rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1 year]: window-close:38/$-1,211
+   fair  [HOLD1 year]: tickets 38 deployed $526,159 ret -0.23% per_ticket $-31.9 best +3,286 (2025-09-19) worst -2,082 ex_best -4,496 negm_ex_best 2/2
+ C37F y2025    37d $     -35,259 3/3  maxDD $   38,298  [C37 on the FULL-coverage pool (post-backfill benchmark)]
+   exits [C37F y2025]: bearish:70/$+16,721  scale-out:2/$+1,297  stop:40/$-43,889  window-close:22/$-9,387
+   fair  [C37F y2025]: tickets 132 deployed $1,692,357 ret -2.083% per_ticket $-267.1 best +3,039 (2024-12-17) worst -7,966 ex_best -38,298 negm_ex_best 3/3
+ HOLD1 y2025    37d $     -18,789 3/3  maxDD $   18,789  [rank + HOLD-to-flatten, sequential, 10bps]
+   exits [HOLD1 y2025]: window-close:37/$-18,789
+   fair  [HOLD1 y2025]: tickets 37 deployed $482,576 ret -3.894% per_ticket $-507.8 best +4,837 (2024-11-08) worst -3,719 ex_best -23,626 negm_ex_best 3/3
+{
+ "ndays": 40,
+ "tally": {
+  "n": 380619,
+  "mean_bps": 64.35123580395826,
+  "frac_gt_10bps": 0.7727727727727728,
+  "tiers": {
+   "legacy": 1606,
+   "legacy+ext": 29088,
+   "prior": 49001,
+   "prior+ext": 38290,
+   "win": 262634
+  }
+ },
+ "rows": [
+  {
+   "cost": "flat",
+   "cfg": "C37F",
+   "label": "year",
+   "total": -2796,
+   "days": 37,
+   "tickets": 162,
+   "pnl_per_ticket": -17.3
+  },
+  {
+   "cost": "flat",
+   "cfg": "C37F",
+   "label": "y2025",
+   "total": -2594,
+   "days": 37,
+   "tickets": 134,
+   "pnl_per_ticket": -19.4
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1",
+   "label": "year",
+   "total": 4096,
+   "days": 37,
+   "tickets": 38,
+   "pnl_per_ticket": 107.8
+  },
+  {
+   "cost": "flat",
+   "cfg": "HOLD1",
+   "label": "y2025",
+   "total": -11760,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -317.8
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F",
+   "label": "year",
+   "total": -23538,
+   "days": 37,
+   "tickets": 148,
+   "pnl_per_ticket": -159.0
+  },
+  {
+   "cost": "measured",
+   "cfg": "C37F",
+   "label": "y2025",
+   "total": -35259,
+   "days": 37,
+   "tickets": 132,
+   "pnl_per_ticket": -267.1
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1",
+   "label": "year",
+   "total": -1211,
+   "days": 37,
+   "tickets": 38,
+   "pnl_per_ticket": -31.9
+  },
+  {
+   "cost": "measured",
+   "cfg": "HOLD1",
+   "label": "y2025",
+   "total": -18789,
+   "days": 37,
+   "tickets": 37,
+   "pnl_per_ticket": -507.8
+  }
+ ]
+}

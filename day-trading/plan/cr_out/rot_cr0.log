@@ -1,0 +1,5 @@
+C37F: C37 on the FULL-coverage pool (post-backfill benchmark)
+  exit kwargs [C37F] mode=inherited: {'trail_pct': 20, 'stop_pct': 8, 'pressure_trail': (10, 0.3, 0.3, 10, 40), 'scale_out_at': 25.0, 'scale_out_pressure_skip': 0.3, 'wick_guard': 3.0}
+HOLD1: rank + HOLD-to-flatten, sequential, 10bps
+  exit kwargs [HOLD1] mode=HOLD: {'trail_pct': 999, 'stop_pct': 99, 'sell_mode': 'target_stop_only'}
+  ..year 50/251 [C37F] (47d $-3,218)
