@@ -9388,3 +9388,21 @@ What WAS run instead is targeted at the only row that earned it: the
 green-on-red control battery (gate-matched random, mirror image, and the
 hold sweep -- TABLE 3) and a three-seed entry-shuffle on the two most
 -taught triggers (TABLE 5). **That is where the information was.**
+
+
+### VS2: IS THE "IT EQUALS THE FRICTION" READING HOSTAGE TO THE COST MODEL?
+No, and it is worth showing why, because the COST-REBASE line is
+re-pricing costs across the campaign at the same time.
+Everything above uses the cost model this mandate specifies: **10 bps per
+side**, i.e. **$30 round-trip on a $15,000 ticket**. Observed medians:
+**-$27 (wide, 27 configs)** and **-$39 (gappers, 19 configs)**.
+* If the true cost is **LOWER** than 10 bps/side, then the gross edge of
+  these mechanics is **NEGATIVE**, not zero. The verdict gets worse.
+* If the true cost is **HIGHER**, the gross edge is mildly positive --
+  and the closest miss still needs **+$357/ticket** to clear the bar
+  against a measured premium of **+$55**. A cost revision of a few dollars
+  a ticket does not close a 6.5x gap.
+The conclusion is therefore **robust to the cost model in both
+directions**: no plausible re-pricing turns any of these 46 configs into
+$7,500/month. What a re-pricing would change is the DIAGNOSIS (zero gross
+edge vs slightly negative vs slightly positive), not the VERDICT.
