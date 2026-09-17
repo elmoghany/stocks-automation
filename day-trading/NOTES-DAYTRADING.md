@@ -10098,3 +10098,14 @@ and `data/halal_list.json`.
 > (476 names, `updated` 2026-09-17). `data/halal_list.json` still holds the
 > 415-name list and was never touched by this line.
 
+**ADDENDUM, 19:30 ET -- THE SWAP HAPPENED WITHOUT THIS LINE.**
+`data/halal_list.json` was rewritten at 18:24 by another owner from this
+parked list, with the four non-common-equity names removed -- i.e. proposal
+3 applied by hand. Live list now carries **472 symbols** (mine minus HLAL,
+JPO, MNZL, SPUS); `data/halal_list.NEW.json` still carries all 476. Two
+things to know about that file as it stands: its `n` field still reads 476
+against 472 symbols (COSMETIC ONLY -- `cmd_rank` reads `updated` and
+`symbols`, never `n`), and dropping those four is a change this line
+recommended but did not make, so if the intent was only the swap, the four
+should go back. Flagged, not touched: it is not this line's file.
+
