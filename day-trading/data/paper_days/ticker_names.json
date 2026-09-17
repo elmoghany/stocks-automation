@@ -23,6 +23,14 @@
 "name": "Addex Therapeutics",
 "type": "EQUITY"
 },
+"AEHL": {
+"name": "Antelope Enterprise",
+"type": "EQUITY"
+},
+"AEMD": {
+"name": "Aethlon Medical",
+"type": "EQUITY"
+},
 "AFIX": {
 "name": "Allspring Broad Market Core Bond ETF",
 "type": "EQUITY"
@@ -91,6 +99,10 @@
 "name": "Arcturus Therapeutics Holdings",
 "type": "EQUITY"
 },
+"ARL": {
+"name": "American Realty",
+"type": "EQUITY"
+},
 "ARMA": {
 "name": "Corgi ARM 2x Daily ETF",
 "type": "EQUITY"
@@ -109,6 +121,10 @@
 },
 "ASTT": {
 "name": "Corgi ASTS 2x Daily ETF",
+"type": "EQUITY"
+},
+"AT": {
+"name": "Defiance Robotics Actuators ETF",
 "type": "EQUITY"
 },
 "ATHE": {
@@ -203,8 +219,16 @@
 "name": "Burning Rock Biotech",
 "type": "EQUITY"
 },
+"BOLT": {
+"name": "Bolt Biotherapeutics",
+"type": "EQUITY"
+},
 "BRNX": {
 "name": "BrenX Ltd.",
+"type": "EQUITY"
+},
+"BRTX": {
+"name": "BioRestorative Therapies",
 "type": "EQUITY"
 },
 "BRZD": {
@@ -251,12 +275,24 @@
 "name": "EA Series Trust Concourse Capital Focused Equity ETF",
 "type": "EQUITY"
 },
+"CCPX": {
+"name": "Corgi China 2x Daily ETF",
+"type": "EQUITY"
+},
 "CDNG": {
 "name": "Leverage Shares 2X Long CDNS Daily ETF",
 "type": "EQUITY"
 },
+"CENN": {
+"name": "Cenntro Inc.",
+"type": "EQUITY"
+},
 "CHNL": {
 "name": "Chainlink ETF",
+"type": "EQUITY"
+},
+"CHNR": {
+"name": "China Natural Resources",
 "type": "EQUITY"
 },
 "CHNU": {
@@ -283,6 +319,10 @@
 "name": "T-REX 2X Long CIFR Daily Target ETF",
 "type": "EQUITY"
 },
+"CIR": {
+"name": "Corgi CRCL 2x Daily ETF",
+"type": "EQUITY"
+},
 "CKX": {
 "name": "CKX Lands",
 "type": "EQUITY"
@@ -297,6 +337,10 @@
 },
 "CNXC": {
 "name": "Concentrix Corp",
+"type": "EQUITY"
+},
+"COE": {
+"name": "51Talk Online Education",
 "type": "EQUITY"
 },
 "COHC": {
@@ -359,6 +403,14 @@
 "name": "Corgi CRWD 2x Daily ETF",
 "type": "EQUITY"
 },
+"CRWG": {
+"name": "Leverage Shares 2X Long CRWV Daily ETF",
+"type": "EQUITY"
+},
+"CRWU": {
+"name": "T-REX 2X Long CRWV Daily Target ETF",
+"type": "EQUITY"
+},
 "CRWX": {
 "name": "Corgi CRWV 2x Daily ETF",
 "type": "EQUITY"
@@ -383,6 +435,10 @@
 "name": "Chicago Rivet & Machine",
 "type": "EQUITY"
 },
+"CWVX": {
+"name": "Tradr 2X Long CRWV Daily ETF",
+"type": "EQUITY"
+},
 "CYPH": {
 "name": "Cypherpunk Technologies",
 "type": "EQUITY"
@@ -397,6 +453,10 @@
 },
 "DECO": {
 "name": "State Street Galaxy Digital Asset Ecosystem ETF",
+"type": "EQUITY"
+},
+"DETX": {
+"name": "Liberty Defense Holdings",
 "type": "EQUITY"
 },
 "DIPR": {
@@ -555,8 +615,16 @@
 "name": "EA Series Trust Guru Favorite Stocks ETF",
 "type": "EQUITY"
 },
+"GLAS": {
+"name": "Glass House Brands Inc.",
+"type": "EQUITY"
+},
 "GLMD": {
 "name": "Galmed Pharmaceuticals",
+"type": "EQUITY"
+},
+"GLOO": {
+"name": "Gloo Holdings",
 "type": "EQUITY"
 },
 "GLWG": {
@@ -569,6 +637,10 @@
 },
 "GMTL": {
 "name": "Guardian Metal Resources",
+"type": "EQUITY"
+},
+"GNRC": {
+"name": "Generac Holdings",
 "type": "EQUITY"
 },
 "GOTU": {
@@ -639,6 +711,10 @@
 "name": "Intelligent Living Application Group",
 "type": "EQUITY"
 },
+"IMDX": {
+"name": "Insight Molecular Diagnostics",
+"type": "EQUITY"
+},
 "IMOS": {
 "name": "ChipMOS Technologies",
 "type": "EQUITY"
@@ -649,6 +725,10 @@
 },
 "INBX": {
 "name": "Inhibrx Biosciences",
+"type": "EQUITY"
+},
+"INLX": {
+"name": "Intellinetics",
 "type": "EQUITY"
 },
 "INT": {
@@ -663,6 +743,10 @@
 "name": "GraniteShares 2x Long INTC Daily ETF",
 "type": "EQUITY"
 },
+"ION": {
+"name": "ProShares S&P Global Core Battery Metals ETF",
+"type": "EQUITY"
+},
 "IONL": {
 "name": "GraniteShares ETF Trust GraniteShares 2x Long IONQ Daily ETF",
 "type": "EQUITY"
@@ -675,8 +759,24 @@
 "name": "Defiance Daily Target 2X Long IONQ ETF",
 "type": "EQUITY"
 },
+"IQGR": {
+"name": "Astoria International Quality Growth Kings ETF",
+"type": "EQUITY"
+},
+"IRE": {
+"name": "Defiance Daily Target 2X Long IREN ETF",
+"type": "EQUITY"
+},
 "IREC": {
 "name": "Corgi IREN 2x Daily ETF",
+"type": "EQUITY"
+},
+"IREG": {
+"name": "Leverage Shares 2X Long IREN Daily ETF",
+"type": "EQUITY"
+},
+"IREX": {
+"name": "Tradr 2X Long IREN Daily ETF",
 "type": "EQUITY"
 },
 "IREZ": {
@@ -691,12 +791,28 @@
 "name": "iSpecimen",
 "type": "EQUITY"
 },
+"ITDE": {
+"name": "iShares LifePath Target Date 2045 ETF",
+"type": "EQUITY"
+},
 "ITDF": {
 "name": "iShares LifePath Target Date 2050 ETF",
 "type": "EQUITY"
 },
+"ITDG": {
+"name": "iShares LifePath Target Date 2055 ETF",
+"type": "EQUITY"
+},
 "JETU": {
 "name": "MAX Airlines 3x Leveraged ETN",
+"type": "EQUITY"
+},
+"JFU": {
+"name": "9F",
+"type": "EQUITY"
+},
+"JL": {
+"name": "J-Long Group Limited Class A",
 "type": "EQUITY"
 },
 "JLHL": {
@@ -723,12 +839,20 @@
 "name": "Corgi KEYS 2x Daily ETF",
 "type": "EQUITY"
 },
+"KFFB": {
+"name": "Kentucky First Federal Bancorp",
+"type": "EQUITY"
+},
 "KG": {
 "name": "Kestrel Group",
 "type": "EQUITY"
 },
 "KPRO": {
 "name": "KraneShares 100% KWEB Defined Outcome January 2027 ETF",
+"type": "EQUITY"
+},
+"KXIN": {
+"name": "Kaixin",
 "type": "EQUITY"
 },
 "LABT": {
@@ -785,6 +909,10 @@
 },
 "LRCC": {
 "name": "Corgi LRCX 2x Daily ETF",
+"type": "EQUITY"
+},
+"LRHC": {
+"name": "La Rosa Holdings Corp.",
 "type": "EQUITY"
 },
 "LRNX": {
@@ -895,8 +1023,24 @@
 "name": "Corgi NBIS 2x Daily ETF",
 "type": "EQUITY"
 },
+"NBIG": {
+"name": "Leverage Shares 2X Long NBIS Daily ETF",
+"type": "EQUITY"
+},
+"NBIL": {
+"name": "GraniteShares 2x Long NBIS Daily ETF",
+"type": "EQUITY"
+},
+"NBIS": {
+"name": "Nebius Group",
+"type": "EQUITY"
+},
 "NCRA": {
 "name": "Nocera",
+"type": "EQUITY"
+},
+"NEBX": {
+"name": "Tradr 2X Long NBIS Daily ETF",
 "type": "EQUITY"
 },
 "NIPG": {
@@ -1007,6 +1151,10 @@
 "name": "PS International Group Ltd",
 "type": "EQUITY"
 },
+"PUL": {
+"name": "GraniteShares 2x Long P Daily ETF",
+"type": "EQUITY"
+},
 "PXS": {
 "name": "Pyxis Tankers",
 "type": "EQUITY"
@@ -1045,6 +1193,10 @@
 },
 "RACD": {
 "name": "Research Alliance Corporation IV Class A",
+"type": "EQUITY"
+},
+"RAPP": {
+"name": "Rapport Therapeutics",
 "type": "EQUITY"
 },
 "RAYA": {
@@ -1163,6 +1315,10 @@
 "name": "Defiance Daily Target 2X Long SPCX ETF",
 "type": "EQUITY"
 },
+"SPPL": {
+"name": "SIMPPLE LTD.",
+"type": "EQUITY"
+},
 "SSM": {
 "name": "Sono Group N.V.",
 "type": "EQUITY"
@@ -1237,6 +1393,10 @@
 },
 "TGL": {
 "name": "Treasure Global",
+"type": "EQUITY"
+},
+"TNON": {
+"name": "Tenon Medical",
 "type": "EQUITY"
 },
 "TSCM": {
@@ -1339,6 +1499,10 @@
 "name": "Leverage Shares 2X Long VIAV Daily ETF",
 "type": "EQUITY"
 },
+"VICR": {
+"name": "Vicor",
+"type": "EQUITY"
+},
 "VIDA": {
 "name": "VIDA Global",
 "type": "EQUITY"
@@ -1349,6 +1513,10 @@
 },
 "VUSV": {
 "name": "Vanguard Wellington U.S. Value Active ETF",
+"type": "EQUITY"
+},
+"WATT": {
+"name": "Energous",
 "type": "EQUITY"
 },
 "WEBX": {
@@ -1385,6 +1553,10 @@
 },
 "WYHG": {
 "name": "Wing Yip Food Holdings Group",
+"type": "EQUITY"
+},
+"WZRD": {
+"name": "Opportunistic Trader ETF",
 "type": "EQUITY"
 },
 "XBIX": {
@@ -1429,6 +1601,10 @@
 },
 "YEXT": {
 "name": "Yext",
+"type": "EQUITY"
+},
+"YI": {
+"name": "111, Inc",
 "type": "EQUITY"
 },
 "YQ": {

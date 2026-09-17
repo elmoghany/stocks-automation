@@ -89,8 +89,8 @@
    "first_seen": "06:28"
   },
   "VICR": {
-   "pct": 11.74,
-   "last": 205.5,
+   "pct": 11.47,
+   "last": 205.0,
    "prev_close": 183.91,
    "vol": "573847.226479",
    "name": "Vicor",
@@ -183,7 +183,9 @@
   "WATT",
   "YI"
  ],
- "fake_gap": [],
+ "fake_gap": [
+  "INLX"
+ ],
  "inherited_fail": [
   "AAPG",
   "ADXN",

@@ -56,8 +56,15 @@
     },
     "cycles": []
   },
+  "ops_clock_correction": {
+    "found_et": "06:25",
+    "defect": "The premarket artefacts were named from HAND-TYPED clock guesses, not from zoneinfo: scan_0628.tsv, halal_0632.json, halal_0640.json, and the sweep's HH:MM argument (06:28). The real elapsed window was 06:20:16-06:24:50 ET, so every one of those labels is 3-16 minutes ahead of the truth.",
+    "impact": "COSMETIC ONLY -- none of these labels feeds a causal cutoff. The sweep's HH:MM is a report label; the halal screen is time-independent; no `trigger --as-of` or bar cutoff was involved. No trading decision used a wrong minute.",
+    "fix": "Filenames left as committed (renaming committed artefacts hides the error); the true times are recorded here. From 06:25 on, every timestamp -- filenames included -- is read from zoneinfo/wait_until.py before use, per the CLOCK RULE.",
+    "true_times": {"scan": "~06:21", "sweep": "~06:22", "halal_q1_first_pass": "~06:23", "mcap_backfill_and_rescreen": "~06:24"}
+  },
   "premarket_screen": {
-    "scan_et": "06:28",
+    "scan_et": "~06:21 (filename says 0628 -- see ops_clock_correction)",
     "scan_id": "5f132877-7730-4a18-9e72-b3f0d2c9df83",
     "rows": 113,
     "sweep": "plan/scan_sweep.py on a transcribed dump (response arrived inline). dropped funds=77, spac=2 (ALF RACD), inherited_fail=13 -> 21 candidates",
@@ -78,7 +85,38 @@
     "VICR": {"q1": "PASS", "loan_pct": 0.09, "cash_pct": 5.35, "combined": 5.44, "mcap": 8479489081.0, "q2": "PASS", "screened_et": "06:40"},
     "GLAS": {"q1": "PASS", "loan_pct": 9.55, "cash_pct": 2.47, "combined": 12.03, "mcap": 750170339.0, "q2": "FAIL (recreational cannabis is the main revenue line)", "screened_et": "06:40", "armable": false}
   },
-  "veto_rates": {},
+  "cycles_log": [
+    {
+      "et": "07:02",
+      "state": "FLAT-5m",
+      "scan": "118 rows (incremental via plan/scan_delta.py off the 06:21 base: 10 new tickers, 5 gone, 21 refreshed). dropped funds=84, spac=2, halal_fail=10, inherited_fail=14, cannot_verify=6 -> 2 candidates",
+      "new_crossers_common_stock": ["AEMD +451.7%", "NBIS +10.6%", "TNON +10.2%"],
+      "new_crossers_disposition": "all three already in inherited_fail from prior sessions -- a real FAIL is never re-litigated",
+      "rank": "TOP = VICR (coil 0.998, gap7 +11.5%, calm yes, halal PASS, pressure UNTRUSTED <20k sh). INLX excluded: NO BARS.",
+      "armed": false,
+      "vetoes": ["SPREAD VICR 0.873%", "DEPTH VICR 0 sh within trigger+0.5%", "CHASE VICR ask 207.00 > 206.53 cap", "SPREAD INLX 26.84%"]
+    }
+  ],
+  "fake_gap_finding": {
+    "symbol": "INLX",
+    "et": "07:02",
+    "what": "INLX showed +11.76% on the scanner but has NOT TRADED TODAY. Its last_non_reg_trade_price 5.70 is stamped 2026-09-16T22:40:42Z = 18:40 ET YESTERDAY, an after-hours print, compared against yesterday's 5.10 close.",
+    "why_it_matters": "The scan's changeFromCloseAllDayRatio carries a PRIOR-day extended-hours print when a name has not traded in the current session, so a name can sit on the +10% scan all morning having never moved today. RH's minute feed returned 0 real bars and 182 interpolated ones, and the ranker refused it as NO BARS -- the mechanical path caught it independently.",
+    "book": "bid 4.58 x100 / ask 6.00 x5 -- a 26.84% spread, i.e. no real two-sided market.",
+    "recorded": "scan_state fake_gap"
+  },
+  "veto_rates": {
+    "premarket": {
+      "would_be_entries": 2,
+      "spread_veto": 2,
+      "spread_veto_rate": 1.0,
+      "depth_veto": 1,
+      "chase_veto": 1,
+      "size_cap_binding": 1,
+      "note": "Both premarket candidates blocked on spread alone (VICR 0.873%, INLX 26.84% vs the 0.5% cap). VICR was independently blocked three more ways: 0 shares resting within trigger+0.5%, inside ask above the chase cap, and a 20%-of-trailing-10-min-volume cap of 32 sh against a 73 sh ticket. Consistent with the documented ~90-100% premarket spread-veto rate, which modelling says is too aggressive -- but here the rule is not the binding constraint, the absence of a two-sided market is."
+    },
+    "regular": {"would_be_entries": 0, "spread_veto": 0, "depth_veto": 0, "chase_veto": 0}
+  },
   "errors": [],
   "summary": {}
 }
