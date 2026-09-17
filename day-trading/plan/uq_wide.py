@@ -35,7 +35,7 @@ OUT = HERE / "uq_out"
 sys.path.insert(0, str(HERE))
 sys.path.insert(0, str(HERE / "rl2"))
 
-UNI = OUT / "universe"
+UNI = OUT / "universe"      # overridable with --uni (e.g. universe_s3)
 DAYS = OUT / "days"
 FEAT = OUT / "feat"
 WN = OUT / "wn"
@@ -78,16 +78,47 @@ def stage_table(smoke=0):
 
 
 def stage_model(h="h30", seed=0, shuffle=False):
+    """CAUTION, and the bug that cost a run: `wn_lib.Table.__init__` has
+    `path=TAB` as a DEFAULT ARGUMENT, which is bound once at function
+    definition. Reassigning `wn_lib.TAB` afterwards does nothing, and the
+    first version of this stage silently refitted the walk-forward on the
+    INCUMBENT table and wrote the scores into the widened directory (the
+    give-away was train-row counts identical to the 61-name run:
+    164,644 / 177,849 / 191,620). The subclass below rebinds the default,
+    and the row counts are printed so the substitution is visible."""
     import wn_lib
-    wn_lib.TAB = WN / "table.npz"
+    base = wn_lib.Table
+    tab = WN / "table.npz"
+
+    class WideTable(base):
+        def __init__(self, path=tab):
+            super().__init__(path)
+
+    wn_lib.TAB = tab
     wn_lib.OUT = WN
     import wn_model
+    wn_model.Table = WideTable
     wn_model.OUT = WN
+    t = WideTable()
+    print(f"widened table: {len(t.dates)} dates, {len(t.syms)} symbols, "
+          f"{len(t.date_i):,} rows", flush=True)
     wn_model.stage_wf(h, seed, shuffle)
 
 
 if __name__ == "__main__":
     a = sys.argv
+    if "--uni" in a:
+        # A strided subset of dates (every 3rd session, 150 of 448) is a
+        # legitimate day-level SUBSAMPLE of the same causal universe: each
+        # sampled day carries its FULL cross-section, so the cross-sectional
+        # features and the ranking are untouched; only the number of days
+        # (and so the power) falls. It exists because the widened universe
+        # needs ~97k new symbol-days of 1-minute bars and the strided subset
+        # needs 32k.
+        UNI = OUT / a[a.index("--uni") + 1]
+        DAYS = OUT / (a[a.index("--uni") + 1].replace("universe", "days"))
+        FEAT = OUT / (a[a.index("--uni") + 1].replace("universe", "feat"))
+        WN = OUT / (a[a.index("--uni") + 1].replace("universe", "wn"))
     st = a[a.index("--stage") + 1] if "--stage" in a else "panel"
     h = a[a.index("--h") + 1] if "--h" in a else "h30"
     if st == "panel":

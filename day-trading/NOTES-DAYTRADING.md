@@ -8572,3 +8572,200 @@ from the 4-core PC, shared with another agent's `wn_*` / `rotation_sim` /
 maskppo-real-800k, offline CQL seed 1 / BCQ, rules2 seeds 1–4 and its
 walk-forward arm. No real orders, no engine files touched, no halal cache
 written to.
+
+
+# UNIVERSE+QUOTES (2026-09-16)
+
+Mandate: attack the TWO binding constraints `widenet-audit.md` measured -- a
+halal universe starved by COVERAGE, and the TOLL -- by extending
+point-in-time fundamentals to every liquid name and by modelling LIMIT
+entries against real quotes instead of next-bar-open market fills. Full
+write-up in `universe-quotes-audit.md`; code in `plan/uq_*.py`; artefacts in
+`plan/uq_out/` and `data/massive/trades/`.
+
+**VERDICT: FAIL at +$7/month against the $7,500/month bar.** Both constraints
+were real, both were moved, and the amounts are now measured instead of
+guessed:
+
+    universe widening          -$948/month   (it HURT)
+    limit entries            +$2,460/month
+    ranking for the fill     +$1,369/month
+    ------------------------------------------
+    net, account-legal       -$3,822 -> +$7/month
+
+### The premise about quotes is FALSE on this account (finding #1)
+`/v3/quotes`, `/v3/trades`, `/v2/last/nbbo`, `/v2/last/trade` and
+`/v2/ticks/stocks/nbbo` all return **403 NOT_AUTHORIZED** ("You are not
+entitled to this data"). The paid Starter tier carries aggregates and
+reference, not the tick feeds. Reproduce: `python plan/uq_sec1.py --probe`.
+
+**1-SECOND AGGREGATES ARE ENTITLED and they answer the fill rule EXACTLY**: a
+1-second bar's `l` IS the minimum trade price in that second, so "filled iff a
+trade prints at or below the limit within N minutes" is `min(l)` over the
+window. They reach back past 2024-10-22. Only the NBBO half needed a
+substitute. Cached the whole RTH tape for the causal universe:
+**27,197 symbol-days, 0 failures, 0.61 GB, 122 min at 4 req/s**, one call per
+symbol-day (`data/massive/trades/{SYM}_{DATE}.json.gz`).
+
+### Constraint 1: the funnel was mis-read -- it is the LABEL, not the statements
+Of the 6,371 symbols in the causal liquidity screen, **3,099 have a pt_halal
+statement file but only 1,270 have a non-empty industry/sector LABEL**, and
+`industry_clean` under HALAL_STRICT refuses an empty label. That is why
+`labelled` and `shares` are the same number (727.6) in the incumbent funnel:
+the shares backfill had itself been run only on the labelled set.
+
+`data/sic_codes.json` was already on disk with EDGAR SIC **descriptions** for
+3,589 screen symbols. Injected in memory as `sector_raw` where the label was
+empty (names that already had one keep it, so the incumbent universe is
+decided by exactly the data that decided it before), plus **DEI cover-page
+share counts with their FILING DATES read straight out of companyfacts.zip**
+(5,250 symbols, 184,100 counts, **zero API calls** against ~136,000 Polygon
+calls it replaced; vs the cached Polygon counts on 25,163 overlapping pairs:
+median ratio 1.000, 80.3% within 5%).
+
+    per day        screen 4,574.8 -> labelled 2,596.8 -> sector 2,215.9
+                   -> SIC screen 2,096.9 -> shares 1,992.6
+                   -> statements 1,759.7 -> PASS 278.3
+    halal-PASS/day  60.7 -> 278.3     symbol-days  27,209 -> 124,687
+    symbols        191   -> 599       of the old 191, 186 KEPT
+
+A supplementary HARAM-SIC group screen (ordnance/aircraft/missile,
+motion-picture, amusement-gambling, tobacco, alcohol + the revenue-sensitive
+eating/lodging groups) makes the gate STRICTER wherever a SIC description is a
+weaker label than a vendor sector string. It drops exactly 5 incumbent names:
+**BJRI, BROS, FUBO, OSW, TH** -- restaurants, streaming and lodging. It bites
+only where it should.
+
+**AND THE WIDER UNIVERSE LOSES MONEY.** Same 85 held-out days, same features,
+same walk-forward, same costs, same account rules, same 30-seed control, only
+the cross-section differs:
+
+    incumbent  57.5 names/day  504 tkts  -$6.03/tkt   -$750/mo  edge +$26.81  100th pct
+    widened   240.2 names/day  440 tkts -$15.63/tkt -$1,699/mo  edge +$14.73  100th pct
+
+The RANDOM control barely moves (-$32.84 vs -$30.36), so the extra names are
+not intrinsically worse -- what collapses is the MODEL's edge. rho falls
+faster than E[max over N] rises. **Breadth is not the binding constraint.**
+
+### Constraint 2: a limit entry is worth the entry fee and NOT ONE BASIS POINT MORE
+448 days, 30,000 sampled $15k tickets, nine RTH slots, 30-min hold. Market
+fill at the open of m+1: **-$26.49/ticket**. Then, per FILLED limit ticket:
+
+    offset  fill   $/tkt(filled)   px improvement   gross ret of the SAME
+     bps    rate                        bps         names under a market fill
+       0   0.642      -15.89            +4.0              -4.7
+      10   0.361      -16.39           +10.9             -12.1
+      20   0.224      -18.20           +18.3             -20.4
+      30   0.148      -15.70           +26.0             -25.8
+      50   0.073      -20.61           +41.6             -44.2
+
+**Price improvement and adverse selection cancel at EVERY rung**, so
+$/ticket-filled is flat at -$15..-$18 all the way down. Posting deeper buys
+nothing; the only thing the limit buys is the ~10 bps of entry cost you stop
+paying. Robust to queue position (requiring a full cent THROUGH the limit
+costs a fifth of the fills and moves $/ticket by $0.90). The
+$/ticket-over-all-ATTEMPTS column looks like it improves with depth -- that is
+an artefact of counting unfilled attempts as $0. **Do not read that column.**
+
+### Break-even IC: 0.150 -> 0.126, not 0.10 -> 0.02
+`plan/uq_need.py` re-runs `wn_need`'s machinery on the LIMIT-filled
+cross-section (and reproduces wn_need's market leg exactly, 0.320 / 0.150):
+
+    rho needed for $7,500/month     market   limit
+      1 ticket/day, any RTH slot     0.320   0.284
+      7 tickets/day, any RTH slot    0.150   0.126
+
+The limit helps at low rho and HURTS at high rho (crossover ~0.4): an unfilled
+attempt books $0, so the better the forecast the more it costs to miss the
+winners. At rho = 1 the limit curve is BELOW the market curve. Achieved rho is
+still 0.033 -- a factor of 3.8 short. The wide-net audit's ranked idea #2
+("limit entry moves break-even from rho 0.10 to 0.02") is measured and WRONG.
+
+### RANK FOR THE FILL -- the one thing that worked
+The wide-net model was fitted on a ticket that ALWAYS fills, so under a limit
+it is applied to a conditional population it never saw: on TRAIN, **all 30
+limit configurations had a NEGATIVE edge over a random ranking** while the
+market configuration had +$3.98. Refitting the SAME `wn_model.fit` on the
+LIMIT-FILL label (194,010 rows, $0 when unfilled, fill rate 0.356) fixes it.
+OOS, offset 10 bps / 1 min / post 3, one position at a time, <=7 tickets/day:
+
+    relabelled model, LIMIT   1,210 tkts (4.82/day)  +$0.06/tkt   +$7/mo   8/12 mo+
+    relabelled model, MARKET  1,492 tkts            -$17.93/tkt  -$2,238/mo
+    inverted, limit           1,316 tkts            -$21.61/tkt  -$2,380/mo
+    shuffled-label, limit     1,104 tkts            -$12.07/tkt  -$1,115/mo  (= random)
+    random x30, limit                               -$15.67 +- 6.71  -$1,362/mo
+
+Edge +$15.73/ticket, **100th percentile**, inverted loses, shuffled is random,
+maxDD -$7,391, ex-best -$1,533. **Break-even, not $7,500/month.**
+
+### The real spread is 2-6 bps, not 20
+Four methods, 448 days: Corwin-Schultz on 1-min bars median **2.01 bps**,
+Abdi-Ranaldo **5.57**, observed 1-second high-low range **1.74** (n>=5) to
+**4.22** (n>=10), Roll 18.59 (the known-unstable one). So the half-spread is
+1-3 bps against an assumed **10 bps per side** -- the incumbent cost ladder is
+**2-5x conservative** and the wide-net "$30 round trip" is really $6-$18. NOT
+adopted as the headline here (it would move the relabelled strategy to about
++$1,100/month, still $6,400 short, by LOOSENING a cost assumption on the
+strength of an estimator) but it is the single highest-value thing to
+re-baseline next. The observed 1-second range does NOT plateau as the
+transaction threshold rises (1.8 -> 23.0 bps from n>=2 to n>=50) because busy
+seconds carry drift as well as bounce; recorded, not smoothed. A live
+Robinhood book pull was attempted and is unusable (market closed, 19:07 ET,
+AAOI 26 bps wide) -- recorded as attempted, not as evidence.
+
+### Honesty battery
+* **IDENTITY GATE**: 96,780 baseline tickets recomputed from the raw day and
+  feature caches reproduce `data/massive/wn/table.npz` exactly, 0 mismatches.
+  It exposed a convention on the way: `wn_table` applies the $500 floor to the
+  printed/ok FLAGS but not to `pnl`, and `wn_lib.mask()` gates on `printed_m`
+  alone, so the wide-net study DID book sub-$500 tickets.
+* **POISON** (`plan/uq_poison.py`, 8 days x 4 cut minutes): 128 array checks
+  (32 features + printed_m + mark + volcap) **0 mismatches**; **192 checks on
+  the POSTED ORDER itself** (limit price and ticket notional at 3 offsets)
+  **0 mismatches**; **0 pre-t0 leaks** in 1,588 checks; 887/1,588 fill
+  outcomes MOVED under post-t0 garbage. The rule is stated first: the decision
+  reads only bars <= m, and ONLY whether it fills is read from prints after
+  t0. The limit ticket's SIZE is causal where the market ticket's was not (the
+  baseline sizes on open(m+1)).
+* **MERGE GUARD**: `edgar_backfill.cmd_merge` rewrites every file it touches,
+  so `data/pt_halal` was SHA-256'd before and after -- 22 new files kept,
+  **0 pre-existing files modified**.
+* **A bug this study introduced, found and recorded**: filling every limit at
+  `L`. Because `mark(m)` can be minutes stale on a thin name, that charged a
+  stale price for an order that was MARKETABLE on arrival, and the
+  price-improvement column went NEGATIVE at a zero offset -- impossible for a
+  real limit order. Fixed to `min(L, open of the filling second)`.
+* **A second bug, in the redirection harness**: `wn_lib.Table.__init__` binds
+  `path=TAB` as a DEFAULT ARGUMENT, so reassigning `wn_lib.TAB` does nothing.
+  The first widened walk-forward silently refitted on the INCUMBENT table and
+  wrote the scores into the widened directory; the give-away was train-row
+  counts identical to the 61-name run. Fixed with a subclass that rebinds the
+  default, and the table shape is now printed before the fit.
+* **OOS reads, counted**: three. (1) the wide-net model at its train-chosen
+  limit configuration, (2) the relabelled model at its train-chosen post_k,
+  (3) the unconditional ladder, which involves no selection. The
+  30-configuration grid, the offset, the wait and post_k were all chosen on
+  the train window with a purpose-built train-window walk-forward, because
+  `wn_model`'s own walk-forward scores only the held-out year.
+
+### Ranked next ideas
+1. **Re-baseline the cost ladder on the measured spread.** Every number in
+   this project is priced at 10 bps/side against a measured 1-3 bps
+   half-spread. That is ~$19/ticket -- larger than any edge any model here has
+   demonstrated -- and it is a measurement. Verify against realised fill
+   prices in paper trading first.
+2. **The information set is still the whole gap, and it is now exact.** Two
+   constraints were attacked and both moved by the amount arithmetic said;
+   what remains is rho = 0.033 against a break-even of 0.126. Nothing about
+   fills, breadth or cost modelling closes a factor of 3.8. Spend the next
+   line's whole budget on new INPUTS (order book, options flow).
+3. **Always rank for the fill.** Relabelling was worth +$15.73/ticket over
+   random where the market-labelled model was worth +$9.5. Any strategy with a
+   conditional execution must be trained on the conditional label.
+4. **Do not post deeper limits.** Post at or near the touch: 64% fill instead
+   of 15%, identical $/ticket.
+5. **Do not reach for the widened universe as a fix** -- it costs ~$950/month.
+   It is the right pool to SCREEN on and the wrong pool to widen INTO. The one
+   experiment worth running on it is retuning the ranker for a 4.6x larger
+   cross-section; the random control says there is no free expectancy in the
+   extra names.

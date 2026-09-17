@@ -1,0 +1,27 @@
+# UNIVERSE+QUOTES (2026-09-16) -- derived caches, not source.
+#
+# The small JSON reports in this directory ARE tracked (funnel, deltas,
+# spread report, ladders, strategy runs, poison, self-test, merge guard).
+# Everything below is regenerable from tracked code plus the bulk caches
+# under day-trading/data/, which the repo already ignores, and it runs to
+# ~715 MB:
+#
+#   universe/      python plan/uq_universe.py --workers 6         (~23 min)
+#   universe_s3/   every third date of universe/ (see the audit, Part 1.5)
+#   days_s3/       python plan/uq_wide.py --stage panel --uni universe_s3
+#   feat_s3/       python plan/uq_wide.py --stage feat  --uni universe_s3
+#   wn_s3/         python plan/uq_wide.py --stage table --uni universe_s3
+#   shares_pt.json.gz   python plan/uq_edgar.py shares
+#   limlabel_*.npz      python plan/uq_label.py --offset 10 --wait 1
+#
+universe/
+universe_s3/
+days_s3/
+feat_s3/
+wn_s3/
+pt_halal_pre/
+ref/
+*.npy
+*.npz
+*.gz
+*.log

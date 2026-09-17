@@ -21,16 +21,21 @@ DIR` argument added to `plan/rl2/backfill_m1w.py`, which the mandate authorised)
 | model, market fill, account-legal | -17.93 | -2,238 | |
 | random ranking, **limit** fill, account-legal | -15.67 | -1,362 | |
 | **model relabelled for the fill, limit fill, account-legal** | **+0.06** | **+7** | **fails by ~$7,500** |
+| — and the WIDENED 278-name universe, market fill, same 85 days | -15.63 | -1,699 | worse than the 61-name pool's -750 |
 
 **FAIL.** Both constraints were real and both were moved, by amounts that are
 now measured rather than guessed:
 
-* **Constraint 1 bought a 4.6× wider universe.** Halal-PASS names per day go
-  **60.7 → 278.3**, symbol-days **27,209 → 124,687**, distinct symbols
-  **191 → 599**, and 186 of the incumbent 191 survive inside it. The audit's
-  diagnosis was *nearly* right and wrong in an important detail: the binding
-  constraint is not `data/pt_halal` statement coverage, it is the **industry
-  label**, which `HALAL_STRICT` refuses when empty.
+* **Constraint 1 bought a 4.6× wider universe and it made the result WORSE.**
+  Halal-PASS names per day go **60.7 → 278.3**, symbol-days **27,209 →
+  124,687**, distinct symbols **191 → 599**, and 186 of the incumbent 191
+  survive inside it. The audit's diagnosis was *nearly* right and wrong in an
+  important detail: the binding constraint is not `data/pt_halal` statement
+  coverage, it is the **industry label**, which `HALAL_STRICT` refuses when
+  empty. But priced on the same 85 held-out days with everything else held
+  fixed, the wider cross-section is worth **-$948/month**: the model's edge
+  over a random ranking falls from **+$26.81 to +$14.73 a ticket** because
+  ρ falls faster than E[max over N] rises (Part 1.5).
 * **Constraint 2 is worth exactly the entry-side fee and not one basis point
   more.** A limit entry improves an unconditional $15,000 ticket from
   **-$26.49 to about -$16**, and that entire gain is the ~10 bps of entry cost
@@ -39,9 +44,13 @@ now measured rather than guessed:
   ladder. The audit's own ranked idea #2 guessed the limit would move
   break-even from ρ ≈ 0.10 to ρ ≈ 0.02; measured, it moves the break-even IC
   from **0.150 to 0.126** at seven tickets a day.
-* The two together take an account-legal strategy from **-$3,822/month to
-  break-even**, which is a real $3,800/month of progress and still **$7,500
-  short of the bar**.
+* **What each constraint bought, in the currency the mandate asks for:**
+  universe widening **-$948/month**, limit fills **+$2,460/month** (random
+  ranking, account-legal: -$3,822 → -$1,362), and re-ranking for the fill a
+  further **+$1,369/month** (-$1,362 → +$7). The limit entry and the relabelled
+  model together take an account-legal strategy from **-$3,822/month to
+  break-even** — a real $3,829/month of progress, and still **$7,493 short of
+  the bar**.
 
 ---
 
@@ -206,6 +215,59 @@ overlapping (symbol, date) pairs: median ratio **1.000**, p25 = p75 = 1.000,
 **80.3% within ±5%**, 83.3% within ±10%, 92.0% within a factor of 2. The tails
 (p1 = 0.073, p99 = 13.7) are splits and multi-class structures. Since EDGAR is
 only the *third* precedence tier, none of this touches the incumbent universe.
+
+---
+
+### 1.5 What the wider universe is actually worth (`plan/uq_widecmp.py`)
+
+A wider cross-section raises the top-1 expectation mechanically **at fixed ρ**:
+E[max] over 278 draws is ~3.35σ against ~2.26σ over 61. That is the whole
+theory behind ranked idea #3 of the wide-net audit. Priced, it does not hold,
+because ρ is not fixed.
+
+The comparison is deliberately narrow so that exactly one thing differs: the
+**same 150 trading days** (every third session of the study window, so the
+sample spans it uniformly instead of being a prefix — each sampled day still
+carries its FULL cross-section, so cross-sectional features and rankings are
+untouched and only statistical power falls), the same nine regular-session
+slots, the same 32 causal features, the same `wn_model` walk-forward refitted
+monthly on rows strictly before each test month, the same $15,000 ticket, the
+same 10 bps/side ladder, the same 20%-of-volume cap, the same account-legal
+sequential simulator and the same 30-seed random control. **Market fills on
+both sides** — the 1-second tape exists for the incumbent 27,197 symbol-days,
+not for the widened 124,687, and pricing one side with limits would attribute
+the fill effect to the universe.
+
+85 held-out days (the OOS months inside the strided sample):
+
+| | names/day | tickets (per day) | $/ticket | $/month | months + | maxDD | random ×30 | edge | percentile |
+|---|---|---|---|---|---|---|---|---|---|
+| **incumbent 61/day** | 57.5 | 504 (5.93) | **-6.03** | **-750** | 6/13 | -5,170 | -32.84 ± 6.36 | **+26.81** | 100 |
+| **widened 278/day** | 240.2 | 440 (5.18) | **-15.63** | **-1,699** | 5/13 | -9,128 | -30.36 ± 4.92 | **+14.73** | 100 |
+
+**Universe widening is worth -$948/month.** Note where it goes wrong: the
+*random* control is essentially unchanged (-$32.84 vs -$30.36), so the wider
+universe is not intrinsically a worse place to trade — its unconditional
+expectancy and its toll are the same. What collapses is the **model's edge**,
+from +$26.81 to +$14.73 a ticket. The 4.6× wider cross-section contains
+hundreds of names the ranker has never had reason to be good at, and ρ falls
+faster than the order statistic rises. Both sides still sit at the 100th
+percentile of their own random controls and both inverted controls lose
+(-$53.54 and -$40.80), so this is a real measurement and not a broken harness.
+
+*Caveats, stated:* 85 held-out days rather than 251 (the strided subsample),
+LightGBM hyperparameters inherited from the 61-name fit and not retuned for a
+4.6× larger cross-section, and the widened model sees ~4× more training rows
+per month. Retuning is the obvious thing to try and is *not* a reason to
+believe the widened universe would win — the random control says the extra
+names carry the same expectancy as the old ones, so there is no free lunch
+sitting in them.
+
+The full 448-day widened universe is built and cached
+(`plan/uq_out/universe/`, 124,687 symbol-days, 599 symbols); 66,284 of its
+symbol-days of 1-minute bars are in `data/massive/m1w/` and the rest resumes
+with one command
+(`python plan/rl2/backfill_m1w.py --universe plan/uq_out/universe`).
 
 ---
 
@@ -447,7 +509,11 @@ refitted on it. `post_k` was chosen on the train window (k=3: -$3.00/tkt,
 | random ×30, limit | | -15.67 ± 6.71 | -1,362 ± 582 | |
 
 **Edge over random: +$15.73/ticket. Percentile vs 30 random seeds: 100.
-Inverted loses. Months positive: 8 of 12.**
+Inverted loses (-$21.61/tkt). Months positive: 8 of 12.** The shuffled-label
+control — the same walk-forward refitted on the limit label permuted *within
+each training day*, then run through the identical simulator — lands at
+**-$12.07/ticket, -$1,115/month, 3/12 months positive**, i.e. 0.54 sd above the
+random mean and ~70th percentile: **random, as a clean harness requires.**
 
 This is the honest centre of the study. Relabelling recovers — and more than
 doubles — the edge the fill condition had destroyed, the controls all point the
@@ -549,7 +615,7 @@ The remaining gap is a factor of **3.8**.
 | **poison, post-t0 prints** (the fill must see them) | 887 of 1,588 outcomes moved |
 | **inverted score** | loses under both fills and both models (-$21.61 to -$37.78/tkt) |
 | **shuffled labels**, wide-net model | +$8.94/tkt — **beat the real model**; recorded, see 4.2 |
-| **shuffled labels**, relabelled model | see `plan/uq_out/relabel_shuffled.json` |
+| **shuffled labels**, relabelled model | **-$12.07/tkt, -$1,115/month, 3/12 months positive — indistinguishable from random** (0.54 sd above the 30-seed random mean, ~70th percentile) while the real model sits at the 100th. The control passes. |
 | **random, 30 seeds**, same slots, same fill rule, same account rules | -$15.67 ± 6.71 (limit), -$30.45 ± 4.05 (market) |
 | **queue position** — require a full cent through the limit | fill rate -20%, $/tkt unchanged |
 | **cost-ladder cross-check** | `uq_need`'s market leg reproduces `wn_need`'s ρ (0.320, 0.150) exactly |
@@ -575,6 +641,10 @@ window.
    and EDGAR cover-page share counts (free, filed-dated) widens it from **60.7
    to 278.3 halal-PASS names per day**, 191 → 599 distinct symbols, with 186 of
    the incumbent 191 kept and the 5 losses all correct.
+   **And the wider universe LOSES money relative to the narrow one** —
+   -$948/month, because the model's edge over random falls from +$26.81 to
+   +$14.73 a ticket while the random control barely moves. Breadth is not the
+   binding constraint; skill is.
 2. **A limit entry is worth exactly the entry-side fee you stop paying**, about
    10 bps ≈ $11–16 on a $15,000 ticket. Price improvement and adverse selection
    cancel to within a basis point or two at **every** offset from 0 to 50 bps,
@@ -583,9 +653,10 @@ window.
    30 train configurations had a negative edge over random — but **relabelling
    the model on the limit-fill P&L restores it and more**: +$15.73/ticket over
    random out of sample, 100th percentile, inverted loses, 8/12 months positive.
-4. **The two constraints together move an account-legal strategy from
-   -$3,822/month to +$7/month.** That is ~$3,800/month of real progress and a
-   $7,493/month miss.
+4. **What each constraint bought.** Universe widening **-$948/month**; the
+   limit entry **+$2,460/month**; re-ranking for the fill a further
+   **+$1,369/month**. Net, an account-legal strategy moves from -$3,822/month
+   to +$7/month — ~$3,829/month of real progress and a **$7,493/month miss**.
 5. **The break-even IC moves from 0.150 to 0.126, not from 0.10 to 0.02.** The
    limit helps at low ρ and hurts at high ρ; the crossover is ρ ≈ 0.4.
 6. **The real inside spread is 2–6 bps, not 20**, so the incumbent cost ladder
@@ -625,10 +696,14 @@ positive, 100th percentile against 30 random seeds, inverted loses at
 4. **Do not post deeper limits.** Part 3.1 is a complete answer: every basis
    point of improvement is given back. Post at or near the touch, where the
    fill rate is 64% instead of 15%.
-5. **The widened universe is built and cached** (`plan/uq_out/universe/`,
-   124,687 symbol-days, 599 symbols). Whatever line runs next should use it
-   rather than the 61-name pool — it costs nothing now and E[max] over 278
-   draws is mechanically better than over 61 at any fixed ρ.
+5. **Do NOT reach for the widened universe as a fix.** It is built and cached
+   (`plan/uq_out/universe/`, 124,687 symbol-days, 599 symbols) and it is the
+   right pool to *screen* on, but on this evidence it costs ~$950/month
+   relative to the 61-name pool because ρ falls faster than E[max] rises. The
+   one experiment worth running on it is retuning the ranker for a 4.6× larger
+   cross-section — and the random control says there is no free expectancy
+   hiding in the extra names, so expect that to recover the loss, not to beat
+   the narrow universe.
 
 ### Files
 
@@ -647,5 +722,6 @@ positive, 100th percentile against 30 random seeds, inverted loses at
 | `plan/uq_need.py` | the break-even IC under limit fills |
 | `plan/uq_poison.py` | the poison test for the limit pipeline |
 | `plan/uq_wide.py` | the wide-net pipeline redirected onto the widened universe |
+| `plan/uq_widecmp.py` | 61-name vs 278-name, one thing different, 85 held-out days |
 | `plan/uq_out/` | universes, labels, scores, reports, logs |
 | `data/massive/trades/` | 27,197 symbol-days of 1-second tape (0.61 GB) |
