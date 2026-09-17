@@ -102,6 +102,27 @@ def main():
                   f"measured ${row['measured_per_tkt']:+8.2f}/tkt  ${row['flat_per_month']:+8.0f} -> "
                   f"${row['measured_per_month']:+8.0f}/mo  bps in/out {row['mean_bps_in']}/{row['mean_bps_out']} "
                   f"tiers {row['tiers']}", flush=True)
+    # the closest-miss rules, same tickets as plan/cat_veto.py --detail
+    for lab, d in C.read_json(C.OUT / "rule_detail.json", {}).items():
+        h = lab.split()[-1]
+        take = np.array(d.get("rows", []), int)
+        if take.size == 0:
+            continue
+        cm.reset()
+        fl, me, bi, bo = reprice(t, take, h, cm)
+        rep = cm.report()
+        nd = len(set(t.date_s))
+        row = {"run": lab, "pick": "rule k=1", "tickets": int(take.size),
+               "flat_per_tkt": round(float(fl.mean()), 2), "measured_per_tkt": round(float(me.mean()), 2),
+               "flat_per_month": round(float(fl.sum()) / (nd / 21), 2),
+               "measured_per_month": round(float(me.sum()) / (nd / 21), 2),
+               "mean_bps_in": round(bi, 2) if bi else None, "mean_bps_out": round(bo, 2) if bo else None,
+               "tiers": rep.get("tiers"), "frac_gt_10bps": rep.get("frac_gt_10bps")}
+        out.append(row)
+        print(f"  {lab:28s} n={row['tickets']:4d} flat ${row['flat_per_tkt']:+8.2f} measured "
+              f"${row['measured_per_tkt']:+8.2f}/tkt ${row['flat_per_month']:+7.0f} -> "
+              f"${row['measured_per_month']:+7.0f}/mo bps {row['mean_bps_in']}/{row['mean_bps_out']} "
+              f"tiers {row['tiers']}", flush=True)
     C.write_json(C.OUT / "cost_reprice.json", out)
 
 

@@ -98,6 +98,7 @@ def rules(t):
     nodil = (f("dilution_30d") == 0) & (f("n_offering_3d") == 0)
     beat = (f("earn_fresh_ev") > 0) & (f("earn_surp_fresh_sign") > 0)
     miss = (f("earn_fresh_ev") > 0) & (f("earn_surp_fresh_sign") < 0)
+    fresh = f("earn_fresh_ev") > 0
     green = f("ret_since_open") > 0
     R = {
         "R1 beat & green @09:35": (beat & green, ["09:35"], ["h60", "h120"], -f("hrs_since_earn")),
@@ -120,6 +121,16 @@ def rules(t):
         "R12 FDA headline 18h @09:35": (f("n_fda_18h") > 0, ["09:35"], ["h60", "h120"], -f("hrs_since_news")),
         "R13 no news/filing 10d (quiet) @09:35": ((f("n_news_all_10d") == 0) & (f("n_fil_all_10d") == 0), ["09:35"], ["h60"], f("rvol30")),
         "R14 positive sentiment 3d & green @09:35": ((f("sent_mean_3d") > 0.5) & green, ["09:35"], ["h60", "h120"], f("sent_mean_3d")),
+        # R15: the family the R1 ablation pointed at -- a report this morning
+        # (or last night) and the name is GREEN since the open, beat or not.
+        "R15 fresh earnings & green @09:35": (fresh & green, ["09:35"], ["h30", "h60", "h120"], -f("hrs_since_earn")),
+        "R15b fresh earnings & green @10:00": (fresh & green, ["10:00"], ["h30", "h60", "h120"], -f("hrs_since_earn")),
+        "R15c fresh earnings & green @10:30": (fresh & green, ["10:30"], ["h30", "h60", "h120"], -f("hrs_since_earn")),
+        "R15d fresh earnings & green @11:00": (fresh & green, ["11:00"], ["h30", "h60", "h120"], -f("hrs_since_earn")),
+        "R15e fresh earnings & RED @10:00 (mirror)": (fresh & ~green, ["10:00"], ["h60"], -f("hrs_since_earn")),
+        "R15f fresh earnings & green & gap>0 @10:00": (fresh & green & (f("gap_vs_prevclose") > 0), ["10:00"], ["h60"], -f("hrs_since_earn")),
+        "R15g fresh earnings & green @10:00, tie=largest ret_open": (fresh & green, ["10:00"], ["h60"], f("ret_since_open")),
+        "R15h fresh earnings & green @10:00, tie=smallest ret_open": (fresh & green, ["10:00"], ["h60"], -f("ret_since_open")),
     }
     return R
 
@@ -177,6 +188,9 @@ if __name__ == "__main__":
     a = sys.argv
     which = a[a.index("--table") + 1] if "--table" in a else "wide"
     t = M.load("wide")
+    if "--rules-only" in a:
+        run_rules(t)
+        sys.exit(0)
     print("bucket tables ...", flush=True)
     res = bucket_tables(t)
     # print the strongest buckets (n>=100 both years, same sign both years)
