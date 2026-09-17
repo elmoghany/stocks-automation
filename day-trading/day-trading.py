@@ -2167,7 +2167,10 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     vwap_target: bool = False,
                     ema_exit: int | None = None,
                     cost_model: str | None = None,
-                    cost_bps_fn=None) -> list[dict]:
+                    cost_bps_fn=None,
+                    exit_mode: str = "market",
+                    limit_entry: tuple | None = None,
+                    limit_exit: tuple | None = None) -> list[dict]:
     """Run the entry/exit state machine over 1-min bars of a single day.
 
     State machine:
@@ -2258,6 +2261,51 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
     #   still the rotation layer's regular-session +10% print.
     # vwap_target=True: exit LIMIT at session VWAP (the VWAP video's
     #   "target the VWAP"); ema_exit=span: exit on a close below EMA.
+    # ---- LIMIT-EXEC 2026-09-17: flag-gated RESTING-LIMIT fills --------
+    # entry_mode="limit_bid": the trigger machinery (ORB / PMH / dip
+    #   patterns / VS2 / market_at_start) DECIDES exactly as before, but
+    #   the decision posts a resting BUY LIMIT at
+    #       L = trigger price * (1 - limit_entry[0] / 1e4)
+    #   instead of paying the marketable price.  On a later bar j the
+    #   order fills iff Low[j] <= L, at min(L, Open[j]) (a gap through
+    #   the limit fills at the open, never worse than the limit --
+    #   plan/lx_engine.py's rule on 1-second bars, here on minute bars).
+    #   After limit_entry[1] bars unfilled: limit_entry[2] = "cancel"
+    #   (no trade; the machinery may trigger again later) or "market"
+    #   (cross at the next open).  A resting order blocks new triggers.
+    #   entry_mode="limit_bid" is the sugar for entry_mode="triggers" +
+    #   limit_entry=(0, 3, "cancel"); market_at_start users pass
+    #   limit_entry explicitly.
+    # exit_mode="limit_ask": every NON-STOP exit decision (target,
+    #   bearish, pressure-flip, TA crosses, rand-exit) posts a resting
+    #   SELL LIMIT at price * (1 + limit_exit[0] / 1e4) for limit_exit[1]
+    #   bars: fills iff High[j] >= L at max(L, Open[j]); on expiry it
+    #   crosses at the next open.  Stops, time-stops and the window-close
+    #   flatten stay MARKETABLE (a stop that rests is not a stop).
+    #   Sugar for limit_exit=(0, 3).
+    # A PASSIVE fill pays no `_slip` (the flat-convention passive cost of
+    # UNIVERSE-QUOTES / LIMIT-EXEC); the marketable remainder pays it.
+    # With both flags off every new branch is dead and `pend_buy` /
+    # `pend_sell` stay None: plan/lx_ident.py asserts byte-identity
+    # against the pre-edit engine, and plan/idgate.py --rot still holds.
+    assert exit_mode in ("market", "limit_ask"), exit_mode
+    if entry_mode == "limit_bid":
+        entry_mode = "triggers"
+        limit_entry = limit_entry or (0.0, 3, "cancel")
+    if exit_mode == "limit_ask":
+        limit_exit = limit_exit or (0.0, 3)
+    _lim_e = tuple(limit_entry) if limit_entry else None
+    _lim_x = tuple(limit_exit) if limit_exit else None
+    if _lim_e is not None and len(_lim_e) < 3:
+        _lim_e = (_lim_e[0], _lim_e[1], "cancel")
+    pend_buy = None          # (limit, pattern, expire_bar, site)
+    pend_sell = None         # (limit, expire_bar, reason)
+    _lim_fill_now = None     # (px, pattern, site) when a resting buy fills
+    _pf_exit = False         # this bar's sale was a passive limit fill
+
+    def _stop_reason(r):
+        return r.startswith("stop") or r.startswith("time-stop")
+
     assert entry_mode in ("triggers", "market_at_start"), entry_mode
     mas_done = False
     _vw = None            # VWAP array for the open position
@@ -2640,6 +2688,24 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
     for i in range(1, cd.n):
         price = cd.c[i]
 
+        # ---- LIMIT-EXEC: resolve a resting BUY limit on this bar -------
+        _lim_fill_now = None
+        _pf_exit = False
+        if pend_sell is not None and state != "LONG":
+            pend_sell = None
+        if pend_buy is not None:
+            if state == "LONG":
+                pend_buy = None
+            else:
+                pL, ppat, pexp, psite, pvf = pend_buy
+                if cd.l[i] <= pL:
+                    _lim_fill_now = (min(pL, cd.o[i]), ppat, psite, "lim", pvf)
+                    pend_buy = None
+                elif i >= pexp:
+                    pend_buy = None
+                    if _lim_e[2] == "market":
+                        _lim_fill_now = (cd.o[i], ppat, psite, "mkt", pvf)
+
         # X335+ monster mode: once >= thresh banked by the tell time,
         # stop banking (and optionally floor the trail wide) all day.
         # Causal: uses only REALIZED pnl of already-closed trades.
@@ -2669,14 +2735,22 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
         # "next print" -- never bar t's own open. Strict inequality
         # here; the trigger path keeps its >= (unchanged machinery).
         if entry_mode == "market_at_start" and state != "LONG":
-            if (not mas_done and entries_open
-                    and (entry_start is None
-                         or cd.index[i].time() > entry_start)
-                    and (max_trades is None or len(trades) < max_trades)):
-                fill = cd.o[i]
-                if (PRICE_MIN <= fill <= PRICE_MAX and _halt_gap(i) < 5
-                        and _pressure_gates_ok(i, fill)
-                        and (ema_ok is None or (i > 0 and ema_ok[i - 1]))):
+            _lf = (_lim_fill_now is not None and _lim_fill_now[2] == "mas")
+            if _lf or (not mas_done and entries_open
+                       and (entry_start is None
+                            or cd.index[i].time() > entry_start)
+                       and (max_trades is None or len(trades) < max_trades)):
+                fill = _lim_fill_now[0] if _lf else cd.o[i]
+                if _lf or (PRICE_MIN <= fill <= PRICE_MAX and _halt_gap(i) < 5
+                           and _pressure_gates_ok(i, fill)
+                           and (ema_ok is None or (i > 0 and ema_ok[i - 1]))):
+                    if _lim_e is not None and not _lf:
+                        # LIMIT-EXEC: the decision posts a resting bid
+                        pend_buy = (fill * (1 - _lim_e[0] / 1e4),
+                                    "market-at-start", i + int(_lim_e[1]),
+                                    "mas", None)
+                        mas_done = True        # one attempt per window
+                        continue
                     buy_budget = _cap_budget(budget_cur * _size_mult(i))
                     if buy_budget is None:
                         mas_done = True        # day's cash exhausted
@@ -2690,7 +2764,9 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                         sh = min(sh, int(cd.v[i - 1] * prev_bar_vol_cap))
                     if sh >= 1:
                         shares = sh
-                        entry = _fill_buy(fill, i) * (1 + _slip(i))
+                        _passive = _lf and _lim_fill_now[3] == "lim"
+                        entry = _fill_buy(fill, i) * (
+                            1 + (0.0 if _passive else _slip(i)))
                         floor_px = entry * (1 - (stop_pct or 5) / 100)
                         risk0 = max(entry - floor_px, entry * 0.001)
                         deployed += shares * entry
@@ -2988,20 +3064,37 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                                                     int(rand_entry[0]) - 1)
                 if i >= _re_target[0]:
                     brk = ("rand-entry", cd.o[i])
+        # LIMIT-EXEC: a resting bid posted by an earlier trigger (or by
+        # the ARMED dip-reversal site) resolved on this bar -> it enters
+        # through THIS site's bookkeeping with the gates already passed
+        # at post time.
+        _lf = (_lim_fill_now is not None and state != "LONG"
+               and _lim_fill_now[2] in ("brk", "pats"))
+        if _lf:
+            brk = (_lim_fill_now[1], _lim_fill_now[0])
+        elif pend_buy is not None:
+            brk = None                 # a resting order blocks new triggers
         if brk is not None:
             pat, fill = brk
             # consume the VS2 structure level with the trigger, so a
             # gate-rejected trigger can never leak its stop to a later
             # entry (the trigger and its stop are one decision)
             _vf, _vs2_floor[0] = _vs2_floor[0], None
-            if orb_fill_mode == "close":
+            if _lf:
+                _vf = _lim_fill_now[4]
+            if orb_fill_mode == "close" and not _lf:
                 fill = cd.c[i]         # pessimistic fill (X097)
             # VS2 pullback triggers waive rule 3 (see the kwarg notes);
             # pullback_relax defaults False so nothing else changes.
             _relax = bool(pullback_relax) and pat in _VS2_PATS
-            if (_entry_ok(fill, _relax) and _pressure_gates_ok(i, fill)
-                    and _halt_gap(i) < 5
-                    and (ema_ok is None or (i > 0 and ema_ok[i - 1]))):
+            if _lf or (_entry_ok(fill, _relax) and _pressure_gates_ok(i, fill)
+                       and _halt_gap(i) < 5
+                       and (ema_ok is None or (i > 0 and ema_ok[i - 1]))):
+                if _lim_e is not None and not _lf:
+                    # LIMIT-EXEC: post the resting bid instead of paying
+                    pend_buy = (fill * (1 - _lim_e[0] / 1e4), pat,
+                                i + int(_lim_e[1]), "brk", _vf)
+                    continue
                 buy_budget = (budget_cur * (0.5 if add_at is not None
                                             else 1.0) * _size_mult(i))
                 buy_budget = _cap_budget(buy_budget)
@@ -3014,7 +3107,9 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                         sh = min(sh, int(vbase * max_vol_frac))
                 if sh >= 1:
                     shares = sh
-                    entry = _fill_buy(fill, i) * (1 + _slip(i))
+                    _passive = _lf and _lim_fill_now[3] == "lim"
+                    entry = _fill_buy(fill, i) * (
+                        1 + (0.0 if _passive else _slip(i)))
                     _lo3 = min(cd.l[max(0, i - ((struct_stop_bars or 1)
                                - 1)):i + 1])
                     floor_px = max(_lo3, entry * (1 - (stop_pct or 5)
@@ -3118,6 +3213,14 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     cb_pending = (cd.l[i] if confirm_break_control
                                   else cd.h[i], pats[0], i)
                     pats = []
+            if pats and _lim_e is not None:
+                # LIMIT-EXEC: the dip-reversal decision posts a resting
+                # bid; it fills through the trigger site above
+                _fl = _cb_fill if _cb_fill is not None else price
+                pend_buy = (_fl * (1 - _lim_e[0] / 1e4), pats[0],
+                            i + int(_lim_e[1]), "pats", None)
+                state = "SCAN"
+                continue
             if pats:                           # dip inverts upward -> BUY
                 entry = _fill_buy(_cb_fill if _cb_fill is not None
                                   else price, i) * (1 + _slip(i))
@@ -3420,9 +3523,31 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                         >= rand_hold * 60):
                     exit_px = _sell_fill(price, i, "close")
                     reason = f"rand-exit {rand_hold}m"
+            # ---- LIMIT-EXEC: non-stop exits rest at the ask ----------
+            if _lim_x is not None:
+                if exit_px is not None and _stop_reason(reason):
+                    pend_sell = None           # a stop takes precedence
+                elif pend_sell is not None:
+                    sL, sexp, sreason = pend_sell
+                    if cd.h[i] >= sL:
+                        exit_px = max(sL, cd.o[i])
+                        reason = sreason + "|limit"
+                        pend_sell = None
+                        _pf_exit = True
+                    elif i >= sexp:
+                        exit_px = cd.o[i]
+                        reason = sreason + "|timeout-mkt"
+                        pend_sell = None
+                    else:
+                        exit_px = None         # still resting
+                elif exit_px is not None:
+                    pend_sell = (price * (1 + _lim_x[0] / 1e4),
+                                 i + int(_lim_x[1]), reason)
+                    exit_px = None
             if exit_px is not None:
                 exit_px = _fill_sell(exit_px, i)   # premarket exits pay too
-                pnl = (exit_px * (1 - _slip(i)) - entry) * shares
+                pnl = (exit_px * (1 - (0.0 if _pf_exit else _slip(i)))
+                       - entry) * shares
                 trades.append({
                     "entry_time": cd.index[entry_i], "entry": round(entry, 2),
                     "exit_time": cd.index[i], "exit": round(exit_px, 2),
