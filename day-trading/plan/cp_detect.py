@@ -44,14 +44,14 @@ RET = "mfe1500"
 DROP = {"up30", "up50", "up100", "mfe1500", "mae1500", "r30", "r60",
         "r120", "r1500", "gain_full_HINDSIGHT", "last", "pc"}
 MIN_TRAIN_DAYS = 120
-NFOLD = 10
+NFOLD = 6
 
 
 def feature_cols(cols):
     return [c for c in cols if c not in DROP]
 
 
-def walk_forward(T, times=(935, 1000), seeds=(0, 1, 2), shuffle=False,
+def walk_forward(T, times=(935, 1000), seeds=(0, 1), shuffle=False,
                  verbose=True):
     import lightgbm as lgb
     X, cols, ci = T["X"], T["cols"], T["ci"]
@@ -78,13 +78,15 @@ def walk_forward(T, times=(935, 1000), seeds=(0, 1, 2), shuffle=False,
             ytr = y[tr].copy()
             if shuffle:
                 ytr = rng.permutation(ytr)
+            print(f"    fold {k} train={int(tr.sum())} test={int(te.sum())}",
+                  flush=True)
             m = lgb.train(
-                dict(objective="binary", learning_rate=0.05,
-                     num_leaves=31, min_data_in_leaf=80,
+                dict(objective="binary", learning_rate=0.08,
+                     num_leaves=15, min_data_in_leaf=120, max_bin=63,
                      feature_fraction=0.8, bagging_fraction=0.8,
                      bagging_freq=1, verbose=-1, seed=int(seed),
-                     num_threads=4),
-                lgb.Dataset(Xf[tr], label=ytr), num_boost_round=250)
+                     num_threads=2),
+                lgb.Dataset(Xf[tr], label=ytr), num_boost_round=150)
             scores[s_i, te] = m.predict(Xf[te])
         if verbose:
             print(f"  seed {seed} done", flush=True)
@@ -168,7 +170,7 @@ def main():
     print(f"table: {T['X'].shape[0]} rows, {len(T['dates'])} dates")
     rows = []
     res = walk_forward(T)
-    rows.append(evaluate(res, "walk-forward LightGBM (3 seeds), 09:35+10:00"))
+    rows.append(evaluate(res, "walk-forward LightGBM (2 seeds), 09:35+10:00"))
     save_scores(res)
     for t in (935, 1000):
         m = res["tt"] == t
@@ -177,6 +179,18 @@ def main():
                for k, v in res.items()}
         rows.append(evaluate(sub, f"  ... restricted to {t//100:02d}:"
                                   f"{t%100:02d}"))
+    # the aug-2026 out-of-sample block, scored by folds that ended
+    # before it (the walk-forward never trains on a row's own date)
+    names = [str(x) for x in T["dates"]]
+    oos_i = [i for i, d in enumerate(names) if d >= "2026-08-01"]
+    if oos_i:
+        lo = min(oos_i)
+        m = res["date"] >= lo
+        if m.sum() > 50:
+            sub = {k: (v[:, m] if k == "scores" else
+                       (v[m] if isinstance(v, np.ndarray) else v))
+                   for k, v in res.items()}
+            rows.append(evaluate(sub, "  ... aug-2026 block only (OOS)"))
     resh = walk_forward(T, shuffle=True, seeds=(0,))
     rows.append(evaluate(resh, "CONTROL shuffled target"))
     rnd = dict(res)
@@ -207,11 +221,11 @@ def main():
         y = X[keep][:, ci[TARGET]].astype(np.float64)
         d = T["date"][keep]
         cut = int(np.percentile(d, 70))
-        m = lgb.train(dict(objective="binary", learning_rate=0.05,
-                           num_leaves=31, min_data_in_leaf=80,
-                           verbose=-1, seed=0),
+        m = lgb.train(dict(objective="binary", learning_rate=0.08,
+                           num_leaves=15, min_data_in_leaf=120,
+                           max_bin=63, verbose=-1, seed=0, num_threads=2),
                       lgb.Dataset(Xf[d < cut], label=y[d < cut]),
-                      num_boost_round=250)
+                      num_boost_round=150)
         imp = sorted(zip(fc, m.feature_importance("gain")),
                      key=lambda x: -x[1])
         print("\ntop features by gain (fit on the first 70% of dates):")

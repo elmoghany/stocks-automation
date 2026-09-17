@@ -50,13 +50,17 @@ GRID_START = 4 * 60          # 04:00 ET
 NMIN = 720                   # 04:00 .. 15:59
 
 
-def pool_records(labels=("y2025", "year")):
+def pool_records(labels=("y2025", "year", "aug2026")):
     """The novol pool: gd regular-session high >= +10%, no rvol filter.
 
     NOTE this is the OUTCOME-CONDITIONED membership set (the day's own
     regular-session high). It is used here only as a COVERAGE list --
     which symbol-days have bars on disk. Every causal universe in this
-    line is re-derived from the bars themselves."""
+    line is re-derived from the bars themselves.
+
+    `aug2026` (2026-08-03 .. 2026-09-01) is the OUT-OF-SAMPLE block:
+    it lies entirely after the last in-sample session (2026-07-31), so
+    consumers separate it with a date cut, not a different cache."""
     recs = {}
     for lab in labels:
         f = ROOT / f"data/massive/gappers_novol_{lab}.json"

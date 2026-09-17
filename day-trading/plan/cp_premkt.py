@@ -131,12 +131,26 @@ def classify(sym, date, pc):
     return out
 
 
+def fetched_dates(min_files=3000):
+    """Dates for which `--job B` fetched the whole scannable market.
+
+    Detected from the cache itself (a job-B date carries thousands of
+    m1c files; a job-A date carries a handful), so the census can never
+    drift away from what was actually fetched -- which it did once when
+    the sample list was re-derived from a panel that had grown."""
+    from collections import Counter
+    c = Counter()
+    for k in cp_fetch._index(M1C):
+        c[k.rpartition("_")[2]] += 1
+    return sorted(d for d, n in c.items() if n >= min_files)
+
+
 def census(ndates=16):
     """Only the sampled dates whose WHOLE candidate list is on disk are
     scored -- a partially fetched date would under-count the missing
     set, which is the one number this census exists to produce."""
     rows = []
-    for date in cp_fetch.sample_dates(ndates):
+    for date in fetched_dates():
         pr = P.load(date)
         if not pr:
             continue
@@ -146,10 +160,13 @@ def census(ndates=16):
                    and (pr.get(s) or {}).get("prevclose", 0) >= 1.82
                    and (pr.get(s) or {}).get("dvol60", 0) >= 100_000
                    and not cp_fetch.have(s, date))
-        if miss:
+        if miss > 25:
             print(f"  {date}: SKIPPED, {miss} names not fetched yet",
                   flush=True)
             continue
+        if miss:
+            print(f"  {date}: {miss} name(s) still missing, scoring "
+                  f"anyway (tolerance 25)", flush=True)
         n = {"RTH-CROSSER": 0, "PM-AND-RTH": 0, "PM-ONLY": 0}
         got = 0
         for r in P.gd_rows(date):

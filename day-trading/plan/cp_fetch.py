@@ -97,14 +97,19 @@ def have(sym, date):
     return k in _index(M1) or k in _index(M1C)
 
 
-def job_a():
-    """Pool symbol-days the full backfill skipped for listing age."""
+def job_a(labels=("year", "y2025", "aug2026")):
+    """Pool symbol-days no backfill ever fetched.
+
+    Two causes: listing age (`hist_n < 50`, which the 2026-08-21
+    full-breadth backfill excluded) and the aug-2026 out-of-sample
+    block, which that backfill predates entirely."""
     pairs = set()
-    for lab in ("year", "y2025"):
+    for lab in labels:
         f = ROOT / f"data/massive/gappers_novol_{lab}.json"
+        if not f.exists():
+            continue
         for c in json.loads(f.read_text()):
-            if c.get("hist_n", 99) < 50:
-                pairs.add((c["symbol"], c["date"]))
+            pairs.add((c["symbol"], c["date"]))
     return sorted(p for p in pairs
                   if clean_ticker(p[0]) and not have(*p))
 

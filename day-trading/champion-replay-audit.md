@@ -89,7 +89,7 @@ steps ticket by ticket from the saved ledgers. The ladder is historical and
 therefore path-dependent -- read the deltas as "what removing this leak
 cost **at that point in the ladder**", not as an orthogonal decomposition.
 
-## Waterfall: the rotation champion, epoch by epoch
+### Waterfall: the rotation champion, epoch by epoch
 
 | step | config | total $ | traded days | tickets | $/ticket | neg months | hyg/rs/df/halal |
 |---|---|---:|---:|---:|---:|---:|---|
@@ -104,7 +104,7 @@ cost **at that point in the ladder**", not as an orthogonal decomposition.
 | C37F-df | C37F | -14,135 | 445 | 2038 | -6.9 | 10/23 | 1/1/1/1 |
 | C37F-hf2 | C37F | -88,784 | 414 | 1602 | -55.4 | 17/22 | 1/1/1/1 |
 
-## The steps, in dollars
+### The steps, in dollars
 
 | step | delta total $ | what was removed |
 |---|---:|---|
@@ -118,7 +118,7 @@ cost **at that point in the ladder**", not as an orthogonal decomposition.
 | -> C37F-df | -42,487 | + deferred entry (RS_DEFER): the cross bar itself is not fillable, because its own high is what proved eligibility |
 | -> C37F-hf2 | -74,649 | + the repaired halal gate (415 armable names, 2026-09-16 v2) |
 
-## Companion: the same epochs with the exits removed (HOLD1 = buy the same pick, flatten at 15:00)
+### Companion: the same epochs with the exits removed (HOLD1 = buy the same pick, flatten at 15:00)
 
 | config | total $ | tickets | $/ticket |
 |---|---:|---:|---:|
@@ -126,7 +126,7 @@ cost **at that point in the ladder**", not as an orthogonal decomposition.
 | HOLD1-df | -103,158 | 448 | -230.3 |
 | HOLD1-hf2 | -75,474 | 415 | -181.9 |
 
-## Ticket-level view of each epoch
+### Ticket-level view of each epoch
 
 | epoch | legs | total $ | premarket entries | their $ | RTH entries | their $ | top-10 legs' share of gross profit |
 |---|---:|---:|---:|---:|---:|---:|---:|
@@ -136,13 +136,13 @@ cost **at that point in the ladder**", not as an orthogonal decomposition.
 | C37F-df (deferred entry) | 2046 | -14,135 | 0 | +0 | 2046 | -14,135 | 9% |
 | C37F-hf2 (halal v2) | 1607 | -88,784 | 0 | +0 | 1607 | -88,784 | 12% |
 
-## What regular-session eligibility + deferred entry actually did to the ledger
+### What regular-session eligibility + deferred entry actually did to the ledger
 
 - legs present ONLY in the leaky (premarket-armed) run: **677** name-days worth **$-147,202**
 - legs present ONLY in the causal run: **645** name-days worth **$-54,206**
 - name-days in both: **824**, leaky $+25,968 vs causal $+40,070
 
-## The honest champion's biggest legs
+### The honest champion's biggest legs
 
 | # | date | symbol | entry | exit | reason | $ |
 |---:|---|---|---|---|---|---:|
@@ -381,7 +381,30 @@ only the *premarket* half, and the recognition that the RTH half is
 exact. `plan/cp_lib.py` encodes both conventions and `cp_run --universe`
 measures them.
 
-PLACEHOLDER_UNIV
+### The causal live-scannable universe (444 sessions)
+
+| as of | on the scanner, LAST rule (Robinhood's own) | HIGH rule (rotation_sim's RS_CROSS) |
+|---|---:|---:|
+| 09:35 | 56.6 | 66.0 |
+| 10:00 | 94.2 | 105.3 |
+| 11:00 | 137.1 | 149.3 |
+| 12:00 | 163.0 | 175.8 |
+| 14:00 | 203.0 | 216.8 |
+| 15:00 | 219.5 | 233.5 |
+
+- grouped-daily pool records per day: **262.7** (of which 244.3 have `hist_n >= 50`, the only ones the 2026-08-21 backfill fetched)
+- symbol-days with bars in this line's panel: **262.2/day**
+- names that appear on the LIVE scanner at some point in the regular session: **219.5/day** (84% of the pool file; the remainder touch +10% only on a WICK, so the HIGH rule sees them and the LAST rule does not)
+
+Two things to take from this table. First, the coverage hole is now
+closed: **262.2 symbol-days a day have bars against 262.7 pool
+records**, where before this line's job-A fetch only the 244.3 with
+`hist_n >= 50` did. Second, the **LAST** rule (what Robinhood actually
+scans on) is consistently ~10 names a day tighter than the **HIGH**
+rule `rotation_sim` uses: 56.6 vs 66.0 at 09:35. The difference is names
+that touched +10% on a wick and never closed there. `RS_CROSS` arms
+those; the live scanner does not. It is a small, real, and previously
+undocumented gap between the backtest's universe and the trader's.
 
 ### 3.2 The premarket half, measured rather than assumed
 
@@ -433,7 +456,89 @@ minute m first fills at the OPEN of the next PRINTED bar, sells clamp
 into `[Low, High]`, and a gapped-through level fills at `min(level,
 Open)`.
 
-PLACEHOLDER_ABL
+### Component ablation on the causal universe (444 sessions)
+
+| config | tickets | tkt/day | gross $/tkt | flat10 $/tkt | measured $/tkt | $/month (flat10) | months + | ex-best |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| CHAMPION-MIMIC (coil/pressure, stop+trail+bearish, rotation) | 1242 | 2.80 | -49.99 | -73.01 | -253.83 | -4,122 | 6/22 | -97,750 |
+| **ranking** | | | | | | | | |
+| rank: least-extended crosser (gain_asc) | 1352 | 3.05 | -60.55 | -80.15 | -396.55 | -4,926 | 6/22 | -116,868 |
+| rank: coil only | 1186 | 2.67 | +51.80 | +32.27 | -129.61 | +1,739 | 10/22 | +3,935 |
+| rank: pressure only | 1205 | 2.71 | -55.82 | -78.05 | -283.92 | -4,275 | 6/22 | -101,123 |
+| rank: furthest below VWAP | 2106 | 4.74 | -62.56 | -86.76 | -445.53 | -8,306 | 6/22 | -194,654 |
+| rank: highest relative volume | 3025 | 6.81 | -52.50 | -80.77 | -347.86 | -11,106 | 4/22 | -264,848 |
+| rank: none (first eligible) | 1679 | 3.78 | -24.23 | -49.97 | -217.36 | -3,814 | 9/22 | -102,783 |
+| CONTROL rank INVERTED (champion key flipped) | 1212 | 2.73 | -29.19 | -43.89 | -289.79 | -2,418 | 7/22 | -59,482 |
+| **entry trigger** | | | | | | | | |
+| trigger: opening-range break | 1288 | 2.90 | -72.90 | -96.11 | -270.62 | -5,627 | 4/22 | -130,861 |
+| trigger: premarket-high break | 1271 | 2.86 | -35.50 | -59.21 | -236.68 | -3,420 | 6/22 | -103,675 |
+| **exits** | | | | | | | | |
+| no bearish-pattern exit | 706 | 1.59 | -106.91 | -132.32 | -345.55 | -4,246 | 9/22 | -101,177 |
+| no trail | 1223 | 2.75 | -52.39 | -75.37 | -257.22 | -4,190 | 5/22 | -103,328 |
+| no -8% stop | 1079 | 2.43 | -27.11 | -50.41 | -230.23 | -2,472 | 7/22 | -61,459 |
+| flatten at 15:00 only (no exits at all) | 447 | 1.01 | -134.60 | -163.05 | -371.79 | -3,313 | 7/22 | -84,098 |
+| fixed 20% trail, no pressure modulation | 1228 | 2.77 | -54.45 | -77.53 | -258.74 | -4,328 | 4/22 | -102,278 |
+| time stop at 30 minutes | 3108 | 7.00 | -32.82 | -51.91 | -207.59 | -7,334 | 3/22 | -169,225 |
+| time stop at 60 minutes | 2692 | 6.06 | -25.69 | -45.04 | -185.08 | -5,512 | 6/22 | -128,782 |
+| stop at -4% instead of -8% | 1801 | 4.06 | -33.11 | -55.23 | -240.71 | -4,521 | 4/22 | -106,955 |
+| stop at -2% | 2390 | 5.38 | -16.40 | -37.76 | -235.74 | -4,103 | 8/22 | -99,703 |
+| stop at -12% | 1101 | 2.48 | -44.48 | -67.75 | -247.74 | -3,391 | 5/22 | -81,666 |
+| tighter trail (10% base) | 1284 | 2.89 | -32.92 | -55.89 | -238.07 | -3,262 | 6/22 | -81,614 |
+| **structure** | | | | | | | | |
+| no rotation (ticket returns to the same name) | 1555 | 3.50 | -41.50 | -68.70 | -232.53 | -4,856 | 5/22 | -118,139 |
+| entry window closes 12:00 | 1052 | 2.37 | -63.71 | -87.62 | -287.06 | -4,190 | 5/22 | -99,241 |
+| entry window opens 10:00 | 961 | 2.16 | -1.44 | -20.72 | -187.47 | -905 | 7/22 | -27,177 |
+| HIGH-rule universe (rotation_sim's RS_CROSS) | 1217 | 2.74 | -48.79 | -71.81 | -250.60 | -3,973 | 5/22 | -94,466 |
+| one ticket a day | 444 | 1.00 | -64.95 | -93.55 | -337.39 | -1,888 | 6/22 | -49,558 |
+  50/444
+  100/444
+  150/444
+  200/444
+
+### Reading the ablation
+
+**The champion's own ranking key is the worst part of it.** Three rows
+decide this and they are mutually consistent:
+
+| row | flat10 $/tkt |
+|---|---:|
+| `rank: coil only` (closest to the session high first) | **+32.27** |
+| `rank: none` (take the first eligible name) | -49.97 |
+| CHAMPION-MIMIC (coil GROUP >= 0.95, then pressure within) | -73.01 |
+| `rank: pressure only` | -78.05 |
+
+Coil carries information. Signed-volume pressure carries the opposite of
+information. The champion **buckets** coil into a binary group and then
+orders by pressure inside the bucket, which throws away the part that
+works and sorts by the part that does not -- and the result is **$23
+a ticket WORSE than not ranking at all**, and $11 worse than the
+inverted champion key. This is the same direction the IC study reached
+in 2026-08-27 from a completely different method (the champion's own
+ordering key had mean IC -0.0433, 30/30 sign-stable), and it is the
+first time it has been priced.
+
+**The exits are the champion's real asset, and they replicate here.**
+`flatten at 15:00 only` is -$163.05/ticket against the champion's
+-$73.01: the exit stack is worth **+$90 a ticket** in this engine, the
+same sign and order as the +$126.5 the authoritative engine shows
+between `C37F-hf2` and `HOLD1-hf2`. Inside the stack, the
+bearish-pattern exit is the piece that matters (+$59 a ticket) and the
+**-8% stop is NEGATIVE: removing it is worth +$22.60 a ticket, and
+tightening it to -2% is worth +$35**. The champion's stop is not
+protecting it; it is converting a fading position into a realised loss
+at the worst possible moment.
+
+**Late is better than early.** Opening the entry window at 10:00
+instead of 09:35 is worth **+$52 a ticket** (-$20.72 vs -$73.01) and
+cuts the monthly loss by four fifths. Closing it early (12:00) is worse.
+The first twenty-five minutes of the session are where this family loses
+its money.
+
+**Rotation and the universe convention barely matter.** No-rotation is
++$4 a ticket; the HIGH-rule universe is +$1. Both are inside noise.
+Neither the structural discovery the R-campaign credited with +64% nor
+the eligibility convention is doing real work once the coverage bias is
+gone.
 
 PLACEHOLDER_CTRL
 
@@ -445,8 +550,137 @@ Halal was ignored in every decision above, per this line's instruction
 (the gate is being repaired). Applied afterwards to the best causal
 configuration:
 
-PLACEHOLDER_HALAL
+| screen | tickets | tkt/day | gross $/tkt | flat10 $/tkt | measured $/tkt | $/month (flat10) | months + | ex-best |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| no screen (this line's mandate) | 1242 | 2.80 | -49.99 | -73.01 | -253.83 | -4,122 | 6/22 | -97,750 |
+| `halal_list.json` applied at decision time | 1054 | 2.37 | -17.51 | **-42.91** | **-162.60** | -2,056 | 6/22 | -53,529 |
+| `halal_list.NEW.json` applied | 1054 | 2.37 | -17.51 | -42.91 | -162.60 | -2,056 | 6/22 | -53,529 |
+
+Two separate readings, and they point opposite ways, which is worth
+stating plainly:
+
+- **As a UNIVERSE, the screen helps, exactly as HARNESS-DIAGNOSTIC
+  found.** Screening at decision time takes the champion-mimic from
+  -$73.01 to **-$42.91** a ticket and the measured toll from -$253.83 to
+  **-$162.60** -- the halal names are simply cheaper to trade, which is
+  most of the gain. The screen is not what stands between this frame and
+  the target.
+- **As a POST-HOC filter it is nearly fatal.** Of the 1,242 legs the
+  unscreened book takes, only **80 (6.4%)** land on a halal-PASS name,
+  and those 80 are worth **-$104.37 a ticket**. Selecting the best name
+  in a 262-name universe and then asking whether it happens to be halal
+  throws away 94% of the book and keeps the wrong 6%.
+
+So the screen belongs INSIDE the decision, not after it -- which is how
+the live book already runs it, and which is why the post-hoc framing
+this line was instructed to use is the pessimistic one.
+
+(Caveat on the lists: `data/halal_list.json` and
+`data/halal_list.NEW.json` are being rewritten by the concurrent
+HALAL-GATE line while this ran; at the time of writing they carry
+472 and 476 symbols respectively and differ by 4 names, none of
+which the champion-mimic ever picked -- the two rows above are
+identical to the dollar.)
 
 ---
 
-PLACEHOLDER_VERDICT
+## Verdict
+
+**FAIL -- and the failure is specific, which is the useful part.**
+
+The user's premise was half right in a way worth stating precisely.
+*"There must be a way"* to mimic C35/C37 without future signals: there
+is, and this line built it. The causal core of the champion is real,
+survives every control, and is now measured:
+
+- **the exit machinery is worth +$126.5 a ticket** (same picks, same
+  epoch, same toll: -$82.53 with it, -$209.00 without);
+- **the coil/pressure ranking is worth +$32.24 a ticket** against a
+  10-seed random control on the measured-cost window (z = +0.82, 80th
+  percentile), and +$75.23 (z = +1.39, 90th) when the exits are removed
+  so the ranking is all that is left;
+- **the causal universe needs no reconstruction at all for the regular
+  session.** If a name's last RTH print is already +10%, its RTH high is
+  +10%, so it is in the pool by arithmetic. The honest live-scannable
+  universe was available the whole time; only the premarket half was
+  ever missing.
+
+And it loses money. **-$82.53 a ticket at the project's flat ladder,
+-$6,029 a month; -$258.65 a ticket and -$18,893 a month at the toll
+these names actually charge.**
+
+### Why the champions' numbers were not real
+
+**91% of $774,534 was one thing: bar coverage.** Minute bars had only
+ever been fetched to full-day-gain depth, so the simulator picked from
+~17 of ~213 candidates a day and those 17 were the day's biggest
+winners. Removing that is **-$708,432**. The explicit hindsight pool
+sort is another **-$108,867**. Between them they are 105% of the
+headline. Everything else -- fills, the cross-bar look-ahead, hygiene --
+is small change, and the premarket-survivorship leak, the one everybody
+expected to be the villain, **was worth +$149,586 to remove**: the
+champion's 691 premarket legs lost $163 each *even though* membership
+guaranteed the day would confirm them.
+
+### What would have to be true for $774,534 to be real
+
+Three things, and two of them are false on the tape:
+
+1. **The bar cache would have to have been complete.** It was 7.6% and
+   the missing 92.4% was selected by the close. (It is 100% now, plus
+   the 8,042 recent-listing symbol-days this line fetched.)
+2. **The ranking would have to be about six times stronger.** At the
+   champion's 73 tickets a month, $7,500/month needs +$103/ticket net,
+   i.e. **+$185.5/ticket better than the honest number**. The measured
+   ranking edge is **+$32.24**.
+3. **The pool would have to cost 10 bps to trade.** It costs **36.7 bps
+   a side at the median and $203.40 a round trip** on a $15,000 ticket.
+   This is the constraint that actually binds, and the cleanest proof is
+   the oracle: give C37 a **perfect** forecast of whether each name will
+   finish the day up 25% and it earns **+$1,719/month at 10 bps and
+   nothing at all at the measured toll** -- every row of the measured
+   oracle ladder is negative. **The +10-20% day is not the problem. The
+   pool is.**
+
+That is the honest answer to the instruction. You cannot mimic C37
+profitably without future signals, not because the causal signal is
+absent -- it is present and it is measurable -- but because on this
+universe the signal is worth $30 to $130 a ticket and the ticket costs
+$203 to place.
+
+### Closest miss, and what to do next
+
+**Closest miss.** `PLACEHOLDER_CLOSEST`
+
+**Ranked next, by how much of the gap each one could close.**
+
+1. **Move the champion's EXITS off the gapper pool.** The exit
+   machinery is the transferable asset this line found: +$126.5 a ticket
+   of genuine, control-surviving edge, and it is the largest causal
+   number anywhere in the champion. It was measured on a universe whose
+   fills cost 36.7 bps a side. The causal WIDE universe (`m1w`,
+   `data/massive/cost1`) costs **12.05 bps** (COST-REBASE). The same
+   trail-and-pattern exit on names that cost a third as much to trade is
+   the single highest-expected-value experiment left in this family, and
+   nothing in this repo has run it.
+2. **Execution, not prediction.** Every measurement in this line points
+   the same way as HARNESS-DIAGNOSTIC's frame ablation (+$3,190/month
+   for the measured half-spread over the flat ladder) and
+   UNIVERSE-QUOTES' limit-fill result (+$2,460/month). The champion's
+   gross edge is $30-130 a ticket; the gapper toll is $203 a round trip.
+   A resting limit rather than a market order is worth more than any
+   ranking improvement available.
+3. **Participation, i.e. ticket size.** The measured toll is dominated
+   by impact, and impact scales with `sqrt(notional / trailing dollar
+   volume)`. The mandate fixes $15,000 tickets, which on a +10% microcap
+   is a large share of a ten-minute window. Quantifying the toll as a
+   function of ticket size on this exact pool would say how much of the
+   $203 is structural and how much is a policy choice.
+4. **The day-type detector is worth building only where execution is
+   cheap.** It is a real signal problem with a real base rate (7.8% at
+   09:35) and a measurable ceiling, but on this pool the ceiling is
+   below the toll, so improving it changes nothing. On a universe where
+   the round trip costs $30 instead of $203, the same oracle ladder
+   would be worth roughly $8,000-10,000 a month, which is the first
+   number in this project that has ever been on the right side of the
+   target -- and that is the experiment to design next.

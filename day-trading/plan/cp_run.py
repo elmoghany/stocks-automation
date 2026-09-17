@@ -32,8 +32,16 @@ HEAD = ("| config | tickets | tkt/day | gross $/tkt | flat10 $/tkt | "
         "|---|---:|---:|---:|---:|---:|---:|---:|---:|")
 
 
-def dates():
-    return F.dates()
+# The aug-2026 block (2026-08-03 .. 2026-09-01) lies entirely after the
+# last in-sample session, so one date cut separates in-sample from
+# out-of-sample. Nothing is fitted in this file, but the mandate asks
+# for an aug-2026 sign check on every line, and a config chosen by
+# looking at the 444-session table has been chosen with that table.
+OOS_FROM = "2026-08-01"
+
+
+def dates(oos=False):
+    return [d for d in F.dates() if (d >= OOS_FROM) == oos]
 
 
 def _fmt(name, s):
@@ -80,42 +88,82 @@ def _strip(res):
 # gates
 # ---------------------------------------------------------------------
 def selftest(ds=None):
-    ds = ds or dates()[:80]
-    print("### hold-is-zero (enter and exit in the same minute, no cost)")
-    cfg = S.default_cfg(stop_pct=None, trail_pct=None, bearish_exit=False,
-                        time_stop=0)
-    legs = S.run(ds[:25], cfg, cost=None)
-    same = [x for x in legs if x["exit_min"] == x["entry_min"]]
-    bad = [x for x in same if abs(x["gross"]) > 1e-9]
-    print(f"  {len(legs)} legs, {len(same)} same-minute, "
-          f"{len(bad)} with non-zero gross")
+    """The gates. Each one is a statement about the ENGINE, not a result.
 
-    print("### poison: corrupt every bar strictly after the FILL bar")
-    T = L.mgrid(10, 0)
-    base = S.default_cfg(t_start=T, cutoff=T + 1, ntickets=1)
-    ref, got_all = {}, {}
-    for d in ds[:60]:
-        Fd, day = F.load(d), L.load_day(d)
-        if Fd is None or day is None:
-            continue
-        ref[d] = [(lg["sym"], lg["entry_min"], round(lg["entry"], 6))
-                  for lg in S.run_day(day, Fd, base, None)]
+    1. FILL CONVENTION -- every leg fills strictly AFTER its decision
+       minute, at the OPEN of a bar that actually printed, and every
+       sell price lies inside that bar's [Low, High].
+    2. ACCOUNTING -- reported gross equals (exit - entry) x shares to
+       the cent, and the flat toll equals 10 bps of both notionals.
+    3. POISON (the causality gate) -- corrupt every bar STRICTLY AFTER a
+       decision minute and recompute the whole feature block at that
+       minute. A single changed value would mean a feature reads the
+       future. NOTE the earlier form of this test also poisoned the FILL
+       bar, which legitimately moves the entry price (the fill happens
+       after the decision by construction), so it was testing the wrong
+       thing; this form tests the decision layer, which is the layer
+       that has to be causal.
+    4. FORESIGHT LADDER + ANTI-FORESIGHT MIRROR.
+    5. COST MONOTONE in the square-root-impact coefficient."""
+    ds = ds or dates()[:80]
+
+    print("### fill convention + accounting")
+    legs = S.run(ds[:60], S.default_cfg(), cost=None)
+    bad_fill = bad_acc = bad_bar = 0
+    for d in {x["date"] for x in legs}:
+        day = L.load_day(d)
+        idx = {s: i for i, s in enumerate(day.syms)}
+        for x in [z for z in legs if z["date"] == d]:
+            i = idx[x["sym"]]
+            if not day.printed[i, x["entry_min"]]:
+                bad_bar += 1
+            elif abs(float(day.o[i, x["entry_min"]]) - x["entry"]) > 1e-6:
+                bad_fill += 1
+            lo = float(day.l[i, x["exit_min"]])
+            hi = float(day.h[i, x["exit_min"]])
+            if not (lo - 1e-6 <= x["exit"] <= hi + 1e-6):
+                bad_bar += 1
+            g = (x["exit"] - x["entry"]) * x["shares"]
+            if abs(g - x["gross"]) > 1e-6:
+                bad_acc += 1
+            t = (x["entry"] + x["exit"]) * x["shares"] * 10.0 / 1e4
+            if abs((x["gross"] - t) - x["net_flat"]) > 1e-6:
+                bad_acc += 1
+    print(f"  {len(legs)} legs: entry not at the fill bar's open "
+          f"{bad_fill}, price outside the bar {bad_bar}, "
+          f"accounting mismatches {bad_acc}")
+
+    print("### poison: corrupt every bar AFTER the decision minute and "
+          "recompute the feature block")
+    keys = ("gain_now", "coil", "hi_gain", "pm_dvol", "pm_high_gain",
+            "gap_open", "dvol_now", "bars_now", "vwap_dist", "pressure30",
+            "pressure10", "orb_dist", "dens", "sigma1")
     rng = np.random.default_rng(1)
-    for d in ref:
-        Fd, day = F.load(d), L.load_day(d)
-        for a in ("o", "h", "l", "c"):
-            arr = getattr(day, a)
-            arr[:, T + 2:] = arr[:, T + 2:] * (
-                1 + rng.normal(0, 5.0, arr[:, T + 2:].shape))
-        day._ffill = day._runhi = day._cumv = None
-        day._cumdv = day._cumsv = day._cumn = None
-        day._orb = None
-        got_all[d] = [(lg["sym"], lg["entry_min"], round(lg["entry"], 6))
-                      for lg in S.run_day(day, Fd, base, None)]
-    nchk = sum(len(v) for v in ref.values())
-    moved = sum(1 for d in ref if got_all[d] != ref[d])
-    print(f"  {nchk} picks over {len(ref)} days; days whose pick or entry "
-          f"price moved: {moved}")
+    nchk = moved = 0
+    for d in ds[:40]:
+        day = L.load_day(d)
+        if day is None:
+            continue
+        for T in (L.mgrid(9, 35), L.mgrid(11, 0), L.mgrid(13, 30)):
+            ref = day.features(T)
+            elig0 = day.crossed_by(T, "LAST")
+            day2 = L.load_day(d)
+            for a in ("o", "h", "l", "c", "v"):
+                arr = getattr(day2, a)
+                arr[:, T + 1:] = np.abs(arr[:, T + 1:] * (
+                    1 + rng.normal(0, 5.0, arr[:, T + 1:].shape))) + 1.0
+            got = day2.features(T)
+            elig1 = day2.crossed_by(T, "LAST")
+            if not np.array_equal(elig0, elig1):
+                moved += 1
+            for k in keys:
+                x, y = np.asarray(ref[k], float), np.asarray(got[k], float)
+                nchk += x.size
+                if not np.allclose(x, y, rtol=1e-9, atol=1e-9,
+                                   equal_nan=True):
+                    moved += 1
+    print(f"  {nchk} feature values over {len(ds[:40])} days x 3 decision "
+          f"minutes; values or eligibility masks that moved: {moved}")
 
     print("### foresight ladder (60-minute forward return as the rank)")
     sc_f, sc_a = {}, {}
@@ -256,28 +304,56 @@ def ablate():
 
 
 def controls(nseed=30):
+    """The two rows the ablation actually pointed at, each against a
+    30-seed random control IN ITS OWN FRAME.
+
+    A random control only means something if the only thing randomised
+    is the PICK: same entry window, same stop, same trail, same exits,
+    same ticket schedule. R5's control (in --recomb) was run this way
+    and R5 failed it; these are the two rows that did not."""
     ds = dates()
-    overs = {"CHAMP": {}, "INV": dict(invert=True)}
-    for k in range(nseed):
-        overs[f"R{k}"] = dict(rank="none", rand=True, seed=k)
+    FRAMES = {
+        "R1 coil rank only": (dict(rank="coil"), dict(rank="none",
+                                                      rand=True)),
+        "R4 coil + no stop": (dict(rank="coil", stop_pct=None),
+                              dict(rank="none", rand=True, stop_pct=None)),
+        "CHAMPION-MIMIC": ({}, dict(rank="none", rand=True)),
+    }
+    overs = {}
+    for name, (cfg, rctl) in FRAMES.items():
+        overs[name] = dict(cfg)
+        overs[f"{name} | INVERTED"] = dict(cfg, invert=True)
+        for k in range(nseed):
+            overs[f"{name} | RND{k}"] = dict(rctl, seed=k)
     res = run_batch(ds, overs)
-    s = res["CHAMP"]
-    print(f"\n## Controls ({len(ds)} sessions, {nseed} random seeds)\n")
+    print("\n## Controls: %d random seeds in each row's own frame "
+          "(%d sessions)\n" % (nseed, len(ds)))
     print(HEAD)
-    print(_fmt("CHAMPION-MIMIC", s))
-    print(_fmt("CONTROL inverted champion key", res["INV"]))
-    tots = np.array([res[f"R{k}"]["total_flat"] for k in range(nseed)])
-    pts = np.array([res[f"R{k}"]["flat_tkt"] for k in range(nseed)])
-    exb = np.array([res[f"R{k}"]["ex_best"] for k in range(nseed)])
-    print(f"| CONTROL random pick, {nseed} seeds (mean) | | | | "
-          f"{pts.mean():+.2f} +- {pts.std(ddof=1):.2f} | | "
-          f"{tots.mean()/max(s['months'],1):+,.0f} | | "
-          f"{exb.mean():+,.0f} |")
-    print(f"\n- percentile of the champion-mimic against the random "
-          f"control, total: **{(tots < s['total_flat']).mean()*100:.1f}th**; "
-          f"ex-best: **{(exb < s['ex_best']).mean()*100:.1f}th**")
-    print(f"- edge over random: **{s['flat_tkt']-pts.mean():+.2f}/ticket** "
-          f"(z = {(s['flat_tkt']-pts.mean())/max(pts.std(ddof=1),1e-9):+.2f})")
+    lines = []
+    for name in FRAMES:
+        print(_fmt(name, res[name]))
+        print(_fmt(f"{name} -- CONTROL inverted", res[f"{name} | INVERTED"]))
+        tots = np.array([res[f"{name} | RND{k}"]["total_flat"]
+                         for k in range(nseed)])
+        pts = np.array([res[f"{name} | RND{k}"]["flat_tkt"]
+                        for k in range(nseed)])
+        exb = np.array([res[f"{name} | RND{k}"]["ex_best"]
+                        for k in range(nseed)])
+        mo = max(res[name]["months"], 1)
+        print(f"| {name} -- CONTROL random, {nseed} seeds (mean) | | | | "
+              f"{pts.mean():+.2f} +- {pts.std(ddof=1):.2f} | | "
+              f"{tots.mean()/mo:+,.0f} | | {exb.mean():+,.0f} |")
+        lines.append((name,
+                      float((tots < res[name]["total_flat"]).mean() * 100),
+                      float((exb < res[name]["ex_best"]).mean() * 100),
+                      res[name]["flat_tkt"] - pts.mean(),
+                      (res[name]["flat_tkt"] - pts.mean())
+                      / max(pts.std(ddof=1), 1e-9)))
+    print("\n| row | percentile, total | percentile, ex-best | "
+          "edge over random $/tkt | z |")
+    print("|---|---:|---:|---:|---:|")
+    for n, pt, pe, ed, z in lines:
+        print(f"| {n} | {pt:.1f}th | {pe:.1f}th | {ed:+.2f} | {z:+.2f} |")
     (OUT / "controls.json").write_text(json.dumps(_strip(res), indent=1,
                                                   default=float))
 
@@ -395,8 +471,88 @@ def halal():
                                                default=float))
 
 
+RECOMB = {
+    "CHAMPION-MIMIC (reference)": {},
+    "R1 coil rank only": dict(rank="coil"),
+    "R2 coil + start 10:00": dict(rank="coil", t_start=L.mgrid(10, 0)),
+    "R3 coil + stop -2%": dict(rank="coil", stop_pct=0.02),
+    "R4 coil + no stop": dict(rank="coil", stop_pct=None),
+    "R5 coil + start 10:00 + stop -2%":
+        dict(rank="coil", t_start=L.mgrid(10, 0), stop_pct=0.02),
+    "R6 coil + start 10:00 + no stop":
+        dict(rank="coil", t_start=L.mgrid(10, 0), stop_pct=None),
+    "R7 R5 + tighter trail (10%)":
+        dict(rank="coil", t_start=L.mgrid(10, 0), stop_pct=0.02,
+             trail_pct=0.10),
+    "R8 R5 without the bearish exit":
+        dict(rank="coil", t_start=L.mgrid(10, 0), stop_pct=0.02,
+             bearish_exit=False),
+    "CONTROL R5 with the coil rank INVERTED":
+        dict(rank="coil", t_start=L.mgrid(10, 0), stop_pct=0.02,
+             invert=True),
+    "CONTROL R5 with a random pick":
+        dict(rank="none", rand=True, seed=17, t_start=L.mgrid(10, 0),
+             stop_pct=0.02),
+}
+
+
+def recomb(nseed=30):
+    """The best causal recombination the ablation points at, with the
+    controls that decide whether it is a finding or a search artefact.
+
+    This IS an in-sample maximum over the ablation grid and is labelled
+    as one; the 30-seed random control, the inverted mirror and the
+    aug-2026 block are what make it readable."""
+    ds = dates()
+    overs = dict(RECOMB)
+    best = dict(rank="coil", t_start=L.mgrid(10, 0), stop_pct=0.02)
+    for k in range(nseed):
+        overs[f"RND{k}"] = dict(best, rank="none", rand=True, seed=k)
+    res = run_batch(ds, overs)
+    print(f"\n## Best causal recombination ({len(ds)} sessions)\n")
+    print(HEAD)
+    for n in RECOMB:
+        print(_fmt(n, res[n]))
+    tots = np.array([res[f"RND{k}"]["total_flat"] for k in range(nseed)])
+    pts = np.array([res[f"RND{k}"]["flat_tkt"] for k in range(nseed)])
+    exb = np.array([res[f"RND{k}"]["ex_best"] for k in range(nseed)])
+    r5 = res["R5 coil + start 10:00 + stop -2%"]
+    print(f"| CONTROL random pick in R5's frame, {nseed} seeds (mean) | | | | "
+          f"{pts.mean():+.2f} +- {pts.std(ddof=1):.2f} | | "
+          f"{tots.mean()/max(r5['months'],1):+,.0f} | | {exb.mean():+,.0f} |")
+    print(f"\n- R5 percentile vs the 30-seed control: total "
+          f"**{(tots < r5['total_flat']).mean()*100:.1f}th**, ex-best "
+          f"**{(exb < r5['ex_best']).mean()*100:.1f}th**")
+    print(f"- R5 edge over random: **{r5['flat_tkt']-pts.mean():+.2f}"
+          f"/ticket** (z = "
+          f"{(r5['flat_tkt']-pts.mean())/max(pts.std(ddof=1),1e-9):+.2f})")
+    (OUT / "recomb.json").write_text(json.dumps(_strip(res), indent=1,
+                                                default=float))
+
+
+def oos():
+    ds = dates(oos=True)
+    overs = {"CHAMPION-MIMIC": {},
+             "R1 coil rank only": dict(rank="coil"),
+             "R5 coil + start 10:00 + stop -2%":
+                 dict(rank="coil", t_start=L.mgrid(10, 0), stop_pct=0.02),
+             "CONTROL R5 inverted":
+                 dict(rank="coil", t_start=L.mgrid(10, 0), stop_pct=0.02,
+                      invert=True),
+             "CONTROL random pick": dict(rank="none", rand=True, seed=3)}
+    res = run_batch(ds, overs)
+    print(f"\n## Out of sample: aug-2026 block ({len(ds)} sessions)\n")
+    print(HEAD)
+    for n in overs:
+        print(_fmt(n, res[n]))
+    (OUT / "oos.json").write_text(json.dumps(_strip(res), indent=1,
+                                             default=float))
+
+
 def main():
     a = sys.argv[1:]
+    if "--oos" in a:
+        oos()
     if "--selftest" in a:
         selftest()
     if "--universe" in a:
@@ -409,6 +565,8 @@ def main():
         model()
     if "--halal" in a:
         halal()
+    if "--recomb" in a:
+        recomb()
     if not a:
         print(__doc__)
 
