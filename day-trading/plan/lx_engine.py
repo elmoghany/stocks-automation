@@ -556,8 +556,8 @@ def execute_leg(day, si, side, m_dec, shares, spec, hard_flat=None):
     wait = int(spec.get("wait", 1))
     mode = spec.get("mode", "rest")
     rungs = _rungs(mode, side, anchor, half_px, m_post, wait, day, si)
-    # extra passivity beyond the quote
-    rungs = [(m, L - side * k_px) for m, L in rungs]
+    # extra passivity beyond the quote; limits live on a 4-decimal grid
+    rungs = [(m, round(L - side * k_px, 4)) for m, L in rungs]
     # the ladder cannot run past the hard flatten minute
     m_end = m_post + wait
     if hard_flat is not None:
@@ -581,7 +581,6 @@ def execute_leg(day, si, side, m_dec, shares, spec, hard_flat=None):
         s_hi = (m_next - SEC0_MIN) * 60 + 1
         if s_hi <= s_lo:
             continue
-        L = round(L, 4)
         q, dq, f1, f2 = _fill_scan(tp, side, s_lo, s_hi, L, remaining, part,
                                    through, rs)
         if q > 0:
@@ -594,6 +593,9 @@ def execute_leg(day, si, side, m_dec, shares, spec, hard_flat=None):
             last = f2
     out["passive_shares"] = filled
     out["rungs"] = len(rungs)
+    used = [L for m, L in rungs if m < m_end]
+    out["lim_hi"] = float(max(used)) if used else np.nan
+    out["lim_lo"] = float(min(used)) if used else np.nan
     if remaining > 1e-9 and spec.get("on_timeout", "cancel") == "market":
         # cross at the open of the first printed minute >= m_end
         if hard_flat is not None and m_end >= hard_flat:

@@ -117,7 +117,13 @@ class WnProvider:
     def __init__(self, t, dec=RTH, h="h30"):
         self.t = t
         self.h = h
-        self.dec_i = [UF.DEC_ET.index(x) for x in dec]
+        self.dec_i = [t.dec.index(x) for x in dec]
+        # decision label -> minute on the 04:00 grid, from the TABLE's own
+        # dec list (wn and cat share it; asserted rather than assumed)
+        self.m_of_ci = {ci: int(UF.STEPS[UF.dec_step(lab)])
+                        for ci, lab in enumerate(t.dec)}
+        self.ti_of_ci = {ci: int(UF.dec_step(lab))
+                         for ci, lab in enumerate(t.dec)}
         self.di = {d: i for i, d in enumerate(t.dates)}
         self._feat = {}
 
@@ -140,8 +146,8 @@ class WnProvider:
         by = {}
         for r in rows:
             ci = int(t.dec_i[r])
-            ti = int(UF.DEC_T[ci])
-            m_dec = int(UF.STEPS[ti])
+            ti = self.ti_of_ci[ci]
+            m_dec = self.m_of_ci[ci]
             sym = t.syms[t.sym_i[r]]
             si = sidx.get(sym)
             cap = float(vc[ti, si]) if si is not None else np.nan
@@ -156,7 +162,7 @@ def _wn_worker(args):
         day = XX.Day(date)
     except Exception as e:
         return date, None, str(e)
-    t = Table(spec.get("table", str(Table.__init__.__defaults__[0])))
+    t = Table(spec["table"])
     prov = WnProvider(t, spec.get("dec", RTH), spec["h"])
     hold = UF.HORIZ[spec["h"]]
     scores = {k: np.load(v).astype(float) for k, v in spec["scores"].items()}
@@ -218,7 +224,8 @@ def _report(acc, att, ladders, names, seeds, ndays, tag, extra=None):
                                 for s in range(seeds)])), 1)}
                        for k, v in rnd.items()}
         r["random"]["tickets_per_day"] = round(float(np.mean(
-            [len(acc.get((lad, f"rand{s}"), [])) for s in range(seeds)]) / max(ndays, 1), 3)
+            [len(acc.get((lad, f"rand{s}"), [])) for s in range(seeds)]))
+            / max(ndays, 1), 3)
         for nm in names:
             rr = acc.get((lad, nm), [])
             row = {k: X.summarize(rr, ndays, k) for k in ("flat", "meas", "zero")}
@@ -273,8 +280,9 @@ def stage_wn(seeds=30, workers=2, ndays=None, ladders=None, post_k=3,
         inv[k + "_inv"] = str(p)
     scores.update(inv)
     ladders = ladders or list(LADDERS)
+    from wn_lib import TAB
     spec = {"h": "h30", "scores": scores, "ref": "model", "seeds": seeds,
-            "ladders": ladders, "post_k": post_k}
+            "ladders": ladders, "post_k": post_k, "table": str(TAB)}
     print(f"[wn] {len(days)} OOS days, post_k {post_k}, {len(ladders)} ladders",
           flush=True)
     acc, att = _run(days, _wn_worker, spec, workers, tag)
@@ -366,16 +374,10 @@ def stage_rev(seeds=30, workers=2, ndays=None, ladders=None, tag="rev",
     t = CS.Table("wide")
     sc, members = CR.build(t, dec, ex)
     sc = np.where(np.isfinite(sc), sc, np.nan)
-    rng = np.random.default_rng(7)
-    shuf = CS._shuffle_day(t, rng) if hasattr(CS, "_shuffle_day") else None
+    # CLOSE-MOMENTUM's shuffled control permutes OUTCOMES within a day,
+    # which has no tape analogue (the outcome here IS the tape); the
+    # controls carried are the 30 random rankings and the inverted sign.
     scores = {"rev": sc, "rev_inv": -sc}
-    if shuf is not None:
-        try:
-            scores["rev_shuf"] = shuf if isinstance(shuf, np.ndarray) else None
-        except Exception:
-            pass
-        if scores.get("rev_shuf") is None:
-            scores.pop("rev_shuf", None)
     sp = X.OUT / "_rev_scores.npz"
     X.OUT.mkdir(parents=True, exist_ok=True)
     np.savez(sp, **scores)
@@ -414,7 +416,8 @@ def stage_veto(seeds=30, workers=2, ndays=None, ladders=None, tag="veto",
     sc_f = C.OUT / f"scores_{h}_base_s{seed}.npy"
     sc = np.load(sc_f).astype(float)
     days = sorted({d for d in t.date_s[np.flatnonzero(np.isfinite(sc))]})
-    days = [d for d in days if d in set(UE.cached_days(t, None))]
+    cached = set(UE.cached_days(t, None))
+    days = [d for d in days if d in cached]
     if ndays:
         days = days[:ndays]
     inv = X.OUT / "_inv_cat.npy"
