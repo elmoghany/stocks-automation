@@ -89,10 +89,10 @@
    "first_seen": "06:28"
   },
   "VICR": {
-   "pct": 12.52,
-   "last": 206.93,
+   "pct": 15.55,
+   "last": 212.5,
    "prev_close": 183.91,
-   "vol": "573847.226479",
+   "vol": "346408.882957",
    "name": "Vicor",
    "first_seen": "06:28"
   },
@@ -207,21 +207,265 @@
    "vol": "345162.320949",
    "name": "Solowin Holdings",
    "first_seen": "08:50"
+  },
+  "USDE": {
+   "pct": 50.32,
+   "last": 9.32,
+   "prev_close": 6.2,
+   "vol": "6.715064151325e+06",
+   "name": "StablecoinX Inc. Class A",
+   "first_seen": "10:23"
+  },
+  "ABSI": {
+   "pct": 21.39,
+   "last": 9.76,
+   "prev_close": 8.04,
+   "vol": "2.586383410421e+06",
+   "name": "Absci",
+   "first_seen": "10:23"
+  },
+  "AIAI": {
+   "pct": 20.18,
+   "last": 4.11,
+   "prev_close": 3.42,
+   "vol": "78420.958821",
+   "name": "AIAI Holdings Corporation",
+   "first_seen": "10:23"
+  },
+  "SECZ": {
+   "pct": 19.31,
+   "last": 9.27,
+   "prev_close": 7.77,
+   "vol": "2.043980672354e+06",
+   "name": "Securitize Corp.",
+   "first_seen": "10:23"
+  },
+  "IPDN": {
+   "pct": 16.99,
+   "last": 3.58,
+   "prev_close": 3.06,
+   "vol": "24874.657867",
+   "name": "Professional Diversity Network",
+   "first_seen": "10:23"
+  },
+  "LGHL": {
+   "pct": 16.52,
+   "last": 6.7,
+   "prev_close": 5.75,
+   "vol": "35470.271931",
+   "name": "Lion Group Holding Ltd.",
+   "first_seen": "10:23"
+  },
+  "GWAV": {
+   "pct": 15.45,
+   "last": 2.6901,
+   "prev_close": 2.33,
+   "vol": "296543.646437",
+   "name": "Greenwave Technology Solutions",
+   "first_seen": "10:23"
+  },
+  "TEM": {
+   "pct": 14.73,
+   "last": 80.275,
+   "prev_close": 69.97,
+   "vol": "6.049971570785e+06",
+   "name": "Tempus AI",
+   "first_seen": "10:23"
+  },
+  "CNXU": {
+   "pct": 13.85,
+   "last": 5.2601,
+   "prev_close": 4.62,
+   "vol": "53942.612027",
+   "name": "Conexeu Sciences",
+   "first_seen": "10:23"
+  },
+  "TWST": {
+   "pct": 12.89,
+   "last": 161.505,
+   "prev_close": 143.07,
+   "vol": "724453.728704",
+   "name": "Twist Bioscience",
+   "first_seen": "10:23"
+  },
+  "CLGN": {
+   "pct": 12.64,
+   "last": 3.92,
+   "prev_close": 3.48,
+   "vol": "60705.765355",
+   "name": "CollPlant Biotechnologies",
+   "first_seen": "10:23"
+  },
+  "GENB": {
+   "pct": 12.37,
+   "last": 17.62,
+   "prev_close": 15.68,
+   "vol": "426418.443153",
+   "name": "Generate Biomedicines",
+   "first_seen": "10:23"
+  },
+  "CHGA": {
+   "pct": 12.37,
+   "last": 2.09,
+   "prev_close": 1.86,
+   "vol": "73923.26",
+   "name": "Change Agents Corporation",
+   "first_seen": "10:23"
+  },
+  "LTRX": {
+   "pct": 11.9,
+   "last": 6.065,
+   "prev_close": 5.42,
+   "vol": "567349.672825",
+   "name": "Lantronix",
+   "first_seen": "10:23"
+  },
+  "PSIX": {
+   "pct": 11.86,
+   "last": 44.845,
+   "prev_close": 40.09,
+   "vol": "437027.242951",
+   "name": "Power Solutions International",
+   "first_seen": "10:23"
+  },
+  "PRME": {
+   "pct": 11.7,
+   "last": 3.351,
+   "prev_close": 3.0,
+   "vol": "687631.635976",
+   "name": "Prime Medicine",
+   "first_seen": "10:23"
+  },
+  "FAC": {
+   "pct": 11.6,
+   "last": 5.58,
+   "prev_close": 5.0,
+   "vol": "55949.336675",
+   "name": "Factorial Energy Inc.",
+   "first_seen": "10:23"
+  },
+  "VNCE": {
+   "pct": 11.54,
+   "last": 9.615,
+   "prev_close": 8.62,
+   "vol": "253622.58351",
+   "name": "Vince Holding Corp.",
+   "first_seen": "10:23"
+  },
+  "LCID": {
+   "pct": 11.14,
+   "last": 4.49,
+   "prev_close": 4.04,
+   "vol": "7.390842407988e+06",
+   "name": "Lucid Group",
+   "first_seen": "10:23"
+  },
+  "SDGR": {
+   "pct": 11.05,
+   "last": 26.575,
+   "prev_close": 23.93,
+   "vol": "1.098518352316e+06",
+   "name": "Schrodinger",
+   "first_seen": "10:23"
+  },
+  "SANA": {
+   "pct": 10.79,
+   "last": 3.235,
+   "prev_close": 2.92,
+   "vol": "530621.673348",
+   "name": "Sana Biotechnology",
+   "first_seen": "10:23"
+  },
+  "DOMH": {
+   "pct": 10.7,
+   "last": 2.38,
+   "prev_close": 2.15,
+   "vol": "148206.697325",
+   "name": "Dominari",
+   "first_seen": "10:23"
+  },
+  "MRNA": {
+   "pct": 10.37,
+   "last": 160.72,
+   "prev_close": 145.62,
+   "vol": "6.024928603991e+06",
+   "name": "Moderna",
+   "first_seen": "10:23"
+  },
+  "CRSP": {
+   "pct": 10.36,
+   "last": 57.62,
+   "prev_close": 52.21,
+   "vol": "561096.52691",
+   "name": "CRISPR",
+   "first_seen": "10:23"
+  },
+  "VELO": {
+   "pct": 10.31,
+   "last": 11.0201,
+   "prev_close": 9.99,
+   "vol": "450116.204396",
+   "name": "Velo3D",
+   "first_seen": "10:23"
+  },
+  "GOSS": {
+   "pct": 10.31,
+   "last": 12.09,
+   "prev_close": 10.96,
+   "vol": "130227.340191",
+   "name": "Gossamer Bio",
+   "first_seen": "10:23"
+  },
+  "RXT": {
+   "pct": 10.3,
+   "last": 3.8386,
+   "prev_close": 3.48,
+   "vol": "2.206198761907e+06",
+   "name": "Rackspace Technology",
+   "first_seen": "10:23"
+  },
+  "PURR": {
+   "pct": 10.27,
+   "last": 12.615,
+   "prev_close": 11.44,
+   "vol": "1.0408720668258e+07",
+   "name": "Hyperliquid Strategies",
+   "first_seen": "10:23"
+  },
+  "NTLA": {
+   "pct": 10.1,
+   "last": 12.65,
+   "prev_close": 11.49,
+   "vol": "1.229892011292e+06",
+   "name": "Intellia Therapeutics",
+   "first_seen": "10:23"
   }
  },
  "halal_fail": [
+  "ABSI",
   "AKAN",
   "ARL",
   "AXG",
   "BOLT",
   "CENN",
   "COE",
+  "GENB",
   "GLAS",
   "GNRC",
   "IMDX",
   "KFFB",
+  "LCID",
   "LRHC",
+  "LTRX",
+  "MRNA",
+  "NTLA",
+  "PRME",
+  "PSIX",
   "RAPP",
+  "SANA",
+  "SECZ",
+  "TEM",
+  "USDE",
   "VEEA",
   "WATT",
   "YI"
@@ -489,11 +733,13 @@
   "BNAI",
   "BRTX",
   "CHNR",
+  "CRSP",
   "DETX",
   "GLOO",
   "JL",
   "KXIN",
   "MKDW",
+  "SDGR",
   "SPPL"
  ],
  "spac": [
