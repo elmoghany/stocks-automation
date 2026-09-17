@@ -23,6 +23,7 @@
 | rules_holdout_s4 :: heldout | 255 | -27,813 | **-2,290** | -46.28 | pct-/-  |
 | bandit2_real_h30_rth_net_q0.99_k2_hz_feat2_b3r200_s1 | 379 | -42,697 | **-2,366** | -25.10 | pct100.0/100.0  |
 | bandit_real_h30_s0_mq0.99 | 255 | -28,912 | **-2,381** | -18.29 |   |
+| bandit2_real_h30_rth_net_q0.99_k2_hz_feat2_b3r200_s2 | 379 | -52,275 | **-2,897** | -30.68 | pct100.0/100.0  |
 | bandit2_shuffled_h30_rth_xs_q0.99_k2_hz_feat2_b3r200_s0 | 379 | -54,424 | **-3,016** | -23.51 | pct96.67/96.67  |
 | bandit_shuffled_h30_s0 | 255 | -39,209 | **-3,229** | -93.13 |   |
 | rules2_holdout_s0 :: heldout | 255 | -40,717 | **-3,353** | -29.81 | pct90.0/90.0  |
@@ -36,6 +37,7 @@
 | bandit2_real_h30_rth_xs_q0.99_k2_trail-0.02-0.05-0.03-240_feat2_b3r200_s0 | 379 | -83,871 | **-4,647** | -43.66 | pct86.67/83.33  |
 | bandit_real_h30_s0 | 255 | -57,969 | **-4,774** | -32.55 |   |
 | bandit_real_h30_s1 | 255 | -60,225 | **-4,960** | -33.74 |   |
+| rl_maskppo_real_rthonly_s0 :: test | 255 | -69,984 | **-5,763** | -39.21 |   |
 | bandit_real_h30_s4 | 255 | -73,678 | **-6,068** | -41.28 |   |
 | bandit_real_h30_s3 | 255 | -82,687 | **-6,810** | -46.35 |   |
 | RANDOM-SPREAD (30 seeds, mean) | 255 | -82,961 | **-6,832** | -46.50 | control  |
@@ -53,7 +55,6 @@
 | rl_maskppo_real_s2 :: test | 255 | -159,814 | **-13,161** | -89.53 |   |
 | rl_maskppo_real_s3 :: test | 255 | -192,181 | **-15,827** | -107.66 |   |
 | rl_maskppo_real_250k_s0 :: test | 255 | -197,077 | **-16,230** | -110.41 |   |
-| rl_maskppo_real_s0 :: test | 255 | -197,077 | **-16,230** | -110.41 |   |
 | RANDOM-ANY (30 seeds, mean) | 255 | -203,374 | **-16,748** | -113.94 | control  |
 
 Bar = $7,500/month net. Rows above are every result file in plan/rl2/results/.

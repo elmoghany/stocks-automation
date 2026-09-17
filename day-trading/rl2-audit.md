@@ -581,6 +581,37 @@ The q0.999/h=60 row deserves one sentence so it is not mistaken for a result:
 it is **-\$0.01/ticket on 99 tickets in 379 days** — a policy that has learned
 to abstain, whose break-even is an accident of 99 draws, not an edge.
 
+### 3.10 The last two rows, which close the case
+
+**Seed spread on the best learned config.** `feat2`, RTH-only, raw target,
+q=0.99, h=30 — the row that reached the 100th percentile:
+
+| seed | \$/ticket | \$/month | tkt/day |
+|---|---|---|---|
+| 0 | -14.99 | -1,434 | 4.56 |
+| 1 | -25.10 | -2,366 | 4.49 |
+| 2 | -30.68 | -2,897 | 4.50 |
+| **mean** | **-23.59** | **-2,232** | 4.52 |
+
+**RANDOM-RTH-greedy is -\$24.44/ticket.** Averaged over its three seeds, the
+best learned policy in this study is **indistinguishable from seven random
+names bought at 09:30 and held thirty minutes** — and its single good seed is
+inside that control's range (-38.60 … -8.57).
+
+**MaskablePPO with the extended-hours action space removed.** Same seed, same
+250k steps, `RL2_RTH_ONLY=1`, no foresight:
+
+| | train | val | **test** |
+|---|---|---|---|
+| full action grid | -\$49.60/tkt | -\$58.05/tkt | **-\$110.41/tkt** |
+| **RTH-only action grid** | **+\$0.64/tkt** | -\$12.31/tkt | **-\$39.21/tkt** |
+
+Masking the 50 bps tier is worth \$71/ticket to the real agent too — it is
+easily the largest single improvement anywhere in this document, and it is
+pure cost avoidance available from a one-line rule. The agent is still \$15
+per ticket worse than RANDOM-RTH-greedy, and its train row is the familiar
+shape: break-even in sample, negative out.
+
 ---
 
 ## Part 4 — Verdict

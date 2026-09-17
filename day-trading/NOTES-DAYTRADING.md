@@ -8519,6 +8519,18 @@ permuted across (name, t) rows within each day, so per-row sums are not
 preserved — v1's version permuted the price path and was a Brownian-bridge
 artifact.
 
+### The two rows that close the case
+* **Seed spread on the best learned config** (feat2, RTH-only, raw target,
+  q0.99, h30): −$14.99 / −$25.10 / −$30.68 per ticket, **mean −$23.59,
+  −$2,232/month**. RANDOM-RTH-greedy is **−$24.44/ticket**. Averaged over its
+  seeds the best learned policy in the study is indistinguishable from seven
+  random names bought at 09:30 and held thirty minutes, and its one good seed
+  sits inside that control's range (−38.60 … −8.57).
+* **MaskablePPO with `RL2_RTH_ONLY=1`, no foresight**: test −$39.21/ticket vs
+  −$110.41 on the full grid; train +$0.64/ticket. Masking the 50 bps tier is
+  worth **$71/ticket** — the largest single improvement anywhere in this
+  study, and it is a one-line rule, not a learned policy.
+
 ### Closest miss and what it would need
 Approach 4, seed 0: **buy when price is below the session VWAP AND the day's
 universe is down on average AND price < ~$15.70; entries 09:30–16:00; exit at
