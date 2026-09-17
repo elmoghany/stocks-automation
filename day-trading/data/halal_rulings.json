@@ -1471,5 +1471,96 @@
   "date": "2026-09-16",
   "haram_share_est": 90,
   "basis": "USER RULING 2026-09-16 (halal audit Sec 3). CTW Cayman operates a WEB-BASED GAMING PLATFORM in Japan and Singapore -- free-to-play games inspired by Japanese animations. Gaming/entertainment IS the line of business, which is haram per the user ruling 2026-08-13 ('entertainment is haram'); functionally identical to SLE, ruled FAIL 2026-08-21. Missed by the screen because its labels say 'Gaming' / 'Multimedia' and neither word is in HARAM_PRIMARY_LABEL (which carries entertainment / casino / gambling). Musaffa: not halal."
+ },
+ "ANET": {
+  "verdict": "PASS",
+  "date": "2026-09-17",
+  "class": "B-no-financials",
+  "basis": "last-available statement absent (debt) after the 2026-09-17 ladder (yfinance quarterly -> annual -> EDGAR companyfacts, <=15 months); Zoya 2026-09-17: Shariah-compliant; Musaffa September 2026: halal. Adopted whole under the user's 2026-08-22 Class-B exception, per the 2026-09-17 ruling. Legs we CAN compute all clear the house 10/10/20: loan None, cash 5.3, combined None, haram 4.12.",
+  "haram_share_est": null
+ },
+ "ARCL": {
+  "verdict": "PASS",
+  "date": "2026-09-17",
+  "class": "B-no-financials",
+  "basis": "last-available statement absent (interest income) after the 2026-09-17 ladder (yfinance quarterly -> annual -> EDGAR companyfacts, <=15 months); Musaffa September 2026: halal. Adopted whole under the user's 2026-08-22 Class-B exception, per the 2026-09-17 ruling. Legs we CAN compute all clear the house 10/10/20: loan 0.16, cash 0.0, combined 0.16, haram None.",
+  "haram_share_est": null
+ },
+ "BMI": {
+  "verdict": "PASS",
+  "date": "2026-09-17",
+  "class": "B-no-financials",
+  "basis": "last-available statement absent (debt) after the 2026-09-17 ladder (yfinance quarterly -> annual -> EDGAR companyfacts, <=15 months); Zoya 2026-09-17: Shariah-compliant. Adopted whole under the user's 2026-08-22 Class-B exception, per the 2026-09-17 ruling. Legs we CAN compute all clear the house 10/10/20: loan None, cash 2.58, combined None, haram 0.49.",
+  "haram_share_est": null
+ },
+ "BUUU": {
+  "verdict": "PASS",
+  "date": "2026-09-17",
+  "class": "B-no-financials",
+  "basis": "last-available statement absent (revenue) after the 2026-09-17 ladder (yfinance quarterly -> annual -> EDGAR companyfacts, <=15 months); Musaffa September 2026: halal. Adopted whole under the user's 2026-08-22 Class-B exception, per the 2026-09-17 ruling. Legs we CAN compute all clear the house 10/10/20: loan 0.1, cash 0.88, combined 0.98, haram None.",
+  "haram_share_est": null
+ },
+ "ELMD": {
+  "verdict": "PASS",
+  "date": "2026-09-17",
+  "class": "B-no-financials",
+  "basis": "last-available statement absent (debt) after the 2026-09-17 ladder (yfinance quarterly -> annual -> EDGAR companyfacts, <=15 months); Zoya 2026-09-17: Shariah-compliant; Musaffa September 2026: halal. Adopted whole under the user's 2026-08-22 Class-B exception, per the 2026-09-17 ruling. Legs we CAN compute all clear the house 10/10/20: loan None, cash 9.28, combined None, haram 0.65.",
+  "haram_share_est": null
+ },
+ "ENGS": {
+  "verdict": "PASS",
+  "date": "2026-09-17",
+  "class": "B-no-financials",
+  "basis": "last-available statement absent (revenue) after the 2026-09-17 ladder (yfinance quarterly -> annual -> EDGAR companyfacts, <=15 months); Musaffa September 2026: halal. Adopted whole under the user's 2026-08-22 Class-B exception, per the 2026-09-17 ruling. Legs we CAN compute all clear the house 10/10/20: loan 6.99, cash 0.4, combined 7.38, haram None.",
+  "haram_share_est": null
+ },
+ "FTHA": {
+  "verdict": "PASS",
+  "date": "2026-09-17",
+  "class": "B-no-financials",
+  "basis": "last-available statement absent (interest income) after the 2026-09-17 ladder (yfinance quarterly -> annual -> EDGAR companyfacts, <=15 months); Musaffa September 2026: halal. Adopted whole under the user's 2026-08-22 Class-B exception, per the 2026-09-17 ruling. Legs we CAN compute all clear the house 10/10/20: loan 0.1, cash 0.6, combined 0.69, haram None.",
+  "haram_share_est": null
+ },
+ "ISRG": {
+  "verdict": "PASS",
+  "date": "2026-09-17",
+  "class": "B-no-financials",
+  "basis": "last-available statement absent (debt) after the 2026-09-17 ladder (yfinance quarterly -> annual -> EDGAR companyfacts, <=15 months); Zoya 2026-09-17: Shariah-compliant; Musaffa September 2026: halal. Adopted whole under the user's 2026-08-22 Class-B exception, per the 2026-09-17 ruling. Legs we CAN compute all clear the house 10/10/20: loan None, cash 3.8, combined None, haram 3.21.",
+  "haram_share_est": null
+ },
+ "NNNN": {
+  "verdict": "PASS",
+  "date": "2026-09-17",
+  "class": "B-no-financials",
+  "basis": "last-available statement absent (interest income) after the 2026-09-17 ladder (yfinance quarterly -> annual -> EDGAR companyfacts, <=15 months); Musaffa September 2026: halal. Adopted whole under the user's 2026-08-22 Class-B exception, per the 2026-09-17 ruling. Legs we CAN compute all clear the house 10/10/20: loan 0.0, cash 4.84, combined 4.84, haram None.",
+  "haram_share_est": null
+ },
+ "NXT": {
+  "verdict": "PASS",
+  "date": "2026-09-17",
+  "class": "B-no-financials",
+  "basis": "last-available statement absent (debt) after the 2026-09-17 ladder (yfinance quarterly -> annual -> EDGAR companyfacts, <=15 months); Zoya 2026-09-17: Shariah-compliant; Musaffa September 2026: halal. Adopted whole under the user's 2026-08-22 Class-B exception, per the 2026-09-17 ruling. Legs we CAN compute all clear the house 10/10/20: loan None, cash 9.48, combined None, haram 0.65.",
+  "haram_share_est": null
+ },
+ "QXL": {
+  "verdict": "PASS",
+  "date": "2026-09-17",
+  "class": "B-no-financials",
+  "basis": "last-available statement absent (interest income) after the 2026-09-17 ladder (yfinance quarterly -> annual -> EDGAR companyfacts, <=15 months); Musaffa September 2026: halal. Adopted whole under the user's 2026-08-22 Class-B exception, per the 2026-09-17 ruling. Legs we CAN compute all clear the house 10/10/20: loan 2.51, cash 3.2, combined 5.71, haram None.",
+  "haram_share_est": null
+ },
+ "SOWG": {
+  "verdict": "PASS",
+  "date": "2026-09-17",
+  "class": "B-no-financials",
+  "basis": "last-available statement absent (interest income) after the 2026-09-17 ladder (yfinance quarterly -> annual -> EDGAR companyfacts, <=15 months); Zoya 2026-09-17: Shariah-compliant; Musaffa September 2026: halal. Adopted whole under the user's 2026-08-22 Class-B exception, per the 2026-09-17 ruling. Legs we CAN compute all clear the house 10/10/20: loan 1.67, cash 0.01, combined 1.68, haram None.",
+  "haram_share_est": null
+ },
+ "VECA": {
+  "verdict": "PASS",
+  "date": "2026-09-17",
+  "class": "B-no-financials",
+  "basis": "last-available statement absent (interest income) after the 2026-09-17 ladder (yfinance quarterly -> annual -> EDGAR companyfacts, <=15 months); Musaffa September 2026: halal. Adopted whole under the user's 2026-08-22 Class-B exception, per the 2026-09-17 ruling. Legs we CAN compute all clear the house 10/10/20: loan 0.23, cash 0.01, combined 0.25, haram None.",
+  "haram_share_est": null
  }
 }

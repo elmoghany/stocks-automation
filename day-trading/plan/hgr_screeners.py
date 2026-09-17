@@ -37,7 +37,14 @@ OLD = ROOT / "data/halal_external/screener_verdicts.json"
 UA = {"User-Agent": ("Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
                      "stocks-automation halal-research "
                      "m.osama.elmoghany@gmail.com")}
-PACE = 1.6          # SOURCES.md: 1.6-2.4 s/request, identified UA
+# SOURCES.md paces the sweep at 1.6-2.4 s/request. MEASURED 2026-09-17:
+# a Zoya page takes 22.9 s to render and a Musaffa page 10.6 s, so a
+# serial sweep of 283 names is 2.7 HOURS and the pace constant never
+# binds. Four workers per site instead: each site then sees roughly one
+# request every 5-6 s, which is SLOWER than the documented pace, not
+# faster -- the politeness budget is spent on latency, not on sleeping.
+PACE = 0.0
+WORKERS = 4
 
 
 def _get(url):
@@ -104,16 +111,29 @@ def main():
             or s not in cache["musaffa"]]
     print(f"{len(syms):,} symbols, {len(todo):,} to fetch "
           f"({len(syms)-len(todo):,} already in today's cache)", flush=True)
-    for i, s in enumerate(todo, 1):
-        if s not in cache["zoya"]:
-            cache["zoya"][s] = zoya(s)
-            time.sleep(PACE)
-        if s not in cache["musaffa"]:
-            cache["musaffa"][s] = musaffa(s)
-            time.sleep(PACE)
-        if i % 25 == 0:
-            OUT.write_text(json.dumps(cache))
-            print(f"  {i:,}/{len(todo):,}", flush=True)
+    from concurrent.futures import ThreadPoolExecutor
+
+    def one(s):
+        z = cache["zoya"].get(s) or zoya(s)
+        m = cache["musaffa"].get(s) or musaffa(s)
+        return s, z, m
+
+    def _answer(rec):
+        """A TRANSPORT failure is not a verdict and must never be cached:
+        caching it would silently mark the name 'no coverage' forever --
+        the same cache-poisoning rule cmd_sic already follows. http 404
+        IS an answer (the screener does not cover the name)."""
+        return bool(rec) and (rec.get("http") or 0) >= 200
+
+    with ThreadPoolExecutor(max_workers=WORKERS) as ex:
+        for i, (s, z, m) in enumerate(ex.map(one, todo), 1):
+            if _answer(z):
+                cache["zoya"][s] = z
+            if _answer(m):
+                cache["musaffa"][s] = m
+            if i % 10 == 0:
+                OUT.write_text(json.dumps(cache))
+                print(f"  {i:,}/{len(todo):,}", flush=True)
     OUT.write_text(json.dumps(cache))
     zc = {}
     mc = {}

@@ -360,3 +360,179 @@ professionals*, and both for a business-activity reason our interest-only 5% tes
 structurally cannot see (documented limitation, not a bug).
 
 ---
+
+## 7. THE REPORTING-CURRENCY BUG — found on the way, and it is large
+
+`halal_check` divides a yfinance statement value by a market cap in USD.
+**yfinance publishes statements in the FILER's OWN reporting currency**
+(`info["financialCurrency"]`). Every foreign private issuer that reports in
+rupiah, won, yen, rupee, yuan or peso therefore has its debt and cash legs
+multiplied by the FX rate before being compared with a 10% limit.
+
+The cached numbers say it plainly:
+
+| SYM | company | `financialCurrency` | cached loan/mcap | cached cash/mcap |
+|---|---|---|---:|---:|
+| TLK | Telkom Indonesia | **IDR** | 554,387% | 387,136% |
+| GRVY | Gravity Co. | **KRW** | 0% | 128,010% |
+| VFS | VinFast | **VND** | 1,264,773% | 108,412% |
+| PKX | POSCO | **KRW** | 171,662% | 80,736% |
+| KT | KT Corp | **KRW** | 115,616% | 52,967% |
+| HMC | Honda | **JPY** | 0% | 13,266% |
+| CEPU | Central Puerto | **ARS** | 36,475% | 10,042% |
+
+Measured on a stratified random sample (60 names per band, seed 20260917),
+share of ratio-refused names whose statements are NOT in USD:
+
+| cached `combined` | names in band | sampled non-USD | rate |
+|---|---:|---:|---:|
+| 20–50% | 1,402 | 3 / 60 | 5% |
+| 50–100% | 592 | 4 / 60 | 7% |
+| 100–1,000% | 609 | 9 / 60 | 15% |
+| **> 1,000%** | **90** | **41 / 60** | **68%** |
+
+**≈ 260 of the 2,693 ratio refusals are unit-mismatched, not over-levered.**
+The 5% haram leg is unaffected (interest and revenue are both in the filer's
+currency, so their ratio is already unit-free); only the two legs divided by
+market cap are wrong. The exact restorable count is measured by
+`plan/hgr_fx.py` (§8, proposal 2) — a EUR filer at combined 25% is still a
+FAIL after conversion, but an INR filer at 600% is a clean PASS.
+
+**This is a bug, not a doctrine question, and it was NOT changed today** —
+fixing it needs an FX rate per reporting currency in the gate and a full
+re-screen, and the brief was one doctrinal change. It is proposal 2.
+
+---
+
+## 8. PROPOSED CHANGES, RANKED — each with its doctrinal question and its count
+
+Counts are priced by `plan/hgr_props.py` against the **2026-09-16 415-name
+state**, so every row is comparable with every other row. `--before` reproduces
+them; without the flag it re-prices against today's rebuilt universe.
+**Nothing below is implemented** — §6's change is the only one that landed.
+
+### 1. Relax the ratio thresholds toward AAOIFI — **the single biggest lever**
+
+* **Doctrinal question for the user:** *your 10/10/20 is roughly 3× stricter than
+  the 33/33 that AAOIFI, Zoya, Musaffa, HLAL, SPUS and the Dow Jones Islamic
+  indices all use. Do you want your own number, or the scholarly consensus
+  number? There is no middle position that is "more correct" — both are
+  defensible ijtihad, and the 10% line is the stricter, safer one.*
+* **Effect on the count** (ratio legs only, every other screen untouched):
+
+  | thresholds | armable |
+  |---|---:|
+  | 10 / 10 / 20 — today | **415** |
+  | 12 / 12 / 24 | 510 |
+  | 15 / 15 / 30 | 655 |
+  | 20 / 20 / 40 | 884 |
+  | 25 / 25 / 50 | 1,112 |
+  | 33 / 33 / 66 — AAOIFI | **1,426** |
+
+* **What it changes live:** every household name the user named in the sanity
+  list — PG (loan 10.22), KO (11.42), MRK, ABT, TMO, DHR, HD, LIN, CAT, NKE, CRM
+  — arms at 20/20/40 or lower. The scanner's daily armable pool roughly triples,
+  which is the difference between 1 ticket a day and 3–5.
+* **Risk:** none doctrinally (it is *looser*, and matches the professionals), but
+  it changes every backtest baseline in the repo.
+
+### 2. Fix the reporting-currency bug (§7) — **a bug, not a choice**
+
+* **Doctrinal question:** none. A ratio whose numerator is in rupiah and whose
+  denominator is in dollars is not a ratio.
+* **Effect on the count:** ≈ 260 of the 2,693 ratio refusals are unit-mismatched;
+  the subset that clears 10/10/20 after conversion is measured exactly by
+  `plan/hgr_fx.py` (run in §6). The big foreign corporates mostly still fail on
+  real leverage; the winners are mid-cap Indian, Indonesian and Korean issuers.
+* **What it changes live:** removes a class of false refusals that is invisible
+  today because the numbers look like "obviously over-levered".
+* **Cost:** one FX lookup per reporting currency, cached like `sic_codes.json`,
+  plus a full re-screen.
+
+### 3. Screen only COMMON EQUITY at universe build
+
+* **Doctrinal question:** *should an ETF, a closed-end bond fund, a commodity
+  trust, a preferred share or an ETN ever be armable?* (Today three Shariah ETFs
+  — HLAL, SPUS, MNZL — **are** armable, and so is **JPO, a YieldMax covered-call
+  option-income ETF**.)
+* **Effect on the count:** **415 → 410.** It does not make the list bigger; it
+  makes the *denominator* honest and removes four things that should never have
+  been tradeable here.
+* **What it changes live:** the monthly refresh screens 4,590 symbols instead of
+  10,761 — **57% less yfinance time**, which is the difference between an
+  overnight run and an afternoon one — and the "56% of the universe has no data"
+  statistic disappears because it was never about companies.
+
+### 4. An absent DEBT line on an otherwise-complete filed balance sheet reads as ZERO
+
+* **Doctrinal question:** *a company files a complete balance sheet and it
+  contains no debt line at all. Is that "we cannot verify the debt" (today's
+  answer) or "the company has no debt" (what the filing means)?* The EDGAR
+  extractor already takes the second view for its own quarters
+  (`plan/edgar_backfill.py`: "an absent balance-sheet LINE IS zero on that
+  statement — unlike a missing statement, which stays absent"); the live gate
+  takes the first. **They should agree.**
+* **Effect on the count:** priced in §6 after the rebuild (the before-state
+  cannot price it — `_bs_pair` returned BOTH legs as None, so the cash leg was
+  unknown too; that is itself fixed today).
+* **Names it restores:** ANET, ISRG, BMI, CALM, FNV, MBLY, NXT, UTHR — debt-free
+  operating companies that both professional screeners pass.
+* **Risk:** a filer that tags debt under an unusual concept would read as
+  debt-free. Mitigate by requiring BOTH yfinance and EDGAR to carry no debt
+  concept in any period.
+
+### 5. Restore the SIC 6xxx false positives by explicit PASS rulings
+
+* **Doctrinal question:** *your rule named "banks, lenders, insurers, asset
+  managers, brokers, REITs, funds". SEC SIC 6794 is "Patent Owners & Lessors"
+  and 6795 is "Mineral Royalty Traders". Is a patent licensor or a gold-stream
+  royalty company a financial institution to you?*
+* **Effect on the count:** **415 → 420** (RGLD, TFPM, TPL, USIO, RMCO clear every
+  ratio leg today; IDCC, TRNO, CHCI, VMET, AGNT still fail one).
+* The mechanism already exists and needs no code: a PASS ruling **with a basis**
+  in `data/halal_rulings.json` restores a quirk-coded name.
+* 97 of the 104 SIC refusals are exactly what the rule named. **This is not why
+  415 is 415.**
+
+### 6. Revenue-mix keyword → review queue instead of automatic FAIL
+
+* **Doctrinal question:** *"unverified is haram" (your 2026-08-22 ruling) is
+  applied today to any company whose business summary contains "beverage",
+  "grocer", "hotel" or "restaurant" — 317 names, including BABA. Should a
+  keyword hit refuse the name outright, or send it to the review queue where a
+  10-K segment note or a Zoya verdict can answer it?*
+* **Effect on the count:** **415 → up to 433** (18 of the 317 already clear every
+  ratio leg; the rest fail a ratio anyway). Triggers: hospitality 5, resort 2,
+  grocer 2, restaurant 2, alcohol 1, beverage 1 …
+* **What it changes live:** small, and it is the most labour-intensive proposal.
+
+### 7. The two names where WE are LOOSER than the professionals
+
+* **MSFT** (Zoya *questionable*, Musaffa *not halal*) and **GOOGL** (Zoya
+  *questionable*, Musaffa *doubtful*) both PASS here.
+* **Doctrinal question:** *their objection is business activity — Xbox/gaming
+  revenue at Microsoft, advertising at Alphabet — which our 5% test structurally
+  cannot see because it measures interest income only. Do you want a ruling on
+  advertising and game revenue?*
+* **Effect on the count:** −2 at most, but it is the only direction in which the
+  gate is currently *permissive* relative to the professionals, and the user has
+  asked for the stricter reading in every comparable case (entertainment,
+  defense-by-trade).
+
+### 8. Not proposed, recorded as standing limitations
+
+* **Market cap is a present-day snapshot** against quarter-old statements; a name
+  that halved since filing doubles both ratios. 495 names show cash > 60% of
+  market cap and 140 of those are ADRs (see §7 — most are the currency bug, the
+  rest are the ADR-line-vs-whole-company denominator).
+* **`haram_pct` is interest-income-only** and is blind to alcohol, pork, gaming
+  and tobacco *revenue*; `REVENUE_SENSITIVE_WORDS` is the compensating screen.
+* **The industry keyword screen has essentially no false positives** — checked
+  against EDGAR SIC: bank 340/340 correct, mortgage 41/41, insurance 107/108
+  (XZO, an insurtech software spin-off, is the only arguable one), and every
+  "defense/aerospace" and "entertainment" hit with a non-matching SIC is still a
+  real defense prime (GE Aerospace, GD, NOC, LHX, HII, BWXT, DRS) or a real
+  broadcaster/studio (WBD, FOXA, PSKY, SIRI, ROKU). **Leave it alone.**
+* **The universe file mixes two gate epochs** (§1) and should be rebuilt whole
+  once the thresholds are settled.
+
