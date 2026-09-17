@@ -1,0 +1,352 @@
+{
+ "h": "h30",
+ "days": 144,
+ "grid": [
+  {
+   "offset_bps": 0.0,
+   "wait_min": 1,
+   "post_k": 1,
+   "tickets": 518,
+   "per_day": 3.597,
+   "per_ticket": -21.93,
+   "per_month": -1657.0,
+   "random_per_ticket": -12.18,
+   "edge_vs_random": -9.75
+  },
+  {
+   "offset_bps": 0.0,
+   "wait_min": 1,
+   "post_k": 3,
+   "tickets": 742,
+   "per_day": 5.153,
+   "per_ticket": -12.49,
+   "per_month": -1351.12,
+   "random_per_ticket": -10.37,
+   "edge_vs_random": -2.12
+  },
+  {
+   "offset_bps": 0.0,
+   "wait_min": 1,
+   "post_k": 5,
+   "tickets": 820,
+   "per_day": 5.694,
+   "per_ticket": -14.73,
+   "per_month": -1761.82,
+   "random_per_ticket": -12.75,
+   "edge_vs_random": -1.98
+  },
+  {
+   "offset_bps": 0.0,
+   "wait_min": 3,
+   "post_k": 1,
+   "tickets": 652,
+   "per_day": 4.528,
+   "per_ticket": -14.8,
+   "per_month": -1407.0,
+   "random_per_ticket": -11.87,
+   "edge_vs_random": -2.94
+  },
+  {
+   "offset_bps": 0.0,
+   "wait_min": 3,
+   "post_k": 3,
+   "tickets": 823,
+   "per_day": 5.715,
+   "per_ticket": -11.59,
+   "per_month": -1391.52,
+   "random_per_ticket": -9.6,
+   "edge_vs_random": -1.99
+  },
+  {
+   "offset_bps": 0.0,
+   "wait_min": 3,
+   "post_k": 5,
+   "tickets": 853,
+   "per_day": 5.924,
+   "per_ticket": -14.12,
+   "per_month": -1756.75,
+   "random_per_ticket": -12.67,
+   "edge_vs_random": -1.45
+  },
+  {
+   "offset_bps": 5.0,
+   "wait_min": 1,
+   "post_k": 1,
+   "tickets": 396,
+   "per_day": 2.75,
+   "per_ticket": -24.92,
+   "per_month": -1439.29,
+   "random_per_ticket": -8.9,
+   "edge_vs_random": -16.02
+  },
+  {
+   "offset_bps": 5.0,
+   "wait_min": 1,
+   "post_k": 3,
+   "tickets": 623,
+   "per_day": 4.326,
+   "per_ticket": -15.95,
+   "per_month": -1448.84,
+   "random_per_ticket": -8.33,
+   "edge_vs_random": -7.62
+  },
+  {
+   "offset_bps": 5.0,
+   "wait_min": 1,
+   "post_k": 5,
+   "tickets": 723,
+   "per_day": 5.021,
+   "per_ticket": -21.32,
+   "per_month": -2247.57,
+   "random_per_ticket": -11.03,
+   "edge_vs_random": -10.29
+  },
+  {
+   "offset_bps": 5.0,
+   "wait_min": 3,
+   "post_k": 1,
+   "tickets": 537,
+   "per_day": 3.729,
+   "per_ticket": -15.94,
+   "per_month": -1248.24,
+   "random_per_ticket": -11.69,
+   "edge_vs_random": -4.25
+  },
+  {
+   "offset_bps": 5.0,
+   "wait_min": 3,
+   "post_k": 3,
+   "tickets": 752,
+   "per_day": 5.222,
+   "per_ticket": -12.88,
+   "per_month": -1412.0,
+   "random_per_ticket": -6.38,
+   "edge_vs_random": -6.5
+  },
+  {
+   "offset_bps": 5.0,
+   "wait_min": 3,
+   "post_k": 5,
+   "tickets": 827,
+   "per_day": 5.743,
+   "per_ticket": -18.2,
+   "per_month": -2195.48,
+   "random_per_ticket": -10.32,
+   "edge_vs_random": -7.88
+  },
+  {
+   "offset_bps": 10.0,
+   "wait_min": 1,
+   "post_k": 1,
+   "tickets": 344,
+   "per_day": 2.389,
+   "per_ticket": -22.78,
+   "per_month": -1142.59,
+   "random_per_ticket": -10.24,
+   "edge_vs_random": -12.54
+  },
+  {
+   "offset_bps": 10.0,
+   "wait_min": 1,
+   "post_k": 3,
+   "tickets": 540,
+   "per_day": 3.75,
+   "per_ticket": -14.1,
+   "per_month": -1110.46,
+   "random_per_ticket": -7.61,
+   "edge_vs_random": -6.49
+  },
+  {
+   "offset_bps": 10.0,
+   "wait_min": 1,
+   "post_k": 5,
+   "tickets": 639,
+   "per_day": 4.438,
+   "per_ticket": -24.48,
+   "per_month": -2281.34,
+   "random_per_ticket": -9.03,
+   "edge_vs_random": -15.45
+  },
+  {
+   "offset_bps": 10.0,
+   "wait_min": 3,
+   "post_k": 1,
+   "tickets": 477,
+   "per_day": 3.312,
+   "per_ticket": -16.52,
+   "per_month": -1149.34,
+   "random_per_ticket": -14.49,
+   "edge_vs_random": -2.03
+  },
+  {
+   "offset_bps": 10.0,
+   "wait_min": 3,
+   "post_k": 3,
+   "tickets": 690,
+   "per_day": 4.792,
+   "per_ticket": -13.16,
+   "per_month": -1324.23,
+   "random_per_ticket": -5.79,
+   "edge_vs_random": -7.37
+  },
+  {
+   "offset_bps": 10.0,
+   "wait_min": 3,
+   "post_k": 5,
+   "tickets": 782,
+   "per_day": 5.431,
+   "per_ticket": -18.63,
+   "per_month": -2124.09,
+   "random_per_ticket": -8.28,
+   "edge_vs_random": -10.35
+  },
+  {
+   "offset_bps": 20.0,
+   "wait_min": 1,
+   "post_k": 1,
+   "tickets": 253,
+   "per_day": 1.757,
+   "per_ticket": -21.46,
+   "per_month": -791.76,
+   "random_per_ticket": -7.21,
+   "edge_vs_random": -14.25
+  },
+  {
+   "offset_bps": 20.0,
+   "wait_min": 1,
+   "post_k": 3,
+   "tickets": 422,
+   "per_day": 2.931,
+   "per_ticket": -20.72,
+   "per_month": -1275.28,
+   "random_per_ticket": -8.09,
+   "edge_vs_random": -12.63
+  },
+  {
+   "offset_bps": 20.0,
+   "wait_min": 1,
+   "post_k": 5,
+   "tickets": 496,
+   "per_day": 3.444,
+   "per_ticket": -18.72,
+   "per_month": -1353.72,
+   "random_per_ticket": -10.92,
+   "edge_vs_random": -7.8
+  },
+  {
+   "offset_bps": 20.0,
+   "wait_min": 3,
+   "post_k": 1,
+   "tickets": 380,
+   "per_day": 2.639,
+   "per_ticket": -14.83,
+   "per_month": -821.98,
+   "random_per_ticket": -11.16,
+   "edge_vs_random": -3.67
+  },
+  {
+   "offset_bps": 20.0,
+   "wait_min": 3,
+   "post_k": 3,
+   "tickets": 585,
+   "per_day": 4.062,
+   "per_ticket": -16.99,
+   "per_month": -1449.21,
+   "random_per_ticket": -7.85,
+   "edge_vs_random": -9.14
+  },
+  {
+   "offset_bps": 20.0,
+   "wait_min": 3,
+   "post_k": 5,
+   "tickets": 672,
+   "per_day": 4.667,
+   "per_ticket": -16.71,
+   "per_month": -1638.05,
+   "random_per_ticket": -11.65,
+   "edge_vs_random": -5.06
+  },
+  {
+   "offset_bps": 30.0,
+   "wait_min": 1,
+   "post_k": 1,
+   "tickets": 187,
+   "per_day": 1.299,
+   "per_ticket": -23.71,
+   "per_month": -646.61,
+   "random_per_ticket": -6.97,
+   "edge_vs_random": -16.74
+  },
+  {
+   "offset_bps": 30.0,
+   "wait_min": 1,
+   "post_k": 3,
+   "tickets": 320,
+   "per_day": 2.222,
+   "per_ticket": -24.97,
+   "per_month": -1165.2,
+   "random_per_ticket": -0.8,
+   "edge_vs_random": -24.16
+  },
+  {
+   "offset_bps": 30.0,
+   "wait_min": 1,
+   "post_k": 5,
+   "tickets": 379,
+   "per_day": 2.632,
+   "per_ticket": -13.38,
+   "per_month": -739.48,
+   "random_per_ticket": -1.13,
+   "edge_vs_random": -12.25
+  },
+  {
+   "offset_bps": 30.0,
+   "wait_min": 3,
+   "post_k": 1,
+   "tickets": 290,
+   "per_day": 2.014,
+   "per_ticket": -12.02,
+   "per_month": -508.15,
+   "random_per_ticket": -8.34,
+   "edge_vs_random": -3.68
+  },
+  {
+   "offset_bps": 30.0,
+   "wait_min": 3,
+   "post_k": 3,
+   "tickets": 466,
+   "per_day": 3.236,
+   "per_ticket": -19.59,
+   "per_month": -1331.63,
+   "random_per_ticket": -3.84,
+   "edge_vs_random": -15.75
+  },
+  {
+   "offset_bps": 30.0,
+   "wait_min": 3,
+   "post_k": 5,
+   "tickets": 538,
+   "per_day": 3.736,
+   "per_ticket": -15.95,
+   "per_month": -1251.24,
+   "random_per_ticket": -4.39,
+   "edge_vs_random": -11.56
+  }
+ ],
+ "chosen": {
+  "offset_bps": 30.0,
+  "wait_min": 3,
+  "post_k": 1,
+  "tickets": 290,
+  "per_day": 2.014,
+  "per_ticket": -12.02,
+  "per_month": -508.15,
+  "random_per_ticket": -8.34,
+  "edge_vs_random": -3.68
+ },
+ "market_baseline": {
+  "tickets": 666,
+  "per_ticket": -22.2,
+  "per_month": -2156.37
+ }
+}

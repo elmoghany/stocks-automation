@@ -163,8 +163,14 @@ def main(ndays=10, seed=11, per_day=60):
                 L = ref * (1 - 10.0 / 1e4)
                 real = UE.fill_ms(_scan_from_rows(rows, lo_ms, hi_ms), L)
                 # (i) garbage every print AFTER t0
+                # TWO-SIDED garbage: a one-sided (always higher) poison
+                # can only turn fills into non-fills, so a non-filling
+                # order would "not move" for a trivial reason and the
+                # direction statistic would understate. Multipliers span
+                # 0.3x-3x so some orders start filling and some stop.
                 post = [[r[0], r[1], r[2],
-                         (r[3] * 7.7 + 313.0) if r[3] is not None else None,
+                         (r[3] * float(rng.uniform(0.3, 3.0)))
+                         if r[3] is not None else None,
                          r[4], r[5], r[6]] if r[0] >= lo_ms else r
                         for r in rows]
                 got = UE.fill_ms(_scan_from_rows(post, lo_ms, hi_ms), L)

@@ -370,7 +370,8 @@ def cached_days(t, split=None, need=0.9):
 
 
 def stage_uncond(h="h30", ndays=None, dec=None, exit_bps=uf.FEE_BPS,
-                 sample=None, seed=0, through=0.0):
+                 sample=None, seed=0, through=0.0, cap_mult=1.0,
+                 passive_bps=0.0):
     """Unconditional expectancy per $15,000 ticket under the limit ladder
     -- the direct analogue of widenet-audit Part 2.1, which measured the
     market-fill toll at -$15..-$31 in the regular session."""
@@ -389,11 +390,13 @@ def stage_uncond(h="h30", ndays=None, dec=None, exit_bps=uf.FEE_BPS,
         rows = np.sort(rng.choice(rows, sample, replace=False))
     print(f"uncond: {len(rows):,} eligible tickets over {len(days)} "
           f"tape-complete days, dec={dec}", flush=True)
-    res = price_rows(t, rows, h, exit_bps=exit_bps, through=through)
+    res = price_rows(t, rows, h, exit_bps=exit_bps, through=through,
+                     cap_mult=cap_mult, passive_bps=passive_bps)
     ht = res["have_tape"]
     dts = np.array([t.date_s[r] for r in rows])[ht]
     nd = len(set(dts))
     rep = {"h": h, "dec": dec, "exit_bps": exit_bps, "days": nd,
+           "cap_mult": cap_mult, "passive_bps": passive_bps,
            "tickets": int(ht.sum()),
            "baseline": summarize(res["base"][ht], dts, nd, "market m+1")}
     out = []
@@ -469,7 +472,8 @@ def stage_uncond(h="h30", ndays=None, dec=None, exit_bps=uf.FEE_BPS,
     print(f"gross fwd return, ALL eligible (baseline entry): "
           f"{out[0]['gross_ret_base_all_bps']:.1f} bps")
     print("at estimated bid:", json.dumps(rep["at_est_bid"]))
-    (OUT / f"econ_uncond_{h}.json").write_text(
+    (OUT / f"econ_uncond_{h}_x{exit_bps:.0f}_c{cap_mult:.2f}"
+           f"_p{passive_bps:.0f}_t{through:.2f}.json").write_text(
         json.dumps(rep, indent=1, default=str))
     return rep
 
@@ -488,6 +492,9 @@ if __name__ == "__main__":
     if st == "grid":
         stage_grid(h, nd, tk, dc, xb)
     elif st == "uncond":
-        stage_uncond(h, nd, dc, xb, sm, through=th)
+        cm = float(a[a.index("--capmult") + 1]) if "--capmult" in a else 1.0
+        pb = float(a[a.index("--passive") + 1]) if "--passive" in a else 0.0
+        stage_uncond(h, nd, dc, xb, sm, through=th, cap_mult=cm,
+                     passive_bps=pb)
     else:
         raise SystemExit(f"unknown stage {st}")

@@ -1,0 +1,4055 @@
+{
+ "dates": 448,
+ "mean_funnel": {
+  "screen": 4574.8,
+  "labelled": 2596.8,
+  "sector_ok": 2215.9,
+  "sic_ok": 2096.9,
+  "shares": 1992.6,
+  "pt_halal": 1759.7,
+  "pass": 278.3
+ },
+ "pass_min": 183,
+ "pass_max": 328,
+ "pass_total": 124687,
+ "shares_calls": {
+  "exact": 31732,
+  "earlier": 605136,
+  "edgar": 1148516,
+  "miss": 93458
+ },
+ "per_date": {
+  "2024-10-22": {
+   "screen": 4041,
+   "labelled": 2336,
+   "sector_ok": 2003,
+   "sic_ok": 1895,
+   "shares": 1794,
+   "pt_halal": 1606,
+   "pass": 254
+  },
+  "2024-10-30": {
+   "screen": 4027,
+   "labelled": 2334,
+   "sector_ok": 1998,
+   "sic_ok": 1890,
+   "shares": 1790,
+   "pt_halal": 1603,
+   "pass": 247
+  },
+  "2024-11-07": {
+   "screen": 4038,
+   "labelled": 2337,
+   "sector_ok": 2001,
+   "sic_ok": 1893,
+   "shares": 1792,
+   "pt_halal": 1604,
+   "pass": 252
+  },
+  "2024-11-15": {
+   "screen": 4089,
+   "labelled": 2352,
+   "sector_ok": 2015,
+   "sic_ok": 1906,
+   "shares": 1805,
+   "pt_halal": 1614,
+   "pass": 243
+  },
+  "2024-11-25": {
+   "screen": 4120,
+   "labelled": 2364,
+   "sector_ok": 2027,
+   "sic_ok": 1919,
+   "shares": 1819,
+   "pt_halal": 1627,
+   "pass": 250
+  },
+  "2024-12-04": {
+   "screen": 4145,
+   "labelled": 2382,
+   "sector_ok": 2041,
+   "sic_ok": 1932,
+   "shares": 1830,
+   "pt_halal": 1636,
+   "pass": 256
+  },
+  "2024-12-12": {
+   "screen": 4179,
+   "labelled": 2397,
+   "sector_ok": 2056,
+   "sic_ok": 1948,
+   "shares": 1846,
+   "pt_halal": 1646,
+   "pass": 255
+  },
+  "2024-12-20": {
+   "screen": 4204,
+   "labelled": 2409,
+   "sector_ok": 2065,
+   "sic_ok": 1957,
+   "shares": 1854,
+   "pt_halal": 1652,
+   "pass": 243
+  },
+  "2024-12-31": {
+   "screen": 4225,
+   "labelled": 2421,
+   "sector_ok": 2075,
+   "sic_ok": 1966,
+   "shares": 1861,
+   "pt_halal": 1662,
+   "pass": 242
+  },
+  "2025-01-10": {
+   "screen": 4275,
+   "labelled": 2441,
+   "sector_ok": 2091,
+   "sic_ok": 1980,
+   "shares": 1876,
+   "pt_halal": 1675,
+   "pass": 249
+  },
+  "2025-01-21": {
+   "screen": 4303,
+   "labelled": 2441,
+   "sector_ok": 2094,
+   "sic_ok": 1983,
+   "shares": 1879,
+   "pt_halal": 1676,
+   "pass": 248
+  },
+  "2025-01-29": {
+   "screen": 4327,
+   "labelled": 2442,
+   "sector_ok": 2095,
+   "sic_ok": 1984,
+   "shares": 1880,
+   "pt_halal": 1678,
+   "pass": 252
+  },
+  "2025-02-06": {
+   "screen": 4343,
+   "labelled": 2450,
+   "sector_ok": 2103,
+   "sic_ok": 1994,
+   "shares": 1887,
+   "pt_halal": 1682,
+   "pass": 248
+  },
+  "2025-02-14": {
+   "screen": 4337,
+   "labelled": 2449,
+   "sector_ok": 2103,
+   "sic_ok": 1994,
+   "shares": 1888,
+   "pt_halal": 1682,
+   "pass": 250
+  },
+  "2025-02-25": {
+   "screen": 4343,
+   "labelled": 2453,
+   "sector_ok": 2105,
+   "sic_ok": 1995,
+   "shares": 1890,
+   "pt_halal": 1686,
+   "pass": 247
+  },
+  "2025-03-05": {
+   "screen": 4339,
+   "labelled": 2445,
+   "sector_ok": 2098,
+   "sic_ok": 1987,
+   "shares": 1887,
+   "pt_halal": 1678,
+   "pass": 234
+  },
+  "2025-03-13": {
+   "screen": 4362,
+   "labelled": 2449,
+   "sector_ok": 2101,
+   "sic_ok": 1989,
+   "shares": 1890,
+   "pt_halal": 1680,
+   "pass": 227
+  },
+  "2025-03-21": {
+   "screen": 4352,
+   "labelled": 2451,
+   "sector_ok": 2102,
+   "sic_ok": 1991,
+   "shares": 1891,
+   "pt_halal": 1682,
+   "pass": 229
+  },
+  "2025-03-31": {
+   "screen": 4335,
+   "labelled": 2456,
+   "sector_ok": 2106,
+   "sic_ok": 1995,
+   "shares": 1895,
+   "pt_halal": 1685,
+   "pass": 219
+  },
+  "2025-04-08": {
+   "screen": 4359,
+   "labelled": 2453,
+   "sector_ok": 2098,
+   "sic_ok": 1986,
+   "shares": 1884,
+   "pt_halal": 1680,
+   "pass": 192
+  },
+  "2025-04-16": {
+   "screen": 4365,
+   "labelled": 2446,
+   "sector_ok": 2088,
+   "sic_ok": 1975,
+   "shares": 1873,
+   "pt_halal": 1672,
+   "pass": 208
+  },
+  "2025-04-25": {
+   "screen": 4361,
+   "labelled": 2438,
+   "sector_ok": 2080,
+   "sic_ok": 1966,
+   "shares": 1864,
+   "pt_halal": 1661,
+   "pass": 220
+  },
+  "2025-05-05": {
+   "screen": 4334,
+   "labelled": 2433,
+   "sector_ok": 2074,
+   "sic_ok": 1961,
+   "shares": 1862,
+   "pt_halal": 1658,
+   "pass": 229
+  },
+  "2025-05-13": {
+   "screen": 4338,
+   "labelled": 2434,
+   "sector_ok": 2074,
+   "sic_ok": 1960,
+   "shares": 1863,
+   "pt_halal": 1657,
+   "pass": 250
+  },
+  "2025-05-21": {
+   "screen": 4323,
+   "labelled": 2430,
+   "sector_ok": 2072,
+   "sic_ok": 1959,
+   "shares": 1862,
+   "pt_halal": 1652,
+   "pass": 251
+  },
+  "2025-05-30": {
+   "screen": 4318,
+   "labelled": 2435,
+   "sector_ok": 2077,
+   "sic_ok": 1964,
+   "shares": 1864,
+   "pt_halal": 1654,
+   "pass": 246
+  },
+  "2025-06-09": {
+   "screen": 4311,
+   "labelled": 2437,
+   "sector_ok": 2080,
+   "sic_ok": 1967,
+   "shares": 1868,
+   "pt_halal": 1655,
+   "pass": 256
+  },
+  "2025-06-17": {
+   "screen": 4304,
+   "labelled": 2438,
+   "sector_ok": 2081,
+   "sic_ok": 1967,
+   "shares": 1868,
+   "pt_halal": 1655,
+   "pass": 262
+  },
+  "2025-06-26": {
+   "screen": 4327,
+   "labelled": 2455,
+   "sector_ok": 2095,
+   "sic_ok": 1979,
+   "shares": 1879,
+   "pt_halal": 1663,
+   "pass": 258
+  },
+  "2025-07-07": {
+   "screen": 4321,
+   "labelled": 2456,
+   "sector_ok": 2095,
+   "sic_ok": 1979,
+   "shares": 1879,
+   "pt_halal": 1665,
+   "pass": 270
+  },
+  "2025-07-15": {
+   "screen": 4331,
+   "labelled": 2467,
+   "sector_ok": 2108,
+   "sic_ok": 1991,
+   "shares": 1890,
+   "pt_halal": 1674,
+   "pass": 266
+  },
+  "2025-07-23": {
+   "screen": 4356,
+   "labelled": 2490,
+   "sector_ok": 2130,
+   "sic_ok": 2013,
+   "shares": 1912,
+   "pt_halal": 1691,
+   "pass": 271
+  },
+  "2025-07-31": {
+   "screen": 4371,
+   "labelled": 2505,
+   "sector_ok": 2141,
+   "sic_ok": 2024,
+   "shares": 1923,
+   "pt_halal": 1700,
+   "pass": 268
+  },
+  "2025-08-08": {
+   "screen": 4405,
+   "labelled": 2529,
+   "sector_ok": 2162,
+   "sic_ok": 2044,
+   "shares": 1941,
+   "pt_halal": 1711,
+   "pass": 261
+  },
+  "2025-08-18": {
+   "screen": 4417,
+   "labelled": 2539,
+   "sector_ok": 2170,
+   "sic_ok": 2051,
+   "shares": 1948,
+   "pt_halal": 1715,
+   "pass": 285
+  },
+  "2025-08-26": {
+   "screen": 4440,
+   "labelled": 2560,
+   "sector_ok": 2187,
+   "sic_ok": 2067,
+   "shares": 1964,
+   "pt_halal": 1730,
+   "pass": 296
+  },
+  "2025-09-04": {
+   "screen": 4458,
+   "labelled": 2569,
+   "sector_ok": 2195,
+   "sic_ok": 2075,
+   "shares": 1972,
+   "pt_halal": 1739,
+   "pass": 292
+  },
+  "2025-09-12": {
+   "screen": 4502,
+   "labelled": 2588,
+   "sector_ok": 2213,
+   "sic_ok": 2091,
+   "shares": 1986,
+   "pt_halal": 1749,
+   "pass": 307
+  },
+  "2025-09-22": {
+   "screen": 4521,
+   "labelled": 2597,
+   "sector_ok": 2221,
+   "sic_ok": 2099,
+   "shares": 1994,
+   "pt_halal": 1754,
+   "pass": 304
+  },
+  "2025-09-30": {
+   "screen": 4540,
+   "labelled": 2607,
+   "sector_ok": 2225,
+   "sic_ok": 2105,
+   "shares": 2000,
+   "pt_halal": 1758,
+   "pass": 306
+  },
+  "2025-10-08": {
+   "screen": 4585,
+   "labelled": 2633,
+   "sector_ok": 2246,
+   "sic_ok": 2125,
+   "shares": 2020,
+   "pt_halal": 1772,
+   "pass": 305
+  },
+  "2025-10-16": {
+   "screen": 4605,
+   "labelled": 2644,
+   "sector_ok": 2256,
+   "sic_ok": 2136,
+   "shares": 2030,
+   "pt_halal": 1782,
+   "pass": 312
+  },
+  "2025-10-24": {
+   "screen": 4633,
+   "labelled": 2653,
+   "sector_ok": 2262,
+   "sic_ok": 2142,
+   "shares": 2035,
+   "pt_halal": 1791,
+   "pass": 314
+  },
+  "2025-11-03": {
+   "screen": 4645,
+   "labelled": 2659,
+   "sector_ok": 2263,
+   "sic_ok": 2144,
+   "shares": 2038,
+   "pt_halal": 1791,
+   "pass": 309
+  },
+  "2025-11-11": {
+   "screen": 4703,
+   "labelled": 2683,
+   "sector_ok": 2284,
+   "sic_ok": 2163,
+   "shares": 2059,
+   "pt_halal": 1807,
+   "pass": 301
+  },
+  "2025-11-19": {
+   "screen": 4729,
+   "labelled": 2701,
+   "sector_ok": 2302,
+   "sic_ok": 2178,
+   "shares": 2073,
+   "pt_halal": 1819,
+   "pass": 286
+  },
+  "2025-11-28": {
+   "screen": 4748,
+   "labelled": 2712,
+   "sector_ok": 2309,
+   "sic_ok": 2184,
+   "shares": 2076,
+   "pt_halal": 1825,
+   "pass": 301
+  },
+  "2025-12-08": {
+   "screen": 4755,
+   "labelled": 2716,
+   "sector_ok": 2311,
+   "sic_ok": 2186,
+   "shares": 2079,
+   "pt_halal": 1828,
+   "pass": 302
+  },
+  "2025-12-16": {
+   "screen": 4750,
+   "labelled": 2714,
+   "sector_ok": 2310,
+   "sic_ok": 2185,
+   "shares": 2078,
+   "pt_halal": 1830,
+   "pass": 302
+  },
+  "2025-12-24": {
+   "screen": 4772,
+   "labelled": 2716,
+   "sector_ok": 2311,
+   "sic_ok": 2187,
+   "shares": 2081,
+   "pt_halal": 1832,
+   "pass": 312
+  },
+  "2026-01-05": {
+   "screen": 4763,
+   "labelled": 2715,
+   "sector_ok": 2311,
+   "sic_ok": 2185,
+   "shares": 2078,
+   "pt_halal": 1832,
+   "pass": 306
+  },
+  "2026-01-13": {
+   "screen": 4783,
+   "labelled": 2722,
+   "sector_ok": 2318,
+   "sic_ok": 2192,
+   "shares": 2082,
+   "pt_halal": 1838,
+   "pass": 317
+  },
+  "2026-01-22": {
+   "screen": 4827,
+   "labelled": 2735,
+   "sector_ok": 2329,
+   "sic_ok": 2202,
+   "shares": 2093,
+   "pt_halal": 1846,
+   "pass": 320
+  },
+  "2026-01-30": {
+   "screen": 4839,
+   "labelled": 2743,
+   "sector_ok": 2334,
+   "sic_ok": 2207,
+   "shares": 2097,
+   "pt_halal": 1851,
+   "pass": 316
+  },
+  "2026-02-09": {
+   "screen": 4865,
+   "labelled": 2743,
+   "sector_ok": 2332,
+   "sic_ok": 2205,
+   "shares": 2095,
+   "pt_halal": 1848,
+   "pass": 313
+  },
+  "2026-02-18": {
+   "screen": 4898,
+   "labelled": 2745,
+   "sector_ok": 2333,
+   "sic_ok": 2207,
+   "shares": 2095,
+   "pt_halal": 1847,
+   "pass": 312
+  },
+  "2026-02-26": {
+   "screen": 4897,
+   "labelled": 2747,
+   "sector_ok": 2337,
+   "sic_ok": 2212,
+   "shares": 2101,
+   "pt_halal": 1848,
+   "pass": 301
+  },
+  "2026-03-06": {
+   "screen": 4939,
+   "labelled": 2753,
+   "sector_ok": 2341,
+   "sic_ok": 2217,
+   "shares": 2108,
+   "pt_halal": 1849,
+   "pass": 285
+  },
+  "2026-03-16": {
+   "screen": 4952,
+   "labelled": 2755,
+   "sector_ok": 2343,
+   "sic_ok": 2219,
+   "shares": 2108,
+   "pt_halal": 1850,
+   "pass": 280
+  },
+  "2026-03-24": {
+   "screen": 4954,
+   "labelled": 2758,
+   "sector_ok": 2346,
+   "sic_ok": 2222,
+   "shares": 2114,
+   "pt_halal": 1852,
+   "pass": 274
+  },
+  "2026-04-01": {
+   "screen": 4962,
+   "labelled": 2764,
+   "sector_ok": 2349,
+   "sic_ok": 2224,
+   "shares": 2118,
+   "pt_halal": 1854,
+   "pass": 278
+  },
+  "2026-04-10": {
+   "screen": 4962,
+   "labelled": 2765,
+   "sector_ok": 2351,
+   "sic_ok": 2226,
+   "shares": 2119,
+   "pt_halal": 1860,
+   "pass": 293
+  },
+  "2026-04-20": {
+   "screen": 4963,
+   "labelled": 2768,
+   "sector_ok": 2355,
+   "sic_ok": 2230,
+   "shares": 2121,
+   "pt_halal": 1861,
+   "pass": 303
+  },
+  "2026-04-28": {
+   "screen": 4945,
+   "labelled": 2769,
+   "sector_ok": 2353,
+   "sic_ok": 2227,
+   "shares": 2119,
+   "pt_halal": 1860,
+   "pass": 297
+  },
+  "2026-05-06": {
+   "screen": 4931,
+   "labelled": 2773,
+   "sector_ok": 2358,
+   "sic_ok": 2232,
+   "shares": 2126,
+   "pt_halal": 1866,
+   "pass": 310
+  },
+  "2026-05-14": {
+   "screen": 4950,
+   "labelled": 2791,
+   "sector_ok": 2375,
+   "sic_ok": 2248,
+   "shares": 2146,
+   "pt_halal": 1879,
+   "pass": 304
+  },
+  "2026-05-22": {
+   "screen": 4961,
+   "labelled": 2798,
+   "sector_ok": 2384,
+   "sic_ok": 2257,
+   "shares": 2154,
+   "pt_halal": 1887,
+   "pass": 309
+  },
+  "2026-06-02": {
+   "screen": 4978,
+   "labelled": 2820,
+   "sector_ok": 2401,
+   "sic_ok": 2275,
+   "shares": 2172,
+   "pt_halal": 1898,
+   "pass": 318
+  },
+  "2026-06-10": {
+   "screen": 4967,
+   "labelled": 2824,
+   "sector_ok": 2402,
+   "sic_ok": 2277,
+   "shares": 2172,
+   "pt_halal": 1899,
+   "pass": 312
+  },
+  "2026-06-18": {
+   "screen": 4990,
+   "labelled": 2839,
+   "sector_ok": 2417,
+   "sic_ok": 2289,
+   "shares": 2184,
+   "pt_halal": 1908,
+   "pass": 320
+  },
+  "2026-06-29": {
+   "screen": 5019,
+   "labelled": 2855,
+   "sector_ok": 2429,
+   "sic_ok": 2301,
+   "shares": 2195,
+   "pt_halal": 1919,
+   "pass": 325
+  },
+  "2026-07-08": {
+   "screen": 5047,
+   "labelled": 2872,
+   "sector_ok": 2446,
+   "sic_ok": 2316,
+   "shares": 2210,
+   "pt_halal": 1931,
+   "pass": 327
+  },
+  "2026-07-16": {
+   "screen": 5052,
+   "labelled": 2880,
+   "sector_ok": 2450,
+   "sic_ok": 2317,
+   "shares": 2210,
+   "pt_halal": 1931,
+   "pass": 323
+  },
+  "2026-07-24": {
+   "screen": 5039,
+   "labelled": 2878,
+   "sector_ok": 2448,
+   "sic_ok": 2315,
+   "shares": 2209,
+   "pt_halal": 1931,
+   "pass": 312
+  },
+  "2026-08-03": {
+   "screen": 5032,
+   "labelled": 2884,
+   "sector_ok": 2456,
+   "sic_ok": 2323,
+   "shares": 2211,
+   "pt_halal": 1940,
+   "pass": 311
+  },
+  "2024-10-23": {
+   "screen": 4042,
+   "labelled": 2337,
+   "sector_ok": 2003,
+   "sic_ok": 1895,
+   "shares": 1794,
+   "pt_halal": 1607,
+   "pass": 252
+  },
+  "2024-10-31": {
+   "screen": 4020,
+   "labelled": 2333,
+   "sector_ok": 1997,
+   "sic_ok": 1889,
+   "shares": 1789,
+   "pt_halal": 1602,
+   "pass": 240
+  },
+  "2024-11-08": {
+   "screen": 4052,
+   "labelled": 2344,
+   "sector_ok": 2008,
+   "sic_ok": 1899,
+   "shares": 1797,
+   "pt_halal": 1608,
+   "pass": 246
+  },
+  "2024-11-18": {
+   "screen": 4097,
+   "labelled": 2355,
+   "sector_ok": 2018,
+   "sic_ok": 1909,
+   "shares": 1808,
+   "pt_halal": 1616,
+   "pass": 236
+  },
+  "2024-11-26": {
+   "screen": 4130,
+   "labelled": 2370,
+   "sector_ok": 2031,
+   "sic_ok": 1923,
+   "shares": 1823,
+   "pt_halal": 1629,
+   "pass": 257
+  },
+  "2024-12-05": {
+   "screen": 4154,
+   "labelled": 2386,
+   "sector_ok": 2045,
+   "sic_ok": 1936,
+   "shares": 1834,
+   "pt_halal": 1639,
+   "pass": 255
+  },
+  "2024-12-13": {
+   "screen": 4178,
+   "labelled": 2398,
+   "sector_ok": 2057,
+   "sic_ok": 1949,
+   "shares": 1847,
+   "pt_halal": 1647,
+   "pass": 250
+  },
+  "2024-12-23": {
+   "screen": 4209,
+   "labelled": 2413,
+   "sector_ok": 2068,
+   "sic_ok": 1960,
+   "shares": 1856,
+   "pt_halal": 1655,
+   "pass": 242
+  },
+  "2025-01-02": {
+   "screen": 4230,
+   "labelled": 2421,
+   "sector_ok": 2075,
+   "sic_ok": 1966,
+   "shares": 1861,
+   "pt_halal": 1663,
+   "pass": 243
+  },
+  "2025-01-13": {
+   "screen": 4287,
+   "labelled": 2440,
+   "sector_ok": 2090,
+   "sic_ok": 1979,
+   "shares": 1875,
+   "pt_halal": 1675,
+   "pass": 244
+  },
+  "2025-01-22": {
+   "screen": 4310,
+   "labelled": 2441,
+   "sector_ok": 2094,
+   "sic_ok": 1983,
+   "shares": 1879,
+   "pt_halal": 1676,
+   "pass": 250
+  },
+  "2025-01-30": {
+   "screen": 4330,
+   "labelled": 2444,
+   "sector_ok": 2097,
+   "sic_ok": 1986,
+   "shares": 1881,
+   "pt_halal": 1679,
+   "pass": 249
+  },
+  "2025-02-07": {
+   "screen": 4342,
+   "labelled": 2448,
+   "sector_ok": 2101,
+   "sic_ok": 1992,
+   "shares": 1885,
+   "pt_halal": 1680,
+   "pass": 251
+  },
+  "2025-02-18": {
+   "screen": 4335,
+   "labelled": 2448,
+   "sector_ok": 2103,
+   "sic_ok": 1993,
+   "shares": 1887,
+   "pt_halal": 1682,
+   "pass": 248
+  },
+  "2025-02-26": {
+   "screen": 4340,
+   "labelled": 2448,
+   "sector_ok": 2101,
+   "sic_ok": 1991,
+   "shares": 1887,
+   "pt_halal": 1682,
+   "pass": 243
+  },
+  "2025-03-06": {
+   "screen": 4344,
+   "labelled": 2445,
+   "sector_ok": 2097,
+   "sic_ok": 1986,
+   "shares": 1886,
+   "pt_halal": 1677,
+   "pass": 237
+  },
+  "2025-03-14": {
+   "screen": 4364,
+   "labelled": 2451,
+   "sector_ok": 2104,
+   "sic_ok": 1992,
+   "shares": 1892,
+   "pt_halal": 1683,
+   "pass": 218
+  },
+  "2025-03-24": {
+   "screen": 4345,
+   "labelled": 2453,
+   "sector_ok": 2105,
+   "sic_ok": 1994,
+   "shares": 1894,
+   "pt_halal": 1684,
+   "pass": 228
+  },
+  "2025-04-01": {
+   "screen": 4341,
+   "labelled": 2458,
+   "sector_ok": 2107,
+   "sic_ok": 1995,
+   "shares": 1895,
+   "pt_halal": 1685,
+   "pass": 220
+  },
+  "2025-04-09": {
+   "screen": 4362,
+   "labelled": 2450,
+   "sector_ok": 2095,
+   "sic_ok": 1983,
+   "shares": 1881,
+   "pt_halal": 1678,
+   "pass": 183
+  },
+  "2025-04-17": {
+   "screen": 4364,
+   "labelled": 2442,
+   "sector_ok": 2084,
+   "sic_ok": 1971,
+   "shares": 1869,
+   "pt_halal": 1668,
+   "pass": 201
+  },
+  "2025-04-28": {
+   "screen": 4361,
+   "labelled": 2437,
+   "sector_ok": 2078,
+   "sic_ok": 1964,
+   "shares": 1863,
+   "pt_halal": 1660,
+   "pass": 223
+  },
+  "2025-05-06": {
+   "screen": 4331,
+   "labelled": 2432,
+   "sector_ok": 2073,
+   "sic_ok": 1960,
+   "shares": 1862,
+   "pt_halal": 1657,
+   "pass": 229
+  },
+  "2025-05-14": {
+   "screen": 4338,
+   "labelled": 2435,
+   "sector_ok": 2075,
+   "sic_ok": 1961,
+   "shares": 1864,
+   "pt_halal": 1657,
+   "pass": 251
+  },
+  "2025-05-22": {
+   "screen": 4325,
+   "labelled": 2434,
+   "sector_ok": 2075,
+   "sic_ok": 1962,
+   "shares": 1865,
+   "pt_halal": 1654,
+   "pass": 245
+  },
+  "2025-06-02": {
+   "screen": 4316,
+   "labelled": 2434,
+   "sector_ok": 2077,
+   "sic_ok": 1964,
+   "shares": 1864,
+   "pt_halal": 1653,
+   "pass": 243
+  },
+  "2025-06-10": {
+   "screen": 4312,
+   "labelled": 2440,
+   "sector_ok": 2082,
+   "sic_ok": 1969,
+   "shares": 1870,
+   "pt_halal": 1657,
+   "pass": 257
+  },
+  "2025-06-18": {
+   "screen": 4306,
+   "labelled": 2442,
+   "sector_ok": 2084,
+   "sic_ok": 1970,
+   "shares": 1871,
+   "pt_halal": 1658,
+   "pass": 258
+  },
+  "2025-06-27": {
+   "screen": 4324,
+   "labelled": 2454,
+   "sector_ok": 2095,
+   "sic_ok": 1979,
+   "shares": 1878,
+   "pt_halal": 1665,
+   "pass": 263
+  },
+  "2025-07-08": {
+   "screen": 4320,
+   "labelled": 2456,
+   "sector_ok": 2098,
+   "sic_ok": 1982,
+   "shares": 1881,
+   "pt_halal": 1668,
+   "pass": 266
+  },
+  "2025-07-16": {
+   "screen": 4329,
+   "labelled": 2468,
+   "sector_ok": 2108,
+   "sic_ok": 1991,
+   "shares": 1890,
+   "pt_halal": 1675,
+   "pass": 264
+  },
+  "2025-07-24": {
+   "screen": 4366,
+   "labelled": 2496,
+   "sector_ok": 2137,
+   "sic_ok": 2020,
+   "shares": 1919,
+   "pt_halal": 1696,
+   "pass": 274
+  },
+  "2025-08-01": {
+   "screen": 4378,
+   "labelled": 2508,
+   "sector_ok": 2145,
+   "sic_ok": 2028,
+   "shares": 1927,
+   "pt_halal": 1702,
+   "pass": 266
+  },
+  "2025-08-11": {
+   "screen": 4403,
+   "labelled": 2528,
+   "sector_ok": 2160,
+   "sic_ok": 2042,
+   "shares": 1940,
+   "pt_halal": 1711,
+   "pass": 272
+  },
+  "2025-08-19": {
+   "screen": 4417,
+   "labelled": 2541,
+   "sector_ok": 2172,
+   "sic_ok": 2053,
+   "shares": 1950,
+   "pt_halal": 1717,
+   "pass": 284
+  },
+  "2025-08-27": {
+   "screen": 4446,
+   "labelled": 2563,
+   "sector_ok": 2189,
+   "sic_ok": 2071,
+   "shares": 1968,
+   "pt_halal": 1734,
+   "pass": 297
+  },
+  "2025-09-05": {
+   "screen": 4465,
+   "labelled": 2572,
+   "sector_ok": 2198,
+   "sic_ok": 2077,
+   "shares": 1974,
+   "pt_halal": 1740,
+   "pass": 297
+  },
+  "2025-09-15": {
+   "screen": 4503,
+   "labelled": 2588,
+   "sector_ok": 2213,
+   "sic_ok": 2091,
+   "shares": 1986,
+   "pt_halal": 1749,
+   "pass": 301
+  },
+  "2025-09-23": {
+   "screen": 4524,
+   "labelled": 2602,
+   "sector_ok": 2226,
+   "sic_ok": 2104,
+   "shares": 1999,
+   "pt_halal": 1755,
+   "pass": 304
+  },
+  "2025-10-01": {
+   "screen": 4541,
+   "labelled": 2611,
+   "sector_ok": 2229,
+   "sic_ok": 2109,
+   "shares": 2005,
+   "pt_halal": 1761,
+   "pass": 307
+  },
+  "2025-10-09": {
+   "screen": 4591,
+   "labelled": 2639,
+   "sector_ok": 2253,
+   "sic_ok": 2132,
+   "shares": 2027,
+   "pt_halal": 1778,
+   "pass": 311
+  },
+  "2025-10-17": {
+   "screen": 4618,
+   "labelled": 2647,
+   "sector_ok": 2259,
+   "sic_ok": 2139,
+   "shares": 2031,
+   "pt_halal": 1785,
+   "pass": 310
+  },
+  "2025-10-27": {
+   "screen": 4627,
+   "labelled": 2654,
+   "sector_ok": 2263,
+   "sic_ok": 2143,
+   "shares": 2037,
+   "pt_halal": 1791,
+   "pass": 314
+  },
+  "2025-11-04": {
+   "screen": 4657,
+   "labelled": 2660,
+   "sector_ok": 2264,
+   "sic_ok": 2145,
+   "shares": 2039,
+   "pt_halal": 1792,
+   "pass": 312
+  },
+  "2025-11-12": {
+   "screen": 4710,
+   "labelled": 2684,
+   "sector_ok": 2285,
+   "sic_ok": 2163,
+   "shares": 2059,
+   "pt_halal": 1808,
+   "pass": 305
+  },
+  "2025-11-20": {
+   "screen": 4729,
+   "labelled": 2702,
+   "sector_ok": 2303,
+   "sic_ok": 2179,
+   "shares": 2074,
+   "pt_halal": 1820,
+   "pass": 287
+  },
+  "2025-12-01": {
+   "screen": 4742,
+   "labelled": 2711,
+   "sector_ok": 2307,
+   "sic_ok": 2182,
+   "shares": 2074,
+   "pt_halal": 1823,
+   "pass": 303
+  },
+  "2025-12-09": {
+   "screen": 4757,
+   "labelled": 2714,
+   "sector_ok": 2309,
+   "sic_ok": 2184,
+   "shares": 2077,
+   "pt_halal": 1827,
+   "pass": 301
+  },
+  "2025-12-17": {
+   "screen": 4753,
+   "labelled": 2713,
+   "sector_ok": 2310,
+   "sic_ok": 2185,
+   "shares": 2078,
+   "pt_halal": 1830,
+   "pass": 304
+  },
+  "2025-12-26": {
+   "screen": 4764,
+   "labelled": 2713,
+   "sector_ok": 2307,
+   "sic_ok": 2183,
+   "shares": 2077,
+   "pt_halal": 1830,
+   "pass": 313
+  },
+  "2026-01-06": {
+   "screen": 4776,
+   "labelled": 2719,
+   "sector_ok": 2315,
+   "sic_ok": 2189,
+   "shares": 2080,
+   "pt_halal": 1836,
+   "pass": 315
+  },
+  "2026-01-14": {
+   "screen": 4789,
+   "labelled": 2724,
+   "sector_ok": 2320,
+   "sic_ok": 2194,
+   "shares": 2085,
+   "pt_halal": 1838,
+   "pass": 319
+  },
+  "2026-01-23": {
+   "screen": 4834,
+   "labelled": 2737,
+   "sector_ok": 2329,
+   "sic_ok": 2202,
+   "shares": 2093,
+   "pt_halal": 1846,
+   "pass": 323
+  },
+  "2026-02-02": {
+   "screen": 4848,
+   "labelled": 2745,
+   "sector_ok": 2335,
+   "sic_ok": 2208,
+   "shares": 2099,
+   "pt_halal": 1853,
+   "pass": 311
+  },
+  "2026-02-10": {
+   "screen": 4871,
+   "labelled": 2747,
+   "sector_ok": 2335,
+   "sic_ok": 2208,
+   "shares": 2097,
+   "pt_halal": 1851,
+   "pass": 314
+  },
+  "2026-02-19": {
+   "screen": 4896,
+   "labelled": 2747,
+   "sector_ok": 2335,
+   "sic_ok": 2209,
+   "shares": 2097,
+   "pt_halal": 1848,
+   "pass": 315
+  },
+  "2026-02-27": {
+   "screen": 4909,
+   "labelled": 2748,
+   "sector_ok": 2336,
+   "sic_ok": 2211,
+   "shares": 2102,
+   "pt_halal": 1847,
+   "pass": 305
+  },
+  "2026-03-09": {
+   "screen": 4944,
+   "labelled": 2755,
+   "sector_ok": 2342,
+   "sic_ok": 2218,
+   "shares": 2108,
+   "pt_halal": 1850,
+   "pass": 281
+  },
+  "2026-03-17": {
+   "screen": 4950,
+   "labelled": 2753,
+   "sector_ok": 2341,
+   "sic_ok": 2217,
+   "shares": 2107,
+   "pt_halal": 1848,
+   "pass": 283
+  },
+  "2026-03-25": {
+   "screen": 4960,
+   "labelled": 2758,
+   "sector_ok": 2346,
+   "sic_ok": 2222,
+   "shares": 2115,
+   "pt_halal": 1852,
+   "pass": 279
+  },
+  "2026-04-02": {
+   "screen": 4955,
+   "labelled": 2761,
+   "sector_ok": 2347,
+   "sic_ok": 2222,
+   "shares": 2117,
+   "pt_halal": 1854,
+   "pass": 276
+  },
+  "2026-04-13": {
+   "screen": 4961,
+   "labelled": 2764,
+   "sector_ok": 2352,
+   "sic_ok": 2227,
+   "shares": 2119,
+   "pt_halal": 1861,
+   "pass": 289
+  },
+  "2026-04-21": {
+   "screen": 4956,
+   "labelled": 2765,
+   "sector_ok": 2351,
+   "sic_ok": 2226,
+   "shares": 2117,
+   "pt_halal": 1858,
+   "pass": 303
+  },
+  "2026-04-29": {
+   "screen": 4945,
+   "labelled": 2768,
+   "sector_ok": 2354,
+   "sic_ok": 2228,
+   "shares": 2120,
+   "pt_halal": 1861,
+   "pass": 299
+  },
+  "2026-05-07": {
+   "screen": 4931,
+   "labelled": 2776,
+   "sector_ok": 2361,
+   "sic_ok": 2235,
+   "shares": 2129,
+   "pt_halal": 1869,
+   "pass": 318
+  },
+  "2026-05-15": {
+   "screen": 4959,
+   "labelled": 2796,
+   "sector_ok": 2381,
+   "sic_ok": 2254,
+   "shares": 2152,
+   "pt_halal": 1884,
+   "pass": 305
+  },
+  "2026-05-26": {
+   "screen": 4970,
+   "labelled": 2805,
+   "sector_ok": 2390,
+   "sic_ok": 2263,
+   "shares": 2160,
+   "pt_halal": 1890,
+   "pass": 313
+  },
+  "2026-06-03": {
+   "screen": 4977,
+   "labelled": 2822,
+   "sector_ok": 2404,
+   "sic_ok": 2278,
+   "shares": 2174,
+   "pt_halal": 1900,
+   "pass": 321
+  },
+  "2026-06-11": {
+   "screen": 4967,
+   "labelled": 2821,
+   "sector_ok": 2399,
+   "sic_ok": 2274,
+   "shares": 2169,
+   "pt_halal": 1897,
+   "pass": 311
+  },
+  "2026-06-22": {
+   "screen": 4994,
+   "labelled": 2841,
+   "sector_ok": 2419,
+   "sic_ok": 2291,
+   "shares": 2186,
+   "pt_halal": 1910,
+   "pass": 324
+  },
+  "2026-06-30": {
+   "screen": 5020,
+   "labelled": 2860,
+   "sector_ok": 2435,
+   "sic_ok": 2307,
+   "shares": 2201,
+   "pt_halal": 1923,
+   "pass": 323
+  },
+  "2026-07-09": {
+   "screen": 5052,
+   "labelled": 2873,
+   "sector_ok": 2447,
+   "sic_ok": 2317,
+   "shares": 2211,
+   "pt_halal": 1931,
+   "pass": 322
+  },
+  "2026-07-17": {
+   "screen": 5057,
+   "labelled": 2882,
+   "sector_ok": 2453,
+   "sic_ok": 2320,
+   "shares": 2213,
+   "pt_halal": 1933,
+   "pass": 321
+  },
+  "2026-07-27": {
+   "screen": 5039,
+   "labelled": 2876,
+   "sector_ok": 2447,
+   "sic_ok": 2314,
+   "shares": 2207,
+   "pt_halal": 1931,
+   "pass": 312
+  },
+  "2026-08-04": {
+   "screen": 5028,
+   "labelled": 2883,
+   "sector_ok": 2455,
+   "sic_ok": 2322,
+   "shares": 2211,
+   "pt_halal": 1940,
+   "pass": 314
+  },
+  "2024-10-24": {
+   "screen": 4041,
+   "labelled": 2337,
+   "sector_ok": 2002,
+   "sic_ok": 1894,
+   "shares": 1793,
+   "pt_halal": 1605,
+   "pass": 244
+  },
+  "2024-11-01": {
+   "screen": 4021,
+   "labelled": 2332,
+   "sector_ok": 1996,
+   "sic_ok": 1888,
+   "shares": 1788,
+   "pt_halal": 1602,
+   "pass": 241
+  },
+  "2024-11-11": {
+   "screen": 4061,
+   "labelled": 2346,
+   "sector_ok": 2011,
+   "sic_ok": 1902,
+   "shares": 1801,
+   "pt_halal": 1611,
+   "pass": 248
+  },
+  "2024-11-19": {
+   "screen": 4104,
+   "labelled": 2356,
+   "sector_ok": 2018,
+   "sic_ok": 1909,
+   "shares": 1808,
+   "pt_halal": 1616,
+   "pass": 239
+  },
+  "2024-11-27": {
+   "screen": 4136,
+   "labelled": 2375,
+   "sector_ok": 2035,
+   "sic_ok": 1926,
+   "shares": 1826,
+   "pt_halal": 1630,
+   "pass": 255
+  },
+  "2024-12-06": {
+   "screen": 4154,
+   "labelled": 2386,
+   "sector_ok": 2045,
+   "sic_ok": 1936,
+   "shares": 1834,
+   "pt_halal": 1638,
+   "pass": 254
+  },
+  "2024-12-16": {
+   "screen": 4183,
+   "labelled": 2400,
+   "sector_ok": 2058,
+   "sic_ok": 1950,
+   "shares": 1848,
+   "pt_halal": 1649,
+   "pass": 252
+  },
+  "2024-12-24": {
+   "screen": 4216,
+   "labelled": 2419,
+   "sector_ok": 2073,
+   "sic_ok": 1965,
+   "shares": 1860,
+   "pt_halal": 1659,
+   "pass": 244
+  },
+  "2025-01-03": {
+   "screen": 4241,
+   "labelled": 2428,
+   "sector_ok": 2081,
+   "sic_ok": 1972,
+   "shares": 1867,
+   "pt_halal": 1665,
+   "pass": 245
+  },
+  "2025-01-14": {
+   "screen": 4293,
+   "labelled": 2439,
+   "sector_ok": 2090,
+   "sic_ok": 1979,
+   "shares": 1875,
+   "pt_halal": 1674,
+   "pass": 246
+  },
+  "2025-01-23": {
+   "screen": 4314,
+   "labelled": 2440,
+   "sector_ok": 2093,
+   "sic_ok": 1982,
+   "shares": 1878,
+   "pt_halal": 1675,
+   "pass": 249
+  },
+  "2025-01-31": {
+   "screen": 4333,
+   "labelled": 2447,
+   "sector_ok": 2099,
+   "sic_ok": 1989,
+   "shares": 1884,
+   "pt_halal": 1681,
+   "pass": 250
+  },
+  "2025-02-10": {
+   "screen": 4345,
+   "labelled": 2447,
+   "sector_ok": 2101,
+   "sic_ok": 1993,
+   "shares": 1886,
+   "pt_halal": 1680,
+   "pass": 248
+  },
+  "2025-02-19": {
+   "screen": 4340,
+   "labelled": 2451,
+   "sector_ok": 2106,
+   "sic_ok": 1996,
+   "shares": 1890,
+   "pt_halal": 1686,
+   "pass": 253
+  },
+  "2025-02-27": {
+   "screen": 4333,
+   "labelled": 2445,
+   "sector_ok": 2099,
+   "sic_ok": 1989,
+   "shares": 1886,
+   "pt_halal": 1679,
+   "pass": 237
+  },
+  "2025-03-07": {
+   "screen": 4351,
+   "labelled": 2447,
+   "sector_ok": 2099,
+   "sic_ok": 1988,
+   "shares": 1889,
+   "pt_halal": 1678,
+   "pass": 236
+  },
+  "2025-03-17": {
+   "screen": 4369,
+   "labelled": 2454,
+   "sector_ok": 2107,
+   "sic_ok": 1995,
+   "shares": 1895,
+   "pt_halal": 1685,
+   "pass": 227
+  },
+  "2025-03-25": {
+   "screen": 4344,
+   "labelled": 2453,
+   "sector_ok": 2105,
+   "sic_ok": 1994,
+   "shares": 1894,
+   "pt_halal": 1684,
+   "pass": 237
+  },
+  "2025-04-02": {
+   "screen": 4339,
+   "labelled": 2459,
+   "sector_ok": 2107,
+   "sic_ok": 1994,
+   "shares": 1894,
+   "pt_halal": 1684,
+   "pass": 220
+  },
+  "2025-04-10": {
+   "screen": 4372,
+   "labelled": 2454,
+   "sector_ok": 2098,
+   "sic_ok": 1986,
+   "shares": 1884,
+   "pt_halal": 1680,
+   "pass": 213
+  },
+  "2025-04-21": {
+   "screen": 4362,
+   "labelled": 2440,
+   "sector_ok": 2082,
+   "sic_ok": 1969,
+   "shares": 1867,
+   "pt_halal": 1667,
+   "pass": 206
+  },
+  "2025-04-29": {
+   "screen": 4360,
+   "labelled": 2435,
+   "sector_ok": 2076,
+   "sic_ok": 1963,
+   "shares": 1862,
+   "pt_halal": 1660,
+   "pass": 223
+  },
+  "2025-05-07": {
+   "screen": 4326,
+   "labelled": 2432,
+   "sector_ok": 2073,
+   "sic_ok": 1960,
+   "shares": 1862,
+   "pt_halal": 1657,
+   "pass": 231
+  },
+  "2025-05-15": {
+   "screen": 4337,
+   "labelled": 2438,
+   "sector_ok": 2078,
+   "sic_ok": 1964,
+   "shares": 1867,
+   "pt_halal": 1659,
+   "pass": 249
+  },
+  "2025-05-23": {
+   "screen": 4330,
+   "labelled": 2435,
+   "sector_ok": 2076,
+   "sic_ok": 1963,
+   "shares": 1866,
+   "pt_halal": 1655,
+   "pass": 246
+  },
+  "2025-06-03": {
+   "screen": 4317,
+   "labelled": 2432,
+   "sector_ok": 2075,
+   "sic_ok": 1963,
+   "shares": 1863,
+   "pt_halal": 1653,
+   "pass": 244
+  },
+  "2025-06-11": {
+   "screen": 4310,
+   "labelled": 2440,
+   "sector_ok": 2083,
+   "sic_ok": 1970,
+   "shares": 1871,
+   "pt_halal": 1656,
+   "pass": 261
+  },
+  "2025-06-20": {
+   "screen": 4306,
+   "labelled": 2445,
+   "sector_ok": 2087,
+   "sic_ok": 1973,
+   "shares": 1873,
+   "pt_halal": 1658,
+   "pass": 258
+  },
+  "2025-06-30": {
+   "screen": 4325,
+   "labelled": 2454,
+   "sector_ok": 2093,
+   "sic_ok": 1977,
+   "shares": 1877,
+   "pt_halal": 1665,
+   "pass": 262
+  },
+  "2025-07-09": {
+   "screen": 4313,
+   "labelled": 2456,
+   "sector_ok": 2098,
+   "sic_ok": 1982,
+   "shares": 1881,
+   "pt_halal": 1666,
+   "pass": 267
+  },
+  "2025-07-17": {
+   "screen": 4333,
+   "labelled": 2471,
+   "sector_ok": 2110,
+   "sic_ok": 1993,
+   "shares": 1892,
+   "pt_halal": 1679,
+   "pass": 263
+  },
+  "2025-07-25": {
+   "screen": 4370,
+   "labelled": 2499,
+   "sector_ok": 2139,
+   "sic_ok": 2022,
+   "shares": 1921,
+   "pt_halal": 1698,
+   "pass": 274
+  },
+  "2025-08-04": {
+   "screen": 4389,
+   "labelled": 2516,
+   "sector_ok": 2150,
+   "sic_ok": 2033,
+   "shares": 1932,
+   "pt_halal": 1705,
+   "pass": 261
+  },
+  "2025-08-12": {
+   "screen": 4405,
+   "labelled": 2529,
+   "sector_ok": 2161,
+   "sic_ok": 2042,
+   "shares": 1939,
+   "pt_halal": 1710,
+   "pass": 271
+  },
+  "2025-08-20": {
+   "screen": 4422,
+   "labelled": 2544,
+   "sector_ok": 2174,
+   "sic_ok": 2055,
+   "shares": 1952,
+   "pt_halal": 1721,
+   "pass": 285
+  },
+  "2025-08-28": {
+   "screen": 4451,
+   "labelled": 2564,
+   "sector_ok": 2191,
+   "sic_ok": 2070,
+   "shares": 1967,
+   "pt_halal": 1733,
+   "pass": 299
+  },
+  "2025-09-08": {
+   "screen": 4466,
+   "labelled": 2571,
+   "sector_ok": 2197,
+   "sic_ok": 2076,
+   "shares": 1973,
+   "pt_halal": 1740,
+   "pass": 298
+  },
+  "2025-09-16": {
+   "screen": 4503,
+   "labelled": 2587,
+   "sector_ok": 2212,
+   "sic_ok": 2090,
+   "shares": 1985,
+   "pt_halal": 1747,
+   "pass": 303
+  },
+  "2025-09-24": {
+   "screen": 4526,
+   "labelled": 2599,
+   "sector_ok": 2222,
+   "sic_ok": 2100,
+   "shares": 1995,
+   "pt_halal": 1752,
+   "pass": 304
+  },
+  "2025-10-02": {
+   "screen": 4549,
+   "labelled": 2615,
+   "sector_ok": 2233,
+   "sic_ok": 2113,
+   "shares": 2009,
+   "pt_halal": 1764,
+   "pass": 308
+  },
+  "2025-10-10": {
+   "screen": 4594,
+   "labelled": 2640,
+   "sector_ok": 2253,
+   "sic_ok": 2132,
+   "shares": 2027,
+   "pt_halal": 1778,
+   "pass": 305
+  },
+  "2025-10-20": {
+   "screen": 4622,
+   "labelled": 2649,
+   "sector_ok": 2261,
+   "sic_ok": 2141,
+   "shares": 2033,
+   "pt_halal": 1788,
+   "pass": 311
+  },
+  "2025-10-28": {
+   "screen": 4624,
+   "labelled": 2652,
+   "sector_ok": 2259,
+   "sic_ok": 2139,
+   "shares": 2032,
+   "pt_halal": 1787,
+   "pass": 315
+  },
+  "2025-11-05": {
+   "screen": 4662,
+   "labelled": 2664,
+   "sector_ok": 2266,
+   "sic_ok": 2147,
+   "shares": 2041,
+   "pt_halal": 1794,
+   "pass": 303
+  },
+  "2025-11-13": {
+   "screen": 4713,
+   "labelled": 2686,
+   "sector_ok": 2287,
+   "sic_ok": 2164,
+   "shares": 2059,
+   "pt_halal": 1810,
+   "pass": 306
+  },
+  "2025-11-21": {
+   "screen": 4737,
+   "labelled": 2703,
+   "sector_ok": 2304,
+   "sic_ok": 2180,
+   "shares": 2073,
+   "pt_halal": 1820,
+   "pass": 283
+  },
+  "2025-12-02": {
+   "screen": 4740,
+   "labelled": 2711,
+   "sector_ok": 2307,
+   "sic_ok": 2182,
+   "shares": 2075,
+   "pt_halal": 1825,
+   "pass": 298
+  },
+  "2025-12-10": {
+   "screen": 4758,
+   "labelled": 2717,
+   "sector_ok": 2312,
+   "sic_ok": 2187,
+   "shares": 2080,
+   "pt_halal": 1830,
+   "pass": 307
+  },
+  "2025-12-18": {
+   "screen": 4755,
+   "labelled": 2711,
+   "sector_ok": 2308,
+   "sic_ok": 2184,
+   "shares": 2078,
+   "pt_halal": 1829,
+   "pass": 303
+  },
+  "2025-12-29": {
+   "screen": 4766,
+   "labelled": 2714,
+   "sector_ok": 2308,
+   "sic_ok": 2184,
+   "shares": 2078,
+   "pt_halal": 1830,
+   "pass": 314
+  },
+  "2026-01-07": {
+   "screen": 4780,
+   "labelled": 2717,
+   "sector_ok": 2314,
+   "sic_ok": 2188,
+   "shares": 2079,
+   "pt_halal": 1835,
+   "pass": 314
+  },
+  "2026-01-15": {
+   "screen": 4790,
+   "labelled": 2722,
+   "sector_ok": 2319,
+   "sic_ok": 2193,
+   "shares": 2084,
+   "pt_halal": 1837,
+   "pass": 319
+  },
+  "2026-01-26": {
+   "screen": 4836,
+   "labelled": 2738,
+   "sector_ok": 2331,
+   "sic_ok": 2204,
+   "shares": 2095,
+   "pt_halal": 1846,
+   "pass": 319
+  },
+  "2026-02-03": {
+   "screen": 4848,
+   "labelled": 2740,
+   "sector_ok": 2330,
+   "sic_ok": 2203,
+   "shares": 2094,
+   "pt_halal": 1848,
+   "pass": 315
+  },
+  "2026-02-11": {
+   "screen": 4867,
+   "labelled": 2744,
+   "sector_ok": 2331,
+   "sic_ok": 2204,
+   "shares": 2093,
+   "pt_halal": 1847,
+   "pass": 320
+  },
+  "2026-02-20": {
+   "screen": 4892,
+   "labelled": 2744,
+   "sector_ok": 2332,
+   "sic_ok": 2206,
+   "shares": 2095,
+   "pt_halal": 1845,
+   "pass": 313
+  },
+  "2026-03-02": {
+   "screen": 4913,
+   "labelled": 2746,
+   "sector_ok": 2335,
+   "sic_ok": 2210,
+   "shares": 2102,
+   "pt_halal": 1845,
+   "pass": 297
+  },
+  "2026-03-10": {
+   "screen": 4947,
+   "labelled": 2754,
+   "sector_ok": 2340,
+   "sic_ok": 2216,
+   "shares": 2105,
+   "pt_halal": 1848,
+   "pass": 283
+  },
+  "2026-03-18": {
+   "screen": 4944,
+   "labelled": 2749,
+   "sector_ok": 2337,
+   "sic_ok": 2213,
+   "shares": 2103,
+   "pt_halal": 1846,
+   "pass": 283
+  },
+  "2026-03-26": {
+   "screen": 4956,
+   "labelled": 2759,
+   "sector_ok": 2347,
+   "sic_ok": 2223,
+   "shares": 2116,
+   "pt_halal": 1854,
+   "pass": 280
+  },
+  "2026-04-06": {
+   "screen": 4962,
+   "labelled": 2764,
+   "sector_ok": 2351,
+   "sic_ok": 2226,
+   "shares": 2120,
+   "pt_halal": 1859,
+   "pass": 279
+  },
+  "2026-04-14": {
+   "screen": 4963,
+   "labelled": 2764,
+   "sector_ok": 2351,
+   "sic_ok": 2226,
+   "shares": 2118,
+   "pt_halal": 1860,
+   "pass": 297
+  },
+  "2026-04-22": {
+   "screen": 4958,
+   "labelled": 2770,
+   "sector_ok": 2354,
+   "sic_ok": 2228,
+   "shares": 2119,
+   "pt_halal": 1859,
+   "pass": 304
+  },
+  "2026-04-30": {
+   "screen": 4937,
+   "labelled": 2769,
+   "sector_ok": 2356,
+   "sic_ok": 2230,
+   "shares": 2123,
+   "pt_halal": 1863,
+   "pass": 301
+  },
+  "2026-05-08": {
+   "screen": 4934,
+   "labelled": 2778,
+   "sector_ok": 2363,
+   "sic_ok": 2236,
+   "shares": 2132,
+   "pt_halal": 1869,
+   "pass": 305
+  },
+  "2026-05-18": {
+   "screen": 4965,
+   "labelled": 2802,
+   "sector_ok": 2387,
+   "sic_ok": 2260,
+   "shares": 2158,
+   "pt_halal": 1889,
+   "pass": 302
+  },
+  "2026-05-27": {
+   "screen": 4966,
+   "labelled": 2806,
+   "sector_ok": 2391,
+   "sic_ok": 2266,
+   "shares": 2163,
+   "pt_halal": 1892,
+   "pass": 316
+  },
+  "2026-06-04": {
+   "screen": 4978,
+   "labelled": 2824,
+   "sector_ok": 2405,
+   "sic_ok": 2280,
+   "shares": 2176,
+   "pt_halal": 1901,
+   "pass": 315
+  },
+  "2026-06-12": {
+   "screen": 4973,
+   "labelled": 2826,
+   "sector_ok": 2404,
+   "sic_ok": 2278,
+   "shares": 2173,
+   "pt_halal": 1899,
+   "pass": 318
+  },
+  "2026-06-23": {
+   "screen": 5003,
+   "labelled": 2846,
+   "sector_ok": 2424,
+   "sic_ok": 2296,
+   "shares": 2190,
+   "pt_halal": 1913,
+   "pass": 321
+  },
+  "2026-07-01": {
+   "screen": 5027,
+   "labelled": 2865,
+   "sector_ok": 2440,
+   "sic_ok": 2312,
+   "shares": 2206,
+   "pt_halal": 1927,
+   "pass": 328
+  },
+  "2026-07-10": {
+   "screen": 5056,
+   "labelled": 2874,
+   "sector_ok": 2447,
+   "sic_ok": 2315,
+   "shares": 2209,
+   "pt_halal": 1929,
+   "pass": 327
+  },
+  "2026-07-20": {
+   "screen": 5058,
+   "labelled": 2884,
+   "sector_ok": 2454,
+   "sic_ok": 2320,
+   "shares": 2213,
+   "pt_halal": 1934,
+   "pass": 325
+  },
+  "2026-07-28": {
+   "screen": 5042,
+   "labelled": 2876,
+   "sector_ok": 2447,
+   "sic_ok": 2314,
+   "shares": 2207,
+   "pt_halal": 1930,
+   "pass": 312
+  },
+  "2026-08-05": {
+   "screen": 5035,
+   "labelled": 2882,
+   "sector_ok": 2454,
+   "sic_ok": 2321,
+   "shares": 2210,
+   "pt_halal": 1941,
+   "pass": 325
+  },
+  "2024-10-25": {
+   "screen": 4039,
+   "labelled": 2336,
+   "sector_ok": 2002,
+   "sic_ok": 1894,
+   "shares": 1793,
+   "pt_halal": 1606,
+   "pass": 244
+  },
+  "2024-11-04": {
+   "screen": 4026,
+   "labelled": 2334,
+   "sector_ok": 1998,
+   "sic_ok": 1890,
+   "shares": 1790,
+   "pt_halal": 1603,
+   "pass": 242
+  },
+  "2024-11-12": {
+   "screen": 4068,
+   "labelled": 2347,
+   "sector_ok": 2011,
+   "sic_ok": 1902,
+   "shares": 1800,
+   "pt_halal": 1610,
+   "pass": 249
+  },
+  "2024-11-20": {
+   "screen": 4106,
+   "labelled": 2355,
+   "sector_ok": 2018,
+   "sic_ok": 1909,
+   "shares": 1808,
+   "pt_halal": 1616,
+   "pass": 239
+  },
+  "2024-11-29": {
+   "screen": 4140,
+   "labelled": 2377,
+   "sector_ok": 2036,
+   "sic_ok": 1927,
+   "shares": 1827,
+   "pt_halal": 1631,
+   "pass": 257
+  },
+  "2024-12-09": {
+   "screen": 4156,
+   "labelled": 2388,
+   "sector_ok": 2048,
+   "sic_ok": 1940,
+   "shares": 1838,
+   "pt_halal": 1642,
+   "pass": 252
+  },
+  "2024-12-17": {
+   "screen": 4187,
+   "labelled": 2400,
+   "sector_ok": 2057,
+   "sic_ok": 1949,
+   "shares": 1847,
+   "pt_halal": 1647,
+   "pass": 254
+  },
+  "2024-12-26": {
+   "screen": 4212,
+   "labelled": 2415,
+   "sector_ok": 2069,
+   "sic_ok": 1961,
+   "shares": 1856,
+   "pt_halal": 1656,
+   "pass": 242
+  },
+  "2025-01-06": {
+   "screen": 4255,
+   "labelled": 2430,
+   "sector_ok": 2081,
+   "sic_ok": 1972,
+   "shares": 1867,
+   "pt_halal": 1666,
+   "pass": 248
+  },
+  "2025-01-15": {
+   "screen": 4292,
+   "labelled": 2438,
+   "sector_ok": 2091,
+   "sic_ok": 1980,
+   "shares": 1876,
+   "pt_halal": 1673,
+   "pass": 246
+  },
+  "2025-01-24": {
+   "screen": 4315,
+   "labelled": 2438,
+   "sector_ok": 2091,
+   "sic_ok": 1980,
+   "shares": 1876,
+   "pt_halal": 1674,
+   "pass": 246
+  },
+  "2025-02-03": {
+   "screen": 4340,
+   "labelled": 2450,
+   "sector_ok": 2103,
+   "sic_ok": 1992,
+   "shares": 1886,
+   "pt_halal": 1682,
+   "pass": 247
+  },
+  "2025-02-11": {
+   "screen": 4344,
+   "labelled": 2448,
+   "sector_ok": 2102,
+   "sic_ok": 1994,
+   "shares": 1887,
+   "pt_halal": 1681,
+   "pass": 254
+  },
+  "2025-02-20": {
+   "screen": 4338,
+   "labelled": 2449,
+   "sector_ok": 2104,
+   "sic_ok": 1994,
+   "shares": 1889,
+   "pt_halal": 1685,
+   "pass": 256
+  },
+  "2025-02-28": {
+   "screen": 4334,
+   "labelled": 2445,
+   "sector_ok": 2098,
+   "sic_ok": 1988,
+   "shares": 1885,
+   "pt_halal": 1677,
+   "pass": 234
+  },
+  "2025-03-10": {
+   "screen": 4349,
+   "labelled": 2445,
+   "sector_ok": 2097,
+   "sic_ok": 1985,
+   "shares": 1885,
+   "pt_halal": 1676,
+   "pass": 238
+  },
+  "2025-03-18": {
+   "screen": 4373,
+   "labelled": 2454,
+   "sector_ok": 2107,
+   "sic_ok": 1995,
+   "shares": 1895,
+   "pt_halal": 1685,
+   "pass": 229
+  },
+  "2025-03-26": {
+   "screen": 4351,
+   "labelled": 2458,
+   "sector_ok": 2108,
+   "sic_ok": 1997,
+   "shares": 1896,
+   "pt_halal": 1686,
+   "pass": 232
+  },
+  "2025-04-03": {
+   "screen": 4339,
+   "labelled": 2454,
+   "sector_ok": 2102,
+   "sic_ok": 1990,
+   "shares": 1890,
+   "pt_halal": 1681,
+   "pass": 227
+  },
+  "2025-04-11": {
+   "screen": 4381,
+   "labelled": 2454,
+   "sector_ok": 2097,
+   "sic_ok": 1984,
+   "shares": 1882,
+   "pt_halal": 1678,
+   "pass": 199
+  },
+  "2025-04-22": {
+   "screen": 4359,
+   "labelled": 2438,
+   "sector_ok": 2080,
+   "sic_ok": 1967,
+   "shares": 1864,
+   "pt_halal": 1665,
+   "pass": 199
+  },
+  "2025-04-30": {
+   "screen": 4354,
+   "labelled": 2433,
+   "sector_ok": 2074,
+   "sic_ok": 1961,
+   "shares": 1860,
+   "pt_halal": 1658,
+   "pass": 228
+  },
+  "2025-05-08": {
+   "screen": 4324,
+   "labelled": 2430,
+   "sector_ok": 2071,
+   "sic_ok": 1958,
+   "shares": 1860,
+   "pt_halal": 1655,
+   "pass": 236
+  },
+  "2025-05-16": {
+   "screen": 4335,
+   "labelled": 2434,
+   "sector_ok": 2074,
+   "sic_ok": 1960,
+   "shares": 1863,
+   "pt_halal": 1655,
+   "pass": 249
+  },
+  "2025-05-27": {
+   "screen": 4331,
+   "labelled": 2436,
+   "sector_ok": 2077,
+   "sic_ok": 1964,
+   "shares": 1865,
+   "pt_halal": 1655,
+   "pass": 245
+  },
+  "2025-06-04": {
+   "screen": 4319,
+   "labelled": 2434,
+   "sector_ok": 2078,
+   "sic_ok": 1966,
+   "shares": 1866,
+   "pt_halal": 1655,
+   "pass": 252
+  },
+  "2025-06-12": {
+   "screen": 4302,
+   "labelled": 2438,
+   "sector_ok": 2082,
+   "sic_ok": 1969,
+   "shares": 1870,
+   "pt_halal": 1656,
+   "pass": 259
+  },
+  "2025-06-23": {
+   "screen": 4308,
+   "labelled": 2445,
+   "sector_ok": 2086,
+   "sic_ok": 1971,
+   "shares": 1871,
+   "pt_halal": 1656,
+   "pass": 259
+  },
+  "2025-07-01": {
+   "screen": 4325,
+   "labelled": 2454,
+   "sector_ok": 2093,
+   "sic_ok": 1977,
+   "shares": 1877,
+   "pt_halal": 1665,
+   "pass": 265
+  },
+  "2025-07-10": {
+   "screen": 4314,
+   "labelled": 2458,
+   "sector_ok": 2101,
+   "sic_ok": 1985,
+   "shares": 1884,
+   "pt_halal": 1669,
+   "pass": 268
+  },
+  "2025-07-18": {
+   "screen": 4342,
+   "labelled": 2480,
+   "sector_ok": 2119,
+   "sic_ok": 2003,
+   "shares": 1902,
+   "pt_halal": 1683,
+   "pass": 266
+  },
+  "2025-07-28": {
+   "screen": 4373,
+   "labelled": 2500,
+   "sector_ok": 2137,
+   "sic_ok": 2020,
+   "shares": 1919,
+   "pt_halal": 1697,
+   "pass": 277
+  },
+  "2025-08-05": {
+   "screen": 4389,
+   "labelled": 2518,
+   "sector_ok": 2152,
+   "sic_ok": 2035,
+   "shares": 1933,
+   "pt_halal": 1706,
+   "pass": 268
+  },
+  "2025-08-13": {
+   "screen": 4412,
+   "labelled": 2534,
+   "sector_ok": 2164,
+   "sic_ok": 2045,
+   "shares": 1942,
+   "pt_halal": 1712,
+   "pass": 281
+  },
+  "2025-08-21": {
+   "screen": 4428,
+   "labelled": 2547,
+   "sector_ok": 2175,
+   "sic_ok": 2054,
+   "shares": 1951,
+   "pt_halal": 1719,
+   "pass": 284
+  },
+  "2025-08-29": {
+   "screen": 4454,
+   "labelled": 2567,
+   "sector_ok": 2194,
+   "sic_ok": 2073,
+   "shares": 1970,
+   "pt_halal": 1736,
+   "pass": 299
+  },
+  "2025-09-09": {
+   "screen": 4474,
+   "labelled": 2576,
+   "sector_ok": 2202,
+   "sic_ok": 2081,
+   "shares": 1978,
+   "pt_halal": 1743,
+   "pass": 300
+  },
+  "2025-09-17": {
+   "screen": 4504,
+   "labelled": 2585,
+   "sector_ok": 2209,
+   "sic_ok": 2087,
+   "shares": 1982,
+   "pt_halal": 1744,
+   "pass": 301
+  },
+  "2025-09-25": {
+   "screen": 4532,
+   "labelled": 2604,
+   "sector_ok": 2225,
+   "sic_ok": 2104,
+   "shares": 1999,
+   "pt_halal": 1756,
+   "pass": 300
+  },
+  "2025-10-03": {
+   "screen": 4553,
+   "labelled": 2617,
+   "sector_ok": 2234,
+   "sic_ok": 2113,
+   "shares": 2009,
+   "pt_halal": 1764,
+   "pass": 307
+  },
+  "2025-10-13": {
+   "screen": 4598,
+   "labelled": 2641,
+   "sector_ok": 2254,
+   "sic_ok": 2134,
+   "shares": 2027,
+   "pt_halal": 1778,
+   "pass": 303
+  },
+  "2025-10-21": {
+   "screen": 4626,
+   "labelled": 2648,
+   "sector_ok": 2260,
+   "sic_ok": 2140,
+   "shares": 2032,
+   "pt_halal": 1787,
+   "pass": 314
+  },
+  "2025-10-29": {
+   "screen": 4625,
+   "labelled": 2654,
+   "sector_ok": 2259,
+   "sic_ok": 2139,
+   "shares": 2033,
+   "pt_halal": 1788,
+   "pass": 309
+  },
+  "2025-11-06": {
+   "screen": 4672,
+   "labelled": 2669,
+   "sector_ok": 2270,
+   "sic_ok": 2150,
+   "shares": 2045,
+   "pt_halal": 1797,
+   "pass": 305
+  },
+  "2025-11-14": {
+   "screen": 4721,
+   "labelled": 2691,
+   "sector_ok": 2290,
+   "sic_ok": 2167,
+   "shares": 2062,
+   "pt_halal": 1813,
+   "pass": 292
+  },
+  "2025-11-24": {
+   "screen": 4741,
+   "labelled": 2708,
+   "sector_ok": 2307,
+   "sic_ok": 2182,
+   "shares": 2075,
+   "pt_halal": 1822,
+   "pass": 290
+  },
+  "2025-12-03": {
+   "screen": 4743,
+   "labelled": 2712,
+   "sector_ok": 2308,
+   "sic_ok": 2183,
+   "shares": 2077,
+   "pt_halal": 1825,
+   "pass": 297
+  },
+  "2025-12-11": {
+   "screen": 4758,
+   "labelled": 2718,
+   "sector_ok": 2313,
+   "sic_ok": 2188,
+   "shares": 2081,
+   "pt_halal": 1830,
+   "pass": 308
+  },
+  "2025-12-19": {
+   "screen": 4762,
+   "labelled": 2708,
+   "sector_ok": 2305,
+   "sic_ok": 2181,
+   "shares": 2075,
+   "pt_halal": 1828,
+   "pass": 303
+  },
+  "2025-12-30": {
+   "screen": 4767,
+   "labelled": 2714,
+   "sector_ok": 2308,
+   "sic_ok": 2184,
+   "shares": 2077,
+   "pt_halal": 1831,
+   "pass": 314
+  },
+  "2026-01-08": {
+   "screen": 4779,
+   "labelled": 2718,
+   "sector_ok": 2314,
+   "sic_ok": 2188,
+   "shares": 2078,
+   "pt_halal": 1834,
+   "pass": 316
+  },
+  "2026-01-16": {
+   "screen": 4798,
+   "labelled": 2725,
+   "sector_ok": 2321,
+   "sic_ok": 2195,
+   "shares": 2086,
+   "pt_halal": 1840,
+   "pass": 324
+  },
+  "2026-01-27": {
+   "screen": 4836,
+   "labelled": 2737,
+   "sector_ok": 2329,
+   "sic_ok": 2202,
+   "shares": 2093,
+   "pt_halal": 1846,
+   "pass": 319
+  },
+  "2026-02-04": {
+   "screen": 4855,
+   "labelled": 2740,
+   "sector_ok": 2330,
+   "sic_ok": 2203,
+   "shares": 2094,
+   "pt_halal": 1848,
+   "pass": 315
+  },
+  "2026-02-12": {
+   "screen": 4870,
+   "labelled": 2743,
+   "sector_ok": 2330,
+   "sic_ok": 2204,
+   "shares": 2093,
+   "pt_halal": 1846,
+   "pass": 316
+  },
+  "2026-02-23": {
+   "screen": 4885,
+   "labelled": 2743,
+   "sector_ok": 2331,
+   "sic_ok": 2206,
+   "shares": 2095,
+   "pt_halal": 1844,
+   "pass": 310
+  },
+  "2026-03-03": {
+   "screen": 4921,
+   "labelled": 2749,
+   "sector_ok": 2337,
+   "sic_ok": 2212,
+   "shares": 2104,
+   "pt_halal": 1847,
+   "pass": 300
+  },
+  "2026-03-11": {
+   "screen": 4952,
+   "labelled": 2752,
+   "sector_ok": 2340,
+   "sic_ok": 2216,
+   "shares": 2105,
+   "pt_halal": 1847,
+   "pass": 283
+  },
+  "2026-03-19": {
+   "screen": 4947,
+   "labelled": 2755,
+   "sector_ok": 2343,
+   "sic_ok": 2219,
+   "shares": 2110,
+   "pt_halal": 1850,
+   "pass": 276
+  },
+  "2026-03-27": {
+   "screen": 4962,
+   "labelled": 2762,
+   "sector_ok": 2348,
+   "sic_ok": 2223,
+   "shares": 2116,
+   "pt_halal": 1854,
+   "pass": 276
+  },
+  "2026-04-07": {
+   "screen": 4957,
+   "labelled": 2767,
+   "sector_ok": 2354,
+   "sic_ok": 2229,
+   "shares": 2122,
+   "pt_halal": 1861,
+   "pass": 279
+  },
+  "2026-04-15": {
+   "screen": 4962,
+   "labelled": 2766,
+   "sector_ok": 2354,
+   "sic_ok": 2229,
+   "shares": 2121,
+   "pt_halal": 1862,
+   "pass": 298
+  },
+  "2026-04-23": {
+   "screen": 4957,
+   "labelled": 2768,
+   "sector_ok": 2353,
+   "sic_ok": 2227,
+   "shares": 2118,
+   "pt_halal": 1860,
+   "pass": 303
+  },
+  "2026-05-01": {
+   "screen": 4931,
+   "labelled": 2767,
+   "sector_ok": 2354,
+   "sic_ok": 2228,
+   "shares": 2122,
+   "pt_halal": 1861,
+   "pass": 301
+  },
+  "2026-05-11": {
+   "screen": 4938,
+   "labelled": 2782,
+   "sector_ok": 2367,
+   "sic_ok": 2240,
+   "shares": 2136,
+   "pt_halal": 1871,
+   "pass": 306
+  },
+  "2026-05-19": {
+   "screen": 4968,
+   "labelled": 2802,
+   "sector_ok": 2387,
+   "sic_ok": 2260,
+   "shares": 2157,
+   "pt_halal": 1888,
+   "pass": 304
+  },
+  "2026-05-28": {
+   "screen": 4966,
+   "labelled": 2809,
+   "sector_ok": 2394,
+   "sic_ok": 2269,
+   "shares": 2166,
+   "pt_halal": 1894,
+   "pass": 313
+  },
+  "2026-06-05": {
+   "screen": 4974,
+   "labelled": 2823,
+   "sector_ok": 2405,
+   "sic_ok": 2280,
+   "shares": 2176,
+   "pt_halal": 1900,
+   "pass": 317
+  },
+  "2026-06-15": {
+   "screen": 4979,
+   "labelled": 2830,
+   "sector_ok": 2407,
+   "sic_ok": 2280,
+   "shares": 2175,
+   "pt_halal": 1901,
+   "pass": 321
+  },
+  "2026-06-24": {
+   "screen": 5012,
+   "labelled": 2852,
+   "sector_ok": 2427,
+   "sic_ok": 2299,
+   "shares": 2193,
+   "pt_halal": 1916,
+   "pass": 321
+  },
+  "2026-07-02": {
+   "screen": 5031,
+   "labelled": 2866,
+   "sector_ok": 2442,
+   "sic_ok": 2314,
+   "shares": 2208,
+   "pt_halal": 1929,
+   "pass": 327
+  },
+  "2026-07-13": {
+   "screen": 5052,
+   "labelled": 2873,
+   "sector_ok": 2446,
+   "sic_ok": 2314,
+   "shares": 2208,
+   "pt_halal": 1929,
+   "pass": 323
+  },
+  "2026-07-21": {
+   "screen": 5054,
+   "labelled": 2879,
+   "sector_ok": 2448,
+   "sic_ok": 2315,
+   "shares": 2208,
+   "pt_halal": 1930,
+   "pass": 323
+  },
+  "2026-07-29": {
+   "screen": 5044,
+   "labelled": 2880,
+   "sector_ok": 2452,
+   "sic_ok": 2319,
+   "shares": 2211,
+   "pt_halal": 1934,
+   "pass": 316
+  },
+  "2026-08-06": {
+   "screen": 5037,
+   "labelled": 2883,
+   "sector_ok": 2453,
+   "sic_ok": 2320,
+   "shares": 2209,
+   "pt_halal": 1941,
+   "pass": 321
+  },
+  "2024-10-28": {
+   "screen": 4038,
+   "labelled": 2338,
+   "sector_ok": 2002,
+   "sic_ok": 1894,
+   "shares": 1793,
+   "pt_halal": 1606,
+   "pass": 244
+  },
+  "2024-11-05": {
+   "screen": 4031,
+   "labelled": 2335,
+   "sector_ok": 2000,
+   "sic_ok": 1892,
+   "shares": 1792,
+   "pt_halal": 1605,
+   "pass": 242
+  },
+  "2024-11-13": {
+   "screen": 4077,
+   "labelled": 2346,
+   "sector_ok": 2010,
+   "sic_ok": 1901,
+   "shares": 1801,
+   "pt_halal": 1610,
+   "pass": 243
+  },
+  "2024-11-21": {
+   "screen": 4111,
+   "labelled": 2359,
+   "sector_ok": 2022,
+   "sic_ok": 1914,
+   "shares": 1812,
+   "pt_halal": 1620,
+   "pass": 238
+  },
+  "2024-12-02": {
+   "screen": 4137,
+   "labelled": 2379,
+   "sector_ok": 2038,
+   "sic_ok": 1929,
+   "shares": 1829,
+   "pt_halal": 1634,
+   "pass": 255
+  },
+  "2024-12-10": {
+   "screen": 4166,
+   "labelled": 2392,
+   "sector_ok": 2052,
+   "sic_ok": 1944,
+   "shares": 1842,
+   "pt_halal": 1644,
+   "pass": 254
+  },
+  "2024-12-18": {
+   "screen": 4196,
+   "labelled": 2406,
+   "sector_ok": 2062,
+   "sic_ok": 1954,
+   "shares": 1852,
+   "pt_halal": 1649,
+   "pass": 251
+  },
+  "2024-12-27": {
+   "screen": 4217,
+   "labelled": 2418,
+   "sector_ok": 2072,
+   "sic_ok": 1964,
+   "shares": 1859,
+   "pt_halal": 1660,
+   "pass": 245
+  },
+  "2025-01-07": {
+   "screen": 4259,
+   "labelled": 2433,
+   "sector_ok": 2083,
+   "sic_ok": 1974,
+   "shares": 1869,
+   "pt_halal": 1668,
+   "pass": 251
+  },
+  "2025-01-16": {
+   "screen": 4301,
+   "labelled": 2442,
+   "sector_ok": 2094,
+   "sic_ok": 1983,
+   "shares": 1879,
+   "pt_halal": 1676,
+   "pass": 248
+  },
+  "2025-01-27": {
+   "screen": 4324,
+   "labelled": 2438,
+   "sector_ok": 2091,
+   "sic_ok": 1980,
+   "shares": 1877,
+   "pt_halal": 1674,
+   "pass": 245
+  },
+  "2025-02-04": {
+   "screen": 4340,
+   "labelled": 2453,
+   "sector_ok": 2106,
+   "sic_ok": 1996,
+   "shares": 1889,
+   "pt_halal": 1685,
+   "pass": 247
+  },
+  "2025-02-12": {
+   "screen": 4339,
+   "labelled": 2449,
+   "sector_ok": 2103,
+   "sic_ok": 1994,
+   "shares": 1887,
+   "pt_halal": 1682,
+   "pass": 251
+  },
+  "2025-02-21": {
+   "screen": 4334,
+   "labelled": 2449,
+   "sector_ok": 2104,
+   "sic_ok": 1994,
+   "shares": 1889,
+   "pt_halal": 1685,
+   "pass": 258
+  },
+  "2025-03-03": {
+   "screen": 4341,
+   "labelled": 2447,
+   "sector_ok": 2100,
+   "sic_ok": 1990,
+   "shares": 1889,
+   "pt_halal": 1680,
+   "pass": 242
+  },
+  "2025-03-11": {
+   "screen": 4355,
+   "labelled": 2447,
+   "sector_ok": 2099,
+   "sic_ok": 1987,
+   "shares": 1887,
+   "pt_halal": 1678,
+   "pass": 227
+  },
+  "2025-03-19": {
+   "screen": 4371,
+   "labelled": 2453,
+   "sector_ok": 2106,
+   "sic_ok": 1994,
+   "shares": 1894,
+   "pt_halal": 1685,
+   "pass": 225
+  },
+  "2025-03-27": {
+   "screen": 4346,
+   "labelled": 2455,
+   "sector_ok": 2105,
+   "sic_ok": 1994,
+   "shares": 1893,
+   "pt_halal": 1683,
+   "pass": 231
+  },
+  "2025-04-04": {
+   "screen": 4342,
+   "labelled": 2452,
+   "sector_ok": 2098,
+   "sic_ok": 1986,
+   "shares": 1886,
+   "pt_halal": 1681,
+   "pass": 210
+  },
+  "2025-04-14": {
+   "screen": 4378,
+   "labelled": 2454,
+   "sector_ok": 2097,
+   "sic_ok": 1983,
+   "shares": 1881,
+   "pt_halal": 1678,
+   "pass": 204
+  },
+  "2025-04-23": {
+   "screen": 4362,
+   "labelled": 2437,
+   "sector_ok": 2079,
+   "sic_ok": 1966,
+   "shares": 1863,
+   "pt_halal": 1663,
+   "pass": 207
+  },
+  "2025-05-01": {
+   "screen": 4345,
+   "labelled": 2431,
+   "sector_ok": 2072,
+   "sic_ok": 1959,
+   "shares": 1860,
+   "pt_halal": 1657,
+   "pass": 225
+  },
+  "2025-05-09": {
+   "screen": 4335,
+   "labelled": 2432,
+   "sector_ok": 2073,
+   "sic_ok": 1959,
+   "shares": 1861,
+   "pt_halal": 1657,
+   "pass": 240
+  },
+  "2025-05-19": {
+   "screen": 4327,
+   "labelled": 2432,
+   "sector_ok": 2072,
+   "sic_ok": 1959,
+   "shares": 1862,
+   "pt_halal": 1653,
+   "pass": 258
+  },
+  "2025-05-28": {
+   "screen": 4332,
+   "labelled": 2437,
+   "sector_ok": 2079,
+   "sic_ok": 1966,
+   "shares": 1866,
+   "pt_halal": 1656,
+   "pass": 249
+  },
+  "2025-06-05": {
+   "screen": 4313,
+   "labelled": 2432,
+   "sector_ok": 2077,
+   "sic_ok": 1965,
+   "shares": 1866,
+   "pt_halal": 1653,
+   "pass": 252
+  },
+  "2025-06-13": {
+   "screen": 4299,
+   "labelled": 2436,
+   "sector_ok": 2081,
+   "sic_ok": 1968,
+   "shares": 1869,
+   "pt_halal": 1655,
+   "pass": 259
+  },
+  "2025-06-24": {
+   "screen": 4316,
+   "labelled": 2450,
+   "sector_ok": 2090,
+   "sic_ok": 1974,
+   "shares": 1874,
+   "pt_halal": 1659,
+   "pass": 260
+  },
+  "2025-07-02": {
+   "screen": 4323,
+   "labelled": 2453,
+   "sector_ok": 2091,
+   "sic_ok": 1975,
+   "shares": 1875,
+   "pt_halal": 1663,
+   "pass": 265
+  },
+  "2025-07-11": {
+   "screen": 4321,
+   "labelled": 2462,
+   "sector_ok": 2104,
+   "sic_ok": 1987,
+   "shares": 1886,
+   "pt_halal": 1670,
+   "pass": 268
+  },
+  "2025-07-21": {
+   "screen": 4346,
+   "labelled": 2483,
+   "sector_ok": 2122,
+   "sic_ok": 2005,
+   "shares": 1903,
+   "pt_halal": 1684,
+   "pass": 263
+  },
+  "2025-07-29": {
+   "screen": 4375,
+   "labelled": 2501,
+   "sector_ok": 2136,
+   "sic_ok": 2019,
+   "shares": 1918,
+   "pt_halal": 1697,
+   "pass": 277
+  },
+  "2025-08-06": {
+   "screen": 4397,
+   "labelled": 2523,
+   "sector_ok": 2157,
+   "sic_ok": 2041,
+   "shares": 1938,
+   "pt_halal": 1710,
+   "pass": 270
+  },
+  "2025-08-14": {
+   "screen": 4412,
+   "labelled": 2533,
+   "sector_ok": 2162,
+   "sic_ok": 2043,
+   "shares": 1940,
+   "pt_halal": 1709,
+   "pass": 291
+  },
+  "2025-08-22": {
+   "screen": 4429,
+   "labelled": 2552,
+   "sector_ok": 2179,
+   "sic_ok": 2059,
+   "shares": 1956,
+   "pt_halal": 1723,
+   "pass": 284
+  },
+  "2025-09-02": {
+   "screen": 4453,
+   "labelled": 2567,
+   "sector_ok": 2194,
+   "sic_ok": 2073,
+   "shares": 1970,
+   "pt_halal": 1737,
+   "pass": 296
+  },
+  "2025-09-10": {
+   "screen": 4486,
+   "labelled": 2582,
+   "sector_ok": 2208,
+   "sic_ok": 2087,
+   "shares": 1983,
+   "pt_halal": 1747,
+   "pass": 298
+  },
+  "2025-09-18": {
+   "screen": 4512,
+   "labelled": 2588,
+   "sector_ok": 2212,
+   "sic_ok": 2090,
+   "shares": 1985,
+   "pt_halal": 1746,
+   "pass": 300
+  },
+  "2025-09-26": {
+   "screen": 4538,
+   "labelled": 2606,
+   "sector_ok": 2225,
+   "sic_ok": 2104,
+   "shares": 1999,
+   "pt_halal": 1757,
+   "pass": 301
+  },
+  "2025-10-06": {
+   "screen": 4558,
+   "labelled": 2620,
+   "sector_ok": 2237,
+   "sic_ok": 2116,
+   "shares": 2012,
+   "pt_halal": 1765,
+   "pass": 310
+  },
+  "2025-10-14": {
+   "screen": 4599,
+   "labelled": 2642,
+   "sector_ok": 2255,
+   "sic_ok": 2135,
+   "shares": 2029,
+   "pt_halal": 1778,
+   "pass": 304
+  },
+  "2025-10-22": {
+   "screen": 4629,
+   "labelled": 2649,
+   "sector_ok": 2260,
+   "sic_ok": 2140,
+   "shares": 2033,
+   "pt_halal": 1788,
+   "pass": 317
+  },
+  "2025-10-30": {
+   "screen": 4634,
+   "labelled": 2657,
+   "sector_ok": 2262,
+   "sic_ok": 2142,
+   "shares": 2036,
+   "pt_halal": 1790,
+   "pass": 311
+  },
+  "2025-11-07": {
+   "screen": 4686,
+   "labelled": 2676,
+   "sector_ok": 2277,
+   "sic_ok": 2156,
+   "shares": 2051,
+   "pt_halal": 1801,
+   "pass": 300
+  },
+  "2025-11-17": {
+   "screen": 4725,
+   "labelled": 2694,
+   "sector_ok": 2294,
+   "sic_ok": 2171,
+   "shares": 2065,
+   "pt_halal": 1815,
+   "pass": 292
+  },
+  "2025-11-25": {
+   "screen": 4742,
+   "labelled": 2708,
+   "sector_ok": 2307,
+   "sic_ok": 2182,
+   "shares": 2075,
+   "pt_halal": 1822,
+   "pass": 294
+  },
+  "2025-12-04": {
+   "screen": 4748,
+   "labelled": 2712,
+   "sector_ok": 2309,
+   "sic_ok": 2184,
+   "shares": 2077,
+   "pt_halal": 1827,
+   "pass": 304
+  },
+  "2025-12-12": {
+   "screen": 4753,
+   "labelled": 2718,
+   "sector_ok": 2313,
+   "sic_ok": 2188,
+   "shares": 2081,
+   "pt_halal": 1831,
+   "pass": 311
+  },
+  "2025-12-22": {
+   "screen": 4764,
+   "labelled": 2710,
+   "sector_ok": 2306,
+   "sic_ok": 2182,
+   "shares": 2076,
+   "pt_halal": 1827,
+   "pass": 306
+  },
+  "2025-12-31": {
+   "screen": 4760,
+   "labelled": 2711,
+   "sector_ok": 2307,
+   "sic_ok": 2182,
+   "shares": 2075,
+   "pt_halal": 1830,
+   "pass": 310
+  },
+  "2026-01-09": {
+   "screen": 4780,
+   "labelled": 2722,
+   "sector_ok": 2317,
+   "sic_ok": 2191,
+   "shares": 2081,
+   "pt_halal": 1836,
+   "pass": 318
+  },
+  "2026-01-20": {
+   "screen": 4800,
+   "labelled": 2727,
+   "sector_ok": 2323,
+   "sic_ok": 2196,
+   "shares": 2087,
+   "pt_halal": 1842,
+   "pass": 319
+  },
+  "2026-01-28": {
+   "screen": 4831,
+   "labelled": 2736,
+   "sector_ok": 2328,
+   "sic_ok": 2201,
+   "shares": 2092,
+   "pt_halal": 1845,
+   "pass": 316
+  },
+  "2026-02-05": {
+   "screen": 4863,
+   "labelled": 2743,
+   "sector_ok": 2333,
+   "sic_ok": 2206,
+   "shares": 2096,
+   "pt_halal": 1850,
+   "pass": 315
+  },
+  "2026-02-13": {
+   "screen": 4876,
+   "labelled": 2744,
+   "sector_ok": 2331,
+   "sic_ok": 2204,
+   "shares": 2094,
+   "pt_halal": 1845,
+   "pass": 305
+  },
+  "2026-02-24": {
+   "screen": 4886,
+   "labelled": 2744,
+   "sector_ok": 2332,
+   "sic_ok": 2207,
+   "shares": 2095,
+   "pt_halal": 1844,
+   "pass": 304
+  },
+  "2026-03-04": {
+   "screen": 4925,
+   "labelled": 2753,
+   "sector_ok": 2341,
+   "sic_ok": 2216,
+   "shares": 2107,
+   "pt_halal": 1849,
+   "pass": 290
+  },
+  "2026-03-12": {
+   "screen": 4953,
+   "labelled": 2752,
+   "sector_ok": 2340,
+   "sic_ok": 2216,
+   "shares": 2105,
+   "pt_halal": 1847,
+   "pass": 288
+  },
+  "2026-03-20": {
+   "screen": 4948,
+   "labelled": 2755,
+   "sector_ok": 2343,
+   "sic_ok": 2219,
+   "shares": 2110,
+   "pt_halal": 1850,
+   "pass": 274
+  },
+  "2026-03-30": {
+   "screen": 4964,
+   "labelled": 2762,
+   "sector_ok": 2348,
+   "sic_ok": 2223,
+   "shares": 2116,
+   "pt_halal": 1854,
+   "pass": 275
+  },
+  "2026-04-08": {
+   "screen": 4960,
+   "labelled": 2769,
+   "sector_ok": 2356,
+   "sic_ok": 2231,
+   "shares": 2124,
+   "pt_halal": 1863,
+   "pass": 280
+  },
+  "2026-04-16": {
+   "screen": 4963,
+   "labelled": 2767,
+   "sector_ok": 2355,
+   "sic_ok": 2230,
+   "shares": 2121,
+   "pt_halal": 1862,
+   "pass": 298
+  },
+  "2026-04-24": {
+   "screen": 4959,
+   "labelled": 2768,
+   "sector_ok": 2353,
+   "sic_ok": 2227,
+   "shares": 2118,
+   "pt_halal": 1860,
+   "pass": 302
+  },
+  "2026-05-04": {
+   "screen": 4936,
+   "labelled": 2770,
+   "sector_ok": 2356,
+   "sic_ok": 2230,
+   "shares": 2124,
+   "pt_halal": 1864,
+   "pass": 305
+  },
+  "2026-05-12": {
+   "screen": 4936,
+   "labelled": 2785,
+   "sector_ok": 2369,
+   "sic_ok": 2242,
+   "shares": 2140,
+   "pt_halal": 1874,
+   "pass": 301
+  },
+  "2026-05-20": {
+   "screen": 4971,
+   "labelled": 2802,
+   "sector_ok": 2387,
+   "sic_ok": 2260,
+   "shares": 2157,
+   "pt_halal": 1889,
+   "pass": 304
+  },
+  "2026-05-29": {
+   "screen": 4967,
+   "labelled": 2810,
+   "sector_ok": 2395,
+   "sic_ok": 2270,
+   "shares": 2167,
+   "pt_halal": 1894,
+   "pass": 316
+  },
+  "2026-06-08": {
+   "screen": 4973,
+   "labelled": 2823,
+   "sector_ok": 2404,
+   "sic_ok": 2279,
+   "shares": 2174,
+   "pt_halal": 1900,
+   "pass": 311
+  },
+  "2026-06-16": {
+   "screen": 4986,
+   "labelled": 2835,
+   "sector_ok": 2411,
+   "sic_ok": 2283,
+   "shares": 2178,
+   "pt_halal": 1904,
+   "pass": 324
+  },
+  "2026-06-25": {
+   "screen": 5014,
+   "labelled": 2850,
+   "sector_ok": 2424,
+   "sic_ok": 2296,
+   "shares": 2190,
+   "pt_halal": 1913,
+   "pass": 322
+  },
+  "2026-07-06": {
+   "screen": 5039,
+   "labelled": 2865,
+   "sector_ok": 2441,
+   "sic_ok": 2313,
+   "shares": 2207,
+   "pt_halal": 1930,
+   "pass": 324
+  },
+  "2026-07-14": {
+   "screen": 5059,
+   "labelled": 2881,
+   "sector_ok": 2452,
+   "sic_ok": 2320,
+   "shares": 2213,
+   "pt_halal": 1933,
+   "pass": 320
+  },
+  "2026-07-22": {
+   "screen": 5049,
+   "labelled": 2879,
+   "sector_ok": 2448,
+   "sic_ok": 2315,
+   "shares": 2208,
+   "pt_halal": 1930,
+   "pass": 324
+  },
+  "2026-07-30": {
+   "screen": 5046,
+   "labelled": 2879,
+   "sector_ok": 2451,
+   "sic_ok": 2319,
+   "shares": 2211,
+   "pt_halal": 1934,
+   "pass": 311
+  },
+  "2024-10-29": {
+   "screen": 4037,
+   "labelled": 2337,
+   "sector_ok": 2001,
+   "sic_ok": 1893,
+   "shares": 1792,
+   "pt_halal": 1605,
+   "pass": 248
+  },
+  "2024-11-06": {
+   "screen": 4030,
+   "labelled": 2335,
+   "sector_ok": 2000,
+   "sic_ok": 1892,
+   "shares": 1792,
+   "pt_halal": 1605,
+   "pass": 245
+  },
+  "2024-11-14": {
+   "screen": 4083,
+   "labelled": 2351,
+   "sector_ok": 2014,
+   "sic_ok": 1905,
+   "shares": 1805,
+   "pt_halal": 1613,
+   "pass": 244
+  },
+  "2024-11-22": {
+   "screen": 4122,
+   "labelled": 2364,
+   "sector_ok": 2027,
+   "sic_ok": 1919,
+   "shares": 1817,
+   "pt_halal": 1625,
+   "pass": 247
+  },
+  "2024-12-03": {
+   "screen": 4140,
+   "labelled": 2381,
+   "sector_ok": 2040,
+   "sic_ok": 1931,
+   "shares": 1830,
+   "pt_halal": 1635,
+   "pass": 256
+  },
+  "2024-12-11": {
+   "screen": 4173,
+   "labelled": 2396,
+   "sector_ok": 2056,
+   "sic_ok": 1948,
+   "shares": 1846,
+   "pt_halal": 1647,
+   "pass": 251
+  },
+  "2024-12-19": {
+   "screen": 4195,
+   "labelled": 2404,
+   "sector_ok": 2060,
+   "sic_ok": 1952,
+   "shares": 1850,
+   "pt_halal": 1648,
+   "pass": 243
+  },
+  "2024-12-30": {
+   "screen": 4215,
+   "labelled": 2419,
+   "sector_ok": 2073,
+   "sic_ok": 1965,
+   "shares": 1860,
+   "pt_halal": 1661,
+   "pass": 243
+  },
+  "2025-01-08": {
+   "screen": 4265,
+   "labelled": 2436,
+   "sector_ok": 2086,
+   "sic_ok": 1976,
+   "shares": 1872,
+   "pt_halal": 1671,
+   "pass": 248
+  },
+  "2025-01-17": {
+   "screen": 4303,
+   "labelled": 2443,
+   "sector_ok": 2095,
+   "sic_ok": 1984,
+   "shares": 1880,
+   "pt_halal": 1676,
+   "pass": 247
+  },
+  "2025-01-28": {
+   "screen": 4326,
+   "labelled": 2442,
+   "sector_ok": 2095,
+   "sic_ok": 1984,
+   "shares": 1881,
+   "pt_halal": 1679,
+   "pass": 249
+  },
+  "2025-02-05": {
+   "screen": 4345,
+   "labelled": 2451,
+   "sector_ok": 2104,
+   "sic_ok": 1995,
+   "shares": 1888,
+   "pt_halal": 1684,
+   "pass": 245
+  },
+  "2025-02-13": {
+   "screen": 4336,
+   "labelled": 2449,
+   "sector_ok": 2103,
+   "sic_ok": 1994,
+   "shares": 1888,
+   "pt_halal": 1682,
+   "pass": 251
+  },
+  "2025-02-24": {
+   "screen": 4338,
+   "labelled": 2451,
+   "sector_ok": 2105,
+   "sic_ok": 1995,
+   "shares": 1890,
+   "pt_halal": 1686,
+   "pass": 250
+  },
+  "2025-03-04": {
+   "screen": 4341,
+   "labelled": 2449,
+   "sector_ok": 2101,
+   "sic_ok": 1990,
+   "shares": 1890,
+   "pt_halal": 1679,
+   "pass": 237
+  },
+  "2025-03-12": {
+   "screen": 4363,
+   "labelled": 2448,
+   "sector_ok": 2100,
+   "sic_ok": 1988,
+   "shares": 1888,
+   "pt_halal": 1679,
+   "pass": 226
+  },
+  "2025-03-20": {
+   "screen": 4361,
+   "labelled": 2453,
+   "sector_ok": 2105,
+   "sic_ok": 1993,
+   "shares": 1893,
+   "pt_halal": 1684,
+   "pass": 228
+  },
+  "2025-03-28": {
+   "screen": 4343,
+   "labelled": 2454,
+   "sector_ok": 2105,
+   "sic_ok": 1994,
+   "shares": 1893,
+   "pt_halal": 1684,
+   "pass": 229
+  },
+  "2025-04-07": {
+   "screen": 4349,
+   "labelled": 2453,
+   "sector_ok": 2098,
+   "sic_ok": 1986,
+   "shares": 1884,
+   "pt_halal": 1681,
+   "pass": 191
+  },
+  "2025-04-15": {
+   "screen": 4368,
+   "labelled": 2449,
+   "sector_ok": 2092,
+   "sic_ok": 1978,
+   "shares": 1876,
+   "pt_halal": 1673,
+   "pass": 206
+  },
+  "2025-04-24": {
+   "screen": 4365,
+   "labelled": 2437,
+   "sector_ok": 2079,
+   "sic_ok": 1966,
+   "shares": 1863,
+   "pt_halal": 1662,
+   "pass": 213
+  },
+  "2025-05-02": {
+   "screen": 4338,
+   "labelled": 2432,
+   "sector_ok": 2073,
+   "sic_ok": 1960,
+   "shares": 1861,
+   "pt_halal": 1658,
+   "pass": 229
+  },
+  "2025-05-12": {
+   "screen": 4331,
+   "labelled": 2428,
+   "sector_ok": 2071,
+   "sic_ok": 1957,
+   "shares": 1859,
+   "pt_halal": 1654,
+   "pass": 241
+  },
+  "2025-05-20": {
+   "screen": 4324,
+   "labelled": 2433,
+   "sector_ok": 2075,
+   "sic_ok": 1962,
+   "shares": 1865,
+   "pt_halal": 1654,
+   "pass": 252
+  },
+  "2025-05-29": {
+   "screen": 4329,
+   "labelled": 2435,
+   "sector_ok": 2078,
+   "sic_ok": 1965,
+   "shares": 1865,
+   "pt_halal": 1655,
+   "pass": 247
+  },
+  "2025-06-06": {
+   "screen": 4313,
+   "labelled": 2435,
+   "sector_ok": 2080,
+   "sic_ok": 1967,
+   "shares": 1868,
+   "pt_halal": 1654,
+   "pass": 254
+  },
+  "2025-06-16": {
+   "screen": 4300,
+   "labelled": 2437,
+   "sector_ok": 2082,
+   "sic_ok": 1968,
+   "shares": 1869,
+   "pt_halal": 1656,
+   "pass": 259
+  },
+  "2025-06-25": {
+   "screen": 4323,
+   "labelled": 2453,
+   "sector_ok": 2093,
+   "sic_ok": 1977,
+   "shares": 1877,
+   "pt_halal": 1662,
+   "pass": 260
+  },
+  "2025-07-03": {
+   "screen": 4324,
+   "labelled": 2457,
+   "sector_ok": 2097,
+   "sic_ok": 1981,
+   "shares": 1881,
+   "pt_halal": 1667,
+   "pass": 268
+  },
+  "2025-07-14": {
+   "screen": 4325,
+   "labelled": 2463,
+   "sector_ok": 2104,
+   "sic_ok": 1987,
+   "shares": 1886,
+   "pt_halal": 1670,
+   "pass": 268
+  },
+  "2025-07-22": {
+   "screen": 4353,
+   "labelled": 2486,
+   "sector_ok": 2127,
+   "sic_ok": 2010,
+   "shares": 1908,
+   "pt_halal": 1688,
+   "pass": 264
+  },
+  "2025-07-30": {
+   "screen": 4376,
+   "labelled": 2503,
+   "sector_ok": 2139,
+   "sic_ok": 2022,
+   "shares": 1921,
+   "pt_halal": 1698,
+   "pass": 273
+  },
+  "2025-08-07": {
+   "screen": 4400,
+   "labelled": 2525,
+   "sector_ok": 2159,
+   "sic_ok": 2043,
+   "shares": 1940,
+   "pt_halal": 1710,
+   "pass": 265
+  },
+  "2025-08-15": {
+   "screen": 4411,
+   "labelled": 2534,
+   "sector_ok": 2164,
+   "sic_ok": 2045,
+   "shares": 1942,
+   "pt_halal": 1711,
+   "pass": 285
+  },
+  "2025-08-25": {
+   "screen": 4436,
+   "labelled": 2556,
+   "sector_ok": 2183,
+   "sic_ok": 2063,
+   "shares": 1960,
+   "pt_halal": 1726,
+   "pass": 298
+  },
+  "2025-09-03": {
+   "screen": 4458,
+   "labelled": 2570,
+   "sector_ok": 2196,
+   "sic_ok": 2075,
+   "shares": 1972,
+   "pt_halal": 1739,
+   "pass": 294
+  },
+  "2025-09-11": {
+   "screen": 4492,
+   "labelled": 2584,
+   "sector_ok": 2210,
+   "sic_ok": 2088,
+   "shares": 1983,
+   "pt_halal": 1747,
+   "pass": 299
+  },
+  "2025-09-19": {
+   "screen": 4512,
+   "labelled": 2591,
+   "sector_ok": 2215,
+   "sic_ok": 2094,
+   "shares": 1989,
+   "pt_halal": 1749,
+   "pass": 306
+  },
+  "2025-09-29": {
+   "screen": 4537,
+   "labelled": 2605,
+   "sector_ok": 2223,
+   "sic_ok": 2102,
+   "shares": 1998,
+   "pt_halal": 1755,
+   "pass": 307
+  },
+  "2025-10-07": {
+   "screen": 4575,
+   "labelled": 2626,
+   "sector_ok": 2240,
+   "sic_ok": 2119,
+   "shares": 2014,
+   "pt_halal": 1767,
+   "pass": 308
+  },
+  "2025-10-15": {
+   "screen": 4602,
+   "labelled": 2641,
+   "sector_ok": 2253,
+   "sic_ok": 2133,
+   "shares": 2027,
+   "pt_halal": 1777,
+   "pass": 309
+  },
+  "2025-10-23": {
+   "screen": 4632,
+   "labelled": 2649,
+   "sector_ok": 2259,
+   "sic_ok": 2139,
+   "shares": 2032,
+   "pt_halal": 1788,
+   "pass": 313
+  },
+  "2025-10-31": {
+   "screen": 4641,
+   "labelled": 2661,
+   "sector_ok": 2265,
+   "sic_ok": 2145,
+   "shares": 2039,
+   "pt_halal": 1793,
+   "pass": 312
+  },
+  "2025-11-10": {
+   "screen": 4697,
+   "labelled": 2679,
+   "sector_ok": 2280,
+   "sic_ok": 2158,
+   "shares": 2054,
+   "pt_halal": 1804,
+   "pass": 304
+  },
+  "2025-11-18": {
+   "screen": 4724,
+   "labelled": 2694,
+   "sector_ok": 2295,
+   "sic_ok": 2172,
+   "shares": 2067,
+   "pt_halal": 1814,
+   "pass": 287
+  },
+  "2025-11-26": {
+   "screen": 4747,
+   "labelled": 2712,
+   "sector_ok": 2310,
+   "sic_ok": 2185,
+   "shares": 2077,
+   "pt_halal": 1825,
+   "pass": 301
+  },
+  "2025-12-05": {
+   "screen": 4751,
+   "labelled": 2713,
+   "sector_ok": 2310,
+   "sic_ok": 2185,
+   "shares": 2077,
+   "pt_halal": 1828,
+   "pass": 303
+  },
+  "2025-12-15": {
+   "screen": 4755,
+   "labelled": 2719,
+   "sector_ok": 2315,
+   "sic_ok": 2190,
+   "shares": 2083,
+   "pt_halal": 1833,
+   "pass": 303
+  },
+  "2025-12-23": {
+   "screen": 4772,
+   "labelled": 2714,
+   "sector_ok": 2310,
+   "sic_ok": 2186,
+   "shares": 2080,
+   "pt_halal": 1831,
+   "pass": 312
+  },
+  "2026-01-02": {
+   "screen": 4762,
+   "labelled": 2714,
+   "sector_ok": 2311,
+   "sic_ok": 2185,
+   "shares": 2078,
+   "pt_halal": 1833,
+   "pass": 305
+  },
+  "2026-01-12": {
+   "screen": 4778,
+   "labelled": 2723,
+   "sector_ok": 2317,
+   "sic_ok": 2191,
+   "shares": 2081,
+   "pt_halal": 1837,
+   "pass": 318
+  },
+  "2026-01-21": {
+   "screen": 4813,
+   "labelled": 2732,
+   "sector_ok": 2327,
+   "sic_ok": 2200,
+   "shares": 2091,
+   "pt_halal": 1845,
+   "pass": 317
+  },
+  "2026-01-29": {
+   "screen": 4834,
+   "labelled": 2738,
+   "sector_ok": 2330,
+   "sic_ok": 2203,
+   "shares": 2093,
+   "pt_halal": 1847,
+   "pass": 314
+  },
+  "2026-02-06": {
+   "screen": 4862,
+   "labelled": 2743,
+   "sector_ok": 2332,
+   "sic_ok": 2205,
+   "shares": 2095,
+   "pt_halal": 1849,
+   "pass": 307
+  },
+  "2026-02-17": {
+   "screen": 4885,
+   "labelled": 2742,
+   "sector_ok": 2331,
+   "sic_ok": 2205,
+   "shares": 2093,
+   "pt_halal": 1846,
+   "pass": 312
+  },
+  "2026-02-25": {
+   "screen": 4891,
+   "labelled": 2744,
+   "sector_ok": 2334,
+   "sic_ok": 2209,
+   "shares": 2097,
+   "pt_halal": 1845,
+   "pass": 302
+  },
+  "2026-03-05": {
+   "screen": 4932,
+   "labelled": 2754,
+   "sector_ok": 2342,
+   "sic_ok": 2217,
+   "shares": 2108,
+   "pt_halal": 1849,
+   "pass": 295
+  },
+  "2026-03-13": {
+   "screen": 4951,
+   "labelled": 2752,
+   "sector_ok": 2340,
+   "sic_ok": 2216,
+   "shares": 2105,
+   "pt_halal": 1847,
+   "pass": 281
+  },
+  "2026-03-23": {
+   "screen": 4953,
+   "labelled": 2757,
+   "sector_ok": 2344,
+   "sic_ok": 2220,
+   "shares": 2112,
+   "pt_halal": 1850,
+   "pass": 272
+  },
+  "2026-03-31": {
+   "screen": 4959,
+   "labelled": 2764,
+   "sector_ok": 2350,
+   "sic_ok": 2225,
+   "shares": 2118,
+   "pt_halal": 1855,
+   "pass": 272
+  },
+  "2026-04-09": {
+   "screen": 4960,
+   "labelled": 2765,
+   "sector_ok": 2352,
+   "sic_ok": 2227,
+   "shares": 2121,
+   "pt_halal": 1861,
+   "pass": 288
+  },
+  "2026-04-17": {
+   "screen": 4967,
+   "labelled": 2768,
+   "sector_ok": 2355,
+   "sic_ok": 2230,
+   "shares": 2121,
+   "pt_halal": 1861,
+   "pass": 299
+  },
+  "2026-04-27": {
+   "screen": 4956,
+   "labelled": 2771,
+   "sector_ok": 2355,
+   "sic_ok": 2229,
+   "shares": 2121,
+   "pt_halal": 1861,
+   "pass": 299
+  },
+  "2026-05-05": {
+   "screen": 4928,
+   "labelled": 2770,
+   "sector_ok": 2355,
+   "sic_ok": 2229,
+   "shares": 2123,
+   "pt_halal": 1864,
+   "pass": 305
+  },
+  "2026-05-13": {
+   "screen": 4946,
+   "labelled": 2788,
+   "sector_ok": 2373,
+   "sic_ok": 2246,
+   "shares": 2144,
+   "pt_halal": 1878,
+   "pass": 302
+  },
+  "2026-05-21": {
+   "screen": 4969,
+   "labelled": 2801,
+   "sector_ok": 2387,
+   "sic_ok": 2260,
+   "shares": 2157,
+   "pt_halal": 1889,
+   "pass": 310
+  },
+  "2026-06-01": {
+   "screen": 4978,
+   "labelled": 2819,
+   "sector_ok": 2402,
+   "sic_ok": 2275,
+   "shares": 2172,
+   "pt_halal": 1898,
+   "pass": 316
+  },
+  "2026-06-09": {
+   "screen": 4965,
+   "labelled": 2824,
+   "sector_ok": 2403,
+   "sic_ok": 2278,
+   "shares": 2173,
+   "pt_halal": 1900,
+   "pass": 310
+  },
+  "2026-06-17": {
+   "screen": 4978,
+   "labelled": 2830,
+   "sector_ok": 2409,
+   "sic_ok": 2282,
+   "shares": 2177,
+   "pt_halal": 1902,
+   "pass": 322
+  },
+  "2026-06-26": {
+   "screen": 5017,
+   "labelled": 2853,
+   "sector_ok": 2426,
+   "sic_ok": 2298,
+   "shares": 2192,
+   "pt_halal": 1916,
+   "pass": 323
+  },
+  "2026-07-07": {
+   "screen": 5041,
+   "labelled": 2866,
+   "sector_ok": 2441,
+   "sic_ok": 2312,
+   "shares": 2206,
+   "pt_halal": 1929,
+   "pass": 326
+  },
+  "2026-07-15": {
+   "screen": 5056,
+   "labelled": 2882,
+   "sector_ok": 2452,
+   "sic_ok": 2320,
+   "shares": 2213,
+   "pt_halal": 1933,
+   "pass": 323
+  },
+  "2026-07-23": {
+   "screen": 5042,
+   "labelled": 2876,
+   "sector_ok": 2447,
+   "sic_ok": 2314,
+   "shares": 2207,
+   "pt_halal": 1930,
+   "pass": 317
+  },
+  "2026-07-31": {
+   "screen": 5033,
+   "labelled": 2879,
+   "sector_ok": 2451,
+   "sic_ok": 2318,
+   "shares": 2210,
+   "pt_halal": 1934,
+   "pass": 317
+  }
+ }
+}

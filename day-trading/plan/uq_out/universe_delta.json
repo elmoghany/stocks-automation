@@ -1,0 +1,22 @@
+{
+ "before": {
+  "mean_pass_per_day": 60.7,
+  "total_symbol_days": 27209,
+  "mean_labelled": 727.6
+ },
+ "after": {
+  "mean_pass_per_day": 278.3,
+  "total_symbol_days": 124687,
+  "mean_labelled": 2596.8
+ },
+ "symbols_before": 191,
+ "symbols_after": 599,
+ "kept_from_before": 186,
+ "dropped_from_before": [
+  "BJRI",
+  "BROS",
+  "FUBO",
+  "OSW",
+  "TH"
+ ]
+}

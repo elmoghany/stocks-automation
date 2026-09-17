@@ -415,6 +415,32 @@ def stage_selftest(ndays=40, seed=0):
 
 
 # ---------------------------------------------------------------- spread
+def obs_spread_buckets(day, sym, ti, lookback_s=300,
+                       buckets=(2, 5, 10, 20, 50)):
+    """Median 1-second high-low range, in bps, per minimum-transaction
+    bucket. Prints the convergence the `min_n` choice rests on."""
+    rows = day.tape(sym)
+    out = {}
+    if not rows:
+        return out
+    me = min(int(STEPS[ti]) + 1, NMIN - 1)
+    hi_ms = day.ms_of_min(me)
+    lo_ms = hi_ms - lookback_s * 1000
+    vals = []
+    for t, _o, h, l, _c, _v, n in rows:
+        if t < lo_ms:
+            continue
+        if t >= hi_ms:
+            break
+        if n is None or h is None or l is None or l <= 0:
+            continue
+        vals.append((n, (h - l) / ((h + l) / 2.0) * 1e4))
+    for b in buckets:
+        v = [x for n, x in vals if n >= b]
+        out[b] = (float(np.median(v)), len(v)) if v else (np.nan, 0)
+    return out
+
+
 def stage_spread(ndays=60, seed=0, per_day=120):
     t = Table()
     rng = np.random.default_rng(seed)
@@ -442,8 +468,11 @@ def stage_spread(ndays=60, seed=0, per_day=120):
             ti = int(DEC_T[di])
             mn = spread_at(day, si, ti)
             sc = spread_sec(day, sym, ti)
+            bk = obs_spread_buckets(day, sym, ti)
             rec.append({"date": date, "sym": sym, "dec": DEC_ET[di],
-                        "px": float(day.mark[di, si]),
+                        "px": float(day.mark[ti, si]),
+                        **{f"obs_n{b}": bk.get(b, (np.nan, 0))[0]
+                           for b in (2, 5, 10, 20, 50)},
                         "m_cs": mn["cs"], "m_ar": mn["ar"], "m_roll": mn["roll"],
                         "s_cs": sc["cs"], "s_ar": sc["ar"], "s_roll": sc["roll"],
                         "s_n": sc["n"]})
@@ -463,7 +492,9 @@ def stage_spread(ndays=60, seed=0, per_day=120):
     rep = {"rows": len(rec), "days": len(pick),
            "estimators_bps": {k: pct(k) for k in
                               ("m_cs", "m_ar", "m_roll",
-                               "s_cs", "s_ar", "s_roll")}}
+                               "s_cs", "s_ar", "s_roll")},
+           "observed_1s_range_bps_by_min_transactions":
+               {b: pct(f"obs_n{b}") for b in (2, 5, 10, 20, 50)}}
     print(json.dumps(rep, indent=1))
     (OUT / "spread_report.json").write_text(json.dumps(
         {**rep, "sample": rec[:4000]}, indent=1, default=str))

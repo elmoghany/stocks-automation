@@ -222,9 +222,142 @@ def stage_run(h="h30", split=1, offset=10.0, wait=1, post_k=3, seeds=30,
     return rep
 
 
+# ------------------------------------------------- train-window selection
+def train_scores(h="h30", seed=0, start="2025-01", force=False):
+    """Walk-forward model scores INSIDE the train window.
+
+    plan/wn_model.py's own walk-forward starts at 2025-08, i.e. it only
+    ever scores the held-out year -- which is exactly right for reading a
+    dollar, and useless for CHOOSING a limit configuration, because
+    choosing on the held-out year is choosing on the answer. So the same
+    `wn_model.fit` (imported, not reimplemented, with the same params and
+    the same early stopping) is refitted month by month over the TRAIN
+    window: month M is scored by a model fitted only on train rows with
+    date < M. Nothing here ever touches a row dated 2025-08 or later.
+    """
+    import wn_model
+    f = OUT / f"train_scores_{h}_s{seed}.npy"
+    if f.exists() and not force:
+        return np.load(f).astype(float)
+    t = Table()
+    m = t.mask(split=0, dec=RTH, h=h)
+    rows = np.flatnonzero(m)
+    months = sorted({x for x in t.month[rows] if x >= start})
+    score = np.full(len(t.date_i), np.nan)
+    for mo in months:
+        te = rows[t.month[rows] == mo]
+        tr = rows[t.month[rows] < mo]
+        if len(tr) < 5000 or len(te) == 0:
+            continue
+        dd = t.date_i[tr]
+        cut = np.quantile(np.unique(dd), 0.9)
+        bst = wn_model.fit(t, tr[dd < cut], h, seed, valid_rows=tr[dd >= cut])
+        score[te] = bst.predict(t.F[te])
+        print(f"  train-fold {mo}: train={len(tr):,} test={len(te):,} "
+              f"iters={bst.best_iteration}", flush=True)
+    np.save(f, score.astype(np.float32))
+    return score.astype(float)
+
+
+def run_many(t, days, scores, configs, verbose=True):
+    """Every (config, ranking) pair over the same days, ONE day load each.
+
+    The naive nested loop reloads a day's npz and its 1-second tapes once
+    per config per seed -- 30 configs x 7 rankings = 210 reloads a day.
+    Days go on the outside here, so each day is read once and every policy
+    is walked across it.
+    """
+    di = {d: i for i, d in enumerate(t.dates)}
+    dec_i = [UF.DEC_ET.index(x) for x in RTH]
+    acc = {(ci, si): [] for ci in range(len(configs))
+           for si in range(len(scores))}
+    for k, d in enumerate(days):
+        day = UF.DayTape(d)
+        base = (t.date_i == di[d]) & t.printed_m & np.isin(t.dec_i, dec_i)
+        for si, sc in enumerate(scores):
+            rows = np.flatnonzero(base & np.isfinite(sc))
+            if rows.size == 0:
+                continue
+            for ci, kw in enumerate(configs):
+                acc[(ci, si)] += simulate_day(t, day, rows, sc, **kw)
+        if verbose and (k + 1) % 20 == 0:
+            print(f"  ..{k+1}/{len(days)} days", flush=True)
+    return acc
+
+
+def stage_select(h="h30", seeds=6, ndays=None, max_tickets=7):
+    """Grid the limit configuration on TRAIN days only, against a random
+    control on the same days, and print the ranking. The single winner is
+    what `--stage run` is then allowed to carry to the held-out year."""
+    t = Table()
+    sc = train_scores(h)
+    days = [d for d in UE.cached_days(t, 0)
+            if np.isfinite(sc[t.date_i == t.dates.index(d)]).any()]
+    if ndays:
+        days = days[:ndays]
+    print(f"select: {len(days)} tape-complete TRAIN days with scores",
+          flush=True)
+    configs, labels = [], []
+    for offset in (0.0, 5.0, 10.0, 20.0, 30.0):
+        for wait in (1, 3):
+            for post_k in (1, 3, 5):
+                configs.append(dict(offset=offset, wait=wait, post_k=post_k,
+                                    h=h, exit_bps=UF.FEE_BPS,
+                                    passive_bps=0.0,
+                                    max_tickets=max_tickets))
+                labels.append((offset, wait, post_k))
+    configs.append(dict(offset=0.0, wait=1, post_k=1, h=h,
+                        exit_bps=UF.FEE_BPS, passive_bps=0.0,
+                        max_tickets=max_tickets, market=True))
+    labels.append(("MARKET", 0, 1))
+    scores = [sc]
+    for sd in range(seeds):
+        rg = np.random.default_rng(500 + sd)
+        scores.append(np.where(np.isfinite(sc), rg.random(len(sc)), np.nan))
+    acc = run_many(t, days, scores, configs)
+    grid = []
+    for ci, (offset, wait, post_k) in enumerate(labels):
+        s = _summ(acc[(ci, 0)], len(days), "")
+        rnd = [_summ(acc[(ci, si + 1)], len(days), "")["per_ticket"]
+               for si in range(seeds)]
+        grid.append({"offset_bps": offset, "wait_min": wait,
+                     "post_k": post_k, "tickets": s["tickets"],
+                     "per_day": s["tickets_per_day"],
+                     "per_ticket": s["per_ticket"],
+                     "per_month": s["per_month"],
+                     "random_per_ticket": round(float(np.mean(rnd)), 2),
+                     "edge_vs_random": round(
+                         s["per_ticket"] - float(np.mean(rnd)), 2)})
+        g = grid[-1]
+        print(f"  off={str(offset):>6} w={wait} k={post_k}: "
+              f"{g['tickets']:5d} tkts {g['per_day']:.2f}/day "
+              f"${g['per_ticket']:8.2f}/tkt  ${g['per_month']:9.0f}/mo "
+              f"(random ${g['random_per_ticket']:7.2f}, edge "
+              f"${g['edge_vs_random']:+7.2f})", flush=True)
+    ms = _summ(acc[(len(configs) - 1, 0)], len(days), "market")
+    grid = [g for g in grid if g["offset_bps"] != "MARKET"]
+    best = max(grid, key=lambda g: g["per_month"])
+    rep = {"h": h, "days": len(days), "grid": grid, "chosen": best,
+           "market_baseline": {"tickets": ms["tickets"],
+                               "per_ticket": ms["per_ticket"],
+                               "per_month": ms["per_month"]}}
+    (OUT / f"strat_select_{h}.json").write_text(json.dumps(rep, indent=1,
+                                                           default=str))
+    print(f"market entry on the same train days: {ms['tickets']} tkts "
+          f"${ms['per_ticket']:.2f}/tkt ${ms['per_month']:.0f}/mo")
+    print("CHOSEN ON TRAIN:", json.dumps(best))
+    return rep
+
+
 if __name__ == "__main__":
     a = sys.argv
     g = lambda f, d: (type(d)(a[a.index(f) + 1]) if f in a else d)  # noqa: E731
+    st = g("--stage", "run")
+    if st == "select":
+        stage_select(h=g("--h", "h30"), seeds=g("--seeds", 6),
+                     ndays=g("--days", 0) or None,
+                     max_tickets=g("--maxtkt", 7))
+        raise SystemExit(0)
     stage_run(h=g("--h", "h30"), split=g("--split", 1),
               offset=g("--offset", 10.0), wait=g("--wait", 1),
               post_k=g("--postk", 3), seeds=g("--seeds", 30),
