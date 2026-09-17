@@ -14,9 +14,10 @@ question that matters: **does adding it to the same ranker, on the same
 table, with the same fills and costs, move the out-of-sample IC and the
 $/ticket of the chosen name?**
 
-**Verdict: FAIL — see Part 8.** The headline numbers are filled in below as
-each stage of the run lands; the corpus, the method, the bucket tables and
-the rules are final.
+**Verdict: FAIL — Part 9.** The catalyst block moves the out-of-sample IC
+by +0.0008 / −0.0038 / −0.0007 (h30 / h60 / h120), inside seed noise; every
+model row is negative; the closest miss is a post-hoc one-name earnings rule
+at +$674/month, 11× short; the corpus is worth +$7–27 a ticket as a veto.
 
 Read `widenet-audit.md` first: the ticket table, the fills, the cost ladder,
 the walk-forward protocol and the honest-harness conventions are inherited
@@ -66,7 +67,7 @@ Every catalyst feature is a function of events with ts ≤ the decision
 instant — trailing windows of 18h / 3d / 10d / 30d, hours-since-last-event,
 the most recent surprise — and `plan/cat_poison.py` mutates every event
 after the decision instant and asserts that not one feature, and not one
-chosen name, moves (Part 7).
+chosen name, moves (Part 8).
 
 **The engine's own convention is inherited, not re-derived:** a decision at
 minute *m* fills at the open of minute *m*+1, 10 bps a side (+50 bps outside
@@ -450,3 +451,329 @@ name that reported after yesterday's close and is green since the open,
 sold at 10:35*. It is written here so that it is tested once, as stated,
 and not re-searched.
 
+---
+
+## Part 6 — The model: the same ranker with and without the catalyst block
+
+`plan/cat_model.py` — `plan/wn_model.py`'s LightGBM (same parameters, same
+label = net $ of the ticket, same monthly walk-forward refit with early
+stopping on the last 10% of train days), run three times per horizon with
+three seeds on each of six column sets. Scoring starts at 2025-02 so both
+halves get an out-of-sample reading (Y1 = 2025-02 → 2025-07, Y2 = 2025-08 →
+2026-07; the aug26 stub is 4 days). IC = mean cross-sectional Spearman over
+(date, decision) groups of ≥ 10 eligible names; "ex-15:30" drops the 15:30
+slot (see the caveat below the table).
+
+### 6.1 The delta — the whole question of this line
+
+| columns | h | OOS IC, all 6 slots (mean ± sd, 3 seeds) | **OOS IC ex-15:30** | Y1 / Y2 (ex-15:30) | 1/day @09:35 $/tkt (3 seeds) | 7/day @09:35 $/tkt | shuffled-label IC |
+|---|---|---|---|---|---|---|---|
+| base (32 price/volume) | h30 | +0.0790 ± 0.0015 | **+0.0580 ± 0.0016** | +0.057 / +0.059 | −15.39 [−9.6, −28.1, −8.4] | −22.49 | |
+| **base + catalyst (169)** | h30 | +0.0794 ± 0.0008 | **+0.0588 ± 0.0011** | +0.056 / +0.061 | −38.20 [−25.9, −54.1, −34.6] | −21.09 | −0.0013 |
+| catalyst only (137) | h30 | +0.0149 ± 0.0015 | +0.0122 ± 0.0020 | +0.002 / +0.017 | −39.62 | −26.52 | |
+| base | h60 | +0.0570 ± 0.0008 | **+0.0358 ± 0.0009** | +0.034 / +0.037 | −44.21 [−42.9, −33.0, −56.7] | −21.04 | |
+| **base + catalyst** | h60 | +0.0546 ± 0.0016 | **+0.0320 ± 0.0026** | +0.025 / +0.035 | −41.97 [−45.1, −58.0, −22.8] | −23.84 | +0.0021 |
+| catalyst only | h60 | +0.0085 ± 0.0022 | +0.0078 ± 0.0023 | +0.005 / +0.009 | −55.94 | −27.12 | |
+| base + news only | h60 | +0.0572 ± 0.0007 | +0.0359 ± 0.0007 | +0.035 / +0.037 | −45.15 | −27.65 | |
+| base + filings only | h60 | +0.0548 ± 0.0019 | +0.0329 ± 0.0019 | +0.025 / +0.037 | −36.20 | −25.54 | |
+| base + earnings only | h60 | +0.0562 ± 0.0012 | +0.0341 ± 0.0014 | +0.028 / +0.037 | −48.14 | −26.95 | |
+| base | h120 | +0.0470 ± 0.0011 | **+0.0250 ± 0.0013** | +0.018 / +0.029 | −43.30 | −32.52 | |
+| **base + catalyst** | h120 | +0.0468 ± 0.0021 | **+0.0243 ± 0.0026** | +0.021 / +0.026 | −70.50 | −27.84 | −0.0008 |
+| catalyst only | h120 | +0.0065 ± 0.0021 | +0.0049 ± 0.0029 | +0.009 / +0.002 | −39.49 | −29.17 | |
+
+**IC delta from the catalyst block (base+cat − base, ex-15:30): +0.0008 at
+h30, −0.0038 at h60, −0.0007 at h120** — every one inside the seed-to-seed
+spread. What each input class bought at h60: news +0.0001, filings −0.0029,
+earnings −0.0017. The honest price-only ceiling on this table is **0.036 at
+h60 / 0.058 at h30 / 0.025 at h120**, and the catalyst corpus moves none of
+them. The catalyst block *alone* does carry a small, real signal (h30
++0.012; t ≈ 2.7 at h60; the shuffled-label control sits at 0.000 ± 0.002),
+but it is a fifth of the price block's and, once the price block is present,
+redundant.
+
+Where the trees put it: in the base+cat h60 model the top-16 columns by gain
+are all price/volume (`tod`, `sic2`, `xs_breadth`, `bar_range5`, `rvol30`,
+`log_dv5`, …); the first catalyst column is `days_since_earn` at #17 and
+`hrs_since_fil` at #25. No count column and no surprise column reaches the
+top 25 on any seed. Early stopping chose 2–68 rounds per fold with the block
+and 1–111 without — the same "label is noise at this resolution" reading
+`widenet-audit.md` Part 3.1 recorded.
+
+### 6.2 Per decision time (h60, IC, mean of 3 seeds)
+
+| columns | 09:35 | 10:00 | 10:30 | 11:00 | 13:00 | 15:30 |
+|---|---|---|---|---|---|---|
+| base | 0.0225 | 0.0187 | 0.0360 | 0.0335 | 0.0680 | 0.1645 |
+| base + catalyst | 0.0156 | 0.0134 | 0.0338 | 0.0368 | 0.0606 | 0.1682 |
+| catalyst only | 0.0086 | 0.0046 | 0.0095 | 0.0141 | 0.0021 | 0.0124 |
+
+At 09:35 — where 5.5% of the rows have a fresh article and 1.9% a fresh
+report — the block *lowers* the IC (0.0225 → 0.0156). The "IC" of 0.16 at
+15:30 is not alpha and is excluded from every headline number: at 15:30 a
+30-minute horizon already exits after 16:00, so h30 / h60 / h120 there are
+all **forced flattens at the day's last print through the extended-hours
+ladder** (mean label −$73.63 vs −$15.88 at 13:00 h60), and the ranker is
+predicting which names will print after the bell and pay 60 bps — cost,
+not return. The mandate's 15:30 slot is therefore only honestly readable at
+h15 here (−$24.84 unconditional); CLOSE-MOMENTUM's engine with stated-bar
+exits (15:50/15:55/15:59) is the right tool for that slot and its answer
+stands.
+
+### 6.3 Every configuration against the bar (flat 10 bps/side)
+
+| config | tickets | total | $/tkt | $/month | Y1 $/tkt (n) | Y2 $/tkt (n) | months + | ex-best | maxDD | pct total / ex-best | random ± sd | inverted | foresight $/tkt · $/mo | aug26 |
+|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|
+| base h30, 1/day@09:35 | 379 | −3,646 | −9.62 | −202 | −33.23 (124) | +0.42 (251) | 6/19 | −5,591 | −9,218 | 90 / 90 | −28.30 ± 11.2 | −26.55 | +702 · +14,750 | +370 (4) |
+| **base+cat h30, 1/day@09:35** | 379 | −9,818 | −25.91 | −544 | −11.74 (124) | −35.78 (251) | 7/19 | −11,354 | −14,359 | 63 / 60 | −28.30 ± 11.2 | −30.04 | +702 · +14,750 | +618 (4) |
+| base h30, 7/day@09:35 | 2,653 | −48,212 | −18.17 | −2,671 | −22.58 (868) | −18.46 (1,757) | 6/19 | −50,158 | −53,272 | 93 / 93 | −26.01 ± 4.9 | −30.13 | +360 · +52,849 | +3,819 (28) |
+| base+cat h30, 7/day@09:35 | 2,653 | −54,712 | −20.62 | −3,032 | −36.18 (868) | −14.86 (1,757) | 4/19 | −56,658 | −58,472 | 87 / 87 | −26.01 ± 4.9 | −22.69 | +360 · +52,849 | +2,799 (28) |
+| base h60, 1/day@09:35 | 379 | −16,266 | −42.92 | −901 | −17.52 (124) | −60.63 (251) | 8/19 | −19,346 | −18,276 | 20 / 20 | −28.75 ± 14.5 | −40.44 | +867 · +18,199 | +1,124 (4) |
+| **base+cat h60, 1/day@09:35** | 379 | −17,105 | −45.13 | −948 | −15.52 (124) | −70.19 (251) | 7/19 | −20,185 | −25,632 | 20 / 7 | −28.75 ± 14.5 | −54.67 | +867 · +18,199 | +2,437 (4) |
+| base h60, 7/day@09:35 | 2,653 | −55,674 | −20.99 | −3,085 | −10.96 (868) | −33.88 (1,757) | 8/19 | −58,754 | −80,740 | 87 / 87 | −26.94 ± 5.1 | −46.87 | +447 · +65,749 | +13,359 (28) |
+| base+cat h60, 7/day@09:35 | 2,653 | −59,571 | −22.45 | −3,301 | −28.43 (868) | −27.92 (1,757) | 7/19 | −62,809 | −81,764 | 83 / 83 | −26.94 ± 5.1 | −41.76 | +447 · +65,749 | +14,169 (28) |
+| base h120, 7/day@09:35 | 2,653 | −106,546 | −40.16 | −5,904 | −17.93 (868) | −54.64 (1,757) | 4/19 | −110,275 | −116,061 | 10 / 10 | −32.46 ± 5.6 | −45.25 | +515 · +75,743 | +5,017 (28) |
+| base+cat h120, 7/day@09:35 | 2,653 | −68,713 | −25.90 | −3,807 | −6.17 (868) | −40.98 (1,757) | 5/19 | −72,442 | −80,208 | 87 / 87 | −32.46 ± 5.6 | −52.06 | +515 · +75,743 | +8,638 (28) |
+| catalyst-only h60, 1/day@09:35 | 379 | −8,884 | −23.44 | −492 | −20.43 (124) | −23.56 (251) | 8/19 | −11,013 | −9,928 | 60 / 60 | −28.75 ± 14.5 | −37.32 | | −438 (4) |
+| catalyst-only h60, 7/day@09:35 | 2,653 | −72,635 | −27.38 | −4,025 | −27.18 (868) | −30.62 (1,757) | 4/19 | −75,873 | −81,141 | 47 / 47 | −26.94 ± 5.1 | −30.33 | | +4,758 (28) |
+| base+cat h60 **SHUFFLED labels**, 1/day@09:35 | 379 | −8,278 | −21.84 | −459 | −21.87 | −32.51 | 8/19 | −9,955 | −12,169 | 63 / 63 | −28.75 ± 14.5 | −9.54 | | +2,595 (4) |
+| base+cat h60 SHUFFLED, 7/day@09:35 | 2,653 | −60,207 | −22.69 | −3,336 | −26.12 | −26.35 | 6/19 | −63,334 | −71,602 | 83 / 83 | −26.94 ± 5.1 | −26.61 | | +8,753 (28) |
+| base h60, 1/day@13:00 | 379 | −5,789 | −15.27 | −321 | −12.61 | −17.58 | 6/19 | −6,787 | −6,639 | 47 / 50 | −13.27 ± 6.7 | +8.07 | +356 · +7,468 | +187 (4) |
+| base+cat h60, 1/day@13:00 | 379 | −9,250 | −24.41 | −513 | −15.50 | −29.94 | 5/19 | −10,259 | −10,751 | 7 / 3 | −13.27 ± 6.7 | −12.66 | +356 · +7,468 | +187 (4) |
+
+**Not one model row is positive**, with or without the block. The seven-a-day
+rows are the only ones that reliably beat their random control (87–93rd
+percentile, +$4–8 per ticket, exactly the "real but tiny skill" WIDE-NET
+measured) and they lose $2,700–$5,900 a month to the toll. The one-a-day row
+swings by $50 per ticket between seeds of the same model (h60: −$42.9,
+−$33.0, −$56.7) — at 379 tickets the single pick is noise, which is why the
+mandate's "control percentile" on that row is meaningless in both
+directions (20th with the block, 90th without at h30, 0th–97th across
+seeds). The shuffled-label model lands on the random pick (IC 0.002, −$21.84
+vs −$28.75 random, 63rd pct) and the inverted score loses on every row, so
+the harness is clean. Foresight at 7/day h60 is **+$447/ticket,
++$65,749/month** — the bar is 11% of omniscience on this table.
+
+### 6.4 The block as a veto (`plan/cat_veto.py`)
+
+The bucket tables' information is on the negative side, so the honest use
+of the corpus in a long-only book is refusal. Base (price-only) h60 seed-0
+scores, re-picked after dropping every name a flag marks, against a 30-seed
+random pick on the SAME vetoed universe:
+
+| veto (trailing) | 1/day@09:35 $/tkt | Δ vs unvetoed | random on vetoed universe | edge vs random | 7/day@09:35 $/tkt | Δ | 1/slot all decs $/tkt | Δ |
+|---|---|---|---|---|---|---|---|---|
+| none | −42.92 | — | −28.67 | −14.25 | −20.99 | — | −26.15 | — |
+| 8-K 5.02 in 3d | −42.36 | +0.56 | −28.70 | −13.66 | −19.82 | +1.17 | −25.57 | +0.58 |
+| Form 4 sale in 3d | −40.26 | +2.66 | −28.98 | −11.28 | −18.28 | +2.71 | −24.51 | +1.64 |
+| analyst headline in 3d | −36.29 | +6.63 | −29.55 | −6.74 | −23.01 | −2.02 | −25.83 | +0.32 |
+| fresh earnings | −40.28 | +2.64 | −28.65 | −11.63 | −17.97 | +3.02 | −23.80 | +2.35 |
+| 10-Q/10-K in 18h | −22.71 | +20.21 | −28.32 | +5.61 | −15.83 | +5.16 | −20.69 | +5.46 |
+| 8-K 7.01 in 18h | −16.68 | +26.24 | −28.74 | +12.06 | −19.66 | +1.33 | −20.32 | +5.83 |
+| dilution filing in 30d | −31.63 | +11.29 | −27.75 | −3.88 | −17.40 | +3.59 | −23.78 | +2.37 |
+| any catalyst in 18h | −32.21 | +10.71 | −27.89 | −4.32 | −18.64 | +2.35 | −23.13 | +3.02 |
+| earnings scheduled today/tomorrow | −51.91 | −8.99 | −27.33 | −24.58 | −17.79 | +3.20 | −29.83 | −3.68 |
+| **any of {5.02, Form 4 sale, analyst, 10-Q} in 3d** | **−15.54** | **+27.38** | −29.96 | +14.42 | **−13.52** | +7.47 | −21.37 | +4.78 |
+
+The composite veto is the largest single improvement the corpus produces:
++$27 per ticket on the one-a-day pick and +$7.47 on seven-a-day (about
++$1,100/month at 7/day), in both years (Y1 −3.6 / Y2 −28.8 vs −17.5 / −60.6).
+It is real — the vetoed universe's random pick does not move, so the gain is
+selection, not universe shrinkage — and it leaves every row negative: the
+best vetoed configuration is **−$13.52/ticket, −$1,988/month**.
+
+VETO_SEEDS_LINE
+
+---
+
+## Part 7 — The gapper pool arm: run as asked, not a result
+
+`table_gap.npz` (the +10% pool under `RS_CROSS`, 2,836 symbols, 41,908 rows
+at 10:00/11:00/13:00/15:30, 24,007 live) with the same block, same
+walk-forward, `model_results_gap.json`:
+
+| columns | fill → exit | scored cross-sections (≥ 10 names) | IC | 7/day $/tkt | random 7/day | 1/day $/tkt | foresight 7/day |
+|---|---|---|---|---|---|---|---|
+| base | 10:00 → 12:00 | 4 | +0.171 | +466 | **+160** | −326 | +2,881 |
+| base+cat | 10:00 → 12:00 | 4 | +0.153 | +450 | +160 | +2,116 | |
+| base | 11:00 → 13:00 | 8 | +0.143 | +430 | **+262** | +333 | +977 |
+| base+cat | 11:00 → 13:00 | 8 | +0.147 | +380 | +262 | +311 | |
+| base | 13:00 → 15:00 | 10 | +0.084 | +86 | −64 | +46 | +507 |
+| base+cat | 13:00 → 15:00 | 10 | +0.058 | +85 | −64 | +11 | |
+| base | 15:30 → 15:59 | 52 | +0.085 | −30 | −75 | −85 | +387 |
+| base+cat | 15:30 → 15:59 | 52 | +0.080 | −14 | −75 | −120 | |
+
+Four things make it unreadable, all inherited from CLOSE-MOMENTUM Part 6 and
+none fixable by a catalyst column: the **random control is +$160 to +$344 a
+ticket** at 10:00–11:00 (membership is conditioned on the day's own high, so
+buying anything in the pool "wins"); a walk-forward needs 5,000 training
+rows and the pool reaches that only late, so **Y1 has no out-of-sample row**
+and only 4–52 cross-sections ever have ten names to rank; the one-a-day
+numbers swing from −$1,341 to +$2,645 between column sets on the same slot
+(a lottery, not a ranking); and 94% of the pool is not halal-PASS. The
+catalyst delta on this arm is noise on top of noise; it is reported because
+the mandate asked, and it changes nothing.
+
+---
+
+## Part 8 — The honesty battery
+
+| check | result |
+|---|---|
+| **poison — bars** (garbage on every 1-minute bar strictly after the cut, price block rebuilt through `rl2.features.compute_day` + `wn_table.day_block`; 12 days × 6 cuts) | **144 array checks, 0 mismatches** on all 32 columns + the causal gate |
+| **poison — events** (every article / filing / earnings report / Form 4 / sentiment record after the decision instant deleted and replaced by random-class garbage inside the next 60 days — **1,520,884 events removed, 462,441 added** over the trials; catalyst block rebuilt through `cat_events.features_for`) | **72 block checks, 0 mismatches** on all 137 columns |
+| **poison — picks** (top-1 AND top-7 of a fitted base+cat ranker at every decision ≤ the cut, clean vs poisoned) | **504 pick checks, 0 mismatches** |
+| **direction** — the label must move (it prices minute m+1 onward) and the catalyst block must move at decisions AFTER the cut (the garbage has to be visible where it is allowed) | label moved **72/72**; catalyst block moved **60/60** |
+| **shuffled labels** (permuted within each train day, 300 rounds) | IC −0.0013 / +0.0021 / −0.0008 at h30/h60/h120; 1/day −$21.84 = the random pick (63rd pct) |
+| **inverted score** | negative on every model row (e.g. −$54.67 vs −$45.13 at h60 1/day; −$46.87 vs −$20.99 at 7/day) |
+| **random, 30 seeds, same slots** | −$26 to −$36/ticket depending on horizon; every configuration's percentile is in 6.3 and `rules.json` |
+| **foresight** (score = the ticket's own realised net P&L) | +$447/ticket, +$65,749/month at 7/day h60; +$867 at 1/day — the harness can learn; the bar is 11% of it |
+| **identity of fills / labels** | inherited byte-for-byte from `plan/wn_table.day_block` (poison-tested 96/0 and pick-tested 816/0 in WIDE-NET); only the decision grid differs |
+| **defects found and recorded** | (1) duplicate column name `earn_fresh` (wide-net RH-calendar flag vs the catalyst flag) — LightGBM refused it; renamed `earn_fresh_ev`, every table rebuilt; (2) exit keys with `:`/`->` are not legal Windows filenames — score files renamed; (3) the 15:30 slot's h30/h60/h120 labels are extended-hours flattens (6.2) — excluded from every headline IC; (4) `num_threads=8` was 7× slower than 1 thread on this 4-core host shared with two other agents' jobs — one thread throughout |
+
+### 8.1 Measured cost (COST-REBASE's module as it stands; not landed)
+
+COST-REBASE has no NOTES section and no index row at the time of this run,
+so **the flat 10 bps/side ladder is the headline** and the measured number
+is secondary, computed with `plan/cr_cost.CostModel` exactly as the module
+stands (per-fill half-spread = max of HL2 / Corwin-Schultz / Abdi-Ranaldo on
+trailing windows ending strictly before the fill minute, plus a square-root
+impact term at Y = 1.0, floored at 1 bp, legacy 10 bps where the 1-second
+tape is absent):
+
+MEASURED_COST_TABLE
+
+At 09:36 the module's impact term reads the first five minutes of tape and
+charges **~50 bps on entry** (opening volatility × a small trailing dollar
+volume) against ~20 bps on the exit an hour later — i.e. it prices the open
+2–5× *above* the flat ladder, the opposite direction from what
+UNIVERSE+QUOTES measured for the inside spread (2–6 bps). Whether that
+impact calibration is right is COST-REBASE's question; here it only makes
+every number worse, so the verdict is conservative under both ladders.
+
+---
+
+## Part 9 — Verdict, the closest miss, what each input bought, and what next
+
+### Verdict: **FAIL.**
+
+The mandate's question was whether a genuinely new input set moves the IC
+ceiling. It does not. On the same table, the same ranker, the same fills
+and the same toll, **137 causal catalyst columns change the out-of-sample
+IC by +0.0008 / −0.0038 / −0.0007 at h30 / h60 / h120** — inside the
+seed-to-seed spread of ±0.001–0.003 — and change the $/ticket of the chosen
+name by amounts that flip sign between seeds. The block on its own carries
+a real but small signal (IC 0.005–0.012, t ≈ 2.7) that is already inside
+the price block. Every model configuration is negative; the best of them
+(base+cat h30, seven a day) is −$20.62/ticket, −$3,032/month, 87th
+percentile against random, i.e. skill worth $5 a ticket against a $30 toll.
+Nothing passes; the index bar needs ≥ $7,500/month, both years positive,
+≥ 90th percentile on total and ex-best.
+
+The catalyst corpus is not worthless — it is **worth about $27 a ticket as a
+veto** on the one-a-day price ranker and +$7.47 a ticket on seven a day
+(6.4), which is the largest single improvement any input has produced on
+this universe since the honest harness landed; but a veto cannot make a
+negative book positive, and the best vetoed row is −$13.52/ticket.
+
+### The closest miss
+
+**`R15 | fresh earnings AND green since the open @09:35 | exit 10:35`**
+(Part 5): 112 tickets in 448 days, **+$128.35/ticket, +$14,375 total,
++$674/month**, Y1 +$145 / Y2 +$120, 14 of 22 months positive, Sharpe 2.69,
+ex-best +$12,403, 100th percentile on total and on ex-best against 30
+random seeds on the same slots (−$35.57 ± 25.92), mirror (fresh AND red)
+−$57.59, aug2026 +$397 on 3 tickets. Under the measured cost ladder:
+R15_MEASURED_LINE. It needs to be **11× larger** and it cannot be widened —
+the second candidate on a firing day is worth −$19 in Y2 (k = 7: +$56.51,
+Y2 −$18.6), 10:30 is −$12.67, 11:00 is −$121. It is **post-hoc** (the
+pre-registered R1 "beat AND green" is +$71.24/ticket, +$317/month, Y2
++$38.79; the ablation said the beat was the wrong half), half of it is the
+ordering among ~1.7 candidates (a coin among the qualifiers earns +$69.82 ±
+46.31), five tickets are 61% of it, and the engine is *last night's*
+reporters that opened green (+$149.62, n = 93) rather than this morning's
+(+$12.14, n = 42). It is recorded as the natural pre-registered candidate for
+a paper session — **buy at 09:35 the name that reported after yesterday's
+close and is green since the open; sell at 10:35** — to be tested once, as
+stated, and not re-searched.
+
+### What each input class bought
+
+| input class | IC delta at h60 (base+X − base, ex-15:30) | best bucket / rule it produced ($/month, k = 1) | as a veto (Δ $/tkt, 1/day) |
+|---|---|---|---|
+| news (16 classes, PR flag, sentiment, recency) | **+0.0001** | analyst / M&A / FDA / index / sentiment rules all ≤ random; best +$0 | analyst headline in 3d: +$6.63 |
+| EDGAR filings (8-K items, 424B/S-3/S-1, 13D/G, Form 4 direction, 144) | **−0.0029** | 8-K 1.01 in 18h @09:35 h120: +$17/tkt, t = 0.2; R8 (13D) −$689/mo; R6 (dilution) −$498/mo | 8-K 7.01 in 18h: +$26.24; 10-Q in 18h: +$20.21; composite {5.02, Form 4 sale, analyst, 10-Q}: **+$27.38** |
+| earnings (RH results + timing, surprise sign/size) | **−0.0017** | **R15 +$674/mo**, R1 +$317/mo (both one-a-day, ~25% of days); every "beat" rule beyond 10:00 negative | fresh earnings: +$2.64 |
+| all 137 together | **−0.0038** | — | — |
+
+The surprise itself bought nothing (the largest-surprise ordering is the
+worst of six tie-breaks; "beat" is worse than "any report"); the *timing* of
+the report bought the closest miss; the filings bought the vetoes; the news
+feed bought nothing measurable, which is consistent with 5.5% of decision
+rows having any article in the trailing 18 hours and the two largest
+press-release wires being absent from it.
+
+### Why this input set cannot do what was asked of it
+
+1. **Sparsity.** A cross-sectional ranker over ~60 names sees a fresh
+   catalyst on ~4 of them. The IC is a property of the *whole* cross-section;
+   a feature that is zero on 93% of rows can reorder at most the 7% and its
+   IC contribution is bounded by that share times its within-subset
+   correlation. That bound is ≈ 0.01, which is what `cat`-only measured.
+2. **The feed.** Two commentary sites, one of three press-release wires, no
+   Reuters/Bloomberg/Dow Jones, and a "legal" class that is mostly law-firm
+   solicitation. The catalysts that move small caps at the open — the 07:00
+   press release on Business Wire, the pre-market analyst note — are largely
+   not in it.
+3. **The direction of the information is negative.** Everything with |t| > 2
+   says "do not buy this"; a long-only $15k-ticket account can only decline,
+   and declining moves a −$21 book to −$13.
+4. **The earnings signal is a one-name, one-hour, one-in-four-days event.**
+   It is the only thing here that was positive in both years, and at 112
+   tickets a year it is 11× short even before its post-hoc discount.
+
+### Ranked next ideas
+
+1. **Paper-test R15 as pre-registered above, once.** Fifteen to twenty live
+   firings decide whether the +$150/ticket `pm`-reporter subset is a real
+   post-announcement continuation or a 93-draw artefact. Cost: one paper
+   session rule, zero new code. It is the only positive, both-years,
+   100th-percentile object this line produced.
+2. **Use the composite veto in the live rules now.** Refusing any name with
+   an 8-K 5.02, a Form 4 sale, an analyst headline or a 10-Q/10-K in the
+   trailing 3 days is causal, free, and worth +$7–27 a ticket on the
+   honest table. It will not make C37 positive; it will make it less
+   negative, and `data/filings_hist/` + `plan/cat_events.features_for` can
+   compute it at 09:34 from EDGAR's live submissions feed.
+3. **Do not buy a bigger news feed expecting the IC to move.** The corpus
+   was thin, but the arithmetic in "why" (1) says even a complete feed
+   changes at most the 7% of rows that carry a catalyst; the ceiling of a
+   catalyst *count* feature set on a 60-name cross-section is ≈ 0.01–0.02.
+   What a full-text feed *could* change is the quality of the one-name
+   earnings/PR pick (idea 1), not the ranker.
+4. **Stop adding columns to the wide-universe ranker.** Five lines now
+   (WIDE-NET 0.033, UNIVERSE+QUOTES 0.033, RL-v2 ~0, CLOSE-MOMENTUM
+   0.016–0.024, this line 0.036 at h60 / 0.058 at h30) measure the same
+   ceiling with five different input families. The next line that wants to
+   move it needs an input that is dense across the cross-section every
+   morning — the order book and options flow WIDE-NET named — or a
+   different objective than the daily cross-section altogether.
+5. **The 15:30 slot needs the CLOSE-MOMENTUM engine, not this table.** Any
+   horizon ≥ 30 minutes from 15:30 is an extended-hours flatten here, and a
+   ranker will happily "predict" the 60 bps toll (IC 0.16). Nothing in
+   6.2's 15:30 column should ever be quoted as alpha.
+
+### Files
+
+| | |
+|---|---|
+| `plan/cat_lib.py` | paths, symbol lists, taxonomy, event clock |
+| `plan/cat_news.py` · `plan/cat_edgar.py` | resumable corpus fetchers (Polygon news; EDGAR submissions + Form 4 XML) |
+| `plan/cat_events.py` | event corpus, coverage report, `features_for` (the causal feature function) |
+| `plan/cat_table.py` | the 163,254-row ticket table (+ gapper arm) on `wn_table.day_block` |
+| `plan/cat_buckets.py` | 2,768 bucket rows; 14 pre-registered rules + the R15 family |
+| `plan/cat_model.py` | walk-forward LightGBM on six column sets, IC, picks, controls; gapper arm |
+| `plan/cat_veto.py` | the block as a veto; R1/R15 ticket-level detail, tie-break and set ablations |
+| `plan/cat_poison.py` | bars + events + picks poison test |
+| `plan/cat_cost.py` | measured-cost repricing (COST-REBASE module, not landed) |
+| `data/news_hist/`, `data/filings_hist/` | the caches (gitignored) |
+| `data/massive/cat/` | `events.pkl`, `table*.npz`, every JSON/NPY/log quoted here |

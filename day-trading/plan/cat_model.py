@@ -144,7 +144,7 @@ def walk_forward(t, h, which, seed=0, shuffle=False, tag=""):
         gain_acc += bst.feature_importance("gain")
         info.append({"month": mo, "train": int(len(tr)), "test": int(len(te)),
                      "iters": int(bst.best_iteration or (300 if shuffle else NROUND))})
-    nm = f"scores_{h}_{which}_s{seed}{'_shuf' if shuffle else ''}{tag}.npy"
+    nm = f"scores_{h}_{which}_s{seed}{'_shuf' if shuffle else ''}{tag}.npy".replace(":", "").replace("->", "_to_")
     np.save(C.OUT / nm, score)
     gain = sorted(zip([t.feat[i] for i in idx], gain_acc), key=lambda kv: -kv[1])
     return score, info, [(k, round(float(v), 1)) for k, v in gain[:25]]

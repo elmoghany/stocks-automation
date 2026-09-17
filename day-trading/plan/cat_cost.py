@@ -73,16 +73,16 @@ def main():
     res = C.read_json(C.OUT / "model_results.json", {"runs": []})
     cm = CR.CostModel()
     out = []
+    HEAD = {"base|h30|s0", "base+cat|h30|s0", "base|h60|s0", "base+cat|h60|s0"}
     for run in res["runs"]:
-        if "SHUFFLED" in run["name"]:
+        if run["name"] not in HEAD:        # headline runs only: the tape stats are rebuilt per symbol-day
             continue
         which, h, seed = run["name"].split("|")[:3]
         f = C.OUT / f"scores_{h}_{which}_{seed}.npy"
         if not f.exists():
             continue
         sc = np.load(f)
-        for lab, dec, k in (("1/day@09:35", "09:35", 1), ("7/day@09:35", "09:35", 7),
-                            ("1/day@13:00", "13:00", 1)):
+        for lab, dec, k in (("1/day@09:35", "09:35", 1), ("7/day@09:35", "09:35", 7)):
             m = t.mask(dec=dec, h=h) & np.isfinite(sc)
             pnl, dates, take = L.single_pick(t, sc, m, h, k)
             ndays = len({d for d in t.date_s[np.flatnonzero(np.isfinite(sc))]})
