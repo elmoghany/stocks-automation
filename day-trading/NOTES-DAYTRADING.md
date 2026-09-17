@@ -9361,3 +9361,30 @@ trading, and the level they are lifting from is below zero, so the sum
 is the friction band in TABLE 1 and TABLE 4. **A real but
 cost-sized edge is exactly the thing a retail trader would experience as
 "this works when I paper trade it and loses when I go live".**
+
+
+### VS2: ONE RUN STILL IN FLIGHT AT HANDOVER
+`ROTSHARD=vs2_c` -- the WAVE-2 mechanics (`V1ORBm`, `V1OR01`, `V1OR15c`,
+`V9FVG`, `V9IB`, `V9SWP`, `V9TB`, `V9SB`, `V3E50`, `V9IBd`) on the
+GAPPER harness -- was still running when this line was written (year
+label at 200/251; `V9FVG` and `V9IBd` are the expensive ones, and the
+box is carrying eight other agents' jobs on four cores). It will write
+`data/massive/rotation_results_vs2_c.json` on its own; read it with
+`python plan/vs2_report.py --shards vs2_c`. Partial: `V1ORBm` -$25,035
+over 185 days of `year`, i.e. squarely in the same friction band.
+**It cannot change the verdict** -- the identical mechanics were already
+measured end-to-end on the wide universe in TABLE 2 and landed at -$23
+to -$37 per ticket -- but the row belongs in TABLE 4 when it lands.
+
+### VS2: CONTROLS THAT WERE PRE-REGISTERED AND DELIBERATELY NOT RUN
+The pre-registration says: *"Stage A runs the ranked configs only;
+controls are run for anything that is positive in BOTH years, because a
+30-rep control on a losing config buys nothing."* Nothing was positive in
+both years, so the 30-replicate `-R` batteries (`ROTREP=0-29`) and the
+full 30-seed `-E00..-E29` batteries were not run on the losing rows.
+They are built and registered in `plan/rotation_sim.py::_vs2_cfgs` and
+`plan/vs2_wide.py`, and cost one command each.
+What WAS run instead is targeted at the only row that earned it: the
+green-on-red control battery (gate-matched random, mirror image, and the
+hold sweep -- TABLE 3) and a three-seed entry-shuffle on the two most
+-taught triggers (TABLE 5). **That is where the information was.**
