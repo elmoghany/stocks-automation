@@ -14,16 +14,70 @@
     "session_start_et": "06:20",
     "start_on_time": true,
     "launched_by_scheduler_flag": "data/paper_days/LAUNCHED_BY_SCHEDULER_2026-09-17.flag",
+    "trading_day_guard": "TRADING 2026-09-17 full (market_calendar.py). SESSION close=16:00 exit_end=15:00 entry_cutoff=14:30 cross_cap=14:00 ladder=14:50,14:55,14:58,14:59",
     "capability_probe": {
-      "status": "PENDING"
+      "status": "PASS",
+      "run_et": "06:21",
+      "probe_1_python": {
+        "cmd": "python -c print(1)",
+        "result": "1",
+        "exit": 0,
+        "verdict": "PASS"
+      },
+      "probe_2_git": {
+        "cmd": "git status --short + git add (own paths) + commit + push",
+        "result": "skeleton committed 2af01c0 and pushed (COMMIT_EXIT=0, PUSH_EXIT=0)",
+        "exit": 0,
+        "verdict": "PASS"
+      },
+      "probe_3_mcp": {
+        "cmd": "get_equity_quotes SPY",
+        "result": "SPY prev_close 754.05 (2026-09-16); premarket last_non_reg 760.21 @10:20:25Z; bid 760.21 / ask 760.26 @10:20:38Z",
+        "verdict": "PASS"
+      }
     },
     "heartbeat": {
+      "started_et": "06:21",
       "file": "data/paper_days/SESSION_ALIVE_2026-09-17.flag",
       "cadence": "<=5 min"
-    }
+    },
+    "halal_list": {
+      "updated": "2026-09-16",
+      "age_days": 1,
+      "n_symbols": 415,
+      "guard": "PASS (<35 days)"
+    },
+    "no_double_launch": "no other paper agent for 2026-09-17; no watcher state file dated another day blocking --book",
+    "premarket_tape": {
+      "spy_prev_close": 754.05,
+      "spy_premarket_0620et": 760.21,
+      "spy_premarket_pct": 0.82,
+      "read": "SPY +0.82% premarket -- firm risk-on tone into the open."
+    },
+    "cycles": []
+  },
+  "premarket_screen": {
+    "scan_et": "06:28",
+    "scan_id": "5f132877-7730-4a18-9e72-b3f0d2c9df83",
+    "rows": 113,
+    "sweep": "plan/scan_sweep.py on a transcribed dump (response arrived inline). dropped funds=77, spac=2 (ALF RACD), inherited_fail=13 -> 21 candidates",
+    "candidates_21": ["KXIN", "GNRC", "DETX", "LRHC", "CENN", "SPPL", "KFFB", "BRTX", "WATT", "INLX", "COE", "VICR", "GLAS", "ARL", "GLOO", "RAPP", "BOLT", "IMDX", "YI", "JL", "CHNR"],
+    "mcap_backfill": "20 of 21 first read REFUSE-TO-EVALUATE (no RH market cap cached). Loaded the Robinhood 'Market cap' column from the same 06:28 scan via plan/update_rh_fundamentals.py (its documented agent-driven contract), then re-screened. A missing denominator is a FAIL, never a pass.",
+    "q1_financing_pass": ["INLX", "VICR", "GLAS"],
+    "q2_business_line": {
+      "INLX": "PASS -- document management / imaging software for business. Permissible line, no haram-adjacent revenue.",
+      "VICR": "PASS -- power conversion modules. General-purpose components sold into many end markets incl. defense/aerospace, which the AMD principle expressly permits.",
+      "GLAS": "FAIL -- Glass House Brands is a recreational-cannabis cultivator. An intoxicant is the company's OWN main revenue line (~100%), so it fails the binary 5% rule. This is precisely the documented blind spot: haram_pct is interest-income only and is structurally blind to intoxicant revenue, so the financing PASS is not dispositive."
+    },
+    "armable_today": ["INLX", "VICR"],
+    "recorded_to_scan_state": "halal_fail 12 (incl. GLAS), cannot_verify 7 -- neither can re-enter the pool today or tomorrow"
   },
   "trades": [],
-  "halal_detail": {},
+  "halal_detail": {
+    "INLX": {"q1": "PASS", "loan_pct": 6.92, "cash_pct": 7.48, "combined": 14.4, "mcap": 22924469.0, "q2": "PASS", "screened_et": "06:40"},
+    "VICR": {"q1": "PASS", "loan_pct": 0.09, "cash_pct": 5.35, "combined": 5.44, "mcap": 8479489081.0, "q2": "PASS", "screened_et": "06:40"},
+    "GLAS": {"q1": "PASS", "loan_pct": 9.55, "cash_pct": 2.47, "combined": 12.03, "mcap": 750170339.0, "q2": "FAIL (recreational cannabis is the main revenue line)", "screened_et": "06:40", "armable": false}
+  },
   "veto_rates": {},
   "errors": [],
   "summary": {}
