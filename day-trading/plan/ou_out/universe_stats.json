@@ -1,0 +1,2301 @@
+{
+ "rule": {
+  "start": "2024-10-22",
+  "end": "2026-08-06",
+  "lookback": 60,
+  "min_obs": 40,
+  "min_mdv": 5000000.0,
+  "min_mpx": 5.0,
+  "keep_types": [
+   "ADRC",
+   "CS"
+  ],
+  "fund_sics": [
+   "6726"
+  ],
+  "minute_top": 600
+ },
+ "dates": 448,
+ "names_per_day": {
+  "min": 2275,
+  "max": 2747,
+  "mean": 2531.9
+ },
+ "liquid_before_type": {
+  "min": 3097,
+  "max": 4011,
+  "mean": 3573.3
+ },
+ "symbol_days": 1134288,
+ "union_symbols": 3298,
+ "minute_symbol_days": 268800,
+ "minute_union_symbols": 867,
+ "dropped_by_type": {
+  "ETF": 411667,
+  "ETV": 18732,
+  "NO-META": 12580,
+  "FUND": 10524,
+  "ETS": 5529,
+  "ETN": 3251,
+  "PFD": 2076,
+  "SP": 1963,
+  "WARRANT": 137,
+  "UNIT": 92
+ },
+ "type_counts_all_gd": {
+  "ETF": 5278,
+  "None": 5105,
+  "CS": 4597,
+  "FUND": 330,
+  "ADRC": 309,
+  "SP": 138,
+  "ETS": 107,
+  "ETV": 89,
+  "PFD": 66,
+  "ETN": 42,
+  "UNIT": 10,
+  "WARRANT": 5
+ },
+ "per_date": {
+  "2024-10-22": {
+   "liquid": 3110,
+   "operating": 2281,
+   "minute": 600
+  },
+  "2024-10-23": {
+   "liquid": 3111,
+   "operating": 2282,
+   "minute": 600
+  },
+  "2024-10-24": {
+   "liquid": 3107,
+   "operating": 2281,
+   "minute": 600
+  },
+  "2024-10-25": {
+   "liquid": 3111,
+   "operating": 2283,
+   "minute": 600
+  },
+  "2024-10-28": {
+   "liquid": 3108,
+   "operating": 2281,
+   "minute": 600
+  },
+  "2024-10-29": {
+   "liquid": 3106,
+   "operating": 2277,
+   "minute": 600
+  },
+  "2024-10-30": {
+   "liquid": 3099,
+   "operating": 2275,
+   "minute": 600
+  },
+  "2024-10-31": {
+   "liquid": 3097,
+   "operating": 2277,
+   "minute": 600
+  },
+  "2024-11-01": {
+   "liquid": 3097,
+   "operating": 2278,
+   "minute": 600
+  },
+  "2024-11-04": {
+   "liquid": 3102,
+   "operating": 2281,
+   "minute": 600
+  },
+  "2024-11-05": {
+   "liquid": 3103,
+   "operating": 2280,
+   "minute": 600
+  },
+  "2024-11-06": {
+   "liquid": 3105,
+   "operating": 2279,
+   "minute": 600
+  },
+  "2024-11-07": {
+   "liquid": 3113,
+   "operating": 2284,
+   "minute": 600
+  },
+  "2024-11-08": {
+   "liquid": 3115,
+   "operating": 2287,
+   "minute": 600
+  },
+  "2024-11-11": {
+   "liquid": 3121,
+   "operating": 2293,
+   "minute": 600
+  },
+  "2024-11-12": {
+   "liquid": 3130,
+   "operating": 2299,
+   "minute": 600
+  },
+  "2024-11-13": {
+   "liquid": 3131,
+   "operating": 2300,
+   "minute": 600
+  },
+  "2024-11-14": {
+   "liquid": 3140,
+   "operating": 2306,
+   "minute": 600
+  },
+  "2024-11-15": {
+   "liquid": 3142,
+   "operating": 2307,
+   "minute": 600
+  },
+  "2024-11-18": {
+   "liquid": 3156,
+   "operating": 2316,
+   "minute": 600
+  },
+  "2024-11-19": {
+   "liquid": 3158,
+   "operating": 2317,
+   "minute": 600
+  },
+  "2024-11-20": {
+   "liquid": 3158,
+   "operating": 2318,
+   "minute": 600
+  },
+  "2024-11-21": {
+   "liquid": 3165,
+   "operating": 2323,
+   "minute": 600
+  },
+  "2024-11-22": {
+   "liquid": 3173,
+   "operating": 2329,
+   "minute": 600
+  },
+  "2024-11-25": {
+   "liquid": 3177,
+   "operating": 2333,
+   "minute": 600
+  },
+  "2024-11-26": {
+   "liquid": 3183,
+   "operating": 2339,
+   "minute": 600
+  },
+  "2024-11-27": {
+   "liquid": 3185,
+   "operating": 2342,
+   "minute": 600
+  },
+  "2024-11-29": {
+   "liquid": 3190,
+   "operating": 2343,
+   "minute": 600
+  },
+  "2024-12-02": {
+   "liquid": 3190,
+   "operating": 2343,
+   "minute": 600
+  },
+  "2024-12-03": {
+   "liquid": 3194,
+   "operating": 2345,
+   "minute": 600
+  },
+  "2024-12-04": {
+   "liquid": 3195,
+   "operating": 2347,
+   "minute": 600
+  },
+  "2024-12-05": {
+   "liquid": 3203,
+   "operating": 2351,
+   "minute": 600
+  },
+  "2024-12-06": {
+   "liquid": 3209,
+   "operating": 2352,
+   "minute": 600
+  },
+  "2024-12-09": {
+   "liquid": 3214,
+   "operating": 2357,
+   "minute": 600
+  },
+  "2024-12-10": {
+   "liquid": 3216,
+   "operating": 2357,
+   "minute": 600
+  },
+  "2024-12-11": {
+   "liquid": 3219,
+   "operating": 2358,
+   "minute": 600
+  },
+  "2024-12-12": {
+   "liquid": 3228,
+   "operating": 2366,
+   "minute": 600
+  },
+  "2024-12-13": {
+   "liquid": 3226,
+   "operating": 2365,
+   "minute": 600
+  },
+  "2024-12-16": {
+   "liquid": 3230,
+   "operating": 2367,
+   "minute": 600
+  },
+  "2024-12-17": {
+   "liquid": 3229,
+   "operating": 2363,
+   "minute": 600
+  },
+  "2024-12-18": {
+   "liquid": 3232,
+   "operating": 2362,
+   "minute": 600
+  },
+  "2024-12-19": {
+   "liquid": 3236,
+   "operating": 2363,
+   "minute": 600
+  },
+  "2024-12-20": {
+   "liquid": 3244,
+   "operating": 2368,
+   "minute": 600
+  },
+  "2024-12-23": {
+   "liquid": 3254,
+   "operating": 2373,
+   "minute": 600
+  },
+  "2024-12-24": {
+   "liquid": 3258,
+   "operating": 2377,
+   "minute": 600
+  },
+  "2024-12-26": {
+   "liquid": 3247,
+   "operating": 2372,
+   "minute": 600
+  },
+  "2024-12-27": {
+   "liquid": 3246,
+   "operating": 2369,
+   "minute": 600
+  },
+  "2024-12-30": {
+   "liquid": 3245,
+   "operating": 2367,
+   "minute": 600
+  },
+  "2024-12-31": {
+   "liquid": 3250,
+   "operating": 2371,
+   "minute": 600
+  },
+  "2025-01-02": {
+   "liquid": 3257,
+   "operating": 2375,
+   "minute": 600
+  },
+  "2025-01-03": {
+   "liquid": 3262,
+   "operating": 2376,
+   "minute": 600
+  },
+  "2025-01-06": {
+   "liquid": 3273,
+   "operating": 2381,
+   "minute": 600
+  },
+  "2025-01-07": {
+   "liquid": 3276,
+   "operating": 2380,
+   "minute": 600
+  },
+  "2025-01-08": {
+   "liquid": 3278,
+   "operating": 2382,
+   "minute": 600
+  },
+  "2025-01-10": {
+   "liquid": 3287,
+   "operating": 2391,
+   "minute": 600
+  },
+  "2025-01-13": {
+   "liquid": 3295,
+   "operating": 2396,
+   "minute": 600
+  },
+  "2025-01-14": {
+   "liquid": 3304,
+   "operating": 2397,
+   "minute": 600
+  },
+  "2025-01-15": {
+   "liquid": 3310,
+   "operating": 2403,
+   "minute": 600
+  },
+  "2025-01-16": {
+   "liquid": 3308,
+   "operating": 2400,
+   "minute": 600
+  },
+  "2025-01-17": {
+   "liquid": 3314,
+   "operating": 2405,
+   "minute": 600
+  },
+  "2025-01-21": {
+   "liquid": 3313,
+   "operating": 2402,
+   "minute": 600
+  },
+  "2025-01-22": {
+   "liquid": 3314,
+   "operating": 2402,
+   "minute": 600
+  },
+  "2025-01-23": {
+   "liquid": 3317,
+   "operating": 2399,
+   "minute": 600
+  },
+  "2025-01-24": {
+   "liquid": 3327,
+   "operating": 2403,
+   "minute": 600
+  },
+  "2025-01-27": {
+   "liquid": 3334,
+   "operating": 2406,
+   "minute": 600
+  },
+  "2025-01-28": {
+   "liquid": 3338,
+   "operating": 2407,
+   "minute": 600
+  },
+  "2025-01-29": {
+   "liquid": 3342,
+   "operating": 2409,
+   "minute": 600
+  },
+  "2025-01-30": {
+   "liquid": 3343,
+   "operating": 2408,
+   "minute": 600
+  },
+  "2025-01-31": {
+   "liquid": 3341,
+   "operating": 2406,
+   "minute": 600
+  },
+  "2025-02-03": {
+   "liquid": 3351,
+   "operating": 2411,
+   "minute": 600
+  },
+  "2025-02-04": {
+   "liquid": 3354,
+   "operating": 2412,
+   "minute": 600
+  },
+  "2025-02-05": {
+   "liquid": 3354,
+   "operating": 2411,
+   "minute": 600
+  },
+  "2025-02-06": {
+   "liquid": 3347,
+   "operating": 2406,
+   "minute": 600
+  },
+  "2025-02-07": {
+   "liquid": 3348,
+   "operating": 2405,
+   "minute": 600
+  },
+  "2025-02-10": {
+   "liquid": 3352,
+   "operating": 2407,
+   "minute": 600
+  },
+  "2025-02-11": {
+   "liquid": 3352,
+   "operating": 2406,
+   "minute": 600
+  },
+  "2025-02-12": {
+   "liquid": 3352,
+   "operating": 2408,
+   "minute": 600
+  },
+  "2025-02-13": {
+   "liquid": 3346,
+   "operating": 2403,
+   "minute": 600
+  },
+  "2025-02-14": {
+   "liquid": 3341,
+   "operating": 2400,
+   "minute": 600
+  },
+  "2025-02-18": {
+   "liquid": 3337,
+   "operating": 2399,
+   "minute": 600
+  },
+  "2025-02-19": {
+   "liquid": 3340,
+   "operating": 2400,
+   "minute": 600
+  },
+  "2025-02-20": {
+   "liquid": 3343,
+   "operating": 2401,
+   "minute": 600
+  },
+  "2025-02-21": {
+   "liquid": 3344,
+   "operating": 2403,
+   "minute": 600
+  },
+  "2025-02-24": {
+   "liquid": 3341,
+   "operating": 2400,
+   "minute": 600
+  },
+  "2025-02-25": {
+   "liquid": 3341,
+   "operating": 2399,
+   "minute": 600
+  },
+  "2025-02-26": {
+   "liquid": 3340,
+   "operating": 2397,
+   "minute": 600
+  },
+  "2025-02-27": {
+   "liquid": 3341,
+   "operating": 2398,
+   "minute": 600
+  },
+  "2025-02-28": {
+   "liquid": 3351,
+   "operating": 2401,
+   "minute": 600
+  },
+  "2025-03-03": {
+   "liquid": 3354,
+   "operating": 2400,
+   "minute": 600
+  },
+  "2025-03-04": {
+   "liquid": 3361,
+   "operating": 2407,
+   "minute": 600
+  },
+  "2025-03-05": {
+   "liquid": 3364,
+   "operating": 2410,
+   "minute": 600
+  },
+  "2025-03-06": {
+   "liquid": 3364,
+   "operating": 2409,
+   "minute": 600
+  },
+  "2025-03-07": {
+   "liquid": 3360,
+   "operating": 2407,
+   "minute": 600
+  },
+  "2025-03-10": {
+   "liquid": 3364,
+   "operating": 2409,
+   "minute": 600
+  },
+  "2025-03-11": {
+   "liquid": 3370,
+   "operating": 2413,
+   "minute": 600
+  },
+  "2025-03-12": {
+   "liquid": 3372,
+   "operating": 2413,
+   "minute": 600
+  },
+  "2025-03-13": {
+   "liquid": 3371,
+   "operating": 2412,
+   "minute": 600
+  },
+  "2025-03-14": {
+   "liquid": 3374,
+   "operating": 2413,
+   "minute": 600
+  },
+  "2025-03-17": {
+   "liquid": 3377,
+   "operating": 2415,
+   "minute": 600
+  },
+  "2025-03-18": {
+   "liquid": 3379,
+   "operating": 2417,
+   "minute": 600
+  },
+  "2025-03-19": {
+   "liquid": 3375,
+   "operating": 2417,
+   "minute": 600
+  },
+  "2025-03-20": {
+   "liquid": 3371,
+   "operating": 2416,
+   "minute": 600
+  },
+  "2025-03-21": {
+   "liquid": 3361,
+   "operating": 2410,
+   "minute": 600
+  },
+  "2025-03-24": {
+   "liquid": 3356,
+   "operating": 2408,
+   "minute": 600
+  },
+  "2025-03-25": {
+   "liquid": 3353,
+   "operating": 2406,
+   "minute": 600
+  },
+  "2025-03-26": {
+   "liquid": 3364,
+   "operating": 2415,
+   "minute": 600
+  },
+  "2025-03-27": {
+   "liquid": 3367,
+   "operating": 2415,
+   "minute": 600
+  },
+  "2025-03-28": {
+   "liquid": 3366,
+   "operating": 2413,
+   "minute": 600
+  },
+  "2025-03-31": {
+   "liquid": 3364,
+   "operating": 2412,
+   "minute": 600
+  },
+  "2025-04-01": {
+   "liquid": 3366,
+   "operating": 2415,
+   "minute": 600
+  },
+  "2025-04-02": {
+   "liquid": 3366,
+   "operating": 2417,
+   "minute": 600
+  },
+  "2025-04-03": {
+   "liquid": 3366,
+   "operating": 2416,
+   "minute": 600
+  },
+  "2025-04-04": {
+   "liquid": 3367,
+   "operating": 2419,
+   "minute": 600
+  },
+  "2025-04-07": {
+   "liquid": 3381,
+   "operating": 2430,
+   "minute": 600
+  },
+  "2025-04-08": {
+   "liquid": 3394,
+   "operating": 2439,
+   "minute": 600
+  },
+  "2025-04-09": {
+   "liquid": 3403,
+   "operating": 2445,
+   "minute": 600
+  },
+  "2025-04-10": {
+   "liquid": 3405,
+   "operating": 2445,
+   "minute": 600
+  },
+  "2025-04-11": {
+   "liquid": 3413,
+   "operating": 2446,
+   "minute": 600
+  },
+  "2025-04-14": {
+   "liquid": 3413,
+   "operating": 2446,
+   "minute": 600
+  },
+  "2025-04-15": {
+   "liquid": 3416,
+   "operating": 2446,
+   "minute": 600
+  },
+  "2025-04-16": {
+   "liquid": 3415,
+   "operating": 2447,
+   "minute": 600
+  },
+  "2025-04-17": {
+   "liquid": 3415,
+   "operating": 2447,
+   "minute": 600
+  },
+  "2025-04-21": {
+   "liquid": 3411,
+   "operating": 2447,
+   "minute": 600
+  },
+  "2025-04-22": {
+   "liquid": 3418,
+   "operating": 2449,
+   "minute": 600
+  },
+  "2025-04-23": {
+   "liquid": 3423,
+   "operating": 2452,
+   "minute": 600
+  },
+  "2025-04-24": {
+   "liquid": 3423,
+   "operating": 2454,
+   "minute": 600
+  },
+  "2025-04-25": {
+   "liquid": 3423,
+   "operating": 2453,
+   "minute": 600
+  },
+  "2025-04-28": {
+   "liquid": 3420,
+   "operating": 2452,
+   "minute": 600
+  },
+  "2025-04-29": {
+   "liquid": 3416,
+   "operating": 2448,
+   "minute": 600
+  },
+  "2025-04-30": {
+   "liquid": 3410,
+   "operating": 2444,
+   "minute": 600
+  },
+  "2025-05-01": {
+   "liquid": 3404,
+   "operating": 2440,
+   "minute": 600
+  },
+  "2025-05-02": {
+   "liquid": 3399,
+   "operating": 2438,
+   "minute": 600
+  },
+  "2025-05-05": {
+   "liquid": 3400,
+   "operating": 2436,
+   "minute": 600
+  },
+  "2025-05-06": {
+   "liquid": 3405,
+   "operating": 2438,
+   "minute": 600
+  },
+  "2025-05-07": {
+   "liquid": 3406,
+   "operating": 2443,
+   "minute": 600
+  },
+  "2025-05-08": {
+   "liquid": 3400,
+   "operating": 2438,
+   "minute": 600
+  },
+  "2025-05-09": {
+   "liquid": 3406,
+   "operating": 2441,
+   "minute": 600
+  },
+  "2025-05-12": {
+   "liquid": 3401,
+   "operating": 2439,
+   "minute": 600
+  },
+  "2025-05-13": {
+   "liquid": 3410,
+   "operating": 2446,
+   "minute": 600
+  },
+  "2025-05-14": {
+   "liquid": 3409,
+   "operating": 2448,
+   "minute": 600
+  },
+  "2025-05-15": {
+   "liquid": 3405,
+   "operating": 2446,
+   "minute": 600
+  },
+  "2025-05-16": {
+   "liquid": 3405,
+   "operating": 2444,
+   "minute": 600
+  },
+  "2025-05-19": {
+   "liquid": 3403,
+   "operating": 2444,
+   "minute": 600
+  },
+  "2025-05-20": {
+   "liquid": 3390,
+   "operating": 2436,
+   "minute": 600
+  },
+  "2025-05-21": {
+   "liquid": 3389,
+   "operating": 2434,
+   "minute": 600
+  },
+  "2025-05-22": {
+   "liquid": 3389,
+   "operating": 2433,
+   "minute": 600
+  },
+  "2025-05-23": {
+   "liquid": 3390,
+   "operating": 2430,
+   "minute": 600
+  },
+  "2025-05-27": {
+   "liquid": 3382,
+   "operating": 2428,
+   "minute": 600
+  },
+  "2025-05-28": {
+   "liquid": 3385,
+   "operating": 2431,
+   "minute": 600
+  },
+  "2025-05-29": {
+   "liquid": 3379,
+   "operating": 2428,
+   "minute": 600
+  },
+  "2025-05-30": {
+   "liquid": 3375,
+   "operating": 2428,
+   "minute": 600
+  },
+  "2025-06-02": {
+   "liquid": 3374,
+   "operating": 2426,
+   "minute": 600
+  },
+  "2025-06-03": {
+   "liquid": 3377,
+   "operating": 2429,
+   "minute": 600
+  },
+  "2025-06-04": {
+   "liquid": 3378,
+   "operating": 2429,
+   "minute": 600
+  },
+  "2025-06-05": {
+   "liquid": 3378,
+   "operating": 2431,
+   "minute": 600
+  },
+  "2025-06-06": {
+   "liquid": 3370,
+   "operating": 2427,
+   "minute": 600
+  },
+  "2025-06-09": {
+   "liquid": 3362,
+   "operating": 2424,
+   "minute": 600
+  },
+  "2025-06-10": {
+   "liquid": 3359,
+   "operating": 2421,
+   "minute": 600
+  },
+  "2025-06-11": {
+   "liquid": 3359,
+   "operating": 2423,
+   "minute": 600
+  },
+  "2025-06-12": {
+   "liquid": 3359,
+   "operating": 2422,
+   "minute": 600
+  },
+  "2025-06-13": {
+   "liquid": 3359,
+   "operating": 2424,
+   "minute": 600
+  },
+  "2025-06-16": {
+   "liquid": 3356,
+   "operating": 2423,
+   "minute": 600
+  },
+  "2025-06-17": {
+   "liquid": 3358,
+   "operating": 2428,
+   "minute": 600
+  },
+  "2025-06-18": {
+   "liquid": 3353,
+   "operating": 2423,
+   "minute": 600
+  },
+  "2025-06-20": {
+   "liquid": 3360,
+   "operating": 2430,
+   "minute": 600
+  },
+  "2025-06-23": {
+   "liquid": 3367,
+   "operating": 2438,
+   "minute": 600
+  },
+  "2025-06-24": {
+   "liquid": 3373,
+   "operating": 2441,
+   "minute": 600
+  },
+  "2025-06-25": {
+   "liquid": 3383,
+   "operating": 2446,
+   "minute": 600
+  },
+  "2025-06-26": {
+   "liquid": 3386,
+   "operating": 2447,
+   "minute": 600
+  },
+  "2025-06-27": {
+   "liquid": 3388,
+   "operating": 2451,
+   "minute": 600
+  },
+  "2025-06-30": {
+   "liquid": 3396,
+   "operating": 2460,
+   "minute": 600
+  },
+  "2025-07-01": {
+   "liquid": 3414,
+   "operating": 2473,
+   "minute": 600
+  },
+  "2025-07-02": {
+   "liquid": 3412,
+   "operating": 2472,
+   "minute": 600
+  },
+  "2025-07-03": {
+   "liquid": 3406,
+   "operating": 2475,
+   "minute": 600
+  },
+  "2025-07-07": {
+   "liquid": 3394,
+   "operating": 2467,
+   "minute": 600
+  },
+  "2025-07-08": {
+   "liquid": 3389,
+   "operating": 2465,
+   "minute": 600
+  },
+  "2025-07-09": {
+   "liquid": 3388,
+   "operating": 2465,
+   "minute": 600
+  },
+  "2025-07-10": {
+   "liquid": 3385,
+   "operating": 2467,
+   "minute": 600
+  },
+  "2025-07-11": {
+   "liquid": 3391,
+   "operating": 2474,
+   "minute": 600
+  },
+  "2025-07-14": {
+   "liquid": 3390,
+   "operating": 2474,
+   "minute": 600
+  },
+  "2025-07-15": {
+   "liquid": 3386,
+   "operating": 2471,
+   "minute": 600
+  },
+  "2025-07-16": {
+   "liquid": 3396,
+   "operating": 2475,
+   "minute": 600
+  },
+  "2025-07-17": {
+   "liquid": 3393,
+   "operating": 2477,
+   "minute": 600
+  },
+  "2025-07-18": {
+   "liquid": 3403,
+   "operating": 2484,
+   "minute": 600
+  },
+  "2025-07-21": {
+   "liquid": 3403,
+   "operating": 2485,
+   "minute": 600
+  },
+  "2025-07-22": {
+   "liquid": 3409,
+   "operating": 2490,
+   "minute": 600
+  },
+  "2025-07-23": {
+   "liquid": 3415,
+   "operating": 2494,
+   "minute": 600
+  },
+  "2025-07-24": {
+   "liquid": 3423,
+   "operating": 2499,
+   "minute": 600
+  },
+  "2025-07-25": {
+   "liquid": 3427,
+   "operating": 2501,
+   "minute": 600
+  },
+  "2025-07-28": {
+   "liquid": 3428,
+   "operating": 2503,
+   "minute": 600
+  },
+  "2025-07-29": {
+   "liquid": 3428,
+   "operating": 2503,
+   "minute": 600
+  },
+  "2025-07-30": {
+   "liquid": 3431,
+   "operating": 2507,
+   "minute": 600
+  },
+  "2025-07-31": {
+   "liquid": 3439,
+   "operating": 2512,
+   "minute": 600
+  },
+  "2025-08-01": {
+   "liquid": 3440,
+   "operating": 2511,
+   "minute": 600
+  },
+  "2025-08-04": {
+   "liquid": 3445,
+   "operating": 2514,
+   "minute": 600
+  },
+  "2025-08-05": {
+   "liquid": 3449,
+   "operating": 2516,
+   "minute": 600
+  },
+  "2025-08-06": {
+   "liquid": 3452,
+   "operating": 2516,
+   "minute": 600
+  },
+  "2025-08-07": {
+   "liquid": 3457,
+   "operating": 2520,
+   "minute": 600
+  },
+  "2025-08-08": {
+   "liquid": 3456,
+   "operating": 2520,
+   "minute": 600
+  },
+  "2025-08-11": {
+   "liquid": 3455,
+   "operating": 2519,
+   "minute": 600
+  },
+  "2025-08-12": {
+   "liquid": 3453,
+   "operating": 2519,
+   "minute": 600
+  },
+  "2025-08-13": {
+   "liquid": 3449,
+   "operating": 2518,
+   "minute": 600
+  },
+  "2025-08-14": {
+   "liquid": 3451,
+   "operating": 2517,
+   "minute": 600
+  },
+  "2025-08-15": {
+   "liquid": 3457,
+   "operating": 2525,
+   "minute": 600
+  },
+  "2025-08-18": {
+   "liquid": 3460,
+   "operating": 2528,
+   "minute": 600
+  },
+  "2025-08-19": {
+   "liquid": 3462,
+   "operating": 2528,
+   "minute": 600
+  },
+  "2025-08-20": {
+   "liquid": 3462,
+   "operating": 2530,
+   "minute": 600
+  },
+  "2025-08-21": {
+   "liquid": 3471,
+   "operating": 2533,
+   "minute": 600
+  },
+  "2025-08-22": {
+   "liquid": 3463,
+   "operating": 2530,
+   "minute": 600
+  },
+  "2025-08-25": {
+   "liquid": 3469,
+   "operating": 2532,
+   "minute": 600
+  },
+  "2025-08-26": {
+   "liquid": 3473,
+   "operating": 2534,
+   "minute": 600
+  },
+  "2025-08-27": {
+   "liquid": 3478,
+   "operating": 2537,
+   "minute": 600
+  },
+  "2025-08-28": {
+   "liquid": 3478,
+   "operating": 2537,
+   "minute": 600
+  },
+  "2025-08-29": {
+   "liquid": 3477,
+   "operating": 2535,
+   "minute": 600
+  },
+  "2025-09-02": {
+   "liquid": 3486,
+   "operating": 2537,
+   "minute": 600
+  },
+  "2025-09-03": {
+   "liquid": 3485,
+   "operating": 2536,
+   "minute": 600
+  },
+  "2025-09-04": {
+   "liquid": 3484,
+   "operating": 2534,
+   "minute": 600
+  },
+  "2025-09-05": {
+   "liquid": 3484,
+   "operating": 2532,
+   "minute": 600
+  },
+  "2025-09-08": {
+   "liquid": 3493,
+   "operating": 2532,
+   "minute": 600
+  },
+  "2025-09-09": {
+   "liquid": 3492,
+   "operating": 2533,
+   "minute": 600
+  },
+  "2025-09-10": {
+   "liquid": 3495,
+   "operating": 2531,
+   "minute": 600
+  },
+  "2025-09-11": {
+   "liquid": 3498,
+   "operating": 2531,
+   "minute": 600
+  },
+  "2025-09-12": {
+   "liquid": 3501,
+   "operating": 2533,
+   "minute": 600
+  },
+  "2025-09-15": {
+   "liquid": 3504,
+   "operating": 2534,
+   "minute": 600
+  },
+  "2025-09-16": {
+   "liquid": 3504,
+   "operating": 2532,
+   "minute": 600
+  },
+  "2025-09-17": {
+   "liquid": 3507,
+   "operating": 2532,
+   "minute": 600
+  },
+  "2025-09-18": {
+   "liquid": 3508,
+   "operating": 2534,
+   "minute": 600
+  },
+  "2025-09-19": {
+   "liquid": 3520,
+   "operating": 2541,
+   "minute": 600
+  },
+  "2025-09-22": {
+   "liquid": 3531,
+   "operating": 2545,
+   "minute": 600
+  },
+  "2025-09-23": {
+   "liquid": 3532,
+   "operating": 2545,
+   "minute": 600
+  },
+  "2025-09-24": {
+   "liquid": 3537,
+   "operating": 2545,
+   "minute": 600
+  },
+  "2025-09-25": {
+   "liquid": 3536,
+   "operating": 2547,
+   "minute": 600
+  },
+  "2025-09-26": {
+   "liquid": 3534,
+   "operating": 2546,
+   "minute": 600
+  },
+  "2025-09-29": {
+   "liquid": 3532,
+   "operating": 2543,
+   "minute": 600
+  },
+  "2025-09-30": {
+   "liquid": 3540,
+   "operating": 2548,
+   "minute": 600
+  },
+  "2025-10-01": {
+   "liquid": 3542,
+   "operating": 2549,
+   "minute": 600
+  },
+  "2025-10-02": {
+   "liquid": 3544,
+   "operating": 2549,
+   "minute": 600
+  },
+  "2025-10-03": {
+   "liquid": 3547,
+   "operating": 2549,
+   "minute": 600
+  },
+  "2025-10-06": {
+   "liquid": 3549,
+   "operating": 2549,
+   "minute": 600
+  },
+  "2025-10-07": {
+   "liquid": 3554,
+   "operating": 2551,
+   "minute": 600
+  },
+  "2025-10-08": {
+   "liquid": 3559,
+   "operating": 2556,
+   "minute": 600
+  },
+  "2025-10-09": {
+   "liquid": 3563,
+   "operating": 2561,
+   "minute": 600
+  },
+  "2025-10-10": {
+   "liquid": 3569,
+   "operating": 2563,
+   "minute": 600
+  },
+  "2025-10-13": {
+   "liquid": 3575,
+   "operating": 2565,
+   "minute": 600
+  },
+  "2025-10-14": {
+   "liquid": 3588,
+   "operating": 2574,
+   "minute": 600
+  },
+  "2025-10-15": {
+   "liquid": 3587,
+   "operating": 2574,
+   "minute": 600
+  },
+  "2025-10-16": {
+   "liquid": 3589,
+   "operating": 2574,
+   "minute": 600
+  },
+  "2025-10-17": {
+   "liquid": 3589,
+   "operating": 2572,
+   "minute": 600
+  },
+  "2025-10-20": {
+   "liquid": 3589,
+   "operating": 2573,
+   "minute": 600
+  },
+  "2025-10-21": {
+   "liquid": 3592,
+   "operating": 2572,
+   "minute": 600
+  },
+  "2025-10-22": {
+   "liquid": 3600,
+   "operating": 2577,
+   "minute": 600
+  },
+  "2025-10-23": {
+   "liquid": 3602,
+   "operating": 2576,
+   "minute": 600
+  },
+  "2025-10-24": {
+   "liquid": 3605,
+   "operating": 2581,
+   "minute": 600
+  },
+  "2025-10-27": {
+   "liquid": 3613,
+   "operating": 2584,
+   "minute": 600
+  },
+  "2025-10-28": {
+   "liquid": 3620,
+   "operating": 2588,
+   "minute": 600
+  },
+  "2025-10-29": {
+   "liquid": 3624,
+   "operating": 2589,
+   "minute": 600
+  },
+  "2025-10-30": {
+   "liquid": 3630,
+   "operating": 2592,
+   "minute": 600
+  },
+  "2025-10-31": {
+   "liquid": 3636,
+   "operating": 2595,
+   "minute": 600
+  },
+  "2025-11-03": {
+   "liquid": 3638,
+   "operating": 2598,
+   "minute": 600
+  },
+  "2025-11-04": {
+   "liquid": 3648,
+   "operating": 2598,
+   "minute": 600
+  },
+  "2025-11-05": {
+   "liquid": 3651,
+   "operating": 2600,
+   "minute": 600
+  },
+  "2025-11-06": {
+   "liquid": 3655,
+   "operating": 2604,
+   "minute": 600
+  },
+  "2025-11-07": {
+   "liquid": 3664,
+   "operating": 2607,
+   "minute": 600
+  },
+  "2025-11-10": {
+   "liquid": 3672,
+   "operating": 2610,
+   "minute": 600
+  },
+  "2025-11-11": {
+   "liquid": 3671,
+   "operating": 2609,
+   "minute": 600
+  },
+  "2025-11-12": {
+   "liquid": 3672,
+   "operating": 2611,
+   "minute": 600
+  },
+  "2025-11-13": {
+   "liquid": 3677,
+   "operating": 2610,
+   "minute": 600
+  },
+  "2025-11-14": {
+   "liquid": 3684,
+   "operating": 2611,
+   "minute": 600
+  },
+  "2025-11-17": {
+   "liquid": 3684,
+   "operating": 2611,
+   "minute": 600
+  },
+  "2025-11-18": {
+   "liquid": 3680,
+   "operating": 2608,
+   "minute": 600
+  },
+  "2025-11-19": {
+   "liquid": 3682,
+   "operating": 2609,
+   "minute": 600
+  },
+  "2025-11-20": {
+   "liquid": 3688,
+   "operating": 2610,
+   "minute": 600
+  },
+  "2025-11-21": {
+   "liquid": 3700,
+   "operating": 2618,
+   "minute": 600
+  },
+  "2025-11-24": {
+   "liquid": 3700,
+   "operating": 2618,
+   "minute": 600
+  },
+  "2025-11-25": {
+   "liquid": 3707,
+   "operating": 2621,
+   "minute": 600
+  },
+  "2025-11-26": {
+   "liquid": 3712,
+   "operating": 2626,
+   "minute": 600
+  },
+  "2025-11-28": {
+   "liquid": 3714,
+   "operating": 2626,
+   "minute": 600
+  },
+  "2025-12-01": {
+   "liquid": 3712,
+   "operating": 2625,
+   "minute": 600
+  },
+  "2025-12-02": {
+   "liquid": 3712,
+   "operating": 2626,
+   "minute": 600
+  },
+  "2025-12-03": {
+   "liquid": 3710,
+   "operating": 2622,
+   "minute": 600
+  },
+  "2025-12-04": {
+   "liquid": 3710,
+   "operating": 2624,
+   "minute": 600
+  },
+  "2025-12-05": {
+   "liquid": 3712,
+   "operating": 2621,
+   "minute": 600
+  },
+  "2025-12-08": {
+   "liquid": 3711,
+   "operating": 2620,
+   "minute": 600
+  },
+  "2025-12-09": {
+   "liquid": 3713,
+   "operating": 2621,
+   "minute": 600
+  },
+  "2025-12-10": {
+   "liquid": 3705,
+   "operating": 2617,
+   "minute": 600
+  },
+  "2025-12-11": {
+   "liquid": 3709,
+   "operating": 2620,
+   "minute": 600
+  },
+  "2025-12-12": {
+   "liquid": 3714,
+   "operating": 2624,
+   "minute": 600
+  },
+  "2025-12-15": {
+   "liquid": 3716,
+   "operating": 2624,
+   "minute": 600
+  },
+  "2025-12-16": {
+   "liquid": 3714,
+   "operating": 2623,
+   "minute": 600
+  },
+  "2025-12-17": {
+   "liquid": 3716,
+   "operating": 2622,
+   "minute": 600
+  },
+  "2025-12-18": {
+   "liquid": 3713,
+   "operating": 2622,
+   "minute": 600
+  },
+  "2025-12-19": {
+   "liquid": 3718,
+   "operating": 2623,
+   "minute": 600
+  },
+  "2025-12-22": {
+   "liquid": 3719,
+   "operating": 2625,
+   "minute": 600
+  },
+  "2025-12-23": {
+   "liquid": 3725,
+   "operating": 2626,
+   "minute": 600
+  },
+  "2025-12-24": {
+   "liquid": 3721,
+   "operating": 2622,
+   "minute": 600
+  },
+  "2025-12-26": {
+   "liquid": 3719,
+   "operating": 2623,
+   "minute": 600
+  },
+  "2025-12-29": {
+   "liquid": 3719,
+   "operating": 2623,
+   "minute": 600
+  },
+  "2025-12-30": {
+   "liquid": 3714,
+   "operating": 2620,
+   "minute": 600
+  },
+  "2025-12-31": {
+   "liquid": 3712,
+   "operating": 2618,
+   "minute": 600
+  },
+  "2026-01-02": {
+   "liquid": 3708,
+   "operating": 2616,
+   "minute": 600
+  },
+  "2026-01-05": {
+   "liquid": 3710,
+   "operating": 2616,
+   "minute": 600
+  },
+  "2026-01-06": {
+   "liquid": 3717,
+   "operating": 2620,
+   "minute": 600
+  },
+  "2026-01-07": {
+   "liquid": 3720,
+   "operating": 2621,
+   "minute": 600
+  },
+  "2026-01-08": {
+   "liquid": 3716,
+   "operating": 2618,
+   "minute": 600
+  },
+  "2026-01-09": {
+   "liquid": 3717,
+   "operating": 2617,
+   "minute": 600
+  },
+  "2026-01-12": {
+   "liquid": 3719,
+   "operating": 2617,
+   "minute": 600
+  },
+  "2026-01-13": {
+   "liquid": 3730,
+   "operating": 2621,
+   "minute": 600
+  },
+  "2026-01-14": {
+   "liquid": 3731,
+   "operating": 2622,
+   "minute": 600
+  },
+  "2026-01-15": {
+   "liquid": 3732,
+   "operating": 2622,
+   "minute": 600
+  },
+  "2026-01-16": {
+   "liquid": 3747,
+   "operating": 2631,
+   "minute": 600
+  },
+  "2026-01-20": {
+   "liquid": 3748,
+   "operating": 2630,
+   "minute": 600
+  },
+  "2026-01-21": {
+   "liquid": 3755,
+   "operating": 2634,
+   "minute": 600
+  },
+  "2026-01-22": {
+   "liquid": 3757,
+   "operating": 2633,
+   "minute": 600
+  },
+  "2026-01-23": {
+   "liquid": 3760,
+   "operating": 2631,
+   "minute": 600
+  },
+  "2026-01-26": {
+   "liquid": 3760,
+   "operating": 2631,
+   "minute": 600
+  },
+  "2026-01-27": {
+   "liquid": 3763,
+   "operating": 2633,
+   "minute": 600
+  },
+  "2026-01-28": {
+   "liquid": 3764,
+   "operating": 2630,
+   "minute": 600
+  },
+  "2026-01-29": {
+   "liquid": 3764,
+   "operating": 2628,
+   "minute": 600
+  },
+  "2026-01-30": {
+   "liquid": 3770,
+   "operating": 2629,
+   "minute": 600
+  },
+  "2026-02-02": {
+   "liquid": 3773,
+   "operating": 2629,
+   "minute": 600
+  },
+  "2026-02-03": {
+   "liquid": 3772,
+   "operating": 2629,
+   "minute": 600
+  },
+  "2026-02-04": {
+   "liquid": 3781,
+   "operating": 2632,
+   "minute": 600
+  },
+  "2026-02-05": {
+   "liquid": 3791,
+   "operating": 2640,
+   "minute": 600
+  },
+  "2026-02-06": {
+   "liquid": 3795,
+   "operating": 2641,
+   "minute": 600
+  },
+  "2026-02-09": {
+   "liquid": 3799,
+   "operating": 2643,
+   "minute": 600
+  },
+  "2026-02-10": {
+   "liquid": 3810,
+   "operating": 2644,
+   "minute": 600
+  },
+  "2026-02-11": {
+   "liquid": 3811,
+   "operating": 2645,
+   "minute": 600
+  },
+  "2026-02-12": {
+   "liquid": 3813,
+   "operating": 2645,
+   "minute": 600
+  },
+  "2026-02-13": {
+   "liquid": 3821,
+   "operating": 2647,
+   "minute": 600
+  },
+  "2026-02-17": {
+   "liquid": 3826,
+   "operating": 2646,
+   "minute": 600
+  },
+  "2026-02-18": {
+   "liquid": 3831,
+   "operating": 2648,
+   "minute": 600
+  },
+  "2026-02-19": {
+   "liquid": 3831,
+   "operating": 2647,
+   "minute": 600
+  },
+  "2026-02-20": {
+   "liquid": 3837,
+   "operating": 2648,
+   "minute": 600
+  },
+  "2026-02-23": {
+   "liquid": 3839,
+   "operating": 2650,
+   "minute": 600
+  },
+  "2026-02-24": {
+   "liquid": 3831,
+   "operating": 2643,
+   "minute": 600
+  },
+  "2026-02-25": {
+   "liquid": 3835,
+   "operating": 2646,
+   "minute": 600
+  },
+  "2026-02-26": {
+   "liquid": 3840,
+   "operating": 2648,
+   "minute": 600
+  },
+  "2026-02-27": {
+   "liquid": 3847,
+   "operating": 2650,
+   "minute": 600
+  },
+  "2026-03-02": {
+   "liquid": 3855,
+   "operating": 2654,
+   "minute": 600
+  },
+  "2026-03-03": {
+   "liquid": 3858,
+   "operating": 2651,
+   "minute": 600
+  },
+  "2026-03-04": {
+   "liquid": 3860,
+   "operating": 2650,
+   "minute": 600
+  },
+  "2026-03-05": {
+   "liquid": 3861,
+   "operating": 2649,
+   "minute": 600
+  },
+  "2026-03-06": {
+   "liquid": 3865,
+   "operating": 2650,
+   "minute": 600
+  },
+  "2026-03-09": {
+   "liquid": 3869,
+   "operating": 2655,
+   "minute": 600
+  },
+  "2026-03-10": {
+   "liquid": 3877,
+   "operating": 2659,
+   "minute": 600
+  },
+  "2026-03-11": {
+   "liquid": 3873,
+   "operating": 2656,
+   "minute": 600
+  },
+  "2026-03-12": {
+   "liquid": 3878,
+   "operating": 2655,
+   "minute": 600
+  },
+  "2026-03-13": {
+   "liquid": 3883,
+   "operating": 2656,
+   "minute": 600
+  },
+  "2026-03-16": {
+   "liquid": 3881,
+   "operating": 2651,
+   "minute": 600
+  },
+  "2026-03-17": {
+   "liquid": 3875,
+   "operating": 2646,
+   "minute": 600
+  },
+  "2026-03-18": {
+   "liquid": 3877,
+   "operating": 2648,
+   "minute": 600
+  },
+  "2026-03-19": {
+   "liquid": 3876,
+   "operating": 2648,
+   "minute": 600
+  },
+  "2026-03-20": {
+   "liquid": 3878,
+   "operating": 2647,
+   "minute": 600
+  },
+  "2026-03-23": {
+   "liquid": 3887,
+   "operating": 2653,
+   "minute": 600
+  },
+  "2026-03-24": {
+   "liquid": 3885,
+   "operating": 2653,
+   "minute": 600
+  },
+  "2026-03-25": {
+   "liquid": 3891,
+   "operating": 2653,
+   "minute": 600
+  },
+  "2026-03-26": {
+   "liquid": 3893,
+   "operating": 2652,
+   "minute": 600
+  },
+  "2026-03-27": {
+   "liquid": 3896,
+   "operating": 2656,
+   "minute": 600
+  },
+  "2026-03-30": {
+   "liquid": 3900,
+   "operating": 2660,
+   "minute": 600
+  },
+  "2026-03-31": {
+   "liquid": 3904,
+   "operating": 2660,
+   "minute": 600
+  },
+  "2026-04-01": {
+   "liquid": 3902,
+   "operating": 2659,
+   "minute": 600
+  },
+  "2026-04-02": {
+   "liquid": 3905,
+   "operating": 2660,
+   "minute": 600
+  },
+  "2026-04-06": {
+   "liquid": 3911,
+   "operating": 2662,
+   "minute": 600
+  },
+  "2026-04-07": {
+   "liquid": 3907,
+   "operating": 2661,
+   "minute": 600
+  },
+  "2026-04-08": {
+   "liquid": 3907,
+   "operating": 2659,
+   "minute": 600
+  },
+  "2026-04-09": {
+   "liquid": 3908,
+   "operating": 2659,
+   "minute": 600
+  },
+  "2026-04-10": {
+   "liquid": 3911,
+   "operating": 2660,
+   "minute": 600
+  },
+  "2026-04-13": {
+   "liquid": 3910,
+   "operating": 2658,
+   "minute": 600
+  },
+  "2026-04-14": {
+   "liquid": 3906,
+   "operating": 2657,
+   "minute": 600
+  },
+  "2026-04-15": {
+   "liquid": 3904,
+   "operating": 2658,
+   "minute": 600
+  },
+  "2026-04-16": {
+   "liquid": 3901,
+   "operating": 2657,
+   "minute": 600
+  },
+  "2026-04-17": {
+   "liquid": 3905,
+   "operating": 2657,
+   "minute": 600
+  },
+  "2026-04-20": {
+   "liquid": 3903,
+   "operating": 2659,
+   "minute": 600
+  },
+  "2026-04-21": {
+   "liquid": 3899,
+   "operating": 2653,
+   "minute": 600
+  },
+  "2026-04-22": {
+   "liquid": 3900,
+   "operating": 2655,
+   "minute": 600
+  },
+  "2026-04-23": {
+   "liquid": 3903,
+   "operating": 2656,
+   "minute": 600
+  },
+  "2026-04-24": {
+   "liquid": 3906,
+   "operating": 2660,
+   "minute": 600
+  },
+  "2026-04-27": {
+   "liquid": 3900,
+   "operating": 2658,
+   "minute": 600
+  },
+  "2026-04-28": {
+   "liquid": 3899,
+   "operating": 2656,
+   "minute": 600
+  },
+  "2026-04-29": {
+   "liquid": 3900,
+   "operating": 2657,
+   "minute": 600
+  },
+  "2026-04-30": {
+   "liquid": 3903,
+   "operating": 2657,
+   "minute": 600
+  },
+  "2026-05-01": {
+   "liquid": 3899,
+   "operating": 2655,
+   "minute": 600
+  },
+  "2026-05-04": {
+   "liquid": 3896,
+   "operating": 2654,
+   "minute": 600
+  },
+  "2026-05-05": {
+   "liquid": 3896,
+   "operating": 2654,
+   "minute": 600
+  },
+  "2026-05-06": {
+   "liquid": 3897,
+   "operating": 2656,
+   "minute": 600
+  },
+  "2026-05-07": {
+   "liquid": 3901,
+   "operating": 2661,
+   "minute": 600
+  },
+  "2026-05-08": {
+   "liquid": 3904,
+   "operating": 2660,
+   "minute": 600
+  },
+  "2026-05-11": {
+   "liquid": 3903,
+   "operating": 2661,
+   "minute": 600
+  },
+  "2026-05-12": {
+   "liquid": 3905,
+   "operating": 2663,
+   "minute": 600
+  },
+  "2026-05-13": {
+   "liquid": 3909,
+   "operating": 2668,
+   "minute": 600
+  },
+  "2026-05-14": {
+   "liquid": 3904,
+   "operating": 2668,
+   "minute": 600
+  },
+  "2026-05-15": {
+   "liquid": 3910,
+   "operating": 2670,
+   "minute": 600
+  },
+  "2026-05-18": {
+   "liquid": 3913,
+   "operating": 2672,
+   "minute": 600
+  },
+  "2026-05-19": {
+   "liquid": 3914,
+   "operating": 2670,
+   "minute": 600
+  },
+  "2026-05-20": {
+   "liquid": 3914,
+   "operating": 2670,
+   "minute": 600
+  },
+  "2026-05-21": {
+   "liquid": 3918,
+   "operating": 2669,
+   "minute": 600
+  },
+  "2026-05-22": {
+   "liquid": 3921,
+   "operating": 2672,
+   "minute": 600
+  },
+  "2026-05-26": {
+   "liquid": 3920,
+   "operating": 2672,
+   "minute": 600
+  },
+  "2026-05-27": {
+   "liquid": 3916,
+   "operating": 2670,
+   "minute": 600
+  },
+  "2026-05-28": {
+   "liquid": 3916,
+   "operating": 2667,
+   "minute": 600
+  },
+  "2026-05-29": {
+   "liquid": 3913,
+   "operating": 2667,
+   "minute": 600
+  },
+  "2026-06-01": {
+   "liquid": 3921,
+   "operating": 2671,
+   "minute": 600
+  },
+  "2026-06-02": {
+   "liquid": 3920,
+   "operating": 2674,
+   "minute": 600
+  },
+  "2026-06-03": {
+   "liquid": 3922,
+   "operating": 2674,
+   "minute": 600
+  },
+  "2026-06-04": {
+   "liquid": 3918,
+   "operating": 2671,
+   "minute": 600
+  },
+  "2026-06-05": {
+   "liquid": 3915,
+   "operating": 2670,
+   "minute": 600
+  },
+  "2026-06-08": {
+   "liquid": 3918,
+   "operating": 2672,
+   "minute": 600
+  },
+  "2026-06-09": {
+   "liquid": 3917,
+   "operating": 2667,
+   "minute": 600
+  },
+  "2026-06-10": {
+   "liquid": 3921,
+   "operating": 2668,
+   "minute": 600
+  },
+  "2026-06-11": {
+   "liquid": 3926,
+   "operating": 2670,
+   "minute": 600
+  },
+  "2026-06-12": {
+   "liquid": 3932,
+   "operating": 2674,
+   "minute": 600
+  },
+  "2026-06-15": {
+   "liquid": 3936,
+   "operating": 2677,
+   "minute": 600
+  },
+  "2026-06-16": {
+   "liquid": 3939,
+   "operating": 2680,
+   "minute": 600
+  },
+  "2026-06-17": {
+   "liquid": 3934,
+   "operating": 2678,
+   "minute": 600
+  },
+  "2026-06-18": {
+   "liquid": 3934,
+   "operating": 2678,
+   "minute": 600
+  },
+  "2026-06-22": {
+   "liquid": 3937,
+   "operating": 2681,
+   "minute": 600
+  },
+  "2026-06-23": {
+   "liquid": 3945,
+   "operating": 2684,
+   "minute": 600
+  },
+  "2026-06-24": {
+   "liquid": 3947,
+   "operating": 2686,
+   "minute": 600
+  },
+  "2026-06-25": {
+   "liquid": 3948,
+   "operating": 2690,
+   "minute": 600
+  },
+  "2026-06-26": {
+   "liquid": 3955,
+   "operating": 2692,
+   "minute": 600
+  },
+  "2026-06-29": {
+   "liquid": 3964,
+   "operating": 2699,
+   "minute": 600
+  },
+  "2026-06-30": {
+   "liquid": 3965,
+   "operating": 2703,
+   "minute": 600
+  },
+  "2026-07-01": {
+   "liquid": 3975,
+   "operating": 2711,
+   "minute": 600
+  },
+  "2026-07-02": {
+   "liquid": 3980,
+   "operating": 2715,
+   "minute": 600
+  },
+  "2026-07-06": {
+   "liquid": 3982,
+   "operating": 2718,
+   "minute": 600
+  },
+  "2026-07-07": {
+   "liquid": 3988,
+   "operating": 2723,
+   "minute": 600
+  },
+  "2026-07-08": {
+   "liquid": 3994,
+   "operating": 2726,
+   "minute": 600
+  },
+  "2026-07-09": {
+   "liquid": 4002,
+   "operating": 2733,
+   "minute": 600
+  },
+  "2026-07-10": {
+   "liquid": 4005,
+   "operating": 2735,
+   "minute": 600
+  },
+  "2026-07-13": {
+   "liquid": 4005,
+   "operating": 2737,
+   "minute": 600
+  },
+  "2026-07-14": {
+   "liquid": 4009,
+   "operating": 2743,
+   "minute": 600
+  },
+  "2026-07-15": {
+   "liquid": 4005,
+   "operating": 2739,
+   "minute": 600
+  },
+  "2026-07-16": {
+   "liquid": 4004,
+   "operating": 2738,
+   "minute": 600
+  },
+  "2026-07-17": {
+   "liquid": 4007,
+   "operating": 2738,
+   "minute": 600
+  },
+  "2026-07-20": {
+   "liquid": 4009,
+   "operating": 2742,
+   "minute": 600
+  },
+  "2026-07-21": {
+   "liquid": 4007,
+   "operating": 2743,
+   "minute": 600
+  },
+  "2026-07-22": {
+   "liquid": 4009,
+   "operating": 2744,
+   "minute": 600
+  },
+  "2026-07-23": {
+   "liquid": 4007,
+   "operating": 2745,
+   "minute": 600
+  },
+  "2026-07-24": {
+   "liquid": 4010,
+   "operating": 2746,
+   "minute": 600
+  },
+  "2026-07-27": {
+   "liquid": 4011,
+   "operating": 2747,
+   "minute": 600
+  },
+  "2026-07-28": {
+   "liquid": 4010,
+   "operating": 2746,
+   "minute": 600
+  },
+  "2026-07-29": {
+   "liquid": 4010,
+   "operating": 2746,
+   "minute": 600
+  },
+  "2026-07-30": {
+   "liquid": 4005,
+   "operating": 2744,
+   "minute": 600
+  },
+  "2026-07-31": {
+   "liquid": 3997,
+   "operating": 2740,
+   "minute": 600
+  },
+  "2026-08-03": {
+   "liquid": 3998,
+   "operating": 2741,
+   "minute": 600
+  },
+  "2026-08-04": {
+   "liquid": 3999,
+   "operating": 2742,
+   "minute": 600
+  },
+  "2026-08-05": {
+   "liquid": 4005,
+   "operating": 2745,
+   "minute": 600
+  },
+  "2026-08-06": {
+   "liquid": 4007,
+   "operating": 2745,
+   "minute": 600
+  }
+ }
+}
