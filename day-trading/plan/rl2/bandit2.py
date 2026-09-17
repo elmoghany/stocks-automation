@@ -206,7 +206,7 @@ def main():
     dates = [d for d in R.dates
              if f"{TEST_MONTHS[0]}-01" <= d < month_end(TEST_MONTHS[-1])]
     name = (f"bandit2_{variant}_h{H}_{'rth' if rth else 'any'}_{target}"
-            f"_q{q}_k{topk}_{exit_spec or 'hz'}_{which}"
+            f"_q{q}_k{topk}_{(exit_spec or 'hz').replace(':', '-').replace(',', '-')}_{which}"
             f"_b{block}r{rounds}_s{seed}{tag}")
     mtot = BAR.metrics(all_trades, dates, name)
     rate = mtot["tickets_per_day"]

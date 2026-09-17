@@ -8418,3 +8418,145 @@ consistent with **two lucky sessions** than with a tradable effect.
 **This is the honest reading and it is the one adopted.** The hold sweep
 was run precisely because the 23-month number looked encouraging; it is
 the control that mattered most and it is reported in full.
+
+---
+
+## RL-SERIES v2 (2026-09-16) — RL off the +10% gapper rule, on a causal wide universe
+
+Full write-up: `day-trading/rl2-audit.md`. Code: `plan/rl2/*`. Data:
+`data/massive/m1w/` + `data/massive/MANIFEST_m1w.json` (left in place as a
+reusable causal cache; another line is already reading it through
+`backfill_m1w.py --universe`).
+
+**VERDICT: nothing reaches the $7,500/month bar. Nothing beats HOLD. Nothing
+beats a coin flip that knows the market hours.** $ per month NET, walk-forward:
+FORESIGHT **+22,152** (positive control) | rule-search seed 0 **+355** (1 of 5
+seeds) | **HOLD 0** | bandit2-feat2-RTH −1,434 | RANDOM-RTH-greedy −3,592 |
+bandit −4,774 | offline CQL −8,705 | PPO −9,078 | MaskablePPO −16,230 |
+RANDOM-ANY −16,748.
+
+### The universe (the part worth keeping)
+The +10% pool is outcome-conditioned, so v2 rebuilt membership from
+information complete before the day opens: halal-PASS point-in-time at D,
+median $ volume ≥ $2M and median close ≥ $3 over the PRIOR 60 trading days
+(dates < D), and bars on D. **27,209 symbol-days / 448 dates / 191 distinct
+symbols, 0.557 GB, 0 fetch failures.** Only **4.5%** of those symbol-days
+already existed in `data/massive/m1` — the causal universe and the gapper pool
+are almost disjoint.
+
+Two bugs found and fixed on the way:
+1. **The halal universe was secretly the gapper pool.** Under `shares_asof`'s
+   nearest-earlier semantics a name became halal-EVALUABLE at D only if an
+   earlier (future-conditioned) campaign had queried it on or before D — i.e.
+   only after it had already gapped. `plan/rl2/backfill_shares.py` fetches
+   shares on a fixed MONTHLY ANCHOR GRID for every label-carrying survivor of
+   the causal screen into a PRIVATE cache (29,302 lookups, 27,759 answers, 0
+   failures), so membership now depends on the screen and nothing else.
+   Early-period universe roughly doubled (2025-01-15: 20 → 44 names).
+2. **`data/massive/gd/` has a file per WEEKDAY including market holidays**,
+   with empty results. Using them as trading days made "the previous trading
+   day" empty for 20 post-holiday sessions and emptied the universe on those
+   dates. `plan/rl2/universe.py::gd_dates()` now returns real sessions only.
+
+### What the study found
+* **The universe's unconditional net expectancy is ≈ −$33/ticket at 15 min in
+  the regular session, of which $30 is the round trip.** The market part is
+  about −$3. This is the SAME finding the W-campaign reached from fifteen
+  independent mechanics ("minus the transaction cost"), on a different
+  universe, by a different route. Extended-hours entries lose $150–$175/ticket.
+* **Every learned model learned the clock.** The bandit's top features by gain
+  were `is_ext`, `tod`, `min_to_1600`. Remove that possibility (`--rth 1
+  --target xs`, target demeaned across the names printing at the same minute)
+  and the 26 intraday features land on the **50th percentile of their own
+  30-seed random control** — the median coin flip.
+* **Multi-day position and the opening range moved the percentile — and then
+  the shuffled control took it back.** Adding 11 causal columns (5/20/60-day
+  returns, distance to the 20-day high/low, 20-day vol, 5d/60d $-volume ratio,
+  price vs MA20, opening gap, opening-range position and break) lifted the
+  policy from the 50th to the 86.7th percentile (xs target) and to the 100th
+  (raw target, −$14.99/ticket, −$1,434/month). **But the SHUFFLED-TARGET
+  controls for both branches reach 96.7 and 100.0 as well.** A
+  LightGBM-threshold policy produces a characteristic ticket-rate and
+  entry-time profile whatever it was trained on, and that profile alone is
+  worth 90+ percentile against a rate-matched random control. **Retire
+  "percentile vs matched random" as a signal test for this policy family** —
+  it is necessary, nowhere near sufficient, and no row in this study should be
+  credited for clearing it. What survives is $/month net and the shuffled
+  control.
+* **Rule search is the only place selection TRANSFERRED out of sample.** Five
+  independent searches produced rules averaging −$12.88/ticket on the held-out
+  year against **−$59.12 for 1,335 unsearched rules of the same shape** (only
+  0.37% of those are positive). Selection is worth about **+$46/ticket out of
+  sample** — real, measurable, and not enough to cross zero.
+* **The online-RL arm is UNINFORMATIVE, not null.** Its own foresight control
+  FAILS: MaskablePPO with 30 minutes of lookahead in the observation returns
+  −$88.40/ticket at 250k steps and −$85.73 at 800k, while the same control on
+  the approach-1 policy shape returns **+$150.70**. The wide env made four
+  things harder at once (192 steps vs 126, 20 slots vs 10, 609 obs dims vs
+  209, premarket actions legal). `RL2_RTH_ONLY=1` masks the extended-hours
+  action space and was RUN: it recovers **$74 of the $88** (test −$14.46/ticket,
+  6 extended fills instead of hundreds), confirming the mechanism — and the
+  control is still NEGATIVE with thirty minutes of foresight. The arm needs a
+  smaller observation and a stochastic-policy evaluation before any RL number
+  from it means anything.
+
+### A control that was mis-specified, recorded rather than hidden
+The foresight control run WITHOUT a buy threshold spends all seven tickets in
+the first premarket minute and **loses $85/ticket with perfect foresight**.
+That measures the policy shape, not the harness. It has a corollary that
+changes every comparison in the v1 audit too: **v1's "RANDOM" baseline is a
+straw man on any universe where premarket trading is legal** — it fills
+greedily at 04:00, pays 120 bps, and loses $113.94/ticket. The honest opponent
+is RANDOM-RTH-greedy (7 random names at 09:30, hold 30 min): **−$24.44/ticket**.
+Against THAT, the approach-1 bandit is 1.56 SD BELOW random.
+
+### Honesty battery — all pass
+poison **64 checks / 0 mismatches**; hold-is-zero exactly $0; cost monotonicity
+−514 (0×) > −52,175 (1×) > −517,121 (10×); corrected shuffled-target control
+negative everywhere (−$41.61 … −$93.13/ticket); foresight +$150.70/ticket at
+Sharpe 16.8. The shuffled control is the CORRECT one this time: the target is
+permuted across (name, t) rows within each day, so per-row sums are not
+preserved — v1's version permuted the price path and was a Brownian-bridge
+artifact.
+
+### Closest miss and what it would need
+Approach 4, seed 0: **buy when price is below the session VWAP AND the day's
+universe is down on average AND price < ~$15.70; entries 09:30–16:00; exit at
++5%, a 3% trailing stop, or 240 minutes.** Held-out year: **+$4,305, +$355/month,
++$14.11/ticket over 305 tickets, Sharpe 0.39, 99.93rd percentile of the
+unsearched null.** A mean-reversion entry with TA exits — the shape this
+project's own research line had already nominated.
+To reach $7,500/month it needs EITHER **25 tickets/day** (the cash rule caps
+it at 7, and it only fires 1.2 times/day on a 61-name universe) OR
+**+$297/ticket = +198 bps net**, which is twice what PERFECT 30-minute
+foresight pays. It is 1 of 5 seeds, four of which lost. **Do not trade it.**
+
+### Ranked next steps
+1. Shrink the RL observation (609 dims from 20 slots x 26 features is too big
+   for 152 training days) and evaluate the STOCHASTIC policy instead of the
+   deterministic argmax, which currently forces 7.0 tickets/day on every row.
+   Only then spend steps. `RL2_RTH_ONLY=1` is already done.
+2. **Execution, not selection** (v1 said this too, still untried): the round
+   trip is $30 of a $33 loss; 5 bps a side is worth $15/ticket and is a far
+   easier problem than finding $51/ticket of alpha.
+3. **Widen the universe rather than deepen the model — already in flight.**
+   728 names/day carry a label out of 4,575 that clear the liquidity screen.
+   The UNIVERSE-QUOTES line has already taken the halal universe from 61 to
+   **278 PASS names/day** and is reading this study's `data/massive/m1w` cache
+   through `backfill_m1w.py --universe`. Re-run every approach here on that
+   universe first: more independent bets at a small edge is the only route to
+   the bar that does not need a 20x edge improvement.
+4. More multi-day features (overnight gap, earnings proximity, peer/sector
+   relative strength, index-relative return) — that family is the only one
+   that measurably helped.
+5. Pre-registered re-run of the closest-miss rule on data that did not exist
+   when this was written.
+
+### Operational notes
+Cornell VPN was DOWN for the whole session (`ssh unicorn-login-01` timed out,
+no Cisco adapter had an address), so nothing ran on the cluster; everything is
+from the 4-core PC, shared with another agent's `wn_*` / `rotation_sim` /
+`vs2_test` jobs. Runs cancelled for CPU, all recorded in the audit:
+maskppo-real-800k, offline CQL seed 1 / BCQ, rules2 seeds 1–4 and its
+walk-forward arm. No real orders, no engine files touched, no halal cache
+written to.
