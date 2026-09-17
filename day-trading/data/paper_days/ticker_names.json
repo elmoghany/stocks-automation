@@ -23,6 +23,10 @@
 "name": "Addex Therapeutics",
 "type": "EQUITY"
 },
+"AEHG": {
+"name": "Leverage Shares 2X Long AEHR Daily ETF",
+"type": "EQUITY"
+},
 "AEHL": {
 "name": "Antelope Enterprise",
 "type": "EQUITY"
@@ -115,6 +119,10 @@
 "name": "Corgi ARM 2x Daily ETF",
 "type": "EQUITY"
 },
+"ARMG": {
+"name": "Themes ETF Trust Leverage Shares 2X Long ARM Daily ETF",
+"type": "EQUITY"
+},
 "ARMH": {
 "name": "Arm Holdings PLC ADRhedged",
 "type": "EQUITY"
@@ -157,6 +165,10 @@
 },
 "AVGC": {
 "name": "Corgi AVGO 2x Daily ETF",
+"type": "EQUITY"
+},
+"AXG": {
+"name": "Solowin Holdings",
 "type": "EQUITY"
 },
 "AXTC": {
@@ -345,6 +357,10 @@
 },
 "CLRO": {
 "name": "ClearOne",
+"type": "EQUITY"
+},
+"CLSX": {
+"name": "Tradr 2X Long CLSK Daily ETF",
 "type": "EQUITY"
 },
 "CNXC": {
@@ -615,6 +631,10 @@
 "name": "GameSquare Holdings",
 "type": "EQUITY"
 },
+"GDXU": {
+"name": "MicroSectors Gold Miners 3x Leveraged ETN",
+"type": "EQUITY"
+},
 "GEMG": {
 "name": "Leverage Shares 2X Long GEMI Daily ETF",
 "type": "EQUITY"
@@ -625,6 +645,10 @@
 },
 "GFGF": {
 "name": "EA Series Trust Guru Favorite Stocks ETF",
+"type": "EQUITY"
+},
+"GFSG": {
+"name": "Leverage Shares 2X Long GFS Daily ETF",
 "type": "EQUITY"
 },
 "GLAS": {
@@ -1289,6 +1313,10 @@
 },
 "SMCC": {
 "name": "Corgi SMCI 2x Daily ETF",
+"type": "EQUITY"
+},
+"SMHU": {
+"name": "MicroSectors 3x Long Semiconductor ETNs",
 "type": "EQUITY"
 },
 "SMTG": {

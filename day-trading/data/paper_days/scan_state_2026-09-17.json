@@ -89,8 +89,8 @@
    "first_seen": "06:28"
   },
   "VICR": {
-   "pct": 11.64,
-   "last": 205.31,
+   "pct": 12.52,
+   "last": 206.93,
    "prev_close": 183.91,
    "vol": "573847.226479",
    "name": "Vicor",
@@ -199,11 +199,20 @@
    "vol": "157115.40242",
    "name": "Brand Engagement Network",
    "first_seen": "08:00"
+  },
+  "AXG": {
+   "pct": 10.52,
+   "last": 2.3099,
+   "prev_close": 2.09,
+   "vol": "345162.320949",
+   "name": "Solowin Holdings",
+   "first_seen": "08:50"
   }
  },
  "halal_fail": [
   "AKAN",
   "ARL",
+  "AXG",
   "BOLT",
   "CENN",
   "COE",
