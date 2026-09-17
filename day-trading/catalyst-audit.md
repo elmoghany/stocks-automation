@@ -640,7 +640,29 @@ trailing windows ending strictly before the fill minute, plus a square-root
 impact term at Y = 1.0, floored at 1 bp, legacy 10 bps where the 1-second
 tape is absent):
 
-MEASURED_COST_TABLE
+| config | tickets | flat 10 bps $/tkt | **measured $/tkt** | flat $/month | **measured $/month** | mean bps in / out | tape tier mix |
+|---|---|---|---|---|---|---|---|
+| base h30, 1/day@09:35 | 379 | −9.62 | −76.06 | −202 | −1,597 | 50.0 / 33.6 | win 620 · prior 16 |
+| base+cat h30, 1/day@09:35 | 379 | −25.91 | −90.87 | −544 | −1,908 | 48.7 / 34.6 | win 612 · prior 16 |
+| base h30, 7/day@09:35 | 2,653 | −18.17 | −65.48 | −2,671 | −9,626 | 43.3 / 31.3 | win 3,883 · prior 91 |
+| base+cat h30, 7/day@09:35 | 2,653 | −20.62 | −69.63 | −3,032 | −10,236 | 43.4 / 32.3 | win 3,923 · prior 95 |
+| base h60, 1/day@09:35 | 379 | −42.92 | −110.17 | −901 | −2,314 | 50.7 / 23.1 | win 686 · prior 4 |
+| base+cat h60, 1/day@09:35 | 379 | −45.13 | −114.65 | −948 | −2,408 | 49.6 / 24.9 | win 679 · prior 7 |
+| base h60, 7/day@09:35 | 2,653 | −20.99 | −69.95 | −3,085 | −10,282 | 44.0 / 23.6 | win 4,233 · prior 59 |
+| base+cat h60, 7/day@09:35 | 2,653 | −22.45 | −73.76 | −3,301 | −10,843 | 45.2 / 23.9 | win 4,280 · prior 58 |
+| R1 beat AND green @09:35 h60 | 95 | +71.24 | **−38.21** | +317 | −170 | 70.2 / 24.3 | win 188 |
+| R1b beat AND green @10:00 h60 | 103 | +77.28 | +22.92 | +373 | +111 | 38.1 / 19.3 | win 200 |
+| **R15 fresh AND green @09:35 h60** | 112 | **+128.35** | **+0.54** | **+674** | **+3** | **75.8 / 30.5** | win 222 |
+| R15 fresh AND green @09:35 h120 | 112 | +139.93 | +16.49 | +735 | +87 | 75.8 / 27.7 | win 222 |
+| R15b fresh AND green @10:00 h60 | 122 | +79.15 | +16.95 | +453 | +97 | 41.8 / 23.0 | win 234 |
+
+Every ticket found its 1-second tape ("win" tier; a handful fell back to
+the prior session's median, none to the legacy 10 bps). The model rows go
+from −$3,000 to −$10,000 a month. **The closest miss goes from +$674 to
++$3 a month**: a name that reported last night and is green at 09:35 is
+exactly the name whose first five minutes are the most volatile relative
+to its trailing dollar volume, and the impact term charges it 76 bps on
+the way in.
 
 At 09:36 the module's impact term reads the first five minutes of tape and
 charges **~50 bps on entry** (opening volatility × a small trailing dollar
@@ -683,7 +705,7 @@ negative book positive, and the best vetoed row is −$13.52/ticket.
 ex-best +$12,403, 100th percentile on total and on ex-best against 30
 random seeds on the same slots (−$35.57 ± 25.92), mirror (fresh AND red)
 −$57.59, aug2026 +$397 on 3 tickets. Under the measured cost ladder:
-R15_MEASURED_LINE. It needs to be **11× larger** and it cannot be widened —
+**+$0.54/ticket, +$3/month** (the impact term charges its entries 76 bps; the 10:00 variant keeps +$17/ticket, +$97/month). It needs to be **11× larger** and it cannot be widened —
 the second candidate on a firing day is worth −$19 in Y2 (k = 7: +$56.51,
 Y2 −$18.6), 10:30 is −$12.67, 11:00 is −$121. It is **post-hoc** (the
 pre-registered R1 "beat AND green" is +$71.24/ticket, +$317/month, Y2
