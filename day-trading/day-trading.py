@@ -1917,7 +1917,9 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     struct_target_mode: str | None = None,
                     pullback_relax: bool = False,
                     vwap_target: bool = False,
-                    ema_exit: int | None = None) -> list[dict]:
+                    ema_exit: int | None = None,
+                    cost_model: str | None = None,
+                    cost_bps_fn=None) -> list[dict]:
     """Run the entry/exit state machine over 1-min bars of a single day.
 
     State machine:
@@ -2159,6 +2161,31 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
     last_exit_reason = ""
     mm_engaged = False
     slip = (slippage_bps or 0) / 10_000.0
+    # ---- COST-REBASE 2026-09-16: flag-gated per-bar cost ------------
+    # cost_model None / "flat10"  -> `_slip(i)` RETURNS THE SAME FLOAT
+    #   `slip` at every call site, so the engine is byte-identical to
+    #   the pre-COST-REBASE one (plan/idgate.py --rot + plan/cr_ident.py
+    #   assert it on C37F-hf2 / HOLD1-hf2).
+    # cost_model "measured"       -> `cost_bps_fn(ts)` supplies the
+    #   MEASURED per-side cost in bps for the bar that fills, so the
+    #   toll is per-name per-minute instead of flat 10 bps. The function
+    #   is evaluated ONCE per bar, up front, and may only look at data
+    #   strictly before its own bar -- that contract belongs to the
+    #   supplier (plan/cr_cost.py) and is poison-tested in
+    #   plan/cr_poison.py. The 50 bps `pm_spread_bps` premarket haircut
+    #   is UNCHANGED and still paid on top, so an extended-hours fill is
+    #   never cheaper under the measured model than under the flat one.
+    assert cost_model in (None, "flat10", "measured"), cost_model
+    _cost_v = None
+    if cost_model == "measured":
+        if not callable(cost_bps_fn):
+            raise ValueError("cost_model='measured' needs cost_bps_fn")
+        _cost_v = np.array([float(cost_bps_fn(ts)) for ts in cd.index],
+                           dtype=float) / 10_000.0
+
+    def _slip(i):
+        return slip if _cost_v is None else _cost_v[i]
+
     _shuffle_rng = None
     if pressure_shuffle:
         import random as _rnd
@@ -2415,7 +2442,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                         sh = min(sh, int(cd.v[i - 1] * prev_bar_vol_cap))
                     if sh >= 1:
                         shares = sh
-                        entry = _fill_buy(fill, i) * (1 + slip)
+                        entry = _fill_buy(fill, i) * (1 + _slip(i))
                         floor_px = entry * (1 - (stop_pct or 5) / 100)
                         risk0 = max(entry - floor_px, entry * 0.001)
                         deployed += shares * entry
@@ -2739,7 +2766,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                         sh = min(sh, int(vbase * max_vol_frac))
                 if sh >= 1:
                     shares = sh
-                    entry = _fill_buy(fill, i) * (1 + slip)
+                    entry = _fill_buy(fill, i) * (1 + _slip(i))
                     _lo3 = min(cd.l[max(0, i - ((struct_stop_bars or 1)
                                - 1)):i + 1])
                     floor_px = max(_lo3, entry * (1 - (stop_pct or 5)
@@ -2845,7 +2872,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     pats = []
             if pats:                           # dip inverts upward -> BUY
                 entry = _fill_buy(_cb_fill if _cb_fill is not None
-                                  else price, i) * (1 + slip)
+                                  else price, i) * (1 + _slip(i))
                 entry_i = i
                 buy_budget = (budget_cur * (0.5 if add_at is not None
                                             else 1.0) * _size_mult(i))
@@ -2896,7 +2923,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                 # half-then-add: second half deployed once price confirms
                 if (add_at is not None and not added
                         and cd.h[i] >= entry * (1 + add_at / 100)):
-                    px_add = entry * (1 + add_at / 100) * (1 + slip)
+                    px_add = entry * (1 + add_at / 100) * (1 + _slip(i))
                     sh2 = int((budget_cur * 0.5) // px_add)
                     if max_vol_frac:
                         vbase = _vol_base(i)
@@ -2932,7 +2959,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                             eff_frac = scale_out_frac_pressure[1]
                         px = _fill_sell(_sell_fill(
                             entry * (1 + scale_out_at / 100), i, "limit"),
-                            i) * (1 - slip)
+                            i) * (1 - _slip(i))
                         part = int(shares * eff_frac)
                     if part >= 1:
                         pnl_part = (px - entry) * part
@@ -2955,7 +2982,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                         and cd.h[i] >= entry * (1 + scale_out_2[0] / 100)):
                     px = _fill_sell(_sell_fill(
                         entry * (1 + scale_out_2[0] / 100), i, "limit"),
-                        i) * (1 - slip)
+                        i) * (1 - _slip(i))
                     part = int(shares * scale_out_2[1])
                     if part >= 1:
                         pnl_part = (px - entry) * part
@@ -3147,7 +3174,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
                     reason = f"rand-exit {rand_hold}m"
             if exit_px is not None:
                 exit_px = _fill_sell(exit_px, i)   # premarket exits pay too
-                pnl = (exit_px * (1 - slip) - entry) * shares
+                pnl = (exit_px * (1 - _slip(i)) - entry) * shares
                 trades.append({
                     "entry_time": cd.index[entry_i], "entry": round(entry, 2),
                     "exit_time": cd.index[i], "exit": round(exit_px, 2),
@@ -3171,7 +3198,7 @@ def simulate_trades(df1m: pd.DataFrame, verbose: bool = True,
     # (For 7AM-noon window data that means sold by NOON the same day.)
     if state == "LONG":
         exit_px = cd.c[cd.n - 1]
-        pnl = (exit_px * (1 - slip) - entry) * shares
+        pnl = (exit_px * (1 - _slip(cd.n - 1)) - entry) * shares
         trades.append({
             "entry_time": cd.index[entry_i], "entry": round(entry, 2),
             "exit_time": cd.index[cd.n - 1], "exit": round(exit_px, 2),
