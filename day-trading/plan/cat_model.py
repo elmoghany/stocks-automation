@@ -257,6 +257,13 @@ def run_wide(hs, seeds, sets, shuffle_sets=("base+cat",)):
     t = load("wide")
     res = {"table": "wide", "rows": int(len(t.date_i)), "eligible": int(t.printed_m.sum()),
            "n_base": t.n_base, "n_feat": len(t.feat), "runs": []}
+    prev = C.read_json(C.OUT / "model_results.json", None)
+    if prev and prev.get("rows") == res["rows"] and prev.get("n_feat") == res["n_feat"]:
+        res["runs"] = prev["runs"]      # accumulate across invocations; same-name runs replaced
+
+    def _put(ev):
+        res["runs"] = [r for r in res["runs"] if r["name"] != ev["name"]] + [ev]
+
     t0 = time.time()
     for h in hs:
         for which in sets:
@@ -265,7 +272,7 @@ def run_wide(hs, seeds, sets, shuffle_sets=("base+cat",)):
                 ev = evaluate(t, sc, h, f"{which}|{h}|s{seed}")
                 ev["folds"] = info
                 ev["gain_top"] = gain
-                res["runs"].append(ev)
+                _put(ev)
                 p = ev["picks"]["1/day@09:35"]
                 print(f"  {which:9s} {h} s{seed} IC={ev['ic_all']['ic']:+.4f} "
                       f"(y1 {ev['ic_all']['ic_y1']} y2 {ev['ic_all']['ic_y2']}) "
@@ -277,7 +284,7 @@ def run_wide(hs, seeds, sets, shuffle_sets=("base+cat",)):
             if which in shuffle_sets and seeds:
                 sc, info, _ = walk_forward(t, h, which, seeds[0], shuffle=True)
                 ev = evaluate(t, sc, h, f"{which}|{h}|s{seeds[0]}|SHUFFLED", with_controls=True)
-                res["runs"].append(ev)
+                _put(ev)
                 p = ev["picks"]["1/day@09:35"]
                 print(f"  SHUFFLED {which} {h}: IC={ev['ic_all']['ic']:+.4f} "
                       f"1/day ${p['per_ticket']:+.2f} pct {p['controls']['pct_total']}",
