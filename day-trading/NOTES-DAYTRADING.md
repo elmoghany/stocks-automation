@@ -8330,3 +8330,91 @@ fixed 1:2 risk-reward you break even at a 33% win rate. `W8RS` -- the 2R
 bracket version of the best row -- hit its target **13** times and its
 stop **51** times over 23 months. That is a **20% hit rate** against the
 33% it needs. The bracket is not the problem; the entry is.
+
+
+## VS2 RESULTS, TABLE 2: WAVE 2 ON THE WIDE UNIVERSE (2026-09-16)
+
+Second sweep of the batch (64 videos' transcripts read by this point):
+the ICT fair value gap, the ICT AM Silver Bullet hour, the inside bar,
+the liquidity-sweep reclaim, Live Traders' 3-bar play (2.97M views on the
+flagship), the 50/200-EMA scalping template, the 09:30 FIRST 1-MINUTE
+candle, and all-day ADJACENCY versions of the highest-frequency triggers.
+
+    config       total       Y1       Y2   tkts  $/tkt   $/mo   negm     best   ex_best  t/day
+    W1OR01      +1,103     -505   +1,608    802     +1    +48  12/23   +6,146   -8,830   1.93
+    W9SWP      -30,064  -12,630  -17,434   1221    -25 -1,307  18/23   +1,947  -33,099   2.76
+    W9FVG      -47,124  -18,867  -28,257   2007    -23 -2,049  17/23   +3,915  -53,570   4.53
+    W9TB       -38,312  -18,641  -19,671   1025    -37 -1,666  22/23     +660  -39,409   2.43
+    W9SB       -41,291  -15,256  -26,035   1727    -24 -1,795  20/23   +2,081  -44,973   3.92
+    W3E50      -36,825  -17,252  -19,573   1146    -32 -1,601  22/23     +853  -38,182   2.93
+    W9IB       -77,098  -37,976  -39,122   2690    -29 -3,352  23/23   +1,481  -79,497   6.10
+    W2MPBd     -54,525  -16,513  -38,012   1720    -32 -2,371  23/23   +1,555  -57,361   4.30
+    W9TBd      -58,664  -27,107  -31,557   1707    -34 -2,551  23/23     +912  -60,237   4.04
+    W9IBd      -82,517  -41,053  -41,464   2904    -28 -3,588  23/23   +1,889  -85,324   6.59
+    W5VWBd     -49,619  -23,162  -26,457   1483    -33 -2,157  21/23   +1,114  -51,675   3.70
+    W6VWBd     -78,361  -33,421  -44,940   2346    -33 -3,407  23/23   +1,409  -80,558   5.34
+
+**Same answer, no new information in it.** Eleven of the twelve sit at
+-$23 to -$37 per ticket, i.e. the friction band again, and the ADJACENCY
+rows prove the point the hardest: `W9IBd` takes **6.59 tickets/day** --
+it fills the $100k cash cap almost every session -- and loses **$82,517**
+at -$28/ticket, 23/23 negative months. **Maximum frequency on zero gross
+edge is maximum cost.**
+The one near-flat row is `W1OR01`, the 09:30 FIRST ONE-MINUTE CANDLE
+break (+$1/ticket, +$48/month, Y2 positive), and it fails the ex-best
+test in both years (-8,830 combined). It is noise around zero, not an
+edge, and it is reported as such.
+
+## VS2 RESULTS, TABLE 3: THE CLOSEST MISS, PUT THROUGH A REAL CONTROL BATTERY
+
+`W8RS*` = GREEN-ON-RED. The generic `-R` control shuffles the whole rank,
+which throws the MARKET-RED GATE away along with the green pick and so
+cannot tell the two apart. Two purpose-built controls were run instead:
+**-G** keeps the gate (same minutes, same trading days) and randomises
+the NAME; **-X** is the mirror image (market GREEN, name RED).
+
+    config                          Y1 $/tkt   Y2 $/tkt   total    ex_best
+    W8RSd   rule, all day, hold        +50.0      -11.0  +6,140     -5,466
+    W8RSb   rule, morning, hold        +47.4      -14.3  +5,343     -6,262
+    W8RSr   rule, all day, 2R          +25.6      -27.1  -1,024     -8,460
+    W8RSbG  CONTROL gate + RANDOM name  -5.3      -63.8 -11,957        n/a
+    W8RSbX  CONTROL mirror image       -77.8      -82.4 -25,987        n/a
+    W8RSG   CONTROL gate + random, 2R  -14.0      -65.7 -13,899        n/a
+    W8RSX   CONTROL mirror, 2R         -39.8     -115.3 -29,174        n/a
+    W8RSk   rule, all day, VWAP exit   -26.6      -22.3 -48,546        n/a
+
+**The controls behave exactly as a real effect requires.** Against the
+gate-matched random pick the rule is worth **+$55.3/ticket in year 1 and
++$52.8/ticket in year 2** -- a selection premium that replicates across
+two independent years to within $2.50. The mirror image loses
+catastrophically in both (-$78, -$82). Nothing here is a shuffle
+artifact.
+
+**And it still is not an edge you can bank, for a reason worth stating
+plainly.** The premium is real; the BASE it is lifting is not. The
+gate-matched control -- buy ANY name from this universe on a red-market
+morning and hold to 15:00 -- returns **-$5.3/ticket in year 1 and
+-$63.8/ticket in year 2**. Year 2's conditional intraday drift is worse
+than the entire selection premium, so +$55 of skill on top of -$64 of
+drift is still a loss. Total over 23 months: **+$6,140 = +$267/month**,
+Y2 negative, and **ex-best-day -$5,466** -- two days (2024-11-08,
+2025-10-21) carry the whole result. It fails the pass bar on three
+separate counts.
+
+### THE HOLD SWEEP KILLS THE OPTIMISTIC READING
+If the premium were a durable selection effect, shortening the hold
+should keep a proportional slice of it. It does not:
+
+    config              Y1 $/tkt   Y2 $/tkt   tickets   vs its own -G control
+    W8RSd  hold to 15:00   +50.0      -11.0       339     +55.3 / +52.8
+    W8RS60 hard 60-min     -44.1      -20.1     1,239     -10.9 / +13.1
+    W8RS30 hard 30-min     -48.8      -35.8     1,784     -16.9 /  -6.8
+
+At a 60-minute hold the premium collapses to +$13/-$11; at 30 minutes it
+is NEGATIVE in both years -- the rule is worse than a random pick under
+the same gate. A selection edge that exists only at exactly one horizon,
+on 339 tickets, two of whose days are the entire P&L, is far more
+consistent with **two lucky sessions** than with a tradable effect.
+**This is the honest reading and it is the one adopted.** The hold sweep
+was run precisely because the 23-month number looked encouraging; it is
+the control that mattered most and it is reported in full.

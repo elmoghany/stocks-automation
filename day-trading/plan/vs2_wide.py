@@ -291,6 +291,39 @@ CFGS = {
     "W8RSr": dict(desc="ADJACENCY: GREEN-ON-RED, 2R, entries all day",
                   rank="rs", entry_open=T935, cutoff=dtime(14, 30),
                   sim=kw(entry_mode="market_at_start", target_r=2.0)),
+    # HOLD-LENGTH SWEEP. The controls show the green-on-red SELECTION is
+    # worth a stable ~+$54/ticket against a random pick under the SAME
+    # market-red gate, in both years -- but the conditional base return
+    # (W8RSbG: random name, same minutes, hold to 15:00) is -$5/tkt in
+    # year 1 and -$64/tkt in year 2. If the selection is real and the
+    # drift is the problem, a SHORTER HOLD should keep more of it.
+    # time_stop_progress=9999 makes time_stop_min an unconditional
+    # flatten at N minutes rather than a "cut if not working" rule.
+    "W8RS30": dict(desc="GREEN-ON-RED, hard 30-minute hold",
+                   rank="rs", entry_open=T935, cutoff=dtime(14, 30),
+                   sim=kw(entry_mode="market_at_start", trail_pct=999,
+                          stop_pct=99, time_stop_min=30,
+                          time_stop_progress=9999.0)),
+    "W8RS60": dict(desc="GREEN-ON-RED, hard 60-minute hold",
+                   rank="rs", entry_open=T935, cutoff=dtime(14, 30),
+                   sim=kw(entry_mode="market_at_start", trail_pct=999,
+                          stop_pct=99, time_stop_min=60,
+                          time_stop_progress=9999.0)),
+    "W8RS30G": dict(desc="CONTROL gate kept, RANDOM name, 30-minute hold",
+                    rank="rs_rand", entry_open=T935, cutoff=dtime(14, 30),
+                    sim=kw(entry_mode="market_at_start", trail_pct=999,
+                           stop_pct=99, time_stop_min=30,
+                           time_stop_progress=9999.0)),
+    "W8RS60G": dict(desc="CONTROL gate kept, RANDOM name, 60-minute hold",
+                    rank="rs_rand", entry_open=T935, cutoff=dtime(14, 30),
+                    sim=kw(entry_mode="market_at_start", trail_pct=999,
+                           stop_pct=99, time_stop_min=60,
+                           time_stop_progress=9999.0)),
+    "W8RS30X": dict(desc="CONTROL mirror, 30-minute hold",
+                    rank="rs_inv", entry_open=T935, cutoff=dtime(14, 30),
+                    sim=kw(entry_mode="market_at_start", trail_pct=999,
+                           stop_pct=99, time_stop_min=30,
+                           time_stop_progress=9999.0)),
     "W8RSk": dict(desc="ADJACENCY: GREEN-ON-RED all day, VWAP-target "
                        "exit instead of a bracket",
                   rank="rs", entry_open=T935, cutoff=dtime(14, 30),
