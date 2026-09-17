@@ -22,16 +22,15 @@ measured model.
 | VS2 `W8RSd` (green-on-red) | +18.1 | +267 | −82.0 | −1,209 | n/a |
 | RL-SCOUT v2, rules seed 0 | +14.11 | +355 | −59.97 | −1,506 | 100.0 |
 | UNIVERSE-QUOTES, relabelled limit policy | +0.06 | +7 | −44.34 | −4,489 | **3.3** |
-| HOLD1-hf2 | −180.76 | −3,410 | −351.35 | −6,628 | n/a |
-| C37F-hf2 (live rules) | **−55.08 at ZERO toll** | −4,023 | **−246.34** | **−17,994** | n/a |
+| HOLD1-hf2 | −180.76 | −3,410 | −353.59 | −6,670 | n/a |
+| C37F-hf2 (live rules) | **−55.08 at ZERO toll** | −4,023 | **−246.93** | **−18,037** | n/a |
 
 **The best net $/month any existing policy reaches under measured costs is
 −$559/month** (wide-net refit, one ticket a day). Under the most generous
 variant of the model — spread only, no impact at all — no row clears
 +$500/month either. **FAIL, by more than $8,000/month.**
 
-**FAIL, and the failure is instructive rather than marginal.** Three findings,
-in the order that matters:
+Three findings, in the order that matters:
 
 1. **The premise is only half true.** The measured *half-spread* on the causal
    wide universe is **2.8 bps** at the median — so the spread half of the
@@ -341,18 +340,34 @@ published numbers came back to the digit through this machinery:
 
 Full ledgers, `plan/cr_rot.py --reprice`:
 
-| row | tickets | $/ticket | $/month | months + | ex-best-day | mean cost bps/side |
+| row | tickets | $/ticket | $/month | months + | ex-best-day | entry cost bps: median / mean / p90 |
 |---|---|---|---|---|---|---|
-| **C37F-hf2 published (zero toll)** | 1,607 | −55.08 | −4,023 | 5/22 | −98,092 | 0.00 |
-| C37F-hf2 spread-only (Y=0) | 1,607 | −115.87 | −8,464 | 1/22 | −194,187 | 23.6 |
-| C37F-hf2 Y=0.3 | 1,607 | −156.29 | −11,416 | 0/22 | −258,897 | 41.5 |
-| **C37F-hf2 measured (Y=1)** | 1,607 | **−246.34** | **−17,994** | 0/22 | −403,106 | 81.5 |
-| **HOLD1-hf2 published (10 bps)** | 415 | −180.76 | −3,410 | 7/22 | −80,474 | 10.00 |
-| HOLD1-hf2 spread-only | 415 | −196.53 | −3,707 | 6/22 | −86,987 | 17.2 |
-| **HOLD1-hf2 measured** | 415 | **−351.35** | −6,628 | 3/22 | −151,127 | 87.4 |
+| **C37F-hf2 published (ZERO toll)** | 1,607 | −55.08 | −4,023 | 5/22 | −98,092 | 0 / 0 / 0 |
+| C37F-hf2 spread-only (Y=0) | 1,607 | −116.47 | −8,507 | 1/22 | −195,092 | **13.6** / 24.2 / 56.8 |
+| C37F-hf2 Y=0.3 | 1,607 | −156.88 | −11,459 | 0/22 | −259,803 | 21.0 / 42.4 / 104.2 |
+| **C37F-hf2 measured (Y=1)** | 1,607 | **−246.93** | **−18,037** | 0/22 | −404,012 | 31.9 / 82.1 / 204.4 |
+| **HOLD1-hf2 published (10 bps)** | 415 | −180.76 | −3,410 | 7/22 | −80,474 | 10 / 10 / 10 |
+| HOLD1-hf2 spread-only | 415 | −198.77 | −3,749 | 6/22 | −87,850 | 11.3 / 22.1 / 51.3 |
+| HOLD1-hf2 Y=0.3 | 415 | −249.71 | −4,710 | 5/22 | −108,948 | 21.0 / 42.9 / 96.6 |
+| **HOLD1-hf2 measured** | 415 | **−353.59** | −6,670 | 3/22 | −151,990 | 25.7 / 81.7 / 211.2 |
 
-Tier mix on the traded set: 95% `win`, 3% `prior`, 2% `legacy` — i.e. the tape
-covers the names that actually filled.
+Tier mix on the traded set: 95% `win`, 4% `prior`, 1% `legacy` — the tape covers
+the names that actually filled.
+
+**The distribution is violently right-skewed, and that is itself the finding.**
+The median gapper fill costs 32 bps a side; the 90th percentile costs 204. The
+driver is participation: for the C37F ledger the median fill is 0.8% of the
+trailing 10-minute *dollar* volume, but **11% of fills exceed 20% of it**, and
+the pool's median 10-minute volatility is **181 bps** against the wide
+universe's 61. A $15,000 ticket is a large order in a thin, fast name — which
+is exactly what a +10% gapper is.
+
+**Independent corroboration of the spread half.** The spread-only variant's
+median entry cost on the C37F fills is **13.57 bps a side ⇒ a 27.1 bps full
+spread**. The live paper sessions' real books on names they would actually
+trade have a **28.5 bps median full spread** (Part 2.1). Two instruments that
+share no code and no data agree to 5% on a population the wide universe's 2–6
+bps number misses by a factor of five.
 
 **The path effect, bounded.** C37F's stop and trail levels are struck off
 `entry`, which moves when the cost moves, so route A freezes a path that would

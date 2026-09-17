@@ -105,7 +105,14 @@ def summarize(legs, label):
             "mean_c_in_bps": round(float(np.mean(
                 [x.get("c_in_bps", 0.0) for x in legs])), 2),
             "mean_c_out_bps": round(float(np.mean(
-                [x.get("c_out_bps", 0.0) for x in legs])), 2)}
+                [x.get("c_out_bps", 0.0) for x in legs])), 2),
+            # the gapper cost distribution is extremely right-skewed
+            # (11% of C37F fills are >20% of the trailing 10-minute
+            # DOLLAR volume), so the median is reported next to the mean
+            "median_c_in_bps": round(float(np.median(
+                [x.get("c_in_bps", 0.0) for x in legs])), 2),
+            "p90_c_in_bps": round(float(np.percentile(
+                [x.get("c_in_bps", 0.0) for x in legs], 90)), 2)}
 
 
 def reprice(cm, cfg, legs, c_in=None, c_out=None):
@@ -184,6 +191,15 @@ def stage_subsample(ndays=60, cfgs=("C37F", "HOLD1")):
     import cr_engine as CE
     os.environ.setdefault("ROTSHARD", "crsub")
     RS = _load("rotation_sim", HERE / "rotation_sim.py")
+    # RANDOM-PICK CONTROLS. rotation_sim auto-generates "-R" siblings only
+    # for the VS2 and MX families, not for C37F/HOLD1, so they are
+    # injected here at RUNTIME -- same machinery, same costs, same gap
+    # allowance, only the pick is random, keyed by ROTREP.
+    for cid in [c for c in cfgs if c.endswith("-R")]:
+        base = cid[:-2]
+        RS.CFGS[cid] = dict(RS.CFGS[base], rand=True,
+                            desc="CONTROL random pick: "
+                                 + RS.CFGS[base]["desc"])
     res = {}
     print(f"--- flag OFF, {ndays} days ---", flush=True)
     res["flat"] = RS.run_many(list(cfgs), ndays)
@@ -194,13 +210,19 @@ def stage_subsample(ndays=60, cfgs=("C37F", "HOLD1")):
     rep = {"ndays": ndays, "tally": ec.cm.report(), "rows": []}
     for kind in ("flat", "measured"):
         for cid in cfgs:
-            for lab in ("year", "y2025"):
-                v = res[kind][cid].get(lab)
-                if v:
-                    rep["rows"].append(dict(cost=kind, cfg=cid, label=lab,
-                                            **{k: v[k] for k in
-                                               ("total", "days", "tickets",
-                                                "pnl_per_ticket")}))
+            got = res[kind][cid]
+            # a replicated (random) config returns {rep: {label: row}}
+            reps = got if all(isinstance(k, (int, type(None)))
+                              for k in got) else {None: got}
+            for rp, byl in reps.items():
+                for lab in ("year", "y2025"):
+                    v = byl.get(lab)
+                    if v:
+                        rep["rows"].append(dict(
+                            cost=kind, cfg=cid, rep=rp, label=lab,
+                            **{k: v[k] for k in
+                               ("total", "days", "tickets",
+                                "pnl_per_ticket")}))
     (OUT / f"rot_subsample_d{ndays}.json").write_text(
         json.dumps(rep, indent=1, default=str))
     print(json.dumps(rep, indent=1, default=str))
@@ -221,4 +243,6 @@ if __name__ == "__main__":
     if "--reprice" in a:
         stage_reprice(d)
     if "--subsample" in a:
-        stage_subsample(d or 60)
+        cf = (tuple(a[a.index("--cfgs") + 1].split(","))
+              if "--cfgs" in a else ("C37F", "HOLD1"))
+        stage_subsample(d or 60, cf)

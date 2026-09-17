@@ -9564,3 +9564,180 @@ correlation, ~0.01, which is what catalyst-only measured.
    one ceiling. The next input must be DENSE across the cross-section every
    morning (order book, options flow) or the objective must change.
 5. Never quote the 15:30 slot from this table; use the CM engine.
+
+---
+
+# COST-REBASE (2026-09-16/17) -- measure the toll instead of assuming it
+
+Full write-up: `cost-rebase-audit.md`. Code: `plan/cr_*.py`. Reports:
+`plan/cr_out/`. One engine change, flag-gated and inert with the flag off:
+`day-trading.py::simulate_trades` gained `cost_model` / `cost_bps_fn`.
+
+**Mandate.** UNIVERSE-QUOTES measured the real inside spread at 2-6 bps;
+every result in the project charges 10 bps/side (+50 outside 09:30-16:00),
+which is ~$19 a ticket of assumed toll -- bigger than any edge in the repo.
+Build a MEASURED, causal, per-name per-minute cost model, validate it, and
+re-run the best of every line under it.
+
+## The headline, and it is not the one the arithmetic promised
+
+**The premise is half right and the conclusion inverts.** The measured
+HALF-SPREAD on the causal wide universe is **2.77 bps** at the median -- so
+the spread half of the incumbent ladder really is 2-5x conservative, exactly
+as UNIVERSE-QUOTES said. But the incumbent ladder charges **no market impact
+at all**, and a $15,000 ticket is 2.6% of the trailing 10-minute dollar
+volume of the median name here. Square-root impact with the coefficient at
+the TOP of the published range (Y=1.0) is **9.21 bps**. Total measured cost
+**12.05 bps/side at the median, above 10 bps on 63% of fills**. The
+break-even impact coefficient is **Y = 0.33**, below the bottom of the
+published range: on the whole 208,054-row cross-section the measured model
+is +$8.85/row cheaper than flat-10 at Y=0, +$0.93 at Y=0.3, -$4.35 at Y=0.5
+and **-$17.55 at Y=1.0**.
+
+## FINDING 1 -- C37F, the live benchmark, is priced at ZERO toll
+
+`rotation_sim` sets `slippage_bps` only when a config defines `cfg["slip"]`
+(rotation_sim.py:1477 and :1512). **C37F has no `slip`. HOLD1 has 0.001.**
+Measured, not inferred: inverting `pnl = (exit*(1-slip) - entry)*shares`
+straight off the published ledgers gives an implied per-side cost of
+**0.000 bps for C37F-hf2** (1,607 legs) and **10.071 bps for HOLD1-hf2**
+(415 legs). Under `RS_CROSS=1` there are no premarket fills either, so the
+50 bps `pm_spread_bps` haircut never fires. The -$55/ticket / -$215/day
+benchmark the whole loop is measured against, and every C37/C37F/MX/T/XH
+row, is a **gross** number. The EXPERIMENTS-INDEX header's blanket
+"10 bps/side" is false for that family.
+
+## FINDING 2 -- the gapper pool is not the wide universe
+
+| population | median half-spread | median total cost/side (Y=1) | mean | p90 |
+|---|---|---|---|---|
+| causal wide universe ($2M ADV, $3+) | 2.77 bps | 12.05 | 25.28 | 52.78 |
+| gapper pool (C37F fills) | 13.57 bps | 31.92 | 82.12 | 204.35 |
+
+The gapper fills' median 10-minute volatility is **181 bps** against the wide
+universe's 61, and **11% of C37F fills exceed 20% of the trailing 10-minute
+DOLLAR volume**. The 2-6 bps number is a property of the liquid causal
+universe and does not transfer.
+
+## The validations (none of which the model was fitted to)
+
+1. **The live book.** `data/liquidity_truth.json`, 176 REAL inside books from
+   the paper sessions; 124 with bid+ask; the 1-second tape was fetched for
+   those symbol-days in BOTH sessions (`data/massive/trades_pm` 04:00-09:30
+   added by `plan/cr_tape.py --pm`). Split by the ledger's own note:
+   * **tradeable** (armed / entered / clean / tightest), n=17: real median
+     **28.5 bps**, model **22.5**, median ratio **1.01**, model wider 53% of
+     the time, median abs error 6.7 bps -> **unbiased where it is used**.
+   * **vetoed** (the live 0.5% spread cap refused it), n=83: real 178.0,
+     model 38.1, ratio 0.18 -> the model understates genuinely broken books,
+     which only matters for a backtest that trades what live refuses.
+   * The spread-only variant's median entry cost on the C37F fills is 13.57
+     bps/side = a **27.1 bps full spread**, against the live book's **28.5**
+     on the same species of name. Two instruments sharing no code agree to 5%.
+2. **The UNIVERSE-QUOTES estimators**, recomputed on 15,787 decision points:
+   CS 1.88 (they had 2.01), AR 4.56 (5.57), model max 5.19 -> half 2.6 bps.
+3. **What price was available**: bucket decision minutes by predicted
+   half-spread, measure the median mark-to-first-print distance. Slope 0.577,
+   intercept 2.09 bps, **r = 0.958**; on the diagonal mid-distribution
+   (4.40 -> 4.44, 6.00 -> 5.64) and over-stating ~40% at the wide end.
+
+## Every line, re-priced (flat-10 column reproduces the published row)
+
+Four published numbers came back to the digit through this machinery, which
+is what makes the measured column readable: wide-net -$3.35/tkt;
+`wn_need` break-even rho 0.320 / 0.150; UQ +$0.06/tkt +$7/mo 100th pct;
+rl2 rules seed 0 +$14.11/tkt +$355/mo.
+
+| line, best row | published | **measured (Y=1)** | pct vs 30-seed random |
+|---|---|---|---|
+| WIDE-NET LightGBM 1/day | -$3.35/tkt, -$70/mo, 96.7 pct | **-$85.15, -$1,788/mo** | **33.3** |
+| **WIDE-NET refit on the measured label** | -- | **-$26.61, -$559/mo** | **100.0** |
+| WIDE-NET refit top-3 / 5 / 7 | -- | -$15.08 / -$15.52 / -$15.92 | 100.0 each |
+| UQ relabelled limit, post_k=3 | +$0.06/tkt, +$7/mo, 100 pct | **-$44.34, -$4,489/mo** | **3.3** |
+| RL2 rules seed 0 | +$14.11/tkt, +$355/mo | **-$59.97, -$1,506/mo** | 100.0 |
+| VS2 W8RSd | +$18.1/tkt, +$267/mo | **-$82.0, -$1,209/mo** | n/a |
+| HOLD1-hf2 | -$180.76/tkt (10 bps) | **-$353.59, -$6,670/mo** | n/a |
+| C37F-hf2 | -$55.08/tkt (ZERO toll) | **-$246.93, -$18,037/mo** | n/a |
+
+**Best net $/month any existing policy reaches under measured costs:
+-$559/month.** Under the most generous variant (spread only, Y=0) nothing
+clears +$500/month either.
+
+## FINDING 3 -- the rankers were selecting the names the flat toll under-charged
+
+Three independent lines show the same mechanism.
+* WIDE-NET: priced at the measured SPREAD with **no impact at all**, the
+  unconditional cross-section gets $8.85/row CHEAPER, yet the model's single
+  ticket falls -$3.35 -> -$33.16 and its percentile 96.7 -> 46.7.
+* UQ: the relabelled model's "+$15.73/tkt over random, 100th pct, inverted
+  loses at -$21.61" becomes **-$3.79/tkt, 3.3rd pct, with the inverted
+  control (-$43.25) indistinguishable from the model (-$44.34)**.
+* VS2 `W8RSd`: a green-on-red relative-strength rule selects the thin fast
+  name on a weak tape; +$18.1/tkt -> -$82.0.
+
+**Skill survives a refit; the level does not.** Refitting the wide-net
+LightGBM on the measured label restores the 100th percentile at every k
+(beating random by $27-28/tkt) and still loses $559-21,029 a month.
+
+## The break-even IC, redone (`wn_need`'s own machinery)
+
+rho needed for $7,500/month (flat-10 leg reproduces 0.320 / 0.150 exactly):
+
+| config | flat10 | spread-only | Y=0.3 | **measured** |
+|---|---|---|---|---|
+| 1 ticket/day | 0.320 | 0.333 | 0.343 | **0.367** |
+| 3/day | 0.207 | 0.208 | 0.218 | 0.243 |
+| **7/day** | **0.150** | 0.141 | 0.155 | **0.188** |
+
+Achieved rho 0.033. The gap widens 4.5x -> **5.7x**. There is no
+tickets-per-day that reaches the bar at rho=0.033: at the measured toll the
+per-slot expectancy is negative at every k, so more tickets multiply a
+negative. To pass you need rho ~0.19 at 7 tickets/day, or rho ~0.10 at ~30
+tickets/day, which the cash-account rules forbid.
+
+## Honesty battery
+
+Engine identity against the PRE-edit `day-trading.py` (git acb2730) on the
+REAL kwargs of C37F / HOLD1 / W8RSd, resolved by their own harnesses:
+**756 symbol-days, 742 legs, 0 mismatches** with the flag off, and 756/756
+with the measured path fed each config's own legacy ladder. Cross-section
+identity vs `table.npz`: 208,054 rows, worst abs diff **$0.000151**, 0 over
+tolerance (residual is float32 noise in the cached label). Poison: 150
+future checks / **0 leaks**; 150 past checks / 148 moved; 160/160 engine
+days identical; cost monotone in Y; 340 lookups / 0 non-positive or NaN.
+Estimator identity: vectorised CS/AR vs `plan/liquidity_estimators.py`'s
+reference **318 checks / 0 mismatches, worst 7.1e-15 bps**; cumulative-sum
+form vs scalar 2,080 checks / 3.4e-13 bps. rl2 path-cost-independence proved
+by tripling the fee: **56 legs, 0 moved**. The guardrail the mandate asked
+for -- fraction of fills where the measured cost EXCEEDS 10 bps -- is **63%**
+(wide universe) and **86%** (gapper pool): the change is not one-directional.
+
+**Not done, and stated:** the full flag-off C37F rotation pass was started
+and abandoned at 50/251 days after 55 minutes (18% CPU on a host running
+three other research lines). Identity is proved directly against the
+pre-edit engine instead, on 756 symbol-days, and `plan/idgate.py --rot`
+still asserts the published shard rows, which are untouched. The C37F/HOLD1
+measured rows are ledger re-pricings bounded by a matched 37-day engine
+subsample (path effect +-$33-75/tkt on C37F, opposite signs by year;
+HOLD1's ticket count unchanged, as its cost-independent path requires).
+
+## Ranked next ideas
+
+1. **Re-price the index.** Every row in `EXPERIMENTS-INDEX.md` should carry
+   its ACTUAL toll; the header's blanket "10 bps/side" is wrong for the whole
+   C37 family, which paid nothing.
+2. **Stop treating cost as the binding constraint -- it is measured now, and
+   it is not.** Set the toll to zero and the wide-net refit is still far
+   short. Spend the next budget on new INFORMATION.
+3. **If the gapper line continues, price it.** Adding `slip` to C37F (with a
+   dated ROT_EXPECT re-baseline) is half an hour and it changes the sign of
+   several historical ranked-vs-random comparisons where only one side
+   carried `slip`.
+4. **Trade later in the day.** Measured toll is 18.5 bps/side in the first
+   fifteen minutes and 9.0 after 12:30 -- $28/ticket on a round trip, larger
+   than any per-ticket edge in this repo. Every model here takes its ticket
+   at the open because that is where the features are freshest.
+5. **Buy the impact coefficient rather than assume it.** The entire spread
+   between "+$8.85/row" and "-$17.55/row" is Y. A few hundred live $15k
+   marketable orders with recorded arrival mid and fill price would settle
+   it in a month of paper trading; no amount of aggregate data can.
