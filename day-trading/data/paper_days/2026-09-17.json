@@ -3,11 +3,12 @@
   "day_number": 24,
   "protocol": "C37",
   "mode": "paper",
-  "session_type": "headless (Task Scheduler \\Stocks\\C37MorningLaunch), launched 06:20 ET",
+  "session_type": "headless (Task Scheduler \\Stocks\\C37MorningLaunch) 06:20 ET to close -- single session, NO coverage gap, heartbeat every <=30s throughout",
   "benchmark_per_day": -215,
   "benchmark_note": "C37F-hf2 (2026-09-16 halal-fix epoch): -$215/traded day, -$88,784/414d, -$55/ticket, on the corrected 415-name halal universe with realistic fills. Regular-session split baseline: -$32/day (-$7/ticket). Premarket tickets scored ONLY vs break-even (no backtest baseline on this pool).",
-  "status": "OPEN",
-  "counts_as_traded_day": false,
+  "status": "CLOSED",
+  "counts_as_traded_day": true,
+  "coverage_gaps": [],
   "config": "C37",
   "ops": {
     "skeleton_written_et": "06:20",
@@ -185,6 +186,81 @@
     },
     "regular": {"would_be_entries": 0, "spread_veto": 0, "depth_veto": 0, "chase_veto": 0}
   },
-  "errors": [],
-  "summary": {}
+  "errors": [
+    "ERROR (rule/tooling disagreement, 08:25, VICR): bars_paste trail10vol sums the last 10 STORED bars, not the last 10 wall-clock minutes. On a premarket-dark name the two readings differed 25x (261 sh vs 0 sh) and straddled the 72-share ticket. Logged loudly, conservative branch taken, no entry. Needs a user ruling -- see ERROR_rule_tooling_disagreement.",
+    "NOTE (cosmetic, 06:25): premarket artefact filenames were hand-typed clock guesses 3-16 min ahead of the true times. No causal cutoff used them. See ops_clock_correction."
+  ],
+  "summary": {
+    "status": "CLOSED",
+    "counts_as_traded_day": true,
+    "tickets_used": 1,
+    "tickets_available": 7,
+    "capital_deployed": 14838.6,
+    "daily_cap": 100000,
+    "cap_utilisation_pct": 14.8,
+    "pnl_total": 394.25,
+    "regular_session": {
+      "tickets": 1,
+      "pnl": 394.25,
+      "per_ticket": 394.25,
+      "baseline_per_day": -32,
+      "baseline_per_ticket": -7,
+      "vs_baseline_per_day": 426.25,
+      "vs_break_even": 394.25
+    },
+    "premarket": {
+      "tickets": 0,
+      "pnl": 0.0,
+      "per_ticket": null,
+      "scored_against": "break-even only (no honest backtest baseline exists for premarket legs on this pool)",
+      "vs_break_even": 0.0,
+      "note": "Zero premarket tickets. Not a miss: the premarket book is the documented loss centre (-$112,494 over 691 legs) and today every premarket candidate failed a gate on its own merits."
+    },
+    "vs_benchmark_c37f_hf2": {
+      "benchmark_per_day": -215,
+      "day_pnl": 394.25,
+      "delta": 609.25
+    },
+    "equity_curve": {
+      "max_book_pnl": 431.55,
+      "min_book_pnl": -310.1,
+      "max_drawdown_pct": 2.908,
+      "final": 394.25,
+      "points": 633
+    },
+    "fill_realism": {
+      "entry": "Stop 211.98 traversed intrabar by the 13:41Z bar (open 209.89, high 212.98) -- filled AT the stop, not a gap-through, not a level the bar never traded.",
+      "exit_parity_vs_1459_close": {
+        "close_1459": 218.19,
+        "backtest_exit": 217.9718,
+        "live_vwap": 217.6122,
+        "delta_usd": -25.17,
+        "delta_bps": -16.5,
+        "read": "The live ladder gave up 16.5 bps against the backtest's close-based exit. Small and in the expected direction -- this is the cost the simulator does not charge."
+      }
+    },
+    "screening_ledger": {
+      "candidates_seen": 77,
+      "new_verdicts_issued_today": 74,
+      "halal_fail": 48,
+      "cannot_verify": 25,
+      "fake_gap": 1,
+      "inherited_fail_seeded_from_prior_day": 254,
+      "passed_both_halal_questions": ["VICR", "TWST", "IPDN"],
+      "passed_q1_but_failed_q2": ["GLAS"],
+      "pass_rate": "3 of 77 candidates (3.9%) were armable at all -- the halal gate is again the single largest determinant of what we can trade."
+    },
+    "veto_ledger": {
+      "premarket": {"would_be_entries": 2, "spread": 2, "depth": 1, "chase": 1, "size_cap": 1, "spread_rate": 1.0},
+      "regular": {"arming_evaluations": 2, "vetoed": 1, "spread": 1, "chase": 1, "depth": 0, "size_cap": 0, "armed_and_filled": 1, "spread_rate": 0.5}
+    },
+    "cadence_log": "FLAT-5m premarket discovery (scans ~06:21, 07:01, 07:27, 08:00, 08:50), FLAT-5m into the open (09:32, 09:36), then HOLD from 09:41 with bar feed every 2-7 min and bench refreshes at 10:23 and 11:30. Quotes file written from 14:26, ahead of the 14:30 requirement.",
+    "process_notes": [
+      "run_scan began SPILLING to a file once the regular session widened the result set, which let plan/scan_sweep.py read the dump directly and removed the hand-transcription step entirely. Premarket scans were small enough to arrive inline and needed the scan_delta.py incremental path instead.",
+      "The Day-23 quotes fix is confirmed working: rung 1 priced off a live bid (bid_src 'quote') and filled, where Day 23's rung 1 fell to a bar proxy and went unfilled.",
+      "INLX exposed a scanner artefact worth remembering: a name that has not traded today can still sit on the +10% scan all morning on a PRIOR-day extended-hours print.",
+      "Every `trigger` and `rank` call omitted --as-of so the command read its own zoneinfo clock, which structurally removes the hand-typed-clock error class."
+    ],
+    "verdict": "A one-ticket day that beat every benchmark in play: +$394.25 against a -$215/day expectation, +$426 against the -$32/day regular-session split, and +$394 against break-even. Judge it on process rather than the number -- a single ticket cannot be evidence about a ruleset, and C37's modelled edge is still negative."
+  }
 }

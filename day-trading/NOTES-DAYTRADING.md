@@ -1,5 +1,95 @@
 # Penny Stocks Trading Notes
 
+## PAPER DAY 24 (2026-09-17) -- VICR +$394.25, and a size-rule ambiguity that needs a ruling
+
+**1 ticket: VICR 70 @ 211.98 -> 217.6122 (+$394.25, +2.66%, 14:50 ladder rung 1).
+Flat at 14:50, zero real orders.** `counts_as_traded_day: true`. Headless for the whole
+session, 06:20 to close, **no coverage gap**.
+
+| line | today | vs benchmark |
+|---|---|---|
+| **REGULAR-session tickets** | 1 ticket, **+$394.25**, +$394.25/ticket | **+$426.25 vs -$32/traded day; +$401.25 vs -$7/ticket** |
+| **PREMARKET tickets** | **0 tickets, $0.00** | n/a -- scored only against break-even |
+| day total vs C37F-hf2 (-$215/day) | **+$394.25** | **+$609.25** |
+
+Split scoreboard since it opened (2026-09-16): **regular line +$409.83 over 2 tickets / 2 days;
+premarket line $0.00 over 0 tickets.** Legacy combined view for continuity: -$4,412.83 over 20
+days -> **-$4,018.58 over 21 scored days = -$191.36/day**. Detail in
+`data/paper_days/2026-09-17.{json,md}`.
+
+**One ticket is not evidence about a ruleset.** C37's modelled expectation is still negative and
+today sits inside the noise of a single position. What the day is good for is process.
+
+### The finding that needs a user ruling: what does "trailing 10 minutes' volume" mean?
+
+At 08:25 VICR cleared every premarket gate for the first time -- spread 0.485% (inside the 0.5%
+cap), depth 134 sh vs 72 needed, and a premarket high (206.9108) above the ask (206.50), so the
+stop-buy was a real stop and not a disguised market order. The C37 size rule -- *"size <= 20% of
+the trailing 10 completed minutes' volume"* -- was the only gate left, and it does not have one
+answer on a premarket-dark name:
+
+| reading | value | verdict on a 72-sh ticket |
+|---|---|---|
+| `plan/bars_paste.py` trail10vol = last 10 **stored** bars. Interpolated bars are (correctly) never stored, so those 10 bars spanned **04:01-07:58 -- four hours** | 1,307 sh -> cap **261** | would ARM |
+| wall clock, 08:15-08:25 ET: VICR printed **zero** shares | 0 sh -> cap **0** | REFUSES |
+
+A **25x** disagreement, straddling the ticket size. Logged loudly (no-silent-fallbacks) and the
+conservative branch taken: no arm. **The current code is the permissive side**, and this is a
+live-vs-backtest parity question, not a style preference. Postscript for honesty: VICR traded
+206.93 at 08:50, so that stop would have triggered -- but the regular-session ORB entry that
+replaced it did better than the refused premarket one would have.
+
+### INLX: the scanner can show +11.76% on a name that has not traded today
+
+INLX sat on the +10% scan all morning having **never traded**. Its last print (5.70) is stamped
+`2026-09-16T22:40:42Z` = **18:40 ET yesterday** -- an after-hours print being compared against
+yesterday's 5.10 close. RH returned **0 real minute bars and 182 interpolated**; the book was
+4.58 x100 / 6.00 x5, a **26.8% spread**. The ranker refused it independently as NO BARS, and it
+was recorded `fake_gap`.
+
+**Keep this:** `changeFromCloseAllDayRatio` carries a PRIOR-day extended-hours print when a name
+has not traded in the current session. `fake_gap` is the right bucket and the ranker's NO BARS
+refusal is the backstop.
+
+### The Day-23 quotes fix is confirmed working
+
+Day 23's ladder rung 1 fell to a bid proxy and went unfilled because the quotes file only started
+at 14:45. Today it was written from **14:26**, and **rung 1 filled off a live bid**
+(`bid_src: "quote"`, bid 217.83, fill 217.6122, confirmed by the 14:50 bar) -- the whole position
+out on the first rung. **Exit parity vs the 14:59 close: -$25.17 = -16.5 bps**, the cost the
+simulator does not charge.
+
+### `run_scan` now spills to a file -- the transcription step is gone
+
+Once the regular session widened the result set past the inline limit, `run_scan` began spilling
+to a tool-results file, which `plan/scan_sweep.py` reads **directly**. That deletes the
+hand-transcription step the sweep tooling exists to protect against. Premarket scans are still
+small enough to arrive inline and used the `scan_delta.py` incremental path.
+
+### Halal gate, again the binding constraint
+
+77 candidates seen, **74 new verdicts issued** (48 fail, 25 cannot_verify, 1 fake_gap) on top of
+254 inherited. **3 of 77 (3.9%)** were armable at all: VICR, TWST, IPDN. **GLAS passed Q1 and
+failed Q2** -- a recreational-cannabis cultivator whose intoxicant revenue is ~100% of the
+business, invisible to `haram_pct` exactly as alcohol and pork are. Other notable rejects: MRNA
+(TTM interest/revenue >= 5%), AIFU (insurance, final), AXG/USDE/SECZ (SIC 6xxx), AKAN (cannabis,
+and loans 968% of mcap), VEEA (loans 70.8%).
+
+Veto rates, three categories kept apart: premarket 2 evaluations, spread 2/2 (100%), depth 1,
+chase 1, size 1, armed 0. Regular 2 evaluations, spread 1/2 (50%), chase 1, **armed 1**.
+Premarket's 100% spread rate matches the documented too-aggressive band, but the rule was not the
+binding constraint today -- the absence of a two-sided market was.
+
+### Ops
+
+`plan/_d24_wait.py` was added: the standing `wait_until.py` is the clock authority but blocks
+silently for up to 8 minutes, which breaches the 5-minute heartbeat rule. The wrapper keeps the
+same zoneinfo clock and 480 s cap but touches `SESSION_ALIVE` every 30 s while it waits. Every
+`rank`/`trigger` call omitted `--as-of` so the command reads its own clock -- that removes the
+hand-typed-clock error class structurally. One cosmetic lapse logged: premarket artefact
+*filenames* were typed from guessed times and run 3-16 min ahead of the truth; no causal cutoff
+used them.
+
 ## PAPER DAY 23 (2026-09-16) — AXTI +$15.58, and the first day the split scoreboard opens
 
 **1 ticket: AXTI 235 @ 63.59 → 63.6563 (+$15.58, +0.10%, 14:55 ladder rung 2).
