@@ -168,10 +168,10 @@ def load_tape(sym, date, t0_0930_ms):
     return _parse_rows(rows, t0_0930_ms)
 
 
-def load_day_tapes(date, syms, t0_0930_ms):
+def load_day_tapes(date, syms, t0_0930_ms, cache_tag=""):
     """{sym: Tape or None} for a whole day, through a per-day npz mirror
     of the json.gz cache (same numbers, one file, ~10x faster to read)."""
-    f = TAPE_CACHE / f"{date}.npz"
+    f = TAPE_CACHE / f"{date}{cache_tag}.npz"
     out = {}
     if f.exists():
         try:
@@ -201,7 +201,7 @@ def load_day_tapes(date, syms, t0_0930_ms):
             arrs[s + "__v"] = tp.v.astype(np.float32)
     try:
         TAPE_CACHE.mkdir(parents=True, exist_ok=True)
-        tmp = TAPE_CACHE / f"{date}.{np.random.randint(1 << 30)}.part"
+        tmp = TAPE_CACHE / f"{date}{cache_tag}.{np.random.randint(1 << 30)}.part"
         np.savez(tmp, syms=np.array(keep), **arrs)
         tmp.replace(f)
     except Exception:
@@ -343,7 +343,8 @@ class Day:
     """Minute grid (rl2 causal wide panel) + lazily loaded tapes + the
     measured cost model for one date."""
 
-    def __init__(self, date, syms=None, cost_model=None, panel=None):
+    def __init__(self, date, syms=None, cost_model=None, panel=None,
+                 cache_tag=""):
         self.date = date
         if panel is None:
             z = np.load(DAYS / f"{date}.npz", allow_pickle=False)
@@ -372,7 +373,36 @@ class Day:
         last = np.where(any_p, NMIN - 1 - np.argmax(self.printed[:, ::-1],
                                                    axis=1), -1)
         self.flat_min = last.astype(np.int32)
-        self._tape = load_day_tapes(date, self.syms, self.t0_0930)
+        self._tape = load_day_tapes(date, self.syms, self.t0_0930, cache_tag)
+        # CONSISTENCY GUARD: the tape (adjusted 1-second bars) and the
+        # minute grid must describe the same price.  A symbol-day whose
+        # tape prints sit outside its own minute bar's [low, high] (a
+        # split-adjustment disagreement between two caches) is DROPPED
+        # from the tape, never priced.  Counted in `n_tape_dropped`.
+        self.n_tape_dropped = 0
+        for s, tp in list(self._tape.items()):
+            if tp is None:
+                continue
+            si = self.sidx[s]
+            bad = False
+            checked = 0
+            for k in (335, 340, 360, 400, 500):
+                if not self.printed[si, k]:
+                    continue
+                a = (k - SEC0_MIN) * 60
+                w = tp.c[(tp.sec >= a) & (tp.sec < a + 60)]
+                if w.size == 0:
+                    continue
+                med = float(np.median(w))
+                lo, hi = float(self.l[si, k]), float(self.h[si, k])
+                checked += 1
+                if not (lo * 0.97 <= med <= hi * 1.03):
+                    bad = True
+                if checked >= 2:
+                    break
+            if bad:
+                self._tape[s] = None
+                self.n_tape_dropped += 1
         self.cm = cost_model if cost_model is not None else FastCost()
 
     # ---- tape
