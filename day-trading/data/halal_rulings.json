@@ -727,11 +727,11 @@
   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hotel)"
  },
  "HLAL": {
-  "verdict": "PASS",
-  "date": "2026-08-22",
-  "class": "B-no-financials",
+  "verdict": "FAIL",
+  "date": "2026-09-17",
   "haram_share_est": null,
-  "basis": "external screener verdict adopted whole per user exception 2026-08-22 (no financials available to run house 10/10/20): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22)"
+  "class": "type-fund",
+  "basis": "Polygon reference type is an ETF/fund, not common equity (HALAL-GATE-REVIEW 2026-09-17). Funds/ETFs are a hard FAIL under the user's 2026-09-16 financial-sector ruling; JPO is a covered-call option-income ETF (options are haram). The ticker-shape universe filter let these through."
  },
  "HOFT": {
   "verdict": "PASS",
@@ -939,11 +939,11 @@
   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026); held by shariah ETF(s) HLAL+SPUS (professional index screens). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: alcohol, beer, beverage)"
  },
  "MNZL": {
-  "verdict": "PASS",
-  "date": "2026-08-22",
-  "class": "B-no-financials",
+  "verdict": "FAIL",
+  "date": "2026-09-17",
   "haram_share_est": null,
-  "basis": "external screener verdict adopted whole per user exception 2026-08-22 (no financials available to run house 10/10/20): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22)"
+  "class": "type-fund",
+  "basis": "Polygon reference type is an ETF/fund, not common equity (HALAL-GATE-REVIEW 2026-09-17). Funds/ETFs are a hard FAIL under the user's 2026-09-16 financial-sector ruling; JPO is a covered-call option-income ETF (options are haram). The ticker-shape universe filter let these through."
  },
  "MSI": {
   "verdict": "PASS",
@@ -1128,11 +1128,11 @@
   "basis": "external activity-compliance evidence 2026-08-22 (per user direction 'search zoya or find a way'): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22); Musaffa 'halal' (AAOIFI, as of August 2026). AAOIFI 'compliant' requires impermissible revenue <5%, so the BUSINESS-ACTIVITY leg is affirmed by a professional screener; house 10/10/20 ratios still gate (screen triggers were: hospitality)"
  },
  "SPUS": {
-  "verdict": "PASS",
-  "date": "2026-08-22",
-  "class": "B-no-financials",
+  "verdict": "FAIL",
+  "date": "2026-09-17",
   "haram_share_est": null,
-  "basis": "external screener verdict adopted whole per user exception 2026-08-22 (no financials available to run house 10/10/20): Zoya 'Shariah-compliant' (AAOIFI; public verdict, fetched 2026-08-22)"
+  "class": "type-fund",
+  "basis": "Polygon reference type is an ETF/fund, not common equity (HALAL-GATE-REVIEW 2026-09-17). Funds/ETFs are a hard FAIL under the user's 2026-09-16 financial-sector ruling; JPO is a covered-call option-income ETF (options are haram). The ticker-shape universe filter let these through."
  },
  "STRA": {
   "verdict": "PASS",
@@ -1562,5 +1562,12 @@
   "class": "B-no-financials",
   "basis": "last-available statement absent (interest income) after the 2026-09-17 ladder (yfinance quarterly -> annual -> EDGAR companyfacts, <=15 months); Musaffa September 2026: halal. Adopted whole under the user's 2026-08-22 Class-B exception, per the 2026-09-17 ruling. Legs we CAN compute all clear the house 10/10/20: loan 0.23, cash 0.01, combined 0.25, haram None.",
   "haram_share_est": null
+ },
+ "JPO": {
+  "verdict": "FAIL",
+  "date": "2026-09-17",
+  "haram_share_est": null,
+  "class": "type-fund",
+  "basis": "Polygon reference type is an ETF/fund, not common equity (HALAL-GATE-REVIEW 2026-09-17). Funds/ETFs are a hard FAIL under the user's 2026-09-16 financial-sector ruling; JPO is a covered-call option-income ETF (options are haram). The ticker-shape universe filter let these through."
  }
 }
