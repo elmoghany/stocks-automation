@@ -9654,6 +9654,7 @@ rl2 rules seed 0 +$14.11/tkt +$355/mo.
 | **WIDE-NET refit on the measured label** | -- | **-$26.61, -$559/mo** | **100.0** |
 | WIDE-NET refit top-3 / 5 / 7 | -- | -$15.08 / -$15.52 / -$15.92 | 100.0 each |
 | UQ relabelled limit, post_k=3 | +$0.06/tkt, +$7/mo, 100 pct | **-$44.34, -$4,489/mo** | **3.3** |
+| **UQ refit on the measured label** | -- | **-$22.76, -$1,792/mo** (3.75 tkt/day) | **100.0** |
 | RL2 rules seed 0 | +$14.11/tkt, +$355/mo | **-$59.97, -$1,506/mo** | 100.0 |
 | VS2 W8RSd | +$18.1/tkt, +$267/mo | **-$82.0, -$1,209/mo** | n/a |
 | HOLD1-hf2 | -$180.76/tkt (10 bps) | **-$353.59, -$6,670/mo** | n/a |
@@ -9677,7 +9678,19 @@ Three independent lines show the same mechanism.
 
 **Skill survives a refit; the level does not.** Refitting the wide-net
 LightGBM on the measured label restores the 100th percentile at every k
-(beating random by $27-28/tkt) and still loses $559-21,029 a month.
+(beating random by $27-28/tkt) and still loses $559-21,029 a month; refitting
+the UQ ranker does the same (+$17.79/tkt over 30 seeds, 100th pct, inverted
+-$85.01 vs the model's -$22.76) and still loses $1,792 a month. The refit
+rankers also become MORE selective (UQ 4.82 -> 3.75 tickets/day): given a cost
+that varies by name and minute, they decline the expensive fills.
+
+**Where the mechanism does NOT appear: the gapper pool.** A 10-seed
+random-pick control (`C37F-R` / `HOLD1-R`, injected at runtime, matched 37-day
+window, run twice) shows the ranked-vs-random edge essentially unchanged by the
+cost model: C37F y2025 +$22.3 -> +$22.2, HOLD1 year +$119.2 -> +$111.7, HOLD1
+y2025 +$24.8 -> +$38.8 (C37F year -$50.5 -> +$39.7, inside a +-$46-56 seed
+spread). The "ranker selected the names the flat toll under-charged" finding is
+a property of the WIDE-UNIVERSE rankers, not a universal law.
 
 ## The break-even IC, redone (`wn_need`'s own machinery)
 

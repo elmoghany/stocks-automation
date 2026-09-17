@@ -22,6 +22,7 @@ measured model.
 | VS2 `W8RSd` (green-on-red) | +18.1 | +267 | −82.0 | −1,209 | n/a |
 | RL-SCOUT v2, rules seed 0 | +14.11 | +355 | −59.97 | −1,506 | 100.0 |
 | UNIVERSE-QUOTES, relabelled limit policy | +0.06 | +7 | −44.34 | −4,489 | **3.3** |
+| **UNIVERSE-QUOTES, refit on the measured label** | — | — | **−22.76** | **−1,792** | **100.0** |
 | HOLD1-hf2 | −180.76 | −3,410 | −353.59 | −6,670 | n/a |
 | C37F-hf2 (live rules) | **−55.08 at ZERO toll** | −4,023 | **−246.93** | **−18,037** | n/a |
 
@@ -499,6 +500,74 @@ The +$18.1/ticket that made `W8RSd` the video line's closest miss becomes
 on a weak tape, which is precisely the name whose execution the flat ladder
 under-charges. Third instance of the same mechanism.
 
+### 4.6 The UQ policy, refit on the measured label (`--stage uqrefit`)
+
+Symmetry with 4.2: the limit-fill LABEL itself is rebuilt under measured costs
+(`uq_label.build` with `uq_econ.price_ticket`'s legs routed through the model),
+the ranker refit on it month by month, and the account-legal simulator re-run.
+Every artifact is redirected into `plan/cr_out`; not one byte of `plan/uq_out`
+is written.
+
+| row | tickets | tkts/day | $/ticket | $/month | months + | random (30 seeds) | edge | pct |
+|---|---|---|---|---|---|---|---|---|
+| published policy, re-priced | 1,210 | 4.82 | −44.34 | −4,489 | 0/12 | −40.55 ± 6.41 | −3.79 | 3.3 |
+| **refit on the measured label** | 941 | 3.75 | **−22.76** | **−1,792** | 3/12 | −40.55 ± 6.41 | **+17.79** | **100.0** |
+| refit, market entry | 1,500 | 5.98 | −23.41 | −2,938 | 1/12 | | | |
+| refit, inverted | 1,324 | 5.28 | **−85.01** | −9,417 | 1/12 | | | |
+
+Same story as 4.2, told by a different harness: **refitting on the measured
+label restores a real, controlled edge — +$17.79 a ticket over 30 random
+seeds, 100th percentile, and the inverted control now loses by $62 a ticket
+rather than tying — and the level is still −$1,792/month.** The refit also
+becomes *more selective* (4.82 → 3.75 tickets a day): given a cost that varies
+by name and minute, the ranker declines the expensive fills.
+
+### 4.7 The rotation line's random control
+
+`C37F-R` / `HOLD1-R` — the same machinery, the same gap allowance, the same
+costs, only the **pick** is random — do not exist in `rotation_sim.CFGS` (the
+auto-generated `-R` siblings are built only for the VS2 and MX families), so
+they are injected at runtime by `plan/cr_rot.py`. Ten `ROTREP` replicates over
+the matched 40-day window, run twice (flag off, flag on).
+
+| config / label | flat: ranked | flat: random (10 seeds) | measured: ranked | measured: random (10 seeds) | edge, flat → measured |
+|---|---|---|---|---|---|
+| C37F, year | −17.30 | **+33.21 ± 45.64** | −159.00 | −198.70 ± 56.36 | −50.5 → **+39.7** |
+| C37F, y2025 | −19.40 | −41.66 ± 28.32 | −267.10 | −289.25 ± 46.80 | +22.3 → +22.2 |
+| HOLD1, year | +107.80 | −11.44 ± 90.29 | −31.90 | −143.62 ± 85.14 | +119.2 → +111.7 |
+| HOLD1, y2025 | −317.80 | −342.63 ± 61.41 | −507.80 | −546.61 ± 61.21 | +24.8 → +38.8 |
+
+**And here the mechanism of 4.2 / 4.4 / 4.5 does NOT appear.** The gapper
+ranking's edge over a random pick is essentially unchanged by the cost model
+(±$10 on a ±$45–90 seed spread; the one large move, C37F-year, goes the *other*
+way). So "the ranker was selecting the names the flat toll under-charged" is a
+property of the **wide-universe** rankers, not a universal law. On the gapper
+pool the measured toll is simply a large, roughly uniform tax that both the
+ranked config and its control pay.
+
+Caveat on the control's tier mix, stated because it cuts the wrong way for the
+comfortable conclusion: the engine evaluates the cost function once per **bar**
+of the 07:00–15:00 frame, so 27% of the control's evaluations land on the
+`prior`-session fallback and 6.5% on the flat-10 `legacy` rung — the random
+picks reach names whose tape was not fetched. The `legacy` rung is *cheaper*
+than a measured gapper fill (10 bps against a 32 bps median), so the control is
+flattered, and the ranked config still beats it under measured costs.
+
+### 4.8 Coverage — what was run, and what was not
+
+| line | measured re-run | 30-seed control under measured costs | aug2026 stub |
+|---|---|---|---|
+| WIDE-NET | yes, + refit | yes (30 / 12 for top-k) | yes: 4 tickets, +$1,497 |
+| UNIVERSE-QUOTES | yes, + refit | yes (30) | n/a (its split ends 2026-08-01) |
+| RL-SCOUT v2 | yes (exact re-price) | yes (30, rate-matched) | n/a (holdout ends 2026-08-07) |
+| VS2 `W8RSd` | yes (engine) | **no** — VS2's own 30-seed `-R`/`-E` controls were never run for `W8RSd` even in the original line (`vs2wide_results_wd.json` has no `#r` keys); only its four deterministic gate-matched controls exist | wy2 label covers it |
+| C37F / HOLD1 | ledger re-price (full) + matched 37-day engine subsample | 10 seeds on the 40-day subsample (4.7) | n/a |
+
+The one thing worth flagging as a gap: **`W8RSd` has no random control under
+measured costs**, because it never had a 30-seed control under flat costs
+either. Its −$82.0/ticket is reported against its own published +$18.1, not
+against a null.
+
 ---
 
 ## Part 5 — The break-even IC, redone with the measured toll
@@ -594,12 +663,21 @@ still asserts the published shard rows, which are unchanged.
    measured costs, and the best is about **−$559/month** (wide-net refit on the
    measured label, 1 ticket/day). Even under the most generous spread-only
    reading, no row clears $500/month.
-6. **Skill survives the re-pricing; level does not.** Both the wide-net refit
-   and the rl2 rule sit at the 100th percentile against their 30-seed random
-   controls under measured costs, beating random by $27–70 a ticket. The toll
-   is not what stands between this project and the bar — the toll is smaller
-   than the deficit by an order of magnitude.
-7. **The break-even IC moves 0.150 → 0.188 (7 tickets/day), the wrong way.**
+6. **Skill survives the re-pricing; level does not.** Under measured costs the
+   wide-net refit (100th pct, +$27–28/tkt over random at every k), the UQ
+   refit (100th pct, +$17.79/tkt, inverted −$85 vs model −$23) and the rl2
+   rule (100th pct, +$70/tkt) all still beat their 30-seed controls. The toll
+   is not what stands between this project and the bar — it is smaller than
+   the deficit by an order of magnitude.
+7. **Three of the four wide-universe rankers were partly selecting the names
+   the flat toll under-charged; the gapper ranker was not.** WIDE-NET's
+   percentile falls 96.7 → 33.3, UQ's 100 → 3.3 (with the inverted control
+   tying the model), VS2's `W8RSd` flips +$18.1 → −$82.0 — all while the
+   *unconditional* cross-section gets cheaper at Y = 0. The rotation line's
+   ranked-vs-random edge, by contrast, is unchanged to within a tenth of a
+   seed-spread. A cost model that does not vary by name cannot see this class
+   of artefact at all.
+8. **The break-even IC moves 0.150 → 0.188 (7 tickets/day), the wrong way.**
    Achieved ρ 0.033. Under the most generous variant it moves to 0.141. The
    factor needed is 4.3–5.7×.
 
@@ -609,7 +687,13 @@ still asserts the published shard rows, which are unchanged.
 at 09:35: −$26.61/ticket over 251 held-out-year tickets, −$559/month, 3 of 12
 months positive, 100th percentile against its 30-seed random control
 (−$74.43/ticket), ex-best −$7,664.** It needs to be about **$53 a ticket**
-better to pass — more than twice the entire measured round trip.
+better to pass — more than twice the entire measured round trip, so even
+abolishing transaction costs entirely would not get there.
+
+Runner-up, and the more interesting of the two because it is account-legal at
+3.75 tickets a day: **the UNIVERSE-QUOTES limit policy refit on the measured
+label — −$22.76/ticket over 941 tickets, −$1,792/month, 100th percentile,
++$17.79/ticket over 30 random seeds, inverted at −$85.01.**
 
 ### Ranked next ideas
 

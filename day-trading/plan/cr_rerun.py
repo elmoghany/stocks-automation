@@ -347,10 +347,25 @@ def patch_uq(UE, UF, cm):
     return orig_pt, orig_cf
 
 
+
+def _redirect_uq_out(*mods):
+    """OWN-FILES-ONLY GUARD. uq_relabel.stage_eval writes its report to
+    `uq_relabel.OUT / relabel_eval_...json`, which is UNIVERSE-QUOTES'
+    published artifact. The first --stage uq run of this line overwrote
+    it (restored from git the same session, byte-exact). Every module
+    this line drives now has its OUT pointed at plan/cr_out, so a
+    COST-REBASE run cannot write into plan/uq_out at all."""
+    OUT.mkdir(exist_ok=True)
+    for m in mods:
+        if m is not None and hasattr(m, "OUT"):
+            m.OUT = OUT
+
 def stage_uq(h="h30", offset=10.0, wait=1, post_k=3, split=1, seeds=30):
     UF = _load("uq_fills", HERE / "uq_fills.py")
     UE = _load("uq_econ", HERE / "uq_econ.py")
     UR = _load("uq_relabel", HERE / "uq_relabel.py")
+    US = _load("uq_strat", HERE / "uq_strat.py")
+    _redirect_uq_out(UF, UE, UR, US, _load("uq_label", HERE / "uq_label.py"))
     rep = {}
     print("--- flat10 (reproduces the published row) ---", flush=True)
     rep["flat10"] = UR.stage_eval(h, offset, wait, UF.FEE_BPS, split,
@@ -385,6 +400,7 @@ def stage_uqrefit(h="h30", offset=10.0, wait=1, post_k=3, split=1,
     UR = _load("uq_relabel", HERE / "uq_relabel.py")
     UL.UE, UL.UF = UE, UF
     UR.UE, UR.UF, UR.UL = UE, UF, UL
+    _redirect_uq_out(UF, UE, UL, UR, _load("uq_strat", HERE / "uq_strat.py"))
     cm = CC.CostModel(ext_floor_bps=60.0)
     patch_uq(UE, UF, cm)
     US = sys.modules.get("uq_strat")
