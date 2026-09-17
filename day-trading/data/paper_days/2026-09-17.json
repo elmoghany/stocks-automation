@@ -1,0 +1,30 @@
+{
+  "date": "2026-09-17",
+  "day_number": 24,
+  "protocol": "C37",
+  "mode": "paper",
+  "session_type": "headless (Task Scheduler \\Stocks\\C37MorningLaunch), launched 06:20 ET",
+  "benchmark_per_day": -215,
+  "benchmark_note": "C37F-hf2 (2026-09-16 halal-fix epoch): -$215/traded day, -$88,784/414d, -$55/ticket, on the corrected 415-name halal universe with realistic fills. Regular-session split baseline: -$32/day (-$7/ticket). Premarket tickets scored ONLY vs break-even (no backtest baseline on this pool).",
+  "status": "OPEN",
+  "counts_as_traded_day": false,
+  "config": "C37",
+  "ops": {
+    "skeleton_written_et": "06:20",
+    "session_start_et": "06:20",
+    "start_on_time": true,
+    "launched_by_scheduler_flag": "data/paper_days/LAUNCHED_BY_SCHEDULER_2026-09-17.flag",
+    "capability_probe": {
+      "status": "PENDING"
+    },
+    "heartbeat": {
+      "file": "data/paper_days/SESSION_ALIVE_2026-09-17.flag",
+      "cadence": "<=5 min"
+    }
+  },
+  "trades": [],
+  "halal_detail": {},
+  "veto_rates": {},
+  "errors": [],
+  "summary": {}
+}
