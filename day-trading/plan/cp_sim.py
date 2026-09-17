@@ -251,37 +251,49 @@ def _walk_exit(day, Fd, i, em, entry, cfg):
     scaled = False
     so = (entry * (1 + cfg["scale_out_at"])
           if cfg["scale_out_at"] else None)
+    part_px, part_w = 0.0, 0.0     # share-weighted scale-out proceeds
+    w = cfg["scale_out_frac"] if so is not None else 0.0
+
+    def blend(px):
+        """Effective exit price: the scale-out fill and the final fill,
+        weighted by the fraction of the ticket each one closed."""
+        return part_px * part_w + px * (1.0 - part_w)
+
     for m in range(em + 1, end + 1):
         if not day.printed[i, m]:
             continue
         lo, hi, c, o = (float(day.l[i, m]), float(day.h[i, m]),
                         float(day.c[i, m]), float(day.o[i, m]))
         if stop is not None and lo <= stop:
-            return m, _sell_fill(day, i, m, stop), f"stop {stop:.2f}"
+            return (m, blend(_sell_fill(day, i, m, stop)),
+                    f"stop {stop:.2f}")
         if so is not None and not scaled and hi >= so:
-            scaled = True          # book the level, keep walking the rest
+            # a limit ABOVE the market: a gap through it fills at the
+            # OPEN, which is better, so take max(level, open), clamped
+            px = min(max(max(so, o), lo), hi)
+            part_px, part_w, scaled = px, w, True
         peak = max(peak, hi)
         if cfg["trail_pct"]:
-            w = cfg["trail_pct"]
+            tw = cfg["trail_pct"]
             p10 = _pressure_at(day, i, m, 10)
             if p10 is not None:
                 if p10 <= -cfg["trail_thr"]:
-                    w = cfg["trail_lo"]
+                    tw = cfg["trail_lo"]
                 elif p10 >= cfg["trail_thr"]:
-                    w = cfg["trail_hi"]
-            lvl = peak * (1 - w)
+                    tw = cfg["trail_hi"]
+            lvl = peak * (1 - tw)
             if lo <= lvl < peak:
-                return m, _sell_fill(day, i, m, lvl), f"trail {w:.2f}"
+                return m, blend(_sell_fill(day, i, m, lvl)), f"trail {tw:.2f}"
         if cfg["bearish_exit"] and c > entry and _bearish(day, i, m):
-            return m, c, "bearish"
+            return m, blend(c), "bearish"
         if cfg["time_stop"] and (m - em) >= cfg["time_stop"]:
-            return m, c, "time-stop"
+            return m, blend(c), "time-stop"
     m = end
     while m > em and not day.printed[i, m]:
         m -= 1
     if m <= em:
         return None, None, None
-    return m, float(day.c[i, m]), "flatten"
+    return m, blend(float(day.c[i, m])), "flatten"
 
 
 def _pressure_at(day, i, m, nbars, min_vol=20_000.0):

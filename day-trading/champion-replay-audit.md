@@ -284,26 +284,48 @@ Before asking whether a model can do it, ask what a PERFECT one would be
 worth. Keep only the champion's own legs whose day will finish above a
 threshold -- a pure oracle veto, no re-ranking, no extra tickets:
 
-| oracle veto | legs kept | gross $/tkt | flat10 $/tkt | $/month (flat10) |
-|---|---:|---:|---:|---:|
-| none (the honest champion) | 1,607 | -55.25 | -82.53 | **-6,029** |
-| day-gain >= +15% | 1,258 (78%) | +19.67 | -7.63 | -436 |
-| day-gain >= +20% | 800 (50%) | +62.27 | +35.04 | +1,274 |
-| **day-gain >= +25%** | 514 (32%) | +100.76 | **+73.58** | **+1,719** |
-| day-gain >= +30% | 328 (20%) | +107.98 | +80.76 | +1,204 |
-| day-gain >= +40% | 206 (13%) | +122.62 | +95.57 | +895 |
-| day-gain >= +50% | 143 (9%) | +66.26 | +39.23 | +255 |
+`plan/cp_reprice.py` walks all 1,607 stored legs back to the minute
+panel and charges each fill three ways (0 of 1,607 failed to match):
 
-**A perfect oracle on the single fact the detector is trying to learn
-is worth +$1,719/month, 4.4x short of the target.** It is worth pausing
-on that: it is not a statement about any model, it is a statement about
-the champion's machinery. Hand C37 a flawless answer to "will this name
-run today" and it still cannot pay $7,500 a month at the account's
-ticket size -- because the veto also removes two thirds of the tickets,
-and the surviving ones average +$74 against a $27 round-trip toll.
-(The oracle's *re-ranking* version -- fill all seven tickets a day from
-the oracle-approved set rather than merely vetoing the champion's own
-picks -- is measured in 2.4 as a control row, and is the real ceiling.)
+| oracle veto | legs kept | gross $/tkt | flat10 $/tkt | **measured** $/tkt | $/month flat10 | **$/month measured** |
+|---|---:|---:|---:|---:|---:|---:|
+| none (the honest champion) | 1,607 | -55.25 | -82.53 | **-258.65** | -6,029 | **-18,893** |
+| day-gain >= +15% | 1,258 (78%) | +19.67 | -7.63 | -199.07 | -436 | -11,383 |
+| day-gain >= +20% | 800 (50%) | +62.27 | +35.04 | -188.37 | +1,274 | -6,850 |
+| **day-gain >= +25%** | 514 (32%) | +100.76 | **+73.58** | -192.39 | **+1,719** | -4,495 |
+| day-gain >= +30% | 328 (20%) | +107.98 | +80.76 | -219.47 | +1,204 | -3,272 |
+| day-gain >= +40% | 206 (13%) | +122.62 | +95.57 | -234.76 | +895 | -2,198 |
+| day-gain >= +50% | 143 (9%) | +66.26 | +39.23 | -288.79 | +255 | -1,877 |
+
+(The measured column is `plan/cp_cost.py`, an estimator built from the
+1-MINUTE tape, and it independently reproduces COST-REBASE's 1-SECOND
+number for the same ledger: -$258.65/ticket here against their
+-$246.93, 4.7% apart and on the expensive side. Median measured toll on
+these fills **36.7 bps a side**, mean 86.8, p90 221.3, above 10 bps on
+**86%** of them, **$203.40 a round trip** on a $15,000 ticket.)
+
+**Two ceilings, and they disagree about whether the idea is alive.**
+
+- **At the project's flat 10 bps ladder, a perfect oracle is worth
+  +$1,719/month** -- real money, and **4.4x short** of the target. It is
+  worth pausing on that: it is not a statement about any model, it is a
+  statement about the champion's machinery. Hand C37 a flawless answer
+  to "will this name run today" and it still cannot pay $7,500 a month
+  at the account's ticket size, because the veto also removes two thirds
+  of the tickets and the survivors average +$74 against a $27 toll.
+- **At the toll these names actually charge, the perfect oracle never
+  turns positive at all.** Every row of the measured column is negative,
+  the best of them **-$1,877/month**. The +10-20% bucket is not the
+  problem; **the pool is.** A $15,000 ticket in a +10% microcap costs
+  about $203 to round-trip, and the champion's gross edge -- even
+  conditioned on a perfect forecast of the day type -- is $100 to $123.
+
+That is the honest answer to "there must be a way": on **this
+universe**, with **this ticket size**, there is not, and the binding
+constraint is execution, not prediction. (The oracle's *re-ranking*
+version -- filling all seven tickets a day from the oracle-approved set
+instead of merely vetoing the champion's own picks -- is run as a
+control row in 2.4; it raises ticket count, not $/ticket.)
 
 ### 2.3 The causal detector
 
