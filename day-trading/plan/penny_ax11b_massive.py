@@ -312,8 +312,16 @@ def _ttm_pt(usable, maxq=4):
     for q in reversed(usable):
         if last is not None and _qspan(q["date"], last) < 45:
             continue
-        if picked and ("rev" in _q_miss(q)):
-            break                    # window stops, what we have stands
+        if "rev" in _q_miss(q):
+            if picked:
+                break            # window stops, what we have stands
+            # LAST-AVAILABLE STATEMENT (user ruling 2026-09-17):
+            # the NEWEST filed quarter not tagging revenue is not
+            # a reason to refuse -- it used to be silently summed
+            # in as a 0.0, understating TTM revenue and inflating
+            # the 5% ratio. Step back to the last quarter that
+            # actually filed the line.
+            continue
         picked.append(q)
         last = q["date"]
         if len(picked) >= maxq:
@@ -328,6 +336,27 @@ def _ttm_pt(usable, maxq=4):
 # module, not day-trading.py, and this module must not grow a dependency
 # on the live engine's import graph.
 INTINC_MAX_YIELD = 0.08
+
+
+# LAST-AVAILABLE STATEMENT (user ruling 2026-09-17). Same bound
+# and same doctrine as day-trading.py::LAST_AVAIL_MAX_AGE_DAYS:
+# a row the newest filed quarter does not tag is looked up in
+# the last quarter that DID tag it, within ~15 months, instead
+# of refusing the name outright. It is still never a zero.
+LAST_AVAIL_MAX_AGE_DAYS = 460
+
+
+def _last_filed_pt(usable, field, asof):
+    """Value of `field` from the most recent filed quarter that
+    vouches for it, or None if none does inside the bound."""
+    for q in reversed(usable):
+        if field in _q_miss(q):
+            continue
+        if _qspan(q["date"], asof) > LAST_AVAIL_MAX_AGE_DAYS:
+            return None
+        v = q.get(field)
+        return None if v is None else float(v)
+    return None
 
 
 def _interest_leg_pt(picked, ttm_rev):
@@ -373,6 +402,16 @@ def _interest_leg_pt(picked, ttm_rev):
         bp = abs(sum(q["nonop"] for q in picked)) / ttm_rev * 100
         if bp < 5:
             return bp, "upper-bound"
+    if base > 0:
+        # RUNG 4 -- THE CASH CEILING (user ruling 2026-09-17,
+        # same proof as day-trading.py::halal_check). Interest
+        # income cannot exceed 8%/yr on the cash that earns it,
+        # so a ceiling under 5% of TTM revenue clears the leg
+        # whatever the filer tagged -- and it is untagged for
+        # exactly that reason: the line is immaterial.
+        cb = abs(cap) / ttm_rev * 100
+        if cb < 5:
+            return cb, "upper-bound (max yield on cash)"
     return None, None
 
 
@@ -436,10 +475,15 @@ def halal_pt(sym, date, prev_close):
             # window below. Untagged interest is the single commonest
             # gap in the cache and "missing" is not "unverifiable" when
             # a proven upper bound exists.
-            if {"debt", "cash", "rev"} & set(_q_miss(sel)):
+            _m = {"debt", "cash"} & set(_q_miss(sel))
+            _dv = (_last_filed_pt(usable, "debt", date)
+                   if "debt" in _m else sel["debt"])
+            _cv = (_last_filed_pt(usable, "cash", date)
+                   if "cash" in _m else sel["cash"])
+            if _dv is None or _cv is None:
                 return False          # unverified: missing statement row
-            loan = sel["debt"] / mcap * 100
-            cash = sel["cash"] / mcap * 100
+            loan = _dv / mcap * 100
+            cash = _cv / mcap * 100
             comb = loan + cash
             rev, _intinc, _n, picked = _ttm_pt(usable)
             if rev <= 0:

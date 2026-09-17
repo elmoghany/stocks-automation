@@ -760,16 +760,56 @@ EDGAR_EXTRACTED_DIR = _DIR / "data/edgar/extracted"
 INTINC_MAX_YIELD = 0.08          # 8%/yr: the plausibility cap
 _EDGAR_FLOW_CACHE: dict = {}
 
+# ---- LAST-AVAILABLE STATEMENT (user ruling 2026-09-17) ---------------
+# "For the missing statement, use the last available statement or check
+# the Zoya website. Do not just reject it. Same for data drift."
+#
+# Decision 4 of the halal-fix epoch is UNCHANGED: a row we cannot read
+# is still a leg we cannot clear, and it is never scored as a zero.
+# What changes is WHERE the gate looks before it says it cannot read
+# the row. Until today it read ONE table -- the newest yfinance
+# QUARTERLY columns -- and refused 376 names on that alone, including
+# large profitable operating companies whose freshest quarterly column
+# simply does not carry the line. The ladder is now, per field:
+#
+#   1. yfinance quarterly -- the newest column that carries the row
+#      (this also fixes "no recent period carries BOTH debt and cash":
+#      each leg is now read from its own last filed column)
+#   2. yfinance ANNUAL -- a filed 10-K is a statement, not an absence
+#   3. EDGAR companyfacts (data/edgar/extracted) -- the filer's own
+#      XBRL, honoring the extractor's `miss` list so an untagged line
+#      is still never offered as a zero
+#
+# bounded by LAST_AVAIL_MAX_AGE_DAYS, so "last available" can never
+# reach back into a different business cycle, and every field resolved
+# this way is NAMED on the verdict in `last_available` with the period
+# it came from. The ratios still divide by TODAY's market cap: a stale
+# statement against a re-rated cap is read as-is, which is stated here
+# rather than hidden, and is the same staleness the gate already
+# carries from the ~45-day filing lag.
+LAST_AVAIL_MAX_AGE_DAYS = 460    # ~15 months: 4 quarters + filing lag
+
+
+_EDGAR_EMPTY = {"intinc": {}, "nonop": {}, "rev": {},
+                "debt": {}, "cash": {}}
+
 
 def _edgar_flows(symbol: str) -> dict:
     """{"intinc": {end: val}, "nonop": {end: val}} from the offline
-    companyfacts extract, or empty dicts. Cached per symbol+mtime."""
+    companyfacts extract, or empty dicts. Cached per symbol+mtime.
+
+    LAST-AVAILABLE (2026-09-17): also carries "debt" and "cash" per
+    period end, honoring the extractor's own `miss` list -- a quarter
+    that tagged no debt line is NOT offered as a zero. `cash` can never
+    be missing there (a quarter only exists because a cash tag anchored
+    it) and already includes short-term investments, which is the same
+    composite the vendor cash row uses."""
     key = symbol.upper()
     f = EDGAR_EXTRACTED_DIR / f"{key}.json"
     try:
         mt = f.stat().st_mtime
     except Exception:
-        return {"intinc": {}, "nonop": {}, "rev": {}}
+        return dict(_EDGAR_EMPTY)
     hit = _EDGAR_FLOW_CACHE.get(key)
     if hit and hit[0] == mt:
         return hit[1]
@@ -778,12 +818,14 @@ def _edgar_flows(symbol: str) -> dict:
         fl = raw.get("flows") or {}
         out = {k: {e: float(v[0]) for e, v in (fl.get(k) or {}).items()}
                for k in ("intinc", "nonop")}
+        qs = raw.get("quarters") or []
         # EDGAR's own revenue, for the stale-snapshot fallback below
-        out["rev"] = {q["date"]: float(q["rev"])
-                      for q in (raw.get("quarters") or [])
-                      if "rev" not in (q.get("miss") or [])}
+        for fld in ("rev", "debt", "cash"):
+            out[fld] = {q["date"]: float(q[fld]) for q in qs
+                        if fld not in (q.get("miss") or [])
+                        and q.get(fld) is not None}
     except Exception:
-        out = {"intinc": {}, "nonop": {}, "rev": {}}
+        out = dict(_EDGAR_EMPTY)
     _EDGAR_FLOW_CACHE[key] = (mt, out)
     return out
 
@@ -1078,6 +1120,13 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
                 mcap = None
     mcap = float(mcap or 0)
 
+    # `info` is a vendor SUMMARY, not a statement: its `totalCash`
+    # is unreliable for funds and trusts and there is no interest
+    # field at all. Recorded so the cash-ceiling rung below can
+    # refuse to rest a PROOF on it (audit Bug 3 -- the info tier
+    # must not PASS).
+    _cash_is_info = [False]
+
     # ANNUAL TIER: one filed period ALREADY IS the twelve months, so the
     # window is ONE column, not four -- four would average four fiscal
     # years. No x4 anywhere either: the old code annualized
@@ -1108,9 +1157,141 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
             cash_total = float(i_cash) if i_cash is not None else None
             ttm_rev = float(i_rev) if i_rev is not None else None
             ttm_int, n_q = None, 1        # info revenue is already annual
+            _cash_is_info[0] = True
             inc_miss = ([] if i_rev is not None else ["revenue"]) + \
                        ["interest income"]
             win_iso = []                  # no period ends -> no EDGAR span
+
+    # ---- LAST-AVAILABLE STATEMENT FALLBACK (user ruling 2026-09-17) --
+    # Documented at LAST_AVAIL_MAX_AGE_DAYS above. Only ever fills a
+    # field the tiers above left ABSENT; it never overrides a row that
+    # was read, and it never invents one.
+    last_avail: dict = {}
+    _ann: dict = {"done": False, "bs": None, "inc": None}
+    _today = datetime.now().date()
+
+    def _fresh(iso) -> bool:
+        try:
+            age = (_today
+                   - datetime.fromisoformat(str(iso)[:10]).date()).days
+        except Exception:
+            return False
+        return 0 <= age <= LAST_AVAIL_MAX_AGE_DAYS
+
+    def _ann_tables():
+        """yfinance ANNUAL statements, fetched at most once per call."""
+        if not _ann["done"]:
+            _ann["done"] = True
+            if src == "annual":
+                _ann["bs"], _ann["inc"] = bs, inc
+            else:
+                try:
+                    _ann["bs"] = t.balance_sheet
+                except Exception:
+                    _ann["bs"] = None
+                try:
+                    _ann["inc"] = t.income_stmt
+                except Exception:
+                    _ann["inc"] = None
+        return _ann["bs"], _ann["inc"]
+
+    def _yf_last(df, names):
+        """(value, period-end) from the NEWEST column of `df` carrying
+        one of `names`. Stops at that column: the last available
+        statement is the last one filed, not the last one convenient."""
+        r = _row(df, names)
+        if r is None:
+            return None, None
+        for c in _cols(df):
+            try:
+                if pd.isna(r[c]):
+                    continue
+            except Exception:
+                continue
+            return (float(r[c]), str(c)[:10]) if _fresh(c) else (None, None)
+        return None, None
+
+    def _edgar_last(series):
+        for e in sorted(series or {}, reverse=True):
+            return (float(series[e]), e) if _fresh(e) else (None, None)
+        return None, None
+
+    def _resolve_bs(names, field):
+        """quarterly -> annual -> EDGAR, first hit wins, tagged."""
+        v, p = _yf_last(bs, names)
+        if v is not None:
+            return v, f"yf-quarterly {p}"
+        v, p = _yf_last(_ann_tables()[0], names)
+        if v is not None:
+            return v, f"yf-annual {p}"
+        v, p = _edgar_last((_edgar_flows(symbol) or {}).get(field) or {})
+        if v is not None:
+            return v, f"edgar {p}"
+        return None, None
+
+    if any(str(m).startswith("debt/cash") for m in bs_miss):
+        # the rows exist but no single recent column carried BOTH. Each
+        # leg is read from its own last filed column instead of the pair
+        # being refused -- same statement, one column apart at worst.
+        bs_miss = ["debt", "cash"]
+    # NOTE the condition is `is None`, not `in bs_miss`: _bs_pair
+    # returns BOTH legs as None whenever EITHER row is absent, so a name
+    # whose cash row is missing also arrives here with its perfectly
+    # readable debt row unread. Keying off bs_miss alone left those on
+    # the belt-and-braces refusal ("debt, combined could not be
+    # computed") -- a refusal for a row that is right there.
+    if total_debt is None:
+        v, p = _resolve_bs(DEBT_ROWS, "debt")
+        if v is not None:
+            total_debt = v
+            if "debt" in bs_miss:
+                last_avail["debt"] = p
+            bs_miss = [m for m in bs_miss if m != "debt"]
+    if cash_total is None:
+        v, p = _resolve_bs(CASH_ROWS, "cash")
+        if v is not None:
+            cash_total = v
+            if "cash" in bs_miss:
+                last_avail["cash"] = p
+            bs_miss = [m for m in bs_miss if m != "cash"]
+    if any(str(m).startswith("revenue") for m in inc_miss):
+        # REVENUE must stay a TWELVE-MONTH figure on both sides of the
+        # 5% test, so the annual column (one filed year IS the twelve
+        # months) and EDGAR's own last <=4 filed quarters are the only
+        # two fallbacks offered -- never a single stray quarter.
+        v, p = _yf_last(_ann_tables()[1], REV_ROWS)
+        if v is not None and v > 0:
+            ttm_rev, n_q = v, 1
+            win_iso = [p]
+            last_avail["revenue"] = f"yf-annual {p}"
+            # ...and the interest row from the SAME annual column, so
+            # both sides of the 5% test come from one filed year.
+            _airow = _row(_ann_tables()[1], INT_ROWS)
+            if _airow is not None and ttm_int is None:
+                for _c in _cols(_ann_tables()[1]):
+                    if str(_c)[:10] != p:
+                        continue
+                    try:
+                        if not pd.isna(_airow[_c]):
+                            ttm_int = float(_airow[_c])
+                            last_avail["interest income"] = f"yf-annual {p}"
+                            inc_miss = [m for m in inc_miss
+                                        if m != "interest income"]
+                    except Exception:
+                        pass
+                    break
+        else:
+            _flw = _edgar_flows(symbol)
+            _ew = _edgar_window(_flw, 1)
+            _ew = [e for e in _ew if _fresh(e)]
+            _er = sum((_flw.get("rev") or {}).get(e, 0.0) for e in _ew)
+            if _ew and _er > 0:
+                ttm_rev, n_q, win_iso = _er, len(_ew), list(_ew)
+                last_avail["revenue"] = \
+                    f"edgar {_ew[-1]}..{_ew[0]} ({len(_ew)}q)"
+        if "revenue" in last_avail:
+            inc_miss = [m for m in inc_miss
+                        if not str(m).startswith("revenue")]
 
     loan_pct = (total_debt / mcap * 100) \
         if (mcap > 0 and total_debt is not None) else None
@@ -1128,7 +1309,14 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
     haram_note = ""
     haram_src = "yfinance" if ttm_int is not None else None
     haram_resolved = None
-    span_years = (n_q if src == "annual" else n_q / 4.0) or 1.0
+    # A window of ONE ALREADY-ANNUAL column (the annual tier, the
+    # `info` tier whose revenue is annual by construction, and a
+    # revenue filled from the annual table) spans a year, not a
+    # quarter. Getting this wrong would quarter the plausibility cap.
+    _win_is_annual = (src in ("annual", "info")
+                      or str(last_avail.get("revenue") or "")
+                      .startswith("yf-annual"))
+    span_years = (n_q if _win_is_annual else n_q / 4.0) or 1.0
 
     def _in_window(col) -> bool:
         iso = str(col)[:10]
@@ -1154,7 +1342,32 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
         are excused as mis-tags and fewer names are rescued."""
         crow = _row(bs, CASH_ROWS)
         if crow is None:
-            return None
+            # LAST-AVAILABLE (2026-09-17): the vendor cash ROW being
+            # absent is precisely the case this gate now resolves from
+            # the annual table or EDGAR, so the cap must fall back to
+            # whatever answered rather than going blind -- going blind
+            # here would silently switch the cash-ceiling rung off for
+            # every name that needs it most.
+            _lt = [r for r in (_row(bs, LTI_ROWS_A), _row(bs, LTI_ROWS_B))
+                   if r is not None]
+            _lv = []
+            for c in (_cols(bs) if bs is not None else []):
+                got = [float(r[c]) for r in _lt if not pd.isna(r[c])]
+                if got:
+                    _lv.append(max(got))
+            _base = (abs(float(cash_total))
+                     if cash_total is not None else 0.0)
+            # a fund/trust balance sheet often carries NO cash line
+            # and a very large investments line (ADX: no cash row,
+            # $3.0bn "Investments And Advances" against $34M of
+            # revenue). Those securities earn the income, so they
+            # belong in the ceiling base -- leaving them out would
+            # hand the cash-ceiling rung a base four orders of
+            # magnitude too small and PASS a bond fund on a proof
+            # that is simply false.
+            if _lv:
+                _base += sum(_lv) / len(_lv)
+            return _base or None
         lrows = [r for r in (_row(bs, LTI_ROWS_A), _row(bs, LTI_ROWS_B))
                  if r is not None]
         vals = []
@@ -1204,7 +1417,7 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
             if "interest income" not in inc_miss:
                 inc_miss = list(inc_miss) + ["interest income"]
 
-    if ttm_int is None and win_iso:
+    if ttm_int is None:
         _fl = _edgar_flows(symbol)
 
         def _resolve(window, rev_ttm, tag):
@@ -1236,8 +1449,14 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
                     f"bound is {_bp:.2f}% of revenue (>= 5%) -- it proves "
                     f"nothing; still unverified")
 
-        _pct = None
-        if ttm_rev is not None and ttm_rev > 0:
+        _pct, _src = None, None
+        # EDGAR's flow series is QUARTERLY. Matching it against a single
+        # already-annual period end would sum ONE quarter of interest
+        # against a YEAR of revenue -- a four-fold understatement in the
+        # direction that passes names. Skip the aligned rung entirely on
+        # an annual window and let EDGAR's own span answer instead.
+        if ttm_rev is not None and ttm_rev > 0 and win_iso \
+                and not _win_is_annual:
             _pct, _src, _note = _resolve(win_iso, ttm_rev, "")
             if _note:
                 haram_note = _note
@@ -1245,7 +1464,8 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
             # the vendor window may simply postdate the companyfacts
             # snapshot -- retry on EDGAR's own last filed TTM span, both
             # sides from that span (see _edgar_window).
-            _ew = _edgar_window(_fl, len(win_iso))
+            _ew = _edgar_window(_fl, max(1, len(win_iso)))
+            _ew = [e for e in _ew if _fresh(e)]
             _erev = sum((_fl.get("rev") or {}).get(e, 0.0) for e in _ew)
             if _ew and _erev > 0:
                 _p2, _s2, _n2 = _resolve(_ew, _erev, " (edgar window)")
@@ -1254,6 +1474,31 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
                     haram_note = _n2 or haram_note
                 elif _n2 and not haram_note:
                     haram_note = _n2
+        if _pct is None and (ttm_rev or 0) > 0 and _cap is not None \
+                and abs(_cap) > 0 and not _cash_is_info[0]:
+            # RUNG 4 -- THE CASH CEILING (user ruling 2026-09-17).
+            # The 8%/yr premise the plausibility cap already rests on is
+            # a PROOF read the other way: interest income CANNOT exceed
+            # 8%/yr x (cash + interest-bearing securities). If that
+            # ceiling is under 5% of TTM revenue, the leg is clear no
+            # matter what the filer chose to tag -- and it is clear for
+            # the same reason the row is missing in the first place
+            # (the company holds little cash against large revenue, so
+            # the line is immaterial and nobody tags an immaterial
+            # line). The base is the same deliberately GENEROUS
+            # cash+securities figure used for the cap, so this rung can
+            # only ever under-claim. It is a bound, never a
+            # measurement; `haram_src` says so.
+            _cb = abs(_cap) / ttm_rev * 100
+            if _cb < 5:
+                _pct, _src = _cb, "upper-bound (max yield on cash)"
+                haram_note = (
+                    f"interest income is not tagged in any period read; "
+                    f"{INTINC_MAX_YIELD:.0%}/yr on mean cash+securities "
+                    f"${_cap_base/1e6:,.0f}M over a {span_years:.2f}yr "
+                    f"window CEILINGS interest at ${abs(_cap)/1e6:,.0f}M "
+                    f"= {_cb:.2f}% of TTM revenue, which BOUNDS the 5% "
+                    f"leg clear without measuring interest itself")
         if _pct is not None:
             haram_resolved, haram_src = _pct, _src
             inc_miss = [m for m in inc_miss if m != "interest income"]
@@ -1424,10 +1669,11 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
             "loan_pct": _r(loan_pct), "cash_pct": _r(cash_pct),
             "combined": _r(combined), "haram_pct": _r(haram_pct),
             "halal": False,
-            "source": src,
+            "source": (f"{src}+last-available" if last_avail else src),
             "haram_src": haram_src,
             "haram_note": haram_note,
             "interest_flags": int_flags,
+            "last_available": last_avail,
             "fail_reason": (f"unverified: missing {', '.join(miss)} "
                             f"-- an absent statement row is not a zero "
                             f"(user ruling 2026-09-16); refusing"
@@ -1539,7 +1785,7 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
         "haram_periods": n_q,
         "haram_src": haram_src,
         "halal": halal,
-        "source": src,
+        "source": (f"{src}+last-available" if last_avail else src),
         "fail_reason": "" if halal else (
             "LOAN>10" if not loan_ok else
             "CASH>10" if not cash_ok else
@@ -1552,6 +1798,8 @@ def halal_check(symbol: str, t=None, mcap: float | None = None) -> dict:
         out["haram_note"] = haram_note
     if int_flags:
         out["interest_flags"] = int_flags
+    if last_avail:
+        out["last_available"] = last_avail
     if sic_code:
         out["sic"] = sic_code
     if ruling:
