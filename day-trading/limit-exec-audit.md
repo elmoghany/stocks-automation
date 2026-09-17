@@ -347,7 +347,67 @@ VETO_PLACEHOLDER
 
 ## Part 6 — C37's ORB entry (wide universe and the gapper pool)
 
-ORB_PLACEHOLDER
+`plan/lx_orb.py`. The opening range is the first five regular-session bars
+(09:30–09:34, `DEFAULT_ORB_BARS = 5`); a name breaks when a later bar's high
+exceeds the range high, the decision is that completed bar, the market fill
+is the next open and the ladders post at the same instant. One position at a
+time, ≤ 7 a day, hold 30, flat 15:00, entries cut at 14:30 (C37's
+`entry_cutoff`). `strength` buys the breaker with the largest gain since the
+09:30 open (the live rule's instinct), `weak` the smallest, `fore` the
+perfect-foresight breaker. OPEN-UNIVERSE's `data/massive/m1o` had no
+MANIFEST when this ran, so the two universes are the mandate's fallback.
+
+## FRAME
+
+_(frame pass not landed)_
+
+## ADVERSE (frame)
+
+_(not landed)_
+
+## WIDE-NET / UQ relabel / LX refit (OOS year, post 3, h30)
+
+_(WIDE-NET / UQ relabel / LX refit (OOS year, post 3, h30): not landed)_
+
+## CLOSE-MOMENTUM REV 15:30→15:59, k = 7
+
+_(CLOSE-MOMENTUM REV 15:30→15:59, k = 7: not landed)_
+
+## CATALYST veto ANY_NEG_3d, 1/day @09:35, h60 (random on the vetoed universe)
+
+_(CATALYST veto ANY_NEG_3d, 1/day @09:35, h60 (random on the vetoed universe): not landed)_
+
+**ORB / wide** — 448 days (stride 1), 23.7 breakers/day of 60.7 names, 30 seeds
+
+| ladder | tkts/day | fill | random flat $/tkt | random meas | random zero | market CF | strength $/tkt (pct) | weak (pct) | foresight | entry pi / mo | exit pi / mo |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---|
+| `mkt/mkt` | 3.61 | 1.000 | **-32.53** ± 4.0 | -57.16 | -3.38 | -32.53 | -34.11 (33) | -31.52 (73) | +55.89 | — | — |
+| `bid-rest3-cancel/mkt` | 3.19 | 0.777 | **-14.55** ± 3.2 | -35.69 | -0.87 | -45.61 | -20.43 (0) | -12.83 (73) | +52.00 | +13.1 / +0.8 | — |
+| `bid-rest3-mkt/tick3` | 3.44 | 1.000 | **-12.60** ± 4.1 | -43.27 | -4.20 | -34.54 | -12.03 (63) | -12.97 (60) | +72.20 | +9.9 / -3.6 | +6.2 / -0.1 |
+| `tick5-mkt/tick5` | 3.41 | 1.000 | **-9.20** ± 3.7 | -40.32 | -3.67 | -34.92 | -9.90 (53) | -8.96 (60) | +74.64 | +9.7 / -2.8 | +6.7 / +0.5 |
+| `bid-rest3-cancel/ask-rest3` | 3.09 | 0.776 | **-8.48** ± 3.2 | -33.20 | -3.89 | -46.76 | -13.81 (0) | -6.18 (77) | +60.93 | +12.8 / -0.1 | +7.0 / +0.1 |
+
+**Wide universe (causal, 23.7 breakers a day).** A random ORB breaker is
+−$32.5 under market fills (worse than the frame's −$27.4: a fresh breaker is
+bought at a local high) and **−$8.5 ± 3.2 with both legs resting** — the
+same $24 of execution as the frame, and the same −$33 under the measured
+convention. "Buy the runner" is the instructive row: −$34.1 under market
+fills (33rd percentile) and **−$13.8 with a resting bid (0th percentile,
+i.e. worse than every one of 30 random seeds)** — the strongest breaker is
+the one that does not come back to the bid, so what fills is the fade.
+The weakest breaker is the mirror (77th percentile, −$6.2). Foresight among
+breakers is only +$56…+$75 a ticket: the ORB minute carries little
+30-minute information on this universe.
+
+**Gapper pool (the retracted +10 % screen; execution comparison only, 111
+strided days, 42 breakers a day).** Same names, market vs resting fills —
+the pool's median tradeable book is 28.5 bps wide (COST-REBASE §2.1), so the
+resting ladders recover more per ticket here in dollars and the measured
+convention charges more. The numbers are in the table; they are not an edge
+claim because the membership is outcome-conditioned (MX-SERIES RETRACTION
+#2), and the tape/bar consistency guard drops the symbol-days whose two
+caches disagree (`n_tape_dropped`, Part 0).
+
 
 ## Part 7 — The engine hook (`day-trading.py::simulate_trades`)
 

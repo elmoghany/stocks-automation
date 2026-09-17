@@ -1,0 +1,1538 @@
+{
+ "universe": "pool",
+ "days": 111,
+ "seeds": 30,
+ "stride": 4,
+ "breakers_per_day": 42.31531531531532,
+ "names_per_day": 102.27927927927928,
+ "rows": {
+  "mkt/mkt": {
+   "flat": {
+    "random_per_ticket_mean": 76.09,
+    "random_per_ticket_sd": 23.84,
+    "random_per_month_mean": 6433.5,
+    "strength": {
+     "label": "",
+     "tickets": 447,
+     "tickets_per_day": 4.027,
+     "per_ticket": 75.13,
+     "per_month": 6353.2,
+     "total": 33581.29,
+     "months_pos": "14/22",
+     "ex_best": 16173.16,
+     "max_dd": -11386.5,
+     "win_rate": 0.5436,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 193,
+      "per_ticket": 7.91
+     },
+     "y2": {
+      "tickets": 254,
+      "per_ticket": 126.2
+     },
+     "percentile": 60.0,
+     "edge_vs_random": -0.96
+    },
+    "weak": {
+     "label": "",
+     "tickets": 446,
+     "tickets_per_day": 4.018,
+     "per_ticket": 123.87,
+     "per_month": 10451.8,
+     "total": 55245.39,
+     "months_pos": "19/22",
+     "ex_best": 38541.02,
+     "max_dd": -11927.6,
+     "win_rate": 0.5852,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 193,
+      "per_ticket": 62.36
+     },
+     "y2": {
+      "tickets": 253,
+      "per_ticket": 170.79
+     },
+     "percentile": 96.7,
+     "edge_vs_random": 47.78
+    },
+    "fore": {
+     "label": "",
+     "tickets": 447,
+     "tickets_per_day": 4.027,
+     "per_ticket": 446.22,
+     "per_month": 37736.1,
+     "total": 199462.29,
+     "months_pos": "22/22",
+     "ex_best": 182054.17,
+     "max_dd": -5303.25,
+     "win_rate": 0.6734,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 193,
+      "per_ticket": 440.29
+     },
+     "y2": {
+      "tickets": 254,
+      "per_ticket": 450.74
+     },
+     "percentile": 100.0,
+     "edge_vs_random": 370.13
+    }
+   },
+   "meas": {
+    "random_per_ticket_mean": -96.65,
+    "random_per_ticket_sd": 24.05,
+    "random_per_month_mean": -8171.7,
+    "strength": {
+     "label": "",
+     "tickets": 447,
+     "tickets_per_day": 4.027,
+     "per_ticket": -133.07,
+     "per_month": -11253.3,
+     "total": -59481.51,
+     "months_pos": "5/22",
+     "ex_best": -76106.35,
+     "max_dd": -63031.2,
+     "win_rate": 0.4116,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 193,
+      "per_ticket": -254.82
+     },
+     "y2": {
+      "tickets": 254,
+      "per_ticket": -40.56
+     },
+     "percentile": 0.0,
+     "edge_vs_random": -36.42
+    },
+    "weak": {
+     "label": "",
+     "tickets": 446,
+     "tickets_per_day": 4.018,
+     "per_ticket": -41.14,
+     "per_month": -3471.6,
+     "total": -18350.13,
+     "months_pos": "10/22",
+     "ex_best": -34421.08,
+     "max_dd": -35176.62,
+     "win_rate": 0.4462,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 193,
+      "per_ticket": -138.25
+     },
+     "y2": {
+      "tickets": 253,
+      "per_ticket": 32.93
+     },
+     "percentile": 96.7,
+     "edge_vs_random": 55.51
+    },
+    "fore": {
+     "label": "",
+     "tickets": 447,
+     "tickets_per_day": 4.027,
+     "per_ticket": 253.97,
+     "per_month": 21477.4,
+     "total": 113523.35,
+     "months_pos": "21/22",
+     "ex_best": 96898.51,
+     "max_dd": -6374.76,
+     "win_rate": 0.5615,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 193,
+      "per_ticket": 200.65
+     },
+     "y2": {
+      "tickets": 254,
+      "per_ticket": 294.48
+     },
+     "percentile": 100.0,
+     "edge_vs_random": 350.62
+    }
+   },
+   "zero": {
+    "random_per_ticket_mean": 101.7,
+    "random_per_ticket_sd": 23.86,
+    "random_per_month_mean": 8598.5,
+    "strength": {
+     "label": "",
+     "tickets": 447,
+     "tickets_per_day": 4.027,
+     "per_ticket": 100.84,
+     "per_month": 8528.2,
+     "total": 45077.56,
+     "months_pos": "15/22",
+     "ex_best": 27621.98,
+     "max_dd": -8379.8,
+     "win_rate": 0.5705,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 193,
+      "per_ticket": 32.63
+     },
+     "y2": {
+      "tickets": 254,
+      "per_ticket": 152.68
+     },
+     "percentile": 60.0,
+     "edge_vs_random": -0.86
+    },
+    "weak": {
+     "label": "",
+     "tickets": 446,
+     "tickets_per_day": 4.018,
+     "per_ticket": 149.16,
+     "per_month": 12585.7,
+     "total": 66524.35,
+     "months_pos": "20/22",
+     "ex_best": 49773.22,
+     "max_dd": -11409.04,
+     "win_rate": 0.6233,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 193,
+      "per_ticket": 86.56
+     },
+     "y2": {
+      "tickets": 253,
+      "per_ticket": 196.91
+     },
+     "percentile": 96.7,
+     "edge_vs_random": 47.46
+    },
+    "fore": {
+     "label": "",
+     "tickets": 447,
+     "tickets_per_day": 4.027,
+     "per_ticket": 472.17,
+     "per_month": 39930.4,
+     "total": 211060.59,
+     "months_pos": "22/22",
+     "ex_best": 193605.01,
+     "max_dd": -5208.06,
+     "win_rate": 0.7025,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 193,
+      "per_ticket": 465.62
+     },
+     "y2": {
+      "tickets": 254,
+      "per_ticket": 477.15
+     },
+     "percentile": 100.0,
+     "edge_vs_random": 370.47
+    }
+   },
+   "fills": {
+    "attempts": 13587,
+    "positions": 13407,
+    "fill_rate": 0.9868,
+    "entry_passive_frac_mean": 0.0,
+    "entry_fully_passive": 0.0,
+    "exit_passive_frac_mean": 0.0,
+    "exit_fully_passive": 0.0,
+    "mean_notional": 12752.0,
+    "cost_bps_mean": {
+     "e_flat": 10.0,
+     "x_flat": 10.0,
+     "e_meas": 85.43,
+     "x_meas": 93.25
+    }
+   },
+   "tickets_per_day": 4.026,
+   "decomp": {
+    "e": {
+     "n": 0
+    },
+    "x": {
+     "n": 0
+    }
+   },
+   "mkt_counterfactual_flat": 76.09
+  },
+  "bid-rest3-cancel/mkt": {
+   "flat": {
+    "random_per_ticket_mean": 98.51,
+    "random_per_ticket_sd": 24.72,
+    "random_per_month_mean": 7237.7,
+    "strength": {
+     "label": "",
+     "tickets": 391,
+     "tickets_per_day": 3.523,
+     "per_ticket": 110.82,
+     "per_month": 8197.6,
+     "total": 43330.39,
+     "months_pos": "15/22",
+     "ex_best": 25639.91,
+     "max_dd": -6372.86,
+     "win_rate": 0.5652,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 166,
+      "per_ticket": 132.37
+     },
+     "y2": {
+      "tickets": 225,
+      "per_ticket": 94.92
+     },
+     "percentile": 76.7,
+     "edge_vs_random": 12.31
+    },
+    "weak": {
+     "label": "",
+     "tickets": 382,
+     "tickets_per_day": 3.441,
+     "per_ticket": 113.14,
+     "per_month": 8177.0,
+     "total": 43221.14,
+     "months_pos": "18/22",
+     "ex_best": 34841.27,
+     "max_dd": -3930.74,
+     "win_rate": 0.6126,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 162,
+      "per_ticket": 108.87
+     },
+     "y2": {
+      "tickets": 220,
+      "per_ticket": 116.29
+     },
+     "percentile": 76.7,
+     "edge_vs_random": 14.63
+    },
+    "fore": {
+     "label": "",
+     "tickets": 389,
+     "tickets_per_day": 3.505,
+     "per_ticket": 374.32,
+     "per_month": 27547.7,
+     "total": 145609.21,
+     "months_pos": "22/22",
+     "ex_best": 127918.74,
+     "max_dd": -4383.69,
+     "win_rate": 0.6889,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 164,
+      "per_ticket": 420.22
+     },
+     "y2": {
+      "tickets": 225,
+      "per_ticket": 340.86
+     },
+     "percentile": 100.0,
+     "edge_vs_random": 275.81
+    }
+   },
+   "meas": {
+    "random_per_ticket_mean": -13.48,
+    "random_per_ticket_sd": 24.82,
+    "random_per_month_mean": -985.2,
+    "strength": {
+     "label": "",
+     "tickets": 391,
+     "tickets_per_day": 3.523,
+     "per_ticket": -27.08,
+     "per_month": -2003.3,
+     "total": -10588.84,
+     "months_pos": "9/22",
+     "ex_best": -27768.78,
+     "max_dd": -28075.03,
+     "win_rate": 0.445,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 166,
+      "per_ticket": -36.27
+     },
+     "y2": {
+      "tickets": 225,
+      "per_ticket": -20.3
+     },
+     "percentile": 30.0,
+     "edge_vs_random": -13.6
+    },
+    "weak": {
+     "label": "",
+     "tickets": 382,
+     "tickets_per_day": 3.441,
+     "per_ticket": 16.35,
+     "per_month": 1181.8,
+     "total": 6246.92,
+     "months_pos": "13/22",
+     "ex_best": -1681.2,
+     "max_dd": -9055.22,
+     "win_rate": 0.4974,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 162,
+      "per_ticket": -11.57
+     },
+     "y2": {
+      "tickets": 220,
+      "per_ticket": 36.91
+     },
+     "percentile": 86.7,
+     "edge_vs_random": 29.83
+    },
+    "fore": {
+     "label": "",
+     "tickets": 389,
+     "tickets_per_day": 3.505,
+     "per_ticket": 250.89,
+     "per_month": 18464.1,
+     "total": 97596.04,
+     "months_pos": "21/22",
+     "ex_best": 80416.1,
+     "max_dd": -5296.66,
+     "win_rate": 0.5733,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 164,
+      "per_ticket": 274.19
+     },
+     "y2": {
+      "tickets": 225,
+      "per_ticket": 233.91
+     },
+     "percentile": 100.0,
+     "edge_vs_random": 264.37
+    }
+   },
+   "zero": {
+    "random_per_ticket_mean": 110.56,
+    "random_per_ticket_sd": 24.79,
+    "random_per_month_mean": 8122.8,
+    "strength": {
+     "label": "",
+     "tickets": 391,
+     "tickets_per_day": 3.523,
+     "per_ticket": 122.89,
+     "per_month": 9090.3,
+     "total": 48048.89,
+     "months_pos": "15/22",
+     "ex_best": 30325.97,
+     "max_dd": -6186.85,
+     "win_rate": 0.5831,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 166,
+      "per_ticket": 144.12
+     },
+     "y2": {
+      "tickets": 225,
+      "per_ticket": 107.22
+     },
+     "percentile": 76.7,
+     "edge_vs_random": 12.33
+    },
+    "weak": {
+     "label": "",
+     "tickets": 382,
+     "tickets_per_day": 3.441,
+     "per_ticket": 124.97,
+     "per_month": 9031.8,
+     "total": 47739.65,
+     "months_pos": "19/22",
+     "ex_best": 39336.37,
+     "max_dd": -3657.04,
+     "win_rate": 0.623,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 162,
+      "per_ticket": 120.14
+     },
+     "y2": {
+      "tickets": 220,
+      "per_ticket": 128.53
+     },
+     "percentile": 76.7,
+     "edge_vs_random": 14.41
+    },
+    "fore": {
+     "label": "",
+     "tickets": 389,
+     "tickets_per_day": 3.505,
+     "per_ticket": 386.44,
+     "per_month": 28440.0,
+     "total": 150325.46,
+     "months_pos": "22/22",
+     "ex_best": 132602.55,
+     "max_dd": -4314.41,
+     "win_rate": 0.6992,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 164,
+      "per_ticket": 431.98
+     },
+     "y2": {
+      "tickets": 225,
+      "per_ticket": 353.25
+     },
+     "percentile": 100.0,
+     "edge_vs_random": 275.88
+    }
+   },
+   "fills": {
+    "attempts": 15728,
+    "positions": 11644,
+    "fill_rate": 0.7403,
+    "entry_passive_frac_mean": 1.0,
+    "entry_fully_passive": 1.0,
+    "exit_passive_frac_mean": 0.0,
+    "exit_fully_passive": 0.0,
+    "mean_notional": 11942.2,
+    "cost_bps_mean": {
+     "e_flat": 0.0,
+     "x_flat": 10.0,
+     "e_meas": 56.37,
+     "x_meas": 76.45
+    }
+   },
+   "tickets_per_day": 3.497,
+   "decomp": {
+    "e": {
+     "n": 11644,
+     "pi_bps_mean": 36.39,
+     "markout5_bps_mean": 57.6,
+     "net_bps": 93.99,
+     "share_reverted": 0.6057,
+     "reverted": {
+      "pi": 34.77,
+      "mo": 191.74
+     },
+     "way_down": {
+      "pi": 38.88,
+      "mo": -148.46
+     },
+     "partial_share": 0.0,
+     "wait_s_median": 13.0
+    },
+    "x": {
+     "n": 0
+    }
+   },
+   "mkt_counterfactual_flat": 69.3
+  },
+  "bid-rest3-mkt/tick3": {
+   "flat": {
+    "random_per_ticket_mean": 65.04,
+    "random_per_ticket_sd": 24.95,
+    "random_per_month_mean": 5205.2,
+    "strength": {
+     "label": "",
+     "tickets": 424,
+     "tickets_per_day": 3.82,
+     "per_ticket": 57.78,
+     "per_month": 4634.7,
+     "total": 24497.83,
+     "months_pos": "13/22",
+     "ex_best": 6389.84,
+     "max_dd": -15678.77,
+     "win_rate": 0.5307,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 184,
+      "per_ticket": -25.94
+     },
+     "y2": {
+      "tickets": 240,
+      "per_ticket": 121.96
+     },
+     "percentile": 53.3,
+     "edge_vs_random": -7.26
+    },
+    "weak": {
+     "label": "",
+     "tickets": 421,
+     "tickets_per_day": 3.793,
+     "per_ticket": 97.03,
+     "per_month": 7728.4,
+     "total": 40850.06,
+     "months_pos": "18/22",
+     "ex_best": 25783.21,
+     "max_dd": -18031.21,
+     "win_rate": 0.5724,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 180,
+      "per_ticket": -16.9
+     },
+     "y2": {
+      "tickets": 241,
+      "per_ticket": 182.12
+     },
+     "percentile": 86.7,
+     "edge_vs_random": 31.99
+    },
+    "fore": {
+     "label": "",
+     "tickets": 425,
+     "tickets_per_day": 3.829,
+     "per_ticket": 431.88,
+     "per_month": 34725.6,
+     "total": 183549.45,
+     "months_pos": "22/22",
+     "ex_best": 165441.46,
+     "max_dd": -10949.37,
+     "win_rate": 0.6682,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 184,
+      "per_ticket": 395.02
+     },
+     "y2": {
+      "tickets": 241,
+      "per_ticket": 460.02
+     },
+     "percentile": 100.0,
+     "edge_vs_random": 366.84
+    }
+   },
+   "meas": {
+    "random_per_ticket_mean": -87.15,
+    "random_per_ticket_sd": 26.32,
+    "random_per_month_mean": -6973.3,
+    "strength": {
+     "label": "",
+     "tickets": 424,
+     "tickets_per_day": 3.82,
+     "per_ticket": -118.01,
+     "per_month": -9466.1,
+     "total": -50035.0,
+     "months_pos": "3/22",
+     "ex_best": -67914.01,
+     "max_dd": -55282.01,
+     "win_rate": 0.4245,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 184,
+      "per_ticket": -255.12
+     },
+     "y2": {
+      "tickets": 240,
+      "per_ticket": -12.89
+     },
+     "percentile": 10.0,
+     "edge_vs_random": -30.86
+    },
+    "weak": {
+     "label": "",
+     "tickets": 421,
+     "tickets_per_day": 3.793,
+     "per_ticket": -49.6,
+     "per_month": -3950.2,
+     "total": -20879.6,
+     "months_pos": "8/22",
+     "ex_best": -35457.14,
+     "max_dd": -35488.29,
+     "win_rate": 0.4703,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 180,
+      "per_ticket": -195.94
+     },
+     "y2": {
+      "tickets": 241,
+      "per_ticket": 59.71
+     },
+     "percentile": 93.3,
+     "edge_vs_random": 37.55
+    },
+    "fore": {
+     "label": "",
+     "tickets": 425,
+     "tickets_per_day": 3.829,
+     "per_ticket": 266.57,
+     "per_month": 21433.9,
+     "total": 113293.69,
+     "months_pos": "21/22",
+     "ex_best": 95414.68,
+     "max_dd": -11861.47,
+     "win_rate": 0.5718,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 184,
+      "per_ticket": 196.61
+     },
+     "y2": {
+      "tickets": 241,
+      "per_ticket": 319.99
+     },
+     "percentile": 100.0,
+     "edge_vs_random": 353.72
+    }
+   },
+   "zero": {
+    "random_per_ticket_mean": 73.81,
+    "random_per_ticket_sd": 24.8,
+    "random_per_month_mean": 5907.5,
+    "strength": {
+     "label": "",
+     "tickets": 424,
+     "tickets_per_day": 3.82,
+     "per_ticket": 66.81,
+     "per_month": 5359.5,
+     "total": 28328.71,
+     "months_pos": "13/22",
+     "ex_best": 10220.72,
+     "max_dd": -15357.87,
+     "win_rate": 0.5377,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 184,
+      "per_ticket": -17.1
+     },
+     "y2": {
+      "tickets": 240,
+      "per_ticket": 131.15
+     },
+     "percentile": 53.3,
+     "edge_vs_random": -7.0
+    },
+    "weak": {
+     "label": "",
+     "tickets": 421,
+     "tickets_per_day": 3.793,
+     "per_ticket": 106.41,
+     "per_month": 8475.7,
+     "total": 44800.03,
+     "months_pos": "18/22",
+     "ex_best": 29719.17,
+     "max_dd": -17792.66,
+     "win_rate": 0.5819,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 180,
+      "per_ticket": -7.91
+     },
+     "y2": {
+      "tickets": 241,
+      "per_ticket": 191.8
+     },
+     "percentile": 86.7,
+     "edge_vs_random": 32.6
+    },
+    "fore": {
+     "label": "",
+     "tickets": 425,
+     "tickets_per_day": 3.829,
+     "per_ticket": 440.61,
+     "per_month": 35427.7,
+     "total": 187260.82,
+     "months_pos": "22/22",
+     "ex_best": 169152.84,
+     "max_dd": -10906.18,
+     "win_rate": 0.6753,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 184,
+      "per_ticket": 403.72
+     },
+     "y2": {
+      "tickets": 241,
+      "per_ticket": 468.78
+     },
+     "percentile": 100.0,
+     "edge_vs_random": 366.8
+    }
+   },
+   "fills": {
+    "attempts": 12885,
+    "positions": 12689,
+    "fill_rate": 0.9848,
+    "entry_passive_frac_mean": 0.6516,
+    "entry_fully_passive": 0.5762,
+    "exit_passive_frac_mean": 0.6013,
+    "exit_fully_passive": 0.5409,
+    "mean_notional": 12991.2,
+    "cost_bps_mean": {
+     "e_flat": 3.48,
+     "x_flat": 3.99,
+     "e_meas": 69.82,
+     "x_meas": 75.83
+    }
+   },
+   "tickets_per_day": 3.811,
+   "decomp": {
+    "e": {
+     "n": 9689,
+     "pi_bps_mean": 15.46,
+     "markout5_bps_mean": 35.92,
+     "net_bps": 51.39,
+     "share_reverted": 0.5578,
+     "reverted": {
+      "pi": 14.73,
+      "mo": 177.24
+     },
+     "way_down": {
+      "pi": 16.39,
+      "mo": -142.37
+     },
+     "partial_share": 0.2453,
+     "wait_s_median": 15.0
+    },
+    "x": {
+     "n": 9270,
+     "pi_bps_mean": 20.73,
+     "markout5_bps_mean": -5.78,
+     "net_bps": 14.95,
+     "share_reverted": 0.503,
+     "reverted": {
+      "pi": 16.05,
+      "mo": 95.75
+     },
+     "way_down": {
+      "pi": 25.47,
+      "mo": -108.54
+     },
+     "partial_share": 0.2597,
+     "wait_s_median": 27.0
+    }
+   },
+   "mkt_counterfactual_flat": 76.83
+  },
+  "tick5-mkt/tick5": {
+   "flat": {
+    "random_per_ticket_mean": 56.04,
+    "random_per_ticket_sd": 27.33,
+    "random_per_month_mean": 4419.1,
+    "strength": {
+     "label": "",
+     "tickets": 417,
+     "tickets_per_day": 3.757,
+     "per_ticket": 61.71,
+     "per_month": 4868.0,
+     "total": 25731.1,
+     "months_pos": "13/22",
+     "ex_best": 7623.11,
+     "max_dd": -16914.52,
+     "win_rate": 0.554,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 181,
+      "per_ticket": -18.72
+     },
+     "y2": {
+      "tickets": 236,
+      "per_ticket": 123.39
+     },
+     "percentile": 70.0,
+     "edge_vs_random": 5.67
+    },
+    "weak": {
+     "label": "",
+     "tickets": 414,
+     "tickets_per_day": 3.73,
+     "per_ticket": 85.57,
+     "per_month": 6702.6,
+     "total": 35427.96,
+     "months_pos": "17/22",
+     "ex_best": 19081.17,
+     "max_dd": -15885.57,
+     "win_rate": 0.5821,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 179,
+      "per_ticket": -15.32
+     },
+     "y2": {
+      "tickets": 235,
+      "per_ticket": 162.42
+     },
+     "percentile": 80.0,
+     "edge_vs_random": 29.53
+    },
+    "fore": {
+     "label": "",
+     "tickets": 417,
+     "tickets_per_day": 3.757,
+     "per_ticket": 440.61,
+     "per_month": 34760.7,
+     "total": 183734.87,
+     "months_pos": "22/22",
+     "ex_best": 165626.88,
+     "max_dd": -10947.16,
+     "win_rate": 0.6882,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 181,
+      "per_ticket": 401.08
+     },
+     "y2": {
+      "tickets": 236,
+      "per_ticket": 470.93
+     },
+     "percentile": 100.0,
+     "edge_vs_random": 384.57
+    }
+   },
+   "meas": {
+    "random_per_ticket_mean": -97.53,
+    "random_per_ticket_sd": 29.89,
+    "random_per_month_mean": -7669.9,
+    "strength": {
+     "label": "",
+     "tickets": 417,
+     "tickets_per_day": 3.757,
+     "per_ticket": -116.1,
+     "per_month": -9159.5,
+     "total": -48414.64,
+     "months_pos": "4/22",
+     "ex_best": -66293.66,
+     "max_dd": -54602.99,
+     "win_rate": 0.4341,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 181,
+      "per_ticket": -247.89
+     },
+     "y2": {
+      "tickets": 236,
+      "per_ticket": -15.03
+     },
+     "percentile": 33.3,
+     "edge_vs_random": -18.57
+    },
+    "weak": {
+     "label": "",
+     "tickets": 414,
+     "tickets_per_day": 3.73,
+     "per_ticket": -61.51,
+     "per_month": -4817.6,
+     "total": -25464.58,
+     "months_pos": "7/22",
+     "ex_best": -41345.65,
+     "max_dd": -41073.48,
+     "win_rate": 0.4807,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 179,
+      "per_ticket": -193.72
+     },
+     "y2": {
+      "tickets": 235,
+      "per_ticket": 39.2
+     },
+     "percentile": 90.0,
+     "edge_vs_random": 36.02
+    },
+    "fore": {
+     "label": "",
+     "tickets": 417,
+     "tickets_per_day": 3.757,
+     "per_ticket": 276.63,
+     "per_month": 21823.7,
+     "total": 115353.99,
+     "months_pos": "20/22",
+     "ex_best": 97474.98,
+     "max_dd": -11844.25,
+     "win_rate": 0.5923,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 181,
+      "per_ticket": 206.39
+     },
+     "y2": {
+      "tickets": 236,
+      "per_ticket": 330.5
+     },
+     "percentile": 100.0,
+     "edge_vs_random": 374.16
+    }
+   },
+   "zero": {
+    "random_per_ticket_mean": 62.53,
+    "random_per_ticket_sd": 27.23,
+    "random_per_month_mean": 4929.6,
+    "strength": {
+     "label": "",
+     "tickets": 417,
+     "tickets_per_day": 3.757,
+     "per_ticket": 68.35,
+     "per_month": 5391.9,
+     "total": 28499.93,
+     "months_pos": "13/22",
+     "ex_best": 10391.94,
+     "max_dd": -16673.02,
+     "win_rate": 0.554,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 181,
+      "per_ticket": -11.65
+     },
+     "y2": {
+      "tickets": 236,
+      "per_ticket": 129.7
+     },
+     "percentile": 70.0,
+     "edge_vs_random": 5.82
+    },
+    "weak": {
+     "label": "",
+     "tickets": 414,
+     "tickets_per_day": 3.73,
+     "per_ticket": 92.32,
+     "per_month": 7230.6,
+     "total": 38218.7,
+     "months_pos": "17/22",
+     "ex_best": 21858.97,
+     "max_dd": -15709.03,
+     "win_rate": 0.5894,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 179,
+      "per_ticket": -8.82
+     },
+     "y2": {
+      "tickets": 235,
+      "per_ticket": 169.35
+     },
+     "percentile": 80.0,
+     "edge_vs_random": 29.79
+    },
+    "fore": {
+     "label": "",
+     "tickets": 417,
+     "tickets_per_day": 3.757,
+     "per_ticket": 447.2,
+     "per_month": 35280.8,
+     "total": 186484.22,
+     "months_pos": "22/22",
+     "ex_best": 168376.23,
+     "max_dd": -10906.17,
+     "win_rate": 0.693,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 181,
+      "per_ticket": 407.81
+     },
+     "y2": {
+      "tickets": 236,
+      "per_ticket": 477.42
+     },
+     "percentile": 100.0,
+     "edge_vs_random": 384.67
+    }
+   },
+   "fills": {
+    "attempts": 12644,
+    "positions": 12484,
+    "fill_rate": 0.9873,
+    "entry_passive_frac_mean": 0.7459,
+    "entry_fully_passive": 0.6869,
+    "exit_passive_frac_mean": 0.6944,
+    "exit_fully_passive": 0.6276,
+    "mean_notional": 12948.2,
+    "cost_bps_mean": {
+     "e_flat": 2.54,
+     "x_flat": 3.06,
+     "e_meas": 69.28,
+     "x_meas": 76.55
+    }
+   },
+   "tickets_per_day": 3.749,
+   "decomp": {
+    "e": {
+     "n": 10614,
+     "pi_bps_mean": 15.49,
+     "markout5_bps_mean": 33.04,
+     "net_bps": 48.53,
+     "share_reverted": 0.5889,
+     "reverted": {
+      "pi": 9.08,
+      "mo": 154.76
+     },
+     "way_down": {
+      "pi": 24.69,
+      "mo": -141.35
+     },
+     "partial_share": 0.1921,
+     "wait_s_median": 17.0
+    },
+    "x": {
+     "n": 10050,
+     "pi_bps_mean": 20.07,
+     "markout5_bps_mean": -7.22,
+     "net_bps": 12.85,
+     "share_reverted": 0.4959,
+     "reverted": {
+      "pi": 16.38,
+      "mo": 92.19
+     },
+     "way_down": {
+      "pi": 23.71,
+      "mo": -105.03
+     },
+     "partial_share": 0.2204,
+     "wait_s_median": 32.0
+    }
+   },
+   "mkt_counterfactual_flat": 69.76
+  },
+  "bid-rest3-cancel/ask-rest3": {
+   "flat": {
+    "random_per_ticket_mean": 104.32,
+    "random_per_ticket_sd": 23.39,
+    "random_per_month_mean": 7359.2,
+    "strength": {
+     "label": "",
+     "tickets": 375,
+     "tickets_per_day": 3.378,
+     "per_ticket": 111.4,
+     "per_month": 7903.7,
+     "total": 41776.85,
+     "months_pos": "14/22",
+     "ex_best": 23668.86,
+     "max_dd": -6727.99,
+     "win_rate": 0.56,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 160,
+      "per_ticket": 145.85
+     },
+     "y2": {
+      "tickets": 215,
+      "per_ticket": 85.77
+     },
+     "percentile": 70.0,
+     "edge_vs_random": 7.08
+    },
+    "weak": {
+     "label": "",
+     "tickets": 368,
+     "tickets_per_day": 3.315,
+     "per_ticket": 115.09,
+     "per_month": 8012.4,
+     "total": 42351.32,
+     "months_pos": "17/22",
+     "ex_best": 33210.34,
+     "max_dd": -3791.19,
+     "win_rate": 0.6141,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 153,
+      "per_ticket": 115.3
+     },
+     "y2": {
+      "tickets": 215,
+      "per_ticket": 114.93
+     },
+     "percentile": 73.3,
+     "edge_vs_random": 10.77
+    },
+    "fore": {
+     "label": "",
+     "tickets": 377,
+     "tickets_per_day": 3.396,
+     "per_ticket": 393.81,
+     "per_month": 28087.9,
+     "total": 148464.77,
+     "months_pos": "22/22",
+     "ex_best": 130356.78,
+     "max_dd": -4248.62,
+     "win_rate": 0.679,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 159,
+      "per_ticket": 445.71
+     },
+     "y2": {
+      "tickets": 218,
+      "per_ticket": 355.95
+     },
+     "percentile": 100.0,
+     "edge_vs_random": 289.49
+    }
+   },
+   "meas": {
+    "random_per_ticket_mean": -1.97,
+    "random_per_ticket_sd": 24.55,
+    "random_per_month_mean": -134.1,
+    "strength": {
+     "label": "",
+     "tickets": 375,
+     "tickets_per_day": 3.378,
+     "per_ticket": -14.94,
+     "per_month": -1060.1,
+     "total": -5603.27,
+     "months_pos": "8/22",
+     "ex_best": -23482.28,
+     "max_dd": -21841.72,
+     "win_rate": 0.464,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 160,
+      "per_ticket": -9.21
+     },
+     "y2": {
+      "tickets": 215,
+      "per_ticket": -19.21
+     },
+     "percentile": 33.3,
+     "edge_vs_random": -12.97
+    },
+    "weak": {
+     "label": "",
+     "tickets": 368,
+     "tickets_per_day": 3.315,
+     "per_ticket": 16.12,
+     "per_month": 1122.3,
+     "total": 5932.25,
+     "months_pos": "13/22",
+     "ex_best": -2992.91,
+     "max_dd": -8098.77,
+     "win_rate": 0.5109,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 153,
+      "per_ticket": 3.43
+     },
+     "y2": {
+      "tickets": 215,
+      "per_ticket": 25.15
+     },
+     "percentile": 76.7,
+     "edge_vs_random": 18.09
+    },
+    "fore": {
+     "label": "",
+     "tickets": 377,
+     "tickets_per_day": 3.396,
+     "per_ticket": 280.19,
+     "per_month": 19984.1,
+     "total": 105630.34,
+     "months_pos": "21/22",
+     "ex_best": 87751.33,
+     "max_dd": -4800.49,
+     "win_rate": 0.5862,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 159,
+      "per_ticket": 312.62
+     },
+     "y2": {
+      "tickets": 218,
+      "per_ticket": 256.53
+     },
+     "percentile": 100.0,
+     "edge_vs_random": 282.16
+    }
+   },
+   "zero": {
+    "random_per_ticket_mean": 108.12,
+    "random_per_ticket_sd": 23.37,
+    "random_per_month_mean": 7627.2,
+    "strength": {
+     "label": "",
+     "tickets": 375,
+     "tickets_per_day": 3.378,
+     "per_ticket": 115.39,
+     "per_month": 8186.7,
+     "total": 43272.42,
+     "months_pos": "14/22",
+     "ex_best": 25164.43,
+     "max_dd": -6649.75,
+     "win_rate": 0.56,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 160,
+      "per_ticket": 149.5
+     },
+     "y2": {
+      "tickets": 215,
+      "per_ticket": 90.01
+     },
+     "percentile": 70.0,
+     "edge_vs_random": 7.27
+    },
+    "weak": {
+     "label": "",
+     "tickets": 368,
+     "tickets_per_day": 3.315,
+     "per_ticket": 119.07,
+     "per_month": 8290.2,
+     "total": 43819.4,
+     "months_pos": "18/22",
+     "ex_best": 34678.42,
+     "max_dd": -3763.57,
+     "win_rate": 0.6141,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 153,
+      "per_ticket": 118.68
+     },
+     "y2": {
+      "tickets": 215,
+      "per_ticket": 119.35
+     },
+     "percentile": 73.3,
+     "edge_vs_random": 10.95
+    },
+    "fore": {
+     "label": "",
+     "tickets": 377,
+     "tickets_per_day": 3.396,
+     "per_ticket": 397.22,
+     "per_month": 28331.1,
+     "total": 149750.2,
+     "months_pos": "22/22",
+     "ex_best": 131642.21,
+     "max_dd": -4234.73,
+     "win_rate": 0.6817,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 111,
+     "y1": {
+      "tickets": 159,
+      "per_ticket": 448.86
+     },
+     "y2": {
+      "tickets": 218,
+      "per_ticket": 359.55
+     },
+     "percentile": 100.0,
+     "edge_vs_random": 289.1
+    }
+   },
+   "fills": {
+    "attempts": 15198,
+    "positions": 11181,
+    "fill_rate": 0.7357,
+    "entry_passive_frac_mean": 1.0,
+    "entry_fully_passive": 1.0,
+    "exit_passive_frac_mean": 0.6289,
+    "exit_fully_passive": 0.5696,
+    "mean_notional": 11941.7,
+    "cost_bps_mean": {
+     "e_flat": 0.0,
+     "x_flat": 3.71,
+     "e_meas": 56.38,
+     "x_meas": 68.03
+    }
+   },
+   "tickets_per_day": 3.358,
+   "decomp": {
+    "e": {
+     "n": 11181,
+     "pi_bps_mean": 36.39,
+     "markout5_bps_mean": 57.99,
+     "net_bps": 94.38,
+     "share_reverted": 0.6031,
+     "reverted": {
+      "pi": 34.96,
+      "mo": 194.02
+     },
+     "way_down": {
+      "pi": 38.58,
+      "mo": -148.71
+     },
+     "partial_share": 0.0,
+     "wait_s_median": 13.0
+    },
+    "x": {
+     "n": 8085,
+     "pi_bps_mean": 25.52,
+     "markout5_bps_mean": -4.6,
+     "net_bps": 20.92,
+     "share_reverted": 0.5096,
+     "reverted": {
+      "pi": 23.57,
+      "mo": 109.45
+     },
+     "way_down": {
+      "pi": 27.55,
+      "mo": -123.1
+     },
+     "partial_share": 0.2122,
+     "wait_s_median": 21.0
+    }
+   },
+   "mkt_counterfactual_flat": 66.61
+  }
+ }
+}
