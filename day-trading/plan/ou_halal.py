@@ -58,17 +58,17 @@ def main():
     F = OF.build_features(A)
     dc = OC.DailyCost()
     uni = L.universe()
-    big = {s for s in syms if L.mcap(s) >= 10e9}
-    mid = {s for s in syms if 2e9 <= L.mcap(s) < 10e9}
+    MC = L.mcap_matrix(dates, syms, sidx)
     base = {
         "open": {d: {r[0] for r in uni[d]} for d in dates},
         "open_top600": {d: {r[0] for r in uni[d][:L.MINUTE_TOP]}
                         for d in dates},
-        "open_mcap10b": {d: {r[0] for r in uni[d] if r[0] in big}
-                         for d in dates},
-        "open_mcap2_10b": {d: {r[0] for r in uni[d] if r[0] in mid}
-                           for d in dates},
     }
+    for nm, lo_, hi_ in (("open_mcap10b", 10e9, np.inf),
+                         ("open_mcap2_10b", 2e9, 10e9)):
+        base[nm] = {d: {r[0] for r in uni[d]
+                        if r[0] in sidx and lo_ <= MC[i, sidx[r[0]]] < hi_}
+                    for i, d in enumerate(dates)}
     out = {"list_n": len(cur), "new_same_as_current": same,
            "union_halal_in_open": None, "rows": {}}
     u = sorted({r[0] for v in uni.values() for r in v})

@@ -198,13 +198,14 @@ def run_pre(pre, score, sign, side, cost, ntick=NTICK, rng=None,
 
 def search(pre, F, setting, seeds=SEEDS, neutral=False):
     sides = [1] if setting.get("long_only", True) else [1, -1]
+    cap = bool(setting.get("cap", False))
     rows = []
     for name in FEATURES:
         arr = F[name]
         for sign in (1, -1):
             for side in sides:
                 dp, tk, used = run_pre(pre, arr, sign, side, setting["cost"],
-                                       neutral=neutral)
+                                       neutral=neutral, cap=cap)
                 if tk.size == 0:
                     continue
                 lab = f"{name}{'+' if sign > 0 else '-'}" \
@@ -215,7 +216,7 @@ def search(pre, F, setting, seeds=SEEDS, neutral=False):
     for k in range(seeds):
         rng = np.random.default_rng(700 + k)
         dp, tk, used = run_pre(pre, None, 1, sides[0], setting["cost"],
-                               rng=rng, neutral=neutral)
+                               rng=rng, neutral=neutral, cap=cap)
         rnd.append(L.summarise(dp, used, tk, f"rand{k}"))
     rm = np.array([r["per_month"] for r in rnd])
     rt = np.array([r["per_ticket"] for r in rnd if r["per_ticket"]])
@@ -286,16 +287,14 @@ def stage_close1559(seeds=SEEDS):
     dc = OC.DailyCost()
     O30, C59 = minute_close_matrix(dates, sidx, len(syms))
     uni = L.universe()
-    big = {s for s in syms if L.mcap(s) >= 10e9}
-    mid = {s for s in syms if 2e9 <= L.mcap(s) < 10e9}
-    MEM = {
-        "open_top600": {d: {r[0] for r in uni[d][:L.MINUTE_TOP]}
-                        for d in dates},
-        "open_mcap10b": {d: {r[0] for r in uni[d][:L.MINUTE_TOP] if r[0] in big}
-                         for d in dates},
-        "open_mcap2_10b": {d: {r[0] for r in uni[d][:L.MINUTE_TOP]
-                               if r[0] in mid} for d in dates},
-    }
+    MC = L.mcap_matrix(dates, syms, sidx)
+    MEM = {"open_top600": {d: {r[0] for r in uni[d][:L.MINUTE_TOP]}
+                           for d in dates}}
+    for nm, lo_, hi_ in (("open_mcap10b", 10e9, np.inf),
+                         ("open_mcap2_10b", 2e9, 10e9)):
+        MEM[nm] = {d: {r[0] for r in uni[d][:L.MINUTE_TOP]
+                       if r[0] in sidx and lo_ <= MC[i, sidx[r[0]]] < hi_}
+                   for i, d in enumerate(dates)}
     out = {}
     for uk, mem in MEM.items():
         for exit_label, Aa in (("gdclose", A),
@@ -353,12 +352,18 @@ def main():
                      for r in json.loads(f.read_text())} if f.exists()
                     else set())
         MEM[kind] = m
-    # large-cap slice of the open universe (mandate Test 4)
+    # large-cap slice of the open universe (mandate Test 4).  Market cap is
+    # CAUSAL: present-day share count x the PREVIOUS session's close, so
+    # membership cannot be conditioned on the name having gone up.
+    MC = L.mcap_matrix(dates, syms, sidx)
     for nm, lo_, hi_ in (("open_mcap10b", 10e9, np.inf),
                          ("open_mcap2_10b", 2e9, 10e9),
                          ("open_mcap_lt2b", 0.0, 2e9)):
-        sel = {s for s in syms if lo_ <= L.mcap(s) < hi_}
-        MEM[nm] = {d: {r[0] for r in uni[d] if r[0] in sel} for d in dates}
+        m = {}
+        for i, d in enumerate(dates):
+            m[d] = {r[0] for r in uni[d]
+                    if r[0] in sidx and lo_ <= MC[i, sidx[r[0]]] < hi_}
+        MEM[nm] = m
     # the LIQUIDITY LADDER -- the mandate's breadth question asked as a
     # gradient rather than as one contrast.  Rank k by prior-60-day median
     # dollar volume, which is the same quantity the universe is screened on.
@@ -382,9 +387,9 @@ def main():
     PRE = {}
 
     def run(label, universe_key, cost, exit_mode="close", long_only=True,
-            groups=None):
+            groups=None, cap=False):
         st = {"cost": cost, "exit_mode": exit_mode, "long_only": long_only,
-              "universe": universe_key}
+              "universe": universe_key, "cap": cap}
         key = (universe_key, exit_mode, groups is not None)
         if key not in PRE:
             PRE[key] = Pre(dates, A, sidx, MEM[universe_key], exit_mode, dc,
@@ -423,6 +428,14 @@ def main():
     run("sector-neutral (one per 2-digit SIC)", "open", "flat10", groups=grp)
     run("sector-neutral MEASURED", "open", "measured", groups=grp)
     run("sector-neutral ZERO-COST", "open", "zero", groups=grp)
+
+    # ---- the ACCOUNT-LEGAL ladder: 6 x $15,000 + 1 x $10,000 = $100,000/day
+    # ---- (every row above, like every hd_frame row in the index, charges
+    # ---- 7 x $15,000 = $105,000, which the cash account cannot do)
+    for u in ("open_top600", "open_mcap10b", "open_mcap2_10b",
+              "open_rank0_300", "halal_strict"):
+        for c in ("flat10", "measured", "zero"):
+            run(f"CAP100k {u} {c}", u, c, cap=True)
 
     L.write("frame.json", out)
     print("[frame] wrote plan/ou_out/frame.json", flush=True)

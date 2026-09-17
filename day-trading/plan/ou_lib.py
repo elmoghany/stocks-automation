@@ -196,9 +196,53 @@ def sic2(sym):
 
 
 def mcap(sym):
+    """PRESENT-DAY market cap.  NOT causal -- see `mcap_matrix`."""
     m = meta().get(sym) or {}
     v = m.get("market_cap")
     return float(v) if v else np.nan
+
+
+def shares(sym):
+    m = meta().get(sym) or {}
+    v = m.get("share_class_shares_outstanding") \
+        or m.get("weighted_shares_outstanding")
+    return float(v) if v else np.nan
+
+
+def prev_close_matrix(dates, syms, sidx):
+    """(D, S) grouped-daily close of the PREVIOUS trading session."""
+    td = trading_dates()
+    prev_of = {d: td[i - 1] for i, d in enumerate(td) if i}
+    P = np.full((len(dates), len(syms)), np.nan)
+    for i, d in enumerate(dates):
+        pd_ = prev_of.get(d)
+        if pd_ is None:
+            continue
+        for s, x in gd_day(pd_).items():
+            j = sidx.get(s)
+            if j is not None and x.get("c") is not None:
+                P[i, j] = x["c"]
+    return P
+
+
+def mcap_matrix(dates, syms, sidx):
+    """(D, S) CAUSAL market cap = present-day share count x the PREVIOUS
+    session's close.
+
+    The `market_cap` field in data/hgr_ticker_meta.json is a 2026-09
+    snapshot.  Slicing 2024-2026 dates on it is look-ahead on MEMBERSHIP --
+    a name is in the "> $10B" bucket partly *because* it went up during the
+    study window, which is exactly the outcome-conditioned membership that
+    retracted the MX series.  Replacing the price leg with the previous
+    session's close removes the dominant term; what remains is drift in the
+    share count, which moves a few percent a year and is not a function of
+    the day's outcome.  Grouped-daily closes are split-adjusted to the
+    present and so is the present-day share count, so the product is
+    consistent across splits -- the same convention plan/rl2/universe.py
+    records for its own mcap.
+    """
+    sh = np.array([shares(s) for s in syms], float)
+    return prev_close_matrix(dates, syms, sidx) * sh[None, :]
 
 
 # ------------------------------------------------------------------ universe
