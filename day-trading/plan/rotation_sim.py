@@ -1090,6 +1090,62 @@ def _vs2_cfgs():
 CFGS.update(_vs2_cfgs())
 
 
+# ---------------------------------------------------------------------
+# CHAMPION-REPLAY (2026-09-17) -- component ablation of the rotation
+# champion ON THE CAUSAL UNIVERSE. Every row below is meant to be run
+# in the honest epoch, i.e.
+#   HALAL_STRICT=1 PT_FILED=1 POOL_HYGIENE=1 RS_CROSS=1 RS_DEFER=1
+# in which the untouched `C37F` entry posts -88,784 / 1,602 tickets
+# (rotation_results_hf2.json). CPID is a pure alias of C37F and exists
+# only so the ablation batch carries its own identity row; if CPID does
+# not reproduce C37F to the dollar, nothing else in the batch is
+# readable. These are ADDITIONS ONLY -- no existing config, default or
+# code path is modified by this block.
+def _cp_cfgs():
+    base = dict(entry_cutoff=dtime(14, 30), escape=dtime(10, 0))
+    out = {
+        "CPID": dict(base, desc="IDENTITY: C37F reproduction inside the "
+                                "CHAMPION-REPLAY batch (must equal C37F)"),
+        # --- what the RANKING is worth -------------------------------
+        "CPRND": dict(base, rand=True,
+                      desc="CONTROL: random pick among the gated names "
+                           "(isolates the coil/pressure ranking)"),
+        "CPGA": dict(base, rank_mode="gain_asc",
+                     desc="rank by LEAST-extended crosser (the IC study's "
+                          "sign) instead of coil/pressure"),
+        "CPGD": dict(base, rank_mode="gain_desc",
+                     desc="CONTROL INVERTED: most-extended crosser first "
+                          "(must lose if gain_asc carries information)"),
+        # --- what the STRUCTURE is worth -----------------------------
+        "CPNOROT": dict(base, rotate=False,
+                        desc="no rotation: every freed ticket returns to "
+                             "the same name (the R023 baseline)"),
+        "CPNOESC": dict(entry_cutoff=dtime(14, 30),
+                        desc="no 10:00 stale-pick escape"),
+        "CPW12": dict(base, entry_cutoff=dtime(12, 0),
+                      desc="entry window closes at 12:00 instead of 14:30"),
+        # --- what each EXIT LEG is worth ------------------------------
+        "CPNOB": dict(base, sim_extra={"sell_mode": "target_stop_only"},
+                      desc="no bearish-pattern exit (the leg that printed "
+                           "631 exits and +$153k on C37F-hf2 year)"),
+        "CPNOS": dict(base, sim_extra={"stop_pct": 99},
+                      desc="no -8% stop"),
+        "CPNOT": dict(base, sim_extra={"trail_pct": 999,
+                                       "pressure_trail": None},
+                      desc="no trail (fixed or pressure-modulated)"),
+        "CPNOSO": dict(base, sim_extra={"scale_out_at": None},
+                       desc="no +25% scale-out"),
+        # --- what the TOLL is worth -----------------------------------
+        "CPSLIP": dict(base, slip=0.001,
+                       desc="C37F + the project's flat 10 bps/side (C37F "
+                            "itself carries NO slip -- COST-REBASE)"),
+    }
+    return out
+
+
+CFGS.update(_cp_cfgs())
+
+
 def bars_for(sym, date):
     f = M1 / f"{sym}_{date}.csv"
     if not f.exists() or f.read_text(errors="ignore").startswith("EMPTY"):
