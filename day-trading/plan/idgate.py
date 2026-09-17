@@ -309,6 +309,15 @@ ROT_EXPECT = {
     #   HALAL_STRICT=1 PT_FILED=1 POOL_HYGIENE=1 ROTTRADES=1
     #   MASSIVE_TH_INTERVAL=0.25 RS_CROSS=1 RS_DEFER=1 ROTSHARD=hf3
     #   python plan/rotation_sim.py C37F HOLD1
+    #
+    # PARTIAL CHECKPOINTS, kept because they are CHECKABLE: the
+    # walk is deterministic and the re-launched run reproduced the
+    # killed run's running total exactly at the first checkpoint.
+    # C37F `year`, cumulative $ at each 50-day mark:
+    #     50d  -14,913     150d  -35,234
+    #    100d  -20,773     200d  -47,806
+    # A future re-run that does not hit these four numbers is NOT
+    # the same measurement and the epoch note above is wrong.
 }
 # Which shard file each epoch's rows live in (data/massive/).
 ROT_SHARD = {"fm": "rotation_results_rs_id.json",
