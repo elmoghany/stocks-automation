@@ -1,0 +1,25 @@
+# EXPERIMENTS INDEX
+
+One row per research line. **Every agent appends its row when it finishes** (and updates it if it re-runs). Numbers are HONEST-HARNESS numbers unless marked otherwise: full-coverage minute bars, pool hygiene, regular-session eligibility (`RS_CROSS=1 RS_DEFER=1`), realistic gap-through fills, 10 bps/side (+50 bps outside 09:30–16:00), point-in-time halal (`HALAL_STRICT=1 PT_FILED=1`, 2026-09-16 gate). The loop target is **net ≥ $7,500/month** with $15k same-day tickets on halal-PASS names, both years positive, ≥ 90th percentile vs a 30-seed random control on total AND ex-best-day, inverted/shuffled controls failing, poison test passing, aug-2026 sign-consistent.
+
+Retraction ladder (why pre-2026-09-16 numbers are not comparable): bar-coverage bias (C37E +$635k) → hidden `pressure_trail` in "no-exit" configs (K6S +$302k) → stop fills at untraded prices (PTRAIL6 +$239k) → decision-bar look-ahead in `market_at_start` → outcome-conditioned universe (MXB +$181k). Each was found by an adversarial code-path audit, not by the statistical controls (which inherit the leak).
+
+| line (agent name) | question | universe / data | best honest result | verdict | where written |
+|---|---|---|---|---|---|
+| **C37 / C37F family** (baseline) | the live rules on honest data | gapper pool, RS eligibility, 415-name halal | C37F-hf2 −$88,784 / 414 traded days = **−$55/ticket, −$215/day**; C37F-df (pre-halal-fix universe) −$7/ticket | live benchmark; negative | NOTES "REGULAR-SESSION ELIGIBILITY" + "HALAL-FIX EPOCH" (2026-09-16); `plan/idgate.py` ROT_EXPECT |
+| **HOLD1** | one gapper held to 15:00, no exits | same | HOLD1-hf2 −$182/ticket | negative | same |
+| **XH / XP / K / PTRAIL** (exit families) | remove stops/trails; pressure trail; 2–7 concurrent | gapper pool (pre-RS) | all negative once the hidden trail + phantom fills were removed (PTRAIL6 −$92/ticket) | retracted "winners" | NOTES 2026-09-02 (fill-model epoch), RETRACTION entries |
+| **MX** (mean-reversion entry + TA/time exits) | least-extended crosser at 09:35/10:00, exits 10:30–12:00 | gapper pool | −$99…−$236/ticket after RS fix; inverted controls moved $5–6 | leak (universe), retracted | NOTES "MX-SERIES RETRACTION #2" (2026-09-16) |
+| **IC study** | which causal features predict forward returns | gapper pool, RS | `gain_now` corner inverted (−2.06%); C37 key IC ≈ +0.03 | no usable signal | `IC-STUDY-honest-pool-rs.md` |
+| **HV / IR / L** (vetoes, re-ranking, liquidity) | filters and orderings | gapper pool (pre-RS) | abstention gradients; random veto beat calibrated instruments | no edge | NOTES HV/IR entries (2026-08-26/27) |
+| **RL-SCOUT v1** | PPO/DQN/MaskablePPO/EIIE/SAC intraday under the frame | gapper pool, RS, cluster | all lose; land on a no-information churn baseline (−$33…−$48/ticket); poison 128/128 | null | `rl-audit.md`, NOTES "RL-SERIES (2026-09-16)" |
+| **WIDE-NET** | top-30 tickets mined → one-stock validation | causal wide universe (61 PASS/day) | walk-forward LightGBM real skill (+$24/ticket, 97th pct) but −$3.35/ticket net; closest rule **+$314/month** (31 tickets) | FAIL, 24× short; IC needed 0.48 vs 0.03 achieved | `widenet-audit.md`, NOTES "WIDE-NET (2026-09-16)" |
+| **HALAL-AUDITOR** | are the halal calculations correct | 1,260 armable → 415 | nine defects all biased toward PASS; fixed (strict 10/10/20, SIC 6xxx, TTM 5%, missing rows refuse, EDGAR debt bug, plausibility cap, upper bound) | fixed; universe 1,260 → 415 | `halal-audit-2026-09-16.md`, NOTES "HALAL-FIX EPOCH", "INTEREST-LEG REFINEMENT" |
+| **VIDEO-MINER** (VS2) | mechanics retail videos teach | wide causal universe + gapper pool | table 1: 15 mechanics all fail; closest +$5,343 total / −$6,262 ex-best | running (batch 2) | `video-studies/*.md`, NOTES "VS2-SERIES" |
+| **RL-SCOUT v2** | RL / bandit / offline RL / rule search on the causal wide universe | m1w cache (causal wide universe) | pending | running | `rl2-audit.md` (in progress) |
+| **UNIVERSE-QUOTES** | widen halal coverage; limit fills from real NBBO | 61 → **278** PASS names/day; sampled quotes/trades | limit entries recover the entry-side cost "and not one bp more"; full table pending | running | `universe-quotes-audit.md` (in progress) |
+| **DAY-SESSION** (live paper) | ground truth | Robinhood live | 20 scored days, −$4,413 (−$221/day); Day 23 +$16 | tracking the negative baseline | `data/paper_days/*.md`, NOTES daily entries |
+
+## Row template (copy when you finish a line)
+
+`| **NAME** | question | universe / data | best honest result ($/ticket, $/month net, control percentile, ex-best) | verdict (PASS / FAIL / null / retracted / running) | audit file + NOTES section |`
