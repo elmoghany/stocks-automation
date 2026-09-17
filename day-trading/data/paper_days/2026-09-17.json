@@ -79,6 +79,33 @@
     "armable_today": ["INLX", "VICR"],
     "recorded_to_scan_state": "halal_fail 12 (incl. GLAS), cannot_verify 7 -- neither can re-enter the pool today or tomorrow"
   },
+  "armed_orders": [
+    {
+      "ticket": 1,
+      "symbol": "VICR",
+      "trigger_type": "A -- 5-minute ORB break",
+      "armed_et": "09:36:26",
+      "armed_utc": "2026-09-17T13:36:26Z",
+      "orb_window": "09:30-09:34 ET (13:30Z-13:34Z)",
+      "orb_high": 211.975,
+      "orb_low": 206.55,
+      "trigger": 211.98,
+      "limit": 213.04,
+      "limit_basis": "trigger + 0.5%, bounded slippage per the stop-limit rule",
+      "shares": 70,
+      "notional": 14838.6,
+      "gates_at_arming": {
+        "halal": "PASS (re-run live_halal.py at arming: loan 0.09%, cash 5.35%, combined 5.44%) + Q2 business line PASS",
+        "spread": "0.466% (bid 207.74 / ask 208.71) -- inside the 0.5% cap",
+        "fill_arming": "PASS -- trigger 211.98 is ABOVE the 208.71 ask, so the stop is not already met and is not a disguised market order",
+        "depth": "1,445 sh resting from the inside ask up to trigger*1.005 = 213.04, vs 70 needed",
+        "size_cap": "trail10vol 46,248 -> 20% cap 9,250 sh vs 70 needed. Unambiguous now that the regular session is trading -- the 08:25 premarket ambiguity does not arise here",
+        "rank": "TOP = VICR, coil 0.981, 30-bar pressure +0.08 (now TRUSTED, >20k sh), calm-gap yes"
+      },
+      "status": "ARMED",
+      "note": "PAPER resting order only -- no real order was or will be placed."
+    }
+  ],
   "trades": [],
   "halal_detail": {
     "INLX": {"q1": "PASS", "loan_pct": 6.92, "cash_pct": 7.48, "combined": 14.4, "mcap": 22924469.0, "q2": "PASS", "screened_et": "06:40"},
