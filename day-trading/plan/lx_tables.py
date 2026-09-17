@@ -260,7 +260,7 @@ def _report(acc, att, ladders, names, seeds, ndays, tag, extra=None):
 
 # ------------------------------------------------------------------- wn
 def stage_wn(seeds=30, workers=2, ndays=None, ladders=None, post_k=3,
-             tag="wn"):
+             tag="wn", only=None):
     t = Table()
     days = UE.cached_days(t, 1)
     if ndays:
@@ -279,9 +279,11 @@ def stage_wn(seeds=30, workers=2, ndays=None, ladders=None, post_k=3,
         np.save(p, -np.load(scores[k]))
         inv[k + "_inv"] = str(p)
     scores.update(inv)
+    if only:
+        scores = {k: v for k, v in scores.items() if k in only}
     ladders = ladders or list(LADDERS)
     from wn_lib import TAB
-    spec = {"h": "h30", "scores": scores, "ref": "model", "seeds": seeds,
+    spec = {"h": "h30", "scores": scores, "ref": next(iter(scores)), "seeds": seeds,
             "ladders": ladders, "post_k": post_k, "table": str(TAB)}
     print(f"[wn] {len(days)} OOS days, post_k {post_k}, {len(ladders)} ladders",
           flush=True)
@@ -451,8 +453,10 @@ if __name__ == "__main__":
     if st == "ident":
         stage_ident(g("--days", 12))
     elif st == "wn":
+        on = g("--only", "")
         stage_wn(g("--seeds", 30), g("--workers", 2), g("--days", 0) or None,
-                 lad, g("--postk", 3), g("--tag", "wn"))
+                 lad, g("--postk", 3), g("--tag", "wn"),
+                 on.split(",") if on else None)
     elif st == "rev":
         stage_rev(g("--seeds", 30), g("--workers", 2), g("--days", 0) or None,
                   lad, g("--tag", "rev"), exit_wait=g("--xwait", 3))
