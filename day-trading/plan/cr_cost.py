@@ -211,6 +211,26 @@ def cfile(sym, date):
     return CDIR / f"{sym}_{date}.npz"
 
 
+_IDX = [None]
+
+
+def _index():
+    """symbol -> sorted list of dates present in the per-minute cache.
+
+    Built once by scanning the directory. Globbing per symbol over a
+    27k-file directory was the dominant cost of the prior-session
+    fallback."""
+    if _IDX[0] is None:
+        d = {}
+        for p in CDIR.glob("*.npz"):
+            s, dt = p.name[:-4].split("_", 1)
+            d.setdefault(s, []).append(dt)
+        for v in d.values():
+            v.sort()
+        _IDX[0] = d
+    return _IDX[0]
+
+
 def build_one(sym, date, force=False):
     f = cfile(sym, date)
     if f.exists() and not force:
@@ -239,6 +259,62 @@ def build_one(sym, date, force=False):
 # stage 2 -- the estimators (vectorised; cross-checked in --selftest
 #            against plan/liquidity_estimators.py's reference code)
 # ======================================================================
+
+def cs_pairs(o, h, l):
+    """Vectorised Corwin-Schultz PER PAIR.
+
+    Pair i is (bar i, bar i+1). Returns (s, ok) where s[i] is that
+    pair's spread estimate as a FRACTION (floored at 0 per the paper's
+    Section II.C correction) and ok[i] says the pair was usable. The
+    windowed estimator is then a cumulative-sum mean over pairs, which
+    turns the O(minutes x window) Python loop into O(minutes). Proved
+    identical to `cs_bps` (and therefore to
+    plan/liquidity_estimators.py's reference) in --selftest.
+    """
+    h1, l1 = h[:-1], l[:-1]
+    h2, l2, o2 = h[1:].copy(), l[1:].copy(), o[1:]
+    ok = ((np.minimum.reduce([h1, l1, h2, l2, o2]) > 0)
+          & (h1 >= l1) & (h2 >= l2))
+    adj = np.where(o2 > h1, o2 - h1, np.where(o2 < l1, o2 - l1, 0.0))
+    h2 = h2 - adj
+    l2 = l2 - adj
+    ok &= np.minimum(h2, l2) > 0
+    s = np.zeros(len(h1))
+    if ok.any():
+        with np.errstate(divide="ignore", invalid="ignore"):
+            b = (np.log(h1[ok] / l1[ok]) ** 2
+                 + np.log(h2[ok] / l2[ok]) ** 2)
+            g = np.log(np.maximum(h1[ok], h2[ok])
+                       / np.minimum(l1[ok], l2[ok])) ** 2
+            alpha = ((np.sqrt(2.0 * b) - np.sqrt(b)) / CS_K
+                     - np.sqrt(g / CS_K))
+            ss = 2.0 * (np.exp(alpha) - 1.0) / (1.0 + np.exp(alpha))
+        s[ok] = np.maximum(np.nan_to_num(ss), 0.0)
+    return s, ok
+
+
+def ar_pairs(h, l, c):
+    """Vectorised Abdi-Ranaldo per pair: x[i] and its usability."""
+    h1, l1, c1 = h[:-1], l[:-1], c[:-1]
+    h2, l2 = h[1:], l[1:]
+    ok = np.minimum.reduce([h1, l1, c1, h2, l2]) > 0
+    x = np.zeros(len(h1))
+    if ok.any():
+        with np.errstate(divide="ignore", invalid="ignore"):
+            lc = np.log(c1[ok])
+            e1 = 0.5 * (np.log(h1[ok]) + np.log(l1[ok]))
+            e2 = 0.5 * (np.log(h2[ok]) + np.log(l2[ok]))
+            x[ok] = (lc - e1) * (lc - e2)
+    return np.nan_to_num(x), ok
+
+
+def _win_mean(csum, ccnt, a, b, minn):
+    """mean over [a, b) from cumulative sums; None if fewer than minn."""
+    n = ccnt[b] - ccnt[a]
+    if n < minn:
+        return None
+    return (csum[b] - csum[a]) / n
+
 
 def cs_bps(o, h, l, i0, i1):
     """Corwin-Schultz over 1-minute bars [i0, i1). Percent*100 = bps."""
@@ -406,7 +482,18 @@ class CostModel:
                     # sqrt(10) would over-state sigma.
                     sigw[m] = float(np.std(r, ddof=1)) * math.sqrt(
                         max(1, m - a)) * 1e4
-        # spread: max(HL2, CS, AR) on trailing windows
+        # spread: max(HL2, CS, AR) on trailing windows.
+        # CS/AR are cumulative-sum means over PER-PAIR arrays: pair i
+        # spans bars i and i+1, so the window [b0, m) of BARS is the
+        # window [b0, m-1) of PAIRS -- exactly what cs_bps/ar_bps loop
+        # over, and --selftest asserts the two agree to 1e-9.
+        cs_s, cs_ok = cs_pairs(d.o, d.h, d.l)
+        ar_x, ar_ok = ar_pairs(d.h, d.l, d.c)
+        cs_cs = np.concatenate([[0.0], np.cumsum(np.where(cs_ok, cs_s, 0.0))])
+        cs_cn = np.concatenate([[0], np.cumsum(cs_ok.astype(np.int64))])
+        ar_cs = np.concatenate([[0.0], np.cumsum(np.where(ar_ok, ar_x, 0.0))])
+        ar_cn = np.concatenate([[0], np.cumsum(ar_ok.astype(np.int64))])
+        npair = len(cs_s)
         for m in range(n):
             a = max(0, m - SPREAD_WIN)
             w = d.hl2[a:m]
@@ -418,8 +505,12 @@ class CostModel:
                 w = w[np.isfinite(w)]
                 hl = float(np.median(w)) if len(w) >= MIN_MIN_HL2 else None
             b0 = max(0, m - CSAR_WIN)
-            cs = cs_bps(d.o, d.h, d.l, b0, m)
-            ar = ar_bps(d.h, d.l, d.c, b0, m)
+            pa, pb = min(b0, npair), min(max(m - 1, 0), npair)
+            cs = _win_mean(cs_cs, cs_cn, pa, pb, MIN_PAIRS)
+            cs = None if cs is None else 1e4 * cs
+            arm = _win_mean(ar_cs, ar_cn, pa, pb, MIN_PAIRS)
+            ar = None if arm is None else 1e4 * math.sqrt(
+                max(4.0 * arm, 0.0))
             vals = [v for v in (hl, cs, ar) if v is not None]
             if vals:
                 if self.spread_mode == "max":
@@ -445,10 +536,8 @@ class CostModel:
         cache = self._prior.setdefault(sym, {})
         if date in cache:
             return cache[date]
-        if sym not in self._prior or "_dates" not in cache:
-            ds = sorted(p.name.split("_", 1)[1][:-4]
-                        for p in CDIR.glob(f"{sym}_*.npz"))
-            cache["_dates"] = ds
+        if "_dates" not in cache:
+            cache["_dates"] = _index().get(sym, [])
         ds = cache["_dates"]
         i = bisect_left(ds, date)
         val = None
@@ -616,6 +705,46 @@ def selftest():
     print(f"[1] CS/AR vs liquidity_estimators.py: {nchk} checks, "
           f"{nbad} mismatches, worst {worst:.3e} bps")
 
+    # [1b] the VECTORISED cumulative-sum form used by _rolling must equal
+    # the scalar cs_bps / ar_bps above (which equal the reference).
+    nv = nvb = 0
+    wv = 0.0
+    for f in syms[:20]:
+        with np.load(f) as z:
+            d = _Day(z)
+        cs_s, cs_ok = cs_pairs(d.o, d.h, d.l)
+        ar_x, ar_ok = ar_pairs(d.h, d.l, d.c)
+        ccs = np.concatenate([[0.0], np.cumsum(np.where(cs_ok, cs_s, 0.0))])
+        ccn = np.concatenate([[0], np.cumsum(cs_ok.astype(np.int64))])
+        acs = np.concatenate([[0.0], np.cumsum(np.where(ar_ok, ar_x, 0.0))])
+        acn = np.concatenate([[0], np.cumsum(ar_ok.astype(np.int64))])
+        npair = len(cs_s)
+        for m in range(31, NMIN, 7):
+            b0 = max(0, m - CSAR_WIN)
+            pa, pb = min(b0, npair), min(max(m - 1, 0), npair)
+            v = _win_mean(ccs, ccn, pa, pb, MIN_PAIRS)
+            v = None if v is None else 1e4 * v
+            r = cs_bps(d.o, d.h, d.l, b0, m)
+            if (v is None) != (r is None):
+                nvb += 1
+            elif v is not None:
+                nv += 1
+                wv = max(wv, abs(v - r))
+                if abs(v - r) > 1e-9:
+                    nvb += 1
+            am = _win_mean(acs, acn, pa, pb, MIN_PAIRS)
+            v2 = None if am is None else 1e4 * math.sqrt(max(4.0 * am, 0.0))
+            r2 = ar_bps(d.h, d.l, d.c, b0, m)
+            if (v2 is None) != (r2 is None):
+                nvb += 1
+            elif v2 is not None:
+                nv += 1
+                wv = max(wv, abs(v2 - r2))
+                if abs(v2 - r2) > 1e-9:
+                    nvb += 1
+    print(f"[1b] vectorised vs scalar CS/AR: {nv} checks, {nvb} "
+          f"mismatches, worst {wv:.3e} bps")
+
     # (2) causality
     cm = CostModel()
     nmove = ncau = 0
@@ -654,7 +783,7 @@ def selftest():
                 bad += 1
     print(f"[3] {n} lookups, {bad} non-positive/NaN, report="
           f"{json.dumps(cm.report())}")
-    return nbad == 0 and nmove == 0 and bad == 0
+    return nbad == 0 and nvb == 0 and nmove == 0 and bad == 0
 
 
 def main():

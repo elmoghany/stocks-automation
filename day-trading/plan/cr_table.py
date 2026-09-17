@@ -148,29 +148,52 @@ def _clock(minute):
     return dtime((mm // 60) % 24, mm % 60)
 
 
-def measured_pnl(z, cm, keep_bps=False):
-    """Price every reconstructed row with the measured model."""
+def cost_legs(z, cm):
+    """Half-spread and impact, per row, for the entry and the exit leg.
+
+    ONE pass over the symbol-days; the two variants (with and without
+    the impact term) are then pure arithmetic on the returned arrays.
+    Extended-hours floors are applied here, after the combination, so
+    they behave the same way in both variants.
+    """
     n = len(z["ent"])
-    ci = np.zeros(n)
-    co = np.zeros(n)
+    hi_ = np.zeros(n)
+    ii_ = np.zeros(n)
+    ho_ = np.zeros(n)
+    io_ = np.zeros(n)
     dates, syms = list(z["dates"]), list(z["syms"])
     idx = np.flatnonzero(z["good"])
-    # group by (date, sym) so each symbol-day's stats load once
     key = z["date_i"].astype(np.int64) * 100000 + z["sym_i"]
     order = idx[np.argsort(key[idx], kind="stable")]
-    for r in order:
+    t0 = time.monotonic()
+    for k, r in enumerate(order):
         d = str(dates[int(z["date_i"][r])])
         s = str(syms[int(z["sym_i"][r])])
-        ci[r] = cm.cost_bps(s, d, _clock(z["enm"][r]), z["notion"][r])
-        co[r] = cm.cost_bps(s, d, _clock(z["exm"][r]),
-                            z["notion"][r] * z["exp"][r]
-                            / max(z["ent"][r], 1e-12))
+        hi_[r], ii_[r], _ = cm.parts(s, d, _clock(z["enm"][r]),
+                                     z["notion"][r])
+        ho_[r], io_[r], _ = cm.parts(s, d, _clock(z["exm"][r]),
+                                     z["notion"][r] * z["exp"][r]
+                                     / max(z["ent"][r], 1e-12))
+        if (k + 1) % 25000 == 0:
+            print(f"  legs [{k+1:,}/{len(order):,}] "
+                  f"{(time.monotonic()-t0)/60:.1f}m", flush=True)
+    return hi_, ii_, ho_, io_
+
+
+def combine(z, half_i, imp_i, half_o, imp_o, coef=1.0, floor=None,
+            ext_floor=60.0):
+    floor = CC.FLOOR_BPS if floor is None else floor
+    ci = np.maximum(floor, half_i + coef * imp_i)
+    co = np.maximum(floor, half_o + coef * imp_o)
+    ext_i = (z["enm"] < UF.RTH_LO) | (z["enm"] >= UF.RTH_HI)
+    ext_o = (z["exm"] < UF.RTH_LO) | (z["exm"] >= UF.RTH_HI)
+    ci = np.where(ext_i, np.maximum(ci, ext_floor), ci)
+    co = np.where(ext_o, np.maximum(co, ext_floor), co)
     with np.errstate(divide="ignore", invalid="ignore"):
         p = z["notion"] * (z["exp"] * (1 - co / 1e4)
                            / np.maximum(z["ent"], 1e-12)
                            - (1 + ci / 1e4))
-    p = np.where(z["good"], p, 0.0)
-    return (p, ci, co) if keep_bps else p
+    return np.where(z["good"], p, 0.0), ci, co
 
 
 def main():
@@ -188,20 +211,39 @@ def main():
         # the incumbent floor, whichever is larger" means 60 there. The
         # engine path uses 10 because day-trading.py pays its 50 bps
         # premarket haircut separately, through pm_spread_bps.
-        cm = CC.CostModel(ext_floor_bps=60.0)
-        p, ci, co = measured_pnl(z, cm, keep_bps=True)
-        np.savez_compressed(OUT / f"priced_{h}.npz", pnl_measured=p,
-                            c_in_bps=ci, c_out_bps=co,
-                            pnl_flat10=flat_pnl(z))
         g = z["good"]
-        print(json.dumps(dict(
-            n=int(g.sum()),
-            mean_c_in=float(ci[g].mean()), mean_c_out=float(co[g].mean()),
-            median_c_in=float(np.median(ci[g])),
-            frac_c_in_gt10=float((ci[g] > 10).mean()),
-            mean_pnl_flat=float(flat_pnl(z)[g].mean()),
-            mean_pnl_measured=float(p[g].mean()),
-            tally=cm.report()), indent=1))
+        out = {"pnl_flat10": flat_pnl(z)}
+        rep = {"n": int(g.sum()),
+               "mean_pnl_flat10": float(flat_pnl(z)[g].mean())}
+        # TWO variants, and the difference between them IS the finding:
+        #   measured   = half-spread + square-root impact (Y = 1.0)
+        #   spreadonly = half-spread only (Y = 0), i.e. the literal
+        #                "re-price at the measured spread" that the
+        #                UNIVERSE-QUOTES audit's ranked idea #2 asked for
+        cm = CC.CostModel(ext_floor_bps=60.0)
+        hi_, ii_, ho_, io_ = cost_legs(z, cm)
+        np.savez_compressed(OUT / f"legs_{h}.npz", half_in=hi_, imp_in=ii_,
+                            half_out=ho_, imp_out=io_)
+        for name, coef in (("measured", CC.IMPACT_COEF),
+                           ("spreadonly", 0.0),
+                           ("imp03", 0.3), ("imp05", 0.5)):
+            p, ci, co = combine(z, hi_, ii_, ho_, io_, coef=coef)
+            out[f"pnl_{name}"] = p
+            out[f"c_in_bps_{name}"] = ci
+            out[f"c_out_bps_{name}"] = co
+            rep[name] = dict(
+                mean_c_in=float(ci[g].mean()),
+                median_c_in=float(np.median(ci[g])),
+                mean_c_out=float(co[g].mean()),
+                median_c_out=float(np.median(co[g])),
+                frac_c_in_gt10=float((ci[g] > 10).mean()),
+                mean_pnl=float(p[g].mean()),
+                delta_vs_flat=float(p[g].mean()
+                                    - flat_pnl(z)[g].mean()))
+            print(name, json.dumps(rep[name]), flush=True)
+        np.savez_compressed(OUT / f"priced_{h}.npz", **out)
+        (OUT / f"priced_{h}_report.json").write_text(
+            json.dumps(rep, indent=1))
 
 
 if __name__ == "__main__":
