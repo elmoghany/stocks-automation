@@ -35,6 +35,10 @@
 "name": "Allspring Broad Market Core Bond ETF",
 "type": "EQUITY"
 },
+"AFRU": {
+"name": "T-REX 2X Long AFRM Daily Target ETF",
+"type": "EQUITY"
+},
 "AIBU": {
 "name": "Direxion Daily AI and Big Data Bull 2X ETF",
 "type": "EQUITY"
@@ -45,6 +49,10 @@
 },
 "AIQD": {
 "name": "MicroSectors -3x Short Artificial Intelligence (AI) ETNs",
+"type": "EQUITY"
+},
+"AKAN": {
+"name": "Akanda",
 "type": "EQUITY"
 },
 "ALA": {
@@ -209,6 +217,10 @@
 },
 "BMNZ": {
 "name": "Defiance Daily Target 2X Short BMNR ETF",
+"type": "EQUITY"
+},
+"BNAI": {
+"name": "Brand Engagement Network",
 "type": "EQUITY"
 },
 "BNC": {
@@ -949,6 +961,10 @@
 },
 "MHX": {
 "name": "Corgi MARA 2x Daily ETF",
+"type": "EQUITY"
+},
+"MKDW": {
+"name": "MKDWELL Tech",
 "type": "EQUITY"
 },
 "MLEC": {

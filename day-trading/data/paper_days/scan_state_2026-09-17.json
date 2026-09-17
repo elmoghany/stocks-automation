@@ -89,8 +89,8 @@
    "first_seen": "06:28"
   },
   "VICR": {
-   "pct": 12.22,
-   "last": 206.3893,
+   "pct": 11.64,
+   "last": 205.31,
    "prev_close": 183.91,
    "vol": "573847.226479",
    "name": "Vicor",
@@ -175,9 +175,34 @@
    "vol": "14106812.677891",
    "name": "Veea",
    "first_seen": "07:27"
+  },
+  "AKAN": {
+   "pct": 22.06,
+   "last": 3.32,
+   "prev_close": 2.72,
+   "vol": "204775.139673",
+   "name": "Akanda",
+   "first_seen": "08:00"
+  },
+  "MKDW": {
+   "pct": 20.41,
+   "last": 9.38,
+   "prev_close": 7.79,
+   "vol": "778533.352325",
+   "name": "MKDWELL Tech",
+   "first_seen": "08:00"
+  },
+  "BNAI": {
+   "pct": 10.53,
+   "last": 7.56,
+   "prev_close": 6.84,
+   "vol": "157115.40242",
+   "name": "Brand Engagement Network",
+   "first_seen": "08:00"
   }
  },
  "halal_fail": [
+  "AKAN",
   "ARL",
   "BOLT",
   "CENN",
@@ -452,12 +477,14 @@
   "ZYME"
  ],
  "cannot_verify": [
+  "BNAI",
   "BRTX",
   "CHNR",
   "DETX",
   "GLOO",
   "JL",
   "KXIN",
+  "MKDW",
   "SPPL"
  ],
  "spac": [
