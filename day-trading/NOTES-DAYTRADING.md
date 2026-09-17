@@ -8969,3 +8969,162 @@ after. Every number above is post-fix.
    k=7 is -$13.62. An edge that lives in the single most-active name and dies
    on the second ticket cannot be sized to a $100k/day account, whatever its
    t-statistic.
+
+
+## VS2 RESULTS, TABLE 4: THE SAME MECHANICS ON THE MANDATED GAPPER HARNESS
+
+`RS_CROSS=1 RS_DEFER=1 POOL_HYGIENE=1 HALAL_STRICT=1 PT_FILED=1`, 10
+bps/side, gap-through fills, labels `year` + `y2025` = 445 days / 23
+months. Baselines on this exact harness: **C37F-hf2 -$88,784, -$55.4 per
+ticket, -$215 per traded day; HOLD1-hf2 -$182 per ticket.**
+
+    config       total       Y1       Y2   tkts  $/tkt   $/mo   negm     best   ex_best  t/day
+    V1ORBx     -12,584   -7,747   -4,837    450    -28    -547  17/23   +1,455  -14,996   1.46
+    V1ORB      -36,823  -12,292  -24,531   1134    -32  -1,601  14/23   +4,628  -45,559   2.96
+    V1ORBr     -49,763  -17,235  -32,528   1311    -38  -2,164  15/23   +3,937  -56,732   3.42
+    V1OR15     -51,146  -19,090  -32,056   1296    -39  -2,224  16/23   +4,761  -59,844   3.44
+    V5VWR      -53,638  -31,730  -21,908   1760    -30  -2,332  19/23   +3,937  -58,950   4.56
+    V1ORBb     -54,507  -13,631  -40,876   1168    -47  -2,370  15/23   +4,974  -64,349   2.92
+    V4FLAGw    -56,071  -31,401  -24,670   1577    -36  -2,438  20/23   +3,937  -61,653   4.15
+    V3EMA      -56,554  -36,090  -20,464   1638    -35  -2,459  19/23   +3,937  -62,137   4.19
+    V5VWB      -62,945  -40,128  -22,817   1722    -37  -2,737  20/23   +3,937  -68,605   4.51
+    V4FLAG     -64,493  -39,005  -25,488   1777    -36  -2,804  21/23   +3,937  -70,075   4.94
+    V1OR30     -64,681  -31,819  -32,862   1424    -45  -2,940  18/22   +4,150  -70,793   3.73
+    V2MPBh     -70,174  -30,102  -40,072   1243    -56  -3,051  16/23   +8,985  -84,843   3.35
+    V2MPB1     -72,441  -44,716  -27,725   1765    -41  -3,150  22/23   +3,937  -78,022   4.88
+    V2MPB      -74,025  -40,428  -33,597   1824    -41  -3,218  20/23   +3,937  -80,452   4.92
+    V7ABCD     -86,584  -51,864  -34,720   1731    -50  -3,765  19/23   +4,493  -92,991   4.52
+    V6VWB2     -89,716  -54,074  -35,642   2089    -43  -3,901  23/23   +1,962  -93,002   5.40
+    V6VWB      -92,341  -56,198  -36,143   2164    -43  -4,015  22/23   +1,962  -96,245   5.45
+    V8HALT     -96,627  -53,738  -42,889   2581    -37  -4,201  22/23   +3,937 -102,208   6.19
+    V1ORBe     -98,736  -55,189  -43,547   2229    -44  -4,293  22/23   +4,193 -106,986   5.82
+    ---- the harness's own benchmarks ----
+    C37F-hf2   -88,784  -47,689  -41,095   1602    -55  -3,860  17/23        -        -   3.87
+    HOLD1-hf2  -75,474  -31,586  -43,888    415   -182  -3,282  15/23        -        -   1.00
+
+**Nineteen for nineteen negative in BOTH years.** The per-ticket column
+runs -28 to -56, median **-$39** -- the same friction band as the wide
+universe, on a completely different pool.
+
+Two things in this table are worth saying out loud because they are
+mildly in the videos' favour and it would be easy to leave them out:
+1. **Eighteen of the nineteen beat the live champion per ticket.** C37F
+   is -$55.4/ticket; only `V2MPBh` (-$56) is worse. `V1ORBx` -- the
+   09:30 opening-range break taken on the RETEST of the level, the "1-
+   minute refinement" both Master The Market and QuantCrawler teach --
+   is **-$28/ticket and -$547/month, seven times less bad than the
+   champion in total dollars.** The video crowd's entries are not worse
+   than what this campaign has been trading live; they are less bad.
+2. `V1ORBx` is also the lowest-frequency row (1.46 tickets/day). It is
+   less bad because **it trades less**, which is the friction reading
+   again, not an edge.
+
+### AUGUST 2026, OUT OF SAMPLE (22 sessions, `ROTLABELS=aug2026`)
+
+    V1ORBx  -505 (13d)   V2MPB  -1,314 (16d)   V1ORB  -1,395 (17d)
+    V1OR15 -1,688 (17d)  V3EMA  -2,193 (17d)   V5VWR  -2,723 (17d)
+    V4FLAG -2,842 (16d)  V6VWB  -5,149 (17d)   C37F   -7,996 (19d)
+
+**Sign-consistent with the in-sample result: every single one negative**,
+and again every one less negative than C37F. Nothing here rescues
+anything.
+
+## VS2 SERIES: THE VERDICT (2026-09-16)
+
+**Does any video-taught mechanic reach >= $7,500/month net on an honest
+harness? NO. Nothing comes within a factor of 28.**
+
+Scope: **79 videos** located and their transcripts read in full (the
+watch-skill MCP could not acquire YouTube this session -- `yt-dlp`
+directly, documented in the pre-registration, which costs the frame/OCR
+channel and nothing else, because every mechanic below was SPOKEN).
+**55 study files** in `video-studies/`. **17 distinct causal mechanics**
+implemented as flag-gated engine kwargs. **46 ranked configs** run over
+two universes and 23 months each, plus controls.
+
+**The single finding, stated once:**
+Across 46 configs drawn from 17 mechanics taught by ~30 different
+channels, measured on two universes that share no membership rule -- the
++10% gapper pool and a liquid halal cross-section -- the per-ticket
+result clusters at **-$27 (wide) and -$39 (gappers)** against a **$30
+round-trip friction cost** on a $15,000 ticket.
+**The gross edge of retail day-trading's most-taught setups, on halal
+names, long-only, same-day, is indistinguishable from zero. What a
+backtest of them reports is the transaction cost.**
+Every family lands in the same band: breakout (ORB at 1/5/15/30 minutes,
+with and without the retest, with a range-low stop, a +10%/+15% bank, a
+measured move, or a 9-EMA trail), continuation (micro pullback, 3-bar
+play, bull flag, 9-EMA and 50/200-EMA pullbacks, inside bar, ABCD),
+mean-reversion (VWAP reclaim, VWAP bounce, VWAP-band fade at 1 and 2
+sigma with a VWAP target), structure (fair value gap, the AM Silver
+Bullet hour, liquidity-sweep reclaim), event (halt resumption,
+red-to-green) and cross-sectional (green-on-red).
+
+**Closest miss: green-on-red relative strength (`W8RSd`)**, +$18/ticket,
+**+$267/month**, on the wide universe -- 28x short of the bar, year 2
+negative, ex-best-day negative, and its selection premium evaporates at
+any hold shorter than the close. Full control battery in TABLE 3.
+**Closest miss on the mandated gapper harness: `V1ORBx`** (09:30 OR
+break taken on the retest), -$28/ticket, -$547/month -- which is seven
+times less bad than the live champion and still a loss.
+
+**What the closest miss would need.** `W8RSd` needs its base to stop
+being negative. The premium it earns over a gate-matched random pick is
++$55.3/ticket (Y1) and +$52.8 (Y2) -- stable and real -- but the
+conditional base (any name, red-market morning, hold to 15:00) is -$5.3
+then -$63.8. To clear $7,500/month at its own 1.0 tickets/day and ~21
+trading days it would need **+$357/ticket**, i.e. **6.5x its measured
+selection premium AND a non-negative base**. No parameter in the family
+moves it that far; the 30- and 60-minute hold sweeps move it the wrong
+way.
+
+### WHAT I WOULD TRY NEXT, RANKED
+1. **The short side, if it were ever permitted.** Every mirror control
+   in this batch (`-X`: market green + name red) loses $78-$115 per
+   ticket. A rule that loses that reliably long is the same rule that
+   would earn it short. This is the largest single number in the whole
+   study and the constraint set forbids acting on it. Worth stating
+   because it explains why the video crowd's own demonstrations are so
+   often short trades.
+2. **Cross-sectional over shape.** Green-on-red is the only mechanic
+   that produced a replicated, control-beating premium. It is a
+   RELATIVE-STRENGTH statement, not a candlestick shape. The next
+   experiment I would run is relative strength measured properly
+   (residual return vs the cross-section over a fixed window) rather
+   than the binary green/red proxy, on the same universe. That is a
+   WIDE-NET/RL-v2 style feature study, not a video mechanic.
+3. **Limit entries.** Every entry tested here crosses the spread. The
+   UNIVERSE-QUOTES line is already measuring what a resting limit
+   recovers; on a book where the gross edge is ~0 and the cost is ~$30,
+   recovering even the entry half changes the sign of the whole table.
+   The ICT/order-block entries are LIMITS by construction and were
+   deliberately tested in their worse (stop-buy confirmation) form here.
+   **This is the single highest-value follow-up.**
+4. **Premarket-inclusive causal universe.** Three mechanics
+   (premarket-high break, the whole Treyding premarket-plan genre,
+   gap-and-go as actually taught) live before 09:30 and the RS_CROSS
+   epoch cannot express them.
+5. **The swing timeframe.** Two of the highest-view-count videos in the
+   batch (Financial Wisdom 126k, Mind Math Money) teach multi-DAY
+   pullbacks off a rising 50-day MA. They are out of scope for a
+   same-day mandate and were not run. If the same-day constraint is ever
+   relaxed, they are the first thing to test.
+6. Queued and labelled, not run: the FVG resting-limit entry, the
+   sweep-then-FVG conjunction (tested only as separate triggers), the
+   opening-range MIDPOINT retest, mechanically-anchored VWAP, and the
+   "N VWAP breakdowns before 11:00 kills the day" filter.
+
+### FILES
+Engine (flag-gated, default off, identity proven): `day-trading.py`
+`or_clock`, `vwap_entry` (reclaim/bounce/band), `micro_pullback`,
+`ema_pullback`, `flag_break`, `abcd_entry`, `halt_resume`, `fvg_entry`,
+`inside_bar`, `sweep_reclaim`, `three_bar`, `rand_entry`,
+`struct_floor_mode`, `struct_target_mode`, `pullback_relax`,
+`vwap_target`, `ema_exit`.
+Proofs: `plan/vs2_test.py` (identity 48/48, poison 0/10,362),
+`plan/vs2_wide.py --poison` (112/112).
+Runners: `plan/rotation_sim.py` (CFGS additions only, `_vs2_cfgs`),
+`plan/vs2_wide.py`. Report: `plan/vs2_report.py`.
+Data: `data/massive/rotation_results_vs2_{a,b,c,aug}.json`,
+`data/massive/vs2wide_results_{wa,wb,wc,wd,we}.json`.
+Logs: `/c/tmp/vs2/*.log`.
