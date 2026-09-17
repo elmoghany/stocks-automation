@@ -9844,3 +9844,257 @@ HOLD1's ticket count unchanged, as its cost-independent path requires).
    between "+$8.85/row" and "-$17.55/row" is Y. A few hundred live $15k
    marketable orders with recorded arrival mid and fill price would settle
    it in a month of paper trading; no amount of aggregate data can.
+
+## HALAL-GATE-REVIEW (2026-09-17): the denominator was wrong, one rule was over-applied, and the thresholds are doing the rest
+
+User: *"our halal gate is too extreme -- 415 armable names is too few, something
+must be wrong. Let's analyze it."* Then, mid-review, a second ruling that turned
+the line from a diagnosis into a change: *"For the missing statement, use the
+last available statement or check the Zoya website. Do not just reject it. Same
+for data drift."*
+
+Full write-up: `halal-gate-review.md`. **ARMABLE 415 -> 476.**
+
+### 1. THE DENOMINATOR IS NOT 10,761 -- IT IS 4,590
+
+`build_halal_universe.py::universe()` filters on TICKER SHAPE and price
+(alphabetic, <=5 chars, no W/U/R suffix, close >= $2). It never asks what the
+listing IS. Polygon's reference endpoint, pulled for all 10,761 symbols
+(`plan/hgr_meta.py` -> `data/hgr_ticker_meta.json`, 10,718 resolved):
+
+    ETF        5,266      CS         4,294      FUND         329
+    ADRC         296      SP           122      ETS/ETV/ETN  236
+    PFD           63      UNIT/WARRANT   7      unresolved   148
+
+**COMMON EQUITY (CS+ADRC) = 4,590. The other 6,171 are not companies.** So 415
+armable was **9.0% of the screenable universe, not 3.9%** -- and of the 6,068
+"NO FUNDAMENTALS DATA" refusals the 2026-09-16 audit called "56% of the
+universe", **5,918 are ETFs, closed-end funds, structured products, preferreds
+and ETNs. Only 150 were common stock.** Three Shariah ETFs (HLAL, SPUS, MNZL)
+and **JPO, a YieldMax covered-call option-income ETF, are currently ARMABLE**
+for the same reason.
+
+### 2. THE RULE THAT BITES IS THE USER'S OWN 10/10/20
+
+Funnel on the 4,590 common stocks (`plan/hgr_funnel.py`, the gate's own return
+order, first test to fire wins), BEFORE today's change:
+
+    industry keyword       695   RULE      missing statement row   286  DATA->RULE
+    SIC 6000-6999           92   RULE      revenue-mix unverified  314  DATA->RULE
+    user/external ruling    29   RULE      LOAN>10               1,861  RULE
+    market cap missing       7   DATA      CASH>10                 695  RULE
+    no fundamentals         150  DATA      HARAM>=5%                52  RULE
+                                           ARMABLE                 409
+
+**3,444 refused by a rule, 443 for a data reason.** Counterfactual on the cached
+ratios (ratio legs only, every other screen untouched), on today's rebuilt
+universe:
+
+    10/10/20 (today)   476      20/20/40    930
+    12/12/24           578      25/25/50  1,076
+    15/15/30           724      33/33/66  1,363   <- AAOIFI
+
+Benchmarked against Zoya + Musaffa + the US Shariah ETFs (HLAL SPUS SPTE SPRE;
+`plan/hgr_bench.py`): 524 names in our universe are passed by a professional
+screen; we now pass 173 (was 133). **217 of the disagreements are the 10/10/20
+choice alone -- a leg sitting in the 10-33 band AAOIFI allows -- against 29 for
+any data reason.** In the other direction, **of the 400+ names both screeners
+refuse, we pass ZERO.** No compliance leaks.
+
+SIC 6xxx, checked name by name: **97 of the 104 refusals are exactly what the
+user's rule named** (banks, lenders, insurers, asset managers, brokers,
+exchanges, REITs, funds). The genuine mis-codes are IDCC (SIC 6794 "Patent
+Owners & Lessors" -- a wireless-R&D licensor), RGLD/TFPM (6795 "Mineral Royalty
+Traders"), TPL (6792, ~60% water and surface leasing) and USIO (6099, a payment
+processor). Five names.
+
+The keyword screen has **essentially no false positives**: bank 340/340 carry a
+financial SIC, mortgage 41/41, insurance 107/108 (XZO, an insurtech software
+spin-off, is the only arguable one), and every "defense/aerospace" or
+"entertainment" hit with a non-matching SIC is still a real defense prime (GE
+Aerospace, GD, NOC, LHX, HII, BWXT, DRS) or a real broadcaster/studio (WBD,
+FOXA, PSKY, SIRI, ROKU). **Leave it alone.**
+
+### 3. THE CHANGE, AS LANDED
+
+Decision 4 of the halal-fix epoch -- *a missing row is never a zero* -- STANDS.
+What changed is WHERE the gate looks before it says the row is missing. Per
+field, bounded by `LAST_AVAIL_MAX_AGE_DAYS = 460` (~15 months) and NAMED on the
+verdict in a new `last_available` field:
+
+  1. yfinance quarterly -- the newest column that carries the row (this alone
+     fixes "no recent period carries BOTH debt and cash": each leg is read from
+     its own last filed column instead of the pair being refused);
+  2. yfinance ANNUAL -- a filed 10-K is a statement, not an absence; revenue
+     read this way brings the interest row from the SAME annual column;
+  3. EDGAR companyfacts, honoring the extractor's `miss` list so an untagged
+     line is still never offered as a zero.
+
+**A real bug found on the way:** `_bs_pair` returns BOTH legs as None whenever
+EITHER row is absent, so a name whose cash row was missing also arrived with its
+perfectly readable debt row unread and fell to the belt-and-braces refusal
+"debt, combined could not be computed" -- a refusal for a row that was right
+there. Fixed.
+
+**NEW INTEREST RUNG 4 -- THE CASH CEILING.** The 8%/yr premise the plausibility
+cap already rests on is a PROOF read the other way: interest income cannot
+exceed 8%/yr x (cash + interest-bearing securities), so a ceiling under 5% of
+TTM revenue clears the leg whatever the filer tagged. Guarded TWICE, because the
+first version passed a closed-end fund: it never fires on the `info` tier (a
+vendor summary is not a statement), and the ceiling base now includes the
+long-dated investments line, so ADX (no cash row, $3.0bn "Investments And
+Advances" against $34M of revenue) is refused, not cleared. Bounds among the
+armable names are strong: median 2.26%, p90 2.8%, one at >=4%.
+
+Unchanged as briefed: strict 10/10/20, SIC 6000-6999 (6770 exempt), the 5%
+threshold, the keyword screen. Mirrored into `halal_pt` with the same semantics
+plus one fix of the same family: `_ttm_pt` no longer sums a leading
+untagged-revenue quarter in as 0.0.
+
+**EDGAR refreshed first**: `companyfacts.zip` 2026-08-14 -> 2026-09-17 (old kept
+as `companyfacts.2026-08-14.zip`), re-extracted over 12,532 symbols (**4,416
+with >=1 complete quarter**, was 3,677) and re-merged (31 pt_halal files created,
+4,444 updated, 41,367 EDGAR-side quarters).
+
+### 4. RESULT: 415 -> 463 -> 476
+
+    2026-09-16 interest-leg state                    415
+    + --last-available rescreen (2,439 candidates)   463   (52 restored, 4 lost)
+    + 13 Class-B Zoya/Musaffa rulings                476
+
+RESTORED BY RUNG (`data/halal_flips_2026-09-17.last-available.json`):
+
+    vendor row on fresher data (drift, not the change)  13  REGN 80bn, IMO 63bn, MSM, XMTR, BRC, NRP, ODC, ITRN
+    upper-bound (max yield on cash)  <- the new rung    16  MRVL 206bn, KNSA, DMLP, GFR, PLBL, ACCL
+    last-available statement                           17  GFI 37bn (yf-annual rev+int), ANGO (EDGAR debt + yf cash),
+                                                           MCFT (EDGAR debt), MGRT, NBTX, SLBT, ADSE, ELVR
+    upper-bound (nonoperating income)                   3  MMED 6bn, POWI, GYRE, CHRN
+      (the plausibility cap had to rescue 12 of those first)
+
+**MRVL comes back MEASURED at 2.90%** on the cash ceiling -- the name the whole
+interest-leg saga was about, cleared by a proof instead of refused for a row
+Marvell does not tag.
+
+THE 13 CLASS-B RULINGS (`plan/hgr_screeners.py` -> `plan/hgr_rulings.py`, public
+Zoya/Musaffa pages, no login, 4 workers because a Zoya page takes **22.9 s** to
+render and the documented 1.6 s pace never binds): ANET 249bn, ISRG 135bn, NXT
+12bn, BMI 3.7bn, ELMD, BUUU, NNNN, ARCL, FTHA, VECA, ENGS, QXL, SOWG. Written
+under FOUR guards stricter than the bare Class-B rule, because a Class-B PASS
+bypasses our ratio legs entirely and those screeners use 33/33: common equity
+only; >=1 affirmation AND no conflicting verdict; **every leg we can still
+compute must clear the house 10/10/20**; never overwrite a ruling and never
+write a FAIL. Skipped: 213 no affirmation, 181 not common equity, 12 conflicting,
+10 already ruled, 9 whose own computable legs fail. Transport failures are never
+cached (the cache-poisoning rule `cmd_sic` already follows).
+
+### 5. "SAME FOR DATA DRIFT" -- THERE IS NOTHING TO CORRECT
+
+All 4 names lost in this rebuild are strict-10 drift, and every one crossed the
+line by <= 0.6pp BECAUSE THE MARKET CAP FELL, on statements that did not move:
+
+    INTU  loan 9.77 -> 10.06     STE  loan 9.84 -> 10.08
+    NPO   loan 9.61 -> 10.17     Z    cash 9.50 -> 10.08
+
+Recomputing from the last available statement gives the SAME answer -- the
+statement is the current one and it is complete. **This is not a vendor
+artifact; it is the 10% line being a cliff.** The remedies are doctrinal: a
+looser threshold, or a tolerance band so a name 0.1pp over does not flip week to
+week. That is a question for the user, not a bug.
+
+### 6. A SECOND BUG FOUND AND NOT FIXED: THE REPORTING CURRENCY
+
+`halal_check` divides a yfinance statement value by a market cap in USD.
+yfinance publishes statements in the FILER's reporting currency
+(`info["financialCurrency"]`). TLK (Telkom Indonesia, IDR) is cached at
+loan/mcap **554,387%** and cash/mcap **387,136%**: rupiah over dollars.
+Stratified sample (60 per band, seed 20260917) of ratio refusals reporting in a
+non-USD currency: combined 20-50% -> 5%, 50-100% -> 7%, 100-1,000% -> 15%,
+**>1,000% -> 68%**; ~260 of the 2,693 ratio refusals are unit-mismatched.
+
+**MEASURED, AND THE HEADLINE DEFLATES** (`plan/hgr_fx.py`): of 59 non-USD names
+with a resolvable FX rate, **only 2 would PASS the unchanged 10/10/20 after
+conversion**. BIDU goes 291%/362% -> 43%/54%; ENB 102% -> 73%; BCE 190% -> 136%.
+The big foreign issuers are genuinely levered. **So the printed numbers are
+wrong and should be fixed for correctness, but the fix buys 2-10 names, not
+hundreds.** (yfinance answered 401 "Invalid Crumb" for 1,262 of 2,318 lookups,
+which is why the currency column is partial; stated, not hidden.)
+
+### 7. WHAT THE 2026-08-14 COMPANYFACTS SNAPSHOT COST
+
+663 symbols got a newer filed quarter from the refresh; **202 of them are true
+July/August-quarter filers** whose period end is now after 2026-06-30. Crossed
+against the refusals: 72 of the 376 missing-row refusals got a newer quarter but
+only **5** are strictly July-quarter filers; 52 of the 238 still-refused-for-
+interest, again 5 July filers; 21 of the 6,068 no-data names now have EDGAR
+quarters. **The stale zip was real but minor -- ~19% of the missing-row bucket by
+"newer data exists", ~1.3% by the July-quarter story.**
+
+### 8. THE 40-NAME SANITY LIST
+
+19 PASS / 21 FAIL. **15 of the 21 FAILs are the 10/10/20 ratio choice** (PG at
+loan 10.22, KO 11.42, MRK, ABT, TMO, DHR, HD, LIN, CAT, NKE, CRM, PEP, ORCL,
+LOW, DE/HON), 3 are agreements with both screeners (COST, WMT, NFLX), 2 are
+agreements on the verdict by a different route (UNH -- a health insurer failing
+on a debt ratio rather than on the sector screen), and **ZERO are defects after
+today** (ISRG was the last one and is now PASS). The only names where WE are
+LOOSER than the professionals are **MSFT** (Zoya questionable, Musaffa not
+halal) and **GOOGL** (questionable/doubtful) -- both on business activity
+(Xbox/gaming, advertising) that our interest-only 5% test structurally cannot
+see. That needs a user ruling.
+
+### 9. RANKED PROPOSALS (halal-gate-review.md Sec 8 carries the doctrinal question for each)
+
+    1  relax 10/10/20 toward AAOIFI 33/33          476 -> 578 / 724 / 930 / 1,363
+    2  fix the reporting-currency bug                   +2 measured (correctness, not count)
+    3  screen COMMON EQUITY only                   476 -> 471, and the monthly
+                                                   refresh screens 4,590 not 10,761 (-57% time)
+    4  absent DEBT line on a complete BS reads 0   476 -> 480 (MNST, FNV, SYM, PRT)
+    5  restore the 5 SIC mis-codes by ruling       476 -> 481 (RGLD, TPL, TFPM, USIO, RMCO)
+    6  revenue-mix keyword -> review queue         476 -> up to 494
+    7  rule on MSFT/GOOGL business activity        -2 (the only permissive direction)
+    8  Polygon market cap as a 3rd denominator     19 of the 47 mcap-missing common stocks
+    9  tolerance band on the 10% cliff             stability, not size
+
+### 10. A NEW REFUSAL CLASS THIS CHANGE CREATED, STATED NOT HIDDEN
+
+`MARKET CAP MISSING` went 7 -> 133 (47 of them common stock). That is the change
+working: the gate can now READ statements for names whose market cap yfinance
+will not give it, so it refuses loudly for want of a denominator instead of
+quietly for want of data. **Polygon already has a market cap for 19 of those 47**
+(GILD 183bn, AZO 47bn, EHC, DCI, EDU, ASR, CMC, DAC, GSL, CYD, EDN, GSM, GAIN,
+EBF, CHW). Related live fragility, seen during the 13-name probe: a transient
+yfinance `info` failure makes the gate answer MARKET CAP MISSING for AAPL-class
+names (it did so for KO, ANET and ISRG minutes after the same names screened
+fine). A three-deep denominator -- RH -> yfinance -> Polygon -- closes both.
+
+### OPS / FILES (halal-gate-review 2026-09-17)
+Changed (code, committed): `day-trading.py` (`LAST_AVAIL_MAX_AGE_DAYS`, the
+per-field last-available ladder in `halal_check`, interest rung 4, `_plaus_base`
+fund guard, `_edgar_flows` now carries debt/cash/rev, `last_available` on the
+verdict), `plan/penny_ax11b_massive.py` (`_last_filed_pt`, rung 4 in
+`_interest_leg_pt`, `_ttm_pt` skips a leading untagged-revenue quarter),
+`plan/build_halal_universe.py` (`--last-available` epoch v3,
+`_last_available_candidates`, `last_available` cached, restore-cause labels).
+New (committed): `plan/hgr_meta.py`, `hgr_funnel.py`, `hgr_bench.py`,
+`hgr_screeners.py`, `hgr_rulings.py`, `hgr_apply.py`, `hgr_props.py`,
+`hgr_fx.py`, and the one-shot source patches `hgr_patch1/2/3.py` kept for
+provenance. `data/halal_rulings.json` (+13 Class-B, backup
+`halal_rulings.pre-2026-09-17.json`). `halal-gate-review.md`.
+Data (git-ignored): `data/edgar/companyfacts.zip` refreshed (old kept as
+`companyfacts.2026-08-14.zip`), `data/edgar/extracted/*` re-extracted,
+`data/pt_halal/*` re-merged, `data/halal_universe.json` (476) with
+`data/halal_universe.v2.json` (415),
+`data/halal_flips_2026-09-17.last-available.json`,
+`data/halal_list.NEW.json` (476) with `data/halal_list.NEW.v2.json` (415),
+`data/hgr_ticker_meta.json`, `data/hgr_fx.json`, `data/hgr_edgar_delta.json`,
+`data/halal_external/screener_verdicts.2026-09-17.json` (326 names; the
+2026-08-22 archive is untouched). Logs `/c/tmp/hgr_*.log`.
+
+NOT touched, as briefed: `plan/rotation_sim.py`, `paper_watch.py`,
+`plan/live_halal.py`, the skill, the launcher, the paper-day prompt, `cmd_rank`,
+and `data/halal_list.json`.
+
+> **ACTION AT THE CLOSE: `cp data/halal_list.NEW.json data/halal_list.json`**
+> (476 names, `updated` 2026-09-17). `data/halal_list.json` still holds the
+> 415-name list and was never touched by this line.
+

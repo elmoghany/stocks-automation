@@ -43,20 +43,42 @@ _FX: dict = {"USD": 1.0}
 
 
 def fx(cur):
-    """Local units per USD. yfinance quotes <CUR>USD=X as USD per unit."""
+    """Local units per USD.
+
+    POLYGON FIRST (2026-09-17): yfinance's `<CUR>USD=X` history answered
+    401 "Invalid Crumb" for every pair on the first attempt, which would
+    have silently scored the whole study as "no FX available". Polygon's
+    forex previous-close is on the same paid key the rest of the repo
+    uses. yfinance stays as the fallback."""
     if cur in _FX:
         return _FX[cur]
     rate = None
-    for tk, inv in ((f"{cur}USD=X", False), (f"USD{cur}=X", True)):
-        try:
-            h = yf.Ticker(tk).history(period="5d")
-            if h is not None and not h.empty:
-                v = float(h["Close"].iloc[-1])
-                if v > 0:
-                    rate = (v if inv else 1.0 / v)
-                    break
-        except Exception:
-            continue
+    try:
+        import urllib.request
+        sys.path.insert(0, str(ROOT.parent))
+        from shared.win_cred import get_secret
+        k = get_secret("MASSIVE_KEY")
+        u = (f"https://api.polygon.io/v2/aggs/ticker/C:USD{cur}/prev"
+             f"?adjusted=true&apiKey={k}")
+        with urllib.request.urlopen(u, timeout=20) as f:
+            d = json.load(f)
+        res = (d.get("results") or [{}])[0]
+        v = res.get("c")
+        if v and float(v) > 0:
+            rate = float(v)
+    except Exception:
+        rate = None
+    if rate is None:
+        for tk, inv in ((f"{cur}USD=X", False), (f"USD{cur}=X", True)):
+            try:
+                h = yf.Ticker(tk).history(period="5d")
+                if h is not None and not h.empty:
+                    v = float(h["Close"].iloc[-1])
+                    if v > 0:
+                        rate = (v if inv else 1.0 / v)
+                        break
+            except Exception:
+                continue
     _FX[cur] = rate
     return rate
 
@@ -76,7 +98,15 @@ def main():
     print(f"{len(cands):,} ratio refusals with combined >= {FLOOR:g}%",
           flush=True)
     cur = {}
-    with ThreadPoolExecutor(max_workers=3) as ex:
+    prev = {}
+    try:
+        prev = json.loads(OUT.read_text()).get("currency") or {}
+    except Exception:
+        prev = {}
+    cur.update({k: v for k, v in prev.items() if v})      # keep answers
+    cands = [s for s in cands if not cur.get(s)]
+    print(f"  {len(cands):,} still need a reporting currency", flush=True)
+    with ThreadPoolExecutor(max_workers=2) as ex:
         for n, (s, c) in enumerate(ex.map(one, cands), 1):
             cur[s] = c
             if n % 200 == 0:
