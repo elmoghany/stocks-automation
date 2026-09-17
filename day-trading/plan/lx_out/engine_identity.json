@@ -1,0 +1,29 @@
+{
+ "pre_engine": "C:\\Users\\MYPC~1\\AppData\\Local\\Temp\\dt_pre_limitexec.py",
+ "brackets": {
+  "C37F": {
+   "symbol_days": 169,
+   "legs": 163,
+   "identical_flag_off": 169,
+   "flags_on_legs": 164,
+   "flags_on_passive_exits": 114,
+   "flags_on_days_changed": 163
+  },
+  "HOLD1": {
+   "symbol_days": 169,
+   "legs": 163,
+   "identical_flag_off": 169,
+   "flags_on_legs": 163,
+   "flags_on_passive_exits": 0,
+   "flags_on_days_changed": 163
+  },
+  "W8RSd": {
+   "symbol_days": 169,
+   "legs": 167,
+   "identical_flag_off": 169,
+   "flags_on_legs": 123,
+   "flags_on_passive_exits": 0,
+   "flags_on_days_changed": 167
+  }
+ }
+}
