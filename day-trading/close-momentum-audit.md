@@ -480,6 +480,34 @@ after. Every number in this document is post-fix.
 | poison passes | ✓ (1,900 + 2,400 checks, 0) | ✓ |
 | aug2026 sign-consistent | −$144.91 ✗ | −$100.69 ✗ |
 
+### The "both years" leg under the other convention
+
+Two split conventions live in this repo: `plan/wn_lib.py`'s train/held-out
+(2024-10-22…2025-07-31 vs 2025-08-01…2026-07-31), used above because anything
+fitted must be fitted on the first block; and `plan/rl2/bar.py`'s calendar
+split (`y2025` = date < 2026-01-01). The conclusion does not depend on which
+one is used:
+
+| config | split | tickets | $/ticket | $/month | total | best | ex-best | months + |
+|---|---|---|---|---|---|---|---|---|
+| REV 15:30→15:59 k7 | all | 3,095 | −13.27 | −1,925 | −41,070 | +3,845 | −44,915 | 6/23 |
+| | y2025 | 2,053 | −18.57 | −2,678 | −38,134 | +3,845 | −41,979 | 2/15 |
+| | y2026 | 1,042 | −2.82 | −414 | −2,936 | +1,499 | −4,435 | 4/8 |
+| REV 15:00→15:59 k1 | all | 443 | −0.58 | −12 | −259 | +1,794 | −2,053 | 12/23 |
+| | y2025 | 294 | −18.48 | −382 | −5,432 | +1,794 | −7,226 | 8/15 |
+| | y2026 | 149 | **+34.72** | +729 | +5,174 | +899 | +4,274 | 4/8 |
+| H3-rvol@12:00→15:59 k1 | all | 448 | +37.34 | +784 | +16,727 | +5,497 | +11,231 | 11/23 |
+| | y2025 | 299 | **−10.89** | −229 | −3,255 | +5,497 | −8,752 | 5/15 |
+| | y2026 | 149 | **+134.11** | +2,816 | +19,982 | +4,076 | +15,907 | 6/8 |
+| H1-first 15:59 k7 | all | 3,100 | −21.42 | −3,112 | −66,395 | +1,938 | −68,333 | 5/23 |
+| | y2025 | 2,057 | −27.32 | −3,947 | −56,197 | +1,666 | −57,863 | 1/15 |
+| | y2026 | 1,043 | −9.78 | −1,437 | −10,198 | +1,938 | −12,136 | 4/8 |
+
+The noon row's instability is starker on the calendar split than on the
+train/held-out one: **−$10.89 a ticket in 2025 and +$134.11 in 2026**, on 149
+tickets. That is not a strategy with a weak year; that is a single
+distribution being sampled 149 times.
+
 ### The closest miss, stated with the number it needs
 
 **`REV | 15:30 → 15:59 | k7`** — the Y1-selected late-session reversal

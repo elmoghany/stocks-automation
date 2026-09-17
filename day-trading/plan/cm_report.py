@@ -73,15 +73,17 @@ def t3_configs(uni="wide", n=20):
     rows = sorted(d.items(), key=lambda kv: -kv[1]["all"]["per_month"])
     print(f"\n### T3. Top {n} of {len(d)} pre-registered configs on "
           f"`{uni}` by $/month\n")
-    print("| config | tickets | $/ticket | $/month | Y1 $/tkt | Y2 $/tkt | "
-          "aug2026 $/tkt | months + | ex-best | maxDD |")
-    print("|---|---|---|---|---|---|---|---|---|---|")
+    print("| config | tickets | total | $/ticket | $/month | Y1 $/tkt | "
+          "Y2 $/tkt | aug2026 $/tkt | months + | best | ex-best | maxDD |")
+    print("|---|---|---|---|---|---|---|---|---|---|---|---|")
     for k, v in rows[:n]:
         a = v["all"]
-        print(f"| {k} | {a['tickets']} | {a['per_ticket']:+.2f} | "
+        print(f"| {k} | {a['tickets']} | {a['total']:+,.0f} | "
+              f"{a['per_ticket']:+.2f} | "
               f"{a['per_month']:+.1f} | {v['y1']['per_ticket']:+.2f} | "
               f"{v['y2']['per_ticket']:+.2f} | "
               f"{v['aug2026']['per_ticket']:+.2f} | {a['months_pos']} | "
+              f"{a['best']:+,.0f} | "
               f"{a['ex_best_total']:+,.0f} | {a['max_dd']:+,.0f} |")
     pt = [v["all"]["per_ticket"] for _, v in rows]
     print(f"\nmedian $/ticket over all {len(rows)} configs: "
