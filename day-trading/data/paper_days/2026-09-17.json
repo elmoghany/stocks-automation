@@ -97,6 +97,17 @@
       "vetoes": ["SPREAD VICR 0.873%", "DEPTH VICR 0 sh within trigger+0.5%", "CHASE VICR ask 207.00 > 206.53 cap", "SPREAD INLX 26.84%"]
     }
   ],
+  "ERROR_rule_tooling_disagreement": {
+    "et": "08:25",
+    "severity": "decision-blocking, logged loudly per the NO-SILENT-FALLBACKS rule (2026-08-06)",
+    "symbol": "VICR",
+    "rule": "C37 arming check: 'Size <= 20% of the trailing 10 completed minutes' volume.'",
+    "disagreement": "plan/bars_paste.py reports trail10vol=1,307 -> cap20%=261 sh. It sums the last 10 STORED bars, and because interpolated bars are (correctly) never stored, those 10 bars span 04:01-07:58 ET -- 4 hours, not 10 minutes. Read as WALL CLOCK, VICR printed ZERO shares in 08:15-08:25 ET (last real print 11:58Z/07:58 ET), so the cap is 0 sh.",
+    "magnitude": "The two readings differ by ~25x on the same name at the same instant, and they straddle the 72-share ticket: 261 >= 72 would arm, 0 < 72 refuses.",
+    "other_gates_at_this_moment": "ALL PASSED -- halal PASS, coil 0.992, calm-gap yes, spread 0.485% (inside the 0.5% cap for the first time today), depth 134 sh within trigger*1.005 vs 72 needed, and fill-arming satisfied (trigger 206.92 > ask 206.50, so the stop was not already met). The size rule was the only thing standing between this and an armed premarket ticket.",
+    "decision": "DID NOT ARM. Took the conservative branch: a name that has not printed a single share in 27 minutes is not one where a 72-share ticket is 20% of anything. The skill's own asymmetry governs -- 'an unfilled exit is dangerous, an unfilled entry is merely a missed opportunity' -- and premarket legs are the documented loss centre (-$112,494 over 691 legs). VICR stays latched and is re-evaluated at the open, where the rule is unambiguous.",
+    "needs_user_ruling": "Which window does trail10vol mean -- last 10 stored bars (current code) or last 10 wall-clock minutes (the rule's words)? On a premarket-dark name these are wildly different, and the current code is the permissive one. This is a live-vs-backtest parity question, not a style preference."
+  },
   "fake_gap_finding": {
     "symbol": "INLX",
     "et": "07:02",
