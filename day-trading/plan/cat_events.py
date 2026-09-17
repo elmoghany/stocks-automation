@@ -250,7 +250,7 @@ def feature_names():
             names.append(f"n_{c}_{w}")
     names += ["hrs_since_news", "hrs_since_pr", "hrs_since_fil", "hrs_since_earn",
               "sent_mean_3d", "sent_mean_10d", "sent_n_10d",
-              "earn_fresh", "earn_surp_pct", "earn_surp_sign", "days_since_earn",
+              "earn_fresh_ev", "earn_surp_pct", "earn_surp_sign", "days_since_earn",
               "earn_surp_fresh_pct", "earn_surp_fresh_sign",
               "dilution_30d", "offer_news_30d", "insider_buy_30d", "insider_buy_usd_30d",
               "insider_sell_30d", "f13d_30d", "any_catalyst_18h"]

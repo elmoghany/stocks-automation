@@ -41,7 +41,7 @@ import wn_lib as L                                            # noqa: E402
 PARAMS = dict(objective="regression", learning_rate=0.04, num_leaves=63,
               min_data_in_leaf=400, feature_fraction=0.8,
               bagging_fraction=0.8, bagging_freq=1, lambda_l2=5.0,
-              verbose=-1, num_threads=8)
+              verbose=-1, num_threads=1)   # 4 logical cores shared with other agents: 1 thread is 7x faster than 8 here
 NROUND = 600
 START_MONTH = "2025-02"
 Y1_END = "2025-08"          # months < Y1_END are "Y1", < OOS_END "Y2"
@@ -55,13 +55,38 @@ def load(which="wide"):
     return t
 
 
+NEWS_KEYS = tuple(f"n_{c}_" for c in ("offering", "fda", "contract", "earnings",
+                  "guidance_up", "guidance_down", "mna", "analyst", "index", "halt",
+                  "legal", "insider", "management", "delisting", "crypto_ai",
+                  "macro_list", "news_all", "news_solo", "pr")) + (
+    "hrs_since_news", "hrs_since_pr", "sent_mean_3d", "sent_mean_10d", "sent_n_10d",
+    "offer_news_30d")
+FIL_KEYS = tuple(f"n_{c}_" for c in ("8k_1.01", "8k_1.02", "8k_2.02", "8k_3.02",
+                 "8k_5.02", "8k_7.01", "8k_8.01", "8k_other", "424b", "s3", "s1",
+                 "sc13d", "sc13g", "f4_any", "f4_buy", "f4_sell", "f144", "10q",
+                 "nt10", "fil_all")) + (
+    "hrs_since_fil", "dilution_30d", "insider_buy_30d", "insider_buy_usd_30d",
+    "insider_sell_30d", "f13d_30d")
+EARN_KEYS = ("hrs_since_earn", "earn_fresh_ev", "earn_surp_pct", "earn_surp_sign",
+             "days_since_earn", "earn_surp_fresh_pct", "earn_surp_fresh_sign")
+
+
 def feat_idx(t, which):
+    """Column indices for a feature set.  `base` = the 32 wide-net columns,
+    `cat` = every catalyst column, `base+cat` = all; the three
+    `base+news` / `base+fil` / `base+earn` subsets isolate what each
+    input class buys."""
     nb = t.n_base
     if which == "base":
         return list(range(nb))
     if which == "cat":
         return list(range(nb, len(t.feat)))
-    return list(range(len(t.feat)))
+    if which == "base+cat":
+        return list(range(len(t.feat)))
+    keys = {"base+news": NEWS_KEYS, "base+fil": FIL_KEYS, "base+earn": EARN_KEYS}[which]
+    extra = [i for i in range(nb, len(t.feat))
+             if any(t.feat[i] == k or t.feat[i].startswith(k) for k in keys)]
+    return list(range(nb)) + extra
 
 
 def _cat_cols(t, idx):
