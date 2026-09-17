@@ -9128,3 +9128,191 @@ Runners: `plan/rotation_sim.py` (CFGS additions only, `_vs2_cfgs`),
 Data: `data/massive/rotation_results_vs2_{a,b,c,aug}.json`,
 `data/massive/vs2wide_results_{wa,wb,wc,wd,we}.json`.
 Logs: `/c/tmp/vs2/*.log`.
+
+## HARNESS-DIAGNOSTIC (2026-09-17) — is the stack biased, or is the frame empty?
+
+The user asked the only question left worth asking: *"why is nothing even
+close — something is wrong."* Two candidates. **(A)** the harness / data /
+cost stack is biased against us and a real edge is being hidden by the
+measurement. **(B)** the harness is honest and the same-day, long-only,
+halal, market-order frame has almost no drift to harvest.
+
+This line does not test another config. It pushes **known positives**
+through the same stack — effects the literature says must be there, plus
+things we have independent ground truth for — and asks whether the stack
+can find money when money is there.
+
+**VERDICT: (B).** Full write-up in `harness-diagnostic.md`.
+
+### THE ENABLING DATA FINDING
+`data/massive/gd/{D}.json.gz` carries `o` and `c` for every US ticker, and
+gd `o` **is the 09:30 regular-session open to the cent** — median |diff|
+vs the minute-bar 09:30 open over 789 random symbol-days is **0.0000%**
+(p90 0.0000%); gd `c` sits 4.8 bp from the last RTH minute close, which is
+the closing auction. So the overnight/intraday split and the whole frame
+ablation run on **4,020–5,059 names a day, halal or not**, over all 448
+study dates — coverage no minute cache in this repo has for the non-halal
+arm. gd is split-adjusted but not dividend-adjusted, so the overnight leg
+is biased DOWN by roughly the dividend yield: conservative for the claim.
+
+### CONTROL 1 — OVERNIGHT vs INTRADAY (Lou, Polk & Skouras 2019)
+Equal-weight, membership read at D−1 so nothing about D enters. 448 dates.
+
+| universe | names/day | overnight | t (NW) | cum | intraday | t (NW) | cum |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| halal_strict | 64 | **+8.32 bp** | +1.46 (+1.48) | **+40.4%** | **−1.02 bp** | −0.13 (−0.15) | **−10.3%** |
+| halal_wide | 283 | +5.25 | +1.37 | +24.6% | +1.15 | +0.22 | +2.5% |
+| liquid (no halal) | 4,503 | +4.41 | +1.34 | +20.5% | +0.32 | +0.07 | **−0.6%** |
+
+halal_strict intraday is negative in BOTH years (Y1 −2.77 bp, Y2 −1.64 bp).
+On the ETFs, overnight beats intraday on **7 of 7**: SPY +3.95/+2.87,
+SPUS +5.88/+2.23, HLAL +4.79/+3.44, SPSK +2.42/−2.66, SPRE +7.41/−6.56,
+UMMA +9.34/+0.28, SPWO +35.50/−26.57 (bp/day). **The effect replicates.
+The stack can see money when money is there.**
+
+In $: a $15k ticket bought at the close and sold at the next open, flat
+10 bps/side — gross +$12.48, **net −$17.51/tkt**; at the measured 2.77 bps
+half-spread **+$4.17/tkt**. 3-session hold +$12.27, 5-session **+$42.19**
+(+$6,202/mo at 147 tkts) — but those are **capital-infeasible**: 7 × $15k
+× 5 concurrent days is $525k, not $100k. At the account's real capital a
+5-day rotation runs ~1.4 tkt/day → **+$1,240/month**, which lands on top
+of the buy-and-hold row below. The harness is internally coherent; there
+is no free lunch hiding in the hold length.
+
+### CONTROL 2 — BUY-AND-HOLD ON $100k
+halal_strict **+$1,071/mo** (+12.30%/yr, DD −34.9%), halal_wide +$1,258,
+liquid +$879, SPY +$1,489, SPUS +$1,798, HLAL +$1,864. All positive; the
+market rose and the data says so. **The whole equity premium on this
+account's capital is $1,100–$1,900/month. The loop target is $7,500.**
+
+### CONTROL 3 — THE HARNESS AGAINST THE LIVE BOOK
+All 20 completed live round trips (19 scored days; 20 is the population,
+not a sample) re-priced through the harness convention — entry at the OPEN
+of the live fill minute, exit at the CLOSE of the live exit minute, same
+share count, flat 10 bps/side +50 outside RTH.
+
+    live mean       -$222.13 / trade
+    harness mean    -$215.32 / trade
+    mean diff       +$6.81     median +$12.52
+    95% bootstrap   [-$32.44, +$42.52]      harness worse on 9/20
+    live entries paid +$83.31 MORE than the bar open the harness fills at
+
+**The harness does not underestimate live P&L — it is marginally
+generous.** Corroboration from the tape (`plan/cr_out/cost_decomp.json`,
+4,400 fills): median half-spread **2.77 bps**, median total with a
+conservative sqrt-impact term at coef 1.0 **12.05 bps**. The flat 10 bps
+sits INSIDE that range, not above it. Bar coverage: `panel_stats.json`
+27,209 symbol-days, **no_bars: 0**.
+
+### CONTROL 4 — FORESIGHT LADDER, AND THE ZERO-INFORMATION FLOOR
+One position at a time, ≤7 tickets/day, $15k, 20%-of-trailing-volume cap,
+flat by 15:00, entry = open of the bar after the decision bar, exit = close
+of the bar H minutes later. 448 days, causal wide universe, 30 seeds.
+
+| H | foresight $/tkt | at 0 bps | $/mo @7 | random $/tkt | **random @ 0 bps** | anti |
+|---:|---:|---:|---:|---:|---:|---:|
+| 5 | +322.32 | +350.75 | +47,380 | −28.36 ± 2.60 | **−0.07** | −358.15 |
+| 10 | +352.96 | +381.20 | +51,885 | −28.56 ± 2.12 | **−0.30** | −386.34 |
+| 30 | +399.53 | +427.27 | +58,731 | −28.62 ± 2.40 | **−0.52** | −432.03 |
+| 60 | +510.52 | +538.26 | +75,046 | −26.75 ± 4.13 | **+1.24** | −517.10 |
+
+**Two numbers decide the question.** (i) The zero-information column is
+ZERO: a random long ticket at no cost earns −$0.07/−$0.30/−$0.52/+$1.24.
+The harness leaks nothing. (First-principles check: whole-session drift
+−1.02 bp = −$1.53 on $15k; a 30-min slice is −$0.13; seed-mean noise
+±$2.4.) (ii) The toll column IS the toll: −$28.4…−$28.6 against $30.00 of
+round-trip fee, shaded by the volume cap. **The entire baseline loss of
+this frame is the fee and nothing else** — which independently confirms
+RL-SCOUT v2's −$33/ticket unconditional number.
+
+**The target in information terms.** Break-even needs $28.62 gross =
+**6.70% of perfect 30-minute foresight**. $7,500/month at 147 tickets
+needs $79.64 gross = **18.64%**. Best honest gross edge over a matched
+random control ever measured in this repo: CLOSE-MOMENTUM +$9.04,
+UNIVERSE-QUOTES +$14.73…+$26.81, WIDE-NET +$24, VS2 `W8RSd` +$52.8…+$55.3
+(not both-years-stable), this line's own best naive selector +$9.16 →
+**2.1%–12.9%, clustering at 2–6%**. Demonstrated skill is about **one
+third of what it takes to pay the toll**.
+
+### SUPPLEMENT — IS "BUY WHAT IS RUNNING" THE PROBLEM?
+C37F-hf2 (−$55/tkt) is WORSE than this frame's zero-information baseline
+(−$28.6). The gapper pool cannot attribute that (outcome-conditioned
+membership), so the same instinct was run on the CAUSAL universe, 7
+sequential tickets/day, 30-min holds, 448 days:
+
+    vwap_lo (furthest BELOW vwap)  -$18.61/tkt   edge +$9.16   z=3.04
+    rvol_lo                        -$21.33       edge +$6.44   z=2.14
+    mom (most extended vs open)    -$23.09       edge +$4.68   z=1.55
+    vwap_hi                        -$23.87       edge +$3.90   z=1.30
+    rvol_hi                        -$25.86       edge +$1.91   z=0.63
+    rev                            -$27.12       edge +$0.65   z=0.22
+    random (30 seeds)              -$27.77
+
+"Buy strength" is NOT intrinsically bad — in a causal universe it beats
+random by +$4.68. The −$26/tkt the live rule gives away is therefore the
+**pool**, not the instinct: the +10% gapper screen selects microcaps whose
+spread and impact are far above the wide universe's, on outcome-conditioned
+membership. The best naive causal selector reaches **+$9.16/tkt of real
+edge at z=3.04** and is still **$18.61 short of break-even**.
+
+### CONTROL 5 — FRAME ABLATION, ONE CONSTRAINT AT A TIME
+Same instrument for every row (the gd open/close grid, so the non-halal arm
+has full coverage), same 20 simple policies searched under every setting:
+rank on one of ten strictly-pre-open features, both signs, top 7 at $15k at
+the open, flatten at the stated exit. `gap` excluded — a policy that buys
+at the open cannot have observed the open. Best-of-20 is an in-sample
+maximum and is labelled one; the matched random control is in brackets.
+
+| constraint | ON $/mo (rand) | OFF $/mo (rand) | Δ best | Δ rand |
+|---|---:|---:|---:|---:|
+| same-day only | −2,432 (−3,841) | −1,424 (−1,948) | **+1,009** | +1,893 |
+| long-only | −2,432 (−3,841) | −1,553 (−3,841) | +880 | **+0** |
+| costs charged | −2,432 (−3,841) | **+1,980** (+569) | **+4,412** | +4,411 |
+| market orders (10 → 2.77 bps) | −2,432 (−3,841) | **+757** (−652) | **+3,190** | +3,189 |
+| halal screen | −2,432 (−3,841) | **−3,141** (−4,527) | **−709** | −686 |
+
+(halal_wide, the middle universe: −$2,616 — monotone in the screen.)
+
+1. **Costs / immediacy dominate**, and the random control moves by exactly
+   the same amount in both cost rows (+4,411 / +3,189), proving the gain is
+   the FEE and not extra edge. Same finding UNIVERSE-QUOTES reached from
+   the 1-second tape (limit fills +$2,460/mo; inside spread 2–6 bps).
+2. **Same-day is second, and it is DRIFT, not EDGE**: the best policy gains
+   +$1,009 while a RANDOM picker gains +$1,893. Holding overnight does not
+   make you smarter, it puts you in the only window that pays.
+3. **Long-only costs nothing measurable.** Random moves $0; best-of-40
+   beating best-of-20 by $880 is what searching twice as many policies buys
+   by luck. No evidence the short side is where the edge lives here.
+4. **The halal screen is not the problem — it HELPS.** Dropping it makes
+   the best policy $709/mo worse and random $686/mo worse, on 4,503 names a
+   day against 64. This has been the standing suspicion and it is wrong.
+5. **Even at ZERO cost** the best of 20 makes +$1,980/mo and random makes
+   +$569 — the whole searchable opportunity in this family, before a basis
+   point is charged, is **~$1,400/mo above random, 19% of the target**.
+   Independent confirmation, from a different instrument, of
+   CLOSE-MOMENTUM's "3.8× short at zero cost".
+
+### THE HONEST EXPECTATION FOR THIS FRAME
+At 7 × $15,000 same-day tickets/day on halal-PASS names with market orders:
+**−$4,200/month with no skill (that is the toll), −$2,400…−$2,700/month
+with the best simple causal rule findable in-sample, and roughly break-even
+(±$500/month) at the single best honest result this project has produced**
+(UNIVERSE-QUOTES, +$7/month, which already required relaxing the
+market-order assumption to limit fills). Not $7,500.
+
+Stated as information for the user's decision, not as a recommendation to
+break a rule: the constraint hiding the most money is the **market-order /
+immediacy assumption** (+$3,190/mo at the measured half-spread), then the
+**same-day rule** (+$1,009/mo of policy, +$1,893/mo of pure overnight
+drift, and the 5-session hold reaches the equity premium at ~$1,240/mo on
+feasible capital). The halal screen and the long-only rule cost nothing.
+
+### FILES
+`plan/hd_lib.py` (gd validation, universes, cost model, minute panels),
+`plan/hd_decomp.py` (controls 1-2), `plan/hd_recon.py` (control 3, `--fetch`
+backfills missing symbol-days into `data/massive/hd_bars`),
+`plan/hd_foresight.py` (control 4), `plan/hd_intraday.py` (selector
+supplement), `plan/hd_frame.py` (control 5).
+Outputs: `data/massive/hd/{decomp,recon,foresight,intraday_h30,frame}.json`.
+Logs: `data/massive/hd_{foresight,frame}.log`. Write-up:
+`harness-diagnostic.md`.
