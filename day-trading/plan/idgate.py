@@ -278,20 +278,53 @@ ROT_EXPECT = {
     ("C37F", "hf2", "y2025"): -41_095,     # 679 tkts, 178 traded days
     ("HOLD1", "hf2", "year"): -31_586,     # 237 tkts
     ("HOLD1", "hf2", "y2025"): -43_888,    # 178 tkts
+    # --- HALAL-GATE-REVIEW 2026-09-17, shard `hf3` ---
+    # Same env as hf/hf2 (RS_CROSS=1 RS_DEFER=1 POOL_HYGIENE=1
+    # HALAL_STRICT=1 PT_FILED=1). What moved in halal_pt:
+    #   * a missing DEBT or CASH row is looked up in the last filed
+    #     quarter that carries it (_last_filed_pt, <= 460 days)
+    #     instead of refusing the name on the spot;
+    #   * _ttm_pt steps back past a NEWEST quarter that never tagged
+    #     revenue instead of summing its 0.0 into TTM revenue, which
+    #     understated revenue and inflated the 5% ratio;
+    #   * a fourth interest rung, the CASH CEILING: 8%/yr x mean cash
+    #     over the window is a PROVEN upper bound on interest income,
+    #     so a ceiling under 5% of TTM revenue clears the leg even
+    #     when no interest concept is tagged anywhere.
+    # TWO DATA CAUSES RIDE ALONG and are NOT separated:
+    # companyfacts.zip was refreshed 2026-08-14 -> 2026-09-17 and
+    # re-extracted (symbols with >=1 complete quarter 3,677 -> 4,416,
+    # 663 symbols gained a newer filed quarter), and pt_halal was
+    # re-merged on top of it. The hf2 rows above are therefore FROZEN
+    # HISTORY for the same reason the hf rows are: halal_pt is a
+    # different function now.
+    #
+    # MEASUREMENT IN FLIGHT at the time of writing. The first attempt
+    # (launched 15:57) was killed by the box at 17:50 with 200/251
+    # days of C37F year walked and no result file, under ~40
+    # concurrent python processes from other lines; re-launched
+    # detached. Until the shard file exists, `--rot` prints
+    # "MISSING -- re-run to refresh" for hf3, which is the correct
+    # and honest state. Reproduce / refresh with:
+    #   HALAL_STRICT=1 PT_FILED=1 POOL_HYGIENE=1 ROTTRADES=1
+    #   MASSIVE_TH_INTERVAL=0.25 RS_CROSS=1 RS_DEFER=1 ROTSHARD=hf3
+    #   python plan/rotation_sim.py C37F HOLD1
 }
 # Which shard file each epoch's rows live in (data/massive/).
 ROT_SHARD = {"fm": "rotation_results_rs_id.json",
              "rs": "rotation_results_rs_bench.json",
              "hf": "rotation_results_hf.json",
              "hfm": "rotation_results_hf_fm.json",
-             "hf2": "rotation_results_hf2.json"}
+             "hf2": "rotation_results_hf2.json",
+             "hf3": "rotation_results_hf3.json"}
 # The env each epoch's rows MUST have been produced under. pool_hygiene
 # and halal_strict are required True for every epoch.
 ROT_ENV = {"fm": {"rs_cross": False, "rs_defer": False},
            "rs": {"rs_cross": True, "rs_defer": False},
            "hf": {"rs_cross": True, "rs_defer": True},
            "hfm": {"rs_cross": False, "rs_defer": False},
-           "hf2": {"rs_cross": True, "rs_defer": True}}
+           "hf2": {"rs_cross": True, "rs_defer": True},
+           "hf3": {"rs_cross": True, "rs_defer": True}}
 # Reproduce (from day-trading/, one process per epoch):
 #   HALAL_STRICT=1 PT_FILED=1 POOL_HYGIENE=1 ROTTRADES=1 \
 #     MASSIVE_TH_INTERVAL=0.25 RS_CROSS=0 ROTSHARD=rs_id \
@@ -303,6 +336,8 @@ ROT_ENV = {"fm": {"rs_cross": False, "rs_defer": False},
 #         python plan/rotation_sim.py C37F            # halal-fix epoch
 #   ... RS_CROSS=1 RS_DEFER=1 ROTSHARD=hf2 \
 #         python plan/rotation_sim.py C37F HOLD1   # interest-leg 09-16
+#   ... RS_CROSS=1 RS_DEFER=1 ROTSHARD=hf3 \
+#         python plan/rotation_sim.py C37F HOLD1   # gate-review 09-17
 
 
 def _rot_gate():
