@@ -1,0 +1,4 @@
+08:37:24 AMCI last=2.97 hi=4.15 bid=2.92 ask=3.08 spread=5.48% trail10vol=188346 cap20=37669 shares@ask=4870 fillarm=PASS (ask < trigger) | SPREAD-VETO 5.48% | trig:   AMCI    08:30  macd_cross_up  [STALE (6m since close) -- DO NOT ENTER; wait for a fresh signal]
+08:38:13 AMCI last=2.9983 hi=4.15 bid=2.95 ask=3.03 spread=2.71% trail10vol=192646 cap20=38529 shares@ask=4950 fillarm=PASS (ask < trigger) | SPREAD-VETO 2.71% | trig:   AMCI    08:30  macd_cross_up  [STALE (7m since close) -- DO NOT ENTER; wait for a fresh signal]
+08:39:13 AMCI last=2.95 hi=4.15 bid=2.85 ask=2.92 spread=2.46% trail10vol=195639 cap20=39127 shares@ask=5136 fillarm=PASS (ask < trigger) | SPREAD-VETO 2.46% | trig:   AMCI    no buy_set signal in the last 8 bars
+08:40:19 AMCI last=3.01 hi=4.15 bid=2.91 ask=3.04 spread=4.47% trail10vol=198767 cap20=39753 shares@ask=4934 fillarm=PASS (ask < trigger) | SPREAD-VETO 4.47% | trig:   AMCI    08:39  bullish_engulfing  [TAKEABLE NOW (0m since close)]

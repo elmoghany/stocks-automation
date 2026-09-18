@@ -464,6 +464,13 @@
       "scan": "08:35 scan: 92 rows (delta: BIAF new -> inherited FAIL). AMCI CROSSED on RH tape at 12:31Z (high 3.94, then 4.15); rank TOP=AMCI coil 0.84 press -0.19 calm; trigger macd_cross_up STALE; quote 3.17 bid 3.08/ask 3.29 spread 6.8% -> spread veto. 1-min poll starts",
       "armed": false,
       "vetoes": []
+    },
+    {
+      "et": "08:40",
+      "state": "FLAT-5m",
+      "scan": "08:40 scan: 81 rows, no new common-stock ticker (BHYP SOLT funds; AMCI off-scan at -10% but LATCHED). AMCI 1-min poll: no signal, spread 2.5-5.5% veto",
+      "armed": false,
+      "vetoes": []
     }
   ],
   "veto_rates": {
