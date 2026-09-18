@@ -1367,6 +1367,19 @@
         "BSEM SIZE-CAP 2568<3018",
         "BSEM no signal"
       ]
+    },
+    {
+      "et": "12:25",
+      "state": "FLAT-5m",
+      "scan": "12:25 scan: 132 rows; new rows ABTC/TGL (already FAIL) + 4 ETFs; no unscreened common. AMCI 3.38 (one 100-sh print 12:23), bid 3.32 / ask 3.42 (3.0%). BSEM 4.96, bid 4.95 / ask 4.98 (0.61%), chase at 4.98 high, no signal",
+      "armed": false,
+      "vetoes": [
+        "AMCI SPREAD 3.01%",
+        "AMCI SIZE-CAP",
+        "BSEM SPREAD 0.61%",
+        "BSEM CHASE",
+        "BSEM SIZE-CAP"
+      ]
     }
   ],
   "veto_rates": {
