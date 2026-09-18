@@ -1536,6 +1536,18 @@
         "AMCI SPREAD 5.33%",
         "AMCI SIZE-CAP"
       ]
+    },
+    {
+      "et": "13:25",
+      "state": "FLAT-5m",
+      "scan": "13:25 scan: 137 rows (raw dump); no unscreened common (ALVO/SGML/SECZ/FTCI back, all FAIL). BSEM fading: 5.03 on 3.5k, bid 4.99 / ask 5.30 (6.2%), no signal. AMCI 3.32, bid 3.38 / ask 3.56 (5.3%), stale",
+      "armed": false,
+      "vetoes": [
+        "BSEM SPREAD 6.21%",
+        "BSEM SIZE-CAP",
+        "AMCI SPREAD 5.33%",
+        "AMCI SIZE-CAP"
+      ]
     }
   ],
   "veto_rates": {
