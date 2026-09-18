@@ -1426,6 +1426,18 @@
         "AMCI SPREAD 3.01%",
         "AMCI SIZE-CAP"
       ]
+    },
+    {
+      "et": "12:45",
+      "state": "FLAT-5m",
+      "scan": "12:45 scan: 137 rows (raw dump); no unscreened common (HYPD back, inherited FAIL; rest ETFs). BSEM macd_cross_up 12:44 TAKEABLE -> VETO spread 1.94% + chase (ask 5.25 = high). AMCI 3.42, bid 3.40 / ask 3.56 (4.7%), stale signals",
+      "armed": false,
+      "vetoes": [
+        "BSEM SPREAD 1.94%",
+        "BSEM CHASE",
+        "AMCI SPREAD 4.71%",
+        "AMCI SIZE-CAP"
+      ]
     }
   ],
   "veto_rates": {
@@ -1438,10 +1450,10 @@
       "size_cap_binding": 1
     },
     "regular": {
-      "would_be_entries": 7,
-      "spread_veto": 7,
+      "would_be_entries": 8,
+      "spread_veto": 8,
       "depth_veto": 0,
-      "chase_veto": 5,
+      "chase_veto": 6,
       "size_cap_binding": 4
     }
   },
@@ -1642,6 +1654,21 @@
       "size_cap": "3611 >= 2923 OK",
       "session_phase": "regular",
       "note": "5.13 print at 12:30 = new high; closest miss of the day on spread"
+    },
+    {
+      "et": "12:45",
+      "sym": "BSEM",
+      "signal": "macd_cross_up 12:44 [TAKEABLE NOW]",
+      "bid": 5.15,
+      "ask": 5.25,
+      "spread_pct": 1.94,
+      "session_high": 5.25,
+      "vetoes": [
+        "SPREAD 1.94%",
+        "CHASE (ask 5.25 >= high 5.25)"
+      ],
+      "size_cap": "4038 >= 2857 OK",
+      "session_phase": "regular"
     }
   ],
   "ptle_watch": {
