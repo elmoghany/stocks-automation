@@ -374,6 +374,30 @@
       "q2": "PASS -- Digital Brands: apparel (moot)",
       "screened_et": "09:40",
       "armable": false
+    },
+    "AIXI": {
+      "q1": "FAIL",
+      "loan_pct": 17101.29,
+      "cash_pct": 847.92,
+      "mcap": 273546.0,
+      "q2": "n/a -- Xiao-I: AI software (Shanghai); moot",
+      "screened_et": "09:45",
+      "armable": false
+    },
+    "TAOX": {
+      "q1": "FAIL (loan None -> unverified is FAIL)",
+      "loan_pct": null,
+      "cash_pct": 7.74,
+      "mcap": 30606459.0,
+      "q2": "FAIL -- TAO Synergies: cryptocurrency/AI convergence (Bittensor treasury) plus a legacy neuro pipeline; crypto-treasury main line",
+      "screened_et": "09:45",
+      "armable": false
+    },
+    "LABT": {
+      "q1": "inherited FAIL",
+      "q2": "PASS -- antimicrobial biotech (moot)",
+      "screened_et": "09:45",
+      "armable": false
     }
   },
   "cycles_log": [
@@ -626,6 +650,13 @@
       "et": "09:40",
       "state": "FLAT-5m",
       "scan": "09:40 scan: 58 rows (delta: FWDI DBGI new common -> both Q1 FAIL; 13 funds). AMCI: last 3.27, ORB high 3.39 not broken, spread 5.4% veto, no signal",
+      "armed": false,
+      "vetoes": []
+    },
+    {
+      "et": "09:45",
+      "state": "FLAT-5m",
+      "scan": "09:45 scan: 54 rows (delta: AIXI TAOX LABT new -> AIXI/TAOX Q1 FAIL, LABT inherited FAIL; 3 funds). AMCI: last 3.305, ORB 3.39 intact, spread 4.35% veto, no signal",
       "armed": false,
       "vetoes": []
     }

@@ -247,6 +247,22 @@
    "vol": "38027",
    "name": "Digital Brands Group",
    "first_seen": "09:40"
+  },
+  "AIXI": {
+   "pct": 12.17,
+   "last": 2.35,
+   "prev_close": 2.095,
+   "vol": "232221.54",
+   "name": "Xiao-I Corporation",
+   "first_seen": "09:45"
+  },
+  "TAOX": {
+   "pct": 11.64,
+   "last": 4.555,
+   "prev_close": 4.08,
+   "vol": "156482.46",
+   "name": "Tao Synergies",
+   "first_seen": "09:45"
   }
  },
  "halal_fail": [
@@ -279,7 +295,9 @@
   "PDC",
   "SKIL",
   "FWDI",
-  "DBGI"
+  "DBGI",
+  "AIXI",
+  "TAOX"
  ],
  "fake_gap": [
   "PTLE"
