@@ -1402,6 +1402,18 @@
         "AMCI SPREAD 1.18%",
         "AMCI SIZE-CAP"
       ]
+    },
+    {
+      "et": "12:35",
+      "state": "FLAT-5m",
+      "scan": "12:35 scan: 137 rows (raw dump); LGHL new but already screened FAIL; no unscreened common. BSEM running: 5.20 new high on 3.4k, bid 5.03 / ask 5.22 (3.78%), chase, signals stale. AMCI 3.41, bid 3.32 / ask 3.51 (5.7%), 12:31 signals stale",
+      "armed": false,
+      "vetoes": [
+        "BSEM SPREAD 3.78%",
+        "BSEM CHASE",
+        "AMCI SPREAD 5.72%",
+        "AMCI SIZE-CAP"
+      ]
     }
   ],
   "veto_rates": {
