@@ -741,10 +741,11 @@
       "size_cap_binding": 1
     },
     "regular": {
-      "would_be_entries": 0,
-      "spread_veto": 0,
+      "would_be_entries": 1,
+      "spread_veto": 1,
       "depth_veto": 0,
-      "chase_veto": 0
+      "chase_veto": 1,
+      "size_cap_binding": 1
     }
   },
   "errors": [],
@@ -808,7 +809,8 @@
     "trigger_0835": "macd_cross_up on the 08:30 bar -- STALE (5m since close) -- DO NOT ENTER",
     "premarket_high": 4.15,
     "loop": "from 08:36: 1-minute bar poll + `trigger` on AMCI (coordinator-owned); Trigger B = stop-buy at the 4.15 session high, gated by spread<=0.5%, depth, size cap, fill-arming",
-    "orb_0935": "ORB 09:30-09:34: high 3.39 (09:31 bar), low 3.19. Trigger A = stop-buy 3.39, limit 3.407. At 09:35: last 3.21, bid 3.13 / ask 3.35 (7.0% spread) -> SPREAD VETO; fill-arming PASS (ask < 3.39); size cap 3,055 sh (20% of 15,276) vs 4,477 wanted -> binding. NOTE armcheck.py reported a 'session HIGH 4.4083 set 2026-09-01' -- it reads an older AMCI bar file alongside today's; the correct Trigger B level is today's premarket high 4.15 (poll helper uses the day file only)."
+    "orb_0935": "ORB 09:30-09:34: high 3.39 (09:31 bar), low 3.19. Trigger A = stop-buy 3.39, limit 3.407. At 09:35: last 3.21, bid 3.13 / ask 3.35 (7.0% spread) -> SPREAD VETO; fill-arming PASS (ask < 3.39); size cap 3,055 sh (20% of 15,276) vs 4,477 wanted -> binding. NOTE armcheck.py reported a 'session HIGH 4.4083 set 2026-09-01' -- it reads an older AMCI bar file alongside today's; the correct Trigger B level is today's premarket high 4.15 (poll helper uses the day file only).",
+    "orb_break": "14:00Z bar o3.39 h3.41 c3.41 v976 broke ORB high 3.39 (Trigger A level) with spread 2.4-7.6%; never armable. 14:01Z reversed to 3.28 (v6524) -- a fill at 3.39 would be -3.2% one minute later"
   },
   "veto_events": [
     {
@@ -837,6 +839,21 @@
       "book": "bid 3.06 / ask 3.12 = 1.96% spread (cap 0.5%)",
       "other_gates": "size cap 3,142 sh (20% of trailing-10 15,714) vs 4,807 wanted -> would reduce to 3,142 sh (~$9.8k), not a skip; last 3.115 = -7.0% vs prev close",
       "decision": "SPREAD VETO -- not entered"
+    },
+    {
+      "et": "09:59-10:00",
+      "sym": "AMCI",
+      "trigger": "A (ORB high 3.39 touched on 13:59Z bar: o3.36 h3.39 l3.36 c3.36 v3171)",
+      "session_phase": "regular",
+      "bid": 3.32,
+      "ask": 3.4,
+      "spread_pct": 2.41,
+      "vetoes": [
+        "SPREAD 2.41% > 0.5%",
+        "CHASE ask 3.40 >= ORB high 3.39",
+        "SIZE-CAP 2905 < 4411"
+      ],
+      "note": "never armed -- spread above cap every poll since 09:30; bar closed back at 3.36 below ORB high"
     }
   ],
   "ptle_watch": {
