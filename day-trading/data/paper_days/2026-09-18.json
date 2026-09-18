@@ -1199,6 +1199,19 @@
         "BSEM CHASE",
         "BSEM SIZE-CAP"
       ]
+    },
+    {
+      "et": "11:45",
+      "state": "FLAT-5m",
+      "scan": "11:45 scan: 108 rows (no new common). AMCI 3.39 no prints since 11:38, bid 3.32 / ask 3.45 (3.9%), no signal. BSEM 4.78, bid 4.77 / ask 4.85 (1.7%), chase, no signal",
+      "armed": false,
+      "vetoes": [
+        "AMCI SPREAD 3.92%",
+        "AMCI SIZE-CAP",
+        "BSEM SPREAD 1.68%",
+        "BSEM CHASE",
+        "BSEM SIZE-CAP"
+      ]
     }
   ],
   "veto_rates": {
