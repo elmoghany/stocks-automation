@@ -334,6 +334,13 @@
       "scan": "07:45 scan: 81 rows (delta: DSP new). DSP Q1 FAIL cash 29.0% on the 664.7M fundamentals cap (scan cell 212M was class-A only). 0 armable",
       "armed": false,
       "vetoes": []
+    },
+    {
+      "et": "07:50",
+      "state": "FLAT-5m",
+      "scan": "07:50 scan: 77 rows, no new common-stock ticker (DUKR off). 0 candidates",
+      "armed": false,
+      "vetoes": []
     }
   ],
   "veto_rates": {
