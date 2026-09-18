@@ -1603,6 +1603,18 @@
         "AMCI SPREAD 2.66%",
         "AMCI SIZE-CAP"
       ]
+    },
+    {
+      "et": "13:50",
+      "state": "FLAT-5m",
+      "scan": "13:50 scan: 140 rows (raw dump); no unscreened common (CPOP/BMGL back, both FAIL; CIFU ETF). BSEM 5.04, bid 4.93 / ask 5.15 (4.5%), no signal. AMCI 3.38, bid 3.35 / ask 3.44 (2.7%), no signal",
+      "armed": false,
+      "vetoes": [
+        "BSEM SPREAD 4.46%",
+        "BSEM SIZE-CAP",
+        "AMCI SPREAD 2.69%",
+        "AMCI SIZE-CAP"
+      ]
     }
   ],
   "veto_rates": {
