@@ -199,6 +199,22 @@
    "vol": "31758930.13",
    "name": "Paradium.AI",
    "first_seen": "09:00"
+  },
+  "PTLE": {
+   "pct": 11.48,
+   "last": 7.77,
+   "prev_close": 6.97,
+   "vol": "201.9",
+   "name": "PTL Limited",
+   "first_seen": "09:30"
+  },
+  "LONA": {
+   "pct": 10.14,
+   "last": 7.655,
+   "prev_close": 6.95,
+   "vol": "1138.5",
+   "name": "LeonaBio",
+   "first_seen": "09:30"
   }
  },
  "halal_fail": [
@@ -225,9 +241,13 @@
   "TNMG",
   "TMCR",
   "OPTT",
-  "PAAI"
+  "PAAI",
+  "LONA",
+  "BHV"
  ],
- "fake_gap": [],
+ "fake_gap": [
+  "PTLE"
+ ],
  "inherited_fail": [
   "AAPG",
   "ABCL",

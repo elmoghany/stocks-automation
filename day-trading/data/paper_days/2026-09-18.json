@@ -311,6 +311,33 @@
       "q2": "FAIL-leaning -- Paradium.AI (ex-Arena Group): digital media publisher (Sports Illustrated, TheStreet); moot given Q1 FAIL on either cap (loans ~63% even on 159M)",
       "screened_et": "09:00",
       "armable": false
+    },
+    "LONA": {
+      "q1": "FAIL",
+      "loan_pct": 0.88,
+      "cash_pct": 77.99,
+      "mcap": 65480557.0,
+      "q2": "PASS -- LeonaBio: neuro biotech (moot)",
+      "screened_et": "09:30",
+      "armable": false
+    },
+    "BHV": {
+      "q1": "n/a",
+      "q2": "FAIL -- BlackRock Virginia Municipal Bond Trust is a closed-end bond fund (interest-bearing by construction); the sweep's fund regex missed 'Bond Trust', added to halal_fail",
+      "screened_et": "09:30",
+      "armable": false
+    },
+    "PTLE": {
+      "q1": "PASS",
+      "loan_pct": 0.0,
+      "cash_pct": 2.48,
+      "combined": 2.48,
+      "haram_pct": 0.12,
+      "mcap": 43779420.0,
+      "mcap_fundamentals": 48804100.4,
+      "q2": "PASS -- PTL Ltd: marine fuel logistics / vessel refueling (Asia Pacific). The 'trade credit to customers' line is ancillary: haram_pct (interest income / revenue) 0.12%, well under 5%. Data thin: 1 period, source quarterly+last-available.",
+      "screened_et": "09:30",
+      "armable": true
     }
   },
   "cycles_log": [
@@ -544,6 +571,13 @@
       "scan": "09:25 scan: 78 rows, no new common-stock ticker. AMCI: last 3.08, bid 2.97 / ask 3.21 (8% spread), no signal. Into the open with AMCI as the only latched, halal-PASS name",
       "armed": false,
       "vetoes": []
+    },
+    {
+      "et": "09:31",
+      "state": "FLAT-5m",
+      "scan": "09:30 OPEN scan: 29 rows (delta: PTLE LONA BHV new). PTLE Q1 PASS (loan 0.0 cash 2.5) -> Q2 review; LONA Q1 FAIL cash 78%; BHV closed-end bond fund FAIL. AMCI poll: no signal, spread 3.75% at the open",
+      "armed": false,
+      "vetoes": []
     }
   ],
   "veto_rates": {
@@ -652,5 +686,13 @@
       "other_gates": "size cap 3,142 sh (20% of trailing-10 15,714) vs 4,807 wanted -> would reduce to 3,142 sh (~$9.8k), not a skip; last 3.115 = -7.0% vs prev close",
       "decision": "SPREAD VETO -- not entered"
     }
-  ]
+  ],
+  "ptle_watch": {
+    "first_seen_et": "09:30",
+    "scan_claim": "+11.48% last 7.77 vs scan prev close 6.97",
+    "quote_0931": "last 7.77 @13:30:00Z (ONE 160-sh print at the open); bid 6.24 / ask 6.99 = 12.0% spread; ask is BELOW the last print",
+    "ERROR_prev_close_discrepancy": "get_equity_quotes previous_close 7.505 (official sip-list-exchange-close 2026-09-17) vs adjusted_previous_close 6.97 (the scan's changeFromClose base). On the OFFICIAL close 7.77 is only +3.5% -- the +10% cross has NOT printed. Conservative branch: rank on 7.505; PTLE is not latched unless an RH bar prints >= 8.2555 (7.505 x 1.10). Logged loudly per the no-silent-fallbacks rule; the 6.97 figure is not explained by any split we can see.",
+    "disposition": "halal PASS both questions, on halal_list, but NOT crossed on the official close and the book is 12% wide with 160 sh printed -- not armable",
+    "rh_bars_0931": "rh_bars_ingest: 0 real bars, 330 interpolated (08:00Z-13:30Z). PTLE did NOT trade premarket on the RH feed; the 13:30:00Z 160-sh print is the only trade. Fake-gap class (Day 24 INLX precedent): the scan's +11.5% rests on a stale adjusted close. Not crossed, not armable."
+  }
 }
