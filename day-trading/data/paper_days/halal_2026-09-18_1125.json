@@ -1,0 +1,28 @@
+{
+ "CNTN": {
+  "verdict": "FAIL",
+  "loan_pct": 0.1,
+  "cash_pct": 4.7,
+  "combined": 4.8,
+  "haram_pct": 43.84,
+  "halal": false,
+  "source": "quarterly",
+  "sic": "6199",
+  "fail_reason": "FINANCIAL SECTOR (SIC 6199 Finance Services) -- 6000-6999 is a hard FAIL (user ruling 2026-09-16); only an explicit PASS ruling with a basis can restore a quirk-coded name",
+  "mcap": 161753162.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ },
+ "CD": {
+  "verdict": "FAIL",
+  "loan_pct": 0.29,
+  "cash_pct": 13.49,
+  "combined": 13.78,
+  "haram_pct": 56.72,
+  "halal": false,
+  "source": "quarterly",
+  "sic": "6199",
+  "fail_reason": "FINANCIAL SECTOR (SIC 6199 Finance Services) -- 6000-6999 is a hard FAIL (user ruling 2026-09-16); only an explicit PASS ruling with a basis can restore a quirk-coded name",
+  "mcap": 324511210.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}

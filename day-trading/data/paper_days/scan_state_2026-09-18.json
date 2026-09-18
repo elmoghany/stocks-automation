@@ -367,6 +367,22 @@
    "vol": "838344",
    "name": "5E Advanced Materials",
    "first_seen": "11:20"
+  },
+  "CNTN": {
+   "pct": 11.67,
+   "last": 2.345,
+   "prev_close": 2.0999,
+   "vol": "311163",
+   "name": "Canton Strategic Holdings",
+   "first_seen": "11:25"
+  },
+  "CD": {
+   "pct": 10.65,
+   "last": 3.22,
+   "prev_close": 2.9101,
+   "vol": "82924",
+   "name": "Chaince Digital Holdings",
+   "first_seen": "11:25"
   }
  },
  "halal_fail": [
@@ -413,7 +429,9 @@
   "XBP",
   "SBET",
   "COIN",
-  "FEAM"
+  "FEAM",
+  "CNTN",
+  "CD"
  ],
  "fake_gap": [
   "PTLE"

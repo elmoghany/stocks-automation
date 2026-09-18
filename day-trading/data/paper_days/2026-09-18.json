@@ -613,6 +613,31 @@
       "q2": "not evaluated -- 5E Advanced Materials, boron mining",
       "screened_et": "11:20",
       "armable": false
+    },
+    "CNTN": {
+      "q1": "FAIL",
+      "loan_pct": 0.1,
+      "cash_pct": 4.7,
+      "mcap": 161753162.0,
+      "q2": "FAIL -- Canton Strategic Holdings: crypto/Canton-token treasury",
+      "screened_et": "11:25",
+      "armable": false
+    },
+    "CD": {
+      "q1": "FAIL",
+      "loan_pct": 0.29,
+      "cash_pct": 13.49,
+      "mcap": 324511210.0,
+      "fail_reason": "CASH>10",
+      "q2": "FAIL -- Chaince Digital: crypto",
+      "screened_et": "11:25",
+      "armable": false
+    },
+    "GSIW": {
+      "q1": "inherited FAIL",
+      "q2": "Garden Stage -- HK securities brokerage, FAIL",
+      "screened_et": "11:25",
+      "armable": false
     }
   },
   "cycles_log": [
@@ -1085,6 +1110,19 @@
       "armed": false,
       "vetoes": [
         "AMCI SPREAD 2.08%",
+        "AMCI SIZE-CAP",
+        "BSEM SPREAD 3.41%",
+        "BSEM CHASE",
+        "BSEM SIZE-CAP"
+      ]
+    },
+    {
+      "et": "11:25",
+      "state": "FLAT-5m",
+      "scan": "11:25 scan: 108 rows (delta: CNTN/CD Q1 FAIL crypto; GSIW inherited FAIL; 1 new fund). AMCI 3.41 no prints since 11:19, bid 3.33 / ask 3.43 (3.0%). BSEM 4.76, bid 4.69 / ask 4.85 (3.4%), no signal",
+      "armed": false,
+      "vetoes": [
+        "AMCI SPREAD 3.00%",
         "AMCI SIZE-CAP",
         "BSEM SPREAD 3.41%",
         "BSEM CHASE",
