@@ -525,6 +525,27 @@
       "q2": "Treasure Global -- e-commerce/fintech platform; Q1 fail stands",
       "screened_et": "10:30",
       "armable": false
+    },
+    "CANG": {
+      "q1": "FAIL",
+      "loan_pct": 58.53,
+      "cash_pct": 11.58,
+      "mcap": 87376789.0,
+      "q2": "not evaluated -- Cango, auto-finance turned bitcoin mining",
+      "screened_et": "10:35",
+      "armable": false
+    },
+    "HYPD": {
+      "q1": "inherited FAIL",
+      "q2": "Hyperion DeFi -- crypto treasury",
+      "screened_et": "10:35",
+      "armable": false
+    },
+    "TJGC": {
+      "q1": "inherited FAIL",
+      "q2": "TJGC Group Class A; Q1 fail stands",
+      "screened_et": "10:35",
+      "armable": false
     }
   },
   "cycles_log": [
@@ -874,6 +895,18 @@
         "BSEM SPREAD 3.88%",
         "BSEM CHASE"
       ]
+    },
+    {
+      "et": "10:35",
+      "state": "FLAT-5m",
+      "scan": "10:35 scan: 91 rows (delta: CANG Q1 FAIL loan 58.5%; HYPD/TJGC inherited FAIL; AMCI back on scan +10.1%). AMCI hammer TAKEABLE at 10:34 -> spread 4.64% veto (bid 3.66 / ask 3.83). BSEM signal stale, 3.9% spread",
+      "armed": false,
+      "vetoes": [
+        "AMCI SPREAD 4.64%",
+        "AMCI SIZE-CAP",
+        "BSEM SPREAD 3.88%",
+        "BSEM CHASE"
+      ]
     }
   ],
   "veto_rates": {
@@ -886,11 +919,11 @@
       "size_cap_binding": 1
     },
     "regular": {
-      "would_be_entries": 2,
-      "spread_veto": 2,
+      "would_be_entries": 3,
+      "spread_veto": 3,
       "depth_veto": 0,
       "chase_veto": 2,
-      "size_cap_binding": 2
+      "size_cap_binding": 3
     }
   },
   "errors": [],
@@ -1013,6 +1046,20 @@
         "SPREAD 3.66% > 0.5%",
         "CHASE ask 4.81 >= session high 4.81",
         "SIZE-CAP 501 sh (20% of trailing-10 vol 2506) < 3118 wanted"
+      ],
+      "note": "not armed"
+    },
+    {
+      "et": "10:35:34",
+      "sym": "AMCI",
+      "trigger": "C hammer on 14:34Z close 3.69 [TAKEABLE NOW 1m]",
+      "session_phase": "regular",
+      "bid": 3.66,
+      "ask": 3.83,
+      "spread_pct": 4.64,
+      "vetoes": [
+        "SPREAD 4.64% > 0.5%",
+        "SIZE-CAP 3907 < 3916 (marginal)"
       ],
       "note": "not armed"
     }

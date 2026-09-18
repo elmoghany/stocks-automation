@@ -1,0 +1,17 @@
+{
+ "CANG": {
+  "verdict": "FAIL",
+  "haram_pct_note": "interest income only -- blind to revenue mix",
+  "loan_pct": 58.53,
+  "cash_pct": 11.58,
+  "combined": 70.11,
+  "haram_pct": 0.18,
+  "haram_periods": 4,
+  "haram_src": "yfinance",
+  "halal": false,
+  "source": "quarterly",
+  "fail_reason": "LOAN>10",
+  "mcap": 87376789.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}

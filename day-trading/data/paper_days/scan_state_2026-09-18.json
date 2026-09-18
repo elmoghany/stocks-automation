@@ -327,6 +327,14 @@
    "vol": "689055",
    "name": "Gemini Space Station",
    "first_seen": "10:25"
+  },
+  "CANG": {
+   "pct": 11.06,
+   "last": 2.41,
+   "prev_close": 2.17,
+   "vol": "285014",
+   "name": "Cango",
+   "first_seen": "10:35"
   }
  },
  "halal_fail": [
@@ -368,7 +376,8 @@
   "ALMR",
   "QTI",
   "VOGX",
-  "GEMI"
+  "GEMI",
+  "CANG"
  ],
  "fake_gap": [
   "PTLE"
