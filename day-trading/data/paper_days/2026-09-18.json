@@ -1560,6 +1560,18 @@
         "AMCI SPREAD 5.33%",
         "AMCI SIZE-CAP"
       ]
+    },
+    {
+      "et": "13:35",
+      "state": "FLAT-5m",
+      "scan": "13:35 scan: 134 rows; no unscreened common (NCI/CYPH/FTCI back, all FAIL; RIOX ETF). BSEM 5.06, bid 5.03 / ask 5.29 (5.2%), no signal. AMCI 3.32 no prints since 13:00, bid 3.38 / ask 3.47 (2.7%)",
+      "armed": false,
+      "vetoes": [
+        "BSEM SPREAD 5.17%",
+        "BSEM SIZE-CAP",
+        "AMCI SPREAD 2.66%",
+        "AMCI SIZE-CAP"
+      ]
     }
   ],
   "veto_rates": {
