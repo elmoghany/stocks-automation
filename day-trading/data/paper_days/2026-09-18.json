@@ -1627,6 +1627,18 @@
         "AMCI SPREAD 2.39%",
         "AMCI SIZE-CAP"
       ]
+    },
+    {
+      "et": "14:00",
+      "state": "FLAT-5m",
+      "scan": "14:00 scan: 141 rows (raw dump); no unscreened common (MTC/SLE/CLGN back, all FAIL; CONY ETF). BSEM 5.05, bid 4.93 / ask 5.15 (4.5%), no signal, thin. AMCI 3.43, bid 3.36 / ask 3.43 (2.1%), no signal. 30 min to entry cutoff",
+      "armed": false,
+      "vetoes": [
+        "BSEM SPREAD 4.46%",
+        "BSEM SIZE-CAP",
+        "AMCI SPREAD 2.08%",
+        "AMCI SIZE-CAP"
+      ]
     }
   ],
   "veto_rates": {
