@@ -580,7 +580,8 @@
       "mcap": 1793180851.0,
       "q2": "FAIL -- Sharplink: ether treasury company",
       "screened_et": "10:55",
-      "armable": false
+      "armable": false,
+      "fail_reason": "HARAM INDUSTRY (sportsbook) -- industry screen, final"
     },
     "APUS": {
       "q1": "inherited FAIL",
@@ -592,6 +593,12 @@
       "q1": "inherited FAIL",
       "q2": "Gloo Holdings; Q1 fail stands",
       "screened_et": "10:55",
+      "armable": false
+    },
+    "COIN": {
+      "q1": "FAIL (financial sector / inherited)",
+      "q2": "FAIL -- Coinbase crypto exchange",
+      "screened_et": "11:00",
       "armable": false
     }
   },
@@ -1002,6 +1009,19 @@
         "AMCI SPREAD 3.39%",
         "AMCI SIZE-CAP",
         "BSEM SPREAD 2.77%",
+        "BSEM CHASE",
+        "BSEM SIZE-CAP"
+      ]
+    },
+    {
+      "et": "11:00",
+      "state": "FLAT-5m",
+      "scan": "11:00 scan: 103 rows (delta: COIN new -> FAIL crypto exchange; 1 new fund). AMCI 3.56 no prints since 10:55, bid 3.52 / ask 3.59 (2.0%), no signal. BSEM 4.77, bid 4.72 / ask 4.82 (2.1%), stale",
+      "armed": false,
+      "vetoes": [
+        "AMCI SPREAD 1.99%",
+        "AMCI SIZE-CAP",
+        "BSEM SPREAD 2.12%",
         "BSEM CHASE",
         "BSEM SIZE-CAP"
       ]

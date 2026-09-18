@@ -351,6 +351,14 @@
    "vol": "3889303",
    "name": "Sharplink",
    "first_seen": "10:55"
+  },
+  "COIN": {
+   "pct": 10.62,
+   "last": 192.45,
+   "prev_close": 173.974,
+   "vol": "7921268",
+   "name": "Coinbase",
+   "first_seen": "11:00"
   }
  },
  "halal_fail": [
@@ -395,7 +403,8 @@
   "GEMI",
   "CANG",
   "XBP",
-  "SBET"
+  "SBET",
+  "COIN"
  ],
  "fake_gap": [
   "PTLE"
