@@ -215,6 +215,22 @@
    "vol": "1138.5",
    "name": "LeonaBio",
    "first_seen": "09:30"
+  },
+  "PDC": {
+   "pct": 17.49,
+   "last": 3.09,
+   "prev_close": 2.63,
+   "vol": "1749.72",
+   "name": "Perpetuals.com",
+   "first_seen": "09:35"
+  },
+  "SKIL": {
+   "pct": 11.06,
+   "last": 7.03,
+   "prev_close": 6.33,
+   "vol": "17541.09",
+   "name": "Skillsoft",
+   "first_seen": "09:35"
   }
  },
  "halal_fail": [
@@ -243,7 +259,9 @@
   "OPTT",
   "PAAI",
   "LONA",
-  "BHV"
+  "BHV",
+  "PDC",
+  "SKIL"
  ],
  "fake_gap": [
   "PTLE"
@@ -598,6 +616,7 @@
   "note": "halal_fail+inherited_fail+cannot_verify from Day 24 (a real FAIL / unverified is never re-litigated); fake_gap NOT inherited (day-specific artefact)"
  },
  "halal_pass": [
-  "AMCI"
+  "AMCI",
+  "PTLE"
  ]
 }

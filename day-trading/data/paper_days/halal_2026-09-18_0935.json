@@ -1,0 +1,62 @@
+{
+ "PTLE": {
+  "verdict": "PASS",
+  "haram_pct_note": "interest income only -- blind to revenue mix",
+  "loan_pct": 0.0,
+  "cash_pct": 2.48,
+  "combined": 2.48,
+  "haram_pct": 0.12,
+  "haram_periods": 1,
+  "haram_src": "upper-bound (max yield on cash)",
+  "halal": true,
+  "source": "quarterly+last-available",
+  "fail_reason": "",
+  "haram_note": "interest income is not tagged in any period read; 8%/yr on mean cash+securities $1M over a 1.00yr window CEILINGS interest at $0M = 0.12% of TTM revenue, which BOUNDS the 5% leg clear without measuring interest itself",
+  "last_available": {
+   "revenue": "yf-annual 2025-12-31"
+  },
+  "sic": "5172",
+  "mcap": 43779420.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ },
+ "PDC": {
+  "verdict": "FAIL",
+  "haram_pct_note": "interest income only -- blind to revenue mix",
+  "loan_pct": 3318.01,
+  "cash_pct": 624.72,
+  "combined": 3942.73,
+  "haram_pct": 4.15,
+  "haram_periods": 1,
+  "haram_src": "upper-bound (max yield on cash)",
+  "halal": false,
+  "source": "quarterly+last-available",
+  "fail_reason": "LOAN>10",
+  "haram_note": "interest income is not tagged in any period read; 8%/yr on mean cash+securities $133M over a 1.00yr window CEILINGS interest at $11M = 4.15% of TTM revenue, which BOUNDS the 5% leg clear without measuring interest itself",
+  "interest_flags": [
+   "intinc_implausible"
+  ],
+  "last_available": {
+   "revenue": "yf-annual 2026-04-30",
+   "interest income": "yf-annual 2026-04-30"
+  },
+  "sic": "7371",
+  "mcap": 21259042.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ },
+ "SKIL": {
+  "verdict": "FAIL",
+  "haram_pct_note": "interest income only -- blind to revenue mix",
+  "loan_pct": 997.42,
+  "cash_pct": 156.77,
+  "combined": 1154.19,
+  "haram_pct": 0.47,
+  "haram_periods": 4,
+  "haram_src": "yfinance",
+  "halal": false,
+  "source": "quarterly",
+  "fail_reason": "LOAN>10",
+  "sic": "7372",
+  "mcap": 57605810.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}

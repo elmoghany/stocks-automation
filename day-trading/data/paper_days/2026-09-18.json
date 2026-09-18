@@ -338,6 +338,24 @@
       "q2": "PASS -- PTL Ltd: marine fuel logistics / vessel refueling (Asia Pacific). The 'trade credit to customers' line is ancillary: haram_pct (interest income / revenue) 0.12%, well under 5%. Data thin: 1 period, source quarterly+last-available.",
       "screened_et": "09:30",
       "armable": true
+    },
+    "PDC": {
+      "q1": "FAIL",
+      "loan_pct": 3318.01,
+      "cash_pct": 624.72,
+      "mcap": 21259042.0,
+      "q2": "n/a -- Perpetuals.com: blockchain software (Tokyo); moot",
+      "screened_et": "09:35",
+      "armable": false
+    },
+    "SKIL": {
+      "q1": "FAIL",
+      "loan_pct": 997.42,
+      "cash_pct": 156.77,
+      "mcap": 57605810.0,
+      "q2": "PASS -- Skillsoft: enterprise e-learning (moot, Q1 FAIL: LBO-style debt)",
+      "screened_et": "09:35",
+      "armable": false
     }
   },
   "cycles_log": [
@@ -578,6 +596,13 @@
       "scan": "09:30 OPEN scan: 29 rows (delta: PTLE LONA BHV new). PTLE Q1 PASS (loan 0.0 cash 2.5) -> Q2 review; LONA Q1 FAIL cash 78%; BHV closed-end bond fund FAIL. AMCI poll: no signal, spread 3.75% at the open",
       "armed": false,
       "vetoes": []
+    },
+    {
+      "et": "09:36",
+      "state": "FLAT-5m",
+      "scan": "09:35 scan: 46 rows (delta: PDC SKIL new common -> both Q1 FAIL on loans; 12 funds). AMCI ORB 3.19-3.39 complete; spread 7% veto; size cap binding 3,055 sh",
+      "armed": false,
+      "vetoes": []
     }
   ],
   "veto_rates": {
@@ -656,7 +681,8 @@
     "rank_0835": "TOP = AMCI: last 3.49, gain +4.2%, coil 0.841 (NOT coiled), pressure -0.19 (trusted, 132k sh), gap7 +0.6% calm, halal PASS. 1 crossed / 1 armable.",
     "trigger_0835": "macd_cross_up on the 08:30 bar -- STALE (5m since close) -- DO NOT ENTER",
     "premarket_high": 4.15,
-    "loop": "from 08:36: 1-minute bar poll + `trigger` on AMCI (coordinator-owned); Trigger B = stop-buy at the 4.15 session high, gated by spread<=0.5%, depth, size cap, fill-arming"
+    "loop": "from 08:36: 1-minute bar poll + `trigger` on AMCI (coordinator-owned); Trigger B = stop-buy at the 4.15 session high, gated by spread<=0.5%, depth, size cap, fill-arming",
+    "orb_0935": "ORB 09:30-09:34: high 3.39 (09:31 bar), low 3.19. Trigger A = stop-buy 3.39, limit 3.407. At 09:35: last 3.21, bid 3.13 / ask 3.35 (7.0% spread) -> SPREAD VETO; fill-arming PASS (ask < 3.39); size cap 3,055 sh (20% of 15,276) vs 4,477 wanted -> binding. NOTE armcheck.py reported a 'session HIGH 4.4083 set 2026-09-01' -- it reads an older AMCI bar file alongside today's; the correct Trigger B level is today's premarket high 4.15 (poll helper uses the day file only)."
   },
   "veto_events": [
     {

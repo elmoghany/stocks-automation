@@ -33,12 +33,14 @@ print("TRIGGER:", " | ".join(tlines) if tlines else trig.stdout.strip().splitlin
 
 # Trigger B numbers from the stored bars
 import csv
-hi, last, vols = 0.0, None, []
+hi, last, vols, rth_hi = 0.0, None, [], 0.0
 p = DIR / "data/rh_bars" / f"{sym}_{date}.csv"
 if p.exists():
     rows = list(csv.DictReader(open(p)))
     for r in rows:
         hi = max(hi, float(r["high"]))
+        if r["begins_at"] >= f"{date}T13:30:00Z":
+            rth_hi = max(rth_hi, float(r["high"]))
         last = float(r["close"])
         vols.append(float(r["volume"]))
 trail10 = sum(vols[-10:])
@@ -50,7 +52,8 @@ verdict = []
 if spread > 0.5: verdict.append(f"SPREAD-VETO {spread:.2f}%")
 if shares > cap: verdict.append(f"SIZE-CAP {cap} < {shares}")
 if ask >= hi: verdict.append("CHASE (ask >= session high)")
-line = (f"{now:%H:%M:%S} {sym} last={last} hi={hi} bid={bid} ask={ask} spread={spread:.2f}% "
+orb = f"ORB/rth_hi={rth_hi} A-arm={'PASS' if ask < rth_hi else 'CHASE'}" if rth_hi else "ORB=n/a"
+line = (f"{now:%H:%M:%S} {sym} last={last} hi={hi} {orb} bid={bid} ask={ask} spread={spread:.2f}% "
         f"trail10vol={int(trail10)} cap20={cap} shares@ask={shares} fillarm={fill_arm} "
         f"| {'; '.join(verdict) if verdict else 'ALL B-GATES OPEN'} | trig: {' | '.join(tlines)}")
 print(line)
