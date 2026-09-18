@@ -1414,11 +1414,11 @@
       "size_cap_binding": 1
     },
     "regular": {
-      "would_be_entries": 5,
-      "spread_veto": 5,
+      "would_be_entries": 7,
+      "spread_veto": 7,
       "depth_veto": 0,
-      "chase_veto": 4,
-      "size_cap_binding": 3
+      "chase_veto": 5,
+      "size_cap_binding": 4
     }
   },
   "errors": [],
@@ -1587,6 +1587,37 @@
       "size_cap": "3571 >= 2912 OK",
       "session_phase": "regular",
       "note": "5.00 print at 12:28 = new session high; ask blew out to 5.15"
+    },
+    {
+      "et": "12:32",
+      "sym": "AMCI",
+      "signal": "bullish_engulfing+macd_cross_up+tweezer_bottom 12:31 [TAKEABLE NOW]",
+      "bid": 3.38,
+      "ask": 3.51,
+      "spread_pct": 3.85,
+      "session_high": 4.15,
+      "vetoes": [
+        "SPREAD 3.85%",
+        "SIZE-CAP 2317 < 4273"
+      ],
+      "session_phase": "regular",
+      "note": "12:31 bar 3.375-3.50 on 7.8k shares; ask blew to 3.51"
+    },
+    {
+      "et": "12:32",
+      "sym": "BSEM",
+      "signal": "macd_cross_up 12:30 [TAKEABLE NOW]",
+      "bid": 5.1,
+      "ask": 5.13,
+      "spread_pct": 0.59,
+      "session_high": 5.13,
+      "vetoes": [
+        "SPREAD 0.59% (cap 0.50%)",
+        "CHASE (ask 5.13 >= high 5.13)"
+      ],
+      "size_cap": "3611 >= 2923 OK",
+      "session_phase": "regular",
+      "note": "5.13 print at 12:30 = new high; closest miss of the day on spread"
     }
   ],
   "ptle_watch": {
