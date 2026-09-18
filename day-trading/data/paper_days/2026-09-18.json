@@ -364,6 +364,13 @@
       "scan": "08:00 scan: 81 rows, no new common-stock ticker (KATT fund new; IPW off). 0 candidates",
       "armed": false,
       "vetoes": []
+    },
+    {
+      "et": "08:05",
+      "state": "FLAT-5m",
+      "scan": "08:05 scan: 80 rows, no new common-stock ticker (CIIT off). 0 candidates",
+      "armed": false,
+      "vetoes": []
     }
   ],
   "veto_rates": {
