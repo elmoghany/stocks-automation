@@ -1713,6 +1713,21 @@
         "AMCI SPREAD 0.90%",
         "AMCI SIZE-CAP"
       ]
+    },
+    {
+      "et": "14:25",
+      "state": "FLAT-5m",
+      "scan": "14:25 scan (last pre-cutoff): 147 rows (raw dump); no unscreened common (FEAM/PS back, FAIL). BSEM 5.11, bid 5.05 / ask 5.15 (2.0%), 14:05 MACD stale. HUHU 4.73 no prints since 14:08, bid 4.60 / ask 4.87 (5.9%). AMCI 3.45, bid 3.40 / ask 3.48 (2.4%). No signals. Entry window closes 14:30",
+      "armed": false,
+      "vetoes": [
+        "BSEM SPREAD 1.98%",
+        "BSEM SIZE-CAP",
+        "HUHU SPREAD 5.87%",
+        "HUHU SIZE-CAP",
+        "HUHU CHASE",
+        "AMCI SPREAD 2.35%",
+        "AMCI SIZE-CAP"
+      ]
     }
   ],
   "veto_rates": {
