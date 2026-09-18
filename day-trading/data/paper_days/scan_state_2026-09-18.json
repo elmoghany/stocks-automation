@@ -167,6 +167,14 @@
    "vol": "54604.81",
    "name": "TNL Mediagene",
    "first_seen": "07:55"
+  },
+  "TMCR": {
+   "pct": 20.0,
+   "last": 5.64,
+   "prev_close": 4.7,
+   "vol": "35874.55",
+   "name": "The Metals Royalty Company Inc.",
+   "first_seen": "08:10"
   }
  },
  "halal_fail": [
@@ -190,7 +198,8 @@
   "IPW",
   "NXTC",
   "DSP",
-  "TNMG"
+  "TNMG",
+  "TMCR"
  ],
  "fake_gap": [],
  "inherited_fail": [

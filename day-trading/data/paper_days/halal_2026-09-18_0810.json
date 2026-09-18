@@ -1,0 +1,18 @@
+{
+ "TMCR": {
+  "verdict": "FAIL",
+  "haram_pct_note": "interest income only -- blind to revenue mix",
+  "loan_pct": 12.94,
+  "cash_pct": 3.61,
+  "combined": 16.54,
+  "haram_pct": 100.0,
+  "haram_periods": 4,
+  "haram_src": "yfinance",
+  "halal": false,
+  "source": "quarterly",
+  "fail_reason": "LOAN>10",
+  "sic": "1040",
+  "mcap": 326958006.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}
