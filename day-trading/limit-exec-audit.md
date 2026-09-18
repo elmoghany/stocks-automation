@@ -612,7 +612,25 @@ than the bar open** the harness fills at). What would have to change:
 
 ## Part 9 — The honesty battery
 
-HONESTY_PLACEHOLDER
+| check | result |
+|---|---|
+| **frame identity** — market ticket through `lx_engine` vs `hd_foresight.run_day`, 30 random seeds + foresight + anti, ticket for ticket | **256 checks over 8 days, 0 mismatches, worst $0.0006** |
+| **table identity** — wn market walk vs `uq_strat.simulate_day(market=True)` | **12 OOS days, 0 mismatches, worst $0.0000**; the 251-day `mkt/mkt` block of Part 5.1 reproduces UNIVERSE-QUOTES §4.2 to the cent (random −$30.45 ± 4.05, model −$13.26, inverted −$37.01, shuffled −$24.23) |
+| **engine identity** — `simulate_trades` flags OFF vs the pre-edit engine on the REAL C37F / HOLD1 / W8RSd kwargs | **169/169 + 169/169 + 169/169 symbol-days byte-identical**; `plan/idgate.py --rot` ALL EXACT before and after |
+| **P1 poison, pre-post prints** — garbage in every second at or before the post second | **8,442 orders, 0 fills moved** |
+| **P2 poison, post-post prints** — garbage in the seconds after the post | **7,518 of 8,286 fills moved** (the rule reads them) |
+| **P3 poison, minute bars after m_dec** | 1,407 checks, mark / volcap / posted limit **identical** |
+| **P4 poison, cost1 minutes ≥ the post minute** | 1,407 checks, half-spread / impact **identical**; garbage BEFORE the post minute moves 964 of 990 |
+| **P5 FastCost == CostModel** (tier `win`) | 963/963 inside the battery; 432/432 on an independent sample, worst 9e-14 bps; prior tier +2.3 bps wider (stated) |
+| **P6 sanity** — every passive fill priced at or better than the highest (buy) / lowest (sell) limit its ladder posted; no NaN / non-positive | **5,755/5,755**; a 5-bps-deeper ladder never fills more (1,407/1,407); a market timeout always completes when a later print exists (1,406/1,406) |
+| **tape/bar consistency guard** | 0 symbol-days dropped on the wide universe; the pool's split-adjustment mismatches dropped, never priced |
+| **random, 30 seeds** (frame) / **30 seeds** (wn, rev, veto) / **10 seeds** (pass B, rev) | every headline number is a seed mean with its sd beside it |
+| **inverted** | wn: 3rd percentile under both ladders; refit: −$25.98 under `bid-rest3-mkt/tick3`; ORB "strength" 0th percentile under a resting bid |
+| **shuffled labels** (wn, both refits) | on the random mean (`model_shuf` +$0.89 / `relabel_shuf` +$0.15 edge under the headline ladders) |
+| **foresight** | +$364…+$400/ticket under every ladder, monotone, anti-foresight −$358…−$432 |
+| **sizing** | limit tickets size on mark(m_dec) (causal); market tickets on the fill open (the incumbent convention, reproduced so the published rows return) |
+| **OOS reads, counted** | the held-out year was read once per policy per ladder; no ladder was chosen on it (the ladder grid is a *frame* result on all 448 days of a zero-information policy, which has nothing to overfit) |
+
 
 ## Part 10 — Conclusions
 
