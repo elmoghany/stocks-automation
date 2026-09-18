@@ -295,6 +295,12 @@
       "q2": "FAIL -- Lion Group: securities/futures brokerage, CFD and TRS trading (finance is the main line)",
       "screened_et": "08:30",
       "armable": false
+    },
+    "BIAF": {
+      "q1": "inherited FAIL (prior day)",
+      "q2": "PASS -- bioAffinity: diagnostics biotech (moot)",
+      "screened_et": "08:35",
+      "armable": false
     }
   },
   "cycles_log": [
@@ -451,14 +457,22 @@
       "scan": "08:30 scan: 91 rows (delta: AMCI LGHL new). AMCI halal PASS Q1+Q2 but NOT crossed on RH tape (1 real bar 3.37, quote 3.39 = +1.2% vs scan +12.8%); book 3.66% wide. LGHL inherited FAIL (brokerage). 0 armable",
       "armed": false,
       "vetoes": []
+    },
+    {
+      "et": "08:36",
+      "state": "FLAT-5m",
+      "scan": "08:35 scan: 92 rows (delta: BIAF new -> inherited FAIL). AMCI CROSSED on RH tape at 12:31Z (high 3.94, then 4.15); rank TOP=AMCI coil 0.84 press -0.19 calm; trigger macd_cross_up STALE; quote 3.17 bid 3.08/ask 3.29 spread 6.8% -> spread veto. 1-min poll starts",
+      "armed": false,
+      "vetoes": []
     }
   ],
   "veto_rates": {
     "premarket": {
-      "would_be_entries": 0,
-      "spread_veto": 0,
+      "would_be_entries": 1,
+      "spread_veto": 1,
       "depth_veto": 0,
-      "chase_veto": 0
+      "chase_veto": 0,
+      "stale_signal": 1
     },
     "regular": {
       "would_be_entries": 0,
@@ -521,6 +535,12 @@
     "rh_tape_0831": "ONE real premarket bar: 11:00Z (07:00 ET) o3.36 h3.37 l3.36 c3.37 v200; quote last_non_reg 3.39 @12:30:50Z = +1.2%; every other bar 08:00Z-12:29Z interpolated. The 3.78 print is not on the RH minute feed or the RH quote.",
     "rank_0831": "excluded: only 1 bar (not crossed on RH data)",
     "book_0831": "bid 3.49 x429 / ask 3.62 x104 = 3.66% spread (cap 0.5%). Ask ladder thin: 104+16+3 sh to 3.73",
-    "disposition": "halal PASS (Q1+Q2) and on halal_list -> the day's only armable name so far, but NOT latched: the +10% cross has not printed on the RH feed. Re-check bars every cycle; latch only when an RH bar crosses 3.685. No hand-ranking, no substitute feed (fix #8)."
+    "disposition": "halal PASS (Q1+Q2) and on halal_list -> the day's only armable name so far, but NOT latched: the +10% cross has not printed on the RH feed. Re-check bars every cycle; latch only when an RH bar crosses 3.685. No hand-ranking, no substitute feed (fix #8).",
+    "latched_et": "08:35 (RH bar 12:31Z high 3.9396 > 3.685 = +10% cross; 12:32Z high 4.15 = +23.9%)",
+    "tape_0830_0834": "12:30Z o3.36 h3.51 l3.15 c3.39 v2686 | 12:31Z o3.50 h3.9396 l3.47 c3.7635 v9782 | 12:32Z o3.71 h4.15 l3.38 c3.43 v50328 | 12:33Z o3.485 h3.699 l3.43 c3.6361 v50233 | 12:34Z o3.60 h3.638 l3.45 c3.49 v19167. Quote 12:35:13Z last 3.1687, bid 3.08 / ask 3.29 (6.8% spread) -- a spike-and-fade.",
+    "rank_0835": "TOP = AMCI: last 3.49, gain +4.2%, coil 0.841 (NOT coiled), pressure -0.19 (trusted, 132k sh), gap7 +0.6% calm, halal PASS. 1 crossed / 1 armable.",
+    "trigger_0835": "macd_cross_up on the 08:30 bar -- STALE (5m since close) -- DO NOT ENTER",
+    "premarket_high": 4.15,
+    "loop": "from 08:36: 1-minute bar poll + `trigger` on AMCI (coordinator-owned); Trigger B = stop-buy at the 4.15 session high, gated by spread<=0.5%, depth, size cap, fill-arming"
   }
 }
