@@ -6,7 +6,7 @@
   "session_type": "headless (Task Scheduler \\Stocks\\C37MorningLaunch) 06:20 ET to close -- single session",
   "benchmark_per_day": -215,
   "benchmark_note": "C37F-hf2 (2026-09-16 halal-fix epoch): -$215/traded day, -$88,784/414d, -$55/ticket. Regular-session split baseline: -$32/day (-$7/ticket). Premarket tickets scored ONLY vs break-even.",
-  "status": "OPEN",
+  "status": "CLOSED",
   "counts_as_traded_day": false,
   "coverage_gaps": [],
   "config": "C37",
@@ -1728,6 +1728,20 @@
         "AMCI SPREAD 2.35%",
         "AMCI SIZE-CAP"
       ]
+    },
+    {
+      "et": "14:30",
+      "state": "ENTRY-WINDOW-CLOSED",
+      "scan": "14:30 ET: entry window closed, no position taken. Final watches: AMCI 3.395 (bid 3.40 / ask 3.48, 2.4%), BSEM 5.11 (bid 5.05 / ask 5.15, 2.0%), HUHU 4.73 (bid 4.60 / ask 4.87, 5.9%). No-trade, no-loss day",
+      "armed": false,
+      "vetoes": []
+    },
+    {
+      "et": "14:32",
+      "state": "EOD",
+      "scan": "EOD write-up complete: summary in day JSON (status CLOSED, counts_as_traded_day false), 2026-09-18.md written, NOTES-DAYTRADING.md Day 25 section prepended. Holding heartbeat to 15:00",
+      "armed": false,
+      "vetoes": []
     }
   ],
   "veto_rates": {
@@ -1748,7 +1762,97 @@
     }
   },
   "errors": [],
-  "summary": {},
+  "summary": {
+    "status": "CLOSED",
+    "counts_as_traded_day": false,
+    "tickets_used": 0,
+    "tickets_available": 7,
+    "capital_deployed": 0.0,
+    "daily_cap": 100000,
+    "cap_utilisation_pct": 0.0,
+    "pnl_total": 0.0,
+    "regular_session": {
+      "tickets": 0,
+      "pnl": 0.0,
+      "per_ticket": null,
+      "baseline_per_day": -32,
+      "baseline_per_ticket": -7,
+      "vs_baseline_per_day": "n/a -- no-trade day is not a scored day",
+      "vs_break_even": 0.0
+    },
+    "premarket": {
+      "tickets": 0,
+      "pnl": 0.0,
+      "per_ticket": null,
+      "scored_against": "break-even only",
+      "vs_break_even": 0.0,
+      "note": "Three TAKEABLE Trigger C signals on AMCI (08:39 engulfing, 08:44 engulfing, 08:48 MACD) all spread-vetoed at 4.47% / 1.32% / 1.96% against the 0.5% cap. Premarket is the documented loss centre; no regret."
+    },
+    "vs_benchmark_c37f_hf2": {
+      "benchmark_per_day": -215,
+      "day_pnl": 0.0,
+      "delta": "n/a -- a no-trade day is a NO-LOSS day and does not count as a traded day"
+    },
+    "equity_curve": null,
+    "screening_ledger": {
+      "names_screened_today": 88,
+      "passed_both": [
+        "AMCI",
+        "PTLE",
+        "BSEM",
+        "HUHU"
+      ],
+      "passed_q1_failed_q2": [
+        "BNC"
+      ],
+      "failed": 84,
+      "scan_state_counts": {
+        "halal_fail": 62,
+        "fake_gap": 1,
+        "inherited_fail": 327,
+        "cannot_verify": 1,
+        "spac": 11,
+        "halal_pass": 4
+      },
+      "halal_pass_names": [
+        "AMCI",
+        "PTLE",
+        "BSEM",
+        "HUHU"
+      ],
+      "pass_rate": "4 of 88 names screened today (4.5%) passed both questions: AMCI (premarket, latched 08:35), BSEM (10:25), HUHU (14:05). PTLE passed halal but was a fake gap on the official close and never crossed."
+    },
+    "veto_ledger": {
+      "premarket": {
+        "would_be_entries": 4,
+        "spread": 4,
+        "depth": 0,
+        "chase": 0,
+        "size_cap": 1,
+        "stale": 1,
+        "armed": 0,
+        "spread_rate": 1.0
+      },
+      "regular": {
+        "would_be_entries": 9,
+        "spread": 9,
+        "depth": 0,
+        "chase": 6,
+        "size_cap": 5,
+        "armed": 0,
+        "spread_rate": 1.0
+      },
+      "read": "Every one of the 13 would-be entries (4 premarket + 9 regular) was spread-vetoed. The tightest miss was BSEM 12:30 macd_cross_up at 0.59% vs the 0.50% cap (and chase at the 5.13 high). BSEM's spread touched 0.40% once (12:19) with no signal on the bar."
+    },
+    "watches": {
+      "AMCI": "halal PASS; +23.9% spike at 08:32 faded to +2%; ORB 3.19-3.39 broke 10:00 (spread 2.4%, veto); 10:31 spike to 3.858; 12:31 triple signal (spread 3.85%, veto); closed the window at 3.395 with a 2.4% spread",
+      "BSEM": "halal PASS; latched 10:25 at 4.81; ran to 5.35 by 12:46 (+22.7%) on 1-6k-share bars with the ask pinned at or above the session high the whole way; five TAKEABLE signals, all spread/chase-vetoed; faded to 5.11 by 14:30",
+      "HUHU": "halal PASS at 14:05 (Q1 5.66%/4.06%, Q2 industrial gas systems); 27k shares all day, 6-9.5% spread, no signal; never armable"
+    },
+    "dump_drift": "12:20: discovered hand-built deltas since ~10:30 had dropped real scan names from the dump (BSEM absent after 1025, SSM after 1050). Rebuilt scan_dump_1220 from the live scan (gone=88 stale, new=28). Four commons had never been screened (BTDR, MARA, ALVO, NCI); all four Q1 FAIL at 12:21. No halal PASS name was missed: every other common was already in scan_state lists.",
+    "cadence_log": "94 cycle entries 06:25-14:30; run_scan every 5 min; Trigger C poll every minute on each latched watch from 08:35 (AMCI), 10:25 (BSEM), 14:05 (HUHU). No coverage gap; heartbeat beaten by every helper.",
+    "verdict": "NO-TRADE, NO-LOSS DAY. Three halal-clean gappers, thirteen would-be entries, zero that cleared the 0.5% spread cap. The gate that bound today was liquidity, not halal: the only names that passed both halal questions were sub-$120M microcaps quoting 2-9% wide. Counts_as_traded_day false; cumulative split scoreboard unchanged."
+  },
   "premarket_screen": {
     "scan_et": "06:23 (zoneinfo)",
     "scan_id": "5f132877-7730-4a18-9e72-b3f0d2c9df83",

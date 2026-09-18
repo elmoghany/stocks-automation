@@ -1,5 +1,46 @@
 # Penny Stocks Trading Notes
 
+## PAPER DAY 25 (2026-09-18) -- no trade: three halal-clean gappers, thirteen signals, thirteen spread vetoes
+
+**0 tickets, $0.00, zero real orders. `counts_as_traded_day: false`.** Headless 06:20 to close,
+no coverage gap, 94 cycle entries, `run_scan` every 5 min, Trigger C polled every minute on each
+latched watch.
+
+| line | today | vs benchmark |
+|---|---|---|
+| **REGULAR-session tickets** | 0 tickets, $0.00 | n/a -- a no-trade day is not a scored day |
+| **PREMARKET tickets** | 0 tickets, $0.00 | n/a -- break-even only |
+| day total vs C37F-hf2 (-$215/day) | $0.00 | n/a -- NO-LOSS day |
+
+Split scoreboard **unchanged**: regular line +$394.25 over 1 ticket / 1 scored day; premarket
+$0.00 over 0. Legacy combined -$4,018.58 over 21 scored days. Detail in
+`data/paper_days/2026-09-18.{json,md}`.
+
+**What bound today was liquidity, not halal.** 88 names screened, 4 passed both questions
+(AMCI, PTLE, BSEM, HUHU) -- and every one of them was a sub-$120M microcap quoting 2-9% wide.
+PTLE was a fake gap (stale adjusted close, +3.5% on the official close, Day-24 INLX class).
+The other three produced **13 would-be entries (4 premarket, 9 regular) and 13 spread vetoes --
+100% on both lines**; chase co-vetoed 6 of the 9 regular signals because on a thin name the
+Trigger C bar *is* the bar that makes the new high. Depth never became the binding gate.
+
+Nearest miss: BSEM 12:30 `macd_cross_up`, TAKEABLE at 12:32, **spread 0.59% vs the 0.50% cap**
+with the ask sitting on the 5.13 session high. BSEM printed 5.35 fourteen minutes later and gave
+0.30 of it back within the hour. BSEM's spread touched 0.40% once (12:19) with no signal on that
+bar. Logged as the cost of the gate; the gate is the point.
+
+**Process defect caught mid-day (12:20).** The hand-built `delta_HHMM.json` files had been
+dropping real names from the scan dump since ~10:30 (BSEM absent from every dump after 10:25),
+so the 5-minute sweep was screening a stale universe and four commons (BTDR, MARA, ALVO, NCI)
+had never been screened. Rebuilt the dump from the live scan, screened all four (all Q1 FAIL),
+audited every common against `scan_state` -- no halal-PASS name had been missed. From 12:35
+the spilled `run_scan` file was copied straight in as the dump, which removes the hand step.
+**Rule for next session: never hand-build a delta when the scan result is available as a file.**
+
+Also noted: `rank` reports names outside its 472-name prefilter as NEEDS-SCREEN (BSEM, HUHU);
+`live_halal` at arming is authoritative per the mandate and both were screened live before
+being treated as TOP-eligible. HUHU's own `rank` line flagged pressure UNTRUSTED and CALM-GAP
+FAIL -- the thin-name guards and the spread gate agreeing.
+
 ## PAPER DAY 24 (2026-09-17) -- VICR +$394.25, and a size-rule ambiguity that needs a ruling
 
 **1 ticket: VICR 70 @ 211.98 -> 217.6122 (+$394.25, +2.66%, 14:50 ladder rung 1).
