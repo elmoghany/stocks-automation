@@ -415,6 +415,14 @@
    "vol": "19286",
    "name": "Quince Therapeutics",
    "first_seen": "11:55"
+  },
+  "SLE": {
+   "pct": 11.2,
+   "last": 5.115,
+   "prev_close": 4.5998,
+   "vol": "54351",
+   "name": "Super League Enterprise",
+   "first_seen": "12:00"
   }
  },
  "halal_fail": [
@@ -467,7 +475,8 @@
   "AGCC",
   "SGML",
   "HSDT",
-  "QNCX"
+  "QNCX",
+  "SLE"
  ],
  "fake_gap": [
   "PTLE"

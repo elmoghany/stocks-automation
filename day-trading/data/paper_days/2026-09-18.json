@@ -681,6 +681,16 @@
       "q2": "not evaluated -- Quince Therapeutics, clinical biotech",
       "screened_et": "11:55",
       "armable": false
+    },
+    "SLE": {
+      "q1": "FAIL",
+      "loan_pct": 45.95,
+      "cash_pct": 14.75,
+      "mcap": 7191192.0,
+      "fail_reason": "HARAM by user ruling 2026-08-21 (entertainment content) + LOAN>10",
+      "q2": "FAIL -- Super League Enterprise, entertainment/gaming content",
+      "screened_et": "12:00",
+      "armable": false
     }
   },
   "cycles_log": [
@@ -1246,6 +1256,19 @@
         "AMCI SIZE-CAP",
         "BSEM SPREAD 4.40%",
         "BSEM CHASE"
+      ]
+    },
+    {
+      "et": "12:00",
+      "state": "FLAT-5m",
+      "scan": "12:00 scan: 117 rows (delta: SLE new -> FAIL entertainment ruling + loan 46%; 5 new Solana funds). AMCI 3.44 no prints since 11:53, bid 3.32 / ask 3.45 (3.9%). BSEM 4.98 at session high, bid 4.91 / ask 4.98 (1.4%), chase, signal stale",
+      "armed": false,
+      "vetoes": [
+        "AMCI SPREAD 3.92%",
+        "AMCI SIZE-CAP",
+        "BSEM SPREAD 1.43%",
+        "BSEM CHASE",
+        "BSEM SIZE-CAP"
       ]
     }
   ],

@@ -1,0 +1,20 @@
+{
+ "SLE": {
+  "verdict": "FAIL",
+  "loan_pct": 45.95,
+  "cash_pct": 14.75,
+  "combined": 60.7,
+  "haram_pct": null,
+  "halal": false,
+  "source": "quarterly",
+  "ruling": {
+   "verdict": "FAIL",
+   "date": "2026-08-21",
+   "basis": "delegated ruling per user 2026-08-21: entertainment IS the line (user ruling 2026-08-13: entertainment is haram) -- 'creates and publishes content experiences', production/curation/distribution of entertainment content for digital channels; formerly Super League Gaming.",
+   "haram_share_est": 90
+  },
+  "fail_reason": "HARAM by user ruling (final, 2026-08-21): delegated ruling per user 2026-08-21: entertainment IS the line (user ruling 2026-08-13: entertainment is haram) -- 'creates and publishes content experiences', production/curation/distribution of entertainment content for digital channels; formerly Super League Gaming.",
+  "mcap": 7191192.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}
