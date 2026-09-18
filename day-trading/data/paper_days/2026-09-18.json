@@ -868,11 +868,11 @@
       "size_cap_binding": 1
     },
     "regular": {
-      "would_be_entries": 1,
-      "spread_veto": 1,
+      "would_be_entries": 2,
+      "spread_veto": 2,
       "depth_veto": 0,
-      "chase_veto": 1,
-      "size_cap_binding": 1
+      "chase_veto": 2,
+      "size_cap_binding": 2
     }
   },
   "errors": [],
@@ -982,6 +982,21 @@
         "SIZE-CAP 2905 < 4411"
       ],
       "note": "never armed -- spread above cap every poll since 09:30; bar closed back at 3.36 below ORB high"
+    },
+    {
+      "et": "10:27:15",
+      "sym": "BSEM",
+      "trigger": "C macd_cross_up on 14:26Z close 4.7766 [TAKEABLE NOW 0m]",
+      "session_phase": "regular",
+      "bid": 4.64,
+      "ask": 4.81,
+      "spread_pct": 3.66,
+      "vetoes": [
+        "SPREAD 3.66% > 0.5%",
+        "CHASE ask 4.81 >= session high 4.81",
+        "SIZE-CAP 501 sh (20% of trailing-10 vol 2506) < 3118 wanted"
+      ],
+      "note": "not armed"
     }
   ],
   "ptle_watch": {
