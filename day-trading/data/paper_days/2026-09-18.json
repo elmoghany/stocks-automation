@@ -573,6 +573,26 @@
       "q2": "YD Bio; Q1 fail stands",
       "screened_et": "10:45",
       "armable": false
+    },
+    "SBET": {
+      "q1": "FAIL",
+      "cash_pct": 3.13,
+      "mcap": 1793180851.0,
+      "q2": "FAIL -- Sharplink: ether treasury company",
+      "screened_et": "10:55",
+      "armable": false
+    },
+    "APUS": {
+      "q1": "inherited FAIL",
+      "q2": "Apimeds Pharmaceuticals; Q1 fail stands",
+      "screened_et": "10:55",
+      "armable": false
+    },
+    "GLOO": {
+      "q1": "inherited FAIL",
+      "q2": "Gloo Holdings; Q1 fail stands",
+      "screened_et": "10:55",
+      "armable": false
     }
   },
   "cycles_log": [
@@ -969,6 +989,19 @@
         "AMCI SPREAD 1.11%",
         "AMCI SIZE-CAP",
         "BSEM SPREAD",
+        "BSEM CHASE",
+        "BSEM SIZE-CAP"
+      ]
+    },
+    {
+      "et": "10:55",
+      "state": "FLAT-5m",
+      "scan": "10:55 scan: 97 rows (delta: SBET Q1 FAIL; APUS/GLOO inherited FAIL; 2 new funds). AMCI fading 3.52, bid 3.54 / ask 3.66 (3.4%), no signal. BSEM 4.71, bid 4.69 / ask 4.82 (2.8%), stale",
+      "armed": false,
+      "vetoes": [
+        "AMCI SPREAD 3.39%",
+        "AMCI SIZE-CAP",
+        "BSEM SPREAD 2.77%",
         "BSEM CHASE",
         "BSEM SIZE-CAP"
       ]

@@ -1,0 +1,14 @@
+{
+ "SBET": {
+  "verdict": "FAIL",
+  "loan_pct": null,
+  "cash_pct": 3.13,
+  "combined": null,
+  "haram_pct": 1.25,
+  "halal": false,
+  "source": "quarterly",
+  "fail_reason": "HARAM INDUSTRY (sportsbook) -- industry screen, final regardless of any ruling",
+  "mcap": 1793180851.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}
