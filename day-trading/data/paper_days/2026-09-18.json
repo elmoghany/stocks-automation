@@ -1270,6 +1270,18 @@
         "BSEM CHASE",
         "BSEM SIZE-CAP"
       ]
+    },
+    {
+      "et": "12:05",
+      "state": "FLAT-5m",
+      "scan": "12:05 scan: 121 rows (1 new crypto ETF; no new common). AMCI 3.44 no prints since 11:53, bid 3.32 / ask 3.45 (3.9%). BSEM 4.98 at high, bid 4.90 / ask 4.98 (1.6%), chase, no signal; spread touched 0.82% at 12:02 (tightest of day) but no TAKEABLE signal at that moment",
+      "armed": false,
+      "vetoes": [
+        "AMCI SPREAD 3.92%",
+        "AMCI SIZE-CAP",
+        "BSEM SPREAD 1.63%",
+        "BSEM CHASE"
+      ]
     }
   ],
   "veto_rates": {
