@@ -135,6 +135,14 @@
    "vol": "41007.64",
    "name": "KIDZ AI Inc. Class B",
    "first_seen": "07:25"
+  },
+  "IPW": {
+   "pct": 11.62,
+   "last": 2.0092,
+   "prev_close": 1.8,
+   "vol": "1016616.5",
+   "name": "iPower",
+   "first_seen": "07:30"
   }
  },
  "halal_fail": [
@@ -154,7 +162,8 @@
   "BNC",
   "ELDN",
   "CIIT",
-  "KIDZ"
+  "KIDZ",
+  "IPW"
  ],
  "fake_gap": [],
  "inherited_fail": [

@@ -1,0 +1,22 @@
+{
+ "IPW": {
+  "verdict": "FAIL",
+  "haram_pct_note": "interest income only -- blind to revenue mix",
+  "loan_pct": 432.51,
+  "cash_pct": 39.89,
+  "combined": 472.4,
+  "haram_pct": 1.92,
+  "haram_periods": 4,
+  "haram_src": "yfinance",
+  "halal": false,
+  "source": "quarterly",
+  "fail_reason": "LOAN>10",
+  "haram_note": "vendor interest row $1M over the TTM window exceeds the 8%/yr plausibility cap on mean cash+securities $2M (cap $0M) -- KEPT: it already clears the 5% leg at 1.92%, and a row too large to be interest can only be over-stating it",
+  "interest_flags": [
+   "intinc_implausible"
+  ],
+  "sic": "5200",
+  "mcap": 1789090.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}
