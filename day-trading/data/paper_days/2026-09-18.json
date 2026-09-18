@@ -222,6 +222,15 @@
       "q2": "n/a (Q1 FAIL) -- iPower, hydroponics/grow equipment retailer (would also need a cannabis-equipment Q2 review)",
       "screened_et": "07:30",
       "armable": false
+    },
+    "NXTC": {
+      "q1": "FAIL",
+      "loan_pct": 14.16,
+      "cash_pct": 78.93,
+      "mcap": 25450116.0,
+      "q2": "n/a (Q1 FAIL) -- NextCure, clinical-stage biotech",
+      "screened_et": "07:35",
+      "armable": false
     }
   },
   "cycles_log": [
@@ -292,6 +301,13 @@
       "et": "07:30",
       "state": "FLAT-5m",
       "scan": "07:30 scan: 79 rows (delta: IPW new; ELDN FTCI KIDZ off). IPW Q1 FAIL loan 432.5%. 0 armable",
+      "armed": false,
+      "vetoes": []
+    },
+    {
+      "et": "07:35",
+      "state": "FLAT-5m",
+      "scan": "07:35 scan: 79 rows (delta: NXTC new; IPW off). NXTC Q1 FAIL cash 78.9%. 0 armable",
       "armed": false,
       "vetoes": []
     }

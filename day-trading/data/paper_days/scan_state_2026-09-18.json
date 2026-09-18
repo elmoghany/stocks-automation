@@ -143,6 +143,14 @@
    "vol": "1016616.5",
    "name": "iPower",
    "first_seen": "07:30"
+  },
+  "NXTC": {
+   "pct": 12.52,
+   "last": 6.38,
+   "prev_close": 5.67,
+   "vol": "106844.32",
+   "name": "NextCure",
+   "first_seen": "07:35"
   }
  },
  "halal_fail": [
@@ -163,7 +171,8 @@
   "ELDN",
   "CIIT",
   "KIDZ",
-  "IPW"
+  "IPW",
+  "NXTC"
  ],
  "fake_gap": [],
  "inherited_fail": [

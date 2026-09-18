@@ -1,0 +1,18 @@
+{
+ "NXTC": {
+  "verdict": "FAIL",
+  "loan_pct": 14.16,
+  "cash_pct": 78.93,
+  "combined": 93.09,
+  "haram_pct": null,
+  "halal": false,
+  "source": "quarterly",
+  "haram_src": null,
+  "haram_note": "",
+  "interest_flags": [],
+  "last_available": {},
+  "fail_reason": "unverified: missing interest income -- an absent statement row is not a zero (user ruling 2026-09-16); refusing",
+  "mcap": 25450116.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}
