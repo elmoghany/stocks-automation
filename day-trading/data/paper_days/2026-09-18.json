@@ -357,6 +357,13 @@
       "scan": "07:55 scan: 84 rows (delta: TNMG new; IPW FTCI SLON back; DUKR off). TNMG Q1 FAIL loan 123.8%. 0 armable",
       "armed": false,
       "vetoes": []
+    },
+    {
+      "et": "08:00",
+      "state": "FLAT-5m",
+      "scan": "08:00 scan: 81 rows, no new common-stock ticker (KATT fund new; IPW off). 0 candidates",
+      "armed": false,
+      "vetoes": []
     }
   ],
   "veto_rates": {
