@@ -691,6 +691,26 @@
       "q2": "FAIL -- Super League Enterprise, entertainment/gaming content",
       "screened_et": "12:00",
       "armable": false
+    },
+    "AMTX": {
+      "q1": "FAIL",
+      "loan_pct": 305.72,
+      "cash_pct": 0.72,
+      "mcap": 136039684.0,
+      "fail_reason": "HARAM INDUSTRY (distiller: fuel ethanol) + LOAN>10",
+      "q2": "FAIL -- Aemetis, ethanol/renewable fuels",
+      "screened_et": "12:10",
+      "armable": false
+    },
+    "TTRX": {
+      "q1": "FAIL",
+      "loan_pct": 1.46,
+      "cash_pct": 2.45,
+      "mcap": 419377992.0,
+      "fail_reason": "unverified: missing interest income row (absent row is not zero, user ruling 2026-09-16)",
+      "q2": "not evaluated -- Turn Therapeutics, biotech",
+      "screened_et": "12:10",
+      "armable": false
     }
   },
   "cycles_log": [
@@ -1280,6 +1300,18 @@
         "AMCI SPREAD 3.92%",
         "AMCI SIZE-CAP",
         "BSEM SPREAD 1.63%",
+        "BSEM CHASE"
+      ]
+    },
+    {
+      "et": "12:10",
+      "state": "FLAT-5m",
+      "scan": "12:10 scan: 126 rows (delta: AMTX FAIL distiller/loan 306%; TTRX FAIL unverified interest row). AMCI 3.44, bid 3.33 / ask 3.46 (3.9%), no signal. BSEM 4.98 at high, bid 4.89 / ask 4.98 (1.8%), chase, no signal",
+      "armed": false,
+      "vetoes": [
+        "AMCI SPREAD 3.90%",
+        "AMCI SIZE-CAP",
+        "BSEM SPREAD 1.84%",
         "BSEM CHASE"
       ]
     }

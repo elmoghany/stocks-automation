@@ -1,0 +1,32 @@
+{
+ "AMTX": {
+  "verdict": "FAIL",
+  "loan_pct": 305.72,
+  "cash_pct": 0.72,
+  "combined": 306.43,
+  "haram_pct": 0.78,
+  "halal": false,
+  "source": "quarterly",
+  "fail_reason": "HARAM INDUSTRY (distiller) -- industry screen, final regardless of any ruling",
+  "mcap": 136039684.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ },
+ "TTRX": {
+  "verdict": "FAIL",
+  "loan_pct": 1.46,
+  "cash_pct": 2.45,
+  "combined": 3.91,
+  "haram_pct": null,
+  "halal": false,
+  "source": "quarterly",
+  "haram_src": null,
+  "haram_note": "vendor interest row $2M over the TTM window exceeds the 8%/yr plausibility cap on mean cash+securities $7M (cap $1M) -- discarded as mis-tagged",
+  "interest_flags": [
+   "intinc_implausible"
+  ],
+  "last_available": {},
+  "fail_reason": "unverified: missing interest income -- an absent statement row is not a zero (user ruling 2026-09-16); refusing [vendor interest row $2M over the TTM window exceeds the 8%/yr plausibility cap on mean cash+securities $7M (cap $1M) -- discarded as mis-tagged]",
+  "mcap": 419377992.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}

@@ -423,6 +423,22 @@
    "vol": "54351",
    "name": "Super League Enterprise",
    "first_seen": "12:00"
+  },
+  "AMTX": {
+   "pct": 11.44,
+   "last": 2.095,
+   "prev_close": 1.8799,
+   "vol": "615793",
+   "name": "Aemetis",
+   "first_seen": "12:10"
+  },
+  "TTRX": {
+   "pct": 10.42,
+   "last": 15.26,
+   "prev_close": 13.82,
+   "vol": "65468",
+   "name": "Turn Therapeutics",
+   "first_seen": "12:10"
   }
  },
  "halal_fail": [
@@ -476,7 +492,9 @@
   "SGML",
   "HSDT",
   "QNCX",
-  "SLE"
+  "SLE",
+  "AMTX",
+  "TTRX"
  ],
  "fake_gap": [
   "PTLE"
