@@ -310,6 +310,13 @@
       "scan": "07:35 scan: 79 rows (delta: NXTC new; IPW off). NXTC Q1 FAIL cash 78.9%. 0 armable",
       "armed": false,
       "vetoes": []
+    },
+    {
+      "et": "07:40",
+      "state": "FLAT-5m",
+      "scan": "07:40 scan: 80 rows (delta: SVRN new -> inherited FAIL; RH profile: NEAR digital-asset treasury, sector Finance). 0 candidates",
+      "armed": false,
+      "vetoes": []
     }
   ],
   "veto_rates": {
