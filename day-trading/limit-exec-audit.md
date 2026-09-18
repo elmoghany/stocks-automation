@@ -206,7 +206,89 @@ hurts at high ρ", now with the exit included.
 
 ### 3.2 Pass B — the other 26 configurations (10 seeds)
 
-PASSB_PLACEHOLDER
+Same frame, 10 seeds, no foresight legs (`frame_ladderB_h30.json`).
+
+| config (entry / exit) | fill rate | tkts/day | **flat $/tkt** (±seed sd) | $/month @flat | measured $/tkt | zero-cost $/tkt | market CF (same names) | entry passive share | exit passive share | months + | ex-best | aug2026 | foresight $/tkt | anti |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---:|---:|---:|---:|
+| `bid-rest10-cancel/mkt` | 0.822 | 7.00 | **-11.42** ± 2.9 | -1,677.80 | -30.54 | +1.81 | -38.84 | 1.00 | 0.00 | 2/23 | -38,226.59 | 28 tk -764.93 | — | — |
+| `bid-rest1-mkt/mkt` | 0.997 | 7.00 | **-22.34** ± 2.8 | -3,283.90 | -41.72 | -1.17 | -28.43 | 0.42 | 0.00 | 2/23 | -80,272.92 | 28 tk -1,925.31 | — | — |
+| `bid-rest5-mkt/mkt` | 0.998 | 7.00 | **-18.29** ± 2.2 | -2,688.30 | -39.04 | -0.96 | -28.36 | 0.70 | 0.00 | 3/23 | -58,317.98 | 28 tk -1,193.91 | — | — |
+| `mid-rest1-cancel/mkt` | 0.651 | 7.00 | **-12.45** ± 4.0 | -1,830.00 | -25.88 | -0.31 | -32.29 | 1.00 | 0.00 | 2/23 | -54,013.27 | 28 tk -307.36 | — | — |
+| `mid-rest3-cancel/mkt` | 0.801 | 7.00 | **-12.40** ± 1.9 | -1,823.10 | -30.03 | +0.45 | -32.89 | 1.00 | 0.00 | 4/23 | -45,257.04 | 28 tk -206.87 | — | — |
+| `tick3-cancel/mkt` | 0.725 | 7.00 | **-13.03** ± 2.5 | -1,914.60 | -29.84 | -0.22 | -37.39 | 1.00 | 0.00 | 5/23 | -47,674.06 | 28 tk -459.08 | — | — |
+| `tick10-cancel/mkt` | 0.870 | 7.00 | **-12.38** ± 2.6 | -1,818.90 | -32.34 | +0.86 | -37.34 | 1.00 | 0.00 | 5/23 | -31,364.48 | 28 tk -304.24 | — | — |
+| `tick3-mkt/mkt` | 0.998 | 7.00 | **-19.45** ± 2.7 | -2,859.00 | -39.97 | -1.55 | -28.94 | 0.66 | 0.00 | 1/23 | -66,461.91 | 28 tk -738.55 | — | — |
+| `chase3-cancel/mkt` | 0.797 | 7.00 | **-12.93** ± 2.5 | -1,899.70 | -28.79 | -0.12 | -32.07 | 1.00 | 0.00 | 5/23 | -41,933.66 | 28 tk -60.62 | — | — |
+| `chase5-cancel/mkt` | 0.897 | 7.00 | **-13.18** ± 2.1 | -1,937.10 | -31.20 | -0.10 | -30.85 | 1.00 | 0.00 | 5/23 | -43,762.23 | 28 tk -1,876.91 | — | — |
+| `chase5-mkt/mkt` | 0.998 | 7.00 | **-16.16** ± 2.8 | -2,375.20 | -37.83 | -0.76 | -28.19 | 0.84 | 0.00 | 3/23 | -52,193.17 | 28 tk -1,619.62 | — | — |
+| `mkt/ask-rest1` | 0.998 | 7.00 | **-22.21** ± 3.5 | -3,264.10 | -40.74 | -0.65 | -27.63 | 0.00 | 0.39 | 2/23 | -78,807.59 | 28 tk -1,191.40 | — | — |
+| `mkt/ask-rest5` | 0.998 | 6.99 | **-18.43** ± 3.0 | -2,706.40 | -38.60 | -0.75 | -27.59 | 0.00 | 0.68 | 1/23 | -66,870.63 | 28 tk -1,140.61 | — | — |
+| `mkt/tick3` | 0.998 | 7.00 | **-19.38** ± 3.3 | -2,847.10 | -39.64 | -1.31 | -28.33 | 0.00 | 0.65 | 2/23 | -70,009.09 | 28 tk -879.92 | — | — |
+| `mkt/tick10` | 0.998 | 6.99 | **-15.74** ± 3.4 | -2,310.40 | -36.53 | -0.04 | -27.24 | 0.00 | 0.84 | 4/23 | -51,093.97 | 28 tk -135.05 | — | — |
+| `mkt/chase5` | 0.998 | 7.00 | **-16.28** ± 3.0 | -2,391.70 | -37.56 | -0.63 | -27.53 | 0.00 | 0.83 | 3/23 | -58,221.49 | 28 tk -1,181.85 | — | — |
+| `bid-rest1-cancel/ask-rest1` | 0.483 | 6.99 | **-6.09** ± 3.2 | -893.80 | -21.24 | -0.01 | -36.17 | 1.00 | 0.48 | 2/23 | -37,020.53 | 28 tk -678.69 | — | — |
+| `bid-rest5-cancel/ask-rest5` | 0.744 | 6.99 | **-2.25** ± 2.9 | -330.50 | -24.08 | +1.28 | -38.26 | 1.00 | 0.72 | 9/23 | -6,345.17 | 28 tk -938.78 | — | — |
+| `tick3-cancel/tick3` | 0.727 | 6.99 | **-2.35** ± 2.5 | -345.10 | -23.13 | +1.42 | -35.41 | 1.00 | 0.69 | 10/23 | -16,986.53 | 28 tk -1,328.79 | — | — |
+| `chase5-cancel/chase5` | 0.895 | 6.99 | **-2.16** ± 2.7 | -317.70 | -25.32 | -0.59 | -30.51 | 1.00 | 0.86 | 8/23 | -21,795.16 | 28 tk -1,867.04 | — | — |
+| `mid-rest3-cancel/tick5` | 0.800 | 6.99 | **-2.10** ± 3.2 | -308.30 | -24.13 | +0.67 | -32.46 | 1.00 | 0.78 | 11/23 | -3,969.41 | 28 tk -809.37 | — | — |
+| `bid-rest3-cancel/ask-rest3|part0.5` | 0.671 | 6.99 | **-4.36** ± 2.7 | -640.30 | -21.72 | -0.01 | -36.67 | 1.00 | 0.62 | 10/23 | -14,713.16 | 28 tk -1,097.65 | — | — |
+| `bid-rest3-cancel/ask-rest3|through1c` | 0.583 | 6.99 | **-4.86** ± 3.5 | -713.00 | -24.27 | +0.48 | -39.78 | 1.00 | 0.57 | 8/23 | -33,829.87 | 28 tk -1,201.06 | — | — |
+| `bid-rest3-cancel/ask-rest3|touch` | 0.682 | 6.99 | **+1.17** ± 3.5 | +172.00 | -23.80 | +5.25 | -36.15 | 1.00 | 0.70 | 13/23 | +334.80 | 28 tk -327.96 | — | — |
+| `bid+5-rest3-cancel/ask+5-rest3` | 0.545 | 6.99 | **-4.12** ± 2.6 | -603.90 | -23.60 | +1.90 | -40.50 | 1.00 | 0.51 | 8/23 | -33,343.69 | 28 tk -1,849.51 | — | — |
+| `bid-rest5-cancel/mkt` | 0.744 | 7.00 | **-12.39** ± 2.1 | -1,820.80 | -30.04 | +0.65 | -38.49 | 1.00 | 0.00 | 6/23 | -37,556.72 | 28 tk -724.11 | — | — |
+
+Adverse-selection split for pass B:
+
+| frame config | leg | n passive fills | price improvement (bps) | 5-min markout (bps) | **net** (bps) | share reverted | reverted: pi / mo | way-down: pi / mo | partial share | median wait (s) |
+|---|---|---:|---:|---:|---:|---:|---|---|---:|---:|
+| `bid-rest10-cancel/mkt` | entry (buy at bid) | 31,338 | +12.23 | +3.34 | **+15.56** | 0.536 | +12.1 / +38.5 | +12.3 / -37.4 | 0.000 | 39 |
+| `bid-rest1-mkt/mkt` | entry (buy at bid) | 15,439 | +5.49 | +1.05 | **+6.53** | 0.515 | +5.2 / +42.7 | +5.8 / -43.3 | 0.266 | 14 |
+| `bid-rest5-mkt/mkt` | entry (buy at bid) | 23,503 | +8.72 | +0.78 | **+9.50** | 0.520 | +7.1 / +37.6 | +10.5 / -39.1 | 0.123 | 32 |
+| `mid-rest1-cancel/mkt` | entry (buy at bid) | 31,360 | +4.24 | +2.08 | **+6.31** | 0.527 | +4.3 / +40.5 | +4.2 / -40.7 | 0.000 | 9 |
+| `mid-rest3-cancel/mkt` | entry (buy at bid) | 31,358 | +6.01 | +2.63 | **+8.64** | 0.535 | +5.9 / +39.3 | +6.1 / -39.6 | 0.000 | 14 |
+| `tick3-cancel/mkt` | entry (buy at bid) | 31,350 | +8.94 | +2.36 | **+11.30** | 0.530 | +8.9 / +39.0 | +9.0 / -39.0 | 0.000 | 29 |
+| `tick10-cancel/mkt` | entry (buy at bid) | 31,348 | +10.25 | +3.06 | **+13.31** | 0.534 | +10.0 / +38.0 | +10.5 / -37.0 | 0.000 | 45 |
+| `tick3-mkt/mkt` | entry (buy at bid) | 22,671 | +7.07 | +0.34 | **+7.41** | 0.512 | +6.2 / +38.5 | +8.0 / -39.7 | 0.159 | 29 |
+| `chase3-cancel/mkt` | entry (buy at bid) | 31,356 | +4.89 | +2.61 | **+7.50** | 0.534 | +5.1 / +39.2 | +4.7 / -39.4 | 0.000 | 36 |
+| `chase5-cancel/mkt` | entry (buy at bid) | 31,355 | +3.78 | +2.02 | **+5.80** | 0.528 | +3.8 / +38.3 | +3.7 / -38.6 | 0.000 | 47 |
+| `chase5-mkt/mkt` | entry (buy at bid) | 28,204 | +2.12 | +0.80 | **+2.93** | 0.519 | +1.5 / +36.8 | +2.8 / -38.1 | 0.124 | 48 |
+| `mkt/ask-rest1` | exit (sell at ask) | 14,641 | +4.29 | -0.15 | **+4.14** | 0.509 | +4.1 / +29.8 | +4.5 / -31.2 | 0.283 | 15 |
+| `mkt/ask-rest5` | exit (sell at ask) | 22,868 | +6.84 | +0.11 | **+6.95** | 0.518 | +5.9 / +27.0 | +7.9 / -28.9 | 0.129 | 35 |
+| `mkt/tick3` | exit (sell at ask) | 22,497 | +5.25 | -0.03 | **+5.22** | 0.514 | +4.8 / +27.0 | +5.7 / -28.6 | 0.173 | 32 |
+| `mkt/tick10` | exit (sell at ask) | 27,198 | +6.06 | +0.21 | **+6.27** | 0.515 | +5.9 / +26.7 | +6.2 / -27.9 | 0.072 | 50 |
+| `mkt/chase5` | exit (sell at ask) | 27,821 | +1.70 | +0.08 | **+1.78** | 0.517 | +1.2 / +26.9 | +2.2 / -28.6 | 0.136 | 55 |
+| `bid-rest1-cancel/ask-rest1` | entry (buy at bid) | 31,327 | +7.41 | +2.35 | **+9.76** | 0.527 | +7.5 / +40.4 | +7.3 / -40.0 | 0.000 | 14 |
+| `bid-rest1-cancel/ask-rest1` | exit (sell at ask) | 16,908 | +4.80 | -0.22 | **+4.58** | 0.507 | +4.7 / +30.7 | +4.9 / -32.1 | 0.191 | 13 |
+| `bid-rest5-cancel/ask-rest5` | entry (buy at bid) | 31,315 | +11.02 | +2.67 | **+13.70** | 0.532 | +11.1 / +37.9 | +10.9 / -37.4 | 0.000 | 32 |
+| `bid-rest5-cancel/ask-rest5` | exit (sell at ask) | 23,739 | +6.87 | -0.12 | **+6.75** | 0.522 | +6.1 / +26.9 | +7.7 / -29.6 | 0.109 | 32 |
+| `tick3-cancel/tick3` | entry (buy at bid) | 31,321 | +8.70 | +2.47 | **+11.17** | 0.532 | +8.6 / +38.3 | +8.8 / -38.3 | 0.000 | 30 |
+| `tick3-cancel/tick3` | exit (sell at ask) | 23,432 | +5.31 | -0.13 | **+5.18** | 0.516 | +4.8 / +27.6 | +5.8 / -29.8 | 0.138 | 29 |
+| `chase5-cancel/chase5` | entry (buy at bid) | 31,325 | +3.72 | +1.53 | **+5.24** | 0.526 | +3.8 / +37.3 | +3.6 / -38.2 | 0.000 | 49 |
+| `chase5-cancel/chase5` | exit (sell at ask) | 28,552 | +1.52 | +0.01 | **+1.53** | 0.517 | +0.9 / +27.3 | +2.2 / -29.2 | 0.111 | 49 |
+| `mid-rest3-cancel/tick5` | entry (buy at bid) | 31,329 | +5.87 | +2.26 | **+8.13** | 0.531 | +5.8 / +37.9 | +6.0 / -38.2 | 0.000 | 14 |
+| `mid-rest3-cancel/tick5` | exit (sell at ask) | 25,507 | +5.76 | +0.33 | **+6.09** | 0.522 | +5.1 / +27.3 | +6.5 / -29.1 | 0.093 | 37 |
+| `bid-rest3-cancel/ask-rest3|part0.5` | entry (buy at bid) | 31,318 | +10.22 | +3.15 | **+13.37** | 0.534 | +9.9 / +38.4 | +10.6 / -37.3 | 0.000 | 25 |
+| `bid-rest3-cancel/ask-rest3|part0.5` | exit (sell at ask) | 21,829 | +5.64 | -0.44 | **+5.20** | 0.512 | +4.9 / +27.2 | +6.4 / -29.5 | 0.202 | 24 |
+| `bid-rest3-cancel/ask-rest3|through1c` | entry (buy at bid) | 31,307 | +11.22 | +2.08 | **+13.30** | 0.524 | +11.4 / +38.7 | +11.0 / -38.1 | 0.000 | 34 |
+| `bid-rest3-cancel/ask-rest3|through1c` | exit (sell at ask) | 19,071 | +7.99 | -0.09 | **+7.90** | 0.517 | +7.6 / +29.2 | +8.5 / -31.5 | 0.116 | 31 |
+| `bid-rest3-cancel/ask-rest3|touch` | entry (buy at bid) | 31,322 | +8.98 | +1.83 | **+10.81** | 0.531 | +9.3 / +38.2 | +8.7 / -39.5 | 0.000 | 26 |
+| `bid-rest3-cancel/ask-rest3|touch` | exit (sell at ask) | 21,790 | +7.45 | +1.19 | **+8.64** | 0.535 | +7.8 / +29.5 | +7.1 / -31.5 | 0.000 | 25 |
+| `bid+5-rest3-cancel/ask+5-rest3` | entry (buy at bid) | 31,302 | +13.10 | +2.95 | **+16.05** | 0.535 | +13.2 / +39.6 | +13.1 / -39.3 | 0.000 | 39 |
+| `bid+5-rest3-cancel/ask+5-rest3` | exit (sell at ask) | 17,616 | +9.95 | -0.07 | **+9.88** | 0.518 | +9.3 / +31.2 | +10.6 / -33.6 | 0.160 | 37 |
+| `bid-rest5-cancel/mkt` | entry (buy at bid) | 31,339 | +11.17 | +3.11 | **+14.29** | 0.532 | +11.1 / +39.2 | +11.2 / -37.9 | 0.000 | 31 |
+
+What the sensitivities say about the headline shape
+(`bid-rest3-cancel/ask-rest3` = −$3.50 in pass A): halving our share of the
+printed volume (`part0.5`) and requiring the book at L to clear (`through1c`)
+move it by a dollar or two; the size-blind `touch` rule is the optimistic
+end; posting **5 bps deeper** on both legs does not help — the deeper the
+post, the more of what fills is the fade (UNIVERSE-QUOTES' "do not post
+deeper", now on both legs). Resting one minute is the worst resting
+variant (49 % fills, the easiest half); three to five minutes is the
+plateau; ten minutes adds nothing. `mid` (resting at the last print) sits
+between the market and the bid ladders. Chasing the bid (`chase`) is not
+better than an anchored tick ladder.
+
 
 
 ## Part 4 — Adverse selection, both legs
@@ -334,7 +416,49 @@ every percentile collapses under them, as in COST-REBASE §4.4.
 
 ### 5.2 Rank for the END-TO-END fill (`plan/lx_relabel.py`)
 
-REFIT_PLACEHOLDER
+`plan/lx_relabel.py`: the label is the realized flat P&L of the
+`bid-rest3-cancel/ask-rest3` ticket for every causally eligible wn row
+(194,010 rows; fill rate 0.668; −$4.06 per attempt, −$6.08 per filled ticket
+— the unconditional end-to-end resting ticket on the whole wn
+cross-section, consistent with Part 3), and `wn_model.fit` is refitted on it
+month by month exactly as UNIVERSE-QUOTES did (train window 2025-01..07 on
+train rows before each month; OOS 2025-08..2026-07 on every row before
+each). The refit stopped at **1–5 boosting iterations in every fold**: the
+end-to-end label carries almost no learnable signal. Evaluated account-legal
+with 3 random seeds (the 30-seed distributions are the ones in 5.1, same
+ladders, same days, same seed indices):
+
+**WIDE-NET / UQ relabel / LX refit (OOS year, post 3, h30)** — 251 days, 3 random seeds
+
+| ladder | policy | tickets | tkts/day | fill rate | **flat $/tkt** | $/month | edge vs random | pct | measured $/tkt | edge (meas) | pct (meas) | zero | months + | ex-best | y1 / y2 $/tkt | aug2026 |
+|---|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|---|---:|---|---|
+| `mkt/mkt` | random ×3 | | 5.98 | | -31.18 ± 4.2 | -3,914.50 | — | — | -43.41 | — | — | -3.16 | | | | |
+| | lx_refit | 1501 | 5.98 | 0.333 | **-33.97** | -4,265.60 | -2.79 | 33 | -76.95 | -33.54 | 0 | -5.65 | 0/12 | -53,099.59 | +0.00 / -33.97 | 0 tk +0.00 |
+| | lx_refit_inv | 1501 | 5.98 | 0.333 | **-34.12** | -4,284.50 | -2.94 | 33 | -66.39 | -22.98 | 0 | -5.32 | 1/12 | -53,026.67 | +0.00 / -34.12 | 0 tk +0.00 |
+| `bid-rest3-cancel/mkt` | random ×3 | | 5.77 | | -15.32 ± 3.6 | -1,858.10 | — | — | -27.57 | — | — | -1.94 | | | | |
+| | lx_refit | 1470 | 5.86 | 0.324 | **-12.59** | -1,548.90 | +2.73 | 67 | -38.12 | -10.55 | 0 | +0.98 | 4/12 | -20,621.43 | +0.00 / -12.59 | 0 tk +0.00 |
+| | lx_refit_inv | 1474 | 5.87 | 0.324 | **-14.97** | -1,846.10 | +0.35 | 67 | -34.30 | -6.73 | 0 | -1.09 | 3/12 | -24,102.70 | +0.00 / -14.97 | 0 tk +0.00 |
+| `bid-rest3-mkt/tick3` | random ×3 | | 5.97 | | -19.72 ± 3.4 | -2,474.00 | — | — | -42.31 | — | — | -6.52 | | | | |
+| | lx_refit | 1499 | 5.97 | 0.333 | **-14.02** | -1,758.90 | +5.70 | 100 | -55.10 | -12.79 | 0 | -1.43 | 3/12 | -23,208.22 | +0.00 / -14.02 | 0 tk +0.00 |
+| | lx_refit_inv | 1501 | 5.98 | 0.333 | **-25.98** | -3,262.40 | -6.26 | 0 | -62.28 | -19.97 | 0 | -14.31 | 1/12 | -41,140.84 | +0.00 / -25.98 | 0 tk +0.00 |
+| `bid-rest3-cancel/ask-rest3` | random ×3 | | 5.77 | | -6.24 ± 3.0 | -757.00 | — | — | -23.81 | — | — | -2.28 | | | | |
+| | lx_refit | 1470 | 5.86 | 0.324 | **-6.84** | -841.70 | -0.60 | 67 | -35.02 | -11.21 | 0 | -2.74 | 3/12 | -12,245.19 | +0.00 / -6.84 | 0 tk +0.00 |
+| | lx_refit_inv | 1474 | 5.87 | 0.324 | **-5.28** | -650.90 | +0.96 | 67 | -27.70 | -3.89 | 0 | -1.64 | 5/12 | -10,191.34 | +0.00 / -5.28 | 0 tk +0.00 |
+
+**Ranking for the end-to-end fill buys nothing.** Under both legs resting
+the refit is −$6.84 against a random −$6.24 (edge −$0.60) and its own
+inverted sign is −$5.28; under `bid-rest3-mkt/tick3` it is +$5.70 over its
+3-seed control and +$2.95 over the 30-seed mean of 5.1 (≈ 76th percentile
+of that distribution, normal approximation), with the inverted control at
+−$25.98. So the one place a ranker still adds a few dollars is the ladder
+that *crosses* after resting — and there the market-labelled model of 5.1
+(+$11.76, 100th percentile, −$5.21/ticket) is already the better ranker.
+The mandate's hope — that a small demonstrated skill becomes net positive
+once the toll is not paid — fails on the mechanism UNIVERSE-QUOTES
+identified and this line confirms with the exit included: **the skill
+does not survive the fill condition, and the fill condition is where the
+toll is saved.**
+
 
 ### 5.3 CLOSE-MOMENTUM's REV 15:30 → 15:59 composite, k = 7
 

@@ -1,0 +1,1068 @@
+{
+ "days": 251,
+ "seeds": 3,
+ "rows": {
+  "mkt/mkt": {
+   "random": {
+    "flat": {
+     "per_ticket_mean": -31.18,
+     "per_ticket_sd": 4.18,
+     "per_month_mean": -3914.5
+    },
+    "meas": {
+     "per_ticket_mean": -43.41,
+     "per_ticket_sd": 3.85,
+     "per_month_mean": -5449.4
+    },
+    "zero": {
+     "per_ticket_mean": -3.16,
+     "per_ticket_sd": 4.08,
+     "per_month_mean": -396.3
+    },
+    "tickets_per_day": 5.977
+   },
+   "lx_refit": {
+    "flat": {
+     "label": "",
+     "tickets": 1501,
+     "tickets_per_day": 5.98,
+     "per_ticket": -33.97,
+     "per_month": -4265.6,
+     "total": -50983.55,
+     "months_pos": "0/12",
+     "ex_best": -53099.59,
+     "max_dd": -51837.95,
+     "win_rate": 0.425,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 251,
+     "y1": {
+      "tickets": 0,
+      "per_ticket": 0.0
+     },
+     "y2": {
+      "tickets": 1501,
+      "per_ticket": -33.97
+     },
+     "edge_vs_random": -2.79,
+     "percentile": 33.3
+    },
+    "meas": {
+     "label": "",
+     "tickets": 1501,
+     "tickets_per_day": 5.98,
+     "per_ticket": -76.95,
+     "per_month": -9663.6,
+     "total": -115503.59,
+     "months_pos": "0/12",
+     "ex_best": -117474.93,
+     "max_dd": -115660.85,
+     "win_rate": 0.3678,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 251,
+     "y1": {
+      "tickets": 0,
+      "per_ticket": 0.0
+     },
+     "y2": {
+      "tickets": 1501,
+      "per_ticket": -76.95
+     },
+     "edge_vs_random": -33.54,
+     "percentile": 0.0
+    },
+    "zero": {
+     "label": "",
+     "tickets": 1501,
+     "tickets_per_day": 5.98,
+     "per_ticket": -5.65,
+     "per_month": -709.0,
+     "total": -8474.21,
+     "months_pos": "5/12",
+     "ex_best": -10622.4,
+     "max_dd": -13600.82,
+     "win_rate": 0.485,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 251,
+     "y1": {
+      "tickets": 0,
+      "per_ticket": 0.0
+     },
+     "y2": {
+      "tickets": 1501,
+      "per_ticket": -5.65
+     }
+    },
+    "fills": {
+     "attempts": 4506,
+     "positions": 1501,
+     "fill_rate": 0.3331,
+     "entry_passive_frac_mean": 0.0,
+     "entry_fully_passive": 0.0,
+     "exit_passive_frac_mean": 0.0,
+     "exit_fully_passive": 0.0,
+     "mean_notional": 14113.2,
+     "cost_bps_mean": {
+      "e_flat": 10.03,
+      "x_flat": 10.03,
+      "e_meas": 29.17,
+      "x_meas": 24.5
+     }
+    },
+    "decomp": {
+     "e": {
+      "n": 0
+     },
+     "x": {
+      "n": 0
+     }
+    }
+   },
+   "lx_refit_inv": {
+    "flat": {
+     "label": "",
+     "tickets": 1501,
+     "tickets_per_day": 5.98,
+     "per_ticket": -34.12,
+     "per_month": -4284.5,
+     "total": -51210.48,
+     "months_pos": "1/12",
+     "ex_best": -53026.67,
+     "max_dd": -52554.19,
+     "win_rate": 0.4171,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 251,
+     "y1": {
+      "tickets": 0,
+      "per_ticket": 0.0
+     },
+     "y2": {
+      "tickets": 1501,
+      "per_ticket": -34.12
+     },
+     "edge_vs_random": -2.94,
+     "percentile": 33.3
+    },
+    "meas": {
+     "label": "",
+     "tickets": 1501,
+     "tickets_per_day": 5.98,
+     "per_ticket": -66.39,
+     "per_month": -8337.9,
+     "total": -99657.76,
+     "months_pos": "0/12",
+     "ex_best": -101407.16,
+     "max_dd": -100243.03,
+     "win_rate": 0.3817,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 251,
+     "y1": {
+      "tickets": 0,
+      "per_ticket": 0.0
+     },
+     "y2": {
+      "tickets": 1501,
+      "per_ticket": -66.39
+     },
+     "edge_vs_random": -22.98,
+     "percentile": 0.0
+    },
+    "zero": {
+     "label": "",
+     "tickets": 1501,
+     "tickets_per_day": 5.98,
+     "per_ticket": -5.32,
+     "per_month": -667.9,
+     "total": -7983.08,
+     "months_pos": "5/12",
+     "ex_best": -9831.12,
+     "max_dd": -12255.79,
+     "win_rate": 0.4917,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 251,
+     "y1": {
+      "tickets": 0,
+      "per_ticket": 0.0
+     },
+     "y2": {
+      "tickets": 1501,
+      "per_ticket": -5.32
+     }
+    },
+    "fills": {
+     "attempts": 4506,
+     "positions": 1501,
+     "fill_rate": 0.3331,
+     "entry_passive_frac_mean": 0.0,
+     "entry_fully_passive": 0.0,
+     "exit_passive_frac_mean": 0.0,
+     "exit_fully_passive": 0.0,
+     "mean_notional": 14352.2,
+     "cost_bps_mean": {
+      "e_flat": 10.03,
+      "x_flat": 10.03,
+      "e_meas": 24.13,
+      "x_meas": 21.07
+     }
+    },
+    "decomp": {
+     "e": {
+      "n": 0
+     },
+     "x": {
+      "n": 0
+     }
+    }
+   }
+  },
+  "bid-rest3-cancel/mkt": {
+   "random": {
+    "flat": {
+     "per_ticket_mean": -15.32,
+     "per_ticket_sd": 3.65,
+     "per_month_mean": -1858.1
+    },
+    "meas": {
+     "per_ticket_mean": -27.57,
+     "per_ticket_sd": 2.98,
+     "per_month_mean": -3341.7
+    },
+    "zero": {
+     "per_ticket_mean": -1.94,
+     "per_ticket_sd": 3.66,
+     "per_month_mean": -235.8
+    },
+    "tickets_per_day": 5.77
+   },
+   "lx_refit": {
+    "flat": {
+     "label": "",
+     "tickets": 1470,
+     "tickets_per_day": 5.857,
+     "per_ticket": -12.59,
+     "per_month": -1548.9,
+     "total": -18513.34,
+     "months_pos": "4/12",
+     "ex_best": -20621.43,
+     "max_dd": -19978.18,
+     "win_rate": 0.4633,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 251,
+     "y1": {
+      "tickets": 0,
+      "per_ticket": 0.0
+     },
+     "y2": {
+      "tickets": 1470,
+      "per_ticket": -12.59
+     },
+     "edge_vs_random": 2.73,
+     "percentile": 66.7
+    },
+    "meas": {
+     "label": "",
+     "tickets": 1470,
+     "tickets_per_day": 5.857,
+     "per_ticket": -38.12,
+     "per_month": -4688.8,
+     "total": -56042.48,
+     "months_pos": "0/12",
+     "ex_best": -58011.03,
+     "max_dd": -57181.76,
+     "win_rate": 0.4116,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 251,
+     "y1": {
+      "tickets": 0,
+      "per_ticket": 0.0
+     },
+     "y2": {
+      "tickets": 1470,
+      "per_ticket": -38.12
+     },
+     "edge_vs_random": -10.55,
+     "percentile": 0.0
+    },
+    "zero": {
+     "label": "",
+     "tickets": 1470,
+     "tickets_per_day": 5.857,
+     "per_ticket": 0.98,
+     "per_month": 120.3,
+     "total": 1437.59,
+     "months_pos": "5/12",
+     "ex_best": -687.53,
+     "max_dd": -8343.06,
+     "win_rate": 0.5068,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 251,
+     "y1": {
+      "tickets": 0,
+      "per_ticket": 0.0
+     },
+     "y2": {
+      "tickets": 1470,
+      "per_ticket": 0.98
+     }
+    },
+    "fills": {
+     "attempts": 4539,
+     "positions": 1470,
+     "fill_rate": 0.3239,
+     "entry_passive_frac_mean": 1.0,
+     "entry_fully_passive": 1.0,
+     "exit_passive_frac_mean": 0.0,
+     "exit_fully_passive": 0.0,
+     "mean_notional": 13571.1,
+     "cost_bps_mean": {
+      "e_flat": 0.0,
+      "x_flat": 10.0,
+      "e_meas": 12.69,
+      "x_meas": 18.44
+     }
+    },
+    "decomp": {
+     "e": {
+      "n": 1470,
+      "pi_bps_mean": 12.55,
+      "markout5_bps_mean": 2.73,
+      "net_bps": 15.28,
+      "share_reverted": 0.5347,
+      "reverted": {
+       "pi": 11.81,
+       "mo": 58.47
+      },
+      "way_down": {
+       "pi": 13.39,
+       "mo": -61.31
+      },
+      "partial_share": 0.0,
+      "wait_s_median": 7.0
+     },
+     "x": {
+      "n": 0
+     }
+    }
+   },
+   "lx_refit_inv": {
+    "flat": {
+     "label": "",
+     "tickets": 1474,
+     "tickets_per_day": 5.873,
+     "per_ticket": -14.97,
+     "per_month": -1846.1,
+     "total": -22065.28,
+     "months_pos": "3/12",
+     "ex_best": -24102.7,
+     "max_dd": -24475.75,
+     "win_rate": 0.4512,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 251,
+     "y1": {
+      "tickets": 0,
+      "per_ticket": 0.0
+     },
+     "y2": {
+      "tickets": 1474,
+      "per_ticket": -14.97
+     },
+     "edge_vs_random": 0.35,
+     "percentile": 66.7
+    },
+    "meas": {
+     "label": "",
+     "tickets": 1474,
+     "tickets_per_day": 5.873,
+     "per_ticket": -34.3,
+     "per_month": -4229.5,
+     "total": -50552.92,
+     "months_pos": "1/12",
+     "ex_best": -52436.14,
+     "max_dd": -52255.35,
+     "win_rate": 0.4213,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 251,
+     "y1": {
+      "tickets": 0,
+      "per_ticket": 0.0
+     },
+     "y2": {
+      "tickets": 1474,
+      "per_ticket": -34.3
+     },
+     "edge_vs_random": -6.73,
+     "percentile": 0.0
+    },
+    "zero": {
+     "label": "",
+     "tickets": 1474,
+     "tickets_per_day": 5.873,
+     "per_ticket": -1.09,
+     "per_month": -134.4,
+     "total": -1605.86,
+     "months_pos": "6/12",
+     "ex_best": -3660.21,
+     "max_dd": -10216.85,
+     "win_rate": 0.5027,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 251,
+     "y1": {
+      "tickets": 0,
+      "per_ticket": 0.0
+     },
+     "y2": {
+      "tickets": 1474,
+      "per_ticket": -1.09
+     }
+    },
+    "fills": {
+     "attempts": 4554,
+     "positions": 1474,
+     "fill_rate": 0.3237,
+     "entry_passive_frac_mean": 1.0,
+     "entry_fully_passive": 1.0,
+     "exit_passive_frac_mean": 0.0,
+     "exit_fully_passive": 0.0,
+     "mean_notional": 13881.3,
+     "cost_bps_mean": {
+      "e_flat": 0.0,
+      "x_flat": 10.0,
+      "e_meas": 10.14,
+      "x_meas": 15.91
+     }
+    },
+    "decomp": {
+     "e": {
+      "n": 1474,
+      "pi_bps_mean": 10.61,
+      "markout5_bps_mean": 1.43,
+      "net_bps": 12.04,
+      "share_reverted": 0.5176,
+      "reverted": {
+       "pi": 10.38,
+       "mo": 55.86
+      },
+      "way_down": {
+       "pi": 10.85,
+       "mo": -56.99
+      },
+      "partial_share": 0.0,
+      "wait_s_median": 7.0
+     },
+     "x": {
+      "n": 0
+     }
+    }
+   }
+  },
+  "bid-rest3-mkt/tick3": {
+   "random": {
+    "flat": {
+     "per_ticket_mean": -19.72,
+     "per_ticket_sd": 3.39,
+     "per_month_mean": -2474.0
+    },
+    "meas": {
+     "per_ticket_mean": -42.31,
+     "per_ticket_sd": 3.68,
+     "per_month_mean": -5307.0
+    },
+    "zero": {
+     "per_ticket_mean": -6.52,
+     "per_ticket_sd": 3.24,
+     "per_month_mean": -817.1
+    },
+    "tickets_per_day": 5.972
+   },
+   "lx_refit": {
+    "flat": {
+     "label": "",
+     "tickets": 1499,
+     "tickets_per_day": 5.972,
+     "per_ticket": -14.02,
+     "per_month": -1758.9,
+     "total": -21023.3,
+     "months_pos": "3/12",
+     "ex_best": -23208.22,
+     "max_dd": -25052.59,
+     "win_rate": 0.4556,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 251,
+     "y1": {
+      "tickets": 0,
+      "per_ticket": 0.0
+     },
+     "y2": {
+      "tickets": 1499,
+      "per_ticket": -14.02
+     },
+     "edge_vs_random": 5.7,
+     "percentile": 100.0
+    },
+    "meas": {
+     "label": "",
+     "tickets": 1499,
+     "tickets_per_day": 5.972,
+     "per_ticket": -55.1,
+     "per_month": -6910.7,
+     "total": -82598.77,
+     "months_pos": "0/12",
+     "ex_best": -84664.64,
+     "max_dd": -81857.55,
+     "win_rate": 0.3722,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 251,
+     "y1": {
+      "tickets": 0,
+      "per_ticket": 0.0
+     },
+     "y2": {
+      "tickets": 1499,
+      "per_ticket": -55.1
+     },
+     "edge_vs_random": -12.79,
+     "percentile": 0.0
+    },
+    "zero": {
+     "label": "",
+     "tickets": 1499,
+     "tickets_per_day": 5.972,
+     "per_ticket": -1.43,
+     "per_month": -179.7,
+     "total": -2147.5,
+     "months_pos": "7/12",
+     "ex_best": -4332.43,
+     "max_dd": -12892.05,
+     "win_rate": 0.489,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 251,
+     "y1": {
+      "tickets": 0,
+      "per_ticket": 0.0
+     },
+     "y2": {
+      "tickets": 1499,
+      "per_ticket": -1.43
+     }
+    },
+    "fills": {
+     "attempts": 4500,
+     "positions": 1499,
+     "fill_rate": 0.3331,
+     "entry_passive_frac_mean": 0.3804,
+     "entry_fully_passive": 0.3629,
+     "exit_passive_frac_mean": 0.6606,
+     "exit_fully_passive": 0.6077,
+     "mean_notional": 13622.2,
+     "cost_bps_mean": {
+      "e_flat": 6.23,
+      "x_flat": 3.43,
+      "e_meas": 25.05,
+      "x_meas": 17.99
+     }
+    },
+    "decomp": {
+     "e": {
+      "n": 599,
+      "pi_bps_mean": 8.25,
+      "markout5_bps_mean": -5.88,
+      "net_bps": 2.37,
+      "share_reverted": 0.4925,
+      "reverted": {
+       "pi": 5.89,
+       "mo": 52.84
+      },
+      "way_down": {
+       "pi": 10.54,
+       "mo": -62.86
+      },
+      "partial_share": 0.0918,
+      "wait_s_median": 5.0
+     },
+     "x": {
+      "n": 1098,
+      "pi_bps_mean": 7.47,
+      "markout5_bps_mean": -1.72,
+      "net_bps": 5.75,
+      "share_reverted": 0.52,
+      "reverted": {
+       "pi": 6.18,
+       "mo": 37.53
+      },
+      "way_down": {
+       "pi": 8.86,
+       "mo": -44.24
+      },
+      "partial_share": 0.1703,
+      "wait_s_median": 23.0
+     }
+    }
+   },
+   "lx_refit_inv": {
+    "flat": {
+     "label": "",
+     "tickets": 1501,
+     "tickets_per_day": 5.98,
+     "per_ticket": -25.98,
+     "per_month": -3262.4,
+     "total": -38993.78,
+     "months_pos": "1/12",
+     "ex_best": -41140.84,
+     "max_dd": -39786.72,
+     "win_rate": 0.4384,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 251,
+     "y1": {
+      "tickets": 0,
+      "per_ticket": 0.0
+     },
+     "y2": {
+      "tickets": 1501,
+      "per_ticket": -25.98
+     },
+     "edge_vs_random": -6.26,
+     "percentile": 0.0
+    },
+    "meas": {
+     "label": "",
+     "tickets": 1501,
+     "tickets_per_day": 5.98,
+     "per_ticket": -62.28,
+     "per_month": -7820.9,
+     "total": -93478.28,
+     "months_pos": "0/12",
+     "ex_best": -95619.06,
+     "max_dd": -93689.81,
+     "win_rate": 0.3644,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 251,
+     "y1": {
+      "tickets": 0,
+      "per_ticket": 0.0
+     },
+     "y2": {
+      "tickets": 1501,
+      "per_ticket": -62.28
+     },
+     "edge_vs_random": -19.97,
+     "percentile": 0.0
+    },
+    "zero": {
+     "label": "",
+     "tickets": 1501,
+     "tickets_per_day": 5.98,
+     "per_ticket": -14.31,
+     "per_month": -1797.3,
+     "total": -21482.2,
+     "months_pos": "4/12",
+     "ex_best": -23629.26,
+     "max_dd": -25065.5,
+     "win_rate": 0.471,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 251,
+     "y1": {
+      "tickets": 0,
+      "per_ticket": 0.0
+     },
+     "y2": {
+      "tickets": 1501,
+      "per_ticket": -14.31
+     }
+    },
+    "fills": {
+     "attempts": 4506,
+     "positions": 1501,
+     "fill_rate": 0.3331,
+     "entry_passive_frac_mean": 0.4331,
+     "entry_fully_passive": 0.4217,
+     "exit_passive_frac_mean": 0.7005,
+     "exit_fully_passive": 0.6509,
+     "mean_notional": 13949.9,
+     "cost_bps_mean": {
+      "e_flat": 5.7,
+      "x_flat": 3.03,
+      "e_meas": 22.09,
+      "x_meas": 15.71
+     }
+    },
+    "decomp": {
+     "e": {
+      "n": 677,
+      "pi_bps_mean": 5.54,
+      "markout5_bps_mean": -12.02,
+      "net_bps": -6.48,
+      "share_reverted": 0.4549,
+      "reverted": {
+       "pi": 5.32,
+       "mo": 51.56
+      },
+      "way_down": {
+       "pi": 5.72,
+       "mo": -65.09
+      },
+      "partial_share": 0.065,
+      "wait_s_median": 4.0
+     },
+     "x": {
+      "n": 1147,
+      "pi_bps_mean": 6.11,
+      "markout5_bps_mean": -1.04,
+      "net_bps": 5.07,
+      "share_reverted": 0.5153,
+      "reverted": {
+       "pi": 6.78,
+       "mo": 38.76
+      },
+      "way_down": {
+       "pi": 5.4,
+       "mo": -43.34
+      },
+      "partial_share": 0.1482,
+      "wait_s_median": 20.0
+     }
+    }
+   }
+  },
+  "bid-rest3-cancel/ask-rest3": {
+   "random": {
+    "flat": {
+     "per_ticket_mean": -6.24,
+     "per_ticket_sd": 3.02,
+     "per_month_mean": -757.0
+    },
+    "meas": {
+     "per_ticket_mean": -23.81,
+     "per_ticket_sd": 2.42,
+     "per_month_mean": -2886.1
+    },
+    "zero": {
+     "per_ticket_mean": -2.28,
+     "per_ticket_sd": 3.12,
+     "per_month_mean": -277.8
+    },
+    "tickets_per_day": 5.77
+   },
+   "lx_refit": {
+    "flat": {
+     "label": "",
+     "tickets": 1470,
+     "tickets_per_day": 5.857,
+     "per_ticket": -6.84,
+     "per_month": -841.7,
+     "total": -10060.27,
+     "months_pos": "3/12",
+     "ex_best": -12245.19,
+     "max_dd": -12988.7,
+     "win_rate": 0.4864,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 251,
+     "y1": {
+      "tickets": 0,
+      "per_ticket": 0.0
+     },
+     "y2": {
+      "tickets": 1470,
+      "per_ticket": -6.84
+     },
+     "edge_vs_random": -0.6,
+     "percentile": 66.7
+    },
+    "meas": {
+     "label": "",
+     "tickets": 1470,
+     "tickets_per_day": 5.857,
+     "per_ticket": -35.02,
+     "per_month": -4306.7,
+     "total": -51475.55,
+     "months_pos": "0/12",
+     "ex_best": -53541.42,
+     "max_dd": -52502.57,
+     "win_rate": 0.419,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 251,
+     "y1": {
+      "tickets": 0,
+      "per_ticket": 0.0
+     },
+     "y2": {
+      "tickets": 1470,
+      "per_ticket": -35.02
+     },
+     "edge_vs_random": -11.21,
+     "percentile": 0.0
+    },
+    "zero": {
+     "label": "",
+     "tickets": 1470,
+     "tickets_per_day": 5.857,
+     "per_ticket": -2.74,
+     "per_month": -337.3,
+     "total": -4031.38,
+     "months_pos": "6/12",
+     "ex_best": -6216.31,
+     "max_dd": -10201.43,
+     "win_rate": 0.5054,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 251,
+     "y1": {
+      "tickets": 0,
+      "per_ticket": 0.0
+     },
+     "y2": {
+      "tickets": 1470,
+      "per_ticket": -2.74
+     }
+    },
+    "fills": {
+     "attempts": 4539,
+     "positions": 1470,
+     "fill_rate": 0.3239,
+     "entry_passive_frac_mean": 1.0,
+     "entry_fully_passive": 1.0,
+     "exit_passive_frac_mean": 0.6839,
+     "exit_fully_passive": 0.6463,
+     "mean_notional": 13571.1,
+     "cost_bps_mean": {
+      "e_flat": 0.0,
+      "x_flat": 3.16,
+      "e_meas": 12.69,
+      "x_meas": 13.57
+     }
+    },
+    "decomp": {
+     "e": {
+      "n": 1470,
+      "pi_bps_mean": 12.55,
+      "markout5_bps_mean": 2.73,
+      "net_bps": 15.28,
+      "share_reverted": 0.5347,
+      "reverted": {
+       "pi": 11.81,
+       "mo": 58.47
+      },
+      "way_down": {
+       "pi": 13.39,
+       "mo": -61.31
+      },
+      "partial_share": 0.0,
+      "wait_s_median": 7.0
+     },
+     "x": {
+      "n": 1084,
+      "pi_bps_mean": 8.85,
+      "markout5_bps_mean": 3.74,
+      "net_bps": 12.59,
+      "share_reverted": 0.5544,
+      "reverted": {
+       "pi": 8.49,
+       "mo": 43.8
+      },
+      "way_down": {
+       "pi": 9.3,
+       "mo": -46.11
+      },
+      "partial_share": 0.1236,
+      "wait_s_median": 16.0
+     }
+    }
+   },
+   "lx_refit_inv": {
+    "flat": {
+     "label": "",
+     "tickets": 1474,
+     "tickets_per_day": 5.873,
+     "per_ticket": -5.28,
+     "per_month": -650.9,
+     "total": -7779.77,
+     "months_pos": "5/12",
+     "ex_best": -10191.34,
+     "max_dd": -12587.84,
+     "win_rate": 0.4993,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 251,
+     "y1": {
+      "tickets": 0,
+      "per_ticket": 0.0
+     },
+     "y2": {
+      "tickets": 1474,
+      "per_ticket": -5.28
+     },
+     "edge_vs_random": 0.96,
+     "percentile": 66.7
+    },
+    "meas": {
+     "label": "",
+     "tickets": 1474,
+     "tickets_per_day": 5.873,
+     "per_ticket": -27.7,
+     "per_month": -3416.1,
+     "total": -40831.07,
+     "months_pos": "1/12",
+     "ex_best": -43164.37,
+     "max_dd": -43567.98,
+     "win_rate": 0.4491,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 251,
+     "y1": {
+      "tickets": 0,
+      "per_ticket": 0.0
+     },
+     "y2": {
+      "tickets": 1474,
+      "per_ticket": -27.7
+     },
+     "edge_vs_random": -3.89,
+     "percentile": 0.0
+    },
+    "zero": {
+     "label": "",
+     "tickets": 1474,
+     "tickets_per_day": 5.873,
+     "per_ticket": -1.64,
+     "per_month": -201.7,
+     "total": -2410.54,
+     "months_pos": "6/12",
+     "ex_best": -4822.11,
+     "max_dd": -10101.21,
+     "win_rate": 0.5088,
+     "aug2026": {
+      "tickets": 0,
+      "total": 0.0
+     },
+     "days": 251,
+     "y1": {
+      "tickets": 0,
+      "per_ticket": 0.0
+     },
+     "y2": {
+      "tickets": 1474,
+      "per_ticket": -1.64
+     }
+    },
+    "fills": {
+     "attempts": 4554,
+     "positions": 1474,
+     "fill_rate": 0.3237,
+     "entry_passive_frac_mean": 1.0,
+     "entry_fully_passive": 1.0,
+     "exit_passive_frac_mean": 0.7288,
+     "exit_fully_passive": 0.694,
+     "mean_notional": 13881.3,
+     "cost_bps_mean": {
+      "e_flat": 0.0,
+      "x_flat": 2.71,
+      "e_meas": 10.14,
+      "x_meas": 10.83
+     }
+    },
+    "decomp": {
+     "e": {
+      "n": 1474,
+      "pi_bps_mean": 10.61,
+      "markout5_bps_mean": 1.32,
+      "net_bps": 11.93,
+      "share_reverted": 0.517,
+      "reverted": {
+       "pi": 10.4,
+       "mo": 55.85
+      },
+      "way_down": {
+       "pi": 10.84,
+       "mo": -57.04
+      },
+      "partial_share": 0.0,
+      "wait_s_median": 7.0
+     },
+     "x": {
+      "n": 1134,
+      "pi_bps_mean": 7.27,
+      "markout5_bps_mean": -1.34,
+      "net_bps": 5.94,
+      "share_reverted": 0.5035,
+      "reverted": {
+       "pi": 7.11,
+       "mo": 41.89
+      },
+      "way_down": {
+       "pi": 7.43,
+       "mo": -45.18
+      },
+      "partial_share": 0.0979,
+      "wait_s_median": 13.0
+     }
+    }
+   }
+  }
+ },
+ "post_k": 3,
+ "split": 1
+}
