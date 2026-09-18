@@ -195,6 +195,15 @@
       "screened_et": "07:02",
       "armable": false,
       "note": "delta dump carried no Market cap cell for the new row; cap loaded from the scan row via update_rh_fundamentals.py, then re-screened"
+    },
+    "CIIT": {
+      "q1": "FAIL",
+      "loan_pct": 3.07,
+      "cash_pct": 30.68,
+      "mcap": 2341083.0,
+      "q2": "n/a (Q1 FAIL) -- Tianci International, shipping/logistics services",
+      "screened_et": "07:10",
+      "armable": false
     }
   },
   "cycles_log": [
@@ -223,6 +232,20 @@
       "et": "07:00",
       "state": "FLAT-5m",
       "scan": "78 rows (delta off 06:30: ELDN new, AKAN gone). 1 candidate ELDN -> Q1 FAIL (cash 41.3%). 0 armable",
+      "armed": false,
+      "vetoes": []
+    },
+    {
+      "et": "07:05",
+      "state": "FLAT-5m",
+      "scan": "80 rows; new vs 07:00: SLON, TXXH (funds), SECZ (inherited FAIL, SIC 6xxx), AKAN back (inherited FAIL). 0 candidates, no dump built",
+      "armed": false,
+      "vetoes": []
+    },
+    {
+      "et": "07:10",
+      "state": "FLAT-5m",
+      "scan": "81 rows (delta: FTCI CIIT new common; TXXS SLON TXXH funds; SECZ AKAN inherited FAIL; JBS NHIC SOLT BNC off-scan). CIIT Q1 FAIL cash 30.7%; FTCI inherited FAIL. 0 armable",
       "armed": false,
       "vetoes": []
     }

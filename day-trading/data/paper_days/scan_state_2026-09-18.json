@@ -119,6 +119,14 @@
    "vol": "558396.79",
    "name": "Eledon Pharmaceuticals",
    "first_seen": "07:00"
+  },
+  "CIIT": {
+   "pct": 10.39,
+   "last": 2.6714,
+   "prev_close": 2.42,
+   "vol": "29065.78",
+   "name": "Tianci International",
+   "first_seen": "07:10"
   }
  },
  "halal_fail": [
@@ -136,7 +144,8 @@
   "ROC",
   "NHIC",
   "BNC",
-  "ELDN"
+  "ELDN",
+  "CIIT"
  ],
  "fake_gap": [],
  "inherited_fail": [

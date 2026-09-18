@@ -1,0 +1,6 @@
+{"changed": {"IMCC": [134.48, "4.08", "-"], "SSM": [60.27, "2.34", "-"], "TCRT": [42.5, "2.28", "-"], "CPOP": [19.09, "4.43", "-"]},
+ "new": [["FTCI", 11.268, "2.37", "128732.95", "FTC Solar"], ["CIIT", 10.388, "2.6714", "29065.78", "Tianci International"],
+         ["TXXS", 15.42, "23.85", "8378.6", "21Shares 2x Long Sui ETF"], ["SLON", 11.2, "34.55", "183528", "ProShares Ultra Solana ETF"],
+         ["TXXH", 11.02, "72.06", "16385", "21Shares 2x Long HYPE ETF"], ["SECZ", 10.86, "9.9", "5798335", "Securitize Corp."],
+         ["AKAN", 13.95, "3.35", "6683357", "Akanda"]],
+ "gone": ["JBS", "NHIC", "SOLT", "BNC"]}
