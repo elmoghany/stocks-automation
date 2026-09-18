@@ -1,0 +1,23 @@
+{
+ "XBP": {
+  "verdict": "FAIL",
+  "haram_pct_note": "interest income only -- blind to revenue mix",
+  "loan_pct": 1087.22,
+  "cash_pct": 49.17,
+  "combined": 1136.39,
+  "haram_pct": 0.25,
+  "haram_periods": 4,
+  "haram_src": "upper-bound (nonoperating income)",
+  "halal": false,
+  "source": "quarterly",
+  "fail_reason": "LOAN>10",
+  "haram_note": "interest income is not tagged; TTM non-operating income $2M is 0.25% of TTM revenue and BOUNDS it -- the 5% leg is proven clear without measuring interest itself",
+  "interest_flags": [
+   "intinc_implausible",
+   "bound_implausible"
+  ],
+  "sic": "7389",
+  "mcap": 37782658.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}

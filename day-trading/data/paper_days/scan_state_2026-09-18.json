@@ -335,6 +335,14 @@
    "vol": "285014",
    "name": "Cango",
    "first_seen": "10:35"
+  },
+  "XBP": {
+   "pct": 11.16,
+   "last": 3.535,
+   "prev_close": 3.1801,
+   "vol": "24240",
+   "name": "XBP Global Holdings,",
+   "first_seen": "10:45"
   }
  },
  "halal_fail": [
@@ -377,7 +385,8 @@
   "QTI",
   "VOGX",
   "GEMI",
-  "CANG"
+  "CANG",
+  "XBP"
  ],
  "fake_gap": [
   "PTLE"

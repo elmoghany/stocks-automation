@@ -552,6 +552,27 @@
       "q2": "CollPlant Biotechnologies; Q1 fail stands",
       "screened_et": "10:40",
       "armable": false
+    },
+    "XBP": {
+      "q1": "FAIL",
+      "loan_pct": 1087.22,
+      "cash_pct": 49.17,
+      "mcap": 37782658.0,
+      "q2": "not evaluated -- XBP Global (business process outsourcing), debt >> cap",
+      "screened_et": "10:45",
+      "armable": false
+    },
+    "AIAI": {
+      "q1": "inherited FAIL",
+      "q2": "AIAI Holdings; Q1 fail stands",
+      "screened_et": "10:45",
+      "armable": false
+    },
+    "YDES": {
+      "q1": "inherited FAIL",
+      "q2": "YD Bio; Q1 fail stands",
+      "screened_et": "10:45",
+      "armable": false
     }
   },
   "cycles_log": [
@@ -922,6 +943,19 @@
       "vetoes": [
         "AMCI SPREAD 3.88%",
         "BSEM SPREAD 3.88%",
+        "BSEM CHASE",
+        "BSEM SIZE-CAP"
+      ]
+    },
+    {
+      "et": "10:45",
+      "state": "FLAT-5m",
+      "scan": "10:45 scan: 96 rows (delta: XBP Q1 FAIL loan 1087%; AIAI/YDES inherited FAIL). AMCI bid 3.60 / ask 3.73 (3.6%) stale hammer. BSEM bid 4.65 / ask 4.82 (3.7%) stale",
+      "armed": false,
+      "vetoes": [
+        "AMCI SPREAD 3.61%",
+        "AMCI SIZE-CAP",
+        "BSEM SPREAD 3.66%",
         "BSEM CHASE",
         "BSEM SIZE-CAP"
       ]
