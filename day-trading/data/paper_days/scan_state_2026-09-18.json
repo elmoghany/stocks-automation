@@ -383,6 +383,14 @@
    "vol": "82924",
    "name": "Chaince Digital Holdings",
    "first_seen": "11:25"
+  },
+  "AGCC": {
+   "pct": 10.05,
+   "last": 13.8,
+   "prev_close": 12.5398,
+   "vol": "17580",
+   "name": "Agencia Comercial Spirits Ltd",
+   "first_seen": "11:30"
   }
  },
  "halal_fail": [
@@ -431,7 +439,8 @@
   "COIN",
   "FEAM",
   "CNTN",
-  "CD"
+  "CD",
+  "AGCC"
  ],
  "fake_gap": [
   "PTLE"

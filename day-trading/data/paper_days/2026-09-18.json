@@ -621,14 +621,15 @@
       "mcap": 161753162.0,
       "q2": "FAIL -- Canton Strategic Holdings: crypto/Canton-token treasury",
       "screened_et": "11:25",
-      "armable": false
+      "armable": false,
+      "fail_reason": "FINANCIAL SECTOR SIC 6199; haram_pct 43.8"
     },
     "CD": {
       "q1": "FAIL",
       "loan_pct": 0.29,
       "cash_pct": 13.49,
       "mcap": 324511210.0,
-      "fail_reason": "CASH>10",
+      "fail_reason": "FINANCIAL SECTOR SIC 6199; haram_pct 56.7",
       "q2": "FAIL -- Chaince Digital: crypto",
       "screened_et": "11:25",
       "armable": false
@@ -637,6 +638,16 @@
       "q1": "inherited FAIL",
       "q2": "Garden Stage -- HK securities brokerage, FAIL",
       "screened_et": "11:25",
+      "armable": false
+    },
+    "AGCC": {
+      "q1": "FAIL",
+      "loan_pct": 4.13,
+      "cash_pct": 5.15,
+      "mcap": 307389885.0,
+      "fail_reason": "HARAM INDUSTRY (distiller)",
+      "q2": "FAIL -- spirits",
+      "screened_et": "11:30",
       "armable": false
     }
   },
@@ -1125,6 +1136,19 @@
         "AMCI SPREAD 3.00%",
         "AMCI SIZE-CAP",
         "BSEM SPREAD 3.41%",
+        "BSEM CHASE",
+        "BSEM SIZE-CAP"
+      ]
+    },
+    {
+      "et": "11:30",
+      "state": "FLAT-5m",
+      "scan": "11:30 scan: 107 rows (delta: AGCC new -> FAIL distiller; 2 new funds). AMCI 3.395, bid 3.32 / ask 3.43 (3.3%), no signal. BSEM 4.78, bid 4.77 / ask 4.85 (1.7%), chase, no signal",
+      "armed": false,
+      "vetoes": [
+        "AMCI SPREAD 3.31%",
+        "AMCI SIZE-CAP",
+        "BSEM SPREAD 1.68%",
         "BSEM CHASE",
         "BSEM SIZE-CAP"
       ]
