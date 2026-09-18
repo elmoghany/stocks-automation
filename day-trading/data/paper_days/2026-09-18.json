@@ -546,6 +546,12 @@
       "q2": "TJGC Group Class A; Q1 fail stands",
       "screened_et": "10:35",
       "armable": false
+    },
+    "CLGN": {
+      "q1": "inherited FAIL (Day 24)",
+      "q2": "CollPlant Biotechnologies; Q1 fail stands",
+      "screened_et": "10:40",
+      "armable": false
     }
   },
   "cycles_log": [
@@ -906,6 +912,18 @@
         "AMCI SIZE-CAP",
         "BSEM SPREAD 3.88%",
         "BSEM CHASE"
+      ]
+    },
+    {
+      "et": "10:40",
+      "state": "FLAT-5m",
+      "scan": "10:40 scan: 92 rows (delta: CLGN new -> inherited FAIL; 1 new fund; AMCI dropped off scan at +8%). AMCI bid 3.61 / ask 3.75 (3.9%) hammer stale. BSEM 4.70 print, bid 4.64 / ask 4.82 (3.9%), stale",
+      "armed": false,
+      "vetoes": [
+        "AMCI SPREAD 3.88%",
+        "BSEM SPREAD 3.88%",
+        "BSEM CHASE",
+        "BSEM SIZE-CAP"
       ]
     }
   ],
