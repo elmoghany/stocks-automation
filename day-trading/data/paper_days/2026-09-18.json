@@ -485,6 +485,13 @@
       "scan": "08:50 scan: 79 rows, no new common-stock ticker (THYP fund). AMCI poll: 3 TAKEABLE Trigger C signals so far (08:39, 08:44, 08:48), all spread-vetoed (1.3-4.5%); size cap now binding as volume dries up",
       "armed": false,
       "vetoes": []
+    },
+    {
+      "et": "08:55",
+      "state": "FLAT-5m",
+      "scan": "08:55 scan: 79 rows, no new common-stock ticker. AMCI poll continues; spread 1.3-8%, no fresh signal",
+      "armed": false,
+      "vetoes": []
     }
   ],
   "veto_rates": {
