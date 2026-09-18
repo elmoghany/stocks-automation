@@ -519,6 +519,12 @@
       "q2": "Strategy Inc -- bitcoin treasury; FAIL",
       "screened_et": "10:25",
       "armable": false
+    },
+    "TGL": {
+      "q1": "inherited FAIL (Day 24)",
+      "q2": "Treasure Global -- e-commerce/fintech platform; Q1 fail stands",
+      "screened_et": "10:30",
+      "armable": false
     }
   },
   "cycles_log": [
@@ -855,6 +861,18 @@
         "BSEM CHASE",
         "AMCI SPREAD 1.40%",
         "AMCI SIZE-CAP"
+      ]
+    },
+    {
+      "et": "10:30",
+      "state": "FLAT-5m",
+      "scan": "10:30 scan: 92 rows (delta: TGL new -> inherited FAIL; 2 new funds; BSEM dropped off scan at +9.6%, still latched). AMCI new rth high 3.68, bid 3.59 / ask 3.73 (3.9%) chase veto. BSEM bid 4.64 / ask 4.82 (3.9%), signal stale",
+      "armed": false,
+      "vetoes": [
+        "AMCI SPREAD 3.90%",
+        "AMCI CHASE",
+        "BSEM SPREAD 3.88%",
+        "BSEM CHASE"
       ]
     }
   ],
