@@ -1,0 +1,18 @@
+{
+ "ALMR": {
+  "verdict": "FAIL",
+  "haram_pct_note": "interest income only -- blind to revenue mix",
+  "loan_pct": 2.52,
+  "cash_pct": 12.24,
+  "combined": 14.75,
+  "haram_pct": 4.52,
+  "haram_periods": 4,
+  "haram_src": "yfinance",
+  "halal": false,
+  "source": "quarterly",
+  "fail_reason": "CASH>10",
+  "sic": "3826",
+  "mcap": 2043616958.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}

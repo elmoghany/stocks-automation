@@ -287,6 +287,14 @@
    "vol": "611768.55",
    "name": "American Bitcoin Corp.",
    "first_seen": "09:55"
+  },
+  "ALMR": {
+   "pct": 10.02,
+   "last": 35.2175,
+   "prev_close": 32.0101,
+   "vol": "146744",
+   "name": "Alamar Biosciences",
+   "first_seen": "10:00"
   }
  },
  "halal_fail": [
@@ -324,7 +332,8 @@
   "TAOX",
   "XRTX",
   "DFDV",
-  "ABTC"
+  "ABTC",
+  "ALMR"
  ],
  "fake_gap": [
   "PTLE"

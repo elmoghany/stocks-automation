@@ -718,6 +718,17 @@
       "scan": "09:55 scan: 72 rows (delta: DFDV ABTC GRNQ new -> DFDV/ABTC Q1 FAIL, GRNQ inherited; 8 funds). AMCI: last 3.27, bid 3.27 / ask 3.36 (2.75%), ORB 3.39 intact, no signal",
       "armed": false,
       "vetoes": []
+    },
+    {
+      "et": "10:01",
+      "state": "FLAT-5m",
+      "scan": "10:00 scan: 79 rows (delta: ALMR new -> Q1 FAIL cash 12.2%; 9 funds; AMCI dropped off scan at +0.3%). AMCI 13:59Z bar touched ORB high 3.39, closed 3.36; bid 3.32 / ask 3.40 (2.41%) -> spread+chase veto, not armed",
+      "armed": false,
+      "vetoes": [
+        "SPREAD 2.41%",
+        "CHASE",
+        "SIZE-CAP"
+      ]
     }
   ],
   "veto_rates": {
