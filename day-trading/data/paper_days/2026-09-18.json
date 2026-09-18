@@ -1,0 +1,32 @@
+{
+  "date": "2026-09-18",
+  "day_number": 25,
+  "protocol": "C37",
+  "mode": "paper",
+  "session_type": "headless (Task Scheduler \\Stocks\\C37MorningLaunch) 06:20 ET to close -- single session",
+  "benchmark_per_day": -215,
+  "benchmark_note": "C37F-hf2 (2026-09-16 halal-fix epoch): -$215/traded day, -$88,784/414d, -$55/ticket. Regular-session split baseline: -$32/day (-$7/ticket). Premarket tickets scored ONLY vs break-even.",
+  "status": "OPEN",
+  "counts_as_traded_day": false,
+  "coverage_gaps": [],
+  "config": "C37",
+  "ops": {
+    "skeleton_written_et": "06:20",
+    "session_start_et": "06:20",
+    "start_on_time": true,
+    "launched_by_scheduler_flag": "data/paper_days/LAUNCHED_BY_SCHEDULER_2026-09-18.flag",
+    "trading_day_guard": "TRADING 2026-09-18 full (market_calendar.py). SESSION close=16:00 exit_end=15:00 entry_cutoff=14:30 cross_cap=14:00 ladder=14:50,14:55,14:58,14:59",
+    "capability_probe": {"status": "PENDING"},
+    "cycles": []
+  },
+  "armed_orders": [],
+  "trades": [],
+  "halal_detail": {},
+  "cycles_log": [],
+  "veto_rates": {
+    "premarket": {"would_be_entries": 0, "spread_veto": 0, "depth_veto": 0, "chase_veto": 0},
+    "regular": {"would_be_entries": 0, "spread_veto": 0, "depth_veto": 0, "chase_veto": 0}
+  },
+  "errors": [],
+  "summary": {}
+}
