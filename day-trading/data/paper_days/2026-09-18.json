@@ -1236,10 +1236,10 @@
       "size_cap_binding": 1
     },
     "regular": {
-      "would_be_entries": 3,
-      "spread_veto": 3,
+      "would_be_entries": 4,
+      "spread_veto": 4,
       "depth_veto": 0,
-      "chase_veto": 2,
+      "chase_veto": 3,
       "size_cap_binding": 3
     }
   },
@@ -1379,6 +1379,20 @@
         "SIZE-CAP 3907 < 3916 (marginal)"
       ],
       "note": "not armed"
+    },
+    {
+      "et": "11:50:35",
+      "sym": "BSEM",
+      "trigger": "C macd_cross_up on 15:49Z close 4.8999 [TAKEABLE NOW 1m]",
+      "session_phase": "regular",
+      "bid": 4.69,
+      "ask": 4.98,
+      "spread_pct": 6.18,
+      "vetoes": [
+        "SPREAD 6.18% > 0.5%",
+        "CHASE ask 4.98 >= session high 4.8999"
+      ],
+      "note": "not armed; size cap 3537 would have cleared 3012"
     }
   ],
   "ptle_watch": {
