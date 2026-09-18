@@ -770,6 +770,14 @@
       "verdict": "FAIL",
       "why": "Q1 FAIL: interest-bearing debt 102% of mcap (cap 10%); Skyline Builders (HK construction), new on 13:45 scan",
       "screened_et": "13:45"
+    },
+    "HUHU": {
+      "q1": "PASS",
+      "q2": "PASS",
+      "verdict": "PASS",
+      "why": "Q1 PASS: debt 5.66% / cash 4.06% of mcap, interest income 0.14% (yfinance FY2025). Q2 PASS: HUHUTECH designs and builds high-purity gas and chemical production systems for semiconductor/industrial plants (Wuxi, China; SIC 3360) -- permissible industrial engineering, no haram line. Not a SPAC. mcap $109M cached from scan.",
+      "screened_et": "14:05",
+      "note": "+11% at 14:05, last 4.73, bid 4.51 / ask 4.94 (9.5% spread), 27k shares all day -- extremely thin"
     }
   },
   "cycles_log": [
@@ -1639,6 +1647,20 @@
         "AMCI SPREAD 2.08%",
         "AMCI SIZE-CAP"
       ]
+    },
+    {
+      "et": "14:06",
+      "state": "FLAT-5m",
+      "scan": "14:05 scan: 144 rows (raw dump); HUHU new -> Q1 PASS + Q2 PASS (industrial gas/chem systems, SIC 3360) = third halal PASS of the day; latched as watch: 4.73, bid 4.51 / ask 4.94 (9.5% spread), 27k day volume, size cap binds hard. BSEM 5.08, bid 4.95 / ask 5.15 (4.0%). AMCI 3.43, bid 3.36 / ask 3.43 (2.1%). No signals",
+      "armed": false,
+      "vetoes": [
+        "HUHU SPREAD 9.53%",
+        "HUHU SIZE-CAP",
+        "BSEM SPREAD 4.04%",
+        "BSEM SIZE-CAP",
+        "AMCI SPREAD 2.08%",
+        "AMCI SIZE-CAP"
+      ]
     }
   ],
   "veto_rates": {
@@ -1887,5 +1909,10 @@
     "rank_1026": "#1 coil 1.000 press +0.25 gap7 +3.2 calm yes -- rank list says NEEDS-SCREEN (not in 472 prefilter); live_halal PASS both Qs at 10:25 so treated as TOP",
     "gates_1026": "bid 4.64 / ask 4.82 spread 3.88% VETO; ask >= session high 4.81 CHASE; 30 real bars, thin"
   },
-  "dump_drift_note": "12:20: discovered hand-built deltas since ~10:30 had dropped real scan names from the dump (BSEM absent after 1025, SSM after 1050). Rebuilt scan_dump_1220 from the live scan (gone=88 stale, new=28). Four commons had never been screened (BTDR, MARA, ALVO, NCI); all four Q1 FAIL at 12:21. No halal PASS name was missed: every other common was already in scan_state lists."
+  "dump_drift_note": "12:20: discovered hand-built deltas since ~10:30 had dropped real scan names from the dump (BSEM absent after 1025, SSM after 1050). Rebuilt scan_dump_1220 from the live scan (gone=88 stale, new=28). Four commons had never been screened (BTDR, MARA, ALVO, NCI); all four Q1 FAIL at 12:21. No halal PASS name was missed: every other common was already in scan_state lists.",
+  "huhu_watch": {
+    "latched_et": "14:05",
+    "prev_close": 4.21,
+    "gates_1405": "bid 4.51 / ask 4.94 spread 9.5% VETO; day volume 27k -> size cap binds hard"
+  }
 }

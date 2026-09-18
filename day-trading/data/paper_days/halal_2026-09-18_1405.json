@@ -1,0 +1,22 @@
+{
+ "HUHU": {
+  "verdict": "PASS",
+  "haram_pct_note": "interest income only -- blind to revenue mix",
+  "loan_pct": 5.66,
+  "cash_pct": 4.06,
+  "combined": 9.73,
+  "haram_pct": 0.14,
+  "haram_periods": 1,
+  "haram_src": "yfinance",
+  "halal": true,
+  "source": "quarterly+last-available",
+  "fail_reason": "",
+  "last_available": {
+   "revenue": "yf-annual 2025-12-31",
+   "interest income": "yf-annual 2025-12-31"
+  },
+  "sic": "3360",
+  "mcap": 109012683.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}
