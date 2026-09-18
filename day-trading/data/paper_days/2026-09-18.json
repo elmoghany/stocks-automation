@@ -778,6 +778,13 @@
       "why": "Q1 PASS: debt 5.66% / cash 4.06% of mcap, interest income 0.14% (yfinance FY2025). Q2 PASS: HUHUTECH designs and builds high-purity gas and chemical production systems for semiconductor/industrial plants (Wuxi, China; SIC 3360) -- permissible industrial engineering, no haram line. Not a SPAC. mcap $109M cached from scan.",
       "screened_et": "14:05",
       "note": "+11% at 14:05, last 4.73, bid 4.51 / ask 4.94 (9.5% spread), 27k shares all day -- extremely thin"
+    },
+    "XBIO": {
+      "q1": "FAIL",
+      "q2": "not reached",
+      "verdict": "FAIL",
+      "why": "Q1 FAIL: cash+securities 113% of mcap (cap 20%); Xenetic Biosciences, $5.7M shell-like mcap, new on 14:20 scan",
+      "screened_et": "14:20"
     }
   },
   "cycles_log": [
@@ -1689,6 +1696,21 @@
         "HUHU SIZE-CAP",
         "HUHU CHASE",
         "AMCI SPREAD 1.19%",
+        "AMCI SIZE-CAP"
+      ]
+    },
+    {
+      "et": "14:20",
+      "state": "FLAT-5m",
+      "scan": "14:20 scan: 148 rows (raw dump); XBIO new -> Q1 FAIL (cash 113% of mcap); MTC/SLE/SGML/FGL back, all FAIL. BSEM 5.10, bid 4.99 / ask 5.15 (3.2%). HUHU 4.73 no prints since 14:04, bid 4.56 / ask 4.87 (6.8%). AMCI 3.36, bid 3.35 / ask 3.38 (0.9%), no signal. 10 min to entry cutoff",
+      "armed": false,
+      "vetoes": [
+        "BSEM SPREAD 3.21%",
+        "BSEM SIZE-CAP",
+        "HUHU SPREAD 6.80%",
+        "HUHU SIZE-CAP",
+        "HUHU CHASE",
+        "AMCI SPREAD 0.90%",
         "AMCI SIZE-CAP"
       ]
     }

@@ -1,0 +1,18 @@
+{
+ "XBIO": {
+  "verdict": "FAIL",
+  "loan_pct": null,
+  "cash_pct": 112.73,
+  "combined": null,
+  "haram_pct": 4.98,
+  "halal": false,
+  "source": "quarterly",
+  "haram_src": "yfinance",
+  "haram_note": "",
+  "interest_flags": [],
+  "last_available": {},
+  "fail_reason": "unverified: missing debt -- an absent statement row is not a zero (user ruling 2026-09-16); refusing",
+  "mcap": 5740793.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}

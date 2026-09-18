@@ -313,10 +313,10 @@
    "first_seen": "10:25"
   },
   "BSEM": {
-   "pct": 17.09,
-   "last": 5.105,
+   "pct": 15.83,
+   "last": 5.05,
    "prev_close": 4.36,
-   "vol": "257417.890614",
+   "vol": "261000.890614",
    "name": "BioStem Technologies",
    "first_seen": "10:25"
   },
@@ -508,9 +508,17 @@
    "pct": 13.3,
    "last": 4.77,
    "prev_close": 4.21,
-   "vol": "27755.927653",
+   "vol": "28041.927653",
    "name": "HUHUTECH International Group",
    "first_seen": "14:05"
+  },
+  "XBIO": {
+   "pct": 10.06,
+   "last": 2.7075,
+   "prev_close": 2.46,
+   "vol": "345496.656757",
+   "name": "Xenetic",
+   "first_seen": "14:20"
   }
  },
  "halal_fail": [
@@ -574,7 +582,8 @@
   "SOL",
   "FGL",
   "FXHO",
-  "KAZR"
+  "KAZR",
+  "XBIO"
  ],
  "fake_gap": [
   "PTLE"
