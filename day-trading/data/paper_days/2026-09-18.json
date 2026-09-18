@@ -419,6 +419,13 @@
       "scan": "08:20 scan: 82 rows, no new common-stock ticker (OPTT TOYO off). 0 candidates",
       "armed": false,
       "vetoes": []
+    },
+    {
+      "et": "08:25",
+      "state": "FLAT-5m",
+      "scan": "08:25 scan: 81 rows, no new common-stock ticker. 0 candidates",
+      "armed": false,
+      "vetoes": []
     }
   ],
   "veto_rates": {
