@@ -476,6 +476,49 @@
       "q2": "Cypherpunk Technologies -- crypto treasury, FAIL",
       "screened_et": "10:20",
       "armable": false
+    },
+    "BSEM": {
+      "q1": "PASS",
+      "loan_pct": 1.66,
+      "cash_pct": 9.45,
+      "haram_pct": 0.13,
+      "mcap": 73643975.0,
+      "q2": "PASS -- BioStem Technologies: regenerative medicine (amniotic/cell therapies, wellness compounds); sector Health Technology / Biotechnology; no haram line",
+      "screened_et": "10:25",
+      "armable": true,
+      "prev_close": 4.36,
+      "note": "thin: 57k sh by 10:25, avg vol 139k; bid 4.64 / ask 4.82 (3.9%) at 10:25"
+    },
+    "VOGX": {
+      "q1": "FAIL",
+      "loan_pct": 0.17,
+      "cash_pct": 0.05,
+      "haram_pct": 100.0,
+      "fail_reason": "HARAM>=5% (interest income is 100% of TTM revenue -- pre-revenue shell)",
+      "q2": "not evaluated",
+      "screened_et": "10:25",
+      "armable": false
+    },
+    "GEMI": {
+      "q1": "FAIL",
+      "loan_pct": 96.22,
+      "cash_pct": 100.1,
+      "fail_reason": "FINANCIAL SECTOR SIC 6199",
+      "q2": "FAIL -- Gemini crypto exchange",
+      "screened_et": "10:25",
+      "armable": false
+    },
+    "PXS": {
+      "q1": "inherited FAIL",
+      "q2": "Pyxis Tankers (shipping); Q1 fail stands",
+      "screened_et": "10:25",
+      "armable": false
+    },
+    "MSTR": {
+      "q1": "inherited FAIL",
+      "q2": "Strategy Inc -- bitcoin treasury; FAIL",
+      "screened_et": "10:25",
+      "armable": false
     }
   },
   "cycles_log": [
@@ -801,6 +844,18 @@
         "SPREAD 3.13%",
         "SIZE-CAP"
       ]
+    },
+    {
+      "et": "10:26",
+      "state": "FLAT-5m",
+      "scan": "10:25 scan: 94 rows (delta: VOGX Q1 FAIL haram 100%; GEMI Q1 FAIL SIC 6199; PXS/MSTR inherited FAIL; BSEM Q1 PASS + Q2 PASS regenerative medicine -> latched, rank #1 coil 1.0; 5 new funds). BSEM bid 4.64 / ask 4.82 (3.9%) chase at high 4.81 -> veto. AMCI bid 3.56 / ask 3.61 (1.4%) veto",
+      "armed": false,
+      "vetoes": [
+        "BSEM SPREAD 3.88%",
+        "BSEM CHASE",
+        "AMCI SPREAD 1.40%",
+        "AMCI SIZE-CAP"
+      ]
     }
   ],
   "veto_rates": {
@@ -936,5 +991,12 @@
     "ERROR_prev_close_discrepancy": "get_equity_quotes previous_close 7.505 (official sip-list-exchange-close 2026-09-17) vs adjusted_previous_close 6.97 (the scan's changeFromClose base). On the OFFICIAL close 7.77 is only +3.5% -- the +10% cross has NOT printed. Conservative branch: rank on 7.505; PTLE is not latched unless an RH bar prints >= 8.2555 (7.505 x 1.10). Logged loudly per the no-silent-fallbacks rule; the 6.97 figure is not explained by any split we can see.",
     "disposition": "halal PASS both questions, on halal_list, but NOT crossed on the official close and the book is 12% wide with 160 sh printed -- not armable",
     "rh_bars_0931": "rh_bars_ingest: 0 real bars, 330 interpolated (08:00Z-13:30Z). PTLE did NOT trade premarket on the RH feed; the 13:30:00Z 160-sh print is the only trade. Fake-gap class (Day 24 INLX precedent): the scan's +11.5% rests on a stale adjusted close. Not crossed, not armable."
+  },
+  "bsem_watch": {
+    "latched_et": "10:25",
+    "prev_close": 4.36,
+    "first_seen": "10:25 scan +10.3% last 4.81",
+    "rank_1026": "#1 coil 1.000 press +0.25 gap7 +3.2 calm yes -- rank list says NEEDS-SCREEN (not in 472 prefilter); live_halal PASS both Qs at 10:25 so treated as TOP",
+    "gates_1026": "bid 4.64 / ask 4.82 spread 3.88% VETO; ask >= session high 4.81 CHASE; 30 real bars, thin"
   }
 }

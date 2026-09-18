@@ -1,0 +1,47 @@
+{
+ "VOGX": {
+  "verdict": "FAIL",
+  "haram_pct_note": "interest income only -- blind to revenue mix",
+  "loan_pct": 0.17,
+  "cash_pct": 0.05,
+  "combined": 0.22,
+  "haram_pct": 100.0,
+  "haram_periods": 2,
+  "haram_src": "yfinance",
+  "halal": false,
+  "source": "quarterly",
+  "fail_reason": "HARAM>=5% (TTM interest / TTM revenue, source yfinance)",
+  "sic": "2834",
+  "mcap": 496011354.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ },
+ "BSEM": {
+  "verdict": "PASS",
+  "haram_pct_note": "interest income only -- blind to revenue mix",
+  "loan_pct": 1.66,
+  "cash_pct": 9.45,
+  "combined": 11.12,
+  "haram_pct": 0.13,
+  "haram_periods": 4,
+  "haram_src": "yfinance",
+  "halal": true,
+  "source": "quarterly",
+  "fail_reason": "",
+  "sic": "2836",
+  "mcap": 73643975.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ },
+ "GEMI": {
+  "verdict": "FAIL",
+  "loan_pct": 96.22,
+  "cash_pct": 100.1,
+  "combined": 196.32,
+  "haram_pct": 23.35,
+  "halal": false,
+  "source": "quarterly",
+  "sic": "6199",
+  "fail_reason": "FINANCIAL SECTOR (SIC 6199 Finance Services) -- 6000-6999 is a hard FAIL (user ruling 2026-09-16); only an explicit PASS ruling with a basis can restore a quirk-coded name",
+  "mcap": 541297943.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}

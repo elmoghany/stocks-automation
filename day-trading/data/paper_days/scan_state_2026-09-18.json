@@ -303,6 +303,30 @@
    "vol": "3692",
    "name": "QT IMAGING HLDGS INC",
    "first_seen": "10:20"
+  },
+  "VOGX": {
+   "pct": 12.54,
+   "last": 38.41,
+   "prev_close": 34.1301,
+   "vol": "20203",
+   "name": "Vogenx Inc",
+   "first_seen": "10:25"
+  },
+  "BSEM": {
+   "pct": 10.32,
+   "last": 4.81,
+   "prev_close": 4.36,
+   "vol": "57415",
+   "name": "BioStem Technologies",
+   "first_seen": "10:25"
+  },
+  "GEMI": {
+   "pct": 10.27,
+   "last": 4.885,
+   "prev_close": 4.43,
+   "vol": "689055",
+   "name": "Gemini Space Station",
+   "first_seen": "10:25"
   }
  },
  "halal_fail": [
@@ -342,7 +366,9 @@
   "DFDV",
   "ABTC",
   "ALMR",
-  "QTI"
+  "QTI",
+  "VOGX",
+  "GEMI"
  ],
  "fake_gap": [
   "PTLE"
@@ -698,6 +724,7 @@
  },
  "halal_pass": [
   "AMCI",
-  "PTLE"
+  "PTLE",
+  "BSEM"
  ]
 }
