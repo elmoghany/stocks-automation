@@ -509,6 +509,13 @@
       "scan": "09:00 scan: 80 rows (delta: PAAI new -> Q1 FAIL loan 233%; THYP fund). AMCI poll: no fresh signal, spread 2.25%, size cap binding",
       "armed": false,
       "vetoes": []
+    },
+    {
+      "et": "09:05",
+      "state": "FLAT-5m",
+      "scan": "09:05 scan: 78 rows, no new common-stock ticker (PAAI +23% but Q1 FAIL). AMCI poll: no signal, spread 6.3%, tape thinning",
+      "armed": false,
+      "vetoes": []
     }
   ],
   "veto_rates": {
