@@ -1,0 +1,14 @@
+{
+ "DSP": {
+  "verdict": "FAIL",
+  "loan_pct": 10.43,
+  "cash_pct": 90.95,
+  "combined": 101.38,
+  "haram_pct": 1.42,
+  "halal": false,
+  "source": "quarterly",
+  "fail_reason": "HARAM INDUSTRY (streaming media) -- industry screen, final regardless of any ruling",
+  "mcap": 212264692.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}

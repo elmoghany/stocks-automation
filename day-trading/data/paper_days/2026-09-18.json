@@ -231,6 +231,16 @@
       "q2": "n/a (Q1 FAIL) -- NextCure, clinical-stage biotech",
       "screened_et": "07:35",
       "armable": false
+    },
+    "DSP": {
+      "q1": "FAIL",
+      "loan_pct": 3.33,
+      "cash_pct": 29.04,
+      "mcap": 664707984.0,
+      "q2": "PASS -- Viant: ad-tech software platform (moot, Q1 FAIL)",
+      "screened_et": "07:46",
+      "armable": false,
+      "note": "Scan 'Market cap' cell was 212.3M (Class A float only); get_equity_fundamentals market_cap is 664.7M (all shares). Re-screened on the larger cap: cash 29.0% still > 10% and combined 32.4% > 20%, so FAIL on either denominator. Dual-class names: prefer the fundamentals cap."
     }
   },
   "cycles_log": [
@@ -315,6 +325,13 @@
       "et": "07:40",
       "state": "FLAT-5m",
       "scan": "07:40 scan: 80 rows (delta: SVRN new -> inherited FAIL; RH profile: NEAR digital-asset treasury, sector Finance). 0 candidates",
+      "armed": false,
+      "vetoes": []
+    },
+    {
+      "et": "07:45",
+      "state": "FLAT-5m",
+      "scan": "07:45 scan: 81 rows (delta: DSP new). DSP Q1 FAIL cash 29.0% on the 664.7M fundamentals cap (scan cell 212M was class-A only). 0 armable",
       "armed": false,
       "vetoes": []
     }

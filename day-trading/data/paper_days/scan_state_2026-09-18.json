@@ -151,6 +151,14 @@
    "vol": "106844.32",
    "name": "NextCure",
    "first_seen": "07:35"
+  },
+  "DSP": {
+   "pct": 13.18,
+   "last": 11.3403,
+   "prev_close": 10.02,
+   "vol": "2195000.99",
+   "name": "Viant Technology",
+   "first_seen": "07:45"
   }
  },
  "halal_fail": [
@@ -172,7 +180,8 @@
   "CIIT",
   "KIDZ",
   "IPW",
-  "NXTC"
+  "NXTC",
+  "DSP"
  ],
  "fake_gap": [],
  "inherited_fail": [
