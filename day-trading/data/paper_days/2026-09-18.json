@@ -1524,6 +1524,18 @@
         "AMCI SPREAD 1.78%",
         "AMCI SIZE-CAP"
       ]
+    },
+    {
+      "et": "13:20",
+      "state": "FLAT-5m",
+      "scan": "13:20 scan: 133 rows; no unscreened common (HYPD back, inherited FAIL; STXL/DIME ETFs). BSEM 5.21, bid 5.11 / ask 5.30 (3.7%), no signal, size cap. AMCI 3.32 no prints since 13:00, bid 3.38 / ask 3.56 (5.3%)",
+      "armed": false,
+      "vetoes": [
+        "BSEM SPREAD 3.72%",
+        "BSEM SIZE-CAP",
+        "AMCI SPREAD 5.33%",
+        "AMCI SIZE-CAP"
+      ]
     }
   ],
   "veto_rates": {
