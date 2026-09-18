@@ -1,0 +1,22 @@
+{
+ "FXHO": {
+  "verdict": "FAIL",
+  "haram_pct_note": "interest income only -- blind to revenue mix",
+  "loan_pct": 23.74,
+  "cash_pct": 88.97,
+  "combined": 112.71,
+  "haram_pct": 3.05,
+  "haram_periods": 1,
+  "haram_src": "yfinance",
+  "halal": false,
+  "source": "quarterly+last-available",
+  "fail_reason": "LOAN>10",
+  "last_available": {
+   "revenue": "yf-annual 2026-03-31",
+   "interest income": "yf-annual 2026-03-31"
+  },
+  "sic": "3600",
+  "mcap": 294294907.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}

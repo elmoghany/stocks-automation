@@ -756,6 +756,13 @@
       "verdict": "FAIL",
       "why": "Q1 FAIL: interest-bearing debt far exceeds market cap (scan mcap $46,739, debt ratio 274331%); Founder Group (Malaysia solar EPC), new on 12:55 scan",
       "screened_et": "12:55"
+    },
+    "FXHO": {
+      "q1": "FAIL",
+      "q2": "not reached",
+      "verdict": "FAIL",
+      "why": "Q1 FAIL: debt 23.7% of mcap (cap 10%), cash+securities 89% of mcap (cap 20%); UTime Ltd, new on 13:00 scan",
+      "screened_et": "13:00"
     }
   },
   "cycles_log": [
@@ -1467,6 +1474,18 @@
         "BSEM SPREAD 3.92%",
         "BSEM SIZE-CAP",
         "AMCI SPREAD 4.48%",
+        "AMCI SIZE-CAP"
+      ]
+    },
+    {
+      "et": "13:00",
+      "state": "FLAT-5m",
+      "scan": "13:00 scan: 138 rows (raw dump); FXHO new -> Q1 FAIL (debt 24%, cash 89%). BSEM 5.21, bid 5.14 / ask 5.30 (3.1%), no signal, size cap 1896<2830. AMCI 3.42 no prints since 12:41, bid 3.32 / ask 3.50 (5.4%)",
+      "armed": false,
+      "vetoes": [
+        "BSEM SPREAD 3.11%",
+        "BSEM SIZE-CAP",
+        "AMCI SPREAD 5.42%",
         "AMCI SIZE-CAP"
       ]
     }
