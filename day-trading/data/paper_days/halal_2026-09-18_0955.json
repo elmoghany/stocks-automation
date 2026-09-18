@@ -1,0 +1,28 @@
+{
+ "DFDV": {
+  "verdict": "FAIL",
+  "loan_pct": 81.5,
+  "cash_pct": 4.25,
+  "combined": 85.75,
+  "haram_pct": null,
+  "halal": false,
+  "source": "quarterly",
+  "sic": "6199",
+  "fail_reason": "FINANCIAL SECTOR (SIC 6199 Finance Services) -- 6000-6999 is a hard FAIL (user ruling 2026-09-16); only an explicit PASS ruling with a basis can restore a quirk-coded name",
+  "mcap": 147935282.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ },
+ "ABTC": {
+  "verdict": "FAIL",
+  "loan_pct": 34.52,
+  "cash_pct": 3.09,
+  "combined": 37.61,
+  "haram_pct": null,
+  "halal": false,
+  "source": "quarterly",
+  "sic": "6199",
+  "fail_reason": "FINANCIAL SECTOR (SIC 6199 Finance Services) -- 6000-6999 is a hard FAIL (user ruling 2026-09-16); only an explicit PASS ruling with a basis can restore a quirk-coded name",
+  "mcap": 594208857.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}

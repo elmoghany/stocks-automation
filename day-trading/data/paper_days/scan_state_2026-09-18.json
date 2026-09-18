@@ -271,6 +271,22 @@
    "vol": "947195.8",
    "name": "XORTX Therapeutics",
    "first_seen": "09:50"
+  },
+  "DFDV": {
+   "pct": 12.3,
+   "last": 5.6151,
+   "prev_close": 5.0,
+   "vol": "741045.82",
+   "name": "DeFi Development Corp.",
+   "first_seen": "09:55"
+  },
+  "ABTC": {
+   "pct": 11.09,
+   "last": 9.8094,
+   "prev_close": 8.83,
+   "vol": "611768.55",
+   "name": "American Bitcoin Corp.",
+   "first_seen": "09:55"
   }
  },
  "halal_fail": [
@@ -306,7 +322,9 @@
   "DBGI",
   "AIXI",
   "TAOX",
-  "XRTX"
+  "XRTX",
+  "DFDV",
+  "ABTC"
  ],
  "fake_gap": [
   "PTLE"

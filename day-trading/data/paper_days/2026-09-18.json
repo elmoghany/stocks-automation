@@ -419,6 +419,30 @@
       "q2": "FAIL -- Alpha Compute: digital-asset treasury / Telegram ecosystem (crypto treasury main line)",
       "screened_et": "09:50",
       "armable": false
+    },
+    "DFDV": {
+      "q1": "FAIL",
+      "loan_pct": 81.5,
+      "cash_pct": 4.25,
+      "mcap": 147935282.0,
+      "q2": "FAIL -- DeFi Development: commercial-mortgage financing platform (sector Finance) + Solana treasury",
+      "screened_et": "09:55",
+      "armable": false
+    },
+    "ABTC": {
+      "q1": "FAIL",
+      "loan_pct": 34.52,
+      "cash_pct": 3.09,
+      "mcap": 594208857.0,
+      "q2": "FAIL-leaning -- American Bitcoin: bitcoin accumulation platform (treasury is the stated business); moot given Q1",
+      "screened_et": "09:55",
+      "armable": false
+    },
+    "GRNQ": {
+      "q1": "inherited FAIL",
+      "q2": "FAIL -- Greenpro: advisory + digital-asset trading + real estate (sector Finance)",
+      "screened_et": "09:55",
+      "armable": false
     }
   },
   "cycles_log": [
@@ -685,6 +709,13 @@
       "et": "09:50",
       "state": "FLAT-5m",
       "scan": "09:50 scan: 64 rows (delta: XRTX new -> Q1 FAIL cash 33%; PFSA ALP SECZ inherited FAIL; 9 funds). AMCI: last 3.30, bid 3.26 / ask 3.30 (1.23%), ORB 3.39 intact, no signal, size cap binding",
+      "armed": false,
+      "vetoes": []
+    },
+    {
+      "et": "09:55",
+      "state": "FLAT-5m",
+      "scan": "09:55 scan: 72 rows (delta: DFDV ABTC GRNQ new -> DFDV/ABTC Q1 FAIL, GRNQ inherited; 8 funds). AMCI: last 3.27, bid 3.27 / ask 3.36 (2.75%), ORB 3.39 intact, no signal",
       "armed": false,
       "vetoes": []
     }
