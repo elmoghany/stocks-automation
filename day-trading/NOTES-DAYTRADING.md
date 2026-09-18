@@ -10119,3 +10119,206 @@ entertainment-leg question is deferred, not decided (recorded as Class-A
 rulings so a later rebuild cannot silently flip them). Still open: the five
 SIC mis-coded names (IDCC, RGLD, TFPM, TPL, USIO) and the currency bug on
 foreign filers (2 names affected).
+
+
+=====================================================================
+## CHAMPION-REPLAY (2026-09-17)
+=====================================================================
+USER: "Try to mimic C37, C31, C36, C35 but without future signals.
+There must be a way." Halal ignored in decisions, applied post-hoc.
+Files: champion-replay-audit.md, plan/cp_*.py (13 modules),
+rotation_sim.py CFGS additions only (`_cp_cfgs`, 13 configs),
+data/massive/{cp_panel,cp_prior,cp_feat,cp,m1c}.
+
+ANSWER IN ONE LINE. There is a way, it is the best row this repo has
+ever produced (+$3,035/month, 100th pct, z=+5.01, both years positive)
+-- and it is five trades, 2.5x short of the bar at flat 10 bps, and
+-$90/ticket under the measured toll.
+
+REGISTRY CORRECTION. C31 and C36 DO NOT EXIST. grep over plan/*.py
+finds neither; "C36" appears once (CONFIGS-TESTED.md:1601) as an
+unbuilt placeholder. The family is C34 (=S093, $1,019,966) -> C35
+(=S095, $1,163,538) -> W109 ($872,790) -> Z104 ($646,581) -> C37
+(=R061, $774,534).
+
+TWO LEAKS NOT ON THE STANDING LIST
+  * the original pool ALSO required full-day volume >= 5x the trailing
+    50-session average -- a 16:00 statistic. Dropped when
+    gappers_novol was built (2026-08-07) for an unrelated reason, so
+    post-08-07 rows are clean, but C34's and C35's headlines are NOT.
+  * backfill_m1_full.py fetched only hist_n >= 50, so 8,042 candidate
+    symbol-days (recent listings -- the +100% names) had NO bars.
+    Fetched here into data/massive/m1c: 7,954 with bars, 88 empty, 0
+    failures, plus 883 more for the aug-2026 OOS block. Panel coverage
+    244.3 -> 262.2 names/day against 262.7 pool records.
+
+PART 1 -- THE WATERFALL (plan/cp_waterfall.py, every row a stored run)
+  C37 as adopted (VOLD)            +774,534  396d
+  -> drop the hindsight top-16 cut  -108,867
+  -> live halal gate                -259,841
+  -> EDGAR filed dates              +229,933
+  -> FULL bar coverage              -708,432   <-- 91% of the headline
+  -> pool hygiene                     -4,032
+  -> honest gap-through fills        -44,529
+  -> regular-session eligibility    +149,586   <-- the leak COST money
+  -> deferred entry (one bar)        -42,487
+  -> repaired halal gate             -74,649
+  = C37F-hf2                         -88,784  414d, 1,602 tkts
+
+  THE SURPRISE: premarket survivorship was NEGATIVE-valued. In the
+  leaky run the 691 premarket legs earned -$112,494 (-$163/leg) vs
+  -$8,740 (-$6/leg) for the 1,480 RTH legs. Being guaranteed the name
+  would print +10% later was not enough to make a 07:00 entry pay.
+
+  PRICED THREE WAYS (1,607 legs, 22 months, plan/cp_reprice.py):
+    no toll (what C37F charges)   -55.25/tkt   -4,036/month
+    flat 10 bps/side               -82.53/tkt   -6,029/month
+    measured (cp_cost)            -258.65/tkt  -18,893/month
+  cp_cost independently reproduces COST-REBASE's 1-second number from
+  the 1-MINUTE tape: -258.65 vs their -246.93. Median toll on these
+  fills 36.7 bps/side, mean 86.8, p90 221.3, >10 bps on 86%, $203.40 a
+  round trip on a $15k ticket.
+
+  LEDGER MECHANICS: bearish-pattern exits 1,050 x +$263 = +$276,087;
+  -8% stops 281 x -$996 = -$279,956; window-close 271 x -$326 =
+  -$88,241. Win rate 68.6%, median leg +$54.6, profit factor 0.768.
+  NOT a tail: top 10 legs are 12% of gross profit.
+
+PART 2 -- WHAT THE CHAMPIONS CAPTURED, AND WHETHER IT IS DETECTABLE
+  Joining the honest ledger to the day's FULL-DAY gain (hindsight):
+    +10..20%   807 legs  -138,600 (-$172/leg)  <- the ENTIRE loss
+    +20..35%   548 legs   +15,949
+    +35..50%   109 legs   +24,392 (+$224/leg)
+    +50..100%  112 legs    -5,557
+    +100..300%  31 legs   +15,031 (+$485/leg)
+  So the user's reading is right: half the tickets are on +10-20% days
+  and those tickets are the whole deficit.
+
+  ORACLE VETO (keep only legs whose day finishes above X) -- the
+  ceiling of "detect the champion's kind of day":
+    >= +20%  800 legs  +35.04 flat10  -188.37 measured  +$1,274/mo
+    >= +25%  514 legs  +73.58 flat10  -192.39 measured  +$1,719/mo
+    >= +50%  143 legs  +39.23 flat10  -288.79 measured    +$255/mo
+  4.4x short at 10 bps; NEVER positive measured.
+
+  ORACLE RE-RANK (fill all 7 tickets from the names that will finish
+  highest) -- the CORRECTED ceiling: +$488.47/tkt, +$65,810/month,
+  22/22 months positive, and +$162.03/ticket AT THE MEASURED TOLL.
+  Direction is worth a fortune and the frame CAN carry it.
+
+  THE DETECTOR. Walk-forward LightGBM, 6 expanding folds, 2 seeds, on
+  `up30` (high reaches +30% above the decision price by 15:00; base
+  rate 7.80% at 09:35, 4.83% at 10:00): AUC 0.876, cross-sectional IC
+  +0.343 (t=+56), top-decile precision 22.56% on a 4.55% base (5.0x),
+  top-1 32.08% (7.1x), aug-2026 block AUC 0.920 / 6.0x. Controls
+  clean: shuffled 0.497, random 0.508, inverted 0.124 / IC -0.3645.
+  TEN TIMES any IC in this repo -- because `up30` is a RANGE question,
+  i.e. a volatility forecast, and the importances are exactly the
+  volatility variables (hi_gain, sigma1, rvol_now, dvol60,
+  prior_range, prevrange).
+  TRADED IT LOSES TO A COIN: -71.28/tkt vs a random pick in the same
+  slot at -54.87, and -663.95/tkt held to 15:00.
+  DIRECTIONAL TARGET (`upc5`, 15:00 close >= +5%, same features, same
+  folds, base rate 20.74%): AUC 0.629, xs-IC +0.0499 (t=+6.7),
+  top-decile precision 35.46% (1.71x), top-1 54.91% (2.65x). That is
+  the repo's familiar ceiling, reached from a new feature block and a
+  new universe -- and 3.8x below the 0.188 break-even rho COST-REBASE
+  computed for 7 tickets/day at the measured toll. The factor of seven
+  between the two AUCs was volatility.
+
+PART 3 -- THE CAUSAL LIVE-SCANNABLE UNIVERSE
+  THE STRUCTURAL FACT: if a name's last RTH print at t is already
+  >= +10% over prev close, its RTH HIGH is too, so it is in the
+  grouped-daily pool BY ARITHMETIC and has bars. The honest RTH
+  universe needed no reconstruction and no fetch; only the PREMARKET
+  half was ever missing. rotation_sim's RS_CROSS is the same set in
+  the HIGH convention.
+  Sizes: 56.6 names on the live scanner (LAST rule) at 09:35, 94.2 at
+  10:00, 219.5 by 15:00, against 262.7 pool records/day. The HIGH rule
+  rotation_sim uses is ~10 names/day looser (66.0 at 09:35) -- wick
+  crossers the live scanner never lists.
+  PREMARKET CENSUS (plan/cp_fetch.py --job B fetched the WHOLE
+  scannable market on 12 sampled sessions, 95,021 symbol-days, 0
+  failures; plan/cp_premkt.py classified it):
+    RTH-CROSSER  113.1/day
+    PM-AND-RTH    68.4/day  (73% of the premarket scanner list)
+    PM-ONLY       25.9/day  (27%) <- INVISIBLE to every backtest here
+  A live premarket entry held to 15:00:
+    PM-AND-RTH  median -1.7%, mean -1.6%, MFE +5.9%, MAE -6.7%
+    PM-ONLY     median -8.6%, mean -11.0%, MFE +1.5%, MAE -12.7%
+  Weighted, a premarket entry on the HONEST list is about -4.1%,
+  i.e. -$615 on a $15k ticket. The premarket half is not a missing
+  opportunity the honest replay was denied; it is the family's largest
+  destroyer of value, and it is why RS_CROSS made C37F $149,586
+  BETTER.
+
+PART 4 -- ABLATION ON THE CAUSAL UNIVERSE (444 sessions, cp_sim)
+  rank: coil only                 +32.27/tkt  +$1,739/mo  10/22 mo +
+  rank: none (first eligible)     -49.97
+  CHAMPION-MIMIC                  -73.01/tkt  -$4,122/mo
+  rank: pressure only             -78.05
+  => coil carries information, pressure carries its opposite, and the
+  champion's key (coil BUCKET then pressure WITHIN) is $23/ticket
+  worse than not ranking at all. Same direction as the 2026-08-27 IC
+  study (champion key IC -0.0433, 30/30 sign-stable); first priced.
+  exits: flatten-only -163.05 => the exit stack is +$90/tkt here
+  (+$126.5 between C37F-hf2 and HOLD1-hf2 in the real engine);
+  bearish-pattern exit +$59; THE -8% STOP IS NEGATIVE (removing it
+  +$22.60, -2% +$35). Window opening at 10:00 instead of 09:35 +$52.
+  Rotation +$4 and HIGH-vs-LAST +$1 are noise.
+
+  CONTROLS, each row against 30 random seeds IN ITS OWN FRAME:
+    R4 (coil rank, no stop)  +69.18/tkt +$3,035/mo  100th pct total
+        AND ex-best, edge +108.92/tkt z=+5.01, inverted -201.08,
+        Y1 +110.98 / Y2 +36.56 (both positive), 2.17 tkt/day
+    R1 (coil rank only)      +32.27/tkt +$1,739/mo  100th/100th,
+        edge +73.63 z=+3.81, inverted -178.66
+    CHAMPION-MIMIC           -73.01/tkt  10th pct (3.3rd ex-best),
+        edge -31.65 z=-1.64
+    R5 (naive recombination, coil + 10:00 + -2% stop) -35.24/tkt,
+        46.7th pct, edge -5.06 z=-0.56  <- forcing the ticket rate up
+        to 4.84/day collapses the edge to random
+  R4 IS FIVE TRADES: ex-best-day +$32,527 of +$66,760; EX-TOP-5-LEGS
+  -$12,651; top 10 legs 39% of gross profit; median leg +$6.10; win
+  rate 53.8%; profit factor 1.305. MNPR 2024-10-24 alone is +$32,093.
+  aug-2026 OOS (22 sessions) UNINFORMATIVE: a single random seed earns
+  +$167.68/ticket there.
+
+PART 5 -- POST-HOC HALAL
+  as a UNIVERSE the screen HELPS: -73.01 -> -42.91/tkt, measured
+  -253.83 -> -162.60 (the halal names are cheaper to trade).
+  as a POST-HOC FILTER it is nearly fatal: 80 of 1,242 unscreened legs
+  (6.4%) are halal-PASS and they are worth -104.37/ticket.
+  The screen belongs INSIDE the decision, which is how the live book
+  already runs it.
+
+GATES
+  CPID (new CFGS entry) reproduces C37F TO THE DOLLAR on 25 sessions,
+  both labels: year -6,649 / 117 tkts / -56.8 per ticket; y2025
+  +16,466 / 112 tkts / +147.0; identical exit decompositions.
+  cp_panel verify 42,620 cell checks, worst 5.9e-08.
+  cp_feat verify 44,762 checks, worst 6.0e-08.
+  cp_cost calibrated vs cr_cost on 250 fills where cr_cost MEASURED
+  (tier win/prior, not the 10 bps fallback): medians 38.59 vs 38.15
+  bps, Spearman +0.966, tape model cheaper on 80%.
+  engine: fill convention + accounting + POISON (corrupt every bar
+  after the decision minute, recompute the feature block) + foresight
+  +$1,476/tkt vs anti-foresight -$873 + cost monotone in Y
+  (-159.95 / -207.65 / -318.96 / -477.97).
+  NOTE the first poison form ALSO poisoned the fill bar, which
+  legitimately moves the entry price; it was testing the wrong thing
+  and was replaced.
+
+VERDICT: FAIL. Best causal row +$3,035/month at flat 10 bps (2.5x
+short) and -$90.27/ticket measured. What would have to be true for
+$774,534: (1) the bar cache complete -- it was 7.6% and gain-selected;
+(2) the ranking an ORDER on coil rather than a bucket plus pressure --
+worth +$140/ticket; (3) and it still would not be enough, because the
+pool costs ~50 bps a side and because the edge does not scale to 7
+tickets a day (R5 proves forcing the rate collapses it to random).
+NEXT, ranked: re-target the detector at DIRECTION (the oracle pays
++$162/ticket MEASURED, so the money is there); take R4 to
+rotation_sim and to the causal WIDE universe (12.05 bps a side vs
+49.98 here); limit fills; ticket size; and stop treating the
++10-20% day as a VETO problem -- the veto ceiling is +$1,719/month,
+the re-rank ceiling is +$65,810.

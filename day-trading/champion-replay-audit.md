@@ -441,7 +441,22 @@ gap between them is the whole of Part 2:
 |---|---:|---:|
 | range: high reaches +30% by 15:00 (`up30`) | **0.876** | **-71.28** |
 | direction: the day's own net gain (perfect oracle) | 1.000 | **+488.47** |
-| direction: 15:00 close >= +5% (`upc5`, same model, same folds) | PLACEHOLDER_DIRAUC | PLACEHOLDER_DIRPNL |
+| direction: 15:00 close >= +5% (`upc5`, same model, same folds) | **0.629** | not traded (see below) |
+
+Running the identical pipeline on the **directional** target settles
+it. `upc5` -- will the 15:00 close beat the decision price by 5%? --
+base rate 20.74%, same features, same folds, same seeds:
+
+| target | AUC | cross-sectional IC | t | top-decile precision | lift |
+|---|---:|---:|---:|---:|---:|
+| `up30` (RANGE) | 0.876 | **+0.343** | +56.2 | 22.56% | 4.96x |
+| `upc5` (DIRECTION) | 0.629 | **+0.050** | +6.7 | 35.46% | 1.71x |
+
+**+0.050.** That is the repo's familiar ceiling, reached from a
+completely new feature block and a completely new universe, and it is
+real (t = +6.7). It is also **3.8x below the 0.188 break-even
+correlation COST-REBASE computed for 7 tickets a day at the measured
+toll**. The entire factor of seven between the two AUCs was volatility.
 
 ---
 
@@ -507,7 +522,47 @@ prints >= $2, prior-60-session median dollar volume >= $100k, traded
 that day) on evenly spaced sample dates, so the missing set can be
 counted and priced instead of argued about.
 
-PLACEHOLDER_PREMKT
+#### Premarket census over 12 complete market days
+
+| class | name-days | per day | share of the premarket scanner list |
+|---|---:|---:|---:|
+| RTH-CROSSER | 1357 | 113.1 | - |
+| PM-AND-RTH | 821 | 68.4 | 73% |
+| PM-ONLY | 311 | 25.9 | 27% |
+
+#### What a live PREMARKET entry earns, by class
+
+| class | n with a fill | median MFE to 15:00 | median MAE | median return to 15:00 | median return to the OPEN | mean return to 15:00 |
+|---|---:|---:|---:|---:|---:|---:|
+| PM-AND-RTH | 821 | +5.9% | -6.7% | -1.7% | -0.3% | -1.6% |
+| PM-ONLY | 311 | +1.5% | -12.7% | -8.6% | -5.8% | -11.0% |
+
+**27% of the premarket scanner list has never existed in this repo.**
+On the whole scannable market over 12 complete sessions, **25.9 names a
+day** cross +10% before 09:30 and never do so again during the regular
+session. They are absent from `gappers_novol_*` by construction, they
+have no bars in `data/massive/m1`, and the live Robinhood scanner shows
+every one of them. Every premarket entry the C31..C37 family ever made
+was drawn from the other 73%.
+
+**And they are catastrophic.** A live premarket entry -- fill at the
+next print after the +10% cross, the same deferred convention used
+everywhere else in this audit -- earns, held to 15:00:
+
+| class | median return | mean return | median MFE | median MAE |
+|---|---:|---:|---:|---:|
+| PM-AND-RTH (the 73% the pool contains) | -1.7% | -1.6% | +5.9% | -6.7% |
+| **PM-ONLY (the 27% it never had)** | **-8.6%** | **-11.0%** | +1.5% | **-12.7%** |
+
+Weighting by their true frequency, a premarket entry on the HONEST
+scanner list returns about **-4.1% on average -- roughly -$615 on a
+$15,000 ticket.** So the premarket half of the champions' universe is
+not a missing opportunity that an honest replay was denied. It is the
+single largest destroyer of value in the family, and the reason the
+survivorship fix (`RS_CROSS`) *made the champion $149,586 better*
+rather than worse: forbidding premarket entries removed trades that
+were losing money even on the flattering 73% subset, and the 27% the
+backtest could not see are five times worse again.
 
 ---
 
@@ -813,26 +868,26 @@ identical to the dollar.)
 
 **FAIL -- and the failure is specific, which is the useful part.**
 
-The user's premise was half right in a way worth stating precisely.
+The user's premise was right in a way worth stating precisely.
 *"There must be a way"* to mimic C35/C37 without future signals: there
-is, and this line built it. The causal core of the champion is real,
-survives every control, and is now measured:
+is, this line built it, and on the project's own cost ladder it is the
+best row this repo has ever produced. It is still 2.5x short of the
+bar, it is five trades, and it dies under the measured toll.
 
-- **the exit machinery is worth +$126.5 a ticket** (same picks, same
-  epoch, same toll: -$82.53 with it, -$209.00 without);
-- **the coil/pressure ranking is worth +$32.24 a ticket** against a
-  10-seed random control on the measured-cost window (z = +0.82, 80th
-  percentile), and +$75.23 (z = +1.39, 90th) when the exits are removed
-  so the ranking is all that is left;
-- **the causal universe needs no reconstruction at all for the regular
-  session.** If a name's last RTH print is already +10%, its RTH high is
-  +10%, so it is in the pool by arithmetic. The honest live-scannable
-  universe was available the whole time; only the premarket half was
-  ever missing.
+### What is causal in the champion, and what each piece is worth
 
-And it loses money. **-$82.53 a ticket at the project's flat ladder,
--$6,029 a month; -$258.65 a ticket and -$18,893 a month at the toll
-these names actually charge.**
+| component | worth | how it was established |
+|---|---:|---|
+| the exit stack (trail + bearish-pattern exit) | **+$126.5/ticket** | `C37F-hf2` -$82.53 vs `HOLD1-hf2` -$209.00, same picks, same epoch, same toll (authoritative engine); +$90 in `cp_sim` |
+| the coil ordering, once it is used as an ORDER and not a bucket | **+$108.92/ticket** | R4 vs 30 random seeds in its own frame, z = +5.01, 100th pct total and ex-best |
+| the coil/pressure key the champion actually used | **-$31.65/ticket** | CHAMPION-MIMIC vs the same 30 seeds, z = -1.64, 10th pct |
+| the -8% stop | **-$22.60/ticket** | ablation: removing it improves; tightening to -2% improves by $35 |
+| rotation | +$4/ticket | ablation, inside noise |
+| the HIGH-vs-LAST universe convention | +$1/ticket | ablation, inside noise |
+
+The causal core is **the exits plus coil**. The champion's own
+contributions on top of that -- bucketing coil, ordering by pressure
+inside the bucket, the -8% stop, rotation -- are worth **zero or less**.
 
 ### Why the champions' numbers were not real
 
@@ -841,37 +896,68 @@ ever been fetched to full-day-gain depth, so the simulator picked from
 ~17 of ~213 candidates a day and those 17 were the day's biggest
 winners. Removing that is **-$708,432**. The explicit hindsight pool
 sort is another **-$108,867**. Between them they are 105% of the
-headline. Everything else -- fills, the cross-bar look-ahead, hygiene --
-is small change, and the premarket-survivorship leak, the one everybody
-expected to be the villain, **was worth +$149,586 to remove**: the
-champion's 691 premarket legs lost $163 each *even though* membership
+headline. The premarket-survivorship leak -- the one everybody expected
+to be the villain -- **was worth +$149,586 to REMOVE**: the champion's
+691 premarket legs lost $163 each *even though* pool membership
 guaranteed the day would confirm them.
 
 ### What would have to be true for $774,534 to be real
 
-Three things, and two of them are false on the tape:
-
 1. **The bar cache would have to have been complete.** It was 7.6% and
    the missing 92.4% was selected by the close. (It is 100% now, plus
    the 8,042 recent-listing symbol-days this line fetched.)
-2. **The ranking would have to be about six times stronger.** At the
-   champion's 73 tickets a month, $7,500/month needs +$103/ticket net,
-   i.e. **+$185.5/ticket better than the honest number**. The measured
-   ranking edge is **+$32.24**.
-3. **The pool would have to cost 10 bps to trade.** It costs **36.7 bps
-   a side at the median and $203.40 a round trip** on a $15,000 ticket.
-   This is the constraint that actually binds, and the cleanest proof is
-   the oracle: give C37 a **perfect** forecast of whether each name will
-   finish the day up 25% and it earns **+$1,719/month at 10 bps and
-   nothing at all at the measured toll** -- every row of the measured
-   oracle ladder is negative. **The +10-20% day is not the problem. The
-   pool is.**
+2. **The ranking would have to be an ORDER on coil rather than a bucket
+   plus pressure.** That single change is worth +$140 a ticket
+   (-$31.65 -> +$108.92 against the same control) and takes the
+   champion from -$4,122 a month to +$3,035.
+3. **And it would still not be enough**, for two independent reasons:
+   - **The toll.** These names cost **49.98 bps a side at the median**
+     and about $200 a round trip on a $15,000 ticket. R4's +$69.18 a
+     ticket at 10 bps is **-$90.27** measured. Every positive row in
+     this audit is positive only at the flat ladder.
+   - **The rate.** R4 produces **2.17 tickets a day**, not 7. At its own
+     per-ticket edge, seven tickets a day would be +$9,800 a month --
+     but the marginal tickets are not like the average ones, and R5
+     proves it: forcing the rate up to 4.84 a day with a -2% stop
+     collapses the edge to **46.7th percentile, z = -0.56**, i.e. to
+     random. **The edge exists and does not scale to the mandate's
+     ticket rate.**
 
-That is the honest answer to the instruction. You cannot mimic C37
-profitably without future signals, not because the causal signal is
-absent -- it is present and it is measurable -- but because on this
-universe the signal is worth $30 to $130 a ticket and the ticket costs
-$203 to place.
+### The one number that reframes the whole project
+
+A perfect oracle -- rank every name by how much it will actually gain
+that day, fill all seven tickets from the top of that list, run the
+champion's exits -- earns **+$488.47 a ticket, +$65,810 a month, 22 of
+22 months positive, and +$162.03 a ticket AT THE MEASURED TOLL.**
+
+So the frame is not empty and the pool is not untradeable. **Perfect
+direction pays $162 a ticket net of the real spread.** The question was
+never whether the money is there; it is whether any causal signal gets
+near it. This line's best causal row captures **14%** of that oracle at
+flat 10 bps and **0%** of it measured, and the ML detector -- which
+reached **AUC 0.876** and a cross-sectional IC of **+0.343**, ten times
+anything previously measured here -- captured **none of it, because it
+was predicting the wrong thing.** `up30` ("will the high run 30%") is a
+volatility question and is easy; the day's direction is the hard one,
+and it is the only one that pays. Re-run on the directional target the
+same pipeline produces **AUC 0.629 and IC +0.050** -- real (t = +6.7),
+new, and **3.8x below the 0.188 that 7 tickets a day needs at the
+measured toll.** The factor of seven between the two AUCs was
+volatility, and volatility is not tradeable long-only at $200 a round
+trip.
+
+### And the premarket half is not a missing opportunity
+
+The one piece of the champions' universe that genuinely could not be
+reconstructed from what was on disk has now been fetched and counted:
+**25.9 names a day, 27% of the premarket scanner list, cross +10%
+before 09:30 and never again in the session.** A live premarket entry
+on that missing 27% returns a **median -8.6% and a mean -11.0%** by
+15:00; on the 73% the pool did contain, -1.6%. Weighted properly, a
+premarket entry on the honest scanner list is worth about **-4.1%, or
+-$615 on a $15,000 ticket.** That is why removing the survivorship leak
+made the champion better, and it closes the last open question about
+the universe.
 
 ### Closest miss, and what to do next
 
@@ -889,33 +975,38 @@ measured toll**, and **five of its 965 legs carry 119% of its P&L**
 
 **Ranked next, by how much of the gap each one could close.**
 
-1. **Move the champion's EXITS off the gapper pool.** The exit
-   machinery is the transferable asset this line found: +$126.5 a ticket
-   of genuine, control-surviving edge, and it is the largest causal
-   number anywhere in the champion. It was measured on a universe whose
-   fills cost 36.7 bps a side. The causal WIDE universe (`m1w`,
-   `data/massive/cost1`) costs **12.05 bps** (COST-REBASE). The same
-   trail-and-pattern exit on names that cost a third as much to trade is
-   the single highest-expected-value experiment left in this family, and
-   nothing in this repo has run it.
-2. **Execution, not prediction.** Every measurement in this line points
-   the same way as HARNESS-DIAGNOSTIC's frame ablation (+$3,190/month
-   for the measured half-spread over the flat ladder) and
-   UNIVERSE-QUOTES' limit-fill result (+$2,460/month). The champion's
-   gross edge is $30-130 a ticket; the gapper toll is $203 a round trip.
-   A resting limit rather than a market order is worth more than any
-   ranking improvement available.
-3. **Participation, i.e. ticket size.** The measured toll is dominated
-   by impact, and impact scales with `sqrt(notional / trailing dollar
-   volume)`. The mandate fixes $15,000 tickets, which on a +10% microcap
-   is a large share of a ten-minute window. Quantifying the toll as a
+1. **Re-target the detector at DIRECTION and re-run exactly this
+   pipeline.** This is now a one-parameter experiment with a measured
+   ceiling: the oracle that ranks on the day's own gain pays **+$488 a
+   ticket at 10 bps and +$162 measured**, and the feature block,
+   the folds, the controls and the engine are all built. The `up30`
+   target was the wrong question and it cost the whole of Part 2; the
+   directional target (`upc5`, 15:00 close >= +5%) is already wired
+   into `cp_detect.py` and reported below.
+2. **Take R4 to the authoritative engine and to a second universe.**
+   `CPID` proves the CFGS additions reproduce `C37F` to the dollar, so
+   `rotation_sim` can run coil-as-an-order with the stop removed on a
+   quiet box; and the same rule on the causal WIDE universe (`m1w`,
+   `data/massive/cost1`, **12.05 bps a side** against this pool's
+   **49.98**) is where a +$69/ticket flat-ladder edge would survive
+   repricing. Nothing in this repo has run the champion's exits off the
+   gapper pool.
+3. **Execution, not prediction, is still the largest single lever.**
+   HARNESS-DIAGNOSTIC put the measured half-spread at +$3,190/month
+   over the flat ladder and UNIVERSE-QUOTES put limit fills at
+   +$2,460/month. Every positive row in this audit is positive at 10
+   bps and negative at 50. A resting limit is worth more than any
+   ranking improvement now on the table.
+4. **Size, i.e. participation.** The measured toll is dominated by
+   impact, which scales with `sqrt(notional / trailing dollar volume)`.
+   The mandate fixes $15,000 tickets, which on a +10% microcap is a
+   large share of a ten-minute window -- the median fill here is 50 bps
+   a side against 12 on the wide universe. Measuring the toll as a
    function of ticket size on this exact pool would say how much of the
-   $203 is structural and how much is a policy choice.
-4. **The day-type detector is worth building only where execution is
-   cheap.** It is a real signal problem with a real base rate (7.8% at
-   09:35) and a measurable ceiling, but on this pool the ceiling is
-   below the toll, so improving it changes nothing. On a universe where
-   the round trip costs $30 instead of $203, the same oracle ladder
-   would be worth roughly $8,000-10,000 a month, which is the first
-   number in this project that has ever been on the right side of the
-   target -- and that is the experiment to design next.
+   $200 round trip is structural and how much is a policy choice.
+5. **Do NOT spend more time on the +10-20% day as a veto.** The
+   oracle-veto ladder in 2.2 is the ceiling of that idea and it tops out
+   at +$1,719/month at 10 bps and never turns positive measured. The
+   re-ranking oracle is the version worth chasing, and it is a different
+   experiment: choose FROM the good names, do not merely refuse the bad
+   ones.
