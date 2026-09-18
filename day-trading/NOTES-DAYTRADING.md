@@ -10322,3 +10322,46 @@ rotation_sim and to the causal WIDE universe (12.05 bps a side vs
 49.98 here); limit fills; ticket size; and stop treating the
 +10-20% day as a VETO problem -- the veto ceiling is +$1,719/month,
 the re-rank ceiling is +$65,810.
+
+## DIRECTION-DETECTOR (2026-09-17) -- PAUSED BEFORE ANY RESULT
+
+Line opened on CHAMPION-REPLAY's ranked next idea #1 and #2: re-target
+the detector at DIRECTION and re-rank R4 with it. **Paused ~30 minutes
+in, on user instruction, before a single number was measured. Nothing
+in this entry is a finding.**
+
+Full plan, inventory and exact relaunch steps:
+`day-trading/RESUME-DIRECTION-DETECTOR.md`.
+
+Written (committed, untested, neither run to completion):
+- `plan/dd_prior.py` -- extended PRIOR-ONLY grouped-daily context
+  (ret1, ret20, hi60, lo60, vol20, amihud60, dvol5, dvolr, **ngap60**
+  = the name's own gapper FREQUENCY over the prior 60 sessions,
+  **gapwin60** = the share of those that closed green, prevvolr).
+  Same emit-before-fold contract as `cp_prior`. Started, stopped at
+  26/542 dates; it accumulates from the first grouped-daily date so it
+  **must be re-run from scratch**, and it is too slow as written
+  (~8 s/date) -- optimise per the resume doc first.
+- `plan/dd_own.py` -- the name's OWN post-cross behaviour on its PRIOR
+  gapper days (cross = LAST rule, deferred fill, emit-before-fold).
+  Never run.
+
+The only empirical things this session established are coverage facts,
+and two of them change the plan:
+- **the 1-second tape covers 36.9% of the decision rows** (26,129 of
+  70,814 at 09:35+10:00), and that coverage is NON-RANDOM -- the tape
+  was fetched where the liquid names are. "Order-flow proxies from
+  1-second bars" can therefore only be an ABLATION block on the subset
+  where it exists; imputing it would feed the model a liquidity
+  selector dressed as order flow. Same for the news corpus (2,737 of
+  5,746 gapper symbols, and it was built for the WIDE universe).
+- **`m1etf` ends 2026-08-06** while the panel runs to 2026-09-01, so
+  SPY is missing for the whole aug-2026 block and QQQ is not cached at
+  all. Either fetch or accept SPY-only with 18 NaN dates.
+
+Also worth recording for whoever resumes: `cp_sim` is NOT the
+bottleneck (20 dates x 2 configs = 3.0 s even with the box at 100% CPU
+on 4 cores and ~30 competing python processes) -- the caches are. And
+the number to beat is the MEASURED-toll one: gapper fills cost
+31.9-36.7 bps a side, break-even rho at 7 tickets/day is **0.188**
+against the **+0.050** `upc5` IC this line is trying to raise.
