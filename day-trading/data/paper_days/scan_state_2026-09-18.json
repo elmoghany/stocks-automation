@@ -263,6 +263,14 @@
    "vol": "156482.46",
    "name": "Tao Synergies",
    "first_seen": "09:45"
+  },
+  "XRTX": {
+   "pct": 24.74,
+   "last": 2.0707,
+   "prev_close": 1.66,
+   "vol": "947195.8",
+   "name": "XORTX Therapeutics",
+   "first_seen": "09:50"
   }
  },
  "halal_fail": [
@@ -297,7 +305,8 @@
   "FWDI",
   "DBGI",
   "AIXI",
-  "TAOX"
+  "TAOX",
+  "XRTX"
  ],
  "fake_gap": [
   "PTLE"

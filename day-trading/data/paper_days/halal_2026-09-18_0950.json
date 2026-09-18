@@ -1,0 +1,18 @@
+{
+ "XRTX": {
+  "verdict": "FAIL",
+  "haram_pct_note": "interest income only -- blind to revenue mix",
+  "loan_pct": 0.0,
+  "cash_pct": 32.96,
+  "combined": 32.96,
+  "haram_pct": 100.0,
+  "haram_periods": 4,
+  "haram_src": "yfinance",
+  "halal": false,
+  "source": "quarterly",
+  "fail_reason": "CASH>10",
+  "sic": "2834",
+  "mcap": 3015497.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}

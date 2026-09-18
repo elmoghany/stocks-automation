@@ -398,6 +398,27 @@
       "q2": "PASS -- antimicrobial biotech (moot)",
       "screened_et": "09:45",
       "armable": false
+    },
+    "XRTX": {
+      "q1": "FAIL",
+      "loan_pct": 0.0,
+      "cash_pct": 32.96,
+      "mcap": 3015497.0,
+      "q2": "PASS -- XORTX: kidney-disease biopharma (moot)",
+      "screened_et": "09:50",
+      "armable": false
+    },
+    "PFSA": {
+      "q1": "inherited FAIL",
+      "q2": "n/a -- Profusa biosensors (RH sector Finance)",
+      "screened_et": "09:50",
+      "armable": false
+    },
+    "ALP": {
+      "q1": "inherited FAIL",
+      "q2": "FAIL -- Alpha Compute: digital-asset treasury / Telegram ecosystem (crypto treasury main line)",
+      "screened_et": "09:50",
+      "armable": false
     }
   },
   "cycles_log": [
@@ -657,6 +678,13 @@
       "et": "09:45",
       "state": "FLAT-5m",
       "scan": "09:45 scan: 54 rows (delta: AIXI TAOX LABT new -> AIXI/TAOX Q1 FAIL, LABT inherited FAIL; 3 funds). AMCI: last 3.305, ORB 3.39 intact, spread 4.35% veto, no signal",
+      "armed": false,
+      "vetoes": []
+    },
+    {
+      "et": "09:50",
+      "state": "FLAT-5m",
+      "scan": "09:50 scan: 64 rows (delta: XRTX new -> Q1 FAIL cash 33%; PFSA ALP SECZ inherited FAIL; 9 funds). AMCI: last 3.30, bid 3.26 / ask 3.30 (1.23%), ORB 3.39 intact, no signal, size cap binding",
       "armed": false,
       "vetoes": []
     }
