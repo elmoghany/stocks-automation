@@ -959,6 +959,19 @@
         "BSEM CHASE",
         "BSEM SIZE-CAP"
       ]
+    },
+    {
+      "et": "10:50",
+      "state": "FLAT-5m",
+      "scan": "10:50 scan: 96 rows (delta: 2 new funds only; no new common). AMCI bid 3.60 / ask 3.64 (1.1%, tightest of the day) but size cap 1357 sh on thin tape, no signal. BSEM 4.77 print, bid 4.69 / ask 4.82 (2.8%), stale",
+      "armed": false,
+      "vetoes": [
+        "AMCI SPREAD 1.11%",
+        "AMCI SIZE-CAP",
+        "BSEM SPREAD",
+        "BSEM CHASE",
+        "BSEM SIZE-CAP"
+      ]
     }
   ],
   "veto_rates": {
