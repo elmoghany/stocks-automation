@@ -443,6 +443,12 @@
       "q2": "FAIL -- Greenpro: advisory + digital-asset trading + real estate (sector Finance)",
       "screened_et": "09:55",
       "armable": false
+    },
+    "ETS": {
+      "q1": "inherited FAIL (Day 24 scan_state)",
+      "q2": "not re-evaluated -- Elite Express Holding, logistics/courier; Q1 fail stands",
+      "screened_et": "10:10",
+      "armable": false
     }
   },
   "cycles_log": [
@@ -737,6 +743,16 @@
       "armed": false,
       "vetoes": [
         "SPREAD 7.65%",
+        "SIZE-CAP"
+      ]
+    },
+    {
+      "et": "10:10",
+      "state": "FLAT-5m",
+      "scan": "10:10 scan: 78 rows (delta: ETS new -> inherited FAIL; 4 new funds HODU SNDU SNDG RKLZ). AMCI: last 3.34, bid 3.26 / ask 3.47 (6.44%), rth high 3.48, no signal",
+      "armed": false,
+      "vetoes": [
+        "SPREAD 6.44%",
         "SIZE-CAP"
       ]
     }
