@@ -10365,3 +10365,32 @@ on 4 cores and ~30 competing python processes) -- the caches are. And
 the number to beat is the MEASURED-toll one: gapper fills cost
 31.9-36.7 bps a side, break-even rho at 7 tickets/day is **0.188**
 against the **+0.050** `upc5` IC this line is trying to raise.
+
+
+# LIMIT-EXEC (2026-09-17) -- end-to-end limit execution on the 1-second tape [PAUSED 2026-09-17, see RESUME-LIMIT-EXEC.md]
+
+Full write-up: `limit-exec-audit.md` (Parts 0-4, 5.1-5.2, 6-9 done; REV / veto / h5-h60 rows
+still running at the pause). Code: `plan/lx_*.py`; outputs `plan/lx_out/`. Engine change,
+flag-gated and inert with the flags off: `day-trading.py::simulate_trades` gained `exit_mode` /
+`limit_entry` / `limit_exit` (`entry_mode="limit_bid"`, `exit_mode="limit_ask"`); identity
+507/507 symbol-days vs the pre-edit engine, `plan/idgate.py --rot` ALL EXACT.
+
+**Question.** Can END-TO-END limit execution (limit entries AND exits, sized to the tape, causal
+cancel/replace) move the frame's zero-information baseline from -$28/ticket to ~$0 so the small
+demonstrated skill becomes net positive?
+
+**Answer so far.** The baseline moves: random pick, market both sides -$27.36 +/- 2.7 (reproduces
+HARNESS-DIAGNOSTIC) -> bid-rest-3-min-cancel / ask-rest-3-min **-$3.50 +/- 2.9** (tick ladders
+-$1.91 +/- 2.6, ex-best-day total +$3,500) under the flat convention (passive fills free of impact);
+either leg alone is only worth its own fee (-$12..-$19, UNIVERSE-QUOTES' finding); under
+COST-REBASE's measured convention (impact charged on passive fills) the same ladders are -$24.
+Price improvement +9.5 bps entry / +6 bps exit; 30-minute adverse selection ~ -6.5 bps on the
+entry (the names that hit the bid earn -$37 vs -$27 under market fills), none on the exit (the
+clock decides it) -- "cancels to within a bp" is refuted in direction, confirmed in size.
+The skill does NOT survive the fill: WIDE-NET's +$17.19 edge (100th pct) -> +$1.20 (60th) with
+both legs resting, UQ relabel +$3.40 (83rd), the end-to-end-fill refit -$0.60 (1-5 LightGBM
+iterations: nothing to learn); rest-then-cross keeps +$11.76 (100th pct) at -$5.21/ticket,
+**-$653/month -- the closest miss**. C37's ORB "buy the runner" is the 0th-percentile pick under
+a resting bid (what fills is the fade). Honesty: P1 0/8,442 pre-post leaks, P2 91% moved,
+FastCost == CostModel 963/963, fills bounded by their limits 5,755/5,755; 30-seed random,
+inverted (3rd pct), shuffled (on the mean), foresight monotone. **FAIL vs $7,500/month.**

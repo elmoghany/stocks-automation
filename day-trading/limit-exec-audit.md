@@ -28,7 +28,24 @@ flags off.
 
 ## Verdict, in one table
 
-RESULTS_TABLE_PLACEHOLDER
+| row | $/ticket | $/month | vs the $7,500 bar | status |
+|---|---:|---:|---|---|
+| frame, random pick, market both sides (the incumbent baseline) | **−27.36 ± 2.7** | −4,021 | | landed |
+| frame, random, entry rests at bid 3 min (cancel) / market exit | −12.66 | −1,860 | | landed |
+| frame, random, market entry / exit rests at ask | −18.59 | −2,732 | | landed |
+| **frame, random, BOTH legs rest (bid 3 min cancel / ask 3 min)** | **−3.50 ± 2.9** (flat) / −23.62 (measured) | −514 / −3,472 | zero-information baseline moved to ≈ $0 under the flat convention | landed |
+| frame, random, tick ladders both legs (5 min) | **−1.91 ± 2.6** (flat), ex-best +3,500 | −281 | | landed |
+| WIDE-NET model, account-legal, both legs rest | −4.95 (edge +1.20, 60th pct) | −590 | ranker's edge collapses +17 → +1 | landed |
+| WIDE-NET model, rest-then-cross / tick exit | −5.21 (edge +11.76, 100th pct) | −653 | **closest miss of the line so far** | landed |
+| UQ relabel, both legs rest | −2.75 (edge +3.40, 83rd pct) | −335 | | landed |
+| end-to-end-fill refit (this line), both legs rest | −6.84 (edge −0.60) | −842 | refit buys nothing (1–5 iterations) | landed |
+| C37 ORB entry, wide universe, random breaker, both legs rest | −8.48 ± 3.2 (market −32.53) | | "buy the runner" 0th pct under a resting bid | landed |
+| CLOSE-MOMENTUM REV 15:30 k7 | — | — | | **PENDING** (`tables_rev2.log`, stride 2, 10 seeds) |
+| catalyst veto 1/day h60 | — | — | | **PENDING** (`tables_veto.log`, 30 seeds) |
+| h5 / h60 sensitivity | — | — | | **PENDING** (`frame_sens_h5.log`, `frame_sens_h60.log`) |
+
+**Verdict so far: FAIL against the bar, with the mechanism measured.** End-to-end resting execution removes the toll and, under the convention that a passive fill pays no impact, takes the zero-information baseline from −$27.4 to −$2…−$3.5 a ticket (≈ −$300…−$500/month, not +$7,500); the demonstrated skill does not survive the fill condition (the wide-net ranker's +$17 edge becomes +$1…+$3 with both legs resting, +$12 when the entry rests then crosses); under the measured convention every row is −$24 or worse. See `RESUME-LIMIT-EXEC.md` for what is still running.
+
 
 ---
 
@@ -462,11 +479,11 @@ toll is saved.**
 
 ### 5.3 CLOSE-MOMENTUM's REV 15:30 → 15:59 composite, k = 7
 
-REV_PLACEHOLDER
+**PENDING (paused 2026-09-17).** Running: `python plan/lx_tables.py --stage rev --seeds 10 --workers 1 --stride 2 --tag rev --ladders "mkt/mkt,bid-rest3-cancel/mkt,bid-rest3-mkt/tick3,bid-rest3-cancel/ask-rest3"` → `plan/lx_out/tables_rev.json`; render with `python plan/lx_report.py --rev tables_rev.json`. The 3-day smoke (`tables_rev_smoke.json`) showed the composite at −$0.22 market / +$13 under `bid-rest3-mkt/tick3` with the random control moving by the same amount — no edge claim until the full run lands.
 
 ### 5.4 The catalyst veto (ANY_NEG_3d), 1/day at 09:35, h60
 
-VETO_PLACEHOLDER
+**PENDING (paused 2026-09-17).** Running: `python plan/lx_tables.py --stage veto --seeds 30 --workers 1 --tag veto` → `plan/lx_out/tables_veto.json` (379 days with h60 base scores; random control on the vetoed universe).
 
 
 ## Part 6 — C37's ORB entry (wide universe and the gapper pool)
@@ -634,4 +651,11 @@ than the bar open** the harness fills at). What would have to change:
 
 ## Part 10 — Conclusions
 
-CONCLUSIONS_PLACEHOLDER
+**PENDING the REV, veto and h5/h60 rows (paused 2026-09-17; see `RESUME-LIMIT-EXEC.md`).** What is already established:
+
+1. **Execution alone moves the zero-information baseline from −$27.4 to ≈ $0 — but only with BOTH legs resting, and only under the flat convention** (passive fills free of impact): `bid-rest3-cancel/ask-rest3` −$3.50 ± 2.9, `tick5-cancel/tick5` −$1.91 ± 2.6, against −$12…−$19 for either leg alone. Under COST-REBASE's measured convention (passive fills charged square-root impact) the same ladders are −$24; the 5-minute markouts after passive fills (+2.6 bps entry, −0.2 exit) are the tape's evidence against charging impact on resting fills, and a live campaign is the only instrument that can settle it (Part 8).
+2. **Adverse selection does not cancel price improvement once the exit is included.** Entry: +9.5 bps improvement, ≈ −6.5 bps of 30-minute selection (the names that hit the bid earn −$37 vs −$27 under market fills), net ≈ +3 bps. Exit: +5.5–6 bps improvement with no selection term (the clock decides the exit, not the price). UNIVERSE-QUOTES' "cancels to within a bp" is refuted in direction, confirmed in size on the entry leg.
+3. **The demonstrated skill does not survive the fill condition.** WIDE-NET's +$17.19 edge (100th pct) becomes +$1.20 (60th) with both legs resting; the entry-limit relabel +$3.40 (83rd); the end-to-end refit −$0.60 with the inverted sign doing as well. The one ladder that keeps a ranker's edge is rest-then-cross (`bid-rest3-mkt/tick3`: model +$11.76, 100th pct, −$5.21/ticket, −$653/month) — the line's closest miss, $58/ticket short of the bar.
+4. **C37's instinct is the wrong instinct for a resting order.** Among ORB breakers on the causal universe the strongest breaker is the 0th-percentile pick under a resting bid: what fills is the fade.
+5. **The engine hook is live and inert with the flags off** (Part 7); the live watcher needs quote polling, cancel/replace and per-fill ledgers (Part 8).
+
