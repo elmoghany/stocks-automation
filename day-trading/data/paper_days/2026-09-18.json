@@ -596,10 +596,13 @@
       "armable": false
     },
     "COIN": {
-      "q1": "FAIL (financial sector / inherited)",
+      "q1": "FAIL",
       "q2": "FAIL -- Coinbase crypto exchange",
       "screened_et": "11:00",
-      "armable": false
+      "armable": false,
+      "loan_pct": 14.53,
+      "cash_pct": 19.65,
+      "mcap": 45899709494.0
     }
   },
   "cycles_log": [
@@ -1022,6 +1025,19 @@
         "AMCI SPREAD 1.99%",
         "AMCI SIZE-CAP",
         "BSEM SPREAD 2.12%",
+        "BSEM CHASE",
+        "BSEM SIZE-CAP"
+      ]
+    },
+    {
+      "et": "11:05",
+      "state": "FLAT-5m",
+      "scan": "11:05 scan: 103 rows (delta: 1 new fund; no new common). AMCI 3.555, bid 3.52 / ask 3.59 (2.0%), no signal. BSEM 4.75, bid 4.75 / ask 4.82 (1.5%), no signal, chase at high",
+      "armed": false,
+      "vetoes": [
+        "AMCI SPREAD 1.99%",
+        "AMCI SIZE-CAP",
+        "BSEM SPREAD 1.47%",
         "BSEM CHASE",
         "BSEM SIZE-CAP"
       ]

@@ -1,0 +1,15 @@
+{
+ "COIN": {
+  "verdict": "FAIL",
+  "loan_pct": 14.53,
+  "cash_pct": 19.65,
+  "combined": 34.17,
+  "haram_pct": 1.42,
+  "halal": false,
+  "source": "quarterly",
+  "sic": "6199",
+  "fail_reason": "FINANCIAL SECTOR (SIC 6199 Finance Services) -- 6000-6999 is a hard FAIL (user ruling 2026-09-16); only an explicit PASS ruling with a basis can restore a quirk-coded name",
+  "mcap": 45899709494.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}
