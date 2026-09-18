@@ -295,6 +295,14 @@
    "vol": "146744",
    "name": "Alamar Biosciences",
    "first_seen": "10:00"
+  },
+  "QTI": {
+   "pct": 13.19,
+   "last": 2.96,
+   "prev_close": 2.6151,
+   "vol": "3692",
+   "name": "QT IMAGING HLDGS INC",
+   "first_seen": "10:20"
   }
  },
  "halal_fail": [
@@ -333,7 +341,8 @@
   "XRTX",
   "DFDV",
   "ABTC",
-  "ALMR"
+  "ALMR",
+  "QTI"
  ],
  "fake_gap": [
   "PTLE"

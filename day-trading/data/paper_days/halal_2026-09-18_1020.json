@@ -1,0 +1,24 @@
+{
+ "QTI": {
+  "verdict": "FAIL",
+  "haram_pct_note": "interest income only -- blind to revenue mix",
+  "loan_pct": 41.65,
+  "cash_pct": 28.93,
+  "combined": 70.58,
+  "haram_pct": 2.27,
+  "haram_periods": 4,
+  "haram_src": "upper-bound (max yield on cash)",
+  "halal": false,
+  "source": "quarterly",
+  "fail_reason": "LOAN>10",
+  "haram_note": "interest income is not tagged in any period read; 8%/yr on mean cash+securities $7M over a 1.00yr window CEILINGS interest at $1M = 2.27% of TTM revenue, which BOUNDS the 5% leg clear without measuring interest itself",
+  "interest_flags": [
+   "intinc_implausible",
+   "bound_implausible",
+   "bound_implausible"
+  ],
+  "sic": "3845",
+  "mcap": 37762231.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}

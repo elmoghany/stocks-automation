@@ -455,6 +455,27 @@
       "q2": "not re-evaluated -- QumulusAI; Q1 fail stands",
       "screened_et": "10:15",
       "armable": false
+    },
+    "QTI": {
+      "q1": "FAIL",
+      "loan_pct": 41.65,
+      "cash_pct": 28.93,
+      "mcap": 37762231.0,
+      "q2": "not evaluated (Q1 FAIL) -- QT Imaging, breast-imaging devices",
+      "screened_et": "10:20",
+      "armable": false
+    },
+    "MTC": {
+      "q1": "inherited FAIL (Day 24)",
+      "q2": "MMTec -- securities-trading software / fintech, FAIL",
+      "screened_et": "10:20",
+      "armable": false
+    },
+    "CYPH": {
+      "q1": "inherited FAIL (Day 24)",
+      "q2": "Cypherpunk Technologies -- crypto treasury, FAIL",
+      "screened_et": "10:20",
+      "armable": false
     }
   },
   "cycles_log": [
@@ -769,6 +790,16 @@
       "armed": false,
       "vetoes": [
         "SPREAD 6.16%"
+      ]
+    },
+    {
+      "et": "10:20",
+      "state": "FLAT-5m",
+      "scan": "10:20 scan: 82 rows (delta: QTI new -> Q1 FAIL loan 41.7%/cash 28.9%; MTC CYPH inherited FAIL; 3 new funds). AMCI: last 3.565, bid 3.51 / ask 3.62 (3.13%), rth high 3.66, no signal",
+      "armed": false,
+      "vetoes": [
+        "SPREAD 3.13%",
+        "SIZE-CAP"
       ]
     }
   ],
