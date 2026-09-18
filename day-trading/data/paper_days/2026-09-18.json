@@ -471,12 +471,19 @@
       "scan": "08:40 scan: 81 rows, no new common-stock ticker (BHYP SOLT funds; AMCI off-scan at -10% but LATCHED). AMCI 1-min poll: no signal, spread 2.5-5.5% veto",
       "armed": false,
       "vetoes": []
+    },
+    {
+      "et": "08:45",
+      "state": "FLAT-5m",
+      "scan": "08:45 scan: 79 rows, no new common-stock ticker. AMCI poll continues (spread 1.3-4.5%, one TAKEABLE bullish_engulfing at 08:40 spread-vetoed)",
+      "armed": false,
+      "vetoes": []
     }
   ],
   "veto_rates": {
     "premarket": {
-      "would_be_entries": 1,
-      "spread_veto": 1,
+      "would_be_entries": 2,
+      "spread_veto": 2,
       "depth_veto": 0,
       "chase_veto": 0,
       "stale_signal": 1
@@ -549,5 +556,16 @@
     "trigger_0835": "macd_cross_up on the 08:30 bar -- STALE (5m since close) -- DO NOT ENTER",
     "premarket_high": 4.15,
     "loop": "from 08:36: 1-minute bar poll + `trigger` on AMCI (coordinator-owned); Trigger B = stop-buy at the 4.15 session high, gated by spread<=0.5%, depth, size cap, fill-arming"
-  }
+  },
+  "veto_events": [
+    {
+      "et": "08:40:19",
+      "symbol": "AMCI",
+      "trigger": "C bullish_engulfing on the 08:39 bar [TAKEABLE NOW]",
+      "phase": "premarket",
+      "book": "bid 2.91 / ask 3.04 = 4.47% spread (cap 0.5%)",
+      "other_gates": "fill-arming n/a for pattern (marketable limit ask+0.3% = 3.049); size cap 39,753 sh vs 4,934 needed OK; last 3.01 = -10.1% vs prev close (latched from the 12:31Z cross)",
+      "decision": "SPREAD VETO -- not entered"
+    }
+  ]
 }
