@@ -185,6 +185,16 @@
       "q2": "PASS -- Rank One Computing: biometrics software (general-purpose, AMD principle)",
       "screened_et": "06:25",
       "armable": false
+    },
+    "ELDN": {
+      "q1": "FAIL",
+      "loan_pct": 0.22,
+      "cash_pct": 41.29,
+      "mcap": 214935747.0,
+      "q2": "PASS -- Eledon: clinical-stage biotech (moot, Q1 FAIL)",
+      "screened_et": "07:02",
+      "armable": false,
+      "note": "delta dump carried no Market cap cell for the new row; cap loaded from the scan row via update_rh_fundamentals.py, then re-screened"
     }
   },
   "cycles_log": [
@@ -192,6 +202,27 @@
       "et": "06:25",
       "state": "FLAT-5m",
       "scan": "77 rows -> 14 candidates -> 0 armable (13 fail Q1, BNC fails Q2)",
+      "armed": false,
+      "vetoes": []
+    },
+    {
+      "et": "06:30",
+      "state": "FLAT-5m",
+      "scan": "78 rows (delta off 06:23 base: AKAN new). 0 candidates -- AKAN inherited FAIL (cannabis), all 14 earlier names now in halal_fail",
+      "armed": false,
+      "vetoes": []
+    },
+    {
+      "et": "06:45",
+      "state": "FLAT-5m",
+      "scan": "77 rows, no new common-stock ticker vs 06:30 (inspected inline; no dump built). 0 candidates",
+      "armed": false,
+      "vetoes": []
+    },
+    {
+      "et": "07:00",
+      "state": "FLAT-5m",
+      "scan": "78 rows (delta off 06:30: ELDN new, AKAN gone). 1 candidate ELDN -> Q1 FAIL (cash 41.3%). 0 armable",
       "armed": false,
       "vetoes": []
     }

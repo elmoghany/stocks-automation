@@ -111,6 +111,14 @@
    "vol": "19900.00242",
    "name": "Rank One Computing",
    "first_seen": "06:23"
+  },
+  "ELDN": {
+   "pct": 10.57,
+   "last": 2.93,
+   "prev_close": 2.65,
+   "vol": "558396.79",
+   "name": "Eledon Pharmaceuticals",
+   "first_seen": "07:00"
   }
  },
  "halal_fail": [
@@ -127,7 +135,8 @@
   "TOYO",
   "ROC",
   "NHIC",
-  "BNC"
+  "BNC",
+  "ELDN"
  ],
  "fake_gap": [],
  "inherited_fail": [
