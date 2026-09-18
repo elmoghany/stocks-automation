@@ -1,0 +1,9 @@
+{
+ "SOL": {
+  "verdict": "REFUSE-TO-EVALUATE",
+  "halal": false,
+  "fail_reason": "no RH market cap cached -- run update_rh_fundamentals.py first",
+  "source": "none",
+  "mcap": null
+ }
+}

@@ -739,6 +739,16 @@
       "verdict": "FAIL",
       "why": "Q1 FAIL: debt 135.1% of mcap; HK apparel, 12:20 scan",
       "screened_et": "12:21"
+    },
+    "SOL": {
+      "verdict": "FAIL",
+      "why": "crypto (Solana) row in scan, not an equity; excluded",
+      "screened_et": "12:30"
+    },
+    "ZTG": {
+      "verdict": "FAIL",
+      "why": "inherited_fail from prior campaign screening (scan_state); +77% at 12:30, not re-screened",
+      "screened_et": "12:30"
     }
   },
   "cycles_log": [
@@ -1380,6 +1390,18 @@
         "BSEM CHASE",
         "BSEM SIZE-CAP"
       ]
+    },
+    {
+      "et": "12:31",
+      "state": "FLAT-5m",
+      "scan": "12:30 scan: 132 rows; ZTG +77% new but inherited_fail; SOL crypto excluded. BSEM tweezer_bottom 12:28 TAKEABLE -> VETO spread 4.04% + chase (5.00 new high, ask 5.15/5.13). AMCI 3.38, bid 3.38 / ask 3.42 (1.18%), no signal",
+      "armed": false,
+      "vetoes": [
+        "BSEM SPREAD 4.06%",
+        "BSEM CHASE",
+        "AMCI SPREAD 1.18%",
+        "AMCI SIZE-CAP"
+      ]
     }
   ],
   "veto_rates": {
@@ -1392,10 +1414,10 @@
       "size_cap_binding": 1
     },
     "regular": {
-      "would_be_entries": 4,
-      "spread_veto": 4,
+      "would_be_entries": 5,
+      "spread_veto": 5,
       "depth_veto": 0,
-      "chase_veto": 3,
+      "chase_veto": 4,
       "size_cap_binding": 3
     }
   },
@@ -1549,6 +1571,22 @@
         "CHASE ask 4.98 >= session high 4.8999"
       ],
       "note": "not armed; size cap 3537 would have cleared 3012"
+    },
+    {
+      "et": "12:29",
+      "sym": "BSEM",
+      "signal": "tweezer_bottom 12:28 [TAKEABLE NOW]",
+      "bid": 4.95,
+      "ask": 5.15,
+      "spread_pct": 4.04,
+      "session_high": 5.0,
+      "vetoes": [
+        "SPREAD 4.04%",
+        "CHASE (ask 5.15 >= high 5.00)"
+      ],
+      "size_cap": "3571 >= 2912 OK",
+      "session_phase": "regular",
+      "note": "5.00 print at 12:28 = new session high; ask blew out to 5.15"
     }
   ],
   "ptle_watch": {
