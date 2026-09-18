@@ -127,6 +127,14 @@
    "vol": "29065.78",
    "name": "Tianci International",
    "first_seen": "07:10"
+  },
+  "KIDZ": {
+   "pct": 10.32,
+   "last": 3.42,
+   "prev_close": 3.1,
+   "vol": "41007.64",
+   "name": "KIDZ AI Inc. Class B",
+   "first_seen": "07:25"
   }
  },
  "halal_fail": [
@@ -145,7 +153,8 @@
   "NHIC",
   "BNC",
   "ELDN",
-  "CIIT"
+  "CIIT",
+  "KIDZ"
  ],
  "fake_gap": [],
  "inherited_fail": [

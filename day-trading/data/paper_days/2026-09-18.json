@@ -204,6 +204,15 @@
       "q2": "n/a (Q1 FAIL) -- Tianci International, shipping/logistics services",
       "screened_et": "07:10",
       "armable": false
+    },
+    "KIDZ": {
+      "q1": "FAIL",
+      "loan_pct": 70.72,
+      "cash_pct": 221.05,
+      "mcap": 2659491.0,
+      "q2": "n/a (Q1 FAIL) -- KIDZ AI, children's edtech",
+      "screened_et": "07:25",
+      "armable": false
     }
   },
   "cycles_log": [
@@ -260,6 +269,13 @@
       "et": "07:25",
       "state": "FLAT-5m",
       "scan": "07:20 scan: 77 rows, no new common-stock ticker (SLON off). 0 candidates",
+      "armed": false,
+      "vetoes": []
+    },
+    {
+      "et": "07:25",
+      "state": "FLAT-5m",
+      "scan": "07:25 scan: 81 rows (delta: KIDZ new). KIDZ Q1 FAIL loan 70.7% cash 221%. 0 armable",
       "armed": false,
       "vetoes": []
     }
