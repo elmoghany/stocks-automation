@@ -1742,6 +1742,13 @@
       "scan": "EOD write-up complete: summary in day JSON (status CLOSED, counts_as_traded_day false), 2026-09-18.md written, NOTES-DAYTRADING.md Day 25 section prepended. Holding heartbeat to 15:00",
       "armed": false,
       "vetoes": []
+    },
+    {
+      "et": "15:00",
+      "state": "SESSION-END",
+      "scan": "15:00 ET exit_end reached. No position held at any point; nothing to flatten. Ledger CLOSED, counts_as_traded_day false. Session ran headless 06:20-15:00 with no coverage gap",
+      "armed": false,
+      "vetoes": []
     }
   ],
   "veto_rates": {
