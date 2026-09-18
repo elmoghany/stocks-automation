@@ -248,6 +248,13 @@
       "scan": "81 rows (delta: FTCI CIIT new common; TXXS SLON TXXH funds; SECZ AKAN inherited FAIL; JBS NHIC SOLT BNC off-scan). CIIT Q1 FAIL cash 30.7%; FTCI inherited FAIL. 0 armable",
       "armed": false,
       "vetoes": []
+    },
+    {
+      "et": "07:15",
+      "state": "FLAT-5m",
+      "scan": "80 rows (delta: MEDS new -> inherited FAIL; DSY SECZ off-scan). 0 candidates",
+      "armed": false,
+      "vetoes": []
     }
   ],
   "veto_rates": {
