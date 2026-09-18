@@ -537,6 +537,13 @@
       "scan": "09:20 scan: 77 rows, no new common-stock ticker. AMCI: one 100-sh print at 09:18, spread 2.6-4.9%, no signal",
       "armed": false,
       "vetoes": []
+    },
+    {
+      "et": "09:25",
+      "state": "FLAT-5m",
+      "scan": "09:25 scan: 78 rows, no new common-stock ticker. AMCI: last 3.08, bid 2.97 / ask 3.21 (8% spread), no signal. Into the open with AMCI as the only latched, halal-PASS name",
+      "armed": false,
+      "vetoes": []
     }
   ],
   "veto_rates": {
