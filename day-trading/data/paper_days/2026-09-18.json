@@ -516,6 +516,13 @@
       "scan": "09:05 scan: 78 rows, no new common-stock ticker (PAAI +23% but Q1 FAIL). AMCI poll: no signal, spread 6.3%, tape thinning",
       "armed": false,
       "vetoes": []
+    },
+    {
+      "et": "09:10",
+      "state": "FLAT-5m",
+      "scan": "09:10 scan: 78 rows, no new common-stock ticker. AMCI poll: no signal, spread 5%, tape thin (100-1000 sh prints)",
+      "armed": false,
+      "vetoes": []
     }
   ],
   "veto_rates": {
