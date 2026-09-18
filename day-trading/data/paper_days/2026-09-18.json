@@ -729,6 +729,16 @@
         "CHASE",
         "SIZE-CAP"
       ]
+    },
+    {
+      "et": "10:05",
+      "state": "FLAT-5m",
+      "scan": "10:05 scan: 73 rows (delta: 6 new funds IONZ XXRP SMZ QBTZ BITX BITU; no new common). AMCI: last 3.28 (no prints since 10:01), bid 3.27 / ask 3.52 (7.65%), ORB broken 10:00 and failed",
+      "armed": false,
+      "vetoes": [
+        "SPREAD 7.65%",
+        "SIZE-CAP"
+      ]
     }
   ],
   "veto_rates": {
