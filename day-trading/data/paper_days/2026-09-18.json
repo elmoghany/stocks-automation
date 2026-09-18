@@ -530,6 +530,13 @@
       "scan": "09:15 scan: 77 rows, no new common-stock ticker (PAAI off). AMCI tape dead since 09:09 (bid 3.03 / ask 3.13, 3.3% spread); no signal",
       "armed": false,
       "vetoes": []
+    },
+    {
+      "et": "09:20",
+      "state": "FLAT-5m",
+      "scan": "09:20 scan: 77 rows, no new common-stock ticker. AMCI: one 100-sh print at 09:18, spread 2.6-4.9%, no signal",
+      "armed": false,
+      "vetoes": []
     }
   ],
   "veto_rates": {
