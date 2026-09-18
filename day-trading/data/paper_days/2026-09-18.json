@@ -1438,6 +1438,18 @@
         "AMCI SPREAD 4.71%",
         "AMCI SIZE-CAP"
       ]
+    },
+    {
+      "et": "12:50",
+      "state": "FLAT-5m",
+      "scan": "12:50 scan: 135 rows; no unscreened common (NCI/TTRX/MTC back, all FAIL). BSEM 5.44 print (+25%), bid 5.17 / ask 5.39 (4.3%), chase, signal stale. AMCI 3.42, bid 3.32 / ask 3.50 (5.4%)",
+      "armed": false,
+      "vetoes": [
+        "BSEM SPREAD 4.26%",
+        "BSEM CHASE",
+        "AMCI SPREAD 5.42%",
+        "AMCI SIZE-CAP"
+      ]
     }
   ],
   "veto_rates": {
