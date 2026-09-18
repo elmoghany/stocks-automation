@@ -277,6 +277,24 @@
       "q2": "PASS -- Ocean Power: wave-energy / maritime autonomy hardware (moot, Q1 FAIL)",
       "screened_et": "08:15",
       "armable": false
+    },
+    "AMCI": {
+      "q1": "PASS",
+      "loan_pct": 0.11,
+      "cash_pct": 6.22,
+      "combined": 6.33,
+      "haram_pct": 1.17,
+      "mcap": 73100232.0,
+      "mcap_fundamentals": 76615231.8,
+      "q2": "PASS -- AMC Robotics (RH profile): AI-enabled robotics and smart-security solutions for warehouse automation, enterprise security, robotics patrol and logistics automation. General-purpose technology, no haram-adjacent revenue line identified.",
+      "screened_et": "08:30",
+      "armable": true
+    },
+    "LGHL": {
+      "q1": "inherited FAIL",
+      "q2": "FAIL -- Lion Group: securities/futures brokerage, CFD and TRS trading (finance is the main line)",
+      "screened_et": "08:30",
+      "armable": false
     }
   },
   "cycles_log": [
@@ -426,6 +444,13 @@
       "scan": "08:25 scan: 81 rows, no new common-stock ticker. 0 candidates",
       "armed": false,
       "vetoes": []
+    },
+    {
+      "et": "08:31",
+      "state": "FLAT-5m",
+      "scan": "08:30 scan: 91 rows (delta: AMCI LGHL new). AMCI halal PASS Q1+Q2 but NOT crossed on RH tape (1 real bar 3.37, quote 3.39 = +1.2% vs scan +12.8%); book 3.66% wide. LGHL inherited FAIL (brokerage). 0 armable",
+      "armed": false,
+      "vetoes": []
     }
   ],
   "veto_rates": {
@@ -489,5 +514,13 @@
     ],
     "armable_now": [],
     "recorded_to_scan_state": "halal_fail 14 (13 Q1 + BNC Q2), NHIC also added to spac"
+  },
+  "amci_watch": {
+    "first_seen_et": "08:30",
+    "scan_claim": "+12.84% last 3.78 (prev close 3.35)",
+    "rh_tape_0831": "ONE real premarket bar: 11:00Z (07:00 ET) o3.36 h3.37 l3.36 c3.37 v200; quote last_non_reg 3.39 @12:30:50Z = +1.2%; every other bar 08:00Z-12:29Z interpolated. The 3.78 print is not on the RH minute feed or the RH quote.",
+    "rank_0831": "excluded: only 1 bar (not crossed on RH data)",
+    "book_0831": "bid 3.49 x429 / ask 3.62 x104 = 3.66% spread (cap 0.5%). Ask ladder thin: 104+16+3 sh to 3.73",
+    "disposition": "halal PASS (Q1+Q2) and on halal_list -> the day's only armable name so far, but NOT latched: the +10% cross has not printed on the RH feed. Re-check bars every cycle; latch only when an RH bar crosses 3.685. No hand-ranking, no substitute feed (fix #8)."
   }
 }

@@ -1,0 +1,18 @@
+{
+ "AMCI": {
+  "verdict": "PASS",
+  "haram_pct_note": "interest income only -- blind to revenue mix",
+  "loan_pct": 0.11,
+  "cash_pct": 6.22,
+  "combined": 6.33,
+  "haram_pct": 1.17,
+  "haram_periods": 4,
+  "haram_src": "yfinance",
+  "halal": true,
+  "source": "quarterly",
+  "fail_reason": "",
+  "sic": "5700",
+  "mcap": 73100232.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}

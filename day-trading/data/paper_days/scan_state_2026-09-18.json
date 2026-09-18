@@ -183,6 +183,14 @@
    "vol": "360732.13",
    "name": "Ocean Power Technologies",
    "first_seen": "08:15"
+  },
+  "AMCI": {
+   "pct": 12.84,
+   "last": 3.78,
+   "prev_close": 3.35,
+   "vol": "70119.24",
+   "name": "AMC Robotics",
+   "first_seen": "08:30"
   }
  },
  "halal_fail": [
@@ -559,5 +567,8 @@
   "inherited_fail": 327,
   "spac": 9,
   "note": "halal_fail+inherited_fail+cannot_verify from Day 24 (a real FAIL / unverified is never re-litigated); fake_gap NOT inherited (day-specific artefact)"
- }
+ },
+ "halal_pass": [
+  "AMCI"
+ ]
 }
