@@ -16,7 +16,14 @@
     "start_on_time": true,
     "launched_by_scheduler_flag": "data/paper_days/LAUNCHED_BY_SCHEDULER_2026-09-18.flag",
     "trading_day_guard": "TRADING 2026-09-18 full (market_calendar.py). SESSION close=16:00 exit_end=15:00 entry_cutoff=14:30 cross_cap=14:00 ladder=14:50,14:55,14:58,14:59",
-    "capability_probe": {"status": "PENDING"},
+    "capability_probe": {
+      "status": "PASS",
+      "run_et": "06:21",
+      "probe_1_python": {"cmd": "python -c print(1)", "result": "1", "exit": 0, "verdict": "PASS"},
+      "probe_2_git": {"cmd": "git status --short + git add (own path) + commit + push", "result": "skeleton committed 08999e0 and pushed (COMMIT_EXIT=0, PUSH_EXIT=0)", "exit": 0, "verdict": "PASS"},
+      "probe_3_mcp": {"cmd": "get_equity_quotes SPY", "result": "SPY prev_close 760.71 (2026-09-17, official 762.60); premarket last_non_reg 762.33 @10:20:53Z; bid 762.25 / ask 762.31 @10:20:59Z", "verdict": "PASS"}
+    },
+    "heartbeat": {"started_et": "06:21", "file": "data/paper_days/SESSION_ALIVE_2026-09-18.flag", "cadence": "<=5 min"},
     "cycles": []
   },
   "armed_orders": [],
