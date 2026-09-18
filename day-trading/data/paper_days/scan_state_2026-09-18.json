@@ -191,6 +191,14 @@
    "vol": "70119.24",
    "name": "AMC Robotics",
    "first_seen": "08:30"
+  },
+  "PAAI": {
+   "pct": 10.48,
+   "last": 3.69,
+   "prev_close": 3.34,
+   "vol": "31758930.13",
+   "name": "Paradium.AI",
+   "first_seen": "09:00"
   }
  },
  "halal_fail": [
@@ -216,7 +224,8 @@
   "DSP",
   "TNMG",
   "TMCR",
-  "OPTT"
+  "OPTT",
+  "PAAI"
  ],
  "fake_gap": [],
  "inherited_fail": [

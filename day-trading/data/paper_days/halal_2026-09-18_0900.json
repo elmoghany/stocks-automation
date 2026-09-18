@@ -1,0 +1,14 @@
+{
+ "PAAI": {
+  "loan_pct": 233.13,
+  "cash_pct": 26.07,
+  "combined": 259.2,
+  "haram_pct": 0.9,
+  "halal": false,
+  "verdict": "FAIL",
+  "source": "quarterly",
+  "fail_reason": "FAIL (unverified revenue mix: restaurant) -- the 5% rule cannot be run from statements (haram_pct is interest-income-only, 0.90%), and unverified is HARAM by rule (2026-08-22). Financing ratios were loan 233.13 / cash 26.07 (which ALSO exceed the strict 10/10/20 limits). Convertible to PASS only by an affirmative <5% evidence ruling in halal_rulings.json.",
+  "mcap": 42844826.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}
