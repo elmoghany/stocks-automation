@@ -175,6 +175,14 @@
    "vol": "35874.55",
    "name": "The Metals Royalty Company Inc.",
    "first_seen": "08:10"
+  },
+  "OPTT": {
+   "pct": 10.88,
+   "last": 2.14,
+   "prev_close": 1.93,
+   "vol": "360732.13",
+   "name": "Ocean Power Technologies",
+   "first_seen": "08:15"
   }
  },
  "halal_fail": [
@@ -199,7 +207,8 @@
   "NXTC",
   "DSP",
   "TNMG",
-  "TMCR"
+  "TMCR",
+  "OPTT"
  ],
  "fake_gap": [],
  "inherited_fail": [

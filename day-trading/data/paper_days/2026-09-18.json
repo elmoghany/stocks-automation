@@ -268,6 +268,15 @@
       "q2": "PASS -- Basel Medical: orthopedic clinics (moot)",
       "screened_et": "08:10",
       "armable": false
+    },
+    "OPTT": {
+      "q1": "FAIL",
+      "loan_pct": 59.91,
+      "cash_pct": 44.89,
+      "mcap": 16388422.0,
+      "q2": "PASS -- Ocean Power: wave-energy / maritime autonomy hardware (moot, Q1 FAIL)",
+      "screened_et": "08:15",
+      "armable": false
     }
   },
   "cycles_log": [
@@ -394,6 +403,13 @@
       "et": "08:10",
       "state": "FLAT-5m",
       "scan": "08:10 scan: 88 rows (delta: TMCR BMGL new common, ESG fund; TNMG +150% but FAIL). TMCR Q1 FAIL (LOAN>10, haram_pct 100%); BMGL inherited FAIL. 0 armable",
+      "armed": false,
+      "vetoes": []
+    },
+    {
+      "et": "08:15",
+      "state": "FLAT-5m",
+      "scan": "08:15 scan: 89 rows (delta: OPTT new). OPTT Q1 FAIL loan 59.9% cash 44.9%. 0 armable",
       "armed": false,
       "vetoes": []
     }
