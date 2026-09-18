@@ -80,6 +80,12 @@ rules is far worse.
 
 ## Resume checklist
 
+**2026-09-18 19:25: EVERYTHING IS OFF.** The in-session backup cron was cancelled and the
+Task Scheduler tasks `\Stocks\C37MorningLaunch` and `\Stocks\C37Watchdog` were DISABLED
+(`Enable-ScheduledTask -TaskPath '\Stocks' -TaskName C37MorningLaunch` / `C37Watchdog` to
+resume daily paper trading). `HalalUniverseRefresh` (monthly) is still enabled.
+
+
 `git pull` → read this file → `RESUME-*.md` → relaunch each line on Opus with
 its name, autonomy rules, index-row rule, and adversarial audit before believing
 any positive number → re-create the in-session 06:45 backup cron → re-arm the
