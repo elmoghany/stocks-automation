@@ -449,6 +449,12 @@
       "q2": "not re-evaluated -- Elite Express Holding, logistics/courier; Q1 fail stands",
       "screened_et": "10:10",
       "armable": false
+    },
+    "QMLS": {
+      "q1": "inherited FAIL (Day 24 scan_state)",
+      "q2": "not re-evaluated -- QumulusAI; Q1 fail stands",
+      "screened_et": "10:15",
+      "armable": false
     }
   },
   "cycles_log": [
@@ -755,6 +761,15 @@
         "SPREAD 6.44%",
         "SIZE-CAP"
       ]
+    },
+    {
+      "et": "10:15",
+      "state": "FLAT-5m",
+      "scan": "10:15 scan: 77 rows (delta: QMLS new -> inherited FAIL; no funds new). AMCI: 14:14Z spike to 3.66 on 8.2k sh, closed 3.40; bid 3.41 / ask 3.62 (6.16%), size cap now clears (4632 > 4143) but spread veto",
+      "armed": false,
+      "vetoes": [
+        "SPREAD 6.16%"
+      ]
     }
   ],
   "veto_rates": {
@@ -836,7 +851,8 @@
     "premarket_high": 4.15,
     "loop": "from 08:36: 1-minute bar poll + `trigger` on AMCI (coordinator-owned); Trigger B = stop-buy at the 4.15 session high, gated by spread<=0.5%, depth, size cap, fill-arming",
     "orb_0935": "ORB 09:30-09:34: high 3.39 (09:31 bar), low 3.19. Trigger A = stop-buy 3.39, limit 3.407. At 09:35: last 3.21, bid 3.13 / ask 3.35 (7.0% spread) -> SPREAD VETO; fill-arming PASS (ask < 3.39); size cap 3,055 sh (20% of 15,276) vs 4,477 wanted -> binding. NOTE armcheck.py reported a 'session HIGH 4.4083 set 2026-09-01' -- it reads an older AMCI bar file alongside today's; the correct Trigger B level is today's premarket high 4.15 (poll helper uses the day file only).",
-    "orb_break": "14:00Z bar o3.39 h3.41 c3.41 v976 broke ORB high 3.39 (Trigger A level) with spread 2.4-7.6%; never armable. 14:01Z reversed to 3.28 (v6524) -- a fill at 3.39 would be -3.2% one minute later"
+    "orb_break": "14:00Z bar o3.39 h3.41 c3.41 v976 broke ORB high 3.39 (Trigger A level) with spread 2.4-7.6%; never armable. 14:01Z reversed to 3.28 (v6524) -- a fill at 3.39 would be -3.2% one minute later",
+    "spike_1014": "14:14Z bar o3.45 h3.66 l3.40 c3.40 v8243 -- new rth high 3.66, faded to 3.40 within the bar; bid 3.41 / ask 3.62 (6.2%) at 10:15"
   },
   "veto_events": [
     {
