@@ -356,6 +356,24 @@
       "q2": "PASS -- Skillsoft: enterprise e-learning (moot, Q1 FAIL: LBO-style debt)",
       "screened_et": "09:35",
       "armable": false
+    },
+    "FWDI": {
+      "q1": "FAIL",
+      "loan_pct": 26.7,
+      "cash_pct": 2.99,
+      "mcap": 443819766.0,
+      "q2": "FAIL -- Forward Industries is now a Solana digital-asset treasury company (sector Finance); moot given Q1",
+      "screened_et": "09:40",
+      "armable": false
+    },
+    "DBGI": {
+      "q1": "FAIL",
+      "loan_pct": 925.65,
+      "cash_pct": 59.34,
+      "mcap": 2335907.0,
+      "q2": "PASS -- Digital Brands: apparel (moot)",
+      "screened_et": "09:40",
+      "armable": false
     }
   },
   "cycles_log": [
@@ -601,6 +619,13 @@
       "et": "09:36",
       "state": "FLAT-5m",
       "scan": "09:35 scan: 46 rows (delta: PDC SKIL new common -> both Q1 FAIL on loans; 12 funds). AMCI ORB 3.19-3.39 complete; spread 7% veto; size cap binding 3,055 sh",
+      "armed": false,
+      "vetoes": []
+    },
+    {
+      "et": "09:40",
+      "state": "FLAT-5m",
+      "scan": "09:40 scan: 58 rows (delta: FWDI DBGI new common -> both Q1 FAIL; 13 funds). AMCI: last 3.27, ORB high 3.39 not broken, spread 5.4% veto, no signal",
       "armed": false,
       "vetoes": []
     }

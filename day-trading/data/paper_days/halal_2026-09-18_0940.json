@@ -1,0 +1,35 @@
+{
+ "FWDI": {
+  "verdict": "FAIL",
+  "loan_pct": 26.7,
+  "cash_pct": 2.99,
+  "combined": 29.69,
+  "haram_pct": 1.84,
+  "halal": false,
+  "source": "quarterly",
+  "sic": "6199",
+  "fail_reason": "FINANCIAL SECTOR (SIC 6199 Finance Services) -- 6000-6999 is a hard FAIL (user ruling 2026-09-16); only an explicit PASS ruling with a basis can restore a quirk-coded name",
+  "mcap": 443819766.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ },
+ "DBGI": {
+  "verdict": "FAIL",
+  "loan_pct": 925.65,
+  "cash_pct": 59.34,
+  "combined": 984.99,
+  "haram_pct": null,
+  "halal": false,
+  "source": "quarterly",
+  "haram_src": null,
+  "haram_note": "interest income is not tagged and the non-operating bound is 68.76% of revenue (>= 5%) -- it proves nothing; still unverified",
+  "interest_flags": [
+   "intinc_implausible",
+   "bound_implausible",
+   "bound_implausible"
+  ],
+  "last_available": {},
+  "fail_reason": "unverified: missing interest income -- an absent statement row is not a zero (user ruling 2026-09-16); refusing [interest income is not tagged and the non-operating bound is 68.76% of revenue (>= 5%) -- it proves nothing; still unverified]",
+  "mcap": 2335907.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}

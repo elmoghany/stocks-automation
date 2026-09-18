@@ -231,6 +231,22 @@
    "vol": "17541.09",
    "name": "Skillsoft",
    "first_seen": "09:35"
+  },
+  "FWDI": {
+   "pct": 10.64,
+   "last": 6.86,
+   "prev_close": 6.2,
+   "vol": "467883.14",
+   "name": "Forward Industries",
+   "first_seen": "09:40"
+  },
+  "DBGI": {
+   "pct": 10.63,
+   "last": 4.89,
+   "prev_close": 4.42,
+   "vol": "38027",
+   "name": "Digital Brands Group",
+   "first_seen": "09:40"
   }
  },
  "halal_fail": [
@@ -261,7 +277,9 @@
   "LONA",
   "BHV",
   "PDC",
-  "SKIL"
+  "SKIL",
+  "FWDI",
+  "DBGI"
  ],
  "fake_gap": [
   "PTLE"
