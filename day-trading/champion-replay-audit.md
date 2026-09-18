@@ -349,9 +349,99 @@ market cap and turnover.
 Walk-forward LightGBM, 10 expanding folds (minimum 120 training
 sessions), 3 seeds, scoring only rows strictly after its training block.
 
-PLACEHOLDER_DETECT
+| model | n | base rate | AUC | IC vs MFE | xs-IC | t | prec top-10% | lift | prec top-1 | lift |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|---:|---:|
+| walk-forward LightGBM (2 seeds), 09:35+10:00 | 53,200 | 4.55% | 0.876 | +0.3645 | +0.3428 | +56.2 | 22.56% | 4.96x | 32.08% | 7.06x |
+|   ... restricted to 09:35 | 19,908 | 5.95% | 0.864 | +0.3880 | +0.3611 | +43.4 | 26.46% | 4.45x | 30.92% | 5.20x |
+|   ... restricted to 10:00 | 33,292 | 3.71% | 0.881 | +0.3432 | +0.3234 | +49.5 | 20.31% | 5.48x | 33.53% | 9.04x |
+|   ... aug-2026 block only (OOS) | 3,851 | 2.99% | 0.920 | +0.2704 | +0.3136 | +11.8 | 18.01% | 6.03x | 40.91% | 13.70x |
+| CONTROL shuffled target | 53,200 | 4.55% | 0.497 | -0.0032 | -0.0061 | -1.0 | 6.34% | 1.39x | 8.09% | 1.78x |
+| CONTROL random score | 70,814 | 5.01% | 0.508 | +0.0026 | +0.0050 | +1.2 | 6.16% | 1.23x | 5.15% | 1.03x |
+| CONTROL inverted score | 53,200 | 4.55% | 0.124 | -0.3645 | -0.3428 | -56.2 | 0.12% | 0.03x | 0.00% | 0.00x |
 
-PLACEHOLDER_MODEL
+```
+top features by gain (fit on the first 70% of dates):
+  hi_gain                  7518
+  sigma1                   6804
+  rvol_now                 5441
+  dvol60                   5054
+  gain_now                 3282
+  prior_range              3212
+  prevrange                3140
+  ret5                     1572
+  pm_bars                  1520
+  gap7                     1493
+  vwap_dist                1121
+  gap_open                 1121
+  pm_dvol                   939
+  coil                      855
+```
+
+**This is the highest AUC and the highest cross-sectional IC ever
+recorded in this repo, by an order of magnitude, and it is not what it
+looks like.** The controls are clean -- shuffled target 0.497, random
+score 0.508, inverted score 0.124 and IC -0.3645, an exact mirror -- so
+the model is genuinely learning. What it is learning is visible in the
+importances: `hi_gain`, `sigma1`, `rvol_now`, `dvol60`, `prior_range`,
+`prevrange`. Those are **volatility** variables, and the target is not
+volatility-standardised. "Will this name's high reach +30% above its
+current price in the next five hours" is, for a 2-dollar microcap
+printing 3% a minute, mostly a question about how fast it moves -- and
+how fast a name moves is easy to forecast from how fast it has been
+moving. The repo's usual IC ceiling of 0.03-0.06 is measured against
+forward RETURN, a near-martingale; this is measured against forward
+RANGE, which is not.
+
+So the honest reading is: **the champion's "kind of day" IS detectable
+-- AUC 0.88, top-decile precision 22.6% against a 4.6% base rate, a
+5.0x lift, and 6.0x on the aug-2026 block the model never trained on --
+because it is mostly a volatility forecast.** The question that matters
+is whether detecting it pays, and a volatility forecast has an obvious
+reason not to: the names with the largest upside range also have the
+largest downside range and the widest spreads. 2.4 settles it with
+money.
+
+### The detector's picks, traded (444 scored sessions)
+
+| config | tickets | tkt/day | gross $/tkt | flat10 $/tkt | measured $/tkt | $/month (flat10) | months + | ex-best |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| model pick 09:35, champion exits | 846 | 1.91 | -44.25 | -71.28 | -391.03 | -2,741 | 10/22 | -73,576 |
+| model pick 09:35, flatten 15:00 | 444 | 1.00 | -637.20 | -663.95 | -1027.25 | -13,400 | 5/22 | -317,096 |
+| CONTROL same slot, random pick, champion exits | 660 | 1.49 | -30.35 | -54.87 | -266.99 | -1,646 | 7/22 | -40,502 |
+| CONTROL same slot, champion ranking | 657 | 1.48 | -58.44 | -85.73 | -321.30 | -2,560 | 8/22 | -64,342 |
+| model, full day (rotation to 14:30) | 1846 | 4.16 | -12.97 | -38.71 | -250.64 | -3,248 | 10/22 | -84,895 |
+| CEILING (not a strategy): perfect day-type oracle, full day | 2964 | 6.68 | +516.12 | +488.47 | +162.03 | +65,810 | 22/22 | +1,402,701 |
+| CEILING: perfect day-type oracle, 09:35 slot only | 974 | 2.19 | +781.64 | +752.89 | +368.46 | +33,333 | 21/22 | +694,016 |
+
+**The detector's picks lose to a coin.** At the same 09:35 slot, with
+the same exits, the model earns **-$71.28 a ticket** against a **random
+pick at -$54.87**. Holding its picks to 15:00 instead of exiting on the
+champion's rules earns **-$663.95 a ticket** -- ten times worse than
+anything else in this audit. Both facts say the same thing: the model
+is picking the most VOLATILE names, and on this universe volatility is
+symmetric and expensive. An AUC of 0.88 against a range target buys
+nothing, because the names whose highs run 30% are the names whose lows
+run 30% the other way, and they cost the most to trade.
+
+**And the ceiling row shows what the right answer would be worth.** A
+perfect oracle that RE-RANKS (fills all seven tickets a day from the
+names that will finish the day highest, rather than merely vetoing the
+champion's own picks) earns **+$488.47 a ticket, +$65,810 a month,
+22 of 22 months positive -- and +$162.03 a ticket even at the MEASURED
+toll.** That is the corrected ceiling, and it is far above the target:
+the veto framing in 2.2 understated it because the veto keeps only the
+champion's own picks and discards two thirds of the tickets.
+
+So the information is worth an enormous amount and the frame CAN carry
+it: perfect direction pays $162 a ticket net of the real toll. What
+this line's detector learned was **range, not direction** -- and the
+gap between them is the whole of Part 2:
+
+| what is being predicted | AUC | traded $/ticket (flat10) |
+|---|---:|---:|
+| range: high reaches +30% by 15:00 (`up30`) | **0.876** | **-71.28** |
+| direction: the day's own net gain (perfect oracle) | 1.000 | **+488.47** |
+| direction: 15:00 close >= +5% (`upc5`, same model, same folds) | PLACEHOLDER_DIRAUC | PLACEHOLDER_DIRPNL |
 
 ---
 
@@ -540,7 +630,142 @@ Neither the structural discovery the R-campaign credited with +64% nor
 the eligibility convention is doing real work once the coverage bias is
 gone.
 
-PLACEHOLDER_CTRL
+### Best causal recombination (444 sessions)
+
+| config | tickets | tkt/day | gross $/tkt | flat10 $/tkt | measured $/tkt | $/month (flat10) | months + | ex-best |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| CHAMPION-MIMIC (reference) | 1242 | 2.80 | -49.99 | -73.01 | -253.83 | -4,122 | 6/22 | -97,750 |
+| R1 coil rank only | 1186 | 2.67 | +51.80 | +32.27 | -129.61 | +1,739 | 10/22 | +3,935 |
+| R2 coil + start 10:00 | 1015 | 2.29 | -36.94 | -55.56 | -181.94 | -2,563 | 5/22 | -63,339 |
+| R3 coil + stop -2% | 2313 | 5.21 | +19.55 | +0.80 | -164.20 | +84 | 9/22 | -33,507 |
+| R4 coil + no stop | 965 | 2.17 | +88.72 | +69.18 | -90.27 | +3,035 | 11/22 | +32,527 |
+| R5 coil + start 10:00 + stop -2% | 2151 | 4.84 | -17.14 | -35.24 | -167.20 | -3,446 | 4/22 | -82,858 |
+| R6 coil + start 10:00 + no stop | 852 | 1.92 | -26.83 | -45.38 | -171.07 | -1,757 | 6/22 | -45,605 |
+| R7 R5 + tighter trail (10%) | 2161 | 4.87 | -17.91 | -35.98 | -167.87 | -3,534 | 4/22 | -84,687 |
+| R8 R5 without the bearish exit | 1383 | 3.11 | -10.07 | -28.65 | -171.91 | -1,801 | 4/22 | -45,457 |
+| CONTROL R5 with the coil rank INVERTED | 2969 | 6.69 | -41.44 | -66.24 | -379.75 | -8,939 | 2/22 | -207,763 |
+| CONTROL R5 with a random pick | 2276 | 5.13 | -10.94 | -31.56 | -144.51 | -3,265 | 3/22 | -75,623 |
+| CONTROL random pick in R5's frame, 30 seeds (mean) | | | | -30.18 +- 8.99 | | -3,174 | | -76,377 |
+
+- R5 percentile vs the 30-seed control: total **46.7th**, ex-best **40.0th**
+- R5 edge over random: **-5.06/ticket** (z = -0.56)
+
+### The controls, each row in its OWN frame
+
+A random control only means anything if the ONLY thing randomised is
+the pick: same entry window, same stop, same trail, same exits, same
+ticket schedule. R5 was run that way in the table above and **failed**
+(46.7th percentile, edge -$5.06/ticket, z = -0.56) -- combining the
+components naively destroys the effect, because the -2% stop doubles
+the ticket count and the extra tickets are the marginal, worse ones.
+These are the two rows that did not fail, each against 30 seeds drawn
+in its own frame.
+
+| config | tickets | tkt/day | gross $/tkt | flat10 $/tkt | measured $/tkt | $/month (flat10) | months + | ex-best |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| R1 coil rank only | 1186 | 2.67 | +51.80 | +32.27 | -129.61 | +1,739 | 10/22 | +3,935 |
+| R1 coil rank only -- CONTROL inverted | 2524 | 5.68 | -153.06 | -178.66 | -530.96 | -20,497 | 3/22 | -464,535 |
+| R1 coil rank only -- CONTROL random, 30 seeds (mean) | | | | -41.36 +- 19.32 | | -2,574 | | -65,552 |
+| R4 coil + no stop | 965 | 2.17 | +88.72 | +69.18 | -90.27 | +3,035 | 11/22 | +32,527 |
+| R4 coil + no stop -- CONTROL inverted | 2056 | 4.63 | -175.24 | -201.08 | -554.11 | -18,792 | 1/22 | -426,715 |
+| R4 coil + no stop -- CONTROL random, 30 seeds (mean) | | | | -39.74 +- 21.75 | | -2,092 | | -55,398 |
+| CHAMPION-MIMIC | 1242 | 2.80 | -49.99 | -73.01 | -253.83 | -4,122 | 6/22 | -97,750 |
+| CHAMPION-MIMIC -- CONTROL inverted | 1212 | 2.73 | -29.19 | -43.89 | -289.79 | -2,418 | 7/22 | -59,482 |
+| CHAMPION-MIMIC -- CONTROL random, 30 seeds (mean) | | | | -41.36 +- 19.32 | | -2,574 | | -65,552 |
+
+| row | percentile, total | percentile, ex-best | edge over random $/tkt | z |
+|---|---:|---:|---:|---:|
+| R1 coil rank only | 100.0th | 100.0th | +73.63 | +3.81 |
+| R4 coil + no stop | 100.0th | 100.0th | +108.92 | +5.01 |
+| CHAMPION-MIMIC | 10.0th | 3.3th | -31.65 | -1.64 |
+
+Read the bottom table carefully, because it contains the sharpest
+single result of this line:
+
+- **R4 -- the champion's machinery with its ranking replaced by coil
+  and its -8% stop removed -- is at the 100th percentile on total AND
+  on ex-best against 30 random seeds, beats them by +$108.92 a ticket
+  at z = +5.01, and its inverted mirror loses $201 a ticket.** That is
+  every control the index header asks for, passed, on 965 tickets over
+  444 sessions and 22 months.
+- **The champion's own ranking is at the 10th percentile (3.3rd on
+  ex-best) and loses to random by $31.65 a ticket at z = -1.64.** The
+  coil/pressure key is not merely weak; on the causal universe it is
+  significantly worse than not ranking at all, and the inverted mirror
+  of the champion key (-$43.89) is BETTER than the champion (-$73.01).
+
+### The closest miss, split every way the bar asks for
+
+| row / window | tickets | flat10 $/tkt | measured $/tkt | total flat10 | $/month | months + | max drawdown |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| **R4 coil + no stop** -- whole window | 965 | +69.18 | -90.27 | +66,760 | +3,035 | 11/22 | -19,873 |
+| R4 coil + no stop -- year 1 (to 2025-08-01) | 423 | +110.98 | -57.75 | +46,944 | +4,694 | 5/10 | -18,381 |
+| R4 coil + no stop -- year 2 | 542 | +36.56 | -115.64 | +19,817 | +1,651 | 6/12 | -13,007 |
+| **R1 coil rank only** -- whole window | 1186 | +32.27 | -129.61 | +38,268 | +1,739 | 10/22 | -37,632 |
+| R1 coil rank only -- year 1 (to 2025-08-01) | 518 | +67.30 | -117.30 | +34,861 | +3,486 | 4/10 | -27,559 |
+| R1 coil rank only -- year 2 | 668 | +5.10 | -139.16 | +3,407 | +284 | 6/12 | -19,055 |
+| **CHAMPION-MIMIC** -- whole window | 1242 | -73.01 | -253.83 | -90,681 | -4,122 | 6/22 | -99,339 |
+| CHAMPION-MIMIC -- year 1 (to 2025-08-01) | 563 | -61.61 | -243.72 | -34,685 | -3,469 | 3/10 | -46,365 |
+| CHAMPION-MIMIC -- year 2 | 679 | -82.47 | -262.22 | -55,995 | -4,666 | 3/12 | -67,928 |
+
+R4 by month (flat 10 bps): 2024-10 +30,557  2024-11 +1,301  2024-12 -4,787  2025-01 +19,437  2025-02 +13,479  2025-03 -6,901  2025-04 -2,812  2025-05 +534  2025-06 -1,169  2025-07 -2,695  2025-08 -310  2025-09 +6,036  2025-10 +5,707  2025-11 +5,241  2025-12 +7,129  2026-01 -829  2026-02 +3,494  2026-03 -4,071  2026-04 +7,508  2026-05 -4,527  2026-06 -3,299  2026-07 -2,263
+
+R4 exits: bearish 393/+201,529  flatten 454/-76,072  trail 118/-58,697
+R4 hold minutes: median 100, mean 143
+R4 win rate 53.8%, median leg +6.1, profit factor 1.305, top-10 legs 39% of gross profit
+
+**And here is why R4 is a closest miss and not a result.** Five legs
+out of 965 carry more than the whole P&L:
+
+| rank | date | symbol | held | exit | $ (flat10) |
+|---:|---|---|---:|---|---:|
+| 1 | 2024-10-24 | MNPR | 93 min | bearish | **+32,093** |
+| 2 | 2025-01-27 | YIBO | 53 min | trail 20% | +15,274 |
+| 3 | 2025-10-22 | ARMP | 68 min | trail 20% | +13,870 |
+| 4 | 2025-01-29 | SGN | 21 min | bearish | +9,313 |
+| 5 | 2025-02-05 | RNAZ | 38 min | bearish | +8,860 |
+
+- total **+$66,760**
+- minus the single best DAY (2024-10-24): **+$32,527**
+- minus the top five LEGS: **-$12,651**
+- the top ten legs are **39% of gross profit**; the median leg is
+  **+$6.10**; the win rate is 53.8% and the profit factor 1.305
+
+So R4 passes the 100th-percentile and z = +5.01 control, both years are
+positive (+$110.98 and +$36.56 a ticket), the inverted mirror loses
+$201 a ticket -- and **it is still five trades.** The 30-seed control
+does not manufacture an MNPR, which is exactly why the percentile is
+100th, and that is a statement about the tail, not about a repeatable
+edge at 2.2 tickets a day. Under the measured toll the row is
+**-$90.27 a ticket**, so even the tail does not survive the spread.
+
+The honest one-line summary of R4: *replacing the champion's ranking key
+with plain coil and deleting its stop turns -$4,122 a month into
++$3,035 a month at the project's flat ladder, with every control
+passed, both years positive, and half the money in one session.*
+
+### Out of sample: aug-2026 block (22 sessions)
+
+| config | tickets | tkt/day | gross $/tkt | flat10 $/tkt | measured $/tkt | $/month (flat10) | months + | ex-best |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+| CHAMPION-MIMIC | 45 | 2.05 | +61.65 | +36.15 | -143.29 | +813 | 1/2 | -1,426 |
+| R1 coil rank only | 44 | 2.00 | +32.15 | +13.16 | -97.80 | +290 | 2/2 | -1,616 |
+| R5 coil + start 10:00 + stop -2% | 104 | 4.73 | -60.55 | -80.05 | -199.72 | -4,163 | 0/2 | -9,616 |
+| CONTROL R5 inverted | 148 | 6.73 | -93.32 | -120.41 | -464.10 | -8,910 | 1/2 | -19,650 |
+| CONTROL random pick | 57 | 2.59 | +189.45 | +167.68 | +33.91 | +4,779 | 1/2 | +7,249 |
+
+**The aug-2026 block is UNINFORMATIVE and is reported as such.** A
+single random-pick seed earns **+$167.68 a ticket** over these 22
+sessions on 57 tickets -- four times anything the ranked rows produce
+and the opposite sign to every in-sample result. With two calendar
+months and fewer than 150 tickets per row, the standard error on
+$/ticket in this block is larger than every effect this line measured.
+It neither confirms nor refutes anything; quoting the champion-mimic's
++$813/month here would be quoting noise, and so would quoting R5's
+-$4,163. The honest statement is that the out-of-sample window
+available to this study is too short to test a 2-3 ticket-a-day rule,
+and that is a property of the calendar, not of the configs.
+
 
 ---
 
@@ -650,7 +875,17 @@ $203 to place.
 
 ### Closest miss, and what to do next
 
-**Closest miss.** `PLACEHOLDER_CLOSEST`
+**Closest miss: `R4` -- the champion's own machinery, with its
+coil/pressure ranking replaced by plain coil and its -8% stop deleted.**
+965 tickets, 2.17 a day, 444 sessions: **+$69.18/ticket and +$3,035 a
+month at flat 10 bps, 100th percentile on total AND ex-best against 30
+random seeds in its own frame, edge +$108.92/ticket at z = +5.01,
+inverted mirror -$201.08/ticket, both years positive (+$110.98 /
++$36.56).** That is the best row this repo has ever produced --
+the previous best was CATALYST-MINER's +$674/month -- and it is still
+**2.5x short** of the bar at flat 10 bps, **-$90.27/ticket under the
+measured toll**, and **five of its 965 legs carry 119% of its P&L**
+(remove them and it is -$12,651). It is a tail, not an income.
 
 **Ranked next, by how much of the gap each one could close.**
 

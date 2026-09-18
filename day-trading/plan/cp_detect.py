@@ -39,6 +39,13 @@ import cp_scan                                              # noqa: E402
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "data/massive/cp"
 
+# THE TARGET MATTERS MORE THAN THE MODEL. `up30` asks whether the
+# name's HIGH reaches +30% above the decision price -- a question about
+# RANGE, which is dominated by volatility and therefore easy. `upc5`
+# asks whether the name's 15:00 CLOSE is +5% above it -- a question
+# about DIRECTION, which is the near-martingale every IC in this repo
+# is measured against. Both are run; the difference between them is the
+# whole finding.
 TARGET = "up30"
 RET = "mfe1500"
 DROP = {"up30", "up50", "up100", "mfe1500", "mae1500", "r30", "r60",
@@ -52,16 +59,21 @@ def feature_cols(cols):
 
 
 def walk_forward(T, times=(935, 1000), seeds=(0, 1), shuffle=False,
-                 verbose=True):
+                 verbose=True, target=None, ret=None):
     import lightgbm as lgb
+    target = target or TARGET
+    ret = ret or RET
     X, cols, ci = T["X"], T["cols"], T["ci"]
     keep = np.isin(T["tt"], list(times))
     X, date, sym, tt = X[keep], T["date"][keep], T["sym"][keep], T["tt"][keep]
     fc = feature_cols(cols)
     fi = [ci[c] for c in fc]
     Xf = X[:, fi].astype(np.float64)
-    y = X[:, ci[TARGET]].astype(np.float64)
-    r = X[:, ci[RET]].astype(np.float64)
+    if target == "upc5":
+        y = (X[:, ci["r1500"]].astype(np.float64) >= 0.05).astype(float)
+    else:
+        y = X[:, ci[target]].astype(np.float64)
+    r = X[:, ci[ret]].astype(np.float64)
     ndates = int(date.max()) + 1
     bounds = np.linspace(MIN_TRAIN_DAYS, ndates, NFOLD + 1).astype(int)
     scores = np.full((len(seeds), len(y)), np.nan)
@@ -191,6 +203,11 @@ def main():
                        (v[m] if isinstance(v, np.ndarray) else v))
                    for k, v in res.items()}
             rows.append(evaluate(sub, "  ... aug-2026 block only (OOS)"))
+    # the DIRECTIONAL target: does the 15:00 CLOSE beat the decision
+    # price by 5%? Same features, same folds, same seeds.
+    resd = walk_forward(T, target="upc5", ret="r1500")
+    rows.append(evaluate(resd, "DIRECTIONAL target (close >= +5% at 15:00)"))
+    save_scores(resd, OUT / "scores_dir.npz")
     resh = walk_forward(T, shuffle=True, seeds=(0,))
     rows.append(evaluate(resh, "CONTROL shuffled target"))
     rnd = dict(res)
