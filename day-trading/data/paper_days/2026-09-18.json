@@ -660,6 +660,16 @@
       "q2": "not evaluated -- Sigma Lithium, lithium mining",
       "screened_et": "11:35",
       "armable": false
+    },
+    "HSDT": {
+      "q1": "FAIL",
+      "loan_pct": 0.0,
+      "cash_pct": 2.66,
+      "mcap": 137241255.0,
+      "fail_reason": "FINANCIAL SECTOR SIC 6199",
+      "q2": "FAIL -- Solana Company, crypto treasury",
+      "screened_et": "11:40",
+      "armable": false
     }
   },
   "cycles_log": [
@@ -1168,6 +1178,19 @@
       "et": "11:35",
       "state": "FLAT-5m",
       "scan": "11:35 scan: 106 rows (delta: SGML new -> Q1 FAIL loan 26%). AMCI 3.41, bid 3.32 / ask 3.45 (3.9%), no signal. BSEM 4.81, bid 4.68 / ask 4.85 (3.6%), chase, no signal",
+      "armed": false,
+      "vetoes": [
+        "AMCI SPREAD 3.92%",
+        "AMCI SIZE-CAP",
+        "BSEM SPREAD 3.63%",
+        "BSEM CHASE",
+        "BSEM SIZE-CAP"
+      ]
+    },
+    {
+      "et": "11:40",
+      "state": "FLAT-5m",
+      "scan": "11:40 scan: 106 rows (delta: HSDT new -> FAIL SIC 6199 crypto treasury). AMCI 3.39, bid 3.32 / ask 3.45 (3.9%), no signal. BSEM 4.78, bid 4.68 / ask 4.85 (3.6%), chase, no signal",
       "armed": false,
       "vetoes": [
         "AMCI SPREAD 3.92%",

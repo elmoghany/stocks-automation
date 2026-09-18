@@ -399,6 +399,14 @@
    "vol": "1254708",
    "name": "Sigma Lithium",
    "first_seen": "11:35"
+  },
+  "HSDT": {
+   "pct": 12.66,
+   "last": 2.58,
+   "prev_close": 2.2901,
+   "vol": "444328",
+   "name": "Solana Company Class A",
+   "first_seen": "11:40"
   }
  },
  "halal_fail": [
@@ -449,7 +457,8 @@
   "CNTN",
   "CD",
   "AGCC",
-  "SGML"
+  "SGML",
+  "HSDT"
  ],
  "fake_gap": [
   "PTLE"

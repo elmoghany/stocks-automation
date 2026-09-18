@@ -1,0 +1,15 @@
+{
+ "HSDT": {
+  "verdict": "FAIL",
+  "loan_pct": 0.0,
+  "cash_pct": 2.66,
+  "combined": 2.66,
+  "haram_pct": null,
+  "halal": false,
+  "source": "quarterly",
+  "sic": "6199",
+  "fail_reason": "FINANCIAL SECTOR (SIC 6199 Finance Services) -- 6000-6999 is a hard FAIL (user ruling 2026-09-16); only an explicit PASS ruling with a basis can restore a quirk-coded name",
+  "mcap": 137241255.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}
