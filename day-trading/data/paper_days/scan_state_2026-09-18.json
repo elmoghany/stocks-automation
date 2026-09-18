@@ -313,10 +313,10 @@
    "first_seen": "10:25"
   },
   "BSEM": {
-   "pct": 24.77,
-   "last": 5.44,
-   "prev_close": 4.62,
-   "vol": "194236",
+   "pct": 20.18,
+   "last": 5.24,
+   "prev_close": 4.36,
+   "vol": "197066.789243",
    "name": "BioStem Technologies",
    "first_seen": "10:25"
   },
@@ -479,6 +479,14 @@
    "vol": "273999",
    "name": "Solana",
    "first_seen": "12:30"
+  },
+  "FGL": {
+   "pct": 13.48,
+   "last": 4.6299,
+   "prev_close": 4.08,
+   "vol": "63743.520232",
+   "name": "Founder Group Limited Class A",
+   "first_seen": "12:55"
   }
  },
  "halal_fail": [
@@ -539,7 +547,8 @@
   "MARA",
   "ALVO",
   "NCI",
-  "SOL"
+  "SOL",
+  "FGL"
  ],
  "fake_gap": [
   "PTLE"

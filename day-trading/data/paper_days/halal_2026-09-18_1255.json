@@ -1,0 +1,22 @@
+{
+ "FGL": {
+  "verdict": "FAIL",
+  "haram_pct_note": "interest income only -- blind to revenue mix",
+  "loan_pct": 274331.72,
+  "cash_pct": 171683.51,
+  "combined": 446015.23,
+  "haram_pct": 0.2,
+  "haram_periods": 1,
+  "haram_src": "yfinance",
+  "halal": false,
+  "source": "quarterly+last-available",
+  "fail_reason": "LOAN>10",
+  "last_available": {
+   "revenue": "yf-annual 2025-12-31",
+   "interest income": "yf-annual 2025-12-31"
+  },
+  "sic": "1700",
+  "mcap": 46739.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}

@@ -749,6 +749,13 @@
       "verdict": "FAIL",
       "why": "inherited_fail from prior campaign screening (scan_state); +77% at 12:30, not re-screened",
       "screened_et": "12:30"
+    },
+    "FGL": {
+      "q1": "FAIL",
+      "q2": "not reached",
+      "verdict": "FAIL",
+      "why": "Q1 FAIL: interest-bearing debt far exceeds market cap (scan mcap $46,739, debt ratio 274331%); Founder Group (Malaysia solar EPC), new on 12:55 scan",
+      "screened_et": "12:55"
     }
   },
   "cycles_log": [
@@ -1448,6 +1455,18 @@
         "BSEM SPREAD 4.26%",
         "BSEM CHASE",
         "AMCI SPREAD 5.42%",
+        "AMCI SIZE-CAP"
+      ]
+    },
+    {
+      "et": "12:55",
+      "state": "FLAT-5m",
+      "scan": "12:55 scan: 137 rows (raw dump); FGL new -> Q1 FAIL (debt >> mcap); GLOO/PS back, inherited FAIL. BSEM 5.24, bid 5.10 / ask 5.30 (3.9%), signal stale, size cap 1978<2830. AMCI 3.42, bid 3.35 / ask 3.50 (4.5%)",
+      "armed": false,
+      "vetoes": [
+        "BSEM SPREAD 3.92%",
+        "BSEM SIZE-CAP",
+        "AMCI SPREAD 4.48%",
         "AMCI SIZE-CAP"
       ]
     }
