@@ -359,6 +359,14 @@
    "vol": "7921268",
    "name": "Coinbase",
    "first_seen": "11:00"
+  },
+  "FEAM": {
+   "pct": 10.92,
+   "last": 2.285,
+   "prev_close": 2.06,
+   "vol": "838344",
+   "name": "5E Advanced Materials",
+   "first_seen": "11:20"
   }
  },
  "halal_fail": [
@@ -404,7 +412,8 @@
   "CANG",
   "XBP",
   "SBET",
-  "COIN"
+  "COIN",
+  "FEAM"
  ],
  "fake_gap": [
   "PTLE"

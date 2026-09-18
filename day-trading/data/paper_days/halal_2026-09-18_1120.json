@@ -1,0 +1,17 @@
+{
+ "FEAM": {
+  "verdict": "FAIL",
+  "haram_pct_note": "interest income only -- blind to revenue mix",
+  "loan_pct": 0.17,
+  "cash_pct": 34.75,
+  "combined": 34.91,
+  "haram_pct": 100.0,
+  "haram_periods": 4,
+  "haram_src": "yfinance",
+  "halal": false,
+  "source": "quarterly",
+  "fail_reason": "CASH>10",
+  "mcap": 73066792.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}
