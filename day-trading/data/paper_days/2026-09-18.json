@@ -1500,6 +1500,18 @@
         "AMCI SPREAD 4.48%",
         "AMCI SIZE-CAP"
       ]
+    },
+    {
+      "et": "13:10",
+      "state": "FLAT-5m",
+      "scan": "13:10 scan: 138 rows (raw dump); no unscreened common (PFSA/TGL/GLOO/IMOS back, inherited FAIL; rest ETFs). BSEM 5.24, bid 5.11 / ask 5.30 (3.7%), no signal, size cap. AMCI 3.32, bid 3.38 / ask 3.50 (3.6%), stale",
+      "armed": false,
+      "vetoes": [
+        "BSEM SPREAD 3.72%",
+        "BSEM SIZE-CAP",
+        "AMCI SPREAD 3.55%",
+        "AMCI SIZE-CAP"
+      ]
     }
   ],
   "veto_rates": {
