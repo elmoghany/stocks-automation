@@ -1569,5 +1569,27 @@
   "haram_share_est": null,
   "class": "type-fund",
   "basis": "Polygon reference type is an ETF/fund, not common equity (HALAL-GATE-REVIEW 2026-09-17). Funds/ETFs are a hard FAIL under the user's 2026-09-16 financial-sector ruling; JPO is a covered-call option-income ETF (options are haram). The ticker-shape universe filter let these through."
+ },
+ "_thresholds_ruling_2026-09-17": "USER RULING 2026-09-17: keep strict 10/10/20 (loans/mcap <= 10, cash/mcap <= 10, combined <= 20). The HALAL-GATE-REVIEW counterfactuals (15/15/30 -> 724, 33/33/66 -> 1,363) are recorded for reference only; the smaller universe is the user's deliberate choice. MSFT and GOOGL stay PASS for now (entertainment-leg question deferred, not ruled).",
+ "MSFT": {
+  "verdict": "PASS",
+  "date": "2026-09-17",
+  "class": "A-activity",
+  "haram_share_est": null,
+  "basis": "USER RULING 2026-09-17: keep for now. The entertainment-leg question (Xbox/Activision; YouTube) is deferred, not decided; ratios still gate (PASS today). Revisit on request."
+ },
+ "GOOGL": {
+  "verdict": "PASS",
+  "date": "2026-09-17",
+  "class": "A-activity",
+  "haram_share_est": null,
+  "basis": "USER RULING 2026-09-17: keep for now. The entertainment-leg question (Xbox/Activision; YouTube) is deferred, not decided; ratios still gate (PASS today). Revisit on request."
+ },
+ "GOOG": {
+  "verdict": "PASS",
+  "date": "2026-09-17",
+  "class": "A-activity",
+  "haram_share_est": null,
+  "basis": "USER RULING 2026-09-17: keep for now. The entertainment-leg question (Xbox/Activision; YouTube) is deferred, not decided; ratios still gate (PASS today). Revisit on request."
  }
 }

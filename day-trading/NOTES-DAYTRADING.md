@@ -10109,3 +10109,13 @@ against 472 symbols (COSMETIC ONLY -- `cmd_rank` reads `updated` and
 recommended but did not make, so if the intent was only the swap, the four
 should go back. Flagged, not touched: it is not this line's file.
 
+
+## HALAL RULINGS 2026-09-17 (user): thresholds stay 10/10/20; MSFT/GOOGL kept
+After the HALAL-GATE-REVIEW the user ruled: keep the strict 10/10/20 ratio
+thresholds (armable 476 on the rebuilt universe, 472 live after the four fund
+tickers were removed). The 15/15/30 (724) and AAOIFI 33/33/66 (1,363)
+counterfactuals are reference only. MSFT and GOOGL stay PASS for now — the
+entertainment-leg question is deferred, not decided (recorded as Class-A
+rulings so a later rebuild cannot silently flip them). Still open: the five
+SIC mis-coded names (IDCC, RGLD, TFPM, TPL, USIO) and the currency bug on
+foreign filers (2 names affected).
