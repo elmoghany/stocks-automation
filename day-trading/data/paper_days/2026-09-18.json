@@ -1414,6 +1414,18 @@
         "AMCI SPREAD 5.72%",
         "AMCI SIZE-CAP"
       ]
+    },
+    {
+      "et": "12:40",
+      "state": "FLAT-5m",
+      "scan": "12:40 scan: 135 rows; MTC/TTRX back (already FAIL), BHYP ETF; no unscreened common. BSEM 5.25 high then 5.11 on 6.2k, bid 4.99 / ask 5.25 (5.2%), chase, no fresh signal. AMCI 3.39, bid 3.32 / ask 3.42 (3.0%)",
+      "armed": false,
+      "vetoes": [
+        "BSEM SPREAD 5.21%",
+        "BSEM CHASE",
+        "AMCI SPREAD 3.01%",
+        "AMCI SIZE-CAP"
+      ]
     }
   ],
   "veto_rates": {
