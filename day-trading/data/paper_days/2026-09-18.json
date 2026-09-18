@@ -1615,6 +1615,18 @@
         "AMCI SPREAD 2.69%",
         "AMCI SIZE-CAP"
       ]
+    },
+    {
+      "et": "13:55",
+      "state": "FLAT-5m",
+      "scan": "13:55 scan: 141 rows (raw dump); no unscreened common (HYPD/SECZ back, inherited FAIL). BSEM 5.04, bid 4.96 / ask 5.15 (3.8%), no signal, thin (trail10 5k). AMCI 3.38, bid 3.35 / ask 3.43 (2.4%), no signal",
+      "armed": false,
+      "vetoes": [
+        "BSEM SPREAD 3.83%",
+        "BSEM SIZE-CAP",
+        "AMCI SPREAD 2.39%",
+        "AMCI SIZE-CAP"
+      ]
     }
   ],
   "veto_rates": {
