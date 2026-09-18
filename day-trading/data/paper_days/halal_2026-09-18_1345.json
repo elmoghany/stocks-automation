@@ -1,0 +1,22 @@
+{
+ "KAZR": {
+  "verdict": "FAIL",
+  "haram_pct_note": "interest income only -- blind to revenue mix",
+  "loan_pct": 102.41,
+  "cash_pct": 14.86,
+  "combined": 117.28,
+  "haram_pct": 1.54,
+  "haram_periods": 1,
+  "haram_src": "yfinance",
+  "halal": false,
+  "source": "quarterly+last-available",
+  "fail_reason": "LOAN>10",
+  "last_available": {
+   "revenue": "yf-annual 2026-03-31",
+   "interest income": "yf-annual 2026-03-31"
+  },
+  "sic": "1700",
+  "mcap": 31129533.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}

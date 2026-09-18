@@ -763,6 +763,13 @@
       "verdict": "FAIL",
       "why": "Q1 FAIL: debt 23.7% of mcap (cap 10%), cash+securities 89% of mcap (cap 20%); UTime Ltd, new on 13:00 scan",
       "screened_et": "13:00"
+    },
+    "KAZR": {
+      "q1": "FAIL",
+      "q2": "not reached",
+      "verdict": "FAIL",
+      "why": "Q1 FAIL: interest-bearing debt 102% of mcap (cap 10%); Skyline Builders (HK construction), new on 13:45 scan",
+      "screened_et": "13:45"
     }
   },
   "cycles_log": [
@@ -1580,6 +1587,18 @@
       "armed": false,
       "vetoes": [
         "BSEM SPREAD 6.01%",
+        "BSEM SIZE-CAP",
+        "AMCI SPREAD 2.66%",
+        "AMCI SIZE-CAP"
+      ]
+    },
+    {
+      "et": "13:45",
+      "state": "FLAT-5m",
+      "scan": "13:45 scan: 140 rows (raw dump); KAZR new -> Q1 FAIL (debt 102% of mcap). BSEM 5.03, bid 4.95 / ask 5.23 (5.7%), no signal, volume drying (trail10 5k). AMCI 3.32 no prints since 13:00, bid 3.38 / ask 3.47 (2.7%)",
+      "armed": false,
+      "vetoes": [
+        "BSEM SPREAD 5.66%",
         "BSEM SIZE-CAP",
         "AMCI SPREAD 2.66%",
         "AMCI SIZE-CAP"
