@@ -391,6 +391,14 @@
    "vol": "17580",
    "name": "Agencia Comercial Spirits Ltd",
    "first_seen": "11:30"
+  },
+  "SGML": {
+   "pct": 10.02,
+   "last": 9.77,
+   "prev_close": 8.8802,
+   "vol": "1254708",
+   "name": "Sigma Lithium",
+   "first_seen": "11:35"
   }
  },
  "halal_fail": [
@@ -440,7 +448,8 @@
   "FEAM",
   "CNTN",
   "CD",
-  "AGCC"
+  "AGCC",
+  "SGML"
  ],
  "fake_gap": [
   "PTLE"

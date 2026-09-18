@@ -1,0 +1,18 @@
+{
+ "SGML": {
+  "verdict": "FAIL",
+  "haram_pct_note": "interest income only -- blind to revenue mix",
+  "loan_pct": 26.05,
+  "cash_pct": 1.62,
+  "combined": 27.66,
+  "haram_pct": 0.43,
+  "haram_periods": 4,
+  "haram_src": "yfinance",
+  "halal": false,
+  "source": "quarterly",
+  "fail_reason": "LOAN>10",
+  "sic": "1000",
+  "mcap": 1029884472.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}

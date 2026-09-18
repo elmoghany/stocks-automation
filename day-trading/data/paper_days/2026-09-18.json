@@ -649,6 +649,17 @@
       "q2": "FAIL -- spirits",
       "screened_et": "11:30",
       "armable": false
+    },
+    "SGML": {
+      "q1": "FAIL",
+      "loan_pct": 26.05,
+      "cash_pct": 1.62,
+      "haram_pct": 0.43,
+      "mcap": 1029884472.0,
+      "fail_reason": "LOAN>10",
+      "q2": "not evaluated -- Sigma Lithium, lithium mining",
+      "screened_et": "11:35",
+      "armable": false
     }
   },
   "cycles_log": [
@@ -1149,6 +1160,19 @@
         "AMCI SPREAD 3.31%",
         "AMCI SIZE-CAP",
         "BSEM SPREAD 1.68%",
+        "BSEM CHASE",
+        "BSEM SIZE-CAP"
+      ]
+    },
+    {
+      "et": "11:35",
+      "state": "FLAT-5m",
+      "scan": "11:35 scan: 106 rows (delta: SGML new -> Q1 FAIL loan 26%). AMCI 3.41, bid 3.32 / ask 3.45 (3.9%), no signal. BSEM 4.81, bid 4.68 / ask 4.85 (3.6%), chase, no signal",
+      "armed": false,
+      "vetoes": [
+        "AMCI SPREAD 3.92%",
+        "AMCI SIZE-CAP",
+        "BSEM SPREAD 3.63%",
         "BSEM CHASE",
         "BSEM SIZE-CAP"
       ]
