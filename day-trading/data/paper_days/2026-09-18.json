@@ -255,6 +255,13 @@
       "scan": "80 rows (delta: MEDS new -> inherited FAIL; DSY SECZ off-scan). 0 candidates",
       "armed": false,
       "vetoes": []
+    },
+    {
+      "et": "07:25",
+      "state": "FLAT-5m",
+      "scan": "07:20 scan: 77 rows, no new common-stock ticker (SLON off). 0 candidates",
+      "armed": false,
+      "vetoes": []
     }
   ],
   "veto_rates": {
