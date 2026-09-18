@@ -1673,11 +1673,11 @@
       "size_cap_binding": 1
     },
     "regular": {
-      "would_be_entries": 8,
-      "spread_veto": 8,
+      "would_be_entries": 9,
+      "spread_veto": 9,
       "depth_veto": 0,
       "chase_veto": 6,
-      "size_cap_binding": 4
+      "size_cap_binding": 5
     }
   },
   "errors": [],
@@ -1892,6 +1892,21 @@
       ],
       "size_cap": "4038 >= 2857 OK",
       "session_phase": "regular"
+    },
+    {
+      "et": "14:07",
+      "sym": "BSEM",
+      "signal": "macd_cross_up 14:05 [TAKEABLE NOW]",
+      "bid": 4.95,
+      "ask": 5.15,
+      "spread_pct": 4.04,
+      "session_high": 5.35,
+      "vetoes": [
+        "SPREAD 4.04%",
+        "SIZE-CAP 1816 < 2912"
+      ],
+      "session_phase": "regular",
+      "note": "14:05 bar 5.12 on 5.4k; no chase (ask < 5.35 high)"
     }
   ],
   "ptle_watch": {
