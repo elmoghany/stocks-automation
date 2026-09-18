@@ -159,6 +159,14 @@
    "vol": "2195000.99",
    "name": "Viant Technology",
    "first_seen": "07:45"
+  },
+  "TNMG": {
+   "pct": 14.5,
+   "last": 3.08,
+   "prev_close": 2.69,
+   "vol": "54604.81",
+   "name": "TNL Mediagene",
+   "first_seen": "07:55"
   }
  },
  "halal_fail": [
@@ -181,7 +189,8 @@
   "KIDZ",
   "IPW",
   "NXTC",
-  "DSP"
+  "DSP",
+  "TNMG"
  ],
  "fake_gap": [],
  "inherited_fail": [

@@ -241,6 +241,15 @@
       "screened_et": "07:46",
       "armable": false,
       "note": "Scan 'Market cap' cell was 212.3M (Class A float only); get_equity_fundamentals market_cap is 664.7M (all shares). Re-screened on the larger cap: cash 29.0% still > 10% and combined 32.4% > 20%, so FAIL on either denominator. Dual-class names: prefer the fundamentals cap."
+    },
+    "TNMG": {
+      "q1": "FAIL",
+      "loan_pct": 123.82,
+      "cash_pct": 16.68,
+      "mcap": 17462747.0,
+      "q2": "n/a (Q1 FAIL) -- TNL Mediagene, digital advertising/media (RH fundamentals cap is only 2.0M, which fails harder)",
+      "screened_et": "07:55",
+      "armable": false
     }
   },
   "cycles_log": [
@@ -339,6 +348,13 @@
       "et": "07:50",
       "state": "FLAT-5m",
       "scan": "07:50 scan: 77 rows, no new common-stock ticker (DUKR off). 0 candidates",
+      "armed": false,
+      "vetoes": []
+    },
+    {
+      "et": "07:55",
+      "state": "FLAT-5m",
+      "scan": "07:55 scan: 84 rows (delta: TNMG new; IPW FTCI SLON back; DUKR off). TNMG Q1 FAIL loan 123.8%. 0 armable",
       "armed": false,
       "vetoes": []
     }
