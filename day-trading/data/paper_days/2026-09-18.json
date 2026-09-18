@@ -412,6 +412,13 @@
       "scan": "08:15 scan: 89 rows (delta: OPTT new). OPTT Q1 FAIL loan 59.9% cash 44.9%. 0 armable",
       "armed": false,
       "vetoes": []
+    },
+    {
+      "et": "08:20",
+      "state": "FLAT-5m",
+      "scan": "08:20 scan: 82 rows, no new common-stock ticker (OPTT TOYO off). 0 candidates",
+      "armed": false,
+      "vetoes": []
     }
   ],
   "veto_rates": {
