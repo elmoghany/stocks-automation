@@ -10394,3 +10394,202 @@ iterations: nothing to learn); rest-then-cross keeps +$11.76 (100th pct) at -$5.
 a resting bid (what fills is the fade). Honesty: P1 0/8,442 pre-post leaks, P2 91% moved,
 FastCost == CostModel 963/963, fills bounded by their limits 5,755/5,755; 30-seed random,
 inverted (3rd pct), shuffled (on the mean), foresight monotone. **FAIL vs $7,500/month.**
+
+
+## OPEN-UNIVERSE (2026-09-17): breadth lowers the ceiling, depth raises it, and two look-aheads caught on the way
+
+**PAUSED mid-study at the coordinator's instruction. Full state, relaunch commands and cache
+inventory: `RESUME-OPEN-UNIVERSE.md`. Results: `open-universe-audit.md`. Code: `plan/ou_*.py`.**
+
+USER DIRECTION: "work on the agents but IGNORE whether the stock is halal for now" -- the gate
+is being repaired separately, so the edge search ran on the full liquid US universe and the halal
+filter was applied afterwards.
+
+### The universe, and the type gate that had to replace the halal screen
+
+The halal screen was the only filter in this repo that also, incidentally, excluded
+non-operating listings. Remove it and `plan/rl2/out/screen.json.gz` -- the `liquid` universe
+every prior line used as its no-halal reference -- turns out to be **30% exchange-traded
+products**: 411,667 ETF symbol-days, plus ETV/FUND/ETS/ETN/PFD/SP/WARRANT/UNIT, out of 1.55M.
+Buying SPY seven times is not stock picking. So a type gate goes in the halal screen's place:
+Polygon `type` in {CS, ADRC}, closed-end-fund SIC excluded, **every sector kept including
+financials** (the mandate says operating companies of every sector, so the halal screen's blanket
+SIC-6xxx removal is not reproduced). With prior-60-session median dollar volume >= $5M and median
+close >= $5: **2,532 names/day, 1,134,288 symbol-days, 3,298 symbols, 448 dates.**
+
+The minute subset is the top 600/day by that same dollar volume -- 268,800 symbol-days but only
+**867 distinct symbols**, because the top of the liquidity distribution barely turns over.
+`plan/ou_backfill.py` therefore walks the RANGE endpoint per symbol in 62-day chunks with
+`next_url` pagination instead of one call per symbol-day: **~7,000 API calls instead of 268,800**,
+~70 minutes, **0 failures**, 1.79 GB, 378,869 symbol-days stored (more than planned, because a
+range fetch returns every date the symbol printed). The vectorised ET-grid mapping was proved
+byte-identical to the naive per-bar `zoneinfo` version on AAPL, 339,009 bars, all of o/h/l/c/v.
+
+### THE FIRST NUMBER: does breadth change the ceiling? No -- it lowers it.
+
+Identity first: the reimplementation of `hd_frame` reproduces `harness-diagnostic.md` **to the
+dollar** on all three of its universes (halal_strict -$2,432/mo and +$1,980 at zero cost,
+halal_wide -$2,616, liquid -$3,141), including the winning policy's identity.
+
+| universe | names/day | flat 10 bps | ZERO cost | measured | edge/tkt vs random | pct |
+|---|---:|---:|---:|---:|---:|---:|
+| halal_strict | 61 | -$2,432 | **+$1,980** | -$3,320 | +$16.84 | 100 |
+| halal_wide | 278 | -$2,616 | +$1,796 | +$399 | +$11.94 | 100 |
+| rl2 `liquid` (30% ETFs) | 4,575 | -$3,141 | +$1,270 | +$403 | +$7.27 | 80.0 |
+| **open universe** | **2,532** | **-$3,396** | **+$1,015** | +$186 | +$4.14 | 76.7 |
+| open, top 100 by $vol | 100 | -$1,612 | +$2,801 | +$812 | +$17.64 | 100 |
+| open, top 300 | 300 | -$1,169 | +$3,244 | +$1,026 | +$20.31 | 100 |
+| **open, top 600** | **600** | **-$682** | **+$3,732** | **+$1,215** | **+$25.14** | 100 |
+| open, top 1200 | 1,200 | -$1,961 | +$2,452 | +$186 | +$15.35 | 100 |
+| open, rank 601+ | 1,932 | -$3,586 | +$825 | -$2,002 | +$2.02 | 63.3 |
+| open, rank 1201+ | 1,332 | -$4,164 | +$246 | -$2,269 | **-$1.52** | 43.3 |
+
+The edge a simple pre-open ordering extracts is **monotone in book depth and dies at the tail**:
++$25/ticket over a matched random control on the 600 deepest books, +$2 on everything below them,
+and **nothing at all** (43rd percentile, best-of-twenty indistinguishable from a coin) on the
+1,332 thinnest names in a universe already screened at $5M a day. Adding those names is exactly
+what taking the universe from 600 to 2,532 does, and it is why breadth lowers the ceiling.
+
+**Account-legal ($100k/day = 6 x $15k + 1 x $10k, which no hd_frame row in the index charges):
+the best row in the whole test is +$1,063/month (top-300) and +$981 (top-600) -- 7.1x and 7.6x
+short**, Y1 negative, 9-11 of 22 months positive, 64% of the top-600 total in one day, runner-up
++$257 with the other eighteen policies negative to -$5,993.
+
+### LEAK #1 -- present-day market cap. Caught before it became a result.
+
+The first cut sliced on `hgr_ticker_meta.market_cap`, a 2026-09 snapshot, and printed
+**+$4,942/mo zero-cost and +$527 net** on the $2-10B bucket -- the best numbers this project has
+produced. They are survivorship: a name is in the ">$2B" bucket partly *because* it rose during
+the study window, the same outcome-conditioned membership that retracted the MX series. With
+market cap computed causally (present-day share count x the **previous session's** close) it
+collapses to **+$896 / -$3,515**, and the size ordering reverses -- **once membership is causal,
+market cap adds nothing beyond liquidity**. `ou_lib.mcap_matrix` does it causally; `ou_lib.mcap`
+is now labelled not-causal. Sector-neutral ranking (one ticket per 2-digit SIC) is worse than
+unconstrained on every cost column: edge/ticket **+$0.30**, 50th percentile.
+
+### LEAK #2 -- the present-day halal list, and it is worth more than the first
+
+`data/halal_list.json` applied retroactively vs point-in-time membership
+(`plan/uq_out/universe/{D}.json`), measured on a **RANDOM picker** -- no ordering, no model,
+nothing but membership:
+
+| universe | random @ zero, SNAPSHOT | random @ zero, PIT | **leak** |
+|---|---:|---:|---:|
+| open (all) | +$1,466 | +$286 | **+$1,180/mo** |
+| open top-600 | +$1,518 | +$24 | **+$1,494/mo** |
+| mcap >$10B (causal) | +$1,078 | +$137 | **+$941/mo** |
+| mcap $2-10B (causal) | +$1,665 | +$528 | **+$1,137/mo** |
+
+**+$6.4 to +$10.2 a ticket, 4.3 to 6.8 bp a day, from membership alone.** The mechanism is not
+mysterious: the gate's debt and cash tests are ratios to *market cap*, so a name that rose is
+likelier to pass today, and today's pass list applied to 2024 selects the names that went up.
+**Any backtest that applies `data/halal_list.json` retroactively is inflated by about that much.**
+This matters right now -- the list was swapped 415 -> 472 by HALAL-GATE-REVIEW at 18:24 while
+this ran.
+
+And with the universe HELD FIXED at the 600 deepest books, the **point-in-time** halal screen
+COSTS about $800/month at the measured toll (+$1,215 -> +$399). HARNESS-DIAGNOSTIC's "the screen
+helps by $709/month" compared halal_strict (64 names, $2M/$3) against liquid (4,503 names, 30%
+ETFs) -- two universes differing in far more than the screen.
+
+### The measured toll is cheap on deep books and expensive at the open
+
+`plan/cr_cost.py` needs the 1-second tape, which this universe does not have, so two models were
+built with cr_cost's own functional form and its own conservative Y = 1.0. `MinuteCost`
+reproduces `cr_cost.CostModel._rolling` to **3.6e-16 relative** on 120 symbol-days off 1-minute
+bars. `DailyCost`'s first cut was WRONG and is reported because the error is instructive: it ran
+Corwin-Schultz and Abdi-Ranaldo on DAILY bars -- the frequency both papers were written for --
+and produced a **50 bps median half-spread**, ~15x the truth, because at daily frequency the
+high-low range is dominated by intraday drift and the overnight gap and both estimators read that
+variance as spread. The same estimators on 1-MINUTE bars land at 1-6 bps, in line with
+UNIVERSE-QUOTES' 2-6 and COST-REBASE's 2.77. The half-spread is now a table measured on 12,853
+symbol-days of BOTH ground truths (`data/massive/cost1` for the low end, this line's `cost1o` for
+the high end), taking the more expensive where they overlap.
+
+| slice | half | impact | **total bps/side** | frac > 10 bps | round trip on $15k |
+|---|---:|---:|---:|---:|---:|
+| incumbent assumption | -- | -- | **10.00** | -- | $30.00 |
+| COST-REBASE, halal wide universe | 2.77 | 9.21 | **12.05** | 63% | $36.15 |
+| open universe, all 2,532/day | 4.12 | 4.03 | **8.05** | 36% | $24.15 |
+| **open, top 600** | 2.83 | **1.29** | **4.30** | **0.6%** | **$12.90** |
+
+Impact is the whole story: **9.21 bps on the halal wide universe, 1.29 on the top 600**, because
+a $15,000 ticket is 2.6% of the trailing 10-minute dollar volume in the first and a rounding error
+in the second. COST-REBASE's conclusion -- that the flat 10 bps is optimistic, not conservative --
+is right on the universe it measured and INVERTS on this one. In the frame ablation, swapping the
+flat ladder for the measured toll is worth **+$3,582/month to the best policy while moving the
+random control by -$77**; the winner is `ldv+L`, buy the seven highest-dollar-volume names, i.e.
+the policy is selecting on the cost model. COST-REBASE's warning applies here with the sign
+reversed, which is why the honest column for this line is the measured one.
+
+**BUT** -- over the **289,152 fills the intraday policies actually take**, all at 09:35/09:45, the
+same model reports **15.06 bps/side with 61.4% above 10 bps**. The impact window is five minutes
+long at the open. **The hour this universe has an edge in is the hour it is most expensive to
+trade.** (COST-REBASE measured the identical shape: 09:30-09:45 19.31 bps, 12:31-16:00 9.24.)
+
+### TEST 2 -- WIDE-NET on 23x the table, same verdict
+
+`rl2.features.compute_day` and `wn_table.day_block` called UNMODIFIED; the only new code is a
+block transpose (the m1o cache is symbol-major). **3,756,872 rows**, 268,348 of 268,800
+symbol-days (452 with no bars, 0.17%), 595-600 names/day.
+
+396 orderings x decision times per horizon, held-out split, flat 10 bps:
+
+| horizon | best ordering | $/tkt | IC | random top-30 | edge/tkt |
+|---|---|---:|---:|---:|---:|
+| h15 | `dist_lo+` @09:45 | -$16.93 | +0.0112 | -$33.15 | +$16.22 |
+| h30 | `ret15+` @09:35 | -$16.90 | +0.0149 | -$31.92 | +$15.02 |
+| h60 | `ret15+` @09:35 | -$16.42 | +0.0175 | -$33.02 | +$16.60 |
+| h120 | `rvol30+` @12:00 | -$13.72 | +0.0091 | -$34.22 | +$20.50 |
+
+The signal is real and small: the winner's own MIRROR is the worst row in its family (`ret15+`
++$15.02 vs `ret15-` -$16.44, a $31/ticket spread), it is stable across horizons, and it is
+**short-horizon momentum in the first fifteen minutes** -- the opposite sign to CLOSE-MOMENTUM's
+15:30 reversal, which is not a contradiction because it is a different hour. IC 0.009-0.020,
+inside the repo's long-standing ~0.03 ceiling. **+$20 of edge does not pay a $30 round trip.**
+
+Account-legal top-k, 288 rows: best flat-10 **+$138/mo at k=1**; best MEASURED **-$59/mo at
+k=1**, 4/12 months positive; best k=7 MEASURED **-$1,563/mo**; worst k=7 -$4,680. And those rows
+are in-sample with respect to the sweep, so they are upper bounds.
+
+Walk-forward LightGBM, 13 monthly refits on 1.5-2.3M rows x 32 features: **the model chose 1, 1,
+1, 1, 10, 3, 1, ..., 2, 1 boosting rounds out of 600.** Held-out train days say the label is noise
+after a single split. WIDE-NET got the same verdict on a table 23x smaller; making it 23x bigger
+did not change it.
+
+### Honesty battery (what has run)
+
+| check | result |
+|---|---|
+| identity vs `harness-diagnostic.md`, 3 universes | **to the dollar** |
+| identity, flat ladder on stored legs vs `wn_table.day_block` | 12,078,885 rows, worst **$0.00046** on $15,000 |
+| `MinuteCost` vs `cr_cost.CostModel._rolling` | 120 symbol-days, **3.6e-16** rel (spread), 7.1e-12 (sigma) |
+| poison, bars after minute m | **160 array checks / 0 mismatches** |
+| poison, carried to the PICK | **8,448 pick checks / 0 mismatches** |
+| m1o grid vs naive per-bar zoneinfo | AAPL 339,009 bars, **byte-identical** |
+| poison(cost) / hold-zero / cost-monotone / foresight / shuffled / inverted | **NOT YET RUN** -- `RESUME-OPEN-UNIVERSE.md` |
+
+The identity gate earned its keep twice: it caught a missing `(1 + entry cost)` factor in the
+re-pricing (wn_table's `notional` is the GROSS ticket; cash out is `notional*(1+c_en)`), and the
+`MinuteCost` selftest caught the batched Abdi-Ranaldo estimator reading Corwin-Schultz's
+overnight-ADJUSTED second-leg highs and lows, plus a sigma-window edge case.
+
+### Verdict and ranked next ideas
+
+**FAIL. Best honest row +$981/month account-legal on the gd frame (7.6x short, Y1 negative,
+one day is 64% of it); best intraday row -$59/month.** The mandate's hypothesis -- that breadth
+was the binding constraint -- is refuted: breadth costs $965/month of ceiling. The replacement
+hypothesis, that DEPTH is what matters, is supported (+$25/ticket of edge on the deepest 600
+books against -$1.52 on the thinnest 1,332) and is worth 2.5-3x, not 7x.
+
+1. **Decide later in the session.** The edge is at 09:35-09:45 and so is the 15 bps toll.
+   `rvol30+`/`bar_range5+` @12:00 was the best h120 row and mid-session impact is about half the
+   open's. That is the one cell where the two curves might cross.
+2. Finish Test 3. A resting limit recovers the half-spread (2.83 bps ~ $4.25/ticket) but NOT the
+   impact term, which is 12 of the 15 bps at 09:35 -- analytic ceiling ~$625/month at 147
+   tickets, against a -$1,563/month gap.
+3. Measure what a SMALLER ticket would cost. Impact scales as sqrt(Q/DV); at $5,000 the 09:35
+   impact term falls 42%. One line, and it says whether the frame is capital- or edge-constrained.
+4. **Tell the halal line about leak #2 before the repaired gate is used to re-score history.**
+5. Re-run Test 1 with the mandate's true exit (15:59, not the closing auction) --
+   `plan/ou_frame.py --stage close1559` is written and never run.

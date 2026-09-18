@@ -168,4 +168,96 @@ Two rows differ from HARNESS-DIAGNOSTIC's and both are about this universe, not 
 
 **Long-only OFF is +$18,360/month above the base**, on a best-of-forty whose random control does not move at all — on halal_strict HARNESS-DIAGNOSTIC measured the same ablation at +$880. The winner is `rng_prev+S`: short the names with the largest previous-day high-low range, Y1 +$23,438, Y2 +$9,977, aug-2026 −$5,338, and one day is $284,790 of the total. It is **outside the mandate** (long-only is a hard constraint), it is an in-sample maximum over forty policies, and it is recorded here only because it is the largest single ablation number this project has produced and somebody will eventually ask.
 
-*(Sections 3–8 land as each run completes.)*
+---
+
+## 3. TEST 2 — WIDE-NET on the open universe's minute subset
+
+`plan/ou_table.py` builds WIDE-NET's $15,000-ticket table on the m1o cache by calling `rl2.features.compute_day` and then `wn_table.day_block` **unmodified** — the same functions `plan/rl2/honesty.py` poison-tested 64/64 — so nothing about the feature block, the fill rule, the 20%-of-trailing-5-minute-volume cap, the cost ladder or the labels is re-derived. The only new code is the transpose: the m1o cache is symbol-major (one npz per symbol, all 448 dates) because that is what made 268,800 symbol-days fetchable in 7,000 calls, so the build walks **blocks of 32 dates**, reading the cache 14 times end to end instead of 600.
+
+| | value |
+|---|---:|
+| rows | **3,756,872** (448 dates × ~599 names × 14 decision times) |
+| symbol-days | 268,348 of 268,800 — **452 with no bars (0.17%)** |
+| names/day | 595 … 600, median 599 |
+| distinct symbols | 864 |
+| candidate rows (bar m printed) | 2,683,311 |
+| fillable rows (bar m+1 printed) | 2,415,777 |
+
+For comparison the WIDE-NET table was 163,254 rows on 191 names; this is **23× larger**.
+
+### 3.1 The top-30 sweep — 396 orderings × decision times per horizon
+
+Held-out split (2025-08 … 2026-07), flat 10 bps, top 30 by each of 22 causal orderings × both signs × 9 regular-session decision times:
+
+| horizon | best ordering | $/ticket | IC | **random top-30** | edge/ticket | worst ordering |
+|---|---|---:|---:|---:|---:|---:|
+| h15 | `dist_lo+` @ 09:45 | −$16.93 | +0.0112 | −$33.15 ± 1.06 | **+$16.22** | `ret5+` @10:00 −$44.38 |
+| h30 | `ret15+` @ 09:35 | −$16.90 | +0.0149 | −$31.92 ± 1.46 | **+$15.02** | `ret15−` @09:35 −$48.36 |
+| h60 | `ret15+` @ 09:35 | −$16.42 | +0.0175 | −$33.02 ± 1.79 | **+$16.60** | `dist_vwap_day+` @15:00 −$116.95 |
+| h120 | `rvol30+` @ 12:00 | −$13.72 | +0.0091 | −$34.22 ± 2.15 | **+$20.50** | `ret15+` @14:00 −$115.95 |
+| flat (to the close) | `gap_vs_prevclose+` @09:45 | −$59.62 | +0.0044 | −$102.06 ± 2.94 | +$42.44 | `ret15−` @09:35 −$125.55 |
+
+Three things are worth saying about this table.
+
+**The signal is real and it is small.** The best ordering beats a matched random top-30 by **+$15 to +$20.50 a ticket**, its own mirror is the *worst* row in the same family (`ret15+` +$15.02, `ret15−` −$16.44 against the same random baseline — a $31/ticket spread), and the winner is stable across horizons: **buy the names that are already up at 09:35–09:45** (`ret15+`, `ret30+`, `dist_lo+`, `prev_day_ret+`, `xs_rank_ret30+`). That is short-horizon intraday *momentum in the first fifteen minutes* — the opposite sign to CLOSE-MOMENTUM's 15:30 reversal and to HARNESS-DIAGNOSTIC's `vwap_lo`, which is consistent, because those are different hours of the day. IC is **0.009 – 0.020**, inside the repo's long-standing ≈ 0.03 ceiling.
+
+**The `flat` row is an artefact and is excluded from everything downstream.** Holding to the forced flatten drags the exit into the extended-hours leg of the cost ladder; its random baseline is −$102/ticket, i.e. the toll, exactly as CATALYST-MINER found for the 15:30 slot.
+
+**+$20 of edge does not pay a $30 round trip**, and that is the whole of Test 2 at the flat toll.
+
+### 3.2 The measured toll at the open is **not** the measured toll at mid-session
+
+This is the finding that decides Test 2, and it was not visible until the picks were priced one at a time. Over the **289,152 fills the top-k policies actually take**, `MinuteCost` reports a **mean of 15.06 bps/side, with 61.4% above 10 bps** (tier mix: 274,548 `win`, 14,604 `prior`, 0 `legacy`) — against the **4.30 bps/side median** the same model gives the top-600 universe as a whole.
+
+The reason is the clock. Every ordering the sweep likes decides at **09:35 or 09:45**, and the impact term is `σ_window · √(Q / DV_window)` over a *trailing* window that, at 09:35, is five minutes long and thin. COST-REBASE measured the identical shape on its own universe (09:30–09:45 total 19.31 bps, 12:31–16:00 9.24 bps). **The hour in which this universe has an edge is the hour in which it is most expensive to trade.**
+
+### 3.3 The account-legal policies
+
+Held-out split, the sweep's own top orderings, k ∈ {1, 3, 5, 7} tickets per day:
+
+| | flat 10 bps | **measured** |
+|---|---:|---:|
+| best row of 288 (`prev_day_ret+` @09:45 h60 **k=1**, 251 tickets) | **+$138/mo** | −$113/mo |
+| best measured row (`print_density30−` @09:35 h60 k=1) | −$136/mo | **−$59/mo** |
+| best **k = 7** row (`prev_day_ret+` @09:35 h30) | −$1,103/mo | — |
+| best **k = 7** measured row (`print_density30−` @09:35 h60) | — | **−$1,563/mo** |
+| worst k = 7 row | −$4,680/mo | — |
+
+**Nothing reaches the bar and nothing comes within 2× of it.** The best measured row in the whole intraday arm is **−$59/month on one ticket a day**, 4 of 12 months positive; at the seven tickets a day the mandate sizes for, the best is **−$1,563/month**. And these rows are *in-sample with respect to the sweep* — the candidate orderings were chosen on the same held-out split they are scored on, which makes them upper bounds, not estimates.
+
+### 3.4 The walk-forward ranker
+
+`plan/ou_model.py` runs WIDE-NET's procedure unchanged: refit LightGBM once per test month on every row with date < that month, label = the realized net dollar P&L of the $15,000 ticket, early stopping on the last 10% of train days, 13 monthly folds over 2.4M regular-session rows.
+
+**The early-stopping counts are the result.** Across the 13 folds the model chose **1, 1, 1, 1, 10, 3, 1, …, 2, 1** boosting rounds out of 600. On 1.5–2.3 million training rows and 32 features, held-out train days say the label is noise at this resolution after a single split. WIDE-NET reported the same number on a table 23× smaller; making the table 23× bigger did not change it.
+
+---
+
+## 4. TEST 5 — the halal screen, post hoc, and a second leak worth more than the first
+
+The mandate asks for the halal list to be re-applied to anything that reaches the bar or comes within 2×. Nothing did, so this is reported for the reason it turned out to matter: **applying `data/halal_list.json` retroactively is worth about $1,000–$1,500 a month of pure survivorship, and the repo is about to start doing exactly that.**
+
+Two arms, same universes, same 20 policies, same 30 seeds:
+* **HALAL-SNAPSHOT** — today's list (472 symbols; the list was swapped from 415 to 472 by HALAL-GATE-REVIEW at 18:24 while this ran, and `halal_list.NEW.json` carries 476);
+* **HALAL-PIT** — point-in-time membership from `plan/uq_out/universe/{D}.json`, the same `halal_pt` gate every other line uses.
+
+| universe | names/day snap → PIT | **random @ zero cost**, snapshot | **random @ zero cost**, PIT | **leak** | best @ zero, snapshot → PIT |
+|---|---|---:|---:|---:|---|
+| open (all) | 327 → 264 | +$1,466 | +$286 | **+$1,180/mo** | +$4,754 → +$2,657 |
+| open top-600 | 130 → 122 | +$1,518 | +$24 | **+$1,494/mo** | +$5,256 → +$1,907 |
+| mcap > $10B (causal) | 164 → 151 | +$1,078 | +$137 | **+$941/mo** | +$4,144 → +$1,855 |
+| mcap $2–10B (causal) | 120 → 81 | +$1,665 | +$528 | **+$1,137/mo** | +$5,217 → +$3,546 |
+
+The leak column is measured on a **random picker**: no ordering, no model, nothing but membership. A coin flip inside today's halal list earns **$941 – $1,494/month more** than a coin flip inside the point-in-time list, on the same universe and the same dates — **+$6.4 to +$10.2 a ticket, 4.3 to 6.8 bp a day of pure look-ahead**. The mechanism is not mysterious: the gate's own debt and cash tests are ratios to *market cap*, so a name that rose is more likely to pass today, and applying today's pass list to 2024 selects the names that went up.
+
+Under the **point-in-time** screen the honest comparison is the other way from HARNESS-DIAGNOSTIC's:
+
+| top-600 universe | flat 10 bps | zero cost | measured |
+|---|---:|---:|---:|
+| no halal screen | −$682 | **+$3,732** | **+$1,215** |
+| PIT halal screen (122 names/day) | −$2,505 | +$1,907 | +$399 |
+| snapshot halal screen (130 names/day) | +$841 | +$5,256 | +$2,976 |
+
+Holding the universe fixed at the 600 deepest books, the **point-in-time** halal screen costs about **$800/month** at the measured toll. HARNESS-DIAGNOSTIC's "the screen helps by $709/month" compared `halal_strict` (64 names, $2M/$3) against `liquid` (4,503 names, 30% of them ETFs) — two universes that differ in far more than the screen. With the universe held fixed, the screen is a cost, not a help. The snapshot row is what the leak looks like when you do not control for it, and it is the single most positive number in this audit.
+
+---

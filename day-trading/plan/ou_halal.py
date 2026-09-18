@@ -69,14 +69,28 @@ def main():
         base[nm] = {d: {r[0] for r in uni[d]
                         if r[0] in sidx and lo_ <= MC[i, sidx[r[0]]] < hi_}
                     for i, d in enumerate(dates)}
+    # POINT-IN-TIME halal membership, for the leak measurement below.
+    pit = {}
+    pdir = HERE / "uq_out" / "universe"
+    for d in dates:
+        f = pdir / f"{d}.json"
+        pit[d] = ({r["symbol"] if isinstance(r, dict) else r
+                   for r in json.loads(f.read_text())} if f.exists() else set())
     out = {"list_n": len(cur), "new_same_as_current": same,
            "union_halal_in_open": None, "rows": {}}
     u = sorted({r[0] for v in uni.values() for r in v})
     out["union_halal_in_open"] = int(sum(1 for x in u if x in cur))
+    arms = [("HALAL-SNAPSHOT", lambda d, v: {s for s in v if s in cur}),
+            ("HALAL-PIT", lambda d, v: {s for s in v if s in pit.get(d, ())})]
     for uk, mem in list(base.items()):
-        hm = {d: {s for s in v if s in cur} for d, v in mem.items()}
+      for arm, pick in arms:
+        hm = {d: pick(d, v) for d, v in mem.items()}
         n = np.array([len(v) for v in hm.values()])
-        print(f"[halal] {uk:16s} halal names/day {n.min()}..{n.max()} "
+        if n.max() < 7:
+            print(f"[halal] {uk}|{arm}: too few names/day, skipped",
+                  flush=True)
+            continue
+        print(f"[halal] {uk:16s} {arm:15s} names/day {n.min()}..{n.max()} "
               f"(mean {n.mean():.0f}) of "
               f"{np.mean([len(v) for v in mem.values()]):.0f}", flush=True)
         for cost in ("flat10", "zero", "measured"):
@@ -84,10 +98,11 @@ def main():
             r = OF.search(pre, F, {"cost": cost, "exit_mode": "close",
                                    "long_only": True, "universe": uk},
                           seeds=seeds)
-            lab = f"{uk}|HALAL-SCREEN|{cost}"
+            lab = f"{uk}|{arm}|{cost}"
+            r["names_per_day"] = round(float(n.mean()), 1)
             out["rows"][lab] = r
             b = r["best"]
-            print(f"[halal] {lab:36s} best ${b['per_month']:+9,.0f}/mo "
+            print(f"[halal] {lab:40s} best ${b['per_month']:+9,.0f}/mo "
                   f"({b['label']:>12s}, ${b['per_ticket']:+7.2f}/tkt) "
                   f"Y1 {b['y1_per_month']} Y2 {b['y2_per_month']} random "
                   f"${r['random_per_month_mean']:+9,.0f} pct "

@@ -530,13 +530,15 @@ class MinuteCost:
             try:
                 z = np.load(f, allow_pickle=False)
                 rec = ({str(d): i for i, d in enumerate(z["dates"])},
-                       z["spread"].astype(np.float64),
-                       z["dv_win"].astype(np.float64),
-                       z["sig_win"].astype(np.float64),
+                       z["spread"], z["dv_win"], z["sig_win"],
                        [str(d) for d in z["dates"]])
             except Exception:
                 rec = None
-        if len(self._order) > 120:
+        # The whole cost1o cache is 867 symbols x (448 x 395 x 3) float32 =
+        # ~1.8 GB, so it fits; the small LRU the first cut used thrashed on
+        # every pick list (picks arrive date-major, so symbols interleave and
+        # each lookup re-read a 2 MB npz).
+        if len(self._order) > 950:
             self._sym.pop(self._order.pop(0), None)
         self._sym[sym] = rec
         self._order.append(sym)
@@ -592,8 +594,16 @@ class MinuteCost:
         return c
 
     def vec(self, syms, dates, gms, notionals, passive=False):
-        return np.array([self.cost_bps(s, d, g, n, passive)
-                         for s, d, g, n in zip(syms, dates, gms, notionals)])
+        """Pick lists arrive date-major, so a naive loop re-reads each
+        symbol's 2 MB statistics file once per pick.  Grouping by symbol
+        first makes it one read each; the returned order is unchanged."""
+        syms = np.asarray(syms)
+        order = np.argsort(syms, kind="stable")
+        out = np.empty(len(syms))
+        for i in order:
+            out[i] = self.cost_bps(str(syms[i]), str(dates[i]), gms[i],
+                                   notionals[i], passive)
+        return out
 
     def report(self):
         n = self.tally.get("_n", 0)

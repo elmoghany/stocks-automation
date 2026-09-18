@@ -1,0 +1,80 @@
+[
+ {
+  "month": "2025-08",
+  "train_rows": 980630,
+  "test_rows": 106787,
+  "iters": 1
+ },
+ {
+  "month": "2025-09",
+  "train_rows": 1087417,
+  "test_rows": 107159,
+  "iters": 1
+ },
+ {
+  "month": "2025-10",
+  "train_rows": 1194576,
+  "test_rows": 117428,
+  "iters": 5
+ },
+ {
+  "month": "2025-11",
+  "train_rows": 1312004,
+  "test_rows": 99350,
+  "iters": 1
+ },
+ {
+  "month": "2025-12",
+  "train_rows": 1411354,
+  "test_rows": 113868,
+  "iters": 3
+ },
+ {
+  "month": "2026-01",
+  "train_rows": 1525222,
+  "test_rows": 105408,
+  "iters": 10
+ },
+ {
+  "month": "2026-02",
+  "train_rows": 1630630,
+  "test_rows": 100266,
+  "iters": 3
+ },
+ {
+  "month": "2026-03",
+  "train_rows": 1730896,
+  "test_rows": 116092,
+  "iters": 1
+ },
+ {
+  "month": "2026-04",
+  "train_rows": 1846988,
+  "test_rows": 110255,
+  "iters": 1
+ },
+ {
+  "month": "2026-05",
+  "train_rows": 1957243,
+  "test_rows": 105455,
+  "iters": 7
+ },
+ {
+  "month": "2026-06",
+  "train_rows": 2062698,
+  "test_rows": 111114,
+  "iters": 37
+ },
+ {
+  "month": "2026-07",
+  "train_rows": 2173812,
+  "test_rows": 115981,
+  "iters": 2
+ },
+ {
+  "month": "2026-08",
+  "train_rows": 2289793,
+  "test_rows": 21155,
+  "iters": 1
+ }
+]

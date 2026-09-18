@@ -1,0 +1,2297 @@
+{
+ "h15": {
+  "rows": [
+   {
+    "ordering": "dist_lo+",
+    "dec": "09:45",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -16.93,
+    "ic": 0.0112
+   },
+   {
+    "ordering": "ret30+",
+    "dec": "09:45",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -17.95,
+    "ic": 0.0166
+   },
+   {
+    "ordering": "xs_rank_ret30+",
+    "dec": "09:45",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -17.95,
+    "ic": 0.0141
+   },
+   {
+    "ordering": "prev_day_ret+",
+    "dec": "09:45",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -18.23,
+    "ic": 0.0063
+   },
+   {
+    "ordering": "gap_vs_prevclose+",
+    "dec": "09:45",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -18.41,
+    "ic": 0.0141
+   },
+   {
+    "ordering": "ret60+",
+    "dec": "09:45",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -19.79,
+    "ic": 0.0146
+   },
+   {
+    "ordering": "rvol30+",
+    "dec": "09:45",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -19.87,
+    "ic": 0.0044
+   },
+   {
+    "ordering": "bar_range5+",
+    "dec": "09:45",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -19.98,
+    "ic": 0.0044
+   },
+   {
+    "ordering": "ret_since_open+",
+    "dec": "09:45",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -20.17,
+    "ic": 0.0094
+   },
+   {
+    "ordering": "ret15+",
+    "dec": "09:45",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -20.17,
+    "ic": 0.0094
+   },
+   {
+    "ordering": "print_density30-",
+    "dec": "09:35",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -20.98,
+    "ic": 0.0183
+   },
+   {
+    "ordering": "dist_vwap_day+",
+    "dec": "09:45",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -21.49,
+    "ic": 0.0065
+   },
+   {
+    "ordering": "print_density30-",
+    "dec": "09:45",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -21.55,
+    "ic": -0.0012
+   },
+   {
+    "ordering": "log_price-",
+    "dec": "09:45",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -21.74,
+    "ic": 0.0089
+   },
+   {
+    "ordering": "dist_vwap30+",
+    "dec": "09:45",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -21.8,
+    "ic": 0.0047
+   },
+   {
+    "ordering": "print_density30-",
+    "dec": "12:00",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.0,
+    "ic": 0.001
+   },
+   {
+    "ordering": "ret5+",
+    "dec": "09:45",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.24,
+    "ic": 0.0039
+   },
+   {
+    "ordering": "print_density30+",
+    "dec": "09:45",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.74,
+    "ic": 0.0012
+   },
+   {
+    "ordering": "print_density30-",
+    "dec": "13:00",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.93,
+    "ic": 0.0057
+   },
+   {
+    "ordering": "ret15+",
+    "dec": "09:35",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -23.54,
+    "ic": 0.0049
+   },
+   {
+    "ordering": "print_density30-",
+    "dec": "14:00",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -23.55,
+    "ic": 0.0035
+   },
+   {
+    "ordering": "print_density30-",
+    "dec": "15:00",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -23.57,
+    "ic": 0.0029
+   },
+   {
+    "ordering": "log_dv5-",
+    "dec": "09:45",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -23.75,
+    "ic": 0.0003
+   },
+   {
+    "ordering": "bar_range5-",
+    "dec": "09:45",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -24.38,
+    "ic": -0.0044
+   },
+   {
+    "ordering": "coil+",
+    "dec": "12:00",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -24.39,
+    "ic": -0.0021
+   },
+   {
+    "ordering": "print_density30-",
+    "dec": "10:30",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -24.44,
+    "ic": -0.0027
+   },
+   {
+    "ordering": "coil+",
+    "dec": "09:45",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -24.57,
+    "ic": -0.0002
+   },
+   {
+    "ordering": "log_dv5-",
+    "dec": "09:35",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -24.61,
+    "ic": 0.006
+   },
+   {
+    "ordering": "dist_lo+",
+    "dec": "09:35",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -24.69,
+    "ic": -0.005
+   },
+   {
+    "ordering": "rvol_profile-",
+    "dec": "09:45",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -24.7,
+    "ic": -0.0064
+   },
+   {
+    "ordering": "bar_range5-",
+    "dec": "12:00",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -24.81,
+    "ic": 0.0115
+   },
+   {
+    "ordering": "print_density30-",
+    "dec": "11:00",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -24.89,
+    "ic": 0.0008
+   },
+   {
+    "ordering": "amihud30+",
+    "dec": "09:45",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -24.93,
+    "ic": 0.0065
+   },
+   {
+    "ordering": "dv_burst-",
+    "dec": "09:45",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -25.1,
+    "ic": 0.0006
+   },
+   {
+    "ordering": "coil+",
+    "dec": "09:35",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -25.18,
+    "ic": 0.0037
+   },
+   {
+    "ordering": "dv_burst-",
+    "dec": "09:35",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -25.2,
+    "ic": -0.0012
+   },
+   {
+    "ordering": "coil+",
+    "dec": "13:00",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -25.25,
+    "ic": 0.0031
+   },
+   {
+    "ordering": "bar_range5-",
+    "dec": "09:35",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -25.26,
+    "ic": 0.0115
+   },
+   {
+    "ordering": "print_density30-",
+    "dec": "10:00",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -25.41,
+    "ic": 0.0127
+   },
+   {
+    "ordering": "rvol_profile+",
+    "dec": "09:45",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -25.42,
+    "ic": 0.0064
+   }
+  ],
+  "worst": [
+   {
+    "ordering": "ret60+",
+    "dec": "10:00",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -39.5,
+    "ic": -0.0276
+   },
+   {
+    "ordering": "dist_vwap_day+",
+    "dec": "10:00",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -39.57,
+    "ic": -0.0321
+   },
+   {
+    "ordering": "rvol30+",
+    "dec": "10:30",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -39.71,
+    "ic": -0.0286
+   },
+   {
+    "ordering": "rvol30+",
+    "dec": "10:00",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -40.18,
+    "ic": -0.0273
+   },
+   {
+    "ordering": "dist_vwap30+",
+    "dec": "10:00",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -40.19,
+    "ic": -0.0328
+   },
+   {
+    "ordering": "ret15-",
+    "dec": "09:35",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -40.44,
+    "ic": -0.0049
+   },
+   {
+    "ordering": "dist_hi-",
+    "dec": "10:00",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -40.55,
+    "ic": 0.0106
+   },
+   {
+    "ordering": "bar_range5+",
+    "dec": "10:00",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -41.28,
+    "ic": -0.0237
+   },
+   {
+    "ordering": "gap_vs_prevclose+",
+    "dec": "10:00",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -42.22,
+    "ic": -0.0294
+   },
+   {
+    "ordering": "ret5+",
+    "dec": "10:00",
+    "h": "h15",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -44.38,
+    "ic": -0.0347
+   }
+  ],
+  "n_rows": 396,
+  "random_top30_per_ticket": -33.15,
+  "random_sd": 1.06
+ },
+ "h30": {
+  "rows": [
+   {
+    "ordering": "ret15+",
+    "dec": "09:35",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -16.9,
+    "ic": 0.0149
+   },
+   {
+    "ordering": "ret30+",
+    "dec": "09:35",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -19.34,
+    "ic": 0.0141
+   },
+   {
+    "ordering": "xs_rank_ret30+",
+    "dec": "09:35",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -19.34,
+    "ic": 0.0021
+   },
+   {
+    "ordering": "print_density30-",
+    "dec": "09:35",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -19.41,
+    "ic": 0.0202
+   },
+   {
+    "ordering": "prev_day_ret+",
+    "dec": "09:35",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -19.76,
+    "ic": 0.0083
+   },
+   {
+    "ordering": "dist_lo+",
+    "dec": "09:35",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -19.77,
+    "ic": -0.0014
+   },
+   {
+    "ordering": "gap_vs_prevclose+",
+    "dec": "09:35",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -21.14,
+    "ic": 0.0078
+   },
+   {
+    "ordering": "dist_vwap_day+",
+    "dec": "13:00",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -21.28,
+    "ic": 0.0339
+   },
+   {
+    "ordering": "print_density30-",
+    "dec": "09:45",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -21.56,
+    "ic": 0.0103
+   },
+   {
+    "ordering": "print_density30-",
+    "dec": "13:00",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -21.57,
+    "ic": -0.0009
+   },
+   {
+    "ordering": "print_density30-",
+    "dec": "12:00",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -21.59,
+    "ic": 0.002
+   },
+   {
+    "ordering": "dist_lo+",
+    "dec": "13:00",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.02,
+    "ic": 0.0233
+   },
+   {
+    "ordering": "ret60+",
+    "dec": "13:00",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.71,
+    "ic": 0.0288
+   },
+   {
+    "ordering": "coil+",
+    "dec": "09:35",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.75,
+    "ic": 0.0086
+   },
+   {
+    "ordering": "prev_day_ret+",
+    "dec": "09:45",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.82,
+    "ic": 0.0084
+   },
+   {
+    "ordering": "log_dv5-",
+    "dec": "09:35",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.87,
+    "ic": 0.0075
+   },
+   {
+    "ordering": "print_density30-",
+    "dec": "14:00",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -23.1,
+    "ic": 0.0054
+   },
+   {
+    "ordering": "ret_since_open+",
+    "dec": "13:00",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -23.3,
+    "ic": 0.0211
+   },
+   {
+    "ordering": "xs_rank_ret30-",
+    "dec": "09:35",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -23.5,
+    "ic": -0.0021
+   },
+   {
+    "ordering": "dv_burst-",
+    "dec": "09:35",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -23.57,
+    "ic": -0.004
+   },
+   {
+    "ordering": "bar_range5-",
+    "dec": "09:35",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -23.61,
+    "ic": 0.0132
+   },
+   {
+    "ordering": "dist_hi+",
+    "dec": "09:35",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -23.63,
+    "ic": 0.0131
+   },
+   {
+    "ordering": "log_price+",
+    "dec": "13:00",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -23.67,
+    "ic": 0.012
+   },
+   {
+    "ordering": "ret30+",
+    "dec": "13:00",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -23.7,
+    "ic": 0.0153
+   },
+   {
+    "ordering": "xs_rank_ret30+",
+    "dec": "13:00",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -23.7,
+    "ic": 0.0153
+   },
+   {
+    "ordering": "print_density30-",
+    "dec": "10:00",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -23.87,
+    "ic": 0.0116
+   },
+   {
+    "ordering": "rvol30+",
+    "dec": "13:00",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -23.88,
+    "ic": 0.0062
+   },
+   {
+    "ordering": "ret_since_open+",
+    "dec": "09:35",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -24.02,
+    "ic": 0.0051
+   },
+   {
+    "ordering": "ret5+",
+    "dec": "09:35",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -24.02,
+    "ic": 0.0051
+   },
+   {
+    "ordering": "bar_range5-",
+    "dec": "09:45",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -24.09,
+    "ic": 0.0133
+   },
+   {
+    "ordering": "bar_range5-",
+    "dec": "14:00",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -24.26,
+    "ic": 0.0123
+   },
+   {
+    "ordering": "bar_range5+",
+    "dec": "13:00",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -24.29,
+    "ic": 0.0072
+   },
+   {
+    "ordering": "dist_vwap30-",
+    "dec": "14:00",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -24.34,
+    "ic": 0.0295
+   },
+   {
+    "ordering": "ret60+",
+    "dec": "09:35",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -24.41,
+    "ic": 0.0098
+   },
+   {
+    "ordering": "prev_day_ret+",
+    "dec": "13:00",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -24.41,
+    "ic": 0.0236
+   },
+   {
+    "ordering": "dist_vwap_day-",
+    "dec": "14:00",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -24.48,
+    "ic": 0.0214
+   },
+   {
+    "ordering": "coil+",
+    "dec": "09:45",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -24.53,
+    "ic": 0.0054
+   },
+   {
+    "ordering": "coil+",
+    "dec": "13:00",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -24.53,
+    "ic": -0.0074
+   },
+   {
+    "ordering": "dist_vwap_day+",
+    "dec": "11:00",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -24.7,
+    "ic": 0.0118
+   },
+   {
+    "ordering": "coil+",
+    "dec": "12:00",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -24.7,
+    "ic": -0.0044
+   }
+  ],
+  "worst": [
+   {
+    "ordering": "dist_lo+",
+    "dec": "10:30",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -41.52,
+    "ic": -0.0127
+   },
+   {
+    "ordering": "xs_rank_ret30-",
+    "dec": "10:00",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -42.32,
+    "ic": 0.0176
+   },
+   {
+    "ordering": "ret60-",
+    "dec": "09:35",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -42.48,
+    "ic": -0.0098
+   },
+   {
+    "ordering": "ret_since_open-",
+    "dec": "10:00",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -42.57,
+    "ic": 0.0176
+   },
+   {
+    "ordering": "ret30-",
+    "dec": "10:00",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -42.57,
+    "ic": 0.0176
+   },
+   {
+    "ordering": "dist_vwap_day-",
+    "dec": "10:00",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -43.06,
+    "ic": 0.0198
+   },
+   {
+    "ordering": "ret30-",
+    "dec": "09:35",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -45.01,
+    "ic": -0.0141
+   },
+   {
+    "ordering": "ret60-",
+    "dec": "10:00",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -45.18,
+    "ic": 0.0067
+   },
+   {
+    "ordering": "dist_hi-",
+    "dec": "10:00",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -46.74,
+    "ic": 0.002
+   },
+   {
+    "ordering": "ret15-",
+    "dec": "09:35",
+    "h": "h30",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -48.36,
+    "ic": -0.0149
+   }
+  ],
+  "n_rows": 396,
+  "random_top30_per_ticket": -31.92,
+  "random_sd": 1.46
+ },
+ "h60": {
+  "rows": [
+   {
+    "ordering": "ret15+",
+    "dec": "09:35",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -16.42,
+    "ic": 0.0175
+   },
+   {
+    "ordering": "ret30+",
+    "dec": "09:35",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -17.26,
+    "ic": 0.018
+   },
+   {
+    "ordering": "xs_rank_ret30+",
+    "dec": "09:35",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -17.26,
+    "ic": 0.003
+   },
+   {
+    "ordering": "rvol30+",
+    "dec": "13:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -17.47,
+    "ic": 0.0034
+   },
+   {
+    "ordering": "bar_range5+",
+    "dec": "13:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -18.65,
+    "ic": 0.0058
+   },
+   {
+    "ordering": "print_density30-",
+    "dec": "09:35",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -19.04,
+    "ic": 0.024
+   },
+   {
+    "ordering": "dist_vwap_day+",
+    "dec": "13:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -19.72,
+    "ic": 0.0188
+   },
+   {
+    "ordering": "ret30+",
+    "dec": "13:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -20.15,
+    "ic": 0.0122
+   },
+   {
+    "ordering": "xs_rank_ret30+",
+    "dec": "13:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -20.15,
+    "ic": 0.0122
+   },
+   {
+    "ordering": "ret60+",
+    "dec": "13:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -20.34,
+    "ic": 0.0249
+   },
+   {
+    "ordering": "dist_lo+",
+    "dec": "09:35",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -20.39,
+    "ic": -0.0036
+   },
+   {
+    "ordering": "prev_day_ret+",
+    "dec": "13:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -20.99,
+    "ic": 0.0171
+   },
+   {
+    "ordering": "print_density30-",
+    "dec": "13:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -21.04,
+    "ic": -0.0025
+   },
+   {
+    "ordering": "ret60+",
+    "dec": "09:45",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -21.2,
+    "ic": 0.0067
+   },
+   {
+    "ordering": "ret60+",
+    "dec": "09:35",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -21.38,
+    "ic": 0.0153
+   },
+   {
+    "ordering": "dist_vwap_day-",
+    "dec": "14:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -21.68,
+    "ic": 0.0168
+   },
+   {
+    "ordering": "dist_lo+",
+    "dec": "13:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -21.73,
+    "ic": 0.0103
+   },
+   {
+    "ordering": "dist_vwap_day+",
+    "dec": "11:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -21.75,
+    "ic": 0.0111
+   },
+   {
+    "ordering": "ret_since_open+",
+    "dec": "13:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.03,
+    "ic": 0.0094
+   },
+   {
+    "ordering": "print_density30-",
+    "dec": "12:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.11,
+    "ic": 0.0048
+   },
+   {
+    "ordering": "gap_vs_prevclose+",
+    "dec": "09:45",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.31,
+    "ic": 0.0109
+   },
+   {
+    "ordering": "print_density30-",
+    "dec": "09:45",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.5,
+    "ic": 0.014
+   },
+   {
+    "ordering": "log_price+",
+    "dec": "13:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.64,
+    "ic": 0.0132
+   },
+   {
+    "ordering": "ret_since_open+",
+    "dec": "09:45",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.82,
+    "ic": -0.0013
+   },
+   {
+    "ordering": "ret15+",
+    "dec": "09:45",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.82,
+    "ic": -0.0013
+   },
+   {
+    "ordering": "log_dv5-",
+    "dec": "09:35",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.86,
+    "ic": 0.0079
+   },
+   {
+    "ordering": "ret30+",
+    "dec": "09:45",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.91,
+    "ic": 0.0059
+   },
+   {
+    "ordering": "xs_rank_ret30+",
+    "dec": "09:45",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.91,
+    "ic": -0.001
+   },
+   {
+    "ordering": "ret_since_open+",
+    "dec": "11:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.91,
+    "ic": 0.0084
+   },
+   {
+    "ordering": "dist_vwap30-",
+    "dec": "14:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -22.95,
+    "ic": 0.0201
+   },
+   {
+    "ordering": "bar_range5-",
+    "dec": "09:35",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -23.03,
+    "ic": 0.0216
+   },
+   {
+    "ordering": "dist_vwap_day+",
+    "dec": "09:45",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -23.04,
+    "ic": -0.0045
+   },
+   {
+    "ordering": "coil+",
+    "dec": "09:35",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -23.11,
+    "ic": 0.0082
+   },
+   {
+    "ordering": "xs_rank_ret30-",
+    "dec": "09:35",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -23.18,
+    "ic": -0.003
+   },
+   {
+    "ordering": "ret60+",
+    "dec": "11:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -23.19,
+    "ic": 0.0089
+   },
+   {
+    "ordering": "print_density30-",
+    "dec": "11:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -23.21,
+    "ic": -0.0039
+   },
+   {
+    "ordering": "ret15+",
+    "dec": "13:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -23.25,
+    "ic": -0.0015
+   },
+   {
+    "ordering": "gap_vs_prevclose+",
+    "dec": "09:35",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -23.36,
+    "ic": 0.0117
+   },
+   {
+    "ordering": "dist_vwap30+",
+    "dec": "13:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -23.38,
+    "ic": 0.0022
+   },
+   {
+    "ordering": "print_density30-",
+    "dec": "14:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -23.49,
+    "ic": 0.0027
+   }
+  ],
+  "worst": [
+   {
+    "ordering": "ret15+",
+    "dec": "15:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -109.73,
+    "ic": -0.0159
+   },
+   {
+    "ordering": "dist_vwap30+",
+    "dec": "15:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -109.91,
+    "ic": -0.0206
+   },
+   {
+    "ordering": "ret30+",
+    "dec": "15:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -111.49,
+    "ic": -0.0218
+   },
+   {
+    "ordering": "xs_rank_ret30+",
+    "dec": "15:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -111.49,
+    "ic": -0.0218
+   },
+   {
+    "ordering": "gap_vs_prevclose+",
+    "dec": "15:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -112.55,
+    "ic": -0.0426
+   },
+   {
+    "ordering": "dist_hi+",
+    "dec": "15:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -112.58,
+    "ic": -0.0469
+   },
+   {
+    "ordering": "ret60+",
+    "dec": "15:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -112.99,
+    "ic": -0.024
+   },
+   {
+    "ordering": "ret_since_open+",
+    "dec": "15:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -115.06,
+    "ic": -0.0444
+   },
+   {
+    "ordering": "dist_lo+",
+    "dec": "15:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -115.21,
+    "ic": -0.0349
+   },
+   {
+    "ordering": "dist_vwap_day+",
+    "dec": "15:00",
+    "h": "h60",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -116.95,
+    "ic": -0.0451
+   }
+  ],
+  "n_rows": 396,
+  "random_top30_per_ticket": -33.02,
+  "random_sd": 1.79
+ },
+ "h120": {
+  "rows": [
+   {
+    "ordering": "rvol30+",
+    "dec": "12:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -13.72,
+    "ic": 0.0091
+   },
+   {
+    "ordering": "bar_range5+",
+    "dec": "12:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -14.24,
+    "ic": 0.0106
+   },
+   {
+    "ordering": "rvol30+",
+    "dec": "13:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -15.47,
+    "ic": -0.0066
+   },
+   {
+    "ordering": "bar_range5+",
+    "dec": "13:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -15.92,
+    "ic": -0.004
+   },
+   {
+    "ordering": "ret30+",
+    "dec": "13:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -17.37,
+    "ic": 0.0136
+   },
+   {
+    "ordering": "xs_rank_ret30+",
+    "dec": "13:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -17.37,
+    "ic": 0.0136
+   },
+   {
+    "ordering": "dist_lo+",
+    "dec": "12:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -17.51,
+    "ic": 0.0072
+   },
+   {
+    "ordering": "dist_vwap30-",
+    "dec": "12:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -17.78,
+    "ic": 0.0094
+   },
+   {
+    "ordering": "ret15-",
+    "dec": "12:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -18.1,
+    "ic": 0.0104
+   },
+   {
+    "ordering": "ret30-",
+    "dec": "12:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -19.18,
+    "ic": 0.015
+   },
+   {
+    "ordering": "xs_rank_ret30-",
+    "dec": "12:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -19.18,
+    "ic": 0.015
+   },
+   {
+    "ordering": "gap_vs_prevclose-",
+    "dec": "13:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -19.46,
+    "ic": -0.0046
+   },
+   {
+    "ordering": "ret_since_open+",
+    "dec": "12:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -19.6,
+    "ic": 0.0027
+   },
+   {
+    "ordering": "dist_vwap_day-",
+    "dec": "13:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -20.31,
+    "ic": 0.0
+   },
+   {
+    "ordering": "ret5+",
+    "dec": "12:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -20.37,
+    "ic": 0.0138
+   },
+   {
+    "ordering": "ret60+",
+    "dec": "13:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -20.38,
+    "ic": 0.0146
+   },
+   {
+    "ordering": "print_density30-",
+    "dec": "12:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -20.43,
+    "ic": 0.0047
+   },
+   {
+    "ordering": "print_density30-",
+    "dec": "13:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -20.45,
+    "ic": -0.0006
+   },
+   {
+    "ordering": "ret15+",
+    "dec": "13:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -20.5,
+    "ic": -0.0045
+   },
+   {
+    "ordering": "dist_vwap_day+",
+    "dec": "13:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -20.8,
+    "ic": -0.0
+   },
+   {
+    "ordering": "ret_since_open+",
+    "dec": "11:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -20.82,
+    "ic": 0.0033
+   },
+   {
+    "ordering": "dist_lo+",
+    "dec": "11:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -20.88,
+    "ic": 0.0095
+   },
+   {
+    "ordering": "dist_vwap30+",
+    "dec": "13:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -21.21,
+    "ic": 0.0028
+   },
+   {
+    "ordering": "ret_since_open-",
+    "dec": "13:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -21.24,
+    "ic": -0.001
+   },
+   {
+    "ordering": "print_density30-",
+    "dec": "09:35",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -21.33,
+    "ic": 0.022
+   },
+   {
+    "ordering": "dist_hi-",
+    "dec": "13:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -21.55,
+    "ic": -0.0066
+   },
+   {
+    "ordering": "log_dv5+",
+    "dec": "12:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -21.68,
+    "ic": 0.0102
+   },
+   {
+    "ordering": "amihud30+",
+    "dec": "12:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -21.9,
+    "ic": -0.0028
+   },
+   {
+    "ordering": "coil-",
+    "dec": "13:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -21.99,
+    "ic": 0.0035
+   },
+   {
+    "ordering": "ret30+",
+    "dec": "09:45",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.03,
+    "ic": 0.0032
+   },
+   {
+    "ordering": "xs_rank_ret30+",
+    "dec": "09:45",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.03,
+    "ic": 0.0005
+   },
+   {
+    "ordering": "prev_day_ret+",
+    "dec": "13:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.09,
+    "ic": 0.006
+   },
+   {
+    "ordering": "dist_vwap_day+",
+    "dec": "09:45",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.26,
+    "ic": 0.0028
+   },
+   {
+    "ordering": "dist_vwap30+",
+    "dec": "09:45",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.26,
+    "ic": 0.0015
+   },
+   {
+    "ordering": "dist_vwap_day+",
+    "dec": "11:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.26,
+    "ic": 0.0055
+   },
+   {
+    "ordering": "ret5-",
+    "dec": "13:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.29,
+    "ic": 0.0099
+   },
+   {
+    "ordering": "gap_vs_prevclose-",
+    "dec": "12:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.35,
+    "ic": -0.0043
+   },
+   {
+    "ordering": "ret15-",
+    "dec": "13:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.43,
+    "ic": 0.0045
+   },
+   {
+    "ordering": "ret60+",
+    "dec": "12:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.44,
+    "ic": 0.016
+   },
+   {
+    "ordering": "prev_day_ret+",
+    "dec": "12:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -22.46,
+    "ic": 0.0099
+   }
+  ],
+  "worst": [
+   {
+    "ordering": "dist_hi+",
+    "dec": "14:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -110.78,
+    "ic": -0.0355
+   },
+   {
+    "ordering": "dist_vwap_day+",
+    "dec": "15:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -111.03,
+    "ic": -0.059
+   },
+   {
+    "ordering": "dist_hi+",
+    "dec": "15:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -111.64,
+    "ic": -0.0681
+   },
+   {
+    "ordering": "gap_vs_prevclose+",
+    "dec": "14:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -111.67,
+    "ic": -0.0385
+   },
+   {
+    "ordering": "dist_vwap30+",
+    "dec": "14:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -113.01,
+    "ic": -0.0181
+   },
+   {
+    "ordering": "dist_vwap_day+",
+    "dec": "14:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -113.72,
+    "ic": -0.0457
+   },
+   {
+    "ordering": "ret_since_open+",
+    "dec": "14:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -114.76,
+    "ic": -0.0389
+   },
+   {
+    "ordering": "dist_lo+",
+    "dec": "14:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -114.96,
+    "ic": -0.043
+   },
+   {
+    "ordering": "ret60+",
+    "dec": "14:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -115.33,
+    "ic": -0.024
+   },
+   {
+    "ordering": "ret15+",
+    "dec": "14:00",
+    "h": "h120",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -115.95,
+    "ic": -0.0242
+   }
+  ],
+  "n_rows": 396,
+  "random_top30_per_ticket": -34.22,
+  "random_sd": 2.15
+ },
+ "flat": {
+  "rows": [
+   {
+    "ordering": "gap_vs_prevclose+",
+    "dec": "09:45",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -59.62,
+    "ic": 0.0044
+   },
+   {
+    "ordering": "ret_since_open+",
+    "dec": "09:45",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -61.88,
+    "ic": 0.001
+   },
+   {
+    "ordering": "ret15+",
+    "dec": "09:45",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -61.88,
+    "ic": 0.001
+   },
+   {
+    "ordering": "dist_lo+",
+    "dec": "11:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -62.25,
+    "ic": 0.0028
+   },
+   {
+    "ordering": "bar_range5+",
+    "dec": "12:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -63.03,
+    "ic": 0.0217
+   },
+   {
+    "ordering": "rvol30+",
+    "dec": "12:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -63.18,
+    "ic": 0.0189
+   },
+   {
+    "ordering": "gap_vs_prevclose+",
+    "dec": "13:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -63.43,
+    "ic": -0.0056
+   },
+   {
+    "ordering": "gap_vs_prevclose+",
+    "dec": "11:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -64.02,
+    "ic": -0.0008
+   },
+   {
+    "ordering": "dist_lo+",
+    "dec": "12:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -64.3,
+    "ic": -0.0119
+   },
+   {
+    "ordering": "bar_range5+",
+    "dec": "11:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -65.44,
+    "ic": 0.0226
+   },
+   {
+    "ordering": "dist_vwap_day+",
+    "dec": "09:45",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -65.48,
+    "ic": 0.0008
+   },
+   {
+    "ordering": "ret60+",
+    "dec": "09:45",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -65.48,
+    "ic": 0.0023
+   },
+   {
+    "ordering": "ret30+",
+    "dec": "09:45",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -66.09,
+    "ic": 0.0029
+   },
+   {
+    "ordering": "xs_rank_ret30+",
+    "dec": "09:45",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -66.09,
+    "ic": 0.0083
+   },
+   {
+    "ordering": "ret_since_open+",
+    "dec": "11:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -66.37,
+    "ic": -0.0007
+   },
+   {
+    "ordering": "dist_lo+",
+    "dec": "09:45",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -66.45,
+    "ic": -0.0016
+   },
+   {
+    "ordering": "rvol30+",
+    "dec": "11:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -67.35,
+    "ic": 0.0202
+   },
+   {
+    "ordering": "dist_vwap30+",
+    "dec": "09:45",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -67.86,
+    "ic": -0.0011
+   },
+   {
+    "ordering": "gap_vs_prevclose+",
+    "dec": "09:35",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -68.48,
+    "ic": 0.0064
+   },
+   {
+    "ordering": "dist_vwap30-",
+    "dec": "12:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -68.56,
+    "ic": 0.0255
+   },
+   {
+    "ordering": "bar_range5+",
+    "dec": "13:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -68.78,
+    "ic": 0.0224
+   },
+   {
+    "ordering": "dist_vwap_day+",
+    "dec": "11:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -68.81,
+    "ic": 0.0003
+   },
+   {
+    "ordering": "gap_vs_prevclose+",
+    "dec": "12:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -68.83,
+    "ic": -0.0064
+   },
+   {
+    "ordering": "ret15-",
+    "dec": "12:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -69.09,
+    "ic": 0.0261
+   },
+   {
+    "ordering": "rvol30+",
+    "dec": "13:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -69.21,
+    "ic": 0.0183
+   },
+   {
+    "ordering": "dist_lo+",
+    "dec": "09:35",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -69.48,
+    "ic": -0.002
+   },
+   {
+    "ordering": "ret15+",
+    "dec": "09:35",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -70.58,
+    "ic": 0.0104
+   },
+   {
+    "ordering": "ret_since_open+",
+    "dec": "12:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -70.99,
+    "ic": -0.0127
+   },
+   {
+    "ordering": "dist_vwap_day-",
+    "dec": "14:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -70.99,
+    "ic": 0.0393
+   },
+   {
+    "ordering": "gap_vs_prevclose+",
+    "dec": "14:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7470,
+    "per_ticket_flat10": -71.35,
+    "ic": -0.0168
+   },
+   {
+    "ordering": "dist_lo+",
+    "dec": "13:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -71.4,
+    "ic": -0.0168
+   },
+   {
+    "ordering": "rvol_profile+",
+    "dec": "13:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -71.73,
+    "ic": 0.0331
+   },
+   {
+    "ordering": "bar_range5+",
+    "dec": "10:30",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -71.88,
+    "ic": 0.0207
+   },
+   {
+    "ordering": "ret_since_open+",
+    "dec": "13:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -72.1,
+    "ic": -0.0126
+   },
+   {
+    "ordering": "dist_vwap_day+",
+    "dec": "13:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -72.21,
+    "ic": -0.0164
+   },
+   {
+    "ordering": "gap_vs_prevclose+",
+    "dec": "10:30",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -72.43,
+    "ic": -0.0011
+   },
+   {
+    "ordering": "prev_day_ret-",
+    "dec": "12:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -72.47,
+    "ic": 0.0123
+   },
+   {
+    "ordering": "ret30+",
+    "dec": "09:35",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -72.51,
+    "ic": 0.0107
+   },
+   {
+    "ordering": "xs_rank_ret30+",
+    "dec": "09:35",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -72.51,
+    "ic": 0.0092
+   },
+   {
+    "ordering": "ret30-",
+    "dec": "12:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -72.56,
+    "ic": 0.0322
+   }
+  ],
+  "worst": [
+   {
+    "ordering": "ret_since_open-",
+    "dec": "09:35",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -113.45,
+    "ic": -0.0063
+   },
+   {
+    "ordering": "ret5-",
+    "dec": "09:35",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -113.45,
+    "ic": -0.0063
+   },
+   {
+    "ordering": "ret15-",
+    "dec": "10:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -113.69,
+    "ic": -0.0031
+   },
+   {
+    "ordering": "dist_vwap30-",
+    "dec": "10:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -115.77,
+    "ic": 0.0002
+   },
+   {
+    "ordering": "ret60-",
+    "dec": "10:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -116.04,
+    "ic": 0.0028
+   },
+   {
+    "ordering": "dist_vwap_day-",
+    "dec": "09:35",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -117.99,
+    "ic": -0.0103
+   },
+   {
+    "ordering": "dist_vwap_day-",
+    "dec": "10:00",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -119.71,
+    "ic": 0.0011
+   },
+   {
+    "ordering": "ret60-",
+    "dec": "09:35",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -123.34,
+    "ic": -0.009
+   },
+   {
+    "ordering": "ret30-",
+    "dec": "09:35",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -124.43,
+    "ic": -0.0107
+   },
+   {
+    "ordering": "ret15-",
+    "dec": "09:35",
+    "h": "flat",
+    "topn": 30,
+    "tickets": 7530,
+    "per_ticket_flat10": -125.55,
+    "ic": -0.0104
+   }
+  ],
+  "n_rows": 396,
+  "random_top30_per_ticket": -102.06,
+  "random_sd": 2.94
+ }
+}

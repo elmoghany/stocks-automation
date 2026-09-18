@@ -1,0 +1,19 @@
+{
+ "file": "C:\\cornell\\stocks-automation\\day-trading\\plan\\ou_out\\table.npz",
+ "rows": 3756872,
+ "dates": 448,
+ "symbols": 864,
+ "first": "2024-10-22",
+ "last": "2026-08-06",
+ "members": 268800,
+ "no_bars": 452,
+ "S_min": 595,
+ "S_p50": 599,
+ "S_max": 600,
+ "S_mean": 599.0,
+ "eligible_rows_bar_m": 2683311,
+ "fillable_rows_bar_m1": 2415777,
+ "ok_h30": 2415777,
+ "ok_h60": 2415777,
+ "seconds": 4601.9
+}

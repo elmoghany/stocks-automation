@@ -70,13 +70,24 @@ class OT(Table):
     # ---- identity gate: the flat ladder on the stored legs must reproduce
     # ---- wn_table.day_block's own pnl_* to float32
     def flat_pnl(self, h):
+        """The incumbent ladder charged on the stored legs.
+
+        `notional` in wn_table is the GROSS ticket; the cash actually paid out
+        is notional*(1 + entry cost) and the cash back is
+        (notional/entry_px)*exit_px*(1 - exit cost), so
+            pnl = notional * (1 + c_en) * tgt,
+        which is the factor `wn_table.day_block` carries and which this gate
+        caught missing on the first cut (mean |diff| $0.14-$0.38, i.e. exactly
+        one entry fee's worth).
+        """
         en = self.fill_px
         ex = self.expx[h]
         c_en = L.cost_frac(self.ent_min)
         c_ex = L.cost_frac(self.exmin[h])
         with np.errstate(all="ignore"):
             r = (ex * (1.0 - c_ex)) / np.maximum(en * (1.0 + c_en), 1e-9) - 1.0
-        return np.where(self.ok[h], self.notional * np.nan_to_num(r), 0.0)
+        return np.where(self.ok[h],
+                        self.notional * (1.0 + c_en) * np.nan_to_num(r), 0.0)
 
     def measured_pnl(self, h, rows, cm=None):
         """Measured-cost P&L for a SUBSET of rows (the picks), $ per ticket."""
@@ -93,7 +104,8 @@ class OT(Table):
                       no * np.nan_to_num(gross, nan=1.0)) / 1e4
         with np.errstate(all="ignore"):
             r = gross * (1.0 - c_ex) / (1.0 + c_en) - 1.0
-        return np.where(self.ok[h][rows], no * np.nan_to_num(r), 0.0)
+        return np.where(self.ok[h][rows],
+                        no * (1.0 + c_en) * np.nan_to_num(r), 0.0)
 
 
 def picks(t, score, mask, topk):

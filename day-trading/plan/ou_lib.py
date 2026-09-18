@@ -125,8 +125,12 @@ def split_of(d):
 
 
 def cost_frac(minute):
-    ext = (minute < RTH_LO) or (minute >= RTH_HI)
-    return (FEE_BPS + EXT_BPS * ext) / 1e4
+    """The incumbent ladder: 10 bps a side, +50 bps outside 09:30-16:00.
+    Scalar or array; identical to rl2.features.cost_frac."""
+    m = np.asarray(minute)
+    ext = (m < RTH_LO) | (m >= RTH_HI)
+    out = (FEE_BPS + EXT_BPS * ext) / 1e4
+    return float(out) if np.ndim(minute) == 0 else out
 
 
 def trading_dates():
