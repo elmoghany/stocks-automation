@@ -1,0 +1,2150 @@
+{
+"data": {
+"result": {
+"scan_id": "5f132877-7730-4a18-9e72-b3f0d2c9df83",
+"total_items": 134,
+"results": [
+{
+"ticker": "IMCC",
+"instrument_id": "dc9aaf38-ea7b-4348-8e03-89a511e76cd9",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "2.3160919540229883",
+"Float": "573636",
+"Last": "5.77",
+"Market cap": "984391",
+"Name": "IM Cannabis",
+"Net change": "4.029999999999999",
+"Relative volume": "208.14170904340622",
+"Symbol": "IMCC",
+"Volume": "9.1541141292362e+07"
+}
+},
+{
+"ticker": "TJGC",
+"instrument_id": "16b491f8-003e-437c-8fd4-2e054cbd973c",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.5240781108083562",
+"Float": "6.826689e+06",
+"Last": "16.7801",
+"Market cap": "1.11100253e+08",
+"Name": "TJGC Group Limited Class A",
+"Net change": "5.770100000000001",
+"Relative volume": "0.5041095124629154",
+"Symbol": "TJGC",
+"Volume": "1.666626887463e+06"
+}
+},
+{
+"ticker": "SSM",
+"instrument_id": "b70288fb-114b-40b2-997d-ef17bc3ceb07",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.44520547945205474",
+"Float": "1.016666e+06",
+"Last": "2.11",
+"Market cap": "2.475569e+06",
+"Name": "Sono Group N.V.",
+"Net change": "0.6499999999999999",
+"Relative volume": "6.776067843525858",
+"Symbol": "SSM",
+"Volume": "3.3867388982431e+07"
+}
+},
+{
+"ticker": "TNMG",
+"instrument_id": "28ee322b-af1c-4c1b-a0fa-5a7b856b6b9f",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.40148698884758366",
+"Float": "5.578391e+06",
+"Last": "3.77",
+"Market cap": "1.7462747e+07",
+"Name": "TNL Mediagene",
+"Net change": "1.08",
+"Relative volume": "633.0180658184789",
+"Symbol": "TNMG",
+"Volume": "3.4565832137957e+07"
+}
+},
+{
+"ticker": "GEMG",
+"instrument_id": "443248ec-d7a9-4ffe-bdae-80c6e1ca0e4b",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.3526901224359147",
+"Float": "",
+"Last": "10.1422",
+"Market cap": "",
+"Name": "Leverage Shares 2X Long GEMI Daily ETF",
+"Net change": "2.644400000000001",
+"Relative volume": "0.5324507640302539",
+"Symbol": "GEMG",
+"Volume": "65323.487334"
+}
+},
+{
+"ticker": "SVRN",
+"instrument_id": "9ed6fc55-0a66-424c-a928-e8f987442f90",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.32663847780126853",
+"Float": "1.863716e+06",
+"Last": "18.825",
+"Market cap": "2.211587e+07",
+"Name": "SVRN",
+"Net change": "4.635",
+"Relative volume": "2.115254493642969",
+"Symbol": "SVRN",
+"Volume": "196857.825034"
+}
+},
+{
+"ticker": "WZRD",
+"instrument_id": "5434be1a-c46b-46f3-8df5-13eb4c737e90",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.2842415316642122",
+"Float": "",
+"Last": "8.72",
+"Market cap": "",
+"Name": "Opportunistic Trader ETF",
+"Net change": "1.9300000000000006",
+"Relative volume": "2.1899028692729563",
+"Symbol": "WZRD",
+"Volume": "14309.138274"
+}
+},
+{
+"ticker": "MSTU",
+"instrument_id": "254cee51-8870-47dd-a0d1-aa27a9648ff3",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.2690553745928339",
+"Float": "",
+"Last": "38.96",
+"Market cap": "",
+"Name": "T-Rex 2X Long MSTR Daily Target ETF",
+"Net change": "8.260000000000002",
+"Relative volume": "1.452212269160617",
+"Symbol": "MSTU",
+"Volume": "6.390622539486e+06"
+}
+},
+{
+"ticker": "MSTX",
+"instrument_id": "090e3b07-0370-42bd-9191-f632e3d52bd8",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.2687411598302688",
+"Float": "",
+"Last": "17.94",
+"Market cap": "",
+"Name": "Defiance Daily Target 2x Long MSTR ETF",
+"Net change": "3.8000000000000007",
+"Relative volume": "1.1629462867759601",
+"Symbol": "MSTX",
+"Volume": "8.97306371011e+06"
+}
+},
+{
+"ticker": "MSTP",
+"instrument_id": "6044b067-12af-494b-aa1f-ed01bbda6dbc",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.26676533585828405",
+"Float": "",
+"Last": "27.56",
+"Market cap": "",
+"Name": "GraniteShares 2x Long MSTR Daily ETF",
+"Net change": "5.803799999999999",
+"Relative volume": "1.108866819670612",
+"Symbol": "MSTP",
+"Volume": "51385.512496"
+}
+},
+{
+"ticker": "CANG",
+"instrument_id": "b78e8196-8685-4d5d-b949-d7fe3df15da0",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.2522",
+"Float": "1.1204377e+07",
+"Last": "2.7172",
+"Market cap": "8.7376789e+07",
+"Name": "Cango",
+"Net change": "0.5337000000000001",
+"Relative volume": "1.04319828424646",
+"Symbol": "CANG",
+"Volume": "1083424"
+}
+},
+{
+"ticker": "LGHL",
+"instrument_id": "1264f56b-40a5-4cc5-a07e-c268df1fef70",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.25780000000000003",
+"Float": "45877",
+"Last": "8.1128",
+"Market cap": "265327",
+"Name": "Lion Group Holding Ltd.",
+"Net change": "1.5499999999999998",
+"Relative volume": "2.758510520411617",
+"Symbol": "LGHL",
+"Volume": "189951"
+}
+},
+{
+"ticker": "SUIL",
+"instrument_id": "ce99e296-ab78-4bc6-a955-a21931c90d3f",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.2374349499093112",
+"Float": "",
+"Last": "7.3",
+"Market cap": "",
+"Name": "2x Sui ETF",
+"Net change": "1.4006999999999996",
+"Relative volume": "4.112335062733449",
+"Symbol": "SUIL",
+"Volume": "35794.718859"
+}
+},
+{
+"ticker": "CONX",
+"instrument_id": "5cb12e33-bd35-4926-aef4-2361c71428cd",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.23671497584541062",
+"Float": "",
+"Last": "7.68",
+"Market cap": "",
+"Name": "Direxion Daily COIN Bull 2X ETF",
+"Net change": "1.4699999999999998",
+"Relative volume": "0.6745927626369226",
+"Symbol": "CONX",
+"Volume": "153268.327049"
+}
+},
+{
+"ticker": "COIG",
+"instrument_id": "0632829d-b9b7-4bf9-a67a-ec375c05c160",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.2354709418837675",
+"Float": "",
+"Last": "6.165",
+"Market cap": "",
+"Name": "Themes ETF Trust Leverage Shares 2X Long COIN Daily ETF",
+"Net change": "1.1749999999999998",
+"Relative volume": "2.4260950570341833",
+"Symbol": "COIG",
+"Volume": "288822.53882"
+}
+},
+{
+"ticker": "CONL",
+"instrument_id": "5f22c9e7-1ee0-4969-8d60-52e54effb0db",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.2337917485265227",
+"Float": "",
+"Last": "6.28",
+"Market cap": "",
+"Name": "GraniteShares 2x Long COIN Daily ETF",
+"Net change": "1.1900000000000004",
+"Relative volume": "1.5628856899675243",
+"Symbol": "CONL",
+"Volume": "4.71843708087e+07"
+}
+},
+{
+"ticker": "SBTU",
+"instrument_id": "53b1536c-8adf-4bb7-be15-111e1a8d405b",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.23022755428049815",
+"Float": "",
+"Last": "47.17",
+"Market cap": "",
+"Name": "T-REX 2X Long SBET Daily Target ETF",
+"Net change": "8.8275",
+"Relative volume": "1.191294895804208",
+"Symbol": "SBTU",
+"Volume": "7721.194646"
+}
+},
+{
+"ticker": "COIA",
+"instrument_id": "31e612a5-8262-406b-aea3-9dadc5474b31",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.22552835051546388",
+"Float": "",
+"Last": "9.5101",
+"Market cap": "",
+"Name": "ProShares Ultra COIN",
+"Net change": "1.7500999999999998",
+"Relative volume": "0.7926149056891572",
+"Symbol": "COIA",
+"Volume": "30968.959944"
+}
+},
+{
+"ticker": "MRAL",
+"instrument_id": "7501b1f8-d408-4edf-a81b-67bdf14d4e70",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.22061528638535718",
+"Float": "",
+"Last": "48.175",
+"Market cap": "",
+"Name": "GraniteShares 2x Long MARA Daily ETF",
+"Net change": "8.7072",
+"Relative volume": "0.9891125066829745",
+"Symbol": "MRAL",
+"Volume": "145713.753068"
+}
+},
+{
+"ticker": "MST",
+"instrument_id": "71c310b8-deb1-4e11-b1c9-f77678e9c28a",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.21877619446772836",
+"Float": "",
+"Last": "14.54",
+"Market cap": "",
+"Name": "Defiance Leveraged Long Income MSTR ETF",
+"Net change": "2.6099999999999994",
+"Relative volume": "1.3761022628458093",
+"Symbol": "MST",
+"Volume": "139998.241869"
+}
+},
+{
+"ticker": "SLON",
+"instrument_id": "c1ec601c-bf5e-4dd3-ae48-a834a3b0a740",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.2162858062439652",
+"Float": "",
+"Last": "37.79",
+"Market cap": "",
+"Name": "ProShares Ultra Solana ETF",
+"Net change": "6.719999999999999",
+"Relative volume": "1.1327159575090113",
+"Symbol": "SLON",
+"Volume": "207885.33334"
+}
+},
+{
+"ticker": "COIX",
+"instrument_id": "5573e8f5-1e1f-4a7b-8ff9-0479f572cab8",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.2144789401830409",
+"Float": "",
+"Last": "38.43",
+"Market cap": "",
+"Name": "Corgi COIN 2x Daily ETF",
+"Net change": "6.7867999999999995",
+"Relative volume": "30.380765702491185",
+"Symbol": "COIX",
+"Volume": "423.9089"
+}
+},
+{
+"ticker": "BTDL",
+"instrument_id": "2050d5dd-9b18-4337-adab-9bd2f62eb057",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.2136108764113988",
+"Float": "",
+"Last": "18.96",
+"Market cap": "",
+"Name": "GraniteShares 2x Long BTDR Daily ETF",
+"Net change": "3.337200000000001",
+"Relative volume": "3.863147106101908",
+"Symbol": "BTDL",
+"Volume": "73306.5783"
+}
+},
+{
+"ticker": "SOLT",
+"instrument_id": "91b5c1fe-d963-4831-aca4-aeb0d3a806ba",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.21356113187399894",
+"Float": "",
+"Last": "68.19",
+"Market cap": "",
+"Name": "Volatility Shares Trust 2x Solana ETF",
+"Net change": "12",
+"Relative volume": "2.291070349694949",
+"Symbol": "SOLT",
+"Volume": "933829.699475"
+}
+},
+{
+"ticker": "QMLS",
+"instrument_id": "c2212e6e-33cf-45e2-b3de-3b13de2416d9",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.21087314662273463",
+"Float": "1.9178798e+07",
+"Last": "7.35",
+"Market cap": "1.7866847e+08",
+"Name": "QumulusAI",
+"Net change": "1.2799999999999994",
+"Relative volume": "1.096980294925515",
+"Symbol": "QMLS",
+"Volume": "478990.312852"
+}
+},
+{
+"ticker": "MSTC",
+"instrument_id": "134c228d-1797-4dab-ab28-d33e722ef837",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.2033966033966034",
+"Float": "",
+"Last": "60.23",
+"Market cap": "",
+"Name": "Corgi MSTR 2x Daily ETF",
+"Net change": "10.18",
+"Relative volume": "0.5093607186659105",
+"Symbol": "MSTC",
+"Volume": "383.166295"
+}
+},
+{
+"ticker": "BSEM",
+"instrument_id": "43358af8-891b-4e1f-bbbc-9d524f112cd8",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.19269999999999998",
+"Float": "",
+"Last": "5.2",
+"Market cap": "7.3643975e+07",
+"Name": "BioStem Technologies",
+"Net change": "0.8800999999999997",
+"Relative volume": "1.7477578039469637",
+"Symbol": "BSEM",
+"Volume": "222989"
+}
+},
+{
+"ticker": "ACLZ",
+"instrument_id": "0617a595-850d-4a99-9068-66363e7b8abc",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.20100645897642075",
+"Float": "",
+"Last": "9.26",
+"Market cap": "",
+"Name": "Corgi ACLS 2x Daily ETF",
+"Net change": "1.5497999999999994",
+"Relative volume": "0",
+"Symbol": "ACLZ",
+"Volume": "0"
+}
+},
+{
+"ticker": "TXXH",
+"instrument_id": "de734724-7299-4b63-aeb6-851993a85603",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.19757250066634524",
+"Float": "",
+"Last": "77.73",
+"Market cap": "",
+"Name": "21Shares 2x Long HYPE ETF",
+"Net change": "12.823700000000002",
+"Relative volume": "1.0569763204992808",
+"Symbol": "TXXH",
+"Volume": "17318.868608"
+}
+},
+{
+"ticker": "FWDI",
+"instrument_id": "e1d69205-3f25-4aa9-a4ba-90d3c7609e4d",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.19677419354838704",
+"Float": "6.4476074e+07",
+"Last": "7.42",
+"Market cap": "4.43819766e+08",
+"Name": "Forward Industries",
+"Net change": "1.2199999999999998",
+"Relative volume": "1.6253272058528734",
+"Symbol": "FWDI",
+"Volume": "2.935916728473e+06"
+}
+},
+{
+"ticker": "ETS",
+"instrument_id": "9a9ebf2b-3d6c-4e6d-befe-5edd57c217a5",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.18739999999999998",
+"Float": "4.4550005e+07",
+"Last": "2.6122",
+"Market cap": "9.7433344e+07",
+"Name": "Elite Express Holding",
+"Net change": "0.4299999999999997",
+"Relative volume": "1.7487231213478158",
+"Symbol": "ETS",
+"Volume": "440433"
+}
+},
+{
+"ticker": "DSP",
+"instrument_id": "a72633f1-147a-4cf9-943a-243cdc5c5b00",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1946107784431139",
+"Float": "2.0457874e+07",
+"Last": "11.97",
+"Market cap": "2.61758485e+08",
+"Name": "Viant Technology",
+"Net change": "1.950000000000001",
+"Relative volume": "0.7506496727650873",
+"Symbol": "DSP",
+"Volume": "1.647676775102e+06"
+}
+},
+{
+"ticker": "HSDT",
+"instrument_id": "e05da8cd-52b7-4e7a-a3d4-b0c8764dccc1",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.18995633187772928",
+"Float": "5.362825e+07",
+"Last": "2.725",
+"Market cap": "1.38148136e+08",
+"Name": "Solana Company Class A",
+"Net change": "0.43500000000000005",
+"Relative volume": "1.3449774490613893",
+"Symbol": "HSDT",
+"Volume": "660957.283443"
+}
+},
+{
+"ticker": "TXXS",
+"instrument_id": "dd5d73d8-3875-4479-a2ef-bc651caf7bbf",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.18416786438446978",
+"Float": "",
+"Last": "24.47",
+"Market cap": "",
+"Name": "21Shares 2x Long Sui ETF",
+"Net change": "3.805699999999998",
+"Relative volume": "3.049515038141329",
+"Symbol": "TXXS",
+"Volume": "25550.778445"
+}
+},
+{
+"ticker": "GEMI",
+"instrument_id": "99c35654-7c80-407b-b045-ecc098a3c658",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.18171557562076765",
+"Float": "5.4416729e+07",
+"Last": "5.235",
+"Market cap": "5.41297943e+08",
+"Name": "Gemini Space Station",
+"Net change": "0.8050000000000006",
+"Relative volume": "2.2722518959790547",
+"Symbol": "GEMI",
+"Volume": "4.093473622131e+06"
+}
+},
+{
+"ticker": "HOOX",
+"instrument_id": "cee33e90-c229-4574-a13b-da1bde8a0dc1",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.18021410787436118",
+"Float": "",
+"Last": "41.43",
+"Market cap": "",
+"Name": "Defiance Daily Target 2X Long HOOD ETF",
+"Net change": "6.3262",
+"Relative volume": "2.393118513865606",
+"Symbol": "HOOX",
+"Volume": "71528.726948"
+}
+},
+{
+"ticker": "SMZ",
+"instrument_id": "560f44de-f3fe-4d7c-8094-24c5aa9b3841",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.179708222811671",
+"Float": "",
+"Last": "17.79",
+"Market cap": "",
+"Name": "Tradr 2X Short SMR Daily ETF",
+"Net change": "2.709999999999999",
+"Relative volume": "0.3416571904310346",
+"Symbol": "SMZ",
+"Volume": "48162.347701"
+}
+},
+{
+"ticker": "ROBN",
+"instrument_id": "425bbf8c-1574-4728-a1ea-3af809d8dd0a",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.17800963081861965",
+"Float": "",
+"Last": "36.695",
+"Market cap": "",
+"Name": "T-Rex 2X Long HOOD Daily Target ETF",
+"Net change": "5.545000000000002",
+"Relative volume": "1.330285247428755",
+"Symbol": "ROBN",
+"Volume": "1.287528714909e+06"
+}
+},
+{
+"ticker": "BLSG",
+"instrument_id": "00932314-7435-4882-87c3-3e8d4281e65d",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.17711598746081503",
+"Float": "",
+"Last": "3.755",
+"Market cap": "",
+"Name": "Leverage Shares 2X Long BLSH Daily ETF",
+"Net change": "0.565",
+"Relative volume": "0.9768557403481765",
+"Symbol": "BLSG",
+"Volume": "146543.687699"
+}
+},
+{
+"ticker": "GLGG",
+"instrument_id": "5a13dbdc-e074-4e81-9407-5c7e44e4e2dc",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.17565527312328286",
+"Float": "",
+"Last": "4.75",
+"Market cap": "",
+"Name": "Leverage Shares 2X Long GLXY Daily ETF",
+"Net change": "0.7096999999999998",
+"Relative volume": "0.43781728218446764",
+"Symbol": "GLGG",
+"Volume": "35082.3986"
+}
+},
+{
+"ticker": "HOOG",
+"instrument_id": "118c8170-2801-4bfa-b1b7-dc9a05876c0c",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1743325828240591",
+"Float": "",
+"Last": "36.51",
+"Market cap": "",
+"Name": "Leverage Shares 2X Long HOOD Daily ETF",
+"Net change": "5.419999999999998",
+"Relative volume": "1.2720080350777359",
+"Symbol": "HOOG",
+"Volume": "589004.888254"
+}
+},
+{
+"ticker": "HODU",
+"instrument_id": "92e0cc97-b8a6-483f-9b0a-80286a6f15ca",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.17054263565891467",
+"Float": "",
+"Last": "15.1",
+"Market cap": "",
+"Name": "Direxion Daily HOOD Bull 2X ETF",
+"Net change": "2.1999999999999993",
+"Relative volume": "0.8448595411060529",
+"Symbol": "HODU",
+"Volume": "217448.965063"
+}
+},
+{
+"ticker": "XBP",
+"instrument_id": "38c56d41-84df-464f-80ca-7670e69f4940",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1666666666666666",
+"Float": "4.243913e+06",
+"Last": "3.71",
+"Market cap": "3.4931136e+07",
+"Name": "XBP Global Holdings,",
+"Net change": "0.5299999999999998",
+"Relative volume": "3.4060040834937944",
+"Symbol": "XBP",
+"Volume": "87997.2582"
+}
+},
+{
+"ticker": "BIAF",
+"instrument_id": "9ad07642-2276-429d-8d20-7a2e93cafdb7",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.16571428571428562",
+"Float": "594921",
+"Last": "10.2",
+"Market cap": "3.159931e+06",
+"Name": "bioAffinity Technologies",
+"Net change": "1.4499999999999993",
+"Relative volume": "0.35551762651426566",
+"Symbol": "BIAF",
+"Volume": "9.033843239276e+06"
+}
+},
+{
+"ticker": "MSTW",
+"instrument_id": "59467db8-3a34-40c9-97b8-48a01dd54d20",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.16410861865407306",
+"Float": "",
+"Last": "4.93",
+"Market cap": "",
+"Name": "Roundhill MSTR WeeklyPay ETF",
+"Net change": "0.6949999999999994",
+"Relative volume": "1.636166964379588",
+"Symbol": "MSTW",
+"Volume": "4.309368374664e+06"
+}
+},
+{
+"ticker": "SNDC",
+"instrument_id": "e53b63b0-a3ab-41ca-b821-1c40f29b357a",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.16300129366106078",
+"Float": "",
+"Last": "8.99",
+"Market cap": "",
+"Name": "Corgi SNDK 2x Daily ETF",
+"Net change": "1.2599999999999998",
+"Relative volume": "0.48268143659943713",
+"Symbol": "SNDC",
+"Volume": "87515.750058"
+}
+},
+{
+"ticker": "GLXU",
+"instrument_id": "999b2d15-2010-4c37-aaf0-a0a111f7bc19",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.16210526315789464",
+"Float": "",
+"Last": "5.52",
+"Market cap": "",
+"Name": "T-REX 2X Long GLXY Daily Target ETF",
+"Net change": "0.7699999999999996",
+"Relative volume": "0.5925892555060442",
+"Symbol": "GLXU",
+"Volume": "106120.736585"
+}
+},
+{
+"ticker": "BNMC",
+"instrument_id": "a788963b-2ee5-4804-beef-f706daa119af",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.15986220091617567",
+"Float": "",
+"Last": "65.35",
+"Market cap": "",
+"Name": "Corgi BMNR 2x Daily ETF",
+"Net change": "9.007099999999994",
+"Relative volume": "4.199878378378378",
+"Symbol": "BNMC",
+"Volume": "3107.91"
+}
+},
+{
+"ticker": "SNXX",
+"instrument_id": "2f4c0f7f-6d85-4dea-b180-eeb8a19cd765",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.15918367346938775",
+"Float": "",
+"Last": "17.04",
+"Market cap": "",
+"Name": "Tradr 2X Long SNDK Daily ETF",
+"Net change": "2.34",
+"Relative volume": "1.1563001549866099",
+"Symbol": "SNXX",
+"Volume": "6.1022374150474e+07"
+}
+},
+{
+"ticker": "GSIW",
+"instrument_id": "bacc2faf-bd32-4659-b9c9-1ed7b4682b8c",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1570746348202327",
+"Float": "1.262523e+06",
+"Last": "16.5",
+"Market cap": "2.1058545e+07",
+"Name": "Garden Stage Limited",
+"Net change": "2.2399000000000004",
+"Relative volume": "4.050564253780908",
+"Symbol": "GSIW",
+"Volume": "33723.002106"
+}
+},
+{
+"ticker": "TXXD",
+"instrument_id": "1e55dd38-f110-463b-89d1-56f270274430",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.15539414307590146",
+"Float": "",
+"Last": "42.63",
+"Market cap": "",
+"Name": "21Shares 2x Long Dogecoin ETF",
+"Net change": "5.733499999999999",
+"Relative volume": "1.6791291255687657",
+"Symbol": "TXXD",
+"Volume": "9020.213322"
+}
+},
+{
+"ticker": "SNDU",
+"instrument_id": "5abb7097-850b-43f4-9b55-869ff3585ca7",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.15497588776852259",
+"Float": "",
+"Last": "26.345",
+"Market cap": "",
+"Name": "T-REX 2X Long SNDK Daily Target ETF",
+"Net change": "3.535",
+"Relative volume": "0.9240545630314432",
+"Symbol": "SNDU",
+"Volume": "4.231875816267e+06"
+}
+},
+{
+"ticker": "SNDG",
+"instrument_id": "2ba13e54-40a7-4332-827e-43392b299642",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1545603495357729",
+"Float": "",
+"Last": "10.57",
+"Market cap": "",
+"Name": "Leverage Shares 2X Long SNDK Daily ETF",
+"Net change": "1.415000000000001",
+"Relative volume": "0.7687743719118749",
+"Symbol": "SNDG",
+"Volume": "5.795418943134e+06"
+}
+},
+{
+"ticker": "SLE",
+"instrument_id": "3ebebee1-baed-4bea-93a0-720386f9349a",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.15450000000000003",
+"Float": "4.6550622e+07",
+"Last": "5.3107",
+"Market cap": "7.191192e+06",
+"Name": "Super League Enterprise",
+"Net change": "0.7107000000000001",
+"Relative volume": "1.1474859186749466",
+"Symbol": "SLE",
+"Volume": "172328.498824"
+}
+},
+{
+"ticker": "BMNG",
+"instrument_id": "4827f85b-4fc1-4f43-a3a3-28511ba14523",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1493670886075949",
+"Float": "",
+"Last": "27.24",
+"Market cap": "",
+"Name": "Leverage Shares 2X Long BMNR Daily ETF",
+"Net change": "3.539999999999999",
+"Relative volume": "0.9795686969017899",
+"Symbol": "BMNG",
+"Volume": "265329.036525"
+}
+},
+{
+"ticker": "BMNU",
+"instrument_id": "49d55e27-7cf5-4395-a17e-50661d896421",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.14795624640184227",
+"Float": "",
+"Last": "19.94",
+"Market cap": "",
+"Name": "T-REX 2X Long BMNR Daily Target ETF",
+"Net change": "2.5700000000000003",
+"Relative volume": "0.9809736541941918",
+"Symbol": "BMNU",
+"Volume": "4.940521849828e+06"
+}
+},
+{
+"ticker": "CIR",
+"instrument_id": "345fac19-64e1-44e2-9542-58180b2cdc7c",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.14434770613150902",
+"Float": "",
+"Last": "36.5",
+"Market cap": "",
+"Name": "Corgi CRCL 2x Daily ETF",
+"Net change": "4.604099999999999",
+"Relative volume": "0.9241290537252788",
+"Symbol": "CIR",
+"Volume": "3991.558"
+}
+},
+{
+"ticker": "AIAI",
+"instrument_id": "beb65e70-08bc-42f8-bddb-c16c2793f1d9",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.14329268292682934",
+"Float": "5.4060405e+07",
+"Last": "3.75",
+"Market cap": "2.39546759e+08",
+"Name": "AIAI Holdings Corporation",
+"Net change": "0.4700000000000002",
+"Relative volume": "0.21734175658401397",
+"Symbol": "AIAI",
+"Volume": "257539.3037"
+}
+},
+{
+"ticker": "AVAZ",
+"instrument_id": "738c402c-4e47-4384-adc6-89c4de59c7d5",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.13883089770354906",
+"Float": "",
+"Last": "10.91",
+"Market cap": "",
+"Name": "2x Avalanche ETF",
+"Net change": "1.33",
+"Relative volume": "3.41907913047698",
+"Symbol": "AVAZ",
+"Volume": "15366.661035"
+}
+},
+{
+"ticker": "COIW",
+"instrument_id": "8565314b-ab8c-4d34-93ae-4f3c4739252c",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1380952380952381",
+"Float": "",
+"Last": "9.56",
+"Market cap": "",
+"Name": "Roundhill COIN WeeklyPay ETF",
+"Net change": "1.1600000000000001",
+"Relative volume": "1.5633928276058164",
+"Symbol": "COIW",
+"Volume": "456637.794447"
+}
+},
+{
+"ticker": "CCUP",
+"instrument_id": "e7f9c8ba-14cc-4ca0-9bd9-dfeaf3643e7f",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1379310344827585",
+"Float": "",
+"Last": "25.74",
+"Market cap": "",
+"Name": "T-REX 2X Long CRCL Daily Target ETF",
+"Net change": "3.1199999999999974",
+"Relative volume": "1.2454820983637371",
+"Symbol": "CCUP",
+"Volume": "122821.943058"
+}
+},
+{
+"ticker": "CD",
+"instrument_id": "33c7a65b-ba97-4a3f-a201-ed197492b7fe",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.13745704467353947",
+"Float": "9.5660254e+07",
+"Last": "3.31",
+"Market cap": "3.2451121e+08",
+"Name": "Chaince Digital Holdings",
+"Net change": "0.3999999999999999",
+"Relative volume": "0.8112237390177794",
+"Symbol": "CD",
+"Volume": "109350.341146"
+}
+},
+{
+"ticker": "TTRX",
+"instrument_id": "482d7c7c-74c1-43ec-b065-f104092b6ea1",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1360347322720694",
+"Float": "",
+"Last": "15.7",
+"Market cap": "4.14519159e+08",
+"Name": "Turn Therapeutics",
+"Net change": "1.879999999999999",
+"Relative volume": "0.540320864533412",
+"Symbol": "TTRX",
+"Volume": "108007.653505"
+}
+},
+{
+"ticker": "CRCG",
+"instrument_id": "7d4e0886-3781-42ac-991c-3893140137d8",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.13601236476043277",
+"Float": "",
+"Last": "14.7",
+"Market cap": "",
+"Name": "Leverage Shares 2X Long CRCL Daily ETF",
+"Net change": "1.7599999999999998",
+"Relative volume": "1.0401278768110802",
+"Symbol": "CRCG",
+"Volume": "4.088837751295e+06"
+}
+},
+{
+"ticker": "FGL",
+"instrument_id": "d685faab-d0ed-4b6d-80e9-6ac225213eef",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.13480392156862742",
+"Float": "10247",
+"Last": "4.63",
+"Market cap": "49489",
+"Name": "Founder Group Limited Class A",
+"Net change": "0.5499999999999998",
+"Relative volume": "0.9036833633558562",
+"Symbol": "FGL",
+"Volume": "71021.520232"
+}
+},
+{
+"ticker": "MSTR",
+"instrument_id": "8249abab-d19e-449d-bd80-1c18e24f491c",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.13406427221172015",
+"Float": "3.77176132e+08",
+"Last": "149.98",
+"Market cap": "5.0128999858e+10",
+"Name": "Strategy Inc.",
+"Net change": "17.72999999999999",
+"Relative volume": "1.5301264505975745",
+"Symbol": "MSTR",
+"Volume": "2.8900906524153e+07"
+}
+},
+{
+"ticker": "ASTN",
+"instrument_id": "9bccda32-1b72-4f6b-9f76-b122517e25ac",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.13248847926267285",
+"Float": "",
+"Last": "19.66",
+"Market cap": "",
+"Name": "Defiance Daily Target 2X Short ASTS ETF",
+"Net change": "2.3000000000000007",
+"Relative volume": "0.28205036916439774",
+"Symbol": "ASTN",
+"Volume": "153830.922849"
+}
+},
+{
+"ticker": "CRCA",
+"instrument_id": "20738182-8a7a-4621-bbf1-2787954f37dd",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.13242961418143895",
+"Float": "",
+"Last": "21.72",
+"Market cap": "",
+"Name": "ProShares Ultra CRCL",
+"Net change": "2.539999999999999",
+"Relative volume": "1.0246433154932217",
+"Symbol": "CRCA",
+"Volume": "928906.797133"
+}
+},
+{
+"ticker": "CYPH",
+"instrument_id": "14c1551c-4dd2-4fc6-b6c4-979537274a8e",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.13029315960912063",
+"Float": "8.6583521e+07",
+"Last": "3.47",
+"Market cap": "2.61867448e+08",
+"Name": "Cypherpunk Technologies",
+"Net change": "0.40000000000000036",
+"Relative volume": "0.7877786651610157",
+"Symbol": "CYPH",
+"Volume": "2.1120426215045e+07"
+}
+},
+{
+"ticker": "UNI",
+"instrument_id": "33316259-af8c-4f31-86a4-c5c07e12d625",
+"instrument_type": "CRYPTO",
+"columns": {
+"% Change": "0.12949480645748837",
+"Float": "",
+"Last": "8.80579",
+"Market cap": "",
+"Name": "Uniswap",
+"Net change": "1.00957",
+"Relative volume": "1.32676264298499",
+"Symbol": "UNI",
+"Volume": "973413.15124015"
+}
+},
+{
+"ticker": "TAOX",
+"instrument_id": "715124c3-34c5-443a-af58-3f65912ba8d4",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12745098039215674",
+"Float": "7.325032e+06",
+"Last": "4.6",
+"Market cap": "2.783766e+07",
+"Name": "Tao Synergies",
+"Net change": "0.5199999999999996",
+"Relative volume": "3.225754005420218",
+"Symbol": "TAOX",
+"Volume": "591589.463822"
+}
+},
+{
+"ticker": "UXRP",
+"instrument_id": "a4ed4191-1ac1-4c8d-8b30-d44c86c0a2a9",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1260315078769692",
+"Float": "",
+"Last": "15.01",
+"Market cap": "",
+"Name": "Proshares Ultra XRP ETF",
+"Net change": "1.6799999999999997",
+"Relative volume": "0.8273373746668898",
+"Symbol": "UXRP",
+"Volume": "190067.307853"
+}
+},
+{
+"ticker": "XRPT",
+"instrument_id": "a191c079-e7f3-4e27-b103-47ecfe13c38b",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12529873677022882",
+"Float": "",
+"Last": "32.96",
+"Market cap": "",
+"Name": "Volatility Shares Trust 2x XRP ETF",
+"Net change": "3.6700000000000017",
+"Relative volume": "1.3760886654354754",
+"Symbol": "XRPT",
+"Volume": "462464.764449"
+}
+},
+{
+"ticker": "GLX",
+"instrument_id": "72421568-5b07-49a8-b384-b51fc8b2a5b2",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12519548934068656",
+"Float": "",
+"Last": "13.67",
+"Market cap": "",
+"Name": "Corgi GLXY 2x Daily ETF",
+"Net change": "1.5210000000000008",
+"Relative volume": "10.567854205607476",
+"Symbol": "GLX",
+"Volume": "1130.7604"
+}
+},
+{
+"ticker": "CHNU",
+"instrument_id": "25e86c79-aaa5-4bbf-a27e-064ed3b794de",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12494325458484504",
+"Float": "",
+"Last": "30.48",
+"Market cap": "",
+"Name": "2x Chainlink ETF",
+"Net change": "3.385300000000001",
+"Relative volume": "3.1991550357144916",
+"Symbol": "CHNU",
+"Volume": "12721.5139"
+}
+},
+{
+"ticker": "XHOA",
+"instrument_id": "39513025-20b0-494c-8d81-10b7534c7a91",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12392547438549097",
+"Float": "",
+"Last": "26.79",
+"Market cap": "",
+"Name": "Corgi U.S. Real Estate 2x Daily ETF",
+"Net change": "2.953900000000001",
+"Relative volume": "0",
+"Symbol": "XHOA",
+"Volume": "0"
+}
+},
+{
+"ticker": "EVMU",
+"instrument_id": "4aec0d9e-bc97-4479-a304-85071f6de060",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12388906345610012",
+"Float": "",
+"Last": "33.9791",
+"Market cap": "",
+"Name": "Direxion Daily Ether Bull 2X ETF",
+"Net change": "3.745600000000003",
+"Relative volume": "0.8734052595064947",
+"Symbol": "EVMU",
+"Volume": "3600.1722"
+}
+},
+{
+"ticker": "BULG",
+"instrument_id": "98fe679b-b0ad-4efb-a729-ca520b9b2cd3",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12320609566983814",
+"Float": "",
+"Last": "44.4",
+"Market cap": "",
+"Name": "Leverage Shares 2X Long BULL Daily ETF",
+"Net change": "4.8703",
+"Relative volume": "1.9867084704062756",
+"Symbol": "BULG",
+"Volume": "5486.6902"
+}
+},
+{
+"ticker": "CRDX",
+"instrument_id": "f17f8253-6746-4f43-b406-81693c103868",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12267509635681943",
+"Float": "",
+"Last": "10.69",
+"Market cap": "",
+"Name": "2x Cardano ETF",
+"Net change": "1.168099999999999",
+"Relative volume": "20.470640646860534",
+"Symbol": "CRDX",
+"Volume": "42083.2933"
+}
+},
+{
+"ticker": "XXRP",
+"instrument_id": "8d09f932-1ffa-4784-a8c7-b0ca94b5df42",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1223152530032763",
+"Float": "",
+"Last": "30.83",
+"Market cap": "",
+"Name": "Teucrium 2x Long Daily XRP ETF",
+"Net change": "3.3599999999999994",
+"Relative volume": "1.641433261745088",
+"Symbol": "XXRP",
+"Volume": "798069.390755"
+}
+},
+{
+"ticker": "MAXI",
+"instrument_id": "92951653-69a8-4bbd-bd91-aa7c1cdfcdf8",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12218726940852073",
+"Float": "",
+"Last": "14.4476",
+"Market cap": "",
+"Name": "Simplify Bitcoin Strategy ETF",
+"Net change": "1.5731000000000002",
+"Relative volume": "9.659638720900004",
+"Symbol": "MAXI",
+"Volume": "78074.577924"
+}
+},
+{
+"ticker": "PFSA",
+"instrument_id": "89fbc5ac-9ffe-4ec9-a5f4-e045b2745792",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12216666666666655",
+"Float": "605373",
+"Last": "2.0199",
+"Market cap": "1.078192e+06",
+"Name": "Profusa",
+"Net change": "0.21989999999999976",
+"Relative volume": "1.1015636025540172",
+"Symbol": "PFSA",
+"Volume": "153812.683743"
+}
+},
+{
+"ticker": "USDE",
+"instrument_id": "fc19918e-cb49-4d4f-8bc8-b559583f9afe",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12191958495460446",
+"Float": "",
+"Last": "8.65",
+"Market cap": "1.49703006e+08",
+"Name": "StablecoinX Inc. Class A",
+"Net change": "0.9400000000000004",
+"Relative volume": "0.5365544070309668",
+"Symbol": "USDE",
+"Volume": "7.751764752098e+06"
+}
+},
+{
+"ticker": "ETHT",
+"instrument_id": "3d91f5c0-4d95-4b9f-b890-6bac062b05bf",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12028014616321543",
+"Float": "",
+"Last": "18.395",
+"Market cap": "",
+"Name": "ProShares Ultra Ether ETF",
+"Net change": "1.9749999999999979",
+"Relative volume": "0.977942320149367",
+"Symbol": "ETHT",
+"Volume": "1.193305068099e+06"
+}
+},
+{
+"ticker": "IONZ",
+"instrument_id": "ce359499-1889-4d18-b2d2-427bae0305ec",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.12010006657655299",
+"Float": "",
+"Last": "27.76",
+"Market cap": "",
+"Name": "Defiance Daily Target 2X Short IONQ ETF",
+"Net change": "2.9765000000000015",
+"Relative volume": "0.3992741217840001",
+"Symbol": "IONZ",
+"Volume": "271525.819548"
+}
+},
+{
+"ticker": "BNC",
+"instrument_id": "67a9e5b7-226d-4dd6-90dd-ce0f39df65d5",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1199261992619927",
+"Float": "4.031385e+07",
+"Last": "6.07",
+"Market cap": "1.95575787e+08",
+"Name": "CEA Industries",
+"Net change": "0.6500000000000004",
+"Relative volume": "3.236254320142496",
+"Symbol": "BNC",
+"Volume": "5.348390397707e+06"
+}
+},
+{
+"ticker": "ETHU",
+"instrument_id": "016e24d5-36bd-4c43-afbc-4b68190910c2",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11942051683633519",
+"Float": "",
+"Last": "28.59",
+"Market cap": "",
+"Name": "2x Ether ETF",
+"Net change": "3.0500000000000007",
+"Relative volume": "0.9205414584464848",
+"Symbol": "ETHU",
+"Volume": "6.429799888241e+06"
+}
+},
+{
+"ticker": "KEEX",
+"instrument_id": "651c28f9-f6c9-446e-9b8d-ea827f149b33",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1187677725118484",
+"Float": "",
+"Last": "8.2621",
+"Market cap": "",
+"Name": "Defiance Daily Target 2x Long KEEL ETF",
+"Net change": "0.8771000000000004",
+"Relative volume": "0.6206579483795469",
+"Symbol": "KEEX",
+"Volume": "77190.254319"
+}
+},
+{
+"ticker": "ETU",
+"instrument_id": "730223c7-7cd3-4ee1-8363-8a1068f292cd",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11834319526627217",
+"Float": "",
+"Last": "7.56",
+"Market cap": "",
+"Name": "T-Rex 2X Long Ether Daily Target ETF",
+"Net change": "0.7999999999999998",
+"Relative volume": "6.138813961597984",
+"Symbol": "ETU",
+"Volume": "142537.56828"
+}
+},
+{
+"ticker": "PUR",
+"instrument_id": "6dacd0ad-4ce3-4d0f-a3a8-565f5e162970",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11805929919137453",
+"Float": "",
+"Last": "41.48",
+"Market cap": "",
+"Name": "Defiance Daily Target 2X Long PURR ETF",
+"Net change": "4.3799999999999955",
+"Relative volume": "0.7003397783184933",
+"Symbol": "PUR",
+"Volume": "179246.029238"
+}
+},
+{
+"ticker": "COIN",
+"instrument_id": "aedbcff3-1e3c-469b-9594-44cffed43404",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11683048801517497",
+"Float": "2.19937773e+08",
+"Last": "194.295",
+"Market cap": "4.3403812202e+10",
+"Name": "Coinbase",
+"Net change": "20.32499999999999",
+"Relative volume": "1.2922373710412332",
+"Symbol": "COIN",
+"Volume": "1.2975798472205e+07"
+}
+},
+{
+"ticker": "BTCU",
+"instrument_id": "afccc551-bd68-486f-adfe-ec356c5ee156",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11470461405778351",
+"Float": "",
+"Last": "25.85",
+"Market cap": "",
+"Name": "Direxion Daily Bitcoin Bull 2X ETF",
+"Net change": "2.66",
+"Relative volume": "4.261707326082317",
+"Symbol": "BTCU",
+"Volume": "54619.0818"
+}
+},
+{
+"ticker": "CNTN",
+"instrument_id": "e2489282-9bed-4a79-9739-12ac83fbeefc",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11428571428571416",
+"Float": "7.8672763e+07",
+"Last": "2.34",
+"Market cap": "1.61753162e+08",
+"Name": "Canton Strategic Holdings",
+"Net change": "0.23999999999999977",
+"Relative volume": "0.8708008046410206",
+"Symbol": "CNTN",
+"Volume": "607347.043271"
+}
+},
+{
+"ticker": "BITX",
+"instrument_id": "3527534d-5b89-4cad-badd-e3b1e5529c76",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11418269230769224",
+"Float": "",
+"Last": "18.54",
+"Market cap": "",
+"Name": "2x Bitcoin ETF",
+"Net change": "1.8999999999999986",
+"Relative volume": "1.4599020836119387",
+"Symbol": "BITX",
+"Volume": "1.0711056874488e+07"
+}
+},
+{
+"ticker": "MSST",
+"instrument_id": "9a8f2037-ec3b-4076-8042-eff90670605a",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11418210048484893",
+"Float": "",
+"Last": "31",
+"Market cap": "",
+"Name": "YieldMax MSTR Performance & Distribution Target 25 ETF",
+"Net change": "3.1769",
+"Relative volume": "0.23895161847175164",
+"Symbol": "MSST",
+"Volume": "591.512334"
+}
+},
+{
+"ticker": "MXLL",
+"instrument_id": "4b0fdb55-e547-49bf-a0b7-a873c53059f1",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11390811831340457",
+"Float": "",
+"Last": "17.7",
+"Market cap": "",
+"Name": "Leverage Shares 2X Long MXL Daily ETF",
+"Net change": "1.8099999999999987",
+"Relative volume": "0.4352904387735399",
+"Symbol": "MXLL",
+"Volume": "20890.7701"
+}
+},
+{
+"ticker": "SOEZ",
+"instrument_id": "a0db3d60-850b-4ff6-821d-76a1c4d79240",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11344429631579256",
+"Float": "",
+"Last": "19.46",
+"Market cap": "",
+"Name": "Franklin Solana ETF",
+"Net change": "1.9827000000000012",
+"Relative volume": "5.440246304814968",
+"Symbol": "SOEZ",
+"Volume": "17843.9241"
+}
+},
+{
+"ticker": "FGRU",
+"instrument_id": "8426a892-3599-4be8-9aff-975a2002f164",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1128423040604344",
+"Float": "",
+"Last": "11.785",
+"Market cap": "",
+"Name": "T-REX 2X Long FIGR Daily Target ETF",
+"Net change": "1.1950000000000003",
+"Relative volume": "2.7163188173603783",
+"Symbol": "FGRU",
+"Volume": "73442.6474"
+}
+},
+{
+"ticker": "MTC",
+"instrument_id": "34671015-f5eb-4c8a-a12d-490ad02c03df",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11280487804878053",
+"Float": "9.9542486e+07",
+"Last": "7.3",
+"Market cap": "5.32794788e+08",
+"Name": "MMTec",
+"Net change": "0.7400000000000002",
+"Relative volume": "0.42834624964509105",
+"Symbol": "MTC",
+"Volume": "34551.287773"
+}
+},
+{
+"ticker": "BITU",
+"instrument_id": "4c03d87f-8f00-4927-bdc2-55329cae5888",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11240310077519373",
+"Float": "",
+"Last": "14.35",
+"Market cap": "",
+"Name": "ProShares Ultra Bitcoin ETF",
+"Net change": "1.4499999999999993",
+"Relative volume": "1.5204806743845616",
+"Symbol": "BITU",
+"Volume": "4.934731076923e+06"
+}
+},
+{
+"ticker": "DFDV",
+"instrument_id": "52f3a2b6-f98f-4723-9a83-c4eae7402f34",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11202000000000005",
+"Float": "2.4240707e+07",
+"Last": "5.5601",
+"Market cap": "1.47935282e+08",
+"Name": "DeFi Development Corp.",
+"Net change": "0.5601000000000003",
+"Relative volume": "3.2223720927131065",
+"Symbol": "DFDV",
+"Volume": "6.199368212136e+06"
+}
+},
+{
+"ticker": "BTCL",
+"instrument_id": "86990d20-736e-484d-8d02-f0c1a6b5d259",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1118304885226605",
+"Float": "",
+"Last": "18.89",
+"Market cap": "",
+"Name": "T-Rex 2X Long Bitcoin Daily Target ETF",
+"Net change": "1.9000000000000021",
+"Relative volume": "1.2098307624746136",
+"Symbol": "BTCL",
+"Volume": "86059.289215"
+}
+},
+{
+"ticker": "BTDR",
+"instrument_id": "a331e34f-ff0f-4349-85ec-317890b7531b",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11076512455516008",
+"Float": "1.83315024e+08",
+"Last": "12.485",
+"Market cap": "2.997758161e+09",
+"Name": "Bitdeer Technologies",
+"Net change": "1.2449999999999992",
+"Relative volume": "0.7136061742533545",
+"Symbol": "BTDR",
+"Volume": "6.229823055196e+06"
+}
+},
+{
+"ticker": "MARA",
+"instrument_id": "8eec3912-304b-4ad9-b71a-39200fc34062",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11039518900343644",
+"Float": "3.37687111e+08",
+"Last": "12.925",
+"Market cap": "4.264744238e+09",
+"Name": "MARA Holdings",
+"Net change": "1.2850000000000001",
+"Relative volume": "0.6527452286966722",
+"Symbol": "MARA",
+"Volume": "4.6064050069227e+07"
+}
+},
+{
+"ticker": "SBET",
+"instrument_id": "f3aa3492-1a4e-4074-bbfe-c4df570a8c5b",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11038740920096847",
+"Float": "2.16791301e+08",
+"Last": "9.1718",
+"Market cap": "1.733444359e+09",
+"Name": "Sharplink",
+"Net change": "0.9117999999999995",
+"Relative volume": "0.9899227404688488",
+"Symbol": "SBET",
+"Volume": "8.151026120743e+06"
+}
+},
+{
+"ticker": "KATT",
+"instrument_id": "033f4841-a060-42f4-ab4e-f3df0c3012ec",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.11003087573850708",
+"Float": "",
+"Last": "31.17",
+"Market cap": "",
+"Name": "T-REX 2X Long PURR Daily Target ETF",
+"Net change": "3.0897000000000006",
+"Relative volume": "0.6083168304596926",
+"Symbol": "KATT",
+"Volume": "5119.7228"
+}
+},
+{
+"ticker": "FEAM",
+"instrument_id": "967039c6-633e-4916-b60b-a5cbc10b2c1a",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10922330097087382",
+"Float": "2.603919e+07",
+"Last": "2.285",
+"Market cap": "7.3066792e+07",
+"Name": "5E Advanced Materials",
+"Net change": "0.2250000000000001",
+"Relative volume": "0.4449251084898844",
+"Symbol": "FEAM",
+"Volume": "1.729666213366e+06"
+}
+},
+{
+"ticker": "BSOL",
+"instrument_id": "1a5fa434-f87e-4cbe-b3dd-26886c380ac4",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10886806056236492",
+"Float": "",
+"Last": "15.38",
+"Market cap": "",
+"Name": "Bitwise Solana Staking ETF",
+"Net change": "1.5100000000000016",
+"Relative volume": "2.4678142327147325",
+"Symbol": "BSOL",
+"Volume": "5.464551814005e+06"
+}
+},
+{
+"ticker": "QBTZ",
+"instrument_id": "ac760096-70b4-44f5-8a3c-4659ed6200e7",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1087811271297511",
+"Float": "",
+"Last": "16.92",
+"Market cap": "",
+"Name": "Defiance Daily Target 2x Short QBTS ETF",
+"Net change": "1.660000000000002",
+"Relative volume": "0.44569054357588767",
+"Symbol": "QBTZ",
+"Volume": "287845.557183"
+}
+},
+{
+"ticker": "QSOL",
+"instrument_id": "0c43b9a6-9be2-4909-92e8-7692d7d8104b",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10859950859950845",
+"Float": "",
+"Last": "11.28",
+"Market cap": "",
+"Name": "Invesco Galaxy Solana ETF",
+"Net change": "1.1049999999999986",
+"Relative volume": "9.274909915870259",
+"Symbol": "QSOL",
+"Volume": "21391.494"
+}
+},
+{
+"ticker": "LRCC",
+"instrument_id": "08c930d9-c0ba-4e06-a1fd-79e210a95154",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10833090278310782",
+"Float": "",
+"Last": "14.44",
+"Market cap": "",
+"Name": "Corgi LRCX 2x Daily ETF",
+"Net change": "1.4113999999999987",
+"Relative volume": "3.084143608743332",
+"Symbol": "LRCC",
+"Volume": "21736.693"
+}
+},
+{
+"ticker": "CLSX",
+"instrument_id": "009680db-a8cf-4188-a4cb-8078cf4ca9f7",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10795873249815768",
+"Float": "",
+"Last": "15.035",
+"Market cap": "",
+"Name": "Tradr 2X Long CLSK Daily ETF",
+"Net change": "1.4649999999999999",
+"Relative volume": "0.4822766352406661",
+"Symbol": "CLSX",
+"Volume": "333548.811106"
+}
+},
+{
+"ticker": "VSOL",
+"instrument_id": "b9c6b1fd-9c2b-492a-89bd-b155377cb552",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10779295492093457",
+"Float": "",
+"Last": "15.0199",
+"Market cap": "",
+"Name": "VanEck Solana ETF",
+"Net change": "1.4614999999999991",
+"Relative volume": "14.850344618288922",
+"Symbol": "VSOL",
+"Volume": "201471.562627"
+}
+},
+{
+"ticker": "SOLZ",
+"instrument_id": "aeed3329-c9f9-4977-9827-dfff78dafe50",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10745273631840782",
+"Float": "",
+"Last": "11.1299",
+"Market cap": "",
+"Name": "Volatility Shares Trust Solana ETF",
+"Net change": "1.0798999999999985",
+"Relative volume": "3.6031527750888586",
+"Symbol": "SOLZ",
+"Volume": "2.538821799392e+06"
+}
+},
+{
+"ticker": "GSOL",
+"instrument_id": "96299a8d-7395-4b16-a318-650d2907f0ef",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1073429319371729",
+"Float": "",
+"Last": "8.4601",
+"Market cap": "",
+"Name": "Grayscale Solana Staking ETF",
+"Net change": "0.8201000000000009",
+"Relative volume": "1.580017935296516",
+"Symbol": "GSOL",
+"Volume": "3.215180300691e+06"
+}
+},
+{
+"ticker": "SOLC",
+"instrument_id": "6d8b685c-6f69-4b8f-8f5f-6434c396ff51",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1070310234138044",
+"Float": "",
+"Last": "22.52",
+"Market cap": "",
+"Name": "Canary Marinade Solana ETF",
+"Net change": "2.177299999999999",
+"Relative volume": "11.919547782191893",
+"Symbol": "SOLC",
+"Volume": "17105.063608"
+}
+},
+{
+"ticker": "STXX",
+"instrument_id": "f90edff2-b673-48f8-88dd-c1645ded38cb",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10691114245416075",
+"Float": "",
+"Last": "39.24",
+"Market cap": "",
+"Name": "Tradr 2X Long STX Daily ETF",
+"Net change": "3.789999999999999",
+"Relative volume": "0.9362790163240681",
+"Symbol": "STXX",
+"Volume": "32528.540979"
+}
+},
+{
+"ticker": "TSOL",
+"instrument_id": "9aec4c1d-6d62-4738-aec0-184044fe0a79",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10639942239441921",
+"Float": "",
+"Last": "10.88",
+"Market cap": "",
+"Name": "21Shares Solana Staking ETF",
+"Net change": "1.0463000000000005",
+"Relative volume": "6.307648344695167",
+"Symbol": "TSOL",
+"Volume": "7099.770393"
+}
+},
+{
+"ticker": "AMTX",
+"instrument_id": "335664ec-fb9c-470a-861e-1e33546b703e",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10638297872340435",
+"Float": "6.7153126e+07",
+"Last": "2.08",
+"Market cap": "1.37843924e+08",
+"Name": "Aemetis",
+"Net change": "0.20000000000000018",
+"Relative volume": "1.8657818667876664",
+"Symbol": "AMTX",
+"Volume": "887661.391854"
+}
+},
+{
+"ticker": "LRCU",
+"instrument_id": "5361b29a-8994-4ec6-8afb-cb72c1fdef21",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10617084343842624",
+"Float": "",
+"Last": "41.05",
+"Market cap": "",
+"Name": "Tradr 2X Long LRCX Daily ETF",
+"Net change": "3.9399999999999977",
+"Relative volume": "1.266436476424788",
+"Symbol": "LRCU",
+"Volume": "113359.406352"
+}
+},
+{
+"ticker": "SSK",
+"instrument_id": "68b56794-27de-4855-bbcf-50098581c322",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10564930300807038",
+"Float": "",
+"Last": "15.07",
+"Market cap": "",
+"Name": "REX-Osprey SOL + Staking ETF",
+"Net change": "1.4399999999999995",
+"Relative volume": "1.0898101695140012",
+"Symbol": "SSK",
+"Volume": "28336.909347"
+}
+},
+{
+"ticker": "FSOL",
+"instrument_id": "d6d17376-e25b-4331-911d-3f93bd765311",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10555088309503775",
+"Float": "",
+"Last": "13.145",
+"Market cap": "",
+"Name": "Fidelity Solana Fund",
+"Net change": "1.254999999999999",
+"Relative volume": "1.4490954798092839",
+"Symbol": "FSOL",
+"Volume": "564078.052054"
+}
+},
+{
+"ticker": "HOOW",
+"instrument_id": "b56cc48e-930b-47bb-815b-819a25478b53",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10324263883712276",
+"Float": "",
+"Last": "29.6",
+"Market cap": "",
+"Name": "Roundhill HOOD WeeklyPay ETF",
+"Net change": "2.770000000000003",
+"Relative volume": "0.9466988975445905",
+"Symbol": "HOOW",
+"Volume": "211856.726812"
+}
+},
+{
+"ticker": "QNCX",
+"instrument_id": "17aede77-894e-4a66-a3dd-bdf9ef15815f",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10310995927434284",
+"Float": "1.014127e+06",
+"Last": "29.795",
+"Market cap": "2.6952169e+07",
+"Name": "Quince Therapeutics",
+"Net change": "2.785",
+"Relative volume": "1.7506211319917313",
+"Symbol": "QNCX",
+"Volume": "20807.533701"
+}
+},
+{
+"ticker": "STXU",
+"instrument_id": "ec7f3d55-3917-46ce-bf7d-924e2596081e",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10255178907721282",
+"Float": "",
+"Last": "11.7091",
+"Market cap": "",
+"Name": "Leverage Shares 2X Long STX Daily ETF",
+"Net change": "1.0891000000000002",
+"Relative volume": "0.6291486233826896",
+"Symbol": "STXU",
+"Volume": "35971.471461"
+}
+},
+{
+"ticker": "ABTC",
+"instrument_id": "f4ddc91b-f012-40b6-8264-5420f201945f",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10192525481313709",
+"Float": "2.3734757e+07",
+"Last": "9.73",
+"Market cap": "5.94208857e+08",
+"Name": "American Bitcoin Corp.",
+"Net change": "0.9000000000000004",
+"Relative volume": "1.3134008074915708",
+"Symbol": "ABTC",
+"Volume": "2.470471568747e+06"
+}
+},
+{
+"ticker": "SECZ",
+"instrument_id": "fd977364-40a5-45ac-9f26-b7cb113e1837",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10190369540873462",
+"Float": "",
+"Last": "9.84",
+"Market cap": "1.268574372e+09",
+"Name": "Securitize Corp.",
+"Net change": "0.9100000000000001",
+"Relative volume": "0.7426755695238977",
+"Symbol": "SECZ",
+"Volume": "4.306281868226e+06"
+}
+},
+{
+"ticker": "SUIS",
+"instrument_id": "0fea8158-f2f2-452c-9b00-ba6ece2d43bc",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10176112847368875",
+"Float": "",
+"Last": "20.87",
+"Market cap": "",
+"Name": "Canary Staked SUIS ETF Shares of Beneficial Interest",
+"Net change": "1.9276000000000018",
+"Relative volume": "0.36446125566168497",
+"Symbol": "SUIS",
+"Volume": "2023.968486"
+}
+},
+{
+"ticker": "MSOL",
+"instrument_id": "6cee7e5e-aef8-4fe6-b468-9a1c36e70cb2",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10166519315217636",
+"Float": "",
+"Last": "30.155",
+"Market cap": "",
+"Name": "Morgan Stanley Solana Trust",
+"Net change": "2.7828000000000017",
+"Relative volume": "5.440495207395208",
+"Symbol": "MSOL",
+"Volume": "12851.822665"
+}
+},
+{
+"ticker": "NCI",
+"instrument_id": "82995bc3-554c-404a-9721-6c01abd45aff",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.1015801354401807",
+"Float": "1.99131e+06",
+"Last": "14.64",
+"Market cap": "3.4368932e+07",
+"Name": "Neo-Concept International Group Holdings Limited",
+"Net change": "1.3500000000000014",
+"Relative volume": "6.166186788650971",
+"Symbol": "NCI",
+"Volume": "2.747243435988e+06"
+}
+},
+{
+"ticker": "PS",
+"instrument_id": "29c4c01a-99a2-4844-8c4d-71c4f52acbdd",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10061601642710481",
+"Float": "7.0260337e+07",
+"Last": "48.24",
+"Market cap": "1.6404e+10",
+"Name": "Pershing Square Inc.",
+"Net change": "4.410000000000004",
+"Relative volume": "0.28943827152966917",
+"Symbol": "PS",
+"Volume": "451054.4362"
+}
+},
+{
+"ticker": "TSUI",
+"instrument_id": "f961aba1-c3ef-49bb-ae4a-70d1a24f8e0c",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10054959291938853",
+"Float": "",
+"Last": "16.14",
+"Market cap": "",
+"Name": "21Shares Sui Staking ETF",
+"Net change": "1.4746000000000006",
+"Relative volume": "0.7686102085970039",
+"Symbol": "TSUI",
+"Volume": "29297.077992"
+}
+},
+{
+"ticker": "MSTY",
+"instrument_id": "0abd12c3-84f0-4b3c-8b46-87f813796c83",
+"instrument_type": "EQUITY",
+"columns": {
+"% Change": "0.10006830601092895",
+"Float": "",
+"Last": "16.105",
+"Market cap": "",
+"Name": "YieldMax MSTR Option Income Strategy ETF",
+"Net change": "1.4649999999999999",
+"Relative volume": "1.6817899838797425",
+"Symbol": "MSTY",
+"Volume": "3.079684559998e+06"
+}
+},
+{
+"ticker": "SOL",
+"instrument_id": "",
+"instrument_type": "EQUITY",
+"columns": {
+"Symbol": "SOL",
+"Name": "Solana",
+"% Change": "0.1016",
+"Last": "111.855",
+"Volume": "289908"
+}
+}
+]
+}
+}
+}
