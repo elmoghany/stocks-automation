@@ -407,6 +407,14 @@
    "vol": "444328",
    "name": "Solana Company Class A",
    "first_seen": "11:40"
+  },
+  "QNCX": {
+   "pct": 11.07,
+   "last": 30.0,
+   "prev_close": 27.01,
+   "vol": "19286",
+   "name": "Quince Therapeutics",
+   "first_seen": "11:55"
   }
  },
  "halal_fail": [
@@ -458,7 +466,8 @@
   "CD",
   "AGCC",
   "SGML",
-  "HSDT"
+  "HSDT",
+  "QNCX"
  ],
  "fake_gap": [
   "PTLE"

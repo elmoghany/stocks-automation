@@ -670,6 +670,17 @@
       "q2": "FAIL -- Solana Company, crypto treasury",
       "screened_et": "11:40",
       "armable": false
+    },
+    "QNCX": {
+      "q1": "FAIL",
+      "loan_pct": 0.0,
+      "cash_pct": 430.32,
+      "haram_pct": 100.0,
+      "mcap": 26952169.0,
+      "fail_reason": "CASH>10 (cash 4.3x market cap; interest income 100% of revenue)",
+      "q2": "not evaluated -- Quince Therapeutics, clinical biotech",
+      "screened_et": "11:55",
+      "armable": false
     }
   },
   "cycles_log": [
@@ -1222,6 +1233,18 @@
         "AMCI SPREAD 3.92%",
         "AMCI SIZE-CAP",
         "BSEM SPREAD 6.18%",
+        "BSEM CHASE"
+      ]
+    },
+    {
+      "et": "11:55",
+      "state": "FLAT-5m",
+      "scan": "11:55 scan: 109 rows (delta: QNCX new -> Q1 FAIL cash 430%). AMCI 3.44, bid 3.32 / ask 3.45 (3.9%), no signal. BSEM new high 4.98, bid 4.77 / ask 4.98 (4.4%), chase, signal stale",
+      "armed": false,
+      "vetoes": [
+        "AMCI SPREAD 3.92%",
+        "AMCI SIZE-CAP",
+        "BSEM SPREAD 4.40%",
         "BSEM CHASE"
       ]
     }
