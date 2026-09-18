@@ -19,21 +19,243 @@
     "capability_probe": {
       "status": "PASS",
       "run_et": "06:21",
-      "probe_1_python": {"cmd": "python -c print(1)", "result": "1", "exit": 0, "verdict": "PASS"},
-      "probe_2_git": {"cmd": "git status --short + git add (own path) + commit + push", "result": "skeleton committed 08999e0 and pushed (COMMIT_EXIT=0, PUSH_EXIT=0)", "exit": 0, "verdict": "PASS"},
-      "probe_3_mcp": {"cmd": "get_equity_quotes SPY", "result": "SPY prev_close 760.71 (2026-09-17, official 762.60); premarket last_non_reg 762.33 @10:20:53Z; bid 762.25 / ask 762.31 @10:20:59Z", "verdict": "PASS"}
+      "probe_1_python": {
+        "cmd": "python -c print(1)",
+        "result": "1",
+        "exit": 0,
+        "verdict": "PASS"
+      },
+      "probe_2_git": {
+        "cmd": "git status --short + git add (own path) + commit + push",
+        "result": "skeleton committed 08999e0 and pushed (COMMIT_EXIT=0, PUSH_EXIT=0)",
+        "exit": 0,
+        "verdict": "PASS"
+      },
+      "probe_3_mcp": {
+        "cmd": "get_equity_quotes SPY",
+        "result": "SPY prev_close 760.71 (2026-09-17, official 762.60); premarket last_non_reg 762.33 @10:20:53Z; bid 762.25 / ask 762.31 @10:20:59Z",
+        "verdict": "PASS"
+      }
     },
-    "heartbeat": {"started_et": "06:21", "file": "data/paper_days/SESSION_ALIVE_2026-09-18.flag", "cadence": "<=5 min"},
-    "cycles": []
+    "heartbeat": {
+      "started_et": "06:21",
+      "file": "data/paper_days/SESSION_ALIVE_2026-09-18.flag",
+      "cadence": "<=5 min"
+    },
+    "cycles": [],
+    "halal_list": {
+      "updated": "2026-09-17",
+      "age_days": 1,
+      "n_symbols": 472,
+      "guard": "PASS (<35 days)"
+    },
+    "no_double_launch": "no other paper agent for 2026-09-18; no watcher state file dated another day",
+    "premarket_tape": {
+      "spy_prev_close": 760.71,
+      "spy_premarket_0620et": 762.33,
+      "spy_premarket_pct": 0.21,
+      "read": "SPY +0.21% premarket -- quiet, mildly positive tone."
+    }
   },
   "armed_orders": [],
   "trades": [],
-  "halal_detail": {},
-  "cycles_log": [],
+  "halal_detail": {
+    "IMCC": {
+      "q1": "FAIL",
+      "loan_pct": 1463.86,
+      "cash_pct": 98.24,
+      "mcap": 1021955.0,
+      "q2": "FAIL -- IM Cannabis: cannabis is the main revenue line (intoxicant)",
+      "screened_et": "06:25",
+      "armable": false
+    },
+    "SSM": {
+      "q1": "FAIL",
+      "loan_pct": 262.0,
+      "cash_pct": 197.61,
+      "mcap": 2167954.0,
+      "q2": "PASS -- Sono Group: solar-integration tech for vehicles",
+      "screened_et": "06:25",
+      "armable": false
+    },
+    "TCRT": {
+      "q1": "FAIL",
+      "loan_pct": null,
+      "cash_pct": 2.98,
+      "mcap": 4166133.0,
+      "q2": "PASS -- Alaunos: clinical-stage biotech",
+      "screened_et": "06:25",
+      "armable": false
+    },
+    "CPOP": {
+      "q1": "FAIL",
+      "loan_pct": 207.48,
+      "cash_pct": 176.77,
+      "mcap": 3731397.0,
+      "q2": "FAIL -- Pop Culture Group: hip-hop concerts/events organiser (entertainment is the main line)",
+      "screened_et": "06:25",
+      "armable": false
+    },
+    "NHIC": {
+      "q1": "FAIL",
+      "loan_pct": null,
+      "cash_pct": 0.14,
+      "mcap": 258179334.0,
+      "q2": "FAIL -- NewHold Investment Corp III is a SPAC (blank-check trust is interest-bearing in substance); added to spac list, the sweep's name regex missed it",
+      "screened_et": "06:25",
+      "armable": false
+    },
+    "CAAS": {
+      "q1": "FAIL",
+      "loan_pct": 49.22,
+      "cash_pct": 64.59,
+      "mcap": 152362045.0,
+      "q2": "PASS -- China Automotive Systems: power-steering components",
+      "screened_et": "06:25",
+      "armable": false
+    },
+    "SEAT": {
+      "q1": "FAIL",
+      "loan_pct": 855.51,
+      "cash_pct": 291.57,
+      "mcap": 46875783.0,
+      "q2": "FAIL -- Vivid Seats: live-event ticket marketplace (concerts/sports/theater entertainment is the main line)",
+      "screened_et": "06:25",
+      "armable": false
+    },
+    "CNSP": {
+      "q1": "FAIL",
+      "loan_pct": 3.11,
+      "cash_pct": 39.44,
+      "mcap": 7482618.0,
+      "q2": "PASS -- CNS Pharmaceuticals: clinical-stage biotech",
+      "screened_et": "06:25",
+      "armable": false
+    },
+    "DSY": {
+      "q1": "FAIL",
+      "loan_pct": 15.07,
+      "cash_pct": 26.97,
+      "mcap": 16679074.0,
+      "q2": "PASS -- Big Tree Cloud: personal-care products",
+      "screened_et": "06:25",
+      "armable": false
+    },
+    "BNC": {
+      "q1": "PASS",
+      "loan_pct": 7.82,
+      "cash_pct": 3.18,
+      "mcap": 222729941.0,
+      "q2": "FAIL -- CEA Industries (RH profile): cultivation technologies 'primarily for cannabis crops' = dedicated haram-production equipment as the main line; also a Fat Panda vape-retail segment (tobacco) and a BNB crypto treasury. Q1 passed (loan 7.82%, cash 3.18%) but Q2 fails outright.",
+      "screened_et": "06:25",
+      "armable": false
+    },
+    "DTST": {
+      "q1": "FAIL",
+      "loan_pct": 8.35,
+      "cash_pct": 135.01,
+      "mcap": 6873183.0,
+      "q2": "PASS -- Data Storage Corp: cloud/IT services",
+      "screened_et": "06:25",
+      "armable": false
+    },
+    "JBS": {
+      "q1": "FAIL",
+      "loan_pct": 189.11,
+      "cash_pct": 26.84,
+      "mcap": 12926456464.0,
+      "q2": "FAIL -- JBS N.V.: beef/pork/poultry processor; pork is a major revenue line, far above 5%",
+      "screened_et": "06:25",
+      "armable": false
+    },
+    "TOYO": {
+      "q1": "FAIL",
+      "loan_pct": 34.2,
+      "cash_pct": 55.95,
+      "mcap": 184930325.0,
+      "q2": "PASS -- TOYO: solar cell manufacturer",
+      "screened_et": "06:25",
+      "armable": false
+    },
+    "ROC": {
+      "q1": "FAIL",
+      "loan_pct": 1.27,
+      "cash_pct": 14.13,
+      "mcap": 84334161.0,
+      "q2": "PASS -- Rank One Computing: biometrics software (general-purpose, AMD principle)",
+      "screened_et": "06:25",
+      "armable": false
+    }
+  },
+  "cycles_log": [
+    {
+      "et": "06:25",
+      "state": "FLAT-5m",
+      "scan": "77 rows -> 14 candidates -> 0 armable (13 fail Q1, BNC fails Q2)",
+      "armed": false,
+      "vetoes": []
+    }
+  ],
   "veto_rates": {
-    "premarket": {"would_be_entries": 0, "spread_veto": 0, "depth_veto": 0, "chase_veto": 0},
-    "regular": {"would_be_entries": 0, "spread_veto": 0, "depth_veto": 0, "chase_veto": 0}
+    "premarket": {
+      "would_be_entries": 0,
+      "spread_veto": 0,
+      "depth_veto": 0,
+      "chase_veto": 0
+    },
+    "regular": {
+      "would_be_entries": 0,
+      "spread_veto": 0,
+      "depth_veto": 0,
+      "chase_veto": 0
+    }
   },
   "errors": [],
-  "summary": {}
+  "summary": {},
+  "premarket_screen": {
+    "scan_et": "06:23 (zoneinfo)",
+    "scan_id": "5f132877-7730-4a18-9e72-b3f0d2c9df83",
+    "rows": 77,
+    "sweep": "plan/scan_sweep.py on a programmatically transcribed inline dump. dropped funds=54, noncommon=1 (EOSEW warrant), nonequity=1 (UNI crypto), spac=2 (ALF FVN), inherited_fail=5 (DUKR USDE WATT CCG WLYB) -> 14 candidates",
+    "candidates_14": [
+      "IMCC",
+      "SSM",
+      "TCRT",
+      "CPOP",
+      "NHIC",
+      "CAAS",
+      "SEAT",
+      "CNSP",
+      "DSY",
+      "BNC",
+      "DTST",
+      "JBS",
+      "TOYO",
+      "ROC"
+    ],
+    "mcap_load": "all 14 market caps loaded from the scan's own 'Market cap' column via _d24_mcap_from_dump.py before screening",
+    "q1_financing_pass": [
+      "BNC"
+    ],
+    "q1_financing_fail": [
+      "IMCC",
+      "SSM",
+      "TCRT",
+      "CPOP",
+      "NHIC",
+      "CAAS",
+      "SEAT",
+      "CNSP",
+      "DSY",
+      "DTST",
+      "JBS",
+      "TOYO",
+      "ROC"
+    ],
+    "q2_fail_of_q1_pass": [
+      "BNC"
+    ],
+    "armable_now": [],
+    "recorded_to_scan_state": "halal_fail 14 (13 Q1 + BNC Q2), NHIC also added to spac"
+  }
 }
