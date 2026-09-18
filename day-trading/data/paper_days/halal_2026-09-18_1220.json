@@ -1,0 +1,64 @@
+{
+ "BTDR": {
+  "verdict": "FAIL",
+  "loan_pct": 65.12,
+  "cash_pct": 15.37,
+  "combined": 80.5,
+  "haram_pct": 3.45,
+  "halal": false,
+  "source": "quarterly",
+  "sic": "6199",
+  "fail_reason": "FINANCIAL SECTOR (SIC 6199 Finance Services) -- 6000-6999 is a hard FAIL (user ruling 2026-09-16); only an explicit PASS ruling with a basis can restore a quirk-coded name",
+  "mcap": 2997758161.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ },
+ "MARA": {
+  "verdict": "FAIL",
+  "loan_pct": 57.82,
+  "cash_pct": 9.88,
+  "combined": 67.7,
+  "haram_pct": 6.84,
+  "halal": false,
+  "source": "quarterly",
+  "sic": "6199",
+  "fail_reason": "FINANCIAL SECTOR (SIC 6199 Finance Services) -- 6000-6999 is a hard FAIL (user ruling 2026-09-16); only an explicit PASS ruling with a basis can restore a quirk-coded name",
+  "mcap": 4264744238.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ },
+ "ALVO": {
+  "verdict": "FAIL",
+  "haram_pct_note": "interest income only -- blind to revenue mix",
+  "loan_pct": 79.78,
+  "cash_pct": 7.84,
+  "combined": 87.62,
+  "haram_pct": 0.65,
+  "haram_periods": 4,
+  "haram_src": "yfinance",
+  "halal": false,
+  "source": "quarterly",
+  "fail_reason": "LOAN>10",
+  "sic": "2836",
+  "mcap": 1819766893.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ },
+ "NCI": {
+  "verdict": "FAIL",
+  "haram_pct_note": "interest income only -- blind to revenue mix",
+  "loan_pct": 135.12,
+  "cash_pct": 6.79,
+  "combined": 141.91,
+  "haram_pct": 0.0,
+  "haram_periods": 1,
+  "haram_src": "yfinance",
+  "halal": false,
+  "source": "quarterly+last-available",
+  "fail_reason": "LOAN>10",
+  "last_available": {
+   "revenue": "yf-annual 2025-12-31",
+   "interest income": "yf-annual 2025-12-31"
+  },
+  "sic": "2300",
+  "mcap": 34368932.0,
+  "q2_note": "question 2 (business line / 5% rule) NOT answered by this tool -- judge it before arming"
+ }
+}

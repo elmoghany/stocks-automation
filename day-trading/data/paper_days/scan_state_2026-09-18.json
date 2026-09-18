@@ -313,10 +313,10 @@
    "first_seen": "10:25"
   },
   "BSEM": {
-   "pct": 10.32,
-   "last": 4.81,
-   "prev_close": 4.36,
-   "vol": "57415",
+   "pct": 13.53,
+   "last": 4.95,
+   "prev_close": 4.3601,
+   "vol": "125987",
    "name": "BioStem Technologies",
    "first_seen": "10:25"
   },
@@ -439,6 +439,38 @@
    "vol": "65468",
    "name": "Turn Therapeutics",
    "first_seen": "12:10"
+  },
+  "BTDR": {
+   "pct": 10.32,
+   "last": 12.4,
+   "prev_close": 11.24,
+   "vol": "5206654",
+   "name": "Bitdeer Technologies",
+   "first_seen": "12:20"
+  },
+  "MARA": {
+   "pct": 10.31,
+   "last": 12.84,
+   "prev_close": 11.6399,
+   "vol": "38770692",
+   "name": "MARA Holdings",
+   "first_seen": "12:20"
+  },
+  "ALVO": {
+   "pct": 10.3,
+   "last": 5.89,
+   "prev_close": 5.34,
+   "vol": "1254832",
+   "name": "Alvotech",
+   "first_seen": "12:20"
+  },
+  "NCI": {
+   "pct": 10.01,
+   "last": 14.62,
+   "prev_close": 13.2897,
+   "vol": "2730058",
+   "name": "Neo-Concept International Group Holdings",
+   "first_seen": "12:20"
   }
  },
  "halal_fail": [
@@ -494,7 +526,11 @@
   "QNCX",
   "SLE",
   "AMTX",
-  "TTRX"
+  "TTRX",
+  "BTDR",
+  "MARA",
+  "ALVO",
+  "NCI"
  ],
  "fake_gap": [
   "PTLE"

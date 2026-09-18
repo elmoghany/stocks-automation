@@ -711,6 +711,34 @@
       "q2": "not evaluated -- Turn Therapeutics, biotech",
       "screened_et": "12:10",
       "armable": false
+    },
+    "BTDR": {
+      "q1": "FAIL",
+      "q2": "not reached",
+      "verdict": "FAIL",
+      "why": "Q1 FAIL: interest-bearing debt 65.1% of mcap (cap 10%); bitcoin miner, 12:20 scan",
+      "screened_et": "12:21"
+    },
+    "MARA": {
+      "q1": "FAIL",
+      "q2": "not reached",
+      "verdict": "FAIL",
+      "why": "Q1 FAIL: debt 57.8% of mcap; bitcoin miner, 12:20 scan",
+      "screened_et": "12:21"
+    },
+    "ALVO": {
+      "q1": "FAIL",
+      "q2": "not reached",
+      "verdict": "FAIL",
+      "why": "Q1 FAIL: debt 79.8% of mcap; biosimilars, 12:20 scan",
+      "screened_et": "12:21"
+    },
+    "NCI": {
+      "q1": "FAIL",
+      "q2": "not reached",
+      "verdict": "FAIL",
+      "why": "Q1 FAIL: debt 135.1% of mcap; HK apparel, 12:20 scan",
+      "screened_et": "12:21"
     }
   },
   "cycles_log": [
@@ -1327,6 +1355,18 @@
         "BSEM CHASE",
         "BSEM SIZE-CAP"
       ]
+    },
+    {
+      "et": "12:22",
+      "state": "FLAT-5m",
+      "scan": "12:20 scan: 129 rows; dump rebuilt from live scan (drift since 10:30 fixed). 4 never-screened commons BTDR/MARA/ALVO/NCI all Q1 FAIL (debt 58-135%). AMCI 3.44 stale since 11:53, bid 3.32 / ask 3.43 (3.3%). BSEM 4.95, bid 4.95 / ask 4.97 (0.40% spread PASS, fill-arm PASS, no chase) but no Trigger C signal; size cap 2568 < 3018",
+      "armed": false,
+      "vetoes": [
+        "AMCI SPREAD 3.31%",
+        "AMCI SIZE-CAP",
+        "BSEM SIZE-CAP 2568<3018",
+        "BSEM no signal"
+      ]
     }
   ],
   "veto_rates": {
@@ -1512,5 +1552,6 @@
     "first_seen": "10:25 scan +10.3% last 4.81",
     "rank_1026": "#1 coil 1.000 press +0.25 gap7 +3.2 calm yes -- rank list says NEEDS-SCREEN (not in 472 prefilter); live_halal PASS both Qs at 10:25 so treated as TOP",
     "gates_1026": "bid 4.64 / ask 4.82 spread 3.88% VETO; ask >= session high 4.81 CHASE; 30 real bars, thin"
-  }
+  },
+  "dump_drift_note": "12:20: discovered hand-built deltas since ~10:30 had dropped real scan names from the dump (BSEM absent after 1025, SSM after 1050). Rebuilt scan_dump_1220 from the live scan (gone=88 stale, new=28). Four commons had never been screened (BTDR, MARA, ALVO, NCI); all four Q1 FAIL at 12:21. No halal PASS name was missed: every other common was already in scan_state lists."
 }
