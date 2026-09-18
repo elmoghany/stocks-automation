@@ -369,7 +369,7 @@ def _rev_worker(args):
 
 
 def stage_rev(seeds=30, workers=2, ndays=None, ladders=None, tag="rev",
-              dec="15:30", ex="15:59", exit_wait=3):
+              dec="15:30", ex="15:59", exit_wait=3, stride=1):
     import cm_lib as CL
     import cm_rev as CR
     import cm_single as CS
@@ -383,7 +383,7 @@ def stage_rev(seeds=30, workers=2, ndays=None, ladders=None, tag="rev",
     sp = X.OUT / "_rev_scores.npz"
     X.OUT.mkdir(parents=True, exist_ok=True)
     np.savez(sp, **scores)
-    dates = list(t.dates)
+    dates = list(t.dates)[::stride]
     if ndays:
         dates = dates[:ndays]
     ladders = ladders or ["mkt/mkt", "bid-rest1-cancel/mkt",
@@ -400,7 +400,7 @@ def stage_rev(seeds=30, workers=2, ndays=None, ladders=None, tag="rev",
     names = [k for k in scores]
     return _report(acc, att, ladders, names, seeds, len(dates), tag,
                    {"members": members, "dec": dec, "exit": ex,
-                    "exit_wait": exit_wait})
+                    "exit_wait": exit_wait, "stride": stride})
 
 
 # ---------------------------------------------------------------- veto
@@ -459,7 +459,8 @@ if __name__ == "__main__":
                  on.split(",") if on else None)
     elif st == "rev":
         stage_rev(g("--seeds", 30), g("--workers", 2), g("--days", 0) or None,
-                  lad, g("--tag", "rev"), exit_wait=g("--xwait", 3))
+                  lad, g("--tag", "rev"), exit_wait=g("--xwait", 3),
+                  stride=g("--stride", 1))
     elif st == "veto":
         stage_veto(g("--seeds", 30), g("--workers", 2), g("--days", 0) or None,
                    lad, g("--tag", "veto"))
