@@ -49,7 +49,10 @@ Medians, worst 10% / middle 80% / best 10%:
 **The central finding: the worst decile and the best decile are the same
 kind of trade.** Both are small, thin, wide-spread, high-sigma, early
 entries on quieter days; the middle 80% is bigger, more liquid, later. Entry-
-time information mostly predicts the SIZE of the outcome, not its SIGN — so
+time information mostly predicts the SIZE of the outcome, not its SIGN
+(Spearman rank correlation with P&L vs with |P&L|: sigma1 R4 +0.02 vs +0.41,
+C37F -0.02 vs +0.39; half-spread -0.04 vs +0.16 / -0.03 vs +0.33; Amihud
+-0.04 vs +0.25 / -0.01 vs +0.27; dvol60 +0.06 vs -0.28 / +0.00 vs -0.35) — so
 almost every "liquidity / volatility / smallness" veto removes winners in the
 same proportion as losers (e.g. `dvol60 < $500k` would remove 453 R4 legs worth
 **+$85,770** — R4's whole edge lives in the thin names; `dilution_30d` on R4
