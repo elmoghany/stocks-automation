@@ -1,0 +1,63 @@
+
+### ALL: R4 n=965 (2.17/day) gross +82.5 (Y1 +113.7 / Y2 +58.2)
+   net@central    +45.1/tkt  Y1   +74.9  Y2   +21.9  $   +2058/mo  months+ 12/22
+   net@evid       +25.0/tkt  Y1   +54.0  Y2    +2.3  $   +1139/mo  months+ 12/22
+   net@flat15     +52.5/tkt  Y1   +83.7  Y2   +28.2  $   +2397/mo  months+ 13/22
+   RND same filter: gross -8.9±22.5, central -48.2±22.2; R4 z(central) +4.21
+   HF3 same filter: n=1839 gross -19.1 (Y1 -12.6 / Y2 -24.4) central -56.2
+
+### drop dvol60 $1-5M: R4 n=785 (1.77/day) gross +120.3 (Y1 +141.6 / Y2 +103.2)
+   net@central    +81.5/tkt  Y1  +100.6  Y2   +66.0  $   +3025/mo  months+ 15/22
+   net@evid       +60.6/tkt  Y1   +78.6  Y2   +46.0  $   +2248/mo  months+ 13/22
+   net@flat15     +90.3/tkt  Y1  +111.6  Y2   +73.2  $   +3354/mo  months+ 15/22
+   RND same filter: gross -4.1±27.4, central -44.9±27.2; R4 z(central) +4.65
+   HF3 same filter: n=1528 gross -12.2 (Y1 -8.2 / Y2 -15.7) central -50.2
+   bootstrap P(kept>dropped gross) 0.999, diff 90% CI [+90, +316]
+
+### drop rvol1<0.5 or >5: R4 n=684 (1.54/day) gross +142.7 (Y1 +209.1 / Y2 +92.0)
+   net@central   +108.6/tkt  Y1  +174.6  Y2   +58.3  $   +3515/mo  months+ 12/22
+   net@evid       +90.3/tkt  Y1  +156.0  Y2   +40.2  $   +2922/mo  months+ 12/22
+   net@flat15    +112.7/tkt  Y1  +179.1  Y2   +62.0  $   +3645/mo  months+ 12/22
+   RND same filter: gross -4.8±27.0, central -39.5±26.9; R4 z(central) +5.51
+   HF3 same filter: n=1145 gross -26.6 (Y1 -27.4 / Y2 -26.0) central -59.1
+   bootstrap P(kept>dropped gross) 0.978, diff 90% CI [+45, +369]
+
+### drop both: R4 n=558 (1.26/day) gross +176.8 (Y1 +244.5 / Y2 +124.5)
+   net@central   +141.0/tkt  Y1  +208.1  Y2   +89.3  $   +3722/mo  months+ 13/22
+   net@evid      +121.8/tkt  Y1  +188.5  Y2   +70.4  $   +3215/mo  months+ 12/22
+   net@flat15    +146.8/tkt  Y1  +214.5  Y2   +94.5  $   +3873/mo  months+ 13/22
+   RND same filter: gross -1.0±32.5, central -36.4±32.5; R4 z(central) +5.45
+   HF3 same filter: n=970 gross -23.3 (Y1 -23.0 / Y2 -23.5) central -55.7
+   bootstrap P(kept>dropped gross) 0.994, diff 90% CI [+74, +381]
+
+### price $5-10 only: R4 n=200 (0.45/day) gross +195.7 (Y1 +162.5 / Y2 +229.5)
+   net@central   +153.3/tkt  Y1  +125.9  Y2  +181.3  $   +1450/mo  months+ 12/22
+   net@evid      +130.5/tkt  Y1  +106.2  Y2  +155.4  $   +1235/mo  months+ 12/22
+   net@flat15    +165.7/tkt  Y1  +132.5  Y2  +199.5  $   +1567/mo  months+ 13/22
+   RND same filter: gross +2.6±38.7, central -39.7±37.3; R4 z(central) +5.18
+   HF3 same filter: n=380 gross +4.1 (Y1 +10.9 / Y2 -1.8) central -36.6
+   bootstrap P(kept>dropped gross) 0.859, diff 90% CI [-69, +404]
+
+### price $2-10 only: R4 n=446 (1.00/day) gross +162.7 (Y1 +223.2 / Y2 +105.9)
+   net@central   +121.8/tkt  Y1  +183.0  Y2   +64.4  $   +2570/mo  months+ 10/22
+   net@evid       +99.8/tkt  Y1  +161.3  Y2   +42.0  $   +2105/mo  months+ 9/22
+   net@flat15    +132.7/tkt  Y1  +193.2  Y2   +75.9  $   +2800/mo  months+ 11/22
+   RND same filter: gross +10.5±39.1, central -33.6±38.3; R4 z(central) +4.06
+   HF3 same filter: n=707 gross -20.1 (Y1 -4.5 / Y2 -35.5) central -64.2
+   bootstrap P(kept>dropped gross) 0.946, diff 90% CI [-4, +325]
+
+### drop price $10-50: R4 n=587 (1.32/day) gross +134.5 (Y1 +179.9 / Y2 +90.7)
+   net@central    +94.1/tkt  Y1  +139.5  Y2   +50.4  $   +2613/mo  months+ 10/22
+   net@evid       +72.4/tkt  Y1  +117.8  Y2   +28.7  $   +2010/mo  months+ 10/22
+   net@flat15    +104.5/tkt  Y1  +149.9  Y2   +60.7  $   +2900/mo  months+ 10/22
+   RND same filter: gross -5.7±34.7, central -47.3±34.3; R4 z(central) +4.12
+   HF3 same filter: n=1108 gross -33.2 (Y1 -20.3 / Y2 -46.0) central -72.5
+   bootstrap P(kept>dropped gross) 0.934, diff 90% CI [-12, +280]
+
+### dvol60 < $1M only: R4 n=550 (1.24/day) gross +153.6 (Y1 +185.3 / Y2 +123.6)
+   net@central   +107.2/tkt  Y1  +137.6  Y2   +78.5  $   +2788/mo  months+ 13/22
+   net@evid       +82.2/tkt  Y1  +111.9  Y2   +54.2  $   +2139/mo  months+ 12/22
+   net@flat15    +123.6/tkt  Y1  +155.3  Y2   +93.6  $   +3215/mo  months+ 13/22
+   RND same filter: gross -5.9±49.4, central -63.8±49.4; R4 z(central) +3.46
+   HF3 same filter: n=722 gross -9.3 (Y1 -14.0 / Y2 -3.0) central -66.8
+   bootstrap P(kept>dropped gross) 0.989, diff 90% CI [+43, +301]
