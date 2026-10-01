@@ -10659,3 +10659,15 @@ Scope here: checks 1-3 + cost verdict (checks 4/5 by parallel agents). Full writ
   every "measured" column in COST-REBASE / LIMIT-EXEC / CHAMPION-REPLAY / OPEN-UNIVERSE / CATALYST is a
   floor. Gapper pool not covered (much wider spreads).
 - Files: `plan/pa_impact.py`, `plan/pa_spread.py`, `plan/pa_fillbias.py`, `plan/pa_out/{impact,spread_modes,fillbias}.json`.
+
+## 2026-10-01 — LIVE-COST-TRUTH (PESSIMISM-AUDIT line) -> `live-cost-truth.md`
+- No real RH fills exist: all 42 legs (21 tickets) are paper fills booked by convention. Measured the toll
+  from logged quotes (n=17 half-spreads) + booked fill vs mid / minute OPEN / minute VWAP; `plan/lct_cost.py`.
+- Half-spread at order time: RTH median 11 (entries in gappers 09:30-10:20, 11-15), ladder exits 14:50+ 2-4;
+  premarket median 18 (tail 64). Sweep past touch at $15k: 0-6 bps entries; ANGX thin exit 58.
+- Own execution: stop-buys booked at trigger; real stop-market on 1-s tape median +1.2 bps vs trigger (n=6).
+  Trigger C fills vs the backtest's signal+1 open: median +5.7, mean +19.5 (1-min latency, NEOV/MRVI tails).
+  Watcher's `bid x 0.999` exit convention adds a fictional 10 bps since 09-02. Stop/trail exits booked at
+  the level are OPTIMISTIC (GTLB trail -118 vs VWAP).
+- Recommend 8 bps/side for RTH $15k liquid fills (12 entry 09:30-10:30, 4 exit after 14:00; range 5-12).
+  Flat 10 is ~2 bps conservative (~$6/RT) -- not why everything loses; ~12 "measured" ~4 too high.
