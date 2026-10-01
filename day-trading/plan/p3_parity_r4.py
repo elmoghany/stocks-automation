@@ -190,8 +190,22 @@ def main():
                     "causal tie-break, LEGACY-2) vs cp_sim with exactly those "
                     "two changes (bars / emulated scan snapshots)")
     minutes = list(range(CL.M_0935, CL.M_1500 + 3))
-    for mode, cfg, ref in (("A", R.CFG, by), ("B", R.CFG, by),
-                           ("C", R.CFG_LIVE, by_no), ("D", R.CFG_LIVE, by_no)):
+    modes = (("A", R.CFG, by), ("B", R.CFG, by),
+             ("C", R.CFG_LIVE, by_no), ("D", R.CFG_LIVE, by_no))
+    if "--modes-from-log" in a:
+        # the minute-by-minute modes take ~25 min; a second pass for the
+        # full/expectation block may reuse their logged totals verbatim
+        import ast
+        logf = Path(a[a.index("--modes-from-log") + 1])
+        for ln in logf.read_text().splitlines():
+            if ln.startswith("MODE "):
+                res["modes"][ln[5]] = ast.literal_eval(ln.split(": ", 1)[1])
+            elif ln.startswith("  ") and " bt " in ln and ": bt" in ln:
+                mode, d = ln.split()[0], ln.split()[1].rstrip(":")
+                res["per_day"].setdefault(d, {})[mode] = ln.strip()
+        res["modes_source"] = str(logf)
+        modes = ()
+    for mode, cfg, ref in modes:
         tot = dict(bt=0, live=0, matched=0, missed=0, extra=0,
                    identical_exits=0, retro=0)
         lat = []

@@ -39,7 +39,10 @@ Source: champion-replay-audit.md Part 4, row R4. Engine: `plan/cp_sim.py`, `defa
    - The agent runs it at each grid minute and ingests it with `p3_r4.py --scan`. A name joins the sticky set when a snapshot shows its RTH price at or above 1.10 x prev close.
 2. **Decision grid.** Every 5 minutes, 09:35, 09:40 ... up to and excluding 14:30. After an exit, the next decision is the first grid minute at or after max(t+5, exit+1).
 3. **Rank.** coil = last / session high, where the high includes premarket. Highest coil first.
-   - Live: the scan's Coil column (RTH price / all-session high), observed at wall t+1.
+   - **Ties are broken causally** (LEGACY-2): by share volume so far (04:00 to t, highest first), then by a seeded hash of (date, t, symbol).
+   - About 5 names tie at coil = 1.0 at a typical decision. The published backtest broke ties by gapper-pool *file* order, and that order correlates with *full-day* volume (Spearman −0.40 to −0.53). That is a look-ahead.
+   - Live never uses pool, file or scanner row order.
+   - Live source: the scan's Coil column (RTH price / all-session high) and its Volume column, observed at wall t+1.
 4. **Gate.** gap7 = (last print at or before 07:00) / prev close - 1. The top-ranked name may have gap7 up to 35%; every other name is held to 20%. Try the first 8 in rank order; the first name that passes is taken.
    - Live: the decision prints `need_bars` for the top 8. The agent fetches their minute bars from 04:00 (`bounds=extended`) so gap7, the fill bar and the size cap are exact.
 5. **Book veto (LEGACY-15, live only).** Before the entry, check the quote and the price book:
@@ -69,6 +72,7 @@ Source: catalyst-audit.md Part 5. The backtest rows are `data/massive/cat/rule_d
 3. **Candidate.** The 09:35 bar printed.
 4. **Green.** log(close at 09:35 / forward-filled close at 09:30) > 0.
 5. **Pick.** One name: the most recent report first, ties in universe (alphabetical) order. The top name is taken even if it cannot fill; the ticket is spent.
+   - Tie check (LEGACY-2): the tie order is alphabetical, the rl2 panel order, which carries no outcome information. No pool-order leak.
 6. **Entry.** Model: the 09:36 bar's OPEN. Size: min($10,000, 20% x volume of the 09:31–09:35 bars x fill). Below $500 there is no trade. Official: the ask at 09:36; after 09:41 the pick is MISSED.
 7. **Exit (watcher, `EXIT_MODE r15`).** Model: the OPEN of the first printed bar at or after **10:36**. Official: the bid at 10:36.
 
@@ -84,6 +88,7 @@ Source: rl2-audit.md §3.3. Rule file: `plan/rl2/results/rules_holdout_s0.json`.
    It is refreshed monthly with `plan/p3_gd_fetch.py` then `p3_universe.py`. The live source is the saved scan **"P3 RL wide universe"** (`2f8e0fb0-197d-406d-a954-db0e4edff2b2`, symbol ANY_OF the 95). It returns 95/95 rows with columns Last, last-trade time, VWAP (all / regular), Open and change vs previous close. The scan's ticker list can only be re-saved from an interactive session (`create_scan` is not on the headless tool list); `p3_universe.py` flags `scan_stale`.
 2. **Decision grid.** Every 5 minutes, 09:30 … 15:55. Step m is decided at wall m+1, once bar m is complete.
 3. **Entry test**, applied to names whose bar m printed, in alphabetical order. The first name passing all three is taken.
+   - Tie check (LEGACY-2): every qualifier scores 1.0, so the order is the universe order, which is alphabetical (the rl2 panel order). It carries no outcome information.
    - `dist_vwap_day = log(mark / VWAP) < -0.00006`, with VWAP = Σ(close·vol) / Σvol from 04:00.
    - `xs_breadth < -0.02379`: the mean, over universe names that printed at m, of log(mark / 09:30-bar close).
    - `log_price < 2.75367`, i.e. mark < ~$15.70.
@@ -103,7 +108,8 @@ Source: rl2-audit.md §3.3. Rule file: `plan/rl2/results/rules_holdout_s0.json`.
 
 | book | deviation | reason | parity cost |
 |---|---|---|---|
-| R4 | **Bearish-engulfing exit fills at the NEXT printed bar's open**; the published backtest used the same bar's close | That close is gone by the time the pattern is known (LEGACY-14). LEGACY-1 shows the next open is slightly *better* per ticket (+$4–6) on the same entries; the rotation path changes, so replay totals move about ±$19/ticket | Mode C below compares against cp_sim with only this fill moved: **952/952 legs identical** |
+| R4 | **Bearish-engulfing exit fills at the NEXT printed bar's open**; the published backtest used the same bar's close | That close is gone by the time the pattern is known (LEGACY-14). LEGACY-1 shows the next open is slightly *better* per ticket (+$4–6) on the same entries; the rotation path changes, so replay totals move about ±$19/ticket | Next-open alone: 952/952 legs identical to cp_sim with only that fill moved. With the tie-break as well: modes C/D and the 1,173-leg full identity |
+| R4 | **Coil ties broken by volume so far, then a seeded hash**; the published backtest used pool-file order | LEGACY-2: file order correlates with full-day volume (a leak). With random tie-breaks R4 earns about +37 bps gross instead of +81, roughly break-even net | Modes C/D below compare against cp_sim with the same causal tie-break |
 | R4 | Universe and coil come from the saved scan, observed at wall t+1, not from bar closes. The sticky +10% LAST rule is observed only at snapshots. Coil's high is Robinhood's all-session high (may include the 20:00–04:00 overnight session) | Robinhood MCP is agent-only, and minute bars for ~150 names every 5 minutes are not affordable | Mode B (emulated 5-minute snapshots, top-200 by coil): **53/54, same as exact-bar mode A**. The overnight-high difference is not measurable offline |
 | R4 | Spread/depth **veto** (spread > 0.5% or depth < 25%) with SHADOW legs | LEGACY-15: refused names lost about 2.6 pp vs traded ones. The backtest's tail lives in those thin names (255 of 965 legs would be refused) | The SHADOW book (official trades + vetoed legs at the model exit) is the backtest-parity book. Both are reported |
 | R4 | cp_sim skips a top-ranked name that does **not print for 60 minutes** after the decision, then takes the next name at its fill minute in the past | A **60-minute look-ahead** in `_try_ticket`/`_next_print`; live cannot know. Live marks such a late leg **MISSED** (it is stale by then) | 1 of 54 legs in the sampled days (2025-08-25 TWIN, behind SPHL); this is the only mode-A/B miss |
@@ -128,11 +134,12 @@ Every test drives the **live code**: `p3_r4.run_live`, `p3_r15`, the `p3_rl` eng
 |---|---:|---:|---:|---:|---:|---:|
 | A: exact-bar universe, minute by minute, 22 days | 54 | 53 (98.1%) | 53 | 1 (60-min look-ahead, see deviations) | 0 | 0 |
 | B: emulated scan snapshots every 5 min, 22 days | 54 | 53 (98.1%) | 53 | 1 (same) | 0 | 0 |
-| C: LIVE next-open bearish fill vs cp_sim with only that fill moved, 22 days | 50 | 50 (100%) | 50 | 0 | 0 | 0 |
+| C: LIVE config (next-open bearish fill + causal tie-break) vs cp_sim with exactly those two changes, exact-bar universe, 22 days | 58 | 58 (100%) | 58 | 0 | 0 | 0 |
+| D: LIVE config on emulated scan snapshots (scan Coil + Volume columns), same reference, 22 days | 58 | 58 (100%) | 58 | 0 | 0 | 0 |
 | full-day engine identity, all 444 days, published convention | 965 | 965 | 965 | 0 | 0 | — |
-| full-day engine identity, all 444 days, next-open convention | 952 | 952 | 952 | 0 | 0 | — |
+| full-day engine identity, all 444 days, LIVE config vs cp_sim with the same two changes | 1173 | 1173 | 1173 | 0 | 0 | — |
 
-A further check, `plan/p3_livepath_r4.py`, ran R4 legs through the real live I/O path: scan files → `--scan` ingest → NEED_DATA → bars → decision. It reproduces 2024-10-22's three legs exactly (MLI bearish next-open 41.15, RITR trail, LOBO flatten).
+A further check, `plan/p3_livepath_r4.py`, ran R4 through the real live I/O path: scan files → `--scan` ingest → NEED_DATA → bars → decision. With the live config (next-open bearish, causal tie-break) it reproduces 2024-10-22 exactly against cp_sim with the same two changes: MLI bearish at the next open 41.15, RITR trail 10%, and HRI (the causal tie-break picks HRI where file order picked LOBO).
 
 **R15** (`plan/p3_parity_r15.py` → `data/paper/parity/r15.json`). The full 448-day window was replayed through the live code. The earnings came from the historical corpus, converted to the live calendar's row format.
 - **112/112 tickets identical** (sym, entry minute, entry price), with 0 missed and 0 extra.
@@ -167,19 +174,23 @@ In every case the model exit minute and price were exact, the official fill was 
 
 | book | per trade (realistic cost) | trades / day | per day | backtest per trade ex-top-5 | notes |
 |---|---:|---:|---:|---:|---|
-| R4 | **+$33.93** (at 28.75 bps: +$14.94) | 2.14 | **+$72.77** (at 28.75: +$32.02) | **−$29.67** | live-code replay, next-open bearish, $10k. Published-close convention: +$53.91/ticket at 10 bps |
+| R4 | **−$1.21** (gross +$23.27; at 28.75 bps: −$23.65) | 2.64 | **−$3.19** (gross +$61.37; at 28.75: −$62.38) | **−$65.17** | LIVE config (next-open bearish fill + causal tie-break), $10k, live-code replay over 444 days. Published backtest at $10k: +$53.91/ticket at 10 bps; the pool-file tie-break leak (LEGACY-2) is most of the difference |
 | R15 | **+$87.62** | 0.248 | **+$21.71** | +$36.07 | 111 tickets in 448 days |
-| RL | **+$16.91** | 0.341 | **+$5.77** | +$18.10 | one position at a time, RTH flatten |
+| RL | **+$16.91** | 0.341 | **+$5.77** | +$18.10 (published 7 x $15k legs) | one position at a time, RTH flatten |
 
 **Read these before the first red week.**
 
+- **R4's realistic expectation is about break-even after costs.**
+  - The causal tie-break (LEGACY-2) removes the pool-file-order leak. The live config earns +$23.27/ticket gross and about −$1/ticket at 15 bps/side. It is not the published +$69.
+  - We keep paper-trading it per the user's standing order. It is honest now, and the paper book measures whether anything is left.
 - **R4 is a tail strategy.**
   - LEGACY-14: its five best legs make more than the whole book. The other 960 legs lose about −$701/month at $10k / 15 bps.
-  - **Ex-top-5 it is about −$28 to −$30 per $10k ticket** (LEGACY-15: −$28 gross on the legs the spread veto keeps).
+  - **Ex-top-5 it is about −$65 per $10k ticket at 15 bps** on the live config's own legs (LEGACY-15: −$28 *gross* on the legs the spread veto keeps).
   - **R4 lost −$4,392 over the 22 out-of-sample August-2026 sessions.**
-  - So a red first week, or a red first month, is *inside* expectation. The test is whether the rare big winner shows up, in the official book or the SHADOW book, and whether the ex-top-5 run rate sits near −$28/ticket rather than far below it.
+  - So a red first week, or a red first month, is *inside* expectation. The test is whether the rare big winner shows up, in the official book or the SHADOW book, and whether the ex-top-5 run rate sits near −$65/ticket at 15 bps (about −$35 gross) rather than far below it.
   - The live spread veto removes most of the thin names where the backtest's tail lives. The SHADOW (backtest-parity) book is what measures whether the edge is real.
 - **R15 fires on about one day in four.** Most days are no-trade days. That is a no-loss day, not a miss. 61% of its backtest P&L is five tickets.
+- **The brief's R4 figure** (+$59…+$111/day) is the published backtest with its tie-break leak and same-bar bearish fills. The honest live configuration above replaces it.
 - **RL is small.** The user's brief said +$14–16/trade at about 1.2/day; that is the published 7 x $15k concurrent configuration. Under the live frame (one position at a time, $10k, RTH), the replay gives 0.34 trades/day at +$16.91/trade (6 bps), about +$5.77/day.
 - **Scoring.** Every EOD reports each book raw and ex-top-5, all trades and halal-PASS only, against these rows (`plan/p3_eod.py`).
 

@@ -366,7 +366,8 @@ def ingest_scan(path, date, at):
     keep.append(dict(t=at, n=len(rows), rows=rows))
     keep.sort(key=lambda x: x["t"])
     f.write_text("\n".join(json.dumps(x) for x in keep) + "\n")
-    top = sorted(rows.items(), key=lambda kv: -(kv[1]["coil"] or 0))[:8]
+    top = sorted(rows.items(), key=lambda kv: (-(kv[1]["coil"] or 0),
+                                             -(kv[1]["vol"] or 0)))[:8]
     need = [s for s, _ in top
             if not (P.RH_BARS / f"{s}_{date}.csv").exists()]
     P.emit(dict(book=BOOK, ingested=len(rows), at=P.hhmm(at),

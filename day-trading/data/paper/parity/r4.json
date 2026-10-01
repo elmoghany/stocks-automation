@@ -1,0 +1,323 @@
+{
+ "days": [
+  "2024-10-22",
+  "2024-12-23",
+  "2024-12-24",
+  "2025-02-27",
+  "2025-03-03",
+  "2025-05-05",
+  "2025-05-07",
+  "2025-06-26",
+  "2025-07-09",
+  "2025-08-25",
+  "2025-09-10",
+  "2025-10-06",
+  "2025-11-11",
+  "2025-12-12",
+  "2026-01-15",
+  "2026-01-28",
+  "2026-03-20",
+  "2026-04-21",
+  "2026-05-22"
+ ],
+ "per_day": {
+  "2024-10-22": {
+   "A": "A 2024-10-22: bt 3 live 3 matched 3 missed [] extra [] retro 0 (56s)",
+   "B": "B 2024-10-22: bt 3 live 3 matched 3 missed [] extra [] retro 0 (275s)",
+   "C": "C 2024-10-22: bt 3 live 3 matched 3 missed [] extra [] retro 0 (546s)",
+   "D": "D 2024-10-22: bt 3 live 3 matched 3 missed [] extra [] retro 0 (986s)"
+  },
+  "2024-12-23": {
+   "A": "A 2024-12-23: bt 3 live 3 matched 3 missed [] extra [] retro 0 (73s)",
+   "B": "B 2024-12-23: bt 3 live 3 matched 3 missed [] extra [] retro 0 (295s)",
+   "C": "C 2024-12-23: bt 7 live 7 matched 7 missed [] extra [] retro 0 (599s)",
+   "D": "D 2024-12-23: bt 7 live 7 matched 7 missed [] extra [] retro 0 (1010s)"
+  },
+  "2024-12-24": {
+   "A": "A 2024-12-24: bt 2 live 2 matched 2 missed [] extra [] retro 0 (86s)",
+   "B": "B 2024-12-24: bt 2 live 2 matched 2 missed [] extra [] retro 0 (310s)",
+   "C": "C 2024-12-24: bt 2 live 2 matched 2 missed [] extra [] retro 0 (631s)",
+   "D": "D 2024-12-24: bt 2 live 2 matched 2 missed [] extra [] retro 0 (1032s)"
+  },
+  "2025-02-27": {
+   "A": "A 2025-02-27: bt 3 live 3 matched 3 missed [] extra [] retro 0 (97s)",
+   "B": "B 2025-02-27: bt 3 live 3 matched 3 missed [] extra [] retro 0 (322s)",
+   "C": "C 2025-02-27: bt 3 live 3 matched 3 missed [] extra [] retro 0 (662s)",
+   "D": "D 2025-02-27: bt 3 live 3 matched 3 missed [] extra [] retro 0 (1052s)"
+  },
+  "2025-03-03": {
+   "A": "A 2025-03-03: bt 2 live 2 matched 2 missed [] extra [] retro 0 (109s)",
+   "B": "B 2025-03-03: bt 2 live 2 matched 2 missed [] extra [] retro 0 (337s)",
+   "C": "C 2025-03-03: bt 3 live 3 matched 3 missed [] extra [] retro 0 (697s)",
+   "D": "D 2025-03-03: bt 3 live 3 matched 3 missed [] extra [] retro 0 (1070s)"
+  },
+  "2025-05-05": {
+   "A": "A 2025-05-05: bt 1 live 1 matched 1 missed [] extra [] retro 0 (113s)",
+   "B": "B 2025-05-05: bt 1 live 1 matched 1 missed [] extra [] retro 0 (342s)",
+   "C": "C 2025-05-05: bt 3 live 3 matched 3 missed [] extra [] retro 0 (710s)",
+   "D": "D 2025-05-05: bt 3 live 3 matched 3 missed [] extra [] retro 0 (1081s)"
+  },
+  "2025-05-07": {
+   "A": "A 2025-05-07: bt 3 live 3 matched 3 missed [] extra [] retro 0 (125s)",
+   "B": "B 2025-05-07: bt 3 live 3 matched 3 missed [] extra [] retro 0 (354s)",
+   "C": "C 2025-05-07: bt 2 live 2 matched 2 missed [] extra [] retro 0 (734s)",
+   "D": "D 2025-05-07: bt 2 live 2 matched 2 missed [] extra [] retro 0 (1101s)"
+  },
+  "2025-06-26": {
+   "A": "A 2025-06-26: bt 5 live 5 matched 5 missed [] extra [] retro 0 (139s)",
+   "B": "B 2025-06-26: bt 5 live 5 matched 5 missed [] extra [] retro 0 (368s)",
+   "C": "C 2025-06-26: bt 3 live 3 matched 3 missed [] extra [] retro 0 (756s)",
+   "D": "D 2025-06-26: bt 3 live 3 matched 3 missed [] extra [] retro 0 (1123s)"
+  },
+  "2025-07-09": {
+   "A": "A 2025-07-09: bt 1 live 1 matched 1 missed [] extra [] retro 0 (150s)",
+   "B": "B 2025-07-09: bt 1 live 1 matched 1 missed [] extra [] retro 0 (380s)",
+   "C": "C 2025-07-09: bt 1 live 1 matched 1 missed [] extra [] retro 0 (776s)",
+   "D": "D 2025-07-09: bt 1 live 1 matched 1 missed [] extra [] retro 0 (1141s)"
+  },
+  "2025-08-25": {
+   "A": "A 2025-08-25: bt 5 live 4 matched 4 missed [('TWIN', 614)] extra [] retro 0 (161s)",
+   "B": "B 2025-08-25: bt 5 live 4 matched 4 missed [('TWIN', 614)] extra [] retro 0 (392s)",
+   "C": "C 2025-08-25: bt 3 live 3 matched 3 missed [] extra [] retro 0 (794s)",
+   "D": "D 2025-08-25: bt 3 live 3 matched 3 missed [] extra [] retro 0 (1158s)"
+  },
+  "2025-09-10": {
+   "A": "A 2025-09-10: bt 2 live 2 matched 2 missed [] extra [] retro 0 (178s)",
+   "B": "B 2025-09-10: bt 2 live 2 matched 2 missed [] extra [] retro 0 (408s)",
+   "C": "C 2025-09-10: bt 2 live 2 matched 2 missed [] extra [] retro 0 (820s)",
+   "D": "D 2025-09-10: bt 2 live 2 matched 2 missed [] extra [] retro 0 (1183s)"
+  },
+  "2025-10-06": {
+   "A": "A 2025-10-06: bt 6 live 6 matched 6 missed [] extra [] retro 0 (197s)",
+   "B": "B 2025-10-06: bt 6 live 6 matched 6 missed [] extra [] retro 0 (429s)",
+   "C": "C 2025-10-06: bt 7 live 7 matched 7 missed [] extra [] retro 0 (851s)",
+   "D": "D 2025-10-06: bt 7 live 7 matched 7 missed [] extra [] retro 0 (1213s)"
+  },
+  "2025-11-11": {
+   "A": "A 2025-11-11: bt 1 live 1 matched 1 missed [] extra [] retro 0 (207s)",
+   "B": "B 2025-11-11: bt 1 live 1 matched 1 missed [] extra [] retro 0 (440s)",
+   "C": "C 2025-11-11: bt 2 live 2 matched 2 missed [] extra [] retro 0 (867s)",
+   "D": "D 2025-11-11: bt 2 live 2 matched 2 missed [] extra [] retro 0 (1229s)"
+  },
+  "2025-12-12": {
+   "A": "A 2025-12-12: bt 3 live 3 matched 3 missed [] extra [] retro 0 (213s)",
+   "B": "B 2025-12-12: bt 3 live 3 matched 3 missed [] extra [] retro 0 (449s)",
+   "C": "C 2025-12-12: bt 3 live 3 matched 3 missed [] extra [] retro 0 (880s)",
+   "D": "D 2025-12-12: bt 3 live 3 matched 3 missed [] extra [] retro 0 (1242s)"
+  },
+  "2026-01-15": {
+   "A": "A 2026-01-15: bt 1 live 1 matched 1 missed [] extra [] retro 0 (228s)",
+   "B": "B 2026-01-15: bt 1 live 1 matched 1 missed [] extra [] retro 0 (462s)",
+   "C": "C 2026-01-15: bt 1 live 1 matched 1 missed [] extra [] retro 0 (901s)",
+   "D": "D 2026-01-15: bt 1 live 1 matched 1 missed [] extra [] retro 0 (1263s)"
+  },
+  "2026-01-28": {
+   "A": "A 2026-01-28: bt 4 live 4 matched 4 missed [] extra [] retro 0 (238s)",
+   "B": "B 2026-01-28: bt 4 live 4 matched 4 missed [] extra [] retro 0 (472s)",
+   "C": "C 2026-01-28: bt 3 live 3 matched 3 missed [] extra [] retro 0 (919s)",
+   "D": "D 2026-01-28: bt 3 live 3 matched 3 missed [] extra [] retro 0 (1284s)"
+  },
+  "2026-03-20": {
+   "A": "A 2026-03-20: bt 4 live 4 matched 4 missed [] extra [] retro 0 (242s)",
+   "B": "B 2026-03-20: bt 4 live 4 matched 4 missed [] extra [] retro 0 (477s)",
+   "C": "C 2026-03-20: bt 4 live 4 matched 4 missed [] extra [] retro 0 (930s)",
+   "D": "D 2026-03-20: bt 4 live 4 matched 4 missed [] extra [] retro 0 (1294s)"
+  },
+  "2026-04-21": {
+   "A": "A 2026-04-21: bt 3 live 3 matched 3 missed [] extra [] retro 0 (252s)",
+   "B": "B 2026-04-21: bt 3 live 3 matched 3 missed [] extra [] retro 0 (487s)",
+   "C": "C 2026-04-21: bt 3 live 3 matched 3 missed [] extra [] retro 0 (947s)",
+   "D": "D 2026-04-21: bt 3 live 3 matched 3 missed [] extra [] retro 0 (1312s)"
+  },
+  "2026-05-22": {
+   "A": "A 2026-05-22: bt 2 live 2 matched 2 missed [] extra [] retro 0 (267s)",
+   "B": "B 2026-05-22: bt 2 live 2 matched 2 missed [] extra [] retro 0 (519s)",
+   "C": "C 2026-05-22: bt 3 live 3 matched 3 missed [] extra [] retro 0 (972s)",
+   "D": "D 2026-05-22: bt 3 live 3 matched 3 missed [] extra [] retro 0 (1343s)"
+  }
+ },
+ "modes": {
+  "A": {
+   "bt": 54,
+   "live": 53,
+   "matched": 53,
+   "missed": 1,
+   "extra": 0,
+   "identical_exits": 53,
+   "retro": 0,
+   "match_rate": 0.9815,
+   "exit_known_after_bar_min": {
+    "min": 1,
+    "max": 284,
+    "mean": 21.36
+   }
+  },
+  "B": {
+   "bt": 54,
+   "live": 53,
+   "matched": 53,
+   "missed": 1,
+   "extra": 0,
+   "identical_exits": 53,
+   "retro": 0,
+   "match_rate": 0.9815,
+   "exit_known_after_bar_min": {
+    "min": 1,
+    "max": 284,
+    "mean": 21.36
+   }
+  },
+  "C": {
+   "bt": 58,
+   "live": 58,
+   "matched": 58,
+   "missed": 0,
+   "extra": 0,
+   "identical_exits": 58,
+   "retro": 0,
+   "match_rate": 1.0,
+   "exit_known_after_bar_min": {
+    "min": 1,
+    "max": 284,
+    "mean": 20.41
+   }
+  },
+  "D": {
+   "bt": 58,
+   "live": 58,
+   "matched": 58,
+   "missed": 0,
+   "extra": 0,
+   "identical_exits": 58,
+   "retro": 0,
+   "match_rate": 1.0,
+   "exit_known_after_bar_min": {
+    "min": 1,
+    "max": 284,
+    "mean": 20.41
+   }
+  }
+ },
+ "note": "A,B: published close-fill engine vs the published dump; C/D: LIVE engine (next-open bearish fill, LEGACY-14; causal tie-break, LEGACY-2) vs cp_sim with exactly those two changes (bars / emulated scan snapshots)",
+ "modes_source": "data\\paper\\parity_r4_modes.log",
+ "full_A_published": {
+  "ref": 965,
+  "live": 965,
+  "matched": 965,
+  "identical": 965,
+  "missed": 0,
+  "extra": 0,
+  "gross_ref": 85615.96,
+  "gross_live": 85615.96
+ },
+ "full_C_live_cfg": {
+  "ref": 1173,
+  "live": 1173,
+  "matched": 1173,
+  "identical": 1173,
+  "missed": 0,
+  "extra": 0,
+  "gross_ref": 24213.36,
+  "gross_live": 24213.36
+ },
+ "expectation_live": {
+  "ticket": 10000.0,
+  "days": 444,
+  "window": [
+   "2024-10-22",
+   "2026-07-31"
+  ],
+  "by_bps": {
+   "live_next_open": {
+    "0": {
+     "per_ticket": 23.27,
+     "per_day": 61.37,
+     "tickets_per_day": 2.637,
+     "aug2026_total": 0.0,
+     "aug2026_tickets": 0
+    },
+    "6": {
+     "per_ticket": 13.48,
+     "per_day": 35.54,
+     "tickets_per_day": 2.637,
+     "aug2026_total": 0.0,
+     "aug2026_tickets": 0
+    },
+    "10": {
+     "per_ticket": 6.95,
+     "per_day": 18.33,
+     "tickets_per_day": 2.637,
+     "aug2026_total": 0.0,
+     "aug2026_tickets": 0
+    },
+    "28.75": {
+     "per_ticket": -23.65,
+     "per_day": -62.38,
+     "tickets_per_day": 2.637,
+     "aug2026_total": 0.0,
+     "aug2026_tickets": 0
+    }
+   },
+   "live_next_open_index_tiebreak": {
+    "0": {
+     "per_ticket": 54.66,
+     "per_day": 117.2,
+     "tickets_per_day": 2.144,
+     "aug2026_total": 0.0,
+     "aug2026_tickets": 0
+    },
+    "6": {
+     "per_ticket": 46.37,
+     "per_day": 99.43,
+     "tickets_per_day": 2.144,
+     "aug2026_total": 0.0,
+     "aug2026_tickets": 0
+    },
+    "10": {
+     "per_ticket": 40.84,
+     "per_day": 87.58,
+     "tickets_per_day": 2.144,
+     "aug2026_total": 0.0,
+     "aug2026_tickets": 0
+    },
+    "28.75": {
+     "per_ticket": 14.94,
+     "per_day": 32.02,
+     "tickets_per_day": 2.144,
+     "aug2026_total": 0.0,
+     "aug2026_tickets": 0
+    }
+   },
+   "published_close": {
+    "0": {
+     "per_ticket": 68.04,
+     "per_day": 147.88,
+     "tickets_per_day": 2.173,
+     "aug2026_total": 0.0,
+     "aug2026_tickets": 0
+    },
+    "6": {
+     "per_ticket": 59.56,
+     "per_day": 129.45,
+     "tickets_per_day": 2.173,
+     "aug2026_total": 0.0,
+     "aug2026_tickets": 0
+    },
+    "10": {
+     "per_ticket": 53.91,
+     "per_day": 117.17,
+     "tickets_per_day": 2.173,
+     "aug2026_total": 0.0,
+     "aug2026_tickets": 0
+    },
+    "28.75": {
+     "per_ticket": 27.42,
+     "per_day": 59.59,
+     "tickets_per_day": 2.173,
+     "aug2026_total": 0.0,
+     "aug2026_tickets": 0
+    }
+   }
+  }
+ }
+}

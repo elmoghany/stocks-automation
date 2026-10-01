@@ -1,3 +1,13 @@
+# >>> 2026-10-01: PAPER-3BOOK is the live paper session (C37 retired) <<<
+
+Paper only, open-ended. Real orders never, unless the user explicitly authorizes them in conversation.
+Live paper runs three books -- R4, R15, RL -- every market day with no end date: rules
+`PAPER-3BOOK-RULES.md`, mandate `plan/paper_3book_prompt.txt`, launcher `plan/launch_paper_day.ps1`
+(Task Scheduler `\Stocks\C37MorningLaunch`, 09:10 ET weekdays) + `\Stocks\C37Watchdog`; both
+RE-ENABLED 2026-10-01 after the parity test passed (first session 2026-10-02). Ledgers:
+`data/paper_days/{date}.3book.json/.md`, scoreboard `data/paper_days/3book_scoreboard.json`.
+The 2026-09-18 note below about the tasks being disabled is superseded.
+
 # CONTINUE HERE — state saved 2026-09-17 ~21:00 ET (second pause)
 
 The user paused the edge-search loop again ("save the state and cache … continue

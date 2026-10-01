@@ -57,9 +57,19 @@ def main():
     pt = {k: v["per_ticket"] for k, v in by.items()}
     pdy = {k: v["per_day"] for k, v in by.items()}
     tpd = by["0"]["tickets_per_day"]
+    # ex-top-5 on the LIVE config's own legs (next-open bearish fill, causal
+    # tie-break, $10k), replayed through p3_r4.run_live over the 444 days
+    import cp_lib as CL
+    import p3_parity_r4 as T
+    import p3_r4 as R4
     legs = json.loads((P.PLAN / "pa_out" / "cp_r4_legs.json").read_text())
-    rets = [x["gross"] / (x["entry"] * x["shares"])
-            for x in legs["legs"]["R4"]]
+    rets = []
+    for d in legs["dates"]:
+        day = T.FullDay(d).day_at(CL.NMIN)
+        lv, _ = R4.run_live(day, R4.fd_from_bars(day), CL.NMIN,
+                            tickets=R4.TICKETS_LIVE, cfg=R4.CFG_LIVE, date=d)
+        rets += [x["gross"] / (x["entry"] * x["shares"]) for x in lv
+                 if x.get("gross") is not None]
     raw, ex5 = ex_top5(rets, COST["r4"])
     out["r4"] = dict(per_trade=round(lin(pt, COST["r4"]), 2),
                      per_day=round(lin(pdy, COST["r4"]), 2),
@@ -70,6 +80,10 @@ def main():
                      aug2026_note="R4 lost -$4,392 over the 22 out-of-sample "
                      "August-2026 sessions (LEGACY-14 / champion-replay "
                      "OOS block); a red first weeks is inside expectation",
+                     legacy2_note="causal coil tie-break (volume so far, "
+                     "then seeded hash) replaces the published pool-file "
+                     "order, which leaked full-day volume: realistic R4 is "
+                     "about break-even after costs",
                      legacy15_note="with the live 0.5% spread veto the kept "
                      "legs are ~ -$28 gross per $10k ex-top-5 (LEGACY-15); "
                      "the backtest edge lives in the thin names the veto "

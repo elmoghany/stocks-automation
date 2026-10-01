@@ -10690,3 +10690,49 @@ Scope here: checks 1-3 + cost verdict (checks 4/5 by parallel agents). Full writ
   evidence cost: 10.2 entry / 21.6 exit (incl. +50 on 82 after-16:00 exits) -> +$16.07/tkt, +$404/mo.
 - Files: `plan/crs_{rescore,evid,cp,rl2,uq,vs2,table,report}.py`, `plan/crs_rescore.json`, `plan/crs_evid.json`
   (plan/*.json is gitignored: outputs + leg dumps stay local; scripts rebuild them).
+
+## PAPER-3BOOK (2026-10-01): live paper now runs R4, R15 and the RL rule; C37 retired
+
+Paper only, open-ended. Real orders never, unless the user explicitly authorizes them in conversation.
+User decision: three separate paper books (own ledger, own $100k notional, $10,000/trade, one position
+at a time per book, same-day exits), halal ignored for selection but tagged on every trade (EOD reports
+all / halal-PASS). Rules: `PAPER-3BOOK-RULES.md`; mandate: `plan/paper_3book_prompt.txt` (C37's is kept
+as `plan/paper_day_prompt.C37.txt`).
+
+- **Live code** imports the backtest code: `plan/p3_r4.py` (cp_sim ranking/gates/pressure/bearish/fills,
+  clock-aware replay), `plan/p3_r15.py` (cat_events freshness, wn/rl2 fill + h60 conventions),
+  `plan/p3_rl.py` (rl2 features/sim rule, incremental), `plan/p3_universe.py` (rl2 membership rebuilt
+  for 2026-10-02: 95 names), `plan/p3_eod.py` (per-book EOD + scoreboard), `plan/p3_expect.py`.
+  `plan/paper_watch.py` gained EXIT_MODE r4/r15/rl (exit decision delegated to `p3_{book}.watch_exit`,
+  official fill = quote bid at the decision minute, model fill recorded) and `--book NAME` (per-book
+  state dir and files); the C37 self-test still passes 47/47.
+- **Data path** (call budget): two saved RH scans do the heavy lifting -- "P3 R4 gapper coil"
+  (0cc1cab3..., Last > $2 & RTH high >= +10%, sorted by Coil = RTH price / all-session high) and
+  "P3 RL wide universe" (2f8e0fb0..., symbol ANY_OF the 95) -- one call per 5-minute step each,
+  instead of ~750 historicals calls for RL breadth. Bars only for top-8 R4 candidates, R15's fresh
+  names, RL confirmations and held names.
+- **Parity** (live code, caches as the live feed, arrays physically truncated after now-1):
+  R4 minute-by-minute 53/54 identical on 22 days (exact-bar and scan-emulation modes alike; the miss is
+  cp_sim skipping a top name that does not print for 60 minutes -- a look-ahead; live logs such a late
+  leg as MISSED), full-day identity 965/965; R15 112/112 over 448 days; RL 305/305 published config,
+  86/87 on the scan path, watch_exit 74/74. Watcher end-to-end (`plan/p3_watch_selftest.py`) ALL PASS.
+- **Deviations adopted live**: R4 bearish exit fills at the next bar's open (LEGACY-14; ground truth
+  952/952), R4 spread/depth veto with SHADOW legs (LEGACY-15), RL one position + RTH flatten 15:59
+  (0.341 trades/day, +$16.91/trade @6 bps vs +$5.32 if held into extended hours), RTH-only session from
+  09:15, no stale entries (>5 min R4, >2 min RL, after 09:41 R15).
+- **R4 tie-break leak (LEGACY-2) fixed live**: cp_sim's stable sort on -coil let ~5 coil=1.0 ties fall to
+  gapper-pool FILE order (correlated with full-day volume). Live breaks ties by volume-so-far then a seeded
+  hash; parity vs cp_sim with the same tie-break + next-open fill: 58/58 minute-by-minute (bars and
+  scan-emulation), 1,173/1,173 full-day identity.
+- **Expectations at $10k** (`data/paper/p3_expectations.json`): R4 live config +$23.27/trade gross,
+  -$1.21/trade and -$3.19/day @15 bps (2.64/day; -$23.65 @28.75), ex-top-5 -$65/trade -- about
+  break-even after costs, a tail strategy that lost -$4,392 over Aug-2026 OOS; kept in paper per the
+  user's standing order; R15 +$87.62/trade, 0.248/day, +$21.71/day @9;
+  RL +$16.91/trade, 0.341/day, +$5.77/day @6. The user's +$14-16/trade at 1.2/day for RL is the published
+  concurrent 7x$15k config.
+- **Scheduler**: `\Stocks\C37MorningLaunch` now fires 09:10 ET (was 06:20) and points at the 3-book
+  prompt; `\Stocks\C37Watchdog` reads `{date}.3book.json` and per-book WATCH_ALIVE files. Both
+  re-enabled 2026-10-01 after parity passed; first session Fri 2026-10-02. No end date.
+- **Open item**: the RL scan's ticker list can only be re-saved interactively (create_scan is not on
+  the headless allow-list); the monthly universe refresh flags UNIVERSE_REFRESH_NEEDED. Next refresh
+  due 2026-11-02.
