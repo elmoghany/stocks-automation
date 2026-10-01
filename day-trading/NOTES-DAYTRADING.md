@@ -10634,3 +10634,28 @@ books against -$1.52 on the thinnest 1,332) and is worth 2.5-3x, not 7x.
 4. **Tell the halal line about leak #2 before the repaired gate is used to re-score history.**
 5. Re-run Test 1 with the mandate's true exit (15:59, not the closing auction) --
    `plan/ou_frame.py --stage close1559` is written and never run.
+
+## PESSIMISM-AUDIT checks 1-3 (2026-10-01): the impact term is the pessimistic piece; flat 10 bps is near the top of the evidence range
+
+User: "it is not realistic that everything loses money". Hunted biases that make results TOO BAD.
+Scope here: checks 1-3 + cost verdict (checks 4/5 by parallel agents). Full write-up `pessimism-audit.md`.
+
+- **Check 1 (impact).** Daily ADV20 + daily sigma20 instead of the trailing 10-min window cuts the
+  square-root term 10.0 -> 7.1 bps median, 23.6 -> 13.6 mean (1,200 symbol-days, 13,200 fills) -- the
+  window choice is NOT the main problem. The coefficient is: on the 1-second tape (300 symbol-days),
+  seconds with >= $15k move the price only 1.4 bps median / 3.1 mean (4.4 at the open) more than small
+  seconds in the same name/minute, and **a >= $15k second made of <= 3 prints (~one order) moves it no
+  more than a small print (-0.2 to -1.0 bps)**. Impact over-charged ~8.6 bps/side median, ~20 mean.
+  The production max(HL2,CS,AR) half-spread is also the conservative end: 7.4 mean vs 3.4 median-of-three.
+- **Check 2 (minute open/close fills).** Open vs first-10-s VWAP +0.05 bps (se 0.06); +0.5 after
+  top-decile momentum; close vs last-10-s VWAP +0.04; after an up minute the next open downticks 41% vs
+  upticks 35%. Fair, if anything slightly OPTIMISTIC.
+- **Check 3 (double counting).** None. Pessimistic non-double-count paths: 09:30-09:32 impact plug
+  (flat 10 bps on top, `cr_cost.py:582-588`, lx_engine/cp_cost mirrors), hold-to-flatten exits landing
+  after hours at 60 bps (already documented), volatility in both CS/AR and the sigma term (~1 bp).
+- **Cost verdict: 6 bps/side central, range 3-10.5 (mean, all-day, wide universe, $15k); 9 (4.5-15.6)
+  at 09:30-10:30.** Flat 10 is pessimistic by ~4 bps/side (~$12/ticket) all-day, ~fair at the open.
+  The measured `cr_cost` Y=1 model (30.8 mean) is pessimistic by ~20-25 bps/side (~$60-75/ticket):
+  every "measured" column in COST-REBASE / LIMIT-EXEC / CHAMPION-REPLAY / OPEN-UNIVERSE / CATALYST is a
+  floor. Gapper pool not covered (much wider spreads).
+- Files: `plan/pa_impact.py`, `plan/pa_spread.py`, `plan/pa_fillbias.py`, `plan/pa_out/{impact,spread_modes,fillbias}.json`.
