@@ -1,0 +1,112 @@
+{
+ "n_minutes": 30616,
+ "symdays": 300,
+ "all": {
+  "entry_buy_open_vs_vwap10": {
+   "n": 30616,
+   "median": 0.0,
+   "mean": 0.054,
+   "trim_mean": -0.017,
+   "se": 0.06
+  },
+  "exit_sell_close_vs_vwap_last10": {
+   "n": 25599,
+   "median": 0.0,
+   "mean": 0.035,
+   "trim_mean": 0.041,
+   "se": 0.05
+  },
+  "p_open_uptick": 0.3749,
+  "p_open_downtick": 0.3759
+ },
+ "prior_min_up": {
+  "entry_buy_open_vs_vwap10": {
+   "n": 14401,
+   "median": 0.0,
+   "mean": 0.11,
+   "trim_mean": 0.06,
+   "se": 0.08
+  },
+  "exit_sell_close_vs_vwap_last10": {
+   "n": 12170,
+   "median": 0.0,
+   "mean": 0.008,
+   "trim_mean": 0.026,
+   "se": 0.067
+  },
+  "p_open_uptick": 0.3537,
+  "p_open_downtick": 0.413
+ },
+ "prior_min_down": {
+  "entry_buy_open_vs_vwap10": {
+   "n": 14083,
+   "median": 0.0,
+   "mean": 0.028,
+   "trim_mean": -0.08,
+   "se": 0.097
+  },
+  "exit_sell_close_vs_vwap_last10": {
+   "n": 11764,
+   "median": 0.0,
+   "mean": 0.028,
+   "trim_mean": 0.037,
+   "se": 0.08
+  },
+  "p_open_uptick": 0.4113,
+  "p_open_downtick": 0.3532
+ },
+ "prior5_top_decile": {
+  "entry_buy_open_vs_vwap10": {
+   "n": 3064,
+   "median": 0.0,
+   "mean": 0.471,
+   "trim_mean": 0.621,
+   "se": 0.338
+  },
+  "exit_sell_close_vs_vwap_last10": {
+   "n": 2684,
+   "median": 0.0,
+   "mean": 0.352,
+   "trim_mean": 0.31,
+   "se": 0.3
+  },
+  "p_open_uptick": 0.3789,
+  "p_open_downtick": 0.4236
+ },
+ "open_0931_1030": {
+  "entry_buy_open_vs_vwap10": {
+   "n": 4713,
+   "median": 0.0,
+   "mean": 0.172,
+   "trim_mean": 0.151,
+   "se": 0.217
+  },
+  "exit_sell_close_vs_vwap_last10": {
+   "n": 4187,
+   "median": 0.0,
+   "mean": 0.097,
+   "trim_mean": 0.034,
+   "se": 0.183
+  },
+  "p_open_uptick": 0.3993,
+  "p_open_downtick": 0.4061
+ },
+ "open_0931_1030_prior5_top": {
+  "entry_buy_open_vs_vwap10": {
+   "n": 1009,
+   "median": 0.0,
+   "mean": 0.564,
+   "trim_mean": 0.657,
+   "se": 0.641
+  },
+  "exit_sell_close_vs_vwap_last10": {
+   "n": 921,
+   "median": 0.0,
+   "mean": 0.537,
+   "trim_mean": 0.426,
+   "se": 0.62
+  },
+  "p_open_uptick": 0.4024,
+  "p_open_downtick": 0.4381
+ }
+}
