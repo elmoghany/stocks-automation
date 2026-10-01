@@ -110,10 +110,10 @@ Legs ≥ +50% of ticket, per 1,000 legs:
 - hf3 is −8% stop / trail machinery, and it **erases the right tail**.
 - CHAMPION-REPLAY already shows the same thing: removing the stop (R1 → R4) was worth +$37/ticket at flat 10.
 - Break-even arithmetic for a thin-name lottery:
-  - The body is −$37/ticket net (R4 thin, ex-top-5, central cost).
-  - The average tail win is ≈ +$15.9k per $10k.
-  - So break-even needs about **1 tail leg per 430 tickets**.
-  - R4 achieved 1 per 69. Random achieves 1 per 230–380.
+  - R4 had 8 legs at ≥ +50%: MNPR, HUIZ, YIBO, SGN, RNAZ in Y1 and ARMP, FLYE, ATGL in Y2. They average **+$12.4k per $10k**.
+  - Without them, the R4-thin body is about **−$73/ticket net** at central cost.
+  - So break-even needs about **1 tail leg per 170 tickets**.
+  - R4 achieved 1 per 69. Random achieves 1 per 230–380, which is **below** break-even. That is why a zero-skill picker in thin names loses.
 
 ### 6. Post-hoc filters that look good but are tail artefacts
 
@@ -151,10 +151,10 @@ Both describe names with the widest spreads and no follow-through. Both are vali
 
 **Expected value at $10k tickets:**
 - In sample: +$107/ticket net at central cost, **+$2,788/month** at 1.24 tickets/day.
-- The body is −$37/ticket. The edge exists only if the ≥ +50% tail rate stays ≳ 1 per 400 tickets (in sample it was 1 per 69; random is 1 per 230–380).
+- The body is about −$73/ticket. The edge exists only if the ≥ +50% tail rate stays ≳ 1 per 170 tickets (in sample it was 1 per 69; random is 1 per 230–380).
 - Honest prior: break-even to modest, with very lumpy months. Five legs carried 22 months.
 
-**Test:** count ≥ +50% legs per 1,000 for R4-thin against RND30-thin on the **OOS dates** (`cp_run.dates(oos=True)`) and on any further forward paper. The pass condition is the tail rate, not $/month. Pass if R4-thin ≥ 2× random **and** ≥ 1 per 400.
+**Test:** count ≥ +50% legs per 1,000 for R4-thin against RND30-thin on the **OOS dates** (`cp_run.dates(oos=True)`) and on any further forward paper. The pass condition is the tail rate, not $/month. Pass if R4-thin ≥ 2× random **and** ≥ 1 per 170.
 
 ### 3. Never put a stop or trail on thin names
 
