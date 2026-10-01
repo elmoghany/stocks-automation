@@ -10671,3 +10671,22 @@ Scope here: checks 1-3 + cost verdict (checks 4/5 by parallel agents). Full writ
   the level are OPTIMISTIC (GTLB trail -118 vs VWAP).
 - Recommend 8 bps/side for RTH $15k liquid fills (12 entry 09:30-10:30, 4 exit after 14:00; range 5-12).
   Flat 10 is ~2 bps conservative (~$6/RT) -- not why everything loses; ~12 "measured" ~4 too high.
+
+## 2026-10-01 — COST-RESCORE (PESSIMISM-AUDIT line) -> `cost-rescore.md`
+- Every line's best config + its 30-seed control re-priced from saved dumps on a flat 0/2/3/4/6/8/10/12
+  bps/side grid (+50 ext), gross recovered by undoing each harness's own convention; identities exact
+  (R4 $66,760.10, R5 -$75,804.91 + 30/30 controls, RL2 $4,304.71, UQ +$0.064/tkt, CM 96,028 trades,
+  VS2 W8RSd $6,135.81 vs $6,139.78 cent-rounded). Re-runs: R5, RL2, UQ, VS2 (one config each, legs dumped).
+- Positive in both years/halves at <=4 bps, controls 100th pct: CP R4 (gapper), CAT R15, RL2 a4s0, UQ, CM.
+  Break-even bps/side (binding year): R15 50.4, R4 28.4, RL2 10.5, UQ 4.1, CM 5.0, VS2 3.2, OU 2.0-2.7 (Y1),
+  WN 1/day 0.0 (H2), LX 3.4; WN top-k, R5, C37F-hf3, HOLD1-hf3 negative at ZERO cost
+  (C37F-hf3 -$37.01/tkt, HOLD1-hf3 -$134.28/tkt gross).
+- Plausible cost (PESSIMISM-AUDIT central 6 all-day / 9 open; LIVE-COST-TRUTH 8): R15 +$690/mo, RL2 +$609,
+  UQ +$560 (H2 negative), CM -$375, OU -$241. Each rule's OWN fills (pa Evid): WN picks 31 bps entry,
+  R15 51, VS2 31 -> selection buys the expensive names. R4 at its 28.75 fill cost +$1,531/mo but Y2 +$96,
+  ex-best-day -$1,231. Best credible ~$700/mo = ~11x short of $7,500; three survivors summed ~4x short.
+- DEFECT found: `plan/cr_engine.py:_m2t` treats rl2's 04:00-origin minute grid as 00:00 -> COST-REBASE's
+  RL2 "measured" row (-$59.97/tkt, 57 bps entry) priced every fill 4 h early (premarket). Correct minutes,
+  evidence cost: 10.2 entry / 21.6 exit (incl. +50 on 82 after-16:00 exits) -> +$16.07/tkt, +$404/mo.
+- Files: `plan/crs_{rescore,evid,cp,rl2,uq,vs2,table,report}.py`, `plan/crs_rescore.json`, `plan/crs_evid.json`
+  (plan/*.json is gitignored: outputs + leg dumps stay local; scripts rebuild them).
