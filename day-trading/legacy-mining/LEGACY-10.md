@@ -115,7 +115,7 @@ The things that argue for luck are:
 
 2. **Risk switch for any close-holding gapper long (HOLD1-type).**
    - **Rule:** on not-TC days, do not carry a gapper long past the morning. Flatten by 10:30 or skip the day.
-   - **Expected:** HOLD1 not-TC days averaged -$136 to -$340 gross/ticket against about -$5 on TC days, in both years. At one ticket/day that avoids about **$1.5k–3k/month of losses**, which is about 9 not-TC days a month x -$136…-$340 + cost. It does not create an edge (TC days are about $0 gross).
+   - **Expected:** HOLD1 not-TC days averaged -$136 to -$340 gross/ticket against about -$5 on TC days, in both years. At one ticket/day that avoids about **$1.5k–3.5k/month of losses**, which is about 9–11 not-TC days a month x -$136…-$340 + cost. It does not create an edge (TC days are about $0 gross).
    - **Test:** re-score the HOLD1 and R4 dumps with not-TC exits forced at 10:30 using the saved m1 bars, then run Aug 2026 as a holdout.
 
 3. **Measure the tail, not the mean.**
