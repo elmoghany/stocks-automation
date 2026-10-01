@@ -17,7 +17,8 @@ if ($guard -match "ERROR" -or $guard -notmatch "TRADING|NO-TRADE") {
 }
 if ($guard -notmatch "TRADING") { exit 0 }
 
-$json = "$root\day-trading\data\paper_days\$day.json"
+# PAPER-3BOOK (2026-10-01): the session ledger is $day.3book.json
+$json = "$root\day-trading\data\paper_days\$day.3book.json"
 $md   = "$root\day-trading\data\paper_days\$day.md"
 $alert = $null
 if (-not ((Test-Path $json) -or (Test-Path $md))) {
@@ -37,12 +38,14 @@ if (-not ((Test-Path $json) -or (Test-Path $md))) {
         $alert = "NO HEARTBEAT: day file exists but SESSION_ALIVE_$day.flag was never written (capability probe not passed?)"
     }
     # An open book with a dead watcher is the worst case under multi-position rules.
-    $openPos = Get-ChildItem "$root\day-trading\data\paper\position_*.json" -ErrorAction SilentlyContinue |
-               Where-Object { (Get-Content $_.FullName -Raw) -match ('"date"\s*:\s*"' + $day + '"') }
-    if ($openPos) {
-        $wa = "$root\day-trading\data\paper_days\WATCH_ALIVE_$day.json"
-        if (-not (Test-Path $wa) -or (((Get-Date) - (Get-Item $wa).LastWriteTime).TotalMinutes -gt 3)) {
-            $alert = "WATCHER DEAD WITH OPEN BOOK: $($openPos.Count) position file(s) dated $day but no fresh WATCH_ALIVE"
+    foreach ($bk in @("r4", "r15", "rl")) {
+        $openPos = Get-ChildItem "$root\day-trading\data\paper\$bk\position_*.json" -ErrorAction SilentlyContinue |
+                   Where-Object { (Get-Content $_.FullName -Raw) -match ('"date"\s*:\s*"' + $day + '"') }
+        if ($openPos) {
+            $wa = "$root\day-trading\data\paper_days\WATCH_ALIVE_$day.$bk.json"
+            if (-not (Test-Path $wa) -or (((Get-Date) - (Get-Item $wa).LastWriteTime).TotalMinutes -gt 3)) {
+                $alert = "WATCHER DEAD WITH OPEN BOOK ${bk}: $($openPos.Count) position file(s) dated $day but no fresh WATCH_ALIVE_$day.$bk.json"
+            }
         }
     }
 }

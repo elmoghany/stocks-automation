@@ -2,8 +2,20 @@
 description: C37 halal day-trading session — sequential ticket rotation, one position at a time, paper only (7:00–15:00 ET)
 ---
 
-# C37 — THE ONLY PROTOCOL. Everything below the HISTORY divider is
-# background; nothing there overrides this section.
+# >>> PAPER-3BOOK (2026-10-01, USER DECISION) — LIVE PAPER NOW RUNS THREE BOOKS <<<
+# Paper only, open-ended. Real orders never, unless the user explicitly
+# authorizes them in conversation.
+# Live paper runs R4 (CHAMPION-REPLAY coil + no stop), R15 (CATALYST-MINER
+# fresh earnings & green @09:35, h60) and RL (RL-SCOUT v2 approach-4 seed 0)
+# as three separate $100k books, $10,000 per trade, one position at a time
+# per book, RTH only, halal ignored for selection but TAGGED on every trade.
+# The rules are day-trading/PAPER-3BOOK-RULES.md and the session mandate is
+# day-trading/plan/paper_3book_prompt.txt (launcher: plan/launch_paper_day.ps1,
+# 09:10 ET). C37 is RETIRED from live paper: the C37 section below is history
+# for the C37 rules only and does not apply to the three books.
+
+# C37 — (RETIRED from live paper 2026-10-01; kept as reference). Everything
+# below the HISTORY divider is background; nothing there overrides this section.
 
 Champion: **C37** sequential ticket rotation.
 **Benchmark (halal universe 472, effective Day 26 2026-09-21): score the day

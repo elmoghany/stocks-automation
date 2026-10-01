@@ -1,5 +1,11 @@
 # \Stocks\C37MorningLaunch -- durable paper-session launcher (W-campaign 1.3)
-# Fires 06:20 ET weekdays via Windows Task Scheduler. Survives Claude session
+# PAPER-3BOOK (2026-10-01): the task name is historical; it now launches the
+# three-book session (R4 / R15 / RL) from plan/paper_3book_prompt.txt. The
+# C37 mandate is retired and kept as plan/paper_day_prompt.C37.txt.
+# Paper only, open-ended. Real orders never, unless the user explicitly
+# authorizes them in conversation. No end date: runs every market day.
+# Fires 09:10 ET weekdays (RTH only since PAPER-3BOOK / LEGACY-15; it was
+# 06:20 for C37's premarket book). Survives Claude session
 # death, login expiry (logged loudly), and REPL-busy cron starvation -- the
 # three measured causes of late/missed sessions (5 of 8 late, Tue 08-18 missed
 # entirely). The in-session cron remains as backup; double-launch is prevented
@@ -25,7 +31,8 @@ if ($guard -match "ERROR" -or $guard -notmatch "TRADING|NO-TRADE") {
 if ($guard -notmatch "TRADING") { Log "abort: not a trading day ($($guard.Trim()))"; exit 0 }
 
 # 2. No-double-launch: day file already present?
-if ((Test-Path "$root\day-trading\data\paper_days\$day.json") -or
+if ((Test-Path "$root\day-trading\data\paper_days\$day.3book.json") -or
+    (Test-Path "$root\day-trading\data\paper_days\$day.json") -or
     (Test-Path "$root\day-trading\data\paper_days\$day.md")) {
     Log "abort: day file for $day already exists (session already running)"; exit 0
 }
@@ -43,8 +50,8 @@ if (Test-Path "$root\day-trading\data\paper_days\LAUNCHED_BY_SCHEDULER_$day.flag
 # The mandate now lives in plan/paper_day_prompt.txt; the CLI argument is a
 # short single-line pointer that quoting cannot mangle.
 $claude = "C:\Users\My PC\.local\bin\claude.exe"
-$promptFile = "$root\day-trading\plan\paper_day_prompt.txt"
-$prompt = "Read C:\cornell\stocks-automation\day-trading\plan\paper_day_prompt.txt NOW and follow it exactly. It is your full mandate for today's headless C37 paper-trading session."
+$promptFile = "$root\day-trading\plan\paper_3book_prompt.txt"
+$prompt = "Read C:\cornell\stocks-automation\day-trading\plan\paper_3book_prompt.txt NOW and follow it exactly. It is your full mandate for today's headless PAPER-3BOOK paper-trading session (paper only, no real orders)."
 # PERMISSION BUG FIX 2026-08-26 (it killed Day 16 outright): a headless
 # `claude -p --permission-mode acceptEdits` session may WRITE FILES and run
 # read-only shell (Get-Date, git status/log) -- and NOTHING ELSE. Every other
@@ -82,7 +89,8 @@ $p = Start-Process -FilePath $claude -ArgumentList @("-p", ('"{0}"' -f $prompt),
 # 06:45 in-session backup cron launches instead.
 Start-Sleep -Seconds 720
 $hb = "$root\day-trading\data\paper_days\SESSION_ALIVE_$day.flag"
-$dayfile = (Test-Path "$root\day-trading\data\paper_days\$day.json") -or
+$dayfile = (Test-Path "$root\day-trading\data\paper_days\$day.3book.json") -or
+           (Test-Path "$root\day-trading\data\paper_days\$day.json") -or
            (Test-Path "$root\day-trading\data\paper_days\$day.md")
 $alive = (Test-Path $hb) -or $dayfile
 if (Test-Path $hb) {

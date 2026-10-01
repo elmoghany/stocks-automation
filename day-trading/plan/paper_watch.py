@@ -34,6 +34,19 @@ until the switch):
           pressure-conditional legs (10% trail when 10-bar pressure <= -0.3,
           40% when >= +0.3, none in between); no scale-out; ladder.
   hold    no stop / trail / scale-out; ladder only.
+  r4 / r15 / rl   PAPER-3BOOK (2026-10-01). The exit decision is DELEGATED
+          to plan/p3_{mode}.watch_exit(date, state, bars, now) -- the very
+          function the live decision code and the parity test use, so live
+          exits and backtest exits are one implementation. The C37 ladder is
+          replaced by ONE safety rung (P3_SAFETY, or close-3min on a half
+          day) that only fires if the model never exited. Every p3 exit is
+          booked twice: OFFICIAL fill = the quote BID at the moment the exit
+          is decided (data/paper/quotes_{date}.json, <= 90 s old; else the
+          model price, flagged) and MODEL fill = the backtest convention
+          price; the quote's bid/ask/mid are recorded for the cost
+          measurement. Use with `--book NAME` so each book has its own
+          state dir data/paper/{NAME}/ and its own flatten/equity/cb/
+          WATCH_ALIVE files ({date}.{NAME}.flatten.json, ...).
 
 INTRABAR SEMANTICS (parity with day-trading.py's simulate loop): for each
 completed 1-minute bar, in order: peak = max(peak, bar HIGH); pressure over
@@ -82,6 +95,8 @@ from datetime import date as ddate, datetime, time as dtime, timedelta, timezone
 from pathlib import Path
 from zoneinfo import ZoneInfo
 
+import numpy as np
+
 ET = ZoneInfo("America/New_York")
 UTC = timezone.utc
 ROOT = Path(__file__).resolve().parent.parent
@@ -109,7 +124,22 @@ MODES = {
                    scale_at=None, scale_frac=None),
     "hold":   dict(hard=None, base=None, tight=None, wide=None,
                    scale_at=None, scale_frac=None),
+    # PAPER-3BOOK: exits delegated to plan/p3_{mode}.watch_exit
+    "r4":     dict(hard=None, base=None, tight=None, wide=None,
+                   scale_at=None, scale_frac=None, p3=True),
+    "r15":    dict(hard=None, base=None, tight=None, wide=None,
+                   scale_at=None, scale_frac=None, p3=True),
+    "rl":     dict(hard=None, base=None, tight=None, wide=None,
+                   scale_at=None, scale_frac=None, p3=True),
 }
+# safety rung per p3 mode: fires only if the model exit never came
+P3_SAFETY = {"r4": dtime(15, 5), "r15": dtime(15, 0), "rl": dtime(16, 2)}
+P3_QUOTE_STALE_S = 90
+
+
+def _p3_module(mode):
+    import importlib
+    return importlib.import_module(f"p3_{mode}")
 RUNG_LIMIT_PCT = (0.005, 0.01, 0.02, 0.02)   # bid - 0.5% / 1% / 2% / 2%
 FILL_HAIRCUT = 0.001                          # fill = bid x (1 - 0.1%)
 SIZE_FRAC = 0.20                              # 20% of trailing-10 volume
@@ -156,11 +186,14 @@ def session_for(d):
 
 # -------------------------------------------------------------------- paths
 class Paths:
-    def __init__(self, data_root=None):
+    def __init__(self, data_root=None, book=None):
         self.root = Path(data_root) if data_root else ROOT / "data"
         self.bars = self.root / "rh_bars"
-        self.state = self.root / "paper"
+        self.book = book or None
+        self.state = (self.root / "paper" / book) if book else \
+            (self.root / "paper")
         self.days = self.root / "paper_days"
+        self.sfx = f".{book}" if book else ""
 
     def pos_file(self, sym):
         return self.state / f"position_{sym.upper()}.json"
@@ -172,19 +205,20 @@ class Paths:
         return self.bars / f"{sym.upper()}_{day.isoformat()}.csv"
 
     def quotes(self, day):
-        return self.state / f"quotes_{day.isoformat()}.json"
+        # one quote file for every book (the agent writes it once)
+        return self.root / "paper" / f"quotes_{day.isoformat()}.json"
 
     def equity(self, day):
-        return self.days / f"{day.isoformat()}.equity.json"
+        return self.days / f"{day.isoformat()}{self.sfx}.equity.json"
 
     def flatten(self, day):
-        return self.days / f"{day.isoformat()}.flatten.json"
+        return self.days / f"{day.isoformat()}{self.sfx}.flatten.json"
 
     def cb(self, day):
-        return self.days / f"{day.isoformat()}.cb.json"
+        return self.days / f"{day.isoformat()}{self.sfx}.cb.json"
 
     def alive(self, day):
-        return self.days / f"WATCH_ALIVE_{day.isoformat()}.json"
+        return self.days / f"WATCH_ALIVE_{day.isoformat()}{self.sfx}.json"
 
 
 def write_atomic(path: Path, obj):
@@ -492,7 +526,88 @@ class Watcher:
             self.book_flatten(st, t)
 
     # ---- (2) bars / mode exits ----------------------------------------
+    def replay_p3(self, st, t, sess):
+        """PAPER-3BOOK exits: plan/p3_{mode}.watch_exit decides; this
+        books. The quote at the decision minute is the official fill."""
+        import p3_lib as P3
+        mod = _p3_module(self.mode)
+        sym, day = st["sym"], t.date()
+        date = day.isoformat()
+        now = t.hour * 60 + t.minute - 240
+        bars = P3.read_bars_csv(self.paths.bars_csv(sym, day), date,
+                                upto=now - 1)
+        if bars is not None:
+            ok = ~np.isnan(bars[3])
+            if ok.any():
+                k = int(np.flatnonzero(ok)[-1])
+                st["last_px"] = float(bars[3][k])
+                st["peak"] = max(float(st.get("peak") or 0),
+                                 float(np.nanmax(bars[1][ok])))
+        pend = st.get("exit_pending")
+        if pend is None:
+            ex = mod.watch_exit(date, st, bars, now)
+            if ex is None:
+                if bars is None or not (~np.isnan(bars[3])).any():
+                    return None
+                k = int(np.flatnonzero(~np.isnan(bars[3]))[-1]) + 240
+                return dict(px=st["last_px"], peak=st["peak"], stop=None,
+                            leg=f"p3-{self.mode}", p=None,
+                            bar=datetime.combine(day, dtime(k // 60, k % 60),
+                                                 tzinfo=ET))
+            q = (read_json(self.paths.quotes(day)) or {}).get(sym) or {}
+            quote = None
+            try:
+                age = (t - _parse_et(q.get("ts"))).total_seconds()
+                if q.get("bid") and age <= P3_QUOTE_STALE_S:
+                    bid, ask = float(q["bid"]), float(q.get("ask") or 0)
+                    quote = dict(bid=bid, ask=ask or None,
+                                 mid=(bid + ask) / 2 if ask else None,
+                                 ts=q.get("ts"), age_s=round(age, 1))
+            except Exception:
+                quote = None
+            pend = dict(ex, quote=quote, decided_at=t.isoformat())
+            st["exit_pending"] = pend
+            self.log(f"EXIT-SIGNAL {sym} {pend['reason']} decided "
+                     f"{P3.hhmm(pend['decided_min'])} model px "
+                     f"{pend.get('px')} quote {quote}")
+        if pend.get("px") is None:
+            ex = mod.watch_exit(date, st, bars, now)
+            if ex is not None and ex.get("px") is not None:
+                pend["px"], pend["min"] = ex["px"], ex["min"]
+        late = now - int(pend.get("min") or pend["decided_min"]) > 3
+        if pend.get("px") is None and not late:
+            return None
+        q = pend.get("quote")
+        if q and q.get("bid"):
+            fill, src = q["bid"], "quote-bid"
+        elif pend.get("px") is not None:
+            fill, src = float(pend["px"]), "MODEL-PX (no fresh quote)"
+        else:
+            fill, src = float(st["last_px"]), "LAST-CLOSE (no quote/model)"
+        shares = st["shares"]
+        me = st.get("model_entry")
+        st["p3"] = dict(
+            book=self.paths.book, mode=self.mode, reason=pend["reason"],
+            decided_min=P3.hhmm(pend["decided_min"]),
+            model_exit=pend.get("px"),
+            model_exit_min=None if pend.get("min") is None
+            else P3.hhmm(pend["min"]),
+            model_entry=me, model_entry_min=None
+            if st.get("model_entry_min") is None
+            else P3.hhmm(st["model_entry_min"]),
+            model_pnl=None if (me is None or pend.get("px") is None)
+            else round((pend["px"] - me) * shares, 2),
+            exit_quote=q, entry_quote=st.get("entry_quote"),
+            exit_cost_bps_vs_mid=None if not (q and q.get("mid"))
+            else round((q["mid"] - fill) / q["mid"] * 1e4, 2),
+            official_src=src)
+        tag = f"EXIT-{self.mode.upper()}-{pend['reason'].split()[0].upper()}"
+        self.book_exit(st, t, fill, tag, pend["decided_at"])
+        return None
+
     def replay(self, st, t, sess, bars_all):
+        if MODES[self.mode].get("p3"):
+            return self.replay_p3(st, t, sess)
         sym, entry = st["sym"], st["entry"]
         since = _parse_utc(st["entry_bar_utc"]) if st.get("entry_bar_utc") \
             else None
@@ -564,7 +679,7 @@ class Watcher:
                    pnl=round(pnl, 2), peak=st["peak"], rungs=st["rungs"],
                    deployed=round(st["entry"] * st["shares_initial"], 2),
                    exit_time=exit_time, booked_at=t.isoformat(),
-                   exit_parity=None)
+                   exit_parity=None, p3=st.get("p3"))
         day = t.date()
         fl = read_json(self.paths.flatten(day)) or {
             "date": day.isoformat(), "records": []}
@@ -696,6 +811,15 @@ class Watcher:
         t = self.clock.now()                    # FIRST, before any I/O
         day = t.date()
         sess = session_for(day)
+        if MODES[self.mode].get("p3"):
+            sess = dict(sess)
+            safe = P3_SAFETY[self.mode]
+            cl = sess.get("close", dtime(16, 0))
+            if cl < dtime(16, 0):            # half day: everything by close-3
+                safe = min(safe, (datetime.combine(day, cl)
+                                  - timedelta(minutes=3)).time())
+            sess["ladder"] = [safe]
+            sess["exit_end"] = safe
         positions = self.load_positions(day)    # exits 2 on a stale file
         quotes = read_json(self.paths.quotes(day)) or {}
         for st in positions:
@@ -747,8 +871,10 @@ def build_parser():
     ap = argparse.ArgumentParser(description=__doc__.split("\n\n")[0])
     ap.add_argument("legacy", nargs="*",
                     help="legacy: SYM ENTRY SHARES [PREV_CLOSE] [BARS_JSON]")
-    ap.add_argument("--book", action="store_true",
-                    help="watch every data/paper/position_*.json")
+    ap.add_argument("--book", nargs="?", const="", default=None,
+                    metavar="NAME",
+                    help="watch every position file; with NAME (r4|r15|rl) "
+                         "use the PAPER-3BOOK book dir data/paper/NAME/")
     ap.add_argument("--exit-mode", choices=sorted(MODES),
                     default=os.environ.get("EXIT_MODE", "c37").lower())
     ap.add_argument("--once", action="store_true", help="single tick")
@@ -764,6 +890,10 @@ def build_parser():
     ap.add_argument("--prev-close", type=float)
     ap.add_argument("--entry-bar-utc",
                     help="ISO UTC of the entry bar (default: this minute)")
+    ap.add_argument("--decision-min", help="PAPER-3BOOK: grid HH:MM ET of "
+                    "the model decision (model entry = open of next bar)")
+    ap.add_argument("--entry-bid", type=float)
+    ap.add_argument("--entry-ask", type=float)
     return ap
 
 
@@ -789,6 +919,18 @@ def cmd_open(args, paths, clock):
     st = new_state(sym, args.entry, args.shares, today, ticket=args.ticket,
                    prev_close=args.prev_close, entry_bar_utc=ebu)
     st["updated"] = now.isoformat()
+    if args.decision_min:
+        hh, mm = (int(x) for x in args.decision_min.split(":"))
+        st["decision_min"] = hh * 60 + mm - 240
+        st["model_entry"] = None
+        st["book"] = paths.book
+    if args.entry_bid or args.entry_ask:
+        b, a_ = args.entry_bid, args.entry_ask
+        mid = (b + a_) / 2 if (b and a_) else None
+        st["entry_quote"] = dict(bid=b, ask=a_, mid=mid)
+        if mid:
+            st["entry_quote"]["cost_bps_vs_mid"] = round(
+                (args.entry - mid) / mid * 1e4, 2)
     write_atomic(f, st)
     print(f"OPEN {sym} entry {args.entry:.4f} x{args.shares} ticket "
           f"{args.ticket} dated {today} entry_bar_utc {ebu} -> {f}",
@@ -800,13 +942,16 @@ def main(argv=None):
     if args.exit_mode not in MODES:
         print(f"ERROR: unknown exit mode {args.exit_mode}", flush=True)
         sys.exit(1)
-    paths = Paths(args.data_root)
+    paths = Paths(args.data_root, book=args.book or None)
     clock = Clock(ddate.fromisoformat(args.date) if args.date else None,
                   args.clock)
     if args.open:
         cmd_open(args, paths, clock)
         return
-    if args.book:
+    if args.book is not None:
+        if MODES[args.exit_mode].get("p3") and not args.book:
+            print("ERROR: exit mode r4/r15/rl needs --book NAME", flush=True)
+            sys.exit(1)
         w = Watcher(paths, clock, args.exit_mode)
         print(f"WATCH-BOOK mode {args.exit_mode} date {clock.today()} "
               f"state {paths.state} bars {paths.bars}", flush=True)
