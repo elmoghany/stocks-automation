@@ -1,0 +1,16 @@
+ALL                    n= 965 tkt/d 2.17 gross   +82.5 net15   +52.5 (Y1  +83.7 / Y2  +28.2) netHS   +23.6 (Y1  +52.2 / Y2   +1.3) rtHS   31bps-med   51-mean | $/mo15  +2303 exbestday   +902/mo ex-top5  -1294/mo  mon+ 13/22 notl-med $14,766 | ctrl  -23.4+-23.6 pct 100
+                       ctrl pooled n=11567 gross +6.6 net15 -23.4 netHS -55.7
+ILLIQ                  n= 847 tkt/d 1.91 gross   +45.9 net15   +15.9 (Y1  +89.9 / Y2  -44.0) netHS   -26.7 (Y1  +42.6 / Y2  -82.9) rtHS   40bps-med   65-mean | $/mo15   +613 exbestday   -788/mo ex-top5  -2658/mo  mon+ 8/22 notl-med $5,054 | ctrl  -38.2+-29.8 pct 100
+                       ctrl pooled n=10238 gross -7.8 net15 -37.8 netHS -97.0
+LIQ                    n=1193 tkt/d 2.69 gross   -13.3 net15   -43.3 (Y1  -39.6 / Y2  -46.6) netHS   -49.6 (Y1  -45.7 / Y2  -53.0) rtHS   20bps-med   28-mean | $/mo15  -2348 exbestday  -2533/mo ex-top5  -2892/mo  mon+ 7/22 notl-med $14,989 | ctrl  -42.9+-13.4 pct  40
+                       ctrl pooled n=13107 gross -13.0 net15 -43.0 netHS -52.6
+SIGHI                  n=1048 tkt/d 2.36 gross    -6.5 net15   -36.5 (Y1  +51.5 / Y2 -105.3) netHS   -93.9 (Y1  -15.6 / Y2 -155.2) rtHS   61bps-med   79-mean | $/mo15  -1737 exbestday  -3138/mo ex-top5  -4529/mo  mon+ 8/22 notl-med $12,755 | ctrl  -40.4+-26.0 pct  60
+                       ctrl pooled n=11471 gross -10.2 net15 -40.2 netHS -103.4
+SIGLO                  n= 926 tkt/d 2.09 gross   -24.7 net15   -54.7 (Y1 -103.3 / Y2  -16.8) netHS   -64.9 (Y1 -115.7 / Y2  -25.3) rtHS   26bps-med   32-mean | $/mo15  -2301 exbestday  -2505/mo ex-top5  -3104/mo  mon+ 7/22 notl-med $14,825 | ctrl  -39.1+-11.3 pct   0
+                       ctrl pooled n=11556 gross -9.1 net15 -39.1 netHS -47.9
+ILLIQ_SIGHI            n= 987 tkt/d 2.22 gross    +8.9 net15   -21.1 (Y1  +75.1 / Y2 -100.4) netHS   -87.5 (Y1   -0.4 / Y2 -159.4) rtHS   71bps-med   88-mean | $/mo15   -947 exbestday  -2348/mo ex-top5  -4194/mo  mon+ 9/22 notl-med $8,207 | ctrl  -22.4+-26.1 pct  60
+                       ctrl pooled n=11168 gross +7.6 net15 -22.4 netHS -97.8
+LIQ_SIGHI              n=1239 tkt/d 2.79 gross   -18.3 net15   -48.3 (Y1  -66.2 / Y2  -32.6) netHS   -82.2 (Y1 -105.1 / Y2  -62.0) rtHS   44bps-med   56-mean | $/mo15  -2722 exbestday  -2956/mo ex-top5  -3566/mo  mon+ 3/22 notl-med $14,988 | ctrl  -63.8+- 8.1 pct  90
+                       ctrl pooled n=13062 gross -33.9 net15 -63.9 netHS -102.2
+
+identity: saved R4 n=965 gross $85,615.96; re-run ALL n=965 gross $85,615.96

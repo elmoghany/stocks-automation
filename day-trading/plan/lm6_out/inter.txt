@@ -1,0 +1,124 @@
+R4: corpus-covered 72%  any_catalyst_18h>0 7.3%  news18h>0 2.6%
+HF3: corpus-covered 100%  any_catalyst_18h>0 19.5%  news18h>0 8.1%
+RND: corpus-covered 70%  any_catalyst_18h>0 9.5%  news18h>0 3.5%
+
+== catalyst yes/no (net15 $/trade at $10k)
+  RND news in last 18h                         n= 1072 d= 349 gross   -36.6 net15   -66.6 | Y1 n= 403   -75.2 | Y2 n= 669   -61.5 | med   +42 win  54% ex-top5  -85.7
+  RND no news 18h                              n=29297 d= 444 gross    -8.2 net15   -38.2 | Y1 n=12741   -48.8 | Y2 n=16556   -29.9 | med   +46 win  54% ex-top5  -42.5
+  R4 news in last 18h                          n=   25 d=  24 gross   -72.3 net15  -102.3 | Y1 n=  11   +36.9 | Y2 n=  14  -211.7 | med  -194 win  44% ex-top5 -420.1
+  R4 no news 18h                               n=  940 d= 441 gross   +86.6 net15   +56.6 | Y1 n= 412   +84.9 | Y2 n= 528   +34.6 | med   +36 win  52% ex-top5  -27.7
+  HF3 news in last 18h                         n=  149 d=  73 gross   -58.8 net15   -88.8 | Y1 n=  38   -59.3 | Y2 n= 111   -98.9 | med   +39 win  54% ex-top5 -133.2
+  HF3 no news 18h                              n= 1690 d= 429 gross   -15.6 net15   -45.6 | Y1 n= 784   -41.8 | Y2 n= 906   -48.9 | med   +52 win  57% ex-top5  -57.4
+
+== RND: coil bucket x sigma1 bucket
+  coil[0,0.95) sig[0,0.009)                    n= 2457 d= 437 gross   -15.0 net15   -45.0 | Y1 n= 997   -47.1 | Y2 n=1460   -43.5 | med   +41 win  54% ex-top5  -47.6
+  coil[0,0.95) sig[0.009,0.0135)               n= 2313 d= 436 gross    -1.4 net15   -31.4 | Y1 n= 987   -43.5 | Y2 n=1326   -22.4 | med   +59 win  55% ex-top5  -43.9
+  coil[0,0.95) sig[0.0135,0.0215)              n= 3077 d= 439 gross    -9.5 net15   -39.5 | Y1 n=1526   -68.2 | Y2 n=1551   -11.4 | med   +63 win  55% ex-top5  -49.9
+  coil[0,0.95) sig[0.0215,9)                   n= 4248 d= 443 gross   -43.6 net15   -73.6 | Y1 n=2170   -88.2 | Y2 n=2078   -58.3 | med   +28 win  50% ex-top5  -86.1
+  coil[0.95,0.99) sig[0,0.009)                 n= 6131 d= 444 gross   +12.8 net15   -17.2 | Y1 n=2416   -16.3 | Y2 n=3715   -17.8 | med   +44 win  55% ex-top5  -26.1
+  coil[0.95,0.99) sig[0.009,0.0135)            n= 2586 d= 438 gross    -4.4 net15   -34.4 | Y1 n=1019   -28.1 | Y2 n=1567   -38.5 | med   +59 win  56% ex-top5  -40.4
+  coil[0.95,0.99) sig[0.0135,0.0215)           n= 2095 d= 438 gross    +2.2 net15   -27.8 | Y1 n= 951   -58.3 | Y2 n=1144    -2.5 | med   +60 win  54% ex-top5  -43.8
+  coil[0.95,0.99) sig[0.0215,9)                n= 1087 d= 399 gross   -88.9 net15  -118.9 | Y1 n= 549  -131.8 | Y2 n= 538  -105.8 | med    +1 win  47% ex-top5 -141.6
+  coil[0.99,1.01) sig[0,0.009)                 n= 3297 d= 437 gross   +20.8 net15    -9.2 | Y1 n=1216   +10.2 | Y2 n=2081   -20.6 | med   +44 win  56% ex-top5  -23.0
+  coil[0.99,1.01) sig[0.009,0.0135)            n= 1037 d= 386 gross   -13.3 net15   -43.3 | Y1 n= 374   -73.4 | Y2 n= 663   -26.4 | med   +65 win  57% ex-top5  -56.8
+  coil[0.99,1.01) sig[0.0135,0.0215)           n=  800 d= 362 gross   +17.6 net15   -12.4 | Y1 n= 353   +27.9 | Y2 n= 447   -44.3 | med   +72 win  56% ex-top5  -31.8
+  coil[0.99,1.01) sig[0.0215,9)                n=  577 d= 321 gross    +6.6 net15   -23.4 | Y1 n= 280    +3.5 | Y2 n= 297   -48.7 | med    +0 win  45% ex-top5 -120.4
+
+== R4 (all coil~1): sigma1 buckets
+  R4 sig[0,0.009)                              n=  321 d= 222 gross   -14.5 net15   -44.5 | Y1 n= 134   -64.1 | Y2 n= 187   -30.5 | med   +34 win  52% ex-top5  -71.2
+  R4 sig[0.009,0.0135)                         n=  182 d= 141 gross    -6.2 net15   -36.2 | Y1 n=  80   -65.2 | Y2 n= 102   -13.4 | med   +88 win  58% ex-top5  -88.8
+  R4 sig[0.0135,0.0215)                        n=  193 d= 162 gross  +105.0 net15   +75.0 | Y1 n=  83  +117.0 | Y2 n= 110   +43.3 | med   +79 win  56% ex-top5   -9.1
+  R4 sig[0.0215,9)                             n=  166 d= 143 gross  +475.3 net15  +445.3 | Y1 n=  84  +674.8 | Y2 n=  82  +210.2 | med   +26 win  49% ex-top5  -32.5
+
+== HF3: coil x sigma1
+  HF3 coil[0,0.99) sig[0,0.0135)               n=  694 d= 311 gross    -1.2 net15   -31.2 | Y1 n= 304   +10.8 | Y2 n= 390   -63.9 | med   +54 win  59% ex-top5  -41.5
+  HF3 coil[0,0.99) sig[0.0135,9)               n=  448 d= 211 gross   -13.5 net15   -43.5 | Y1 n= 226   -69.7 | Y2 n= 222   -16.9 | med   +50 win  55% ex-top5  -88.4
+  HF3 coil[0.99,1.01) sig[0,0.0135)            n=  595 d= 283 gross   -20.4 net15   -50.4 | Y1 n= 234   -51.2 | Y2 n= 361   -49.9 | med   +48 win  57% ex-top5  -66.7
+  HF3 coil[0.99,1.01) sig[0.0135,9)            n=   88 d=  71 gross  -130.0 net15  -160.0 | Y1 n=  50  -153.4 | Y2 n=  38  -168.6 | med   +24 win  47% ex-top5 -248.2
+
+== RND at-high (coil>=0.99): other features split at RND median within that subset
+  sigma1 >= 0.00776                            n= 2856 d= 441 gross    +5.7 net15   -24.3 | Y1 n=1153   -17.4 | Y2 n=1703   -29.0 | med   +57 win  55% ex-top5  -43.8
+  sigma1 <  0.00776                            n= 2855 d= 431 gross   +19.7 net15   -10.3 | Y1 n=1070   +14.9 | Y2 n=1785   -25.4 | med   +42 win  55% ex-top5  -26.2
+  dvol60 >= 4.57e+06                           n= 3016 d= 435 gross    +3.8 net15   -26.2 | Y1 n=1051   -20.3 | Y2 n=1965   -29.3 | med   +49 win  57% ex-top5  -30.0
+  dvol60 <  4.57e+06                           n= 3015 d= 443 gross    +1.5 net15   -28.5 | Y1 n=1307   -24.0 | Y2 n=1708   -32.0 | med   +35 win  51% ex-top5  -56.7
+  prior_range >= 0.0738                        n= 3017 d= 440 gross    +7.8 net15   -22.2 | Y1 n=1069    +2.7 | Y2 n=1948   -35.8 | med   +57 win  55% ex-top5  -49.5
+  prior_range <  0.0738                        n= 3014 d= 443 gross    -2.5 net15   -32.5 | Y1 n=1289   -43.1 | Y2 n=1725   -24.6 | med   +38 win  53% ex-top5  -42.7
+  gain_now >= 0.128                            n= 3016 d= 440 gross    +4.2 net15   -25.8 | Y1 n=1186    +0.7 | Y2 n=1830   -42.9 | med   +46 win  55% ex-top5  -54.0
+  gain_now <  0.128                            n= 3015 d= 441 gross    +1.1 net15   -28.9 | Y1 n=1172   -45.6 | Y2 n=1843   -18.3 | med   +42 win  53% ex-top5  -36.0
+  hi_gain >= 0.132                             n= 3016 d= 441 gross    +6.6 net15   -23.4 | Y1 n=1192    +1.9 | Y2 n=1824   -39.9 | med   +47 win  55% ex-top5  -51.5
+  hi_gain <  0.132                             n= 3015 d= 442 gross    -1.3 net15   -31.3 | Y1 n=1166   -47.1 | Y2 n=1849   -21.4 | med   +40 win  53% ex-top5  -38.4
+  vwap_dist >= 0.0309                          n= 3016 d= 441 gross    -5.2 net15   -35.2 | Y1 n=1245   -29.5 | Y2 n=1771   -39.2 | med   +44 win  54% ex-top5  -53.2
+  vwap_dist <  0.0309                          n= 3015 d= 438 gross   +10.5 net15   -19.5 | Y1 n=1113   -14.3 | Y2 n=1902   -22.5 | med   +43 win  54% ex-top5  -38.5
+  pm_rel >= 0.061                              n= 3016 d= 441 gross   +10.9 net15   -19.1 | Y1 n=1101    +4.1 | Y2 n=1915   -32.4 | med   +53 win  57% ex-top5  -42.9
+  pm_rel <  0.061                              n= 3015 d= 441 gross    -5.6 net15   -35.6 | Y1 n=1257   -45.5 | Y2 n=1758   -28.5 | med   +37 win  52% ex-top5  -50.5
+  rvol_now >= 0.596                            n= 3016 d= 436 gross    -3.7 net15   -33.7 | Y1 n=1302   -13.4 | Y2 n=1714   -49.1 | med   +35 win  52% ex-top5  -54.7
+  rvol_now <  0.596                            n= 3015 d= 440 gross    +9.0 net15   -21.0 | Y1 n=1056   -33.4 | Y2 n=1959   -14.3 | med   +57 win  56% ex-top5  -38.3
+  tod >= 25                                    n= 3183 d= 441 gross    +2.5 net15   -27.5 | Y1 n=1226   -21.2 | Y2 n=1957   -31.4 | med   +38 win  53% ex-top5  -32.1
+  tod <  25                                    n= 2848 d= 443 gross    +2.8 net15   -27.2 | Y1 n=1132   -23.6 | Y2 n=1716   -29.5 | med   +58 win  55% ex-top5  -57.0
+  lead_rank >= 33                              n= 3041 d= 416 gross   +11.7 net15   -18.3 | Y1 n=1153   -31.5 | Y2 n=1888   -10.3 | med   +38 win  53% ex-top5  -24.6
+  lead_rank <  33                              n= 2990 d= 442 gross    -6.5 net15   -36.5 | Y1 n=1205   -13.6 | Y2 n=1785   -52.0 | med   +53 win  55% ex-top5  -65.0
+  mkt_gain_med >= 0.117                        n= 3016 d= 413 gross    +2.2 net15   -27.8 | Y1 n=1107    -4.9 | Y2 n=1909   -41.1 | med   +55 win  55% ex-top5  -55.8
+  mkt_gain_med <  0.117                        n= 3015 d= 432 gross    +3.1 net15   -26.9 | Y1 n=1251   -37.8 | Y2 n=1764   -19.2 | med   +38 win  53% ex-top5  -34.3
+  n_elig >= 88                                 n= 3016 d= 423 gross    +9.4 net15   -20.6 | Y1 n=1134   -15.8 | Y2 n=1882   -23.5 | med   +38 win  53% ex-top5  -27.6
+  n_elig <  88                                 n= 3015 d= 406 gross    -4.1 net15   -34.1 | Y1 n=1224   -28.4 | Y2 n=1791   -38.0 | med   +56 win  55% ex-top5  -62.2
+  pressure30 >= 0.218                          n= 2377 d= 438 gross    +0.1 net15   -29.9 | Y1 n= 912   -41.9 | Y2 n=1465   -22.3 | med   +59 win  58% ex-top5  -38.7
+  pressure30 <  0.218                          n= 2377 d= 434 gross    -0.5 net15   -30.5 | Y1 n= 890   -14.7 | Y2 n=1487   -40.0 | med   +38 win  53% ex-top5  -46.3
+  last >= 15.5                                 n= 3016 d= 442 gross   -11.1 net15   -41.1 | Y1 n=1077   -68.7 | Y2 n=1939   -25.9 | med   +43 win  54% ex-top5  -47.6
+  last <  15.5                                 n= 3015 d= 439 gross   +16.5 net15   -13.5 | Y1 n=1281   +16.6 | Y2 n=1734   -35.8 | med   +44 win  54% ex-top5  -41.7
+  dvol_now >= 2.66e+06                         n= 3016 d= 437 gross    +0.7 net15   -29.3 | Y1 n=1139   -28.3 | Y2 n=1877   -29.9 | med   +46 win  57% ex-top5  -35.0
+  dvol_now <  2.66e+06                         n= 3015 d= 443 gross    +4.6 net15   -25.4 | Y1 n=1219   -16.8 | Y2 n=1796   -31.3 | med   +40 win  52% ex-top5  -53.6
+  since_cross >= 5                             n= 3982 d= 442 gross    +4.6 net15   -25.4 | Y1 n=1552   -10.6 | Y2 n=2430   -34.9 | med   +41 win  54% ex-top5  -42.1
+  since_cross <  5                             n= 2049 d= 442 gross    -1.0 net15   -31.0 | Y1 n= 806   -45.0 | Y2 n=1243   -22.0 | med   +53 win  54% ex-top5  -54.8
+  gap_open >= 0.0535                           n= 2781 d= 440 gross   +23.2 net15    -6.8 | Y1 n=1049   +15.4 | Y2 n=1732   -20.3 | med   +52 win  57% ex-top5  -32.1
+  gap_open <  0.0535                           n= 2781 d= 440 gross    -6.9 net15   -36.9 | Y1 n=1098   -23.6 | Y2 n=1683   -45.6 | med   +42 win  53% ex-top5  -52.3
+
+== R4 top 49 legs by ret: date sym ret% sigma1 coil hi_gain dvol60 tod since_cross lead_rank news18h
+  2025-01-27 YIBO   +287.1 sig 0.0797 coil 1.000 hig 0.67 dv60    0.04M px   3.60 tod   25 sc   25 lr   7 news 0 ex trail 0.20
+  2024-10-24 MNPR   +214.5 sig 0.0234 coil 1.000 hig 0.54 dv60    0.17M px   7.13 tod   70 sc   65 lr   7 news 0 ex bearish
+  2025-12-01 FLYE   +120.1 sig 0.0570 coil 1.000 hig 0.15 dv60    0.26M px   5.15 tod    5 sc    0 lr  13 news 0 ex bearish
+  2025-10-22 ARMP    +92.8 sig 0.0442 coil 1.000 hig 0.95 dv60    0.02M px   6.78 tod  155 sc   35 lr   3 news 0 ex trail 0.20
+  2024-12-09 HUIZ    +78.6 sig 0.0382 coil 1.000 hig 0.63 dv60    0.01M px   4.40 tod  210 sc  150 lr  11 news 0 ex trail 0.20
+  2026-01-09 ATGL    +73.5 sig 0.0386 coil 1.000 hig 0.10 dv60    0.06M px  23.00 tod    5 sc    0 lr  39 news 0 ex trail 0.20
+  2025-01-29 SGN     +62.4 sig 0.0597 coil 1.000 hig 0.80 dv60    0.32M px   3.50 tod    5 sc    5 lr   3 news 0 ex bearish
+  2025-02-05 RNAZ    +59.8 sig 0.0160 coil 1.000 hig 0.14 dv60    0.32M px 196.00 tod    5 sc    0 lr  19 news 0 ex bearish
+  2025-09-09 QMMM    +48.8 sig 0.0645 coil 1.000 hig 6.88 dv60   11.38M px  88.82 tod  260 sc  260 lr   5 news 0 ex bearish
+  2026-02-02 JLHL    +47.6 sig nan coil 1.000 hig 0.14 dv60    0.13M px   3.99 tod    5 sc    0 lr  27 news 0 ex trail 0.20
+  2025-09-02 LUD     +41.2 sig nan coil 1.000 hig 0.13 dv60    0.11M px   6.84 tod    5 sc    0 lr  23 news 0 ex bearish
+  2025-08-14 LIVE    +37.9 sig nan coil 1.000 hig 0.11 dv60    0.21M px  16.85 tod  185 sc    0 lr  46 news 0 ex bearish
+  2025-02-12 YOSH    +37.4 sig 0.0396 coil 1.000 hig 0.11 dv60    0.07M px   2.44 tod    5 sc    0 lr  20 news 0 ex bearish
+  2025-07-08 UONEK   +34.4 sig nan coil 1.000 hig 0.22 dv60    0.01M px   8.50 tod    5 sc    0 lr  13 news 0 ex bearish
+  2025-08-18 MB      +32.4 sig 0.0199 coil 1.000 hig 0.23 dv60    0.33M px   4.35 tod   10 sc    5 lr  12 news 0 ex trail 0.10
+  2025-05-07 ASST    +31.4 sig 0.0375 coil 1.000 hig 2.10 dv60    0.16M px  37.80 tod    5 sc    5 lr   1 news 2 ex bearish
+  2025-04-30 RYET    +31.0 sig 0.0211 coil 1.000 hig 0.18 dv60    1.71M px   5.97 tod   70 sc   25 lr  16 news 0 ex bearish
+  2025-11-05 SLDP    +27.1 sig 0.0059 coil 1.000 hig 0.16 dv60   47.32M px   6.52 tod    5 sc    0 lr  33 news 0 ex bearish
+  2025-01-27 JL      +25.4 sig 0.0256 coil 1.000 hig 0.39 dv60    0.20M px   8.98 tod   85 sc   70 lr  11 news 0 ex bearish
+  2026-07-07 AKTX    +24.3 sig 0.0120 coil 1.000 hig 0.13 dv60    0.33M px  12.34 tod   60 sc    0 lr  32 news 0 ex flatten
+  2025-06-26 CYN     +23.9 sig 0.0430 coil 1.000 hig 4.37 dv60    0.16M px  26.90 tod   90 sc   90 lr   3 news 0 ex trail 0.20
+  2025-07-03 RGC     +23.1 sig 0.0161 coil 1.000 hig 0.22 dv60   16.15M px  12.64 tod    5 sc    0 lr  12 news 0 ex bearish
+  2024-10-24 TC      +22.6 sig 0.0896 coil 1.000 hig 0.93 dv60    0.05M px  56.00 tod   20 sc   10 lr   5 news 0 ex trail 0.20
+  2025-05-05 GDEV    +22.5 sig 0.0122 coil 1.000 hig 0.12 dv60    0.21M px  13.30 tod    5 sc    0 lr  19 news 0 ex flatten
+  2025-10-17 MGN     +21.4 sig 0.0103 coil 1.000 hig 30.65 dv60    0.67M px  69.00 tod   55 sc   55 lr   2 news 0 ex flatten
+  2024-12-09 GELS    +21.2 sig nan coil 1.000 hig 0.16 dv60    0.06M px   2.32 tod   70 sc   35 lr  56 news 0 ex bearish
+  2025-07-29 ANPA    +19.2 sig 0.0251 coil 1.000 hig 0.11 dv60    7.43M px  28.92 tod   20 sc    0 lr  30 news 0 ex bearish
+  2026-06-29 ASUP    +18.9 sig nan coil 1.000 hig 0.20 dv60    0.34M px  15.30 tod    5 sc    5 lr  16 news 0 ex flatten
+  2024-12-27 COCP    +17.1 sig 0.0207 coil 1.000 hig 0.12 dv60    0.03M px   2.79 tod    5 sc    0 lr  42 news 0 ex bearish
+  2025-12-26 TII     +17.1 sig 0.0080 coil 1.000 hig 0.11 dv60    0.15M px   2.71 tod  100 sc    0 lr  27 news 0 ex trail 0.10
+  2026-01-20 RAY     +16.9 sig 0.0138 coil 1.000 hig 0.15 dv60    0.14M px   4.22 tod   30 sc   20 lr  38 news 0 ex flatten
+  2025-05-21 ATHR    +16.9 sig 0.0356 coil 1.000 hig 0.12 dv60    0.51M px  13.87 tod   35 sc   30 lr  39 news 0 ex bearish
+  2025-06-12 BNR     +15.7 sig 0.0081 coil 1.000 hig 0.18 dv60    0.05M px   3.55 tod  125 sc   15 lr  19 news 0 ex bearish
+  2024-10-28 WLGS    +15.2 sig 0.0413 coil 1.000 hig 0.11 dv60    0.06M px 662.50 tod    5 sc    0 lr  28 news 0 ex flatten
+  2026-02-17 BUUU    +15.0 sig nan coil 1.000 hig 0.15 dv60    0.10M px  15.67 tod    5 sc    0 lr  21 news 0 ex bearish
+  2025-06-02 DDC     +14.7 sig 0.0246 coil 1.000 hig 0.12 dv60    0.15M px   8.75 tod    5 sc    0 lr  40 news 0 ex bearish
+  2025-02-13 AMOD    +14.7 sig 0.0411 coil 1.000 hig 1.32 dv60    0.31M px 170.40 tod    5 sc    5 lr   1 news 0 ex trail 0.20
+  2024-11-13 FGF     +13.8 sig 0.0160 coil 1.000 hig 0.17 dv60    0.03M px  19.44 tod  220 sc  205 lr  52 news 0 ex flatten
+  2024-11-12 GDC     +13.8 sig 0.0091 coil 1.000 hig 0.19 dv60    0.79M px 680.00 tod  215 sc   45 lr  39 news 0 ex bearish
+  2025-11-03 FLYE    +13.7 sig 0.0190 coil 1.000 hig 0.17 dv60    0.46M px  11.79 tod    5 sc    0 lr  20 news 1 ex bearish
+  2026-04-30 USAX    +13.7 sig 0.0208 coil 1.000 hig 0.14 dv60    3.30M px  28.78 tod    5 sc    0 lr  32 news 0 ex flatten
+  2024-11-27 ICLK    +13.6 sig 0.0214 coil 1.000 hig 0.10 dv60    0.07M px   6.38 tod    5 sc    0 lr  35 news 0 ex flatten
+  2026-01-29 SILC    +13.6 sig 0.0228 coil 1.000 hig 0.25 dv60    0.24M px  18.88 tod    5 sc    5 lr  12 news 0 ex bearish
+  2026-04-23 NCEL    +13.5 sig 0.0152 coil 1.000 hig 0.19 dv60    0.04M px   4.37 tod  145 sc  135 lr  15 news 0 ex flatten
+  2024-12-26 ATHE    +13.1 sig 0.0078 coil 1.000 hig 0.11 dv60    0.02M px   2.71 tod   45 sc    0 lr  64 news 0 ex flatten
+  2026-04-02 LUD     +13.1 sig 0.0189 coil 1.000 hig 0.11 dv60    0.05M px   3.59 tod   55 sc    0 lr  27 news 0 ex bearish
+  2025-12-15 CGTL    +13.0 sig 0.0307 coil 1.000 hig 0.14 dv60    0.11M px  19.20 tod    5 sc    0 lr  19 news 0 ex bearish
+  2025-11-06 ATNI    +12.8 sig 0.0258 coil 1.000 hig 0.20 dv60    0.47M px  17.37 tod    5 sc    5 lr  20 news 0 ex bearish
+  2026-04-10 NCEL    +12.7 sig nan coil 1.000 hig 0.14 dv60    0.04M px   2.38 tod    5 sc    0 lr  19 news 0 ex flatten
