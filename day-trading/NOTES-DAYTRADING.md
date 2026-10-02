@@ -1,5 +1,18 @@
 # Penny Stocks Trading Notes
 
+## PAPER-3BOOK
+
+### 2026-10-02 (PAPER-3BOOK day 1): late launch at 15:24 ET, no trades in any book
+
+The scheduler's LAUNCH task fired at 15:24:25 ET instead of 09:10. The 12:00 watchdog had already flagged NO SESSION. The session started at 15:24:52 with the capability probe green (python, git, MCP quotes). This is an ops failure on the launch side, not in the trading code. The Task Scheduler trigger needs checking before Monday.
+
+- **R4**: 0 trades. The decision grid (09:35-14:25) had closed before launch, so no decision was made. The book is flat and P&L is $0. Against an expectation of -$3.19/day, this is not a scored miss.
+- **R15**: 0 trades. The 09:35 decision had been missed, so the earnings calendar was not pulled. Whether a fresh, green name existed today is unknown. Flat, $0 (expectation +$21.71/day; R15 fires on roughly one day in four).
+- **RL**: 0 trades. Seven steps ran, 15:25 to 15:55, and all printed NOTHING. Breadth stayed between +0.0004 and +0.0049 against the < -0.02379 gate, so there were zero candidates. It was an up day (SPY +0.7%), and the rule only fires on broad intraday selloffs. Flat, $0 (expectation +$5.77/day).
+  - The 09:30 breadth reference was missing because the 09:31 scan had not run. It was rebuilt from Robinhood's 09:30 minute-bar closes for the 95 names. Six no-print bars were excluded, leaving 89 names. The data is in `data/paper/rl/ref0930_2026-10-02.json`. This matches the rule's own definition.
+  - Scans were saved as compact transcriptions (Last, last-trade time, VWAP) because results came back inline.
+- **Ops lesson**: the harness killed the RL watcher at its 30-minute background-task limit (about 15:55). The book was flat, so nothing was lost. Future sessions must start each watcher with an explicit multi-hour background timeout.
+
 ## PAPER DAY 25 (2026-09-18) -- no trade: three halal-clean gappers, thirteen signals, thirteen spread vetoes
 
 **0 tickets, $0.00, zero real orders. `counts_as_traded_day: false`.** Headless 06:20 to close,

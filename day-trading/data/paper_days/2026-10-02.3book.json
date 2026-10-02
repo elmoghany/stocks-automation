@@ -13,10 +13,13 @@
   "RL steps 09:35-15:20 = GAP (no snapshot; session not running). Step 15:25: scan run at ~15:27:0x ET (2 min after the bar), ingested at --at 15:25 -> NOTHING (breadth +0.00339 vs threshold -0.02379, 0 candidates).",
   "R4: no decisions possible (grid 09:35-14:25 closed before launch); watcher started 15:25 and exited BOOK FLAT. R15: 09:35 decision missed; earnings calendar not pulled (no decision left to make); watcher exited BOOK FLAT.",
   "Watchers: rl running (log data/paper/watch_rl_2026-10-02.log); r4/r15 exited immediately (book flat, past their windows).",
-  "RL step 15:30 (scan ~15:31:05): NOTHING, breadth +0.00491, 0 candidates."
+  "RL step 15:30 (scan ~15:31:05): NOTHING, breadth +0.00491, 0 candidates.",
+  "RL steps 15:35-15:55 all NOTHING (breadth +0.00374, +0.00394, +0.00401, +0.00037, +0.00148; threshold < -0.02379; 0 candidates). No RL entry today.",
+  "RL watcher (started 15:25 as a harness background task) was killed by the harness 30-min background time limit at ~15:55 while the book was FLAT; no position was open and no entry was possible after the 15:55 step, so it was not restarted. Ops lesson: start watchers with an explicit long background timeout (>= 7 h) so a full day is covered."
  ],
  "errors": [
-  "Late launch: LAUNCH task fired 15:24 ET; WATCHDOG ALERT NO SESSION at 12:00 (logged 15:24:26)."
+  "Late launch: LAUNCH task fired 15:24 ET; WATCHDOG ALERT NO SESSION at 12:00 (logged 15:24:26).",
+  "RL watcher killed at ~15:55 by the 30-min background-task limit (book flat, no impact)."
  ],
  "ops": {
   "launched_et": "15:24:52",
@@ -32,6 +35,126 @@
    "r15": "09:35 decision (late launch)",
    "rl": "steps 09:30-15:20 (late launch)"
   },
-  "last_cycle": "15:47"
+  "last_cycle": "16:03 EOD",
+  "eod_done": true
+ },
+ "eod": {
+  "r4": {
+   "trades": 0,
+   "pnl": 0.0,
+   "model_pnl": 0.0,
+   "halal_pass_trades": 0,
+   "pnl_halal_pass": 0.0,
+   "per_trade": null,
+   "cost_bps_per_side_vs_mid_mean": null,
+   "cost_usd_vs_mid": 0.0,
+   "expectation": {
+    "per_trade": -1.21,
+    "per_day": -3.19,
+    "trades_per_day": 2.637,
+    "per_trade_at_28_75bps": -23.65,
+    "per_day_at_28_75bps": -62.38,
+    "backtest_per_trade": -2.21,
+    "backtest_per_trade_ex_top5": -65.17,
+    "aug2026_note": "R4 lost -$4,392 over the 22 out-of-sample August-2026 sessions (LEGACY-14 / champion-replay OOS block); a red first weeks is inside expectation",
+    "legacy2_note": "causal coil tie-break (volume so far, then seeded hash) replaces the published pool-file order, which leaked full-day volume: realistic R4 is about break-even after costs",
+    "legacy15_note": "with the live 0.5% spread veto the kept legs are ~ -$28 gross per $10k ex-top-5 (LEGACY-15); the backtest edge lives in the thin names the veto refuses -- the SHADOW book measures that"
+   },
+   "vs_expectation": {
+    "pnl_minus_expected_day": 3.19,
+    "per_trade_minus_expected": null,
+    "trades_minus_expected_rate": -2.64
+   },
+   "trade_list": [],
+   "shadow_legs": [],
+   "shadow_pnl": 0,
+   "parity_book_pnl": 0.0
+  },
+  "r15": {
+   "trades": 0,
+   "pnl": 0.0,
+   "model_pnl": 0.0,
+   "halal_pass_trades": 0,
+   "pnl_halal_pass": 0.0,
+   "per_trade": null,
+   "cost_bps_per_side_vs_mid_mean": null,
+   "cost_usd_vs_mid": 0.0,
+   "expectation": {
+    "per_trade": 87.62,
+    "per_day": 21.71,
+    "trades_per_day": 0.2478,
+    "backtest_per_trade": 87.15,
+    "backtest_per_trade_ex_top5": 36.07
+   },
+   "vs_expectation": {
+    "pnl_minus_expected_day": -21.71,
+    "per_trade_minus_expected": null,
+    "trades_minus_expected_rate": -0.25
+   },
+   "trade_list": []
+  },
+  "rl": {
+   "trades": 0,
+   "pnl": 0.0,
+   "model_pnl": 0.0,
+   "halal_pass_trades": 0,
+   "pnl_halal_pass": 0.0,
+   "per_trade": null,
+   "cost_bps_per_side_vs_mid_mean": null,
+   "cost_usd_vs_mid": 0.0,
+   "expectation": {
+    "per_trade": 16.92,
+    "per_day": 5.77,
+    "trades_per_day": 0.341,
+    "backtest_per_trade": 30.95,
+    "backtest_per_trade_ex_top5": 18.1
+   },
+   "vs_expectation": {
+    "pnl_minus_expected_day": -5.77,
+    "per_trade_minus_expected": null,
+    "trades_minus_expected_rate": -0.34
+   },
+   "trade_list": []
+  }
+ },
+ "cumulative": {
+  "r4": {
+   "days": 1,
+   "trades": 0,
+   "pnl": 0.0,
+   "model_pnl": 0.0,
+   "pnl_halal_pass": 0.0,
+   "cost_usd_vs_mid": 0,
+   "pnl_ex_top5": null,
+   "per_trade_ex_top5": null,
+   "shadow_pnl": 0,
+   "parity_book_pnl": 0.0,
+   "expected_pnl": -3.19,
+   "expected_trades": 2.64
+  },
+  "r15": {
+   "days": 1,
+   "trades": 0,
+   "pnl": 0.0,
+   "model_pnl": 0.0,
+   "pnl_halal_pass": 0.0,
+   "cost_usd_vs_mid": 0,
+   "pnl_ex_top5": null,
+   "per_trade_ex_top5": null,
+   "expected_pnl": 21.71,
+   "expected_trades": 0.25
+  },
+  "rl": {
+   "days": 1,
+   "trades": 0,
+   "pnl": 0.0,
+   "model_pnl": 0.0,
+   "pnl_halal_pass": 0.0,
+   "cost_usd_vs_mid": 0,
+   "pnl_ex_top5": null,
+   "per_trade_ex_top5": null,
+   "expected_pnl": 5.77,
+   "expected_trades": 0.34
+  }
  }
 }

@@ -1,0 +1,478 @@
+{
+ "next_step": 720,
+ "used": 0,
+ "held": {},
+ "pend_in": [],
+ "pend_out": [],
+ "trades": [],
+ "events": [
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "09:35",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "09:40",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "09:45",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "09:50",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "09:55",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "10:00",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "10:05",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "10:10",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "10:15",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "10:20",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "10:25",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "10:30",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "10:35",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "10:40",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "10:45",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "10:50",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "10:55",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "11:00",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "11:05",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "11:10",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "11:15",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "11:20",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "11:25",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "11:30",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "11:35",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "11:40",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "11:45",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "11:50",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "11:55",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "12:00",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "12:05",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "12:10",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "12:15",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "12:20",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "12:25",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "12:30",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "12:35",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "12:40",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "12:45",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "12:50",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "12:55",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "13:00",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "13:05",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "13:10",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "13:15",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "13:20",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "13:25",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "13:30",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "13:35",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "13:40",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "13:45",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "13:50",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "13:55",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "14:00",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "14:05",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "14:10",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "14:15",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "14:20",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "14:25",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "14:30",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "14:35",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "14:40",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "14:45",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "14:50",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "14:55",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "15:00",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "15:05",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "15:10",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "15:15",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "15:27",
+   "type": "GAP",
+   "step": "15:20",
+   "note": "no snapshot for step"
+  },
+  {
+   "now": "16:01",
+   "type": "DONE"
+  }
+ ],
+ "done": true,
+ "asked": {},
+ "feat": {
+  "09:30": {
+   "br": 0.0,
+   "n_cand": 0,
+   "src": "snap(89)+bars(0)"
+  },
+  "15:25": {
+   "br": 0.00339,
+   "n_cand": 0,
+   "src": "snap(95)+bars(0)"
+  },
+  "15:30": {
+   "br": 0.00491,
+   "n_cand": 0,
+   "src": "snap(95)+bars(0)"
+  },
+  "15:35": {
+   "br": 0.00374,
+   "n_cand": 0,
+   "src": "snap(95)+bars(0)"
+  },
+  "15:40": {
+   "br": 0.00394,
+   "n_cand": 0,
+   "src": "snap(95)+bars(0)"
+  },
+  "15:45": {
+   "br": 0.00401,
+   "n_cand": 0,
+   "src": "snap(95)+bars(0)"
+  },
+  "15:50": {
+   "br": 0.00037,
+   "n_cand": 0,
+   "src": "snap(95)+bars(0)"
+  },
+  "15:55": {
+   "br": 0.00148,
+   "n_cand": 0,
+   "src": "snap(95)+bars(0)"
+  }
+ }
+}
