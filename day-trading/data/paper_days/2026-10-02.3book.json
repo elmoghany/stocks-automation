@@ -1,1 +1,36 @@
-{"date": "2026-10-02", "mode": "PAPER-3BOOK", "books": ["r4", "r15", "rl"], "trades": [], "notes": ["LATE LAUNCH: scheduler LAUNCH task fired at 15:24:25 ET (not 09:10); session started 15:24:52 ET. R4 (decisions to 14:25) and R15 (09:35 decision) windows already closed -> no-trade for both, not a miss of a signal. RL remaining steps 15:25-15:55."], "errors": ["Late launch: LAUNCH task fired 15:24 ET; WATCHDOG ALERT NO SESSION at 12:00 (logged 15:24:26)."], "ops": {"launched_et": "15:24:52"}}
+{
+ "date": "2026-10-02",
+ "mode": "PAPER-3BOOK",
+ "books": [
+  "r4",
+  "r15",
+  "rl"
+ ],
+ "trades": [],
+ "notes": [
+  "LATE LAUNCH: scheduler LAUNCH task fired at 15:24:25 ET (not 09:10); session started 15:24:52 ET. R4 (decisions to 14:25) and R15 (09:35 decision) windows already closed -> no-trade for both, not a miss of a signal. RL remaining steps 15:25-15:55.",
+  "RL 09:30 breadth reference RECONSTRUCTED: the session missed the 09:31 scan, so the 09:30-bar closes of all 95 universe names were fetched with get_equity_historicals (bar 13:30Z, bounds regular; 6 interpolated no-print bars excluded -> 89 names) and seeded as the step-09:30 snapshot (tt=None, so no 09:30 entry is possible). Source file data/paper/rl/ref0930_2026-10-02.json. This matches the rule's definition (log(mark / 09:30-bar close)).",
+  "RL steps 09:35-15:20 = GAP (no snapshot; session not running). Step 15:25: scan run at ~15:27:0x ET (2 min after the bar), ingested at --at 15:25 -> NOTHING (breadth +0.00339 vs threshold -0.02379, 0 candidates).",
+  "R4: no decisions possible (grid 09:35-14:25 closed before launch); watcher started 15:25 and exited BOOK FLAT. R15: 09:35 decision missed; earnings calendar not pulled (no decision left to make); watcher exited BOOK FLAT.",
+  "Watchers: rl running (log data/paper/watch_rl_2026-10-02.log); r4/r15 exited immediately (book flat, past their windows)."
+ ],
+ "errors": [
+  "Late launch: LAUNCH task fired 15:24 ET; WATCHDOG ALERT NO SESSION at 12:00 (logged 15:24:26)."
+ ],
+ "ops": {
+  "launched_et": "15:24:52",
+  "capability_probe": {
+   "python": "OK",
+   "git_status": "OK",
+   "mcp_get_equity_quotes_SPY": "OK bid 769.39 ask 769.40 @19:25:13Z",
+   "at_et": "15:25"
+  },
+  "session": "TRADING 2026-10-02 full (close 16:00)",
+  "missed": {
+   "r4": "all grid decisions 09:35-14:25 (late launch)",
+   "r15": "09:35 decision (late launch)",
+   "rl": "steps 09:30-15:20 (late launch)"
+  },
+  "last_cycle": "15:28"
+ }
+}
