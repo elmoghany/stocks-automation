@@ -19,7 +19,10 @@
   "[09:51] RL step 09:50: NOTHING (br -0.00319).",
   "[09:57] R4 grid 09:55 (scan ~09:56:1x, 111 rows; top8 JAGX LEXX RPGL BRAI NRSN CIG.C TXXD PDC; bars 04:00->now fetched+ingested): ENTER JAGX at 09:57. JAGX is LULD-HALTED since 09:52:51 @4.95 (bars 09:53+ interpolated; quote locked 4.94/4.94 @13:56:08Z; price book CROSSED: best bid 6.00 > best ask 4.06 = halt-auction indicative). No official fill is possible during a halt, so the locked/crossed quote is NOT used for --check-book (it would mechanically PASS spread=0). Treated like the veto re-check: re-check each minute while the script keeps saying ENTER; enter on the first live two-sided quote that PASSes (late entry, noted).",
   "[09:57] RL step 09:55: NOTHING (br -0.00398).",
-  "[09:59] R4 JAGX: reopened 09:57 (bar O4.94 H5.00 L4.74) -> model leg entered @4.94 (09:57), shares_cap 2024; 09:58 bar ran to 5.66 and JAGX LULD-halted again ~09:58:54 (quote locked 5.67/5.67, book crossed bid 7.00 > ask 4.65). Official leg: no live two-sided quote at 09:57 (halted) or 09:59 (halted) -> not entered yet; re-checking each minute."
+  "[09:59] R4 JAGX: reopened 09:57 (bar O4.94 H5.00 L4.74) -> model leg entered @4.94 (09:57), shares_cap 2024; 09:58 bar ran to 5.66 and JAGX LULD-halted again ~09:58:54 (quote locked 5.67/5.67, book crossed bid 7.00 > ask 4.65). Official leg: no live two-sided quote at 09:57 (halted) or 09:59 (halted) -> not entered yet; re-checking each minute.",
+  "[10:01] RL step 10:00: NOTHING (br -0.00444).",
+  "[10:06] RL step 10:05: NOTHING (br -0.00044). JAGX reopened 10:04 (2nd halt ~09:58:54-10:03); model leg tracked.",
+  "[10:11] RL step 10:10: NOTHING (br +0.00047). JAGX 3rd halt ~10:09:38 (LULD down @5.02)."
  ],
  "errors": [],
  "ops": {
@@ -30,11 +33,12 @@
    "mcp_get_equity_quotes_SPY": "ok bid 768.92 ask 768.97 @13:10:25Z",
    "at_et": "09:10"
   },
-  "last_cycle": "10:00:02",
+  "last_cycle": "10:11:37",
   "session": "TRADING 2026-10-05 full (close 16:00)",
   "r4_scan_policy": "While R4 HOLDS its model leg (one position at a time) no R4 decision is possible, so the R4 grid scan is not run/transcribed during the hold (the scan filter RTH high >= 1.10x prev is itself sticky); the scan resumes at the first grid after the model exit. Price book is re-pulled only when the quote spread is <= 0.5% (a wider spread VETOes regardless of depth)."
  },
  "divergences": [
-  "[09:37] R4 MI decision 09:35: VETO at 09:37 (spread 1.79%, depth 200/2958) -> SHADOW leg, not entered (re-check each minute)."
+  "[09:37] R4 MI decision 09:35: VETO at 09:37 (spread 1.79%, depth 200/2958) -> SHADOW leg, not entered (re-check each minute).",
+  "[10:01] R4 JAGX decision 09:55: official leg MISSED -- LULD halts 09:52:51-09:57 and again ~09:58:54-; no live two-sided quote at any check (09:57 locked 4.94/4.94 + crossed book; 09:59/10:00/10:01 locked 5.67/5.67 + crossed book). p3_r4 marked it MISSED at 10:02 ('stale: ... no entry, no shadow') because no --check-book was registered during the halt (the locked quote was deliberately not fed to --check-book). Model leg entered @4.94 09:57 continues; R4 blocked until it exits."
  ]
 }
