@@ -119,7 +119,8 @@
   "[15:41] RL step 15:40: NOTHING (95 rows, br 0.00734, n_cand 0)",
   "[15:46] RL step 15:45: NOTHING (95 rows, br 0.00714, n_cand 0)",
   "[15:51] RL step 15:50: NOTHING (95 rows, br 0.0047, n_cand 0)",
-  "[15:56] RL step 15:55 (final): NOTHING (95 rows, br 0.00499, n_cand 0). RL took no trades today (0 qualifiers across 09:30-15:55 grid)."
+  "[15:56] RL step 15:55 (final): NOTHING (95 rows, br 0.00499, n_cand 0). RL took no trades today (0 qualifiers across 09:30-15:55 grid).",
+  "[16:06] EOD: all three watchers exited (r4 ~15:07, r15 ~15:02, rl 16:04:23 BOOK FLAT). Books flat: R4 +206.64, R15 0, RL 0. Session complete."
  ],
  "errors": [],
  "ops": {
@@ -130,7 +131,7 @@
    "mcp_get_equity_quotes_SPY": "ok bid 768.92 ask 768.97 @13:10:25Z",
    "at_et": "09:10"
   },
-  "last_cycle": "16:01:45",
+  "last_cycle": "16:06:09",
   "session": "TRADING 2026-10-05 full (close 16:00)",
   "r4_scan_policy": "While R4 HOLDS its model leg (one position at a time) no R4 decision is possible, so the R4 grid scan is not run/transcribed during the hold (the scan filter RTH high >= 1.10x prev is itself sticky); the scan resumes at the first grid after the model exit. Price book is re-pulled only when the quote spread is <= 0.5% (a wider spread VETOes regardless of depth).",
   "eod_done": "16:0x ET p3_eod run; all books flat; R4 +206.64 (1 trade), R15 0, RL 0"
