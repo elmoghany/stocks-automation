@@ -6,7 +6,22 @@
   "r15",
   "rl"
  ],
- "trades": [],
+ "trades": [
+  {
+   "book": "r4",
+   "sym": "BCYC",
+   "decision_min": "10:20",
+   "entry_time": "10:23",
+   "ask": 3.87,
+   "bid": 3.86,
+   "mid": 3.865,
+   "shares": 2583,
+   "notional": 9996.21,
+   "halal": "REFUSE-TO-EVALUATE (pass=false)",
+   "model_note": "coil rank #1 at grid 10:20 (coil 1.0, 0.606M vol); model entry 10:21 open 3.855 (shares_cap 2594). Book check 10:22 VETO (depth 498<651) -> SHADOW; re-check 10:23 PASS (spread 0.26%, depth 1655>=646) -> LATE ENTRY at ask 3.87 (quote 14:23:04Z).",
+   "late_entry": true
+  }
+ ],
  "notes": [
   "[09:11] Session clock: TRADING 2026-10-05 full (close 16:00). Universe asof 2026-10-02 (current month, no refresh). R15 earnings calendar (2026-10-05, days=-2): 3 rows (CBAT am, CGTL pm, SGMOQ pm; all eps.actual null), 0 in the 95-name universe -> R15 has no fresh names today (expected DONE at 09:36). Watchers r4/r15/rl first started as harness background tasks (2 h cap), stopped at 09:11 and relaunched DETACHED via PowerShell Start-Process (PIDs 13844/4900/7364) so the harness time limit cannot kill them (2026-10-02 lesson). Logs data/paper/watch_{book}_2026-10-05.log",
   "[09:31] RL step 09:30 (scan 09:31:1x): NOTHING, breadth 0.0, 0 candidates. Scan results come back INLINE (no spill); saved as a compact transcription keeping only the columns p3_rl reads (Last, P3 last time, P3 vwap all/reg, Open) in the run_scan JSON shape.",
@@ -23,7 +38,9 @@
   "[10:01] RL step 10:00: NOTHING (br -0.00444).",
   "[10:06] RL step 10:05: NOTHING (br -0.00044). JAGX reopened 10:04 (2nd halt ~09:58:54-10:03); model leg tracked.",
   "[10:11] RL step 10:10: NOTHING (br +0.00047). JAGX 3rd halt ~10:09:38 (LULD down @5.02).",
-  "[10:16] R4 JAGX model leg CLOSED: entry 09:57 @4.94 -> exit 10:15 @4.728 (trail 20%). Official leg MISSED (halts). R4 flat; next decision grid 10:20. RL step 10:15 NOTHING."
+  "[10:16] R4 JAGX model leg CLOSED: entry 09:57 @4.94 -> exit 10:15 @4.728 (trail 20%). Official leg MISSED (halts). R4 flat; next decision grid 10:20. RL step 10:15 NOTHING.",
+  "[10:22] R4 grid 10:20 (scan ~10:21:1x, 118 rows; top8 BCYC NUG EXYN GEMG BRAI TXXH CRDD TXXD): ENTER BCYC. Book check 10:22: bid 3.83 / ask 3.84 (spread 0.26% ok), displayed ask depth to 3.8592 = 498 sh (3.84x210 + 3.85x288) < 25% of 2604 -> VETO (depth). SHADOW leg; re-check each minute while the model leg is open. RL step 10:20 NOTHING (br +0.00247).",
+  "[10:23] R4 ENTRY BCYC 10:23 @3.87 x2583 (bid 3.86, mid 3.865) -- late entry on veto re-check PASS; watcher r4 state opened (position_BCYC.json). Halal tag REFUSE-TO-EVALUATE."
  ],
  "errors": [],
  "ops": {
@@ -34,12 +51,13 @@
    "mcp_get_equity_quotes_SPY": "ok bid 768.92 ask 768.97 @13:10:25Z",
    "at_et": "09:10"
   },
-  "last_cycle": "10:16:38",
+  "last_cycle": "10:23:28",
   "session": "TRADING 2026-10-05 full (close 16:00)",
   "r4_scan_policy": "While R4 HOLDS its model leg (one position at a time) no R4 decision is possible, so the R4 grid scan is not run/transcribed during the hold (the scan filter RTH high >= 1.10x prev is itself sticky); the scan resumes at the first grid after the model exit. Price book is re-pulled only when the quote spread is <= 0.5% (a wider spread VETOes regardless of depth)."
  },
  "divergences": [
   "[09:37] R4 MI decision 09:35: VETO at 09:37 (spread 1.79%, depth 200/2958) -> SHADOW leg, not entered (re-check each minute).",
-  "[10:01] R4 JAGX decision 09:55: official leg MISSED -- LULD halts 09:52:51-09:57 and again ~09:58:54-; no live two-sided quote at any check (09:57 locked 4.94/4.94 + crossed book; 09:59/10:00/10:01 locked 5.67/5.67 + crossed book). p3_r4 marked it MISSED at 10:02 ('stale: ... no entry, no shadow') because no --check-book was registered during the halt (the locked quote was deliberately not fed to --check-book). Model leg entered @4.94 09:57 continues; R4 blocked until it exits."
+  "[10:01] R4 JAGX decision 09:55: official leg MISSED -- LULD halts 09:52:51-09:57 and again ~09:58:54-; no live two-sided quote at any check (09:57 locked 4.94/4.94 + crossed book; 09:59/10:00/10:01 locked 5.67/5.67 + crossed book). p3_r4 marked it MISSED at 10:02 ('stale: ... no entry, no shadow') because no --check-book was registered during the halt (the locked quote was deliberately not fed to --check-book). Model leg entered @4.94 09:57 continues; R4 blocked until it exits.",
+  "[10:22] R4 BCYC decision 10:20: VETO at 10:22 (depth 498 < 651) -> SHADOW leg (re-check each minute)."
  ]
 }
