@@ -19,7 +19,18 @@
    "notional": 9996.21,
    "halal": "REFUSE-TO-EVALUATE (pass=false)",
    "model_note": "coil rank #1 at grid 10:20 (coil 1.0, 0.606M vol); model entry 10:21 open 3.855 (shares_cap 2594). Book check 10:22 VETO (depth 498<651) -> SHADOW; re-check 10:23 PASS (spread 0.26%, depth 1655>=646) -> LATE ENTRY at ask 3.87 (quote 14:23:04Z).",
-   "late_entry": true
+   "late_entry": true,
+   "exit_time": "11:09:23",
+   "exit_bid": 3.95,
+   "exit_ask": 3.96,
+   "exit_mid": 3.955,
+   "exit_px": 3.95,
+   "exit_kind": "EXIT-R4-BEARISH",
+   "pnl": 206.64,
+   "model_entry": 3.855,
+   "model_exit": 3.9514,
+   "model_exit_min": "11:09",
+   "model_pnl": 249.0
   }
  ],
  "notes": [
@@ -46,7 +57,12 @@
   "[10:36] RL step 10:35: NOTHING (br -0.00303).",
   "[10:41] RL step 10:40: NOTHING (br -0.00454).",
   "[10:51] OPS 10:50: RL scan transcription switched to a slim format (Last + last-trade time for all 95; VWAP-all only for marks < $15.70, the rule's log_price cap). Reason: full transcription took ~3 min of generation and stalled the minute loop (BCYC bars 10:47-10:49 ingested late; watcher kept running). p3_rl: missing VWAP -> dist_vwap 0 -> never a candidate; breadth uses Last/time only; candidates are re-checked from 04:00 bars (need_bars) anyway.",
-  "[10:52] RL step 10:45 NOTHING (br -0.00206); 10:50 NOTHING (br -0.00186)."
+  "[10:52] RL step 10:45 NOTHING (br -0.00206); 10:50 NOTHING (br -0.00186).",
+  "[10:56] RL step 10:55: NOTHING (br -0.0027).",
+  "[11:01] RL step 11:00: NOTHING (br -0.0012).",
+  "[11:06] RL step 11:05: NOTHING (br -0.00235). R4 BCYC mark ~3.955 (+~$220 open).",
+  "[11:12] EXIT-R4-BEARISH BCYC @ 3.9500 x2583 P&L $+206.64 (watcher booked 11:10:23; bearish engulfing decided 11:08, model exit 11:09 open 3.9514, model P&L $+249.00).",
+  "[11:12] R4 grid 11:10 (scan 11:11 spilled to file, 145 rows; top8 BBDO EHLD PBRG RFAI BEEP PBR.A PBR TEMT): ENTER BBDO. Book check 11:11: bid 3.70 / ask 3.81 (spread 2.9%), depth 100 -> VETO -> SHADOW leg; re-check each minute."
  ],
  "errors": [],
  "ops": {
@@ -57,13 +73,14 @@
    "mcp_get_equity_quotes_SPY": "ok bid 768.92 ask 768.97 @13:10:25Z",
    "at_et": "09:10"
   },
-  "last_cycle": "10:52:20",
+  "last_cycle": "11:11:31",
   "session": "TRADING 2026-10-05 full (close 16:00)",
   "r4_scan_policy": "While R4 HOLDS its model leg (one position at a time) no R4 decision is possible, so the R4 grid scan is not run/transcribed during the hold (the scan filter RTH high >= 1.10x prev is itself sticky); the scan resumes at the first grid after the model exit. Price book is re-pulled only when the quote spread is <= 0.5% (a wider spread VETOes regardless of depth)."
  },
  "divergences": [
   "[09:37] R4 MI decision 09:35: VETO at 09:37 (spread 1.79%, depth 200/2958) -> SHADOW leg, not entered (re-check each minute).",
   "[10:01] R4 JAGX decision 09:55: official leg MISSED -- LULD halts 09:52:51-09:57 and again ~09:58:54-; no live two-sided quote at any check (09:57 locked 4.94/4.94 + crossed book; 09:59/10:00/10:01 locked 5.67/5.67 + crossed book). p3_r4 marked it MISSED at 10:02 ('stale: ... no entry, no shadow') because no --check-book was registered during the halt (the locked quote was deliberately not fed to --check-book). Model leg entered @4.94 09:57 continues; R4 blocked until it exits.",
-  "[10:22] R4 BCYC decision 10:20: VETO at 10:22 (depth 498 < 651) -> SHADOW leg (re-check each minute)."
+  "[10:22] R4 BCYC decision 10:20: VETO at 10:22 (depth 498 < 651) -> SHADOW leg (re-check each minute).",
+  "[11:12] R4 BBDO decision 11:10: VETO (spread 2.9%, depth 100) -> SHADOW leg."
  ]
 }

@@ -1,0 +1,62 @@
+{
+ "date": "2026-10-05",
+ "records": [
+  {
+   "sym": "BCYC",
+   "ticket": null,
+   "date": "2026-10-05",
+   "mode": "r4",
+   "entry": 3.87,
+   "shares_initial": 2583,
+   "entry_bar_utc": "2026-10-05T14:23:00Z",
+   "prev_close": null,
+   "exit_kind": "exit-r4-bearish",
+   "fills": [
+    {
+     "kind": "EXIT-R4-BEARISH",
+     "time": "2026-10-05T11:09:23.198859-04:00",
+     "shares": 2583,
+     "px": 3.95,
+     "src": "stop level"
+    }
+   ],
+   "vwap": 3.95,
+   "shares_exited": 2583,
+   "scale_out": null,
+   "banked": 0.0,
+   "pnl": 206.64,
+   "peak": 3.965,
+   "rungs": [],
+   "deployed": 9996.21,
+   "exit_time": "2026-10-05T11:09:23.198859-04:00",
+   "booked_at": "2026-10-05T11:10:23.318902-04:00",
+   "exit_parity": null,
+   "p3": {
+    "book": "r4",
+    "mode": "r4",
+    "reason": "bearish",
+    "decided_min": "11:08",
+    "model_exit": 3.9514,
+    "model_exit_min": "11:09",
+    "model_entry": 3.855,
+    "model_entry_min": "10:21",
+    "model_pnl": 249.0,
+    "exit_quote": {
+     "bid": 3.95,
+     "ask": 3.96,
+     "mid": 3.955,
+     "ts": "2026-10-05T15:08:59Z",
+     "age_s": 24.2
+    },
+    "entry_quote": {
+     "bid": 3.86,
+     "ask": 3.87,
+     "mid": 3.865,
+     "cost_bps_vs_mid": 12.94
+    },
+    "exit_cost_bps_vs_mid": 12.64,
+    "official_src": "quote-bid"
+   }
+  }
+ ]
+}
