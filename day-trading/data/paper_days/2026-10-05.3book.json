@@ -8,7 +8,11 @@
  ],
  "trades": [],
  "notes": [
-  "[09:11] Session clock: TRADING 2026-10-05 full (close 16:00). Universe asof 2026-10-02 (current month, no refresh). R15 earnings calendar (2026-10-05, days=-2): 3 rows (CBAT am, CGTL pm, SGMOQ pm; all eps.actual null), 0 in the 95-name universe -> R15 has no fresh names today (expected DONE at 09:36). Watchers r4/r15/rl first started as harness background tasks (2 h cap), stopped at 09:11 and relaunched DETACHED via PowerShell Start-Process (PIDs 13844/4900/7364) so the harness time limit cannot kill them (2026-10-02 lesson). Logs data/paper/watch_{book}_2026-10-05.log"
+  "[09:11] Session clock: TRADING 2026-10-05 full (close 16:00). Universe asof 2026-10-02 (current month, no refresh). R15 earnings calendar (2026-10-05, days=-2): 3 rows (CBAT am, CGTL pm, SGMOQ pm; all eps.actual null), 0 in the 95-name universe -> R15 has no fresh names today (expected DONE at 09:36). Watchers r4/r15/rl first started as harness background tasks (2 h cap), stopped at 09:11 and relaunched DETACHED via PowerShell Start-Process (PIDs 13844/4900/7364) so the harness time limit cannot kill them (2026-10-02 lesson). Logs data/paper/watch_{book}_2026-10-05.log",
+  "[09:31] RL step 09:30 (scan 09:31:1x): NOTHING, breadth 0.0, 0 candidates. Scan results come back INLINE (no spill); saved as a compact transcription keeping only the columns p3_rl reads (Last, P3 last time, P3 vwap all/reg, Open) in the run_scan JSON shape.",
+  "[09:37] R15 09:36: DONE (no fresh-earnings name in universe) -- no-trade day for R15.",
+  "[09:37] R4 grid 09:35 (scan ~09:36:1x, top8 PRPL MI APT FLBR NUG INSE UBR PUR; bars 04:00->now fetched, spilled file ingested): ENTER MI (coil rank; PRPL had 0 bars). Book check 09:37: quote bid 3.32 / ask 3.38 (quote ts 13:34:37Z, last trade 09:34:37 -- MI may be halted), price book inside ask 200 sh @3.38, next 3.45 -> VETO (spread 1.79% > 0.5%, depth 200 < 25% of 2958). Logged as R4 SHADOW leg; re-checking every minute while the model leg is open.",
+  "[09:37] RL step 09:35 (scan ~09:36:1x): NOTHING, breadth -0.00315, 0 candidates."
  ],
  "errors": [],
  "ops": {
@@ -19,7 +23,10 @@
    "mcp_get_equity_quotes_SPY": "ok bid 768.92 ask 768.97 @13:10:25Z",
    "at_et": "09:10"
   },
-  "last_cycle": "09:11:46",
+  "last_cycle": "09:37:59",
   "session": "TRADING 2026-10-05 full (close 16:00)"
- }
+ },
+ "divergences": [
+  "[09:37] R4 MI decision 09:35: VETO at 09:37 (spread 1.79%, depth 200/2958) -> SHADOW leg, not entered (re-check each minute)."
+ ]
 }
