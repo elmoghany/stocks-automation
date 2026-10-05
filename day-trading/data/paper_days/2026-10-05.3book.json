@@ -62,7 +62,10 @@
   "[11:01] RL step 11:00: NOTHING (br -0.0012).",
   "[11:06] RL step 11:05: NOTHING (br -0.00235). R4 BCYC mark ~3.955 (+~$220 open).",
   "[11:12] EXIT-R4-BEARISH BCYC @ 3.9500 x2583 P&L $+206.64 (watcher booked 11:10:23; bearish engulfing decided 11:08, model exit 11:09 open 3.9514, model P&L $+249.00).",
-  "[11:12] R4 grid 11:10 (scan 11:11 spilled to file, 145 rows; top8 BBDO EHLD PBRG RFAI BEEP PBR.A PBR TEMT): ENTER BBDO. Book check 11:11: bid 3.70 / ask 3.81 (spread 2.9%), depth 100 -> VETO -> SHADOW leg; re-check each minute."
+  "[11:12] R4 grid 11:10 (scan 11:11 spilled to file, 145 rows; top8 BBDO EHLD PBRG RFAI BEEP PBR.A PBR TEMT): ENTER BBDO. Book check 11:11: bid 3.70 / ask 3.81 (spread 2.9%), depth 100 -> VETO -> SHADOW leg; re-check each minute.",
+  "[11:17] RL step 11:15: NOTHING (br -0.00411). R4 BBDO 11:16 VETO (spread 2.66%), model leg holding @3.74.",
+  "[11:21] RL step 11:20: NOTHING (br -0.00042). R4 BBDO VETO each minute 11:16-11:21 (spread 2.7-3.5%).",
+  "[11:26] RL step 11:25: NOTHING (br -0.00288). R4 BBDO VETO 11:22-11:26 (spread 2.9-3.5%; BBDO mostly untraded since 11:20)."
  ],
  "errors": [],
  "ops": {
@@ -73,7 +76,7 @@
    "mcp_get_equity_quotes_SPY": "ok bid 768.92 ask 768.97 @13:10:25Z",
    "at_et": "09:10"
   },
-  "last_cycle": "11:11:31",
+  "last_cycle": "11:30:08",
   "session": "TRADING 2026-10-05 full (close 16:00)",
   "r4_scan_policy": "While R4 HOLDS its model leg (one position at a time) no R4 decision is possible, so the R4 grid scan is not run/transcribed during the hold (the scan filter RTH high >= 1.10x prev is itself sticky); the scan resumes at the first grid after the model exit. Price book is re-pulled only when the quote spread is <= 0.5% (a wider spread VETOes regardless of depth)."
  },
