@@ -22,7 +22,8 @@
   "[09:59] R4 JAGX: reopened 09:57 (bar O4.94 H5.00 L4.74) -> model leg entered @4.94 (09:57), shares_cap 2024; 09:58 bar ran to 5.66 and JAGX LULD-halted again ~09:58:54 (quote locked 5.67/5.67, book crossed bid 7.00 > ask 4.65). Official leg: no live two-sided quote at 09:57 (halted) or 09:59 (halted) -> not entered yet; re-checking each minute.",
   "[10:01] RL step 10:00: NOTHING (br -0.00444).",
   "[10:06] RL step 10:05: NOTHING (br -0.00044). JAGX reopened 10:04 (2nd halt ~09:58:54-10:03); model leg tracked.",
-  "[10:11] RL step 10:10: NOTHING (br +0.00047). JAGX 3rd halt ~10:09:38 (LULD down @5.02)."
+  "[10:11] RL step 10:10: NOTHING (br +0.00047). JAGX 3rd halt ~10:09:38 (LULD down @5.02).",
+  "[10:16] R4 JAGX model leg CLOSED: entry 09:57 @4.94 -> exit 10:15 @4.728 (trail 20%). Official leg MISSED (halts). R4 flat; next decision grid 10:20. RL step 10:15 NOTHING."
  ],
  "errors": [],
  "ops": {
@@ -33,7 +34,7 @@
    "mcp_get_equity_quotes_SPY": "ok bid 768.92 ask 768.97 @13:10:25Z",
    "at_et": "09:10"
   },
-  "last_cycle": "10:11:37",
+  "last_cycle": "10:16:38",
   "session": "TRADING 2026-10-05 full (close 16:00)",
   "r4_scan_policy": "While R4 HOLDS its model leg (one position at a time) no R4 decision is possible, so the R4 grid scan is not run/transcribed during the hold (the scan filter RTH high >= 1.10x prev is itself sticky); the scan resumes at the first grid after the model exit. Price book is re-pulled only when the quote spread is <= 0.5% (a wider spread VETOes regardless of depth)."
  },
