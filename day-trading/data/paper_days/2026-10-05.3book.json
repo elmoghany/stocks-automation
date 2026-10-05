@@ -113,7 +113,12 @@
   "[15:11] RL step 15:10: NOTHING (95 rows, br 0.00518, n_cand 0)",
   "[15:16] RL step 15:15: NOTHING (95 rows, br 0.00533, n_cand 0)",
   "[15:21] RL step 15:20: NOTHING (95 rows, br 0.00688, n_cand 0)",
-  "[15:26] RL step 15:25: NOTHING (95 rows, br 0.0058, n_cand 0)"
+  "[15:26] RL step 15:25: NOTHING (95 rows, br 0.0058, n_cand 0)",
+  "[15:31] RL step 15:30: NOTHING (95 rows, br 0.00668, n_cand 0)",
+  "[15:36] RL step 15:35: NOTHING (95 rows, br 0.00572, n_cand 0)",
+  "[15:41] RL step 15:40: NOTHING (95 rows, br 0.00734, n_cand 0)",
+  "[15:46] RL step 15:45: NOTHING (95 rows, br 0.00714, n_cand 0)",
+  "[15:51] RL step 15:50: NOTHING (95 rows, br 0.0047, n_cand 0)"
  ],
  "errors": [],
  "ops": {
@@ -124,7 +129,7 @@
    "mcp_get_equity_quotes_SPY": "ok bid 768.92 ask 768.97 @13:10:25Z",
    "at_et": "09:10"
   },
-  "last_cycle": "15:26:20",
+  "last_cycle": "15:51:25",
   "session": "TRADING 2026-10-05 full (close 16:00)",
   "r4_scan_policy": "While R4 HOLDS its model leg (one position at a time) no R4 decision is possible, so the R4 grid scan is not run/transcribed during the hold (the scan filter RTH high >= 1.10x prev is itself sticky); the scan resumes at the first grid after the model exit. Price book is re-pulled only when the quote spread is <= 0.5% (a wider spread VETOes regardless of depth)."
  },
