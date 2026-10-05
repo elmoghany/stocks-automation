@@ -40,7 +40,9 @@
   "[10:11] RL step 10:10: NOTHING (br +0.00047). JAGX 3rd halt ~10:09:38 (LULD down @5.02).",
   "[10:16] R4 JAGX model leg CLOSED: entry 09:57 @4.94 -> exit 10:15 @4.728 (trail 20%). Official leg MISSED (halts). R4 flat; next decision grid 10:20. RL step 10:15 NOTHING.",
   "[10:22] R4 grid 10:20 (scan ~10:21:1x, 118 rows; top8 BCYC NUG EXYN GEMG BRAI TXXH CRDD TXXD): ENTER BCYC. Book check 10:22: bid 3.83 / ask 3.84 (spread 0.26% ok), displayed ask depth to 3.8592 = 498 sh (3.84x210 + 3.85x288) < 25% of 2604 -> VETO (depth). SHADOW leg; re-check each minute while the model leg is open. RL step 10:20 NOTHING (br +0.00247).",
-  "[10:23] R4 ENTRY BCYC 10:23 @3.87 x2583 (bid 3.86, mid 3.865) -- late entry on veto re-check PASS; watcher r4 state opened (position_BCYC.json). Halal tag REFUSE-TO-EVALUATE."
+  "[10:23] R4 ENTRY BCYC 10:23 @3.87 x2583 (bid 3.86, mid 3.865) -- late entry on veto re-check PASS; watcher r4 state opened (position_BCYC.json). Halal tag REFUSE-TO-EVALUATE.",
+  "[10:26] RL step 10:25: NOTHING (br +0.00018). R4 holding BCYC (official + model).",
+  "[10:31] RL step 10:30: NOTHING (br -0.00138). R4 BCYC holding, mark ~3.82."
  ],
  "errors": [],
  "ops": {
@@ -51,7 +53,7 @@
    "mcp_get_equity_quotes_SPY": "ok bid 768.92 ask 768.97 @13:10:25Z",
    "at_et": "09:10"
   },
-  "last_cycle": "10:23:28",
+  "last_cycle": "10:31:37",
   "session": "TRADING 2026-10-05 full (close 16:00)",
   "r4_scan_policy": "While R4 HOLDS its model leg (one position at a time) no R4 decision is possible, so the R4 grid scan is not run/transcribed during the hold (the scan filter RTH high >= 1.10x prev is itself sticky); the scan resumes at the first grid after the model exit. Price book is re-pulled only when the quote spread is <= 0.5% (a wider spread VETOes regardless of depth)."
  },
