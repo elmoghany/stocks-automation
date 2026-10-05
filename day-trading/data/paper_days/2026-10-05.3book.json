@@ -1,9 +1,25 @@
 {
-  "date": "2026-10-05",
-  "mode": "PAPER-3BOOK",
-  "books": ["r4", "r15", "rl"],
-  "trades": [],
-  "notes": [],
-  "errors": [],
-  "ops": {"launched_et": "09:10"}
+ "date": "2026-10-05",
+ "mode": "PAPER-3BOOK",
+ "books": [
+  "r4",
+  "r15",
+  "rl"
+ ],
+ "trades": [],
+ "notes": [
+  "[09:11] Session clock: TRADING 2026-10-05 full (close 16:00). Universe asof 2026-10-02 (current month, no refresh). R15 earnings calendar (2026-10-05, days=-2): 3 rows (CBAT am, CGTL pm, SGMOQ pm; all eps.actual null), 0 in the 95-name universe -> R15 has no fresh names today (expected DONE at 09:36). Watchers r4/r15/rl first started as harness background tasks (2 h cap), stopped at 09:11 and relaunched DETACHED via PowerShell Start-Process (PIDs 13844/4900/7364) so the harness time limit cannot kill them (2026-10-02 lesson). Logs data/paper/watch_{book}_2026-10-05.log"
+ ],
+ "errors": [],
+ "ops": {
+  "launched_et": "09:10",
+  "capability_probe": {
+   "python": "ok",
+   "git_status": "ok",
+   "mcp_get_equity_quotes_SPY": "ok bid 768.92 ask 768.97 @13:10:25Z",
+   "at_et": "09:10"
+  },
+  "last_cycle": "09:11:46",
+  "session": "TRADING 2026-10-05 full (close 16:00)"
+ }
 }
