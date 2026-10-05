@@ -77,7 +77,12 @@
   "[12:11] RL step 12:10: NOTHING (br +0.00606). R4 BBDO VETO 12:07-12:11 (3.68/3.76).",
   "[12:16] RL step 12:15: NOTHING (br +0.00461). R4 BBDO VETO 12:12-12:16 (3.68-3.69/3.76).",
   "[12:21] RL step 12:20: NOTHING (br +0.00465). R4 BBDO VETO 12:17-12:21 (spread 1.1-1.9%).",
-  "[12:26] RL step 12:25: NOTHING (br +0.00322). R4 BBDO VETO 12:22-12:26 (3.69-3.70/3.76)."
+  "[12:26] RL step 12:25: NOTHING (br +0.00322). R4 BBDO VETO 12:22-12:26 (3.69-3.70/3.76).",
+  "[12:31] RL step 12:30: NOTHING (br +0.00377). R4 BBDO VETO 12:27-12:31 (spread 1.1-1.35%).",
+  "[12:36] RL step 12:35: NOTHING (br +0.0045). R4 BBDO VETO 12:32-12:36 (3.69/3.73, spread 1.08%).",
+  "[12:41] RL step 12:40: NOTHING (br +0.00253). R4 BBDO VETO 12:37-12:41 (spread 0.8-1.1%).",
+  "[12:46] RL step 12:45: NOTHING (br +0.00446). R4 BBDO VETO 12:42-12:46 (spread 0.54-1.08%; 12:44 3.72/3.74 = 0.536%, just above cap).",
+  "[12:51] RL step 12:50: NOTHING (br +0.00181). R4 BBDO VETO 12:47-12:51 (spread 0.8-1.1%)."
  ],
  "errors": [],
  "ops": {
@@ -88,7 +93,7 @@
    "mcp_get_equity_quotes_SPY": "ok bid 768.92 ask 768.97 @13:10:25Z",
    "at_et": "09:10"
   },
-  "last_cycle": "12:26:23",
+  "last_cycle": "12:51:26",
   "session": "TRADING 2026-10-05 full (close 16:00)",
   "r4_scan_policy": "While R4 HOLDS its model leg (one position at a time) no R4 decision is possible, so the R4 grid scan is not run/transcribed during the hold (the scan filter RTH high >= 1.10x prev is itself sticky); the scan resumes at the first grid after the model exit. Price book is re-pulled only when the quote spread is <= 0.5% (a wider spread VETOes regardless of depth)."
  },
