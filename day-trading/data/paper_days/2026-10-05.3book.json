@@ -108,7 +108,12 @@
   "[14:46] RL step 14:45: NOTHING (95 rows, br 0.00412, n_cand 0). R4 BBDO VETO 14:42-14:46 (spread 0.78-1.31%)",
   "[14:51] RL step 14:50: NOTHING (95 rows, br 0.00421, n_cand 0). R4 BBDO VETO 14:47-14:51 (spread 0.78%)",
   "[14:56] RL step 14:55: NOTHING (95 rows, br 0.0036, n_cand 0). R4 BBDO VETO 14:52-14:56 (spread 0.78-1.05%)",
-  "[15:01] R4 DONE at 15:01: BBDO model leg (decision 11:10, model entry 3.74 @11:11) exited at the 15:00 flatten @3.81. Official entry never happened: book-check VETO (spread 0.5-2.6%) every minute 11:11-15:01, so it is a SHADOW leg (model +1.9% gross). R4 official book flat; watcher open=[] book_pnl +206.64 (BCYC). RL step 15:00: NOTHING (br 0.00513, n_cand 0)."
+  "[15:01] R4 DONE at 15:01: BBDO model leg (decision 11:10, model entry 3.74 @11:11) exited at the 15:00 flatten @3.81. Official entry never happened: book-check VETO (spread 0.5-2.6%) every minute 11:11-15:01, so it is a SHADOW leg (model +1.9% gross). R4 official book flat; watcher open=[] book_pnl +206.64 (BCYC). RL step 15:00: NOTHING (br 0.00513, n_cand 0).",
+  "[15:06] RL step 15:05: NOTHING (95 rows, br 0.00623, n_cand 0)",
+  "[15:11] RL step 15:10: NOTHING (95 rows, br 0.00518, n_cand 0)",
+  "[15:16] RL step 15:15: NOTHING (95 rows, br 0.00533, n_cand 0)",
+  "[15:21] RL step 15:20: NOTHING (95 rows, br 0.00688, n_cand 0)",
+  "[15:26] RL step 15:25: NOTHING (95 rows, br 0.0058, n_cand 0)"
  ],
  "errors": [],
  "ops": {
@@ -119,7 +124,7 @@
    "mcp_get_equity_quotes_SPY": "ok bid 768.92 ask 768.97 @13:10:25Z",
    "at_et": "09:10"
   },
-  "last_cycle": "15:01:29",
+  "last_cycle": "15:26:20",
   "session": "TRADING 2026-10-05 full (close 16:00)",
   "r4_scan_policy": "While R4 HOLDS its model leg (one position at a time) no R4 decision is possible, so the R4 grid scan is not run/transcribed during the hold (the scan filter RTH high >= 1.10x prev is itself sticky); the scan resumes at the first grid after the model exit. Price book is re-pulled only when the quote spread is <= 0.5% (a wider spread VETOes regardless of depth)."
  },
