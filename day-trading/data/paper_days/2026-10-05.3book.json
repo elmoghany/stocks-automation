@@ -97,7 +97,13 @@
   "[13:51] RL step 13:50: NOTHING (95 rows, br 0.006, n_cand 0). R4 BBDO VETO 13:47-13:51 (spread 1.06-1.33%)",
   "[13:56] RL step 13:55: NOTHING (95 rows, br 0.00299, n_cand 0). R4 BBDO VETO 13:52-13:56 (spread 1.06%)",
   "[14:01] RL step 14:00: NOTHING (95 rows, br 0.00587, n_cand 0). R4 BBDO VETO 13:57-14:01 (spread 1.06-1.34%)",
-  "[14:06] RL step 14:05: NOTHING (95 rows, br 0.00434, n_cand 0). R4 BBDO VETO 14:02-14:06 (spread 1.34%)"
+  "[14:06] RL step 14:05: NOTHING (95 rows, br 0.00434, n_cand 0). R4 BBDO VETO 14:02-14:06 (spread 1.34%)",
+  "[14:11] RL step 14:10: NOTHING (95 rows, br 0.00625, n_cand 0). R4 BBDO VETO 14:07-14:11 (spread 0.80-1.61%)",
+  "[14:16] RL step 14:15: NOTHING (95 rows, br 0.00392, n_cand 0). R4 BBDO VETO 14:12-14:16 (spread 0.79-1.34%)",
+  "[14:21] RL step 14:20: NOTHING (95 rows, br 0.00576, n_cand 0). R4 BBDO VETO 14:17-14:21 (spread 1.05-2.34%; BBDO bid 3.81/ask 3.90 at 14:21)",
+  "[14:26] RL step 14:25: NOTHING (95 rows, br 0.00299, n_cand 0). R4 BBDO VETO 14:22-14:26 (spread 2.07-2.59%). R4 grid window closed (last grid 14:25; model leg BBDO still HOLDING so no new R4 decisions).",
+  "[14:31] RL step 14:30: NOTHING (95 rows, br 0.00436, n_cand 0). R4 BBDO VETO 14:27-14:31 (spread 1.30-2.07%)",
+  "[14:36] RL step 14:35: NOTHING (95 rows, br 0.00576, n_cand 0). R4 BBDO VETO 14:32-14:36 (spread 0.53-1.31%)"
  ],
  "errors": [],
  "ops": {
@@ -108,7 +114,7 @@
    "mcp_get_equity_quotes_SPY": "ok bid 768.92 ask 768.97 @13:10:25Z",
    "at_et": "09:10"
   },
-  "last_cycle": "14:09:07",
+  "last_cycle": "14:36:23",
   "session": "TRADING 2026-10-05 full (close 16:00)",
   "r4_scan_policy": "While R4 HOLDS its model leg (one position at a time) no R4 decision is possible, so the R4 grid scan is not run/transcribed during the hold (the scan filter RTH high >= 1.10x prev is itself sticky); the scan resumes at the first grid after the model exit. Price book is re-pulled only when the quote spread is <= 0.5% (a wider spread VETOes regardless of depth)."
  },
