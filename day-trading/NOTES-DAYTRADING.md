@@ -2,6 +2,26 @@
 
 ## PAPER-3BOOK
 
+### 2026-10-05 (PAPER-3BOOK day 2): full headless session; R4 +$206.64 on one trade, R15 and RL flat
+
+The session ran headless from 09:10 to after 16:00, with no gaps. The capability probe was green. The watchers ran detached via PowerShell Start-Process (PIDs 13844/4900/7364), so the harness time limit could not kill them. The ledger was committed every ≤30 min and after the one entry and the one exit. Zero real orders.
+
+- **R4**: 1 official trade, BCYC, +$206.64 on quote fills (+$249.00 at model fills).
+  - Entry: 2,583 shares at 3.87, 10:23. This was a late entry: the 10:22 book check was vetoed on depth and the 10:23 re-check passed.
+  - Exit: 3.95, 11:10, booked by the watcher on the bearish-engulfing rule. Cost vs mid was 12.8 bps per side. Halal verdict: REFUSE-TO-EVALUATE.
+  - Three other model legs never got an official fill:
+    - MI (09:35): vetoed for spread and depth, then halted. Model exit by trail at 2.448. Shadow P&L −$2,757.
+    - JAGX (09:55): MISSED, because three LULD halts left no two-sided quote.
+    - BBDO (11:10): vetoed every minute from 11:11 to 15:01 (spread 0.53%–3.5%, never ≤0.5%). Flattened at 15:00 at 3.81. Shadow P&L $0 at the veto-time ask.
+  - The book check saved $2,757 today. The R4 parity book (trades plus shadow legs) was −$2,550; official was +$207.
+  - The day was +$209.83 against the −$3.19/day expectation.
+- **R15**: 0 trades. The earnings calendar had 3 rows (CBAT, CGTL, SGMOQ), none of them in the 95-name universe, so R15 printed DONE at 09:36. Flat, $0, against +$21.71/day expected. R15 fires on roughly one day in four.
+- **RL**: 0 trades. All 78 grid steps from 09:30 to 15:55 printed NOTHING. Breadth ran from −0.0045 to +0.0073, never near the < −0.02379 gate, so there were zero candidates all day. Flat, $0, against +$5.77/day expected.
+- **Ops lessons**:
+  - From 10:50, RL scans were transcribed slim: Last plus last-trade time for all names, and VWAP only for names under $15.70. The full transcription had stalled the minute loop.
+  - Halted names (MI, JAGX) produce locked or crossed quotes. These must not be run through `--check-book`, which would pass a spread of 0.
+  - Each inline `run_scan` result costs about 25k tokens per RL step. A spill-to-file or server-side slim scan would cut this.
+
 ### 2026-10-02 (PAPER-3BOOK day 1): late launch at 15:24 ET, no trades in any book
 
 The scheduler's LAUNCH task fired at 15:24:25 ET instead of 09:10. The 12:00 watchdog had already flagged NO SESSION. The session started at 15:24:52 with the capability probe green (python, git, MCP quotes). This is an ops failure on the launch side, not in the trading code. The Task Scheduler trigger needs checking before Monday.
