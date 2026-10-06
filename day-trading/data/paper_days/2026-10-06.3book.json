@@ -85,7 +85,9 @@
   "[13:55] 13:55 R4 BESS VETO (spread 3.2%), RL 13:50 NOTHING (br -0.0115)",
   "[14:00] 14:00 R4 BESS VETO (spread 2.3%); RL 13:55 NOTHING (br -0.0106); 13:58 tick skipped (slow box)",
   "[14:05] 14:05 R4 BESS model leg closed 13:59 @2.23 (bearish; entry 2.069 @10:06) -- shadow only, never PASSed the book check. R4 FLAT; R4 grid 14:00 MISSED (BESS exit only visible after 14:03 bar ingest; R4 was running --check-book only). Resuming R4 scans 14:05-14:25.",
-  "14:07 R4 ENTER GLWG x621 @16.08 (bid 16.03, spread 0.31%, depth 36082 >= 25% of 621) decision 14:05 -- PASS; halal REFUSE-TO-EVALUATE (tag only)"
+  "14:07 R4 ENTER GLWG x621 @16.08 (bid 16.03, spread 0.31%, depth 36082 >= 25% of 621) decision 14:05 -- PASS; halal REFUSE-TO-EVALUATE (tag only)",
+  "[14:22] 14:22 OUTAGE/STALL ~14:09-14:19 (tool call hung; box stalled): RL grid 14:10 and 14:15 MISSED (no snapshot; p3_rl logged GAP); RL 14:05 NOTHING (br -0.0106), RL 14:20 NOTHING (br -0.0116). R4 holds GLWG (watcher r4 open, last TICK on bar 14:05 until bars re-ingested 14:21). R4 grid 14:10-14:25 BLOCKED (book holds GLWG).",
+  "[14:26] 14:26 RL 14:25 NOTHING (br -0.0138); R4 grid closed (14:25 last; book held GLWG). GLWG bid 15.76/15.81 (entry 16.08)"
  ],
  "errors": [],
  "ops": {
@@ -98,6 +100,6 @@
    "at_et": "09:11"
   },
   "session": "TRADING 2026-10-06 full (close 16:00)",
-  "last_cycle": "14:05:30"
+  "last_cycle": "14:29:30"
  }
 }
