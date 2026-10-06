@@ -26,7 +26,11 @@
   "[10:36] R4 BESS VETO 10:32-10:36 (2.01/2.12, 5.33%; prints 10:32 @2.02, 10:33 @2.07-2.04). RL 10:35 NOTHING (br -0.01335).",
   "[10:41] R4 BESS VETO 10:37-10:41 (2.01/2.12 5.33%, quote frozen since 10:32:19). RL 10:40 NOTHING (br -0.0132).",
   "[10:46] R4 BESS VETO 10:42-10:46 (bid fell to 1.96 at 10:42:26; 1.96/2.12 7.84%). RL 10:45 NOTHING (br -0.01352).",
-  "[10:51] R4 BESS VETO 10:47-10:51 (1.95/2.12, 8.35%; no prints since 10:33). RL 10:50 NOTHING (br -0.01185)."
+  "[10:51] R4 BESS VETO 10:47-10:51 (1.95/2.12, 8.35%; no prints since 10:33). RL 10:50 NOTHING (br -0.01185).",
+  "[10:56] R4 BESS VETO 10:52-10:56 (1.95/2.12, 8.35%; 1 print 10:54 @2.03). RL 10:55 NOTHING (br -0.01034).",
+  "[11:01] R4 BESS VETO 10:57-11:01 (1.94/2.07-2.12, 6.5-8.9%). RL 11:00 NOTHING.",
+  "[11:06] R4 BESS VETO 11:02-11:06 (1.94-1.99/2.07, 3.9-6.5%). RL 11:05 NOTHING.",
+  "[11:11] R4 BESS VETO 11:07-11:11 (1.94/2.07 6.48%). RL 11:10 NOTHING."
  ],
  "errors": [],
  "ops": {
@@ -39,6 +43,6 @@
    "at_et": "09:11"
   },
   "session": "TRADING 2026-10-06 full (close 16:00)",
-  "last_cycle": "10:51:31"
+  "last_cycle": "11:11:28"
  }
 }
