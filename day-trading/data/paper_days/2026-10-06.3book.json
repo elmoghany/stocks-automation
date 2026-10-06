@@ -103,7 +103,13 @@
   "[14:51] 14:51 RL 14:50 NOTHING (br -0.0136); R4 GLWG bid 15.62",
   "[14:56] 14:56 RL 14:55 NOTHING (br -0.0126); R4 GLWG bid 15.65, watcher flatten 15:00",
   "[15:01:16] EXIT-SIGNAL GLWG flatten decided 14:59 model px 15.665 quote bid 15.65 ask 15.68 (age 77s)",
-  "[15:01:16] EXIT-R4-FLATTEN GLWG @ 15.6500 x621 P&L $-267.03 -- R4 book FLAT"
+  "[15:01:16] EXIT-R4-FLATTEN GLWG @ 15.6500 x621 P&L $-267.03 -- R4 book FLAT",
+  "[15:02] 15:02 RL 15:00 NOTHING (br -0.0126); R4 flat (GLWG -267.03), R15 DONE; only RL active until 15:59",
+  "[15:06] 15:06 RL 15:05 NOTHING (br -0.0140)",
+  "[15:11] 15:11 RL 15:10 NOTHING (br -0.0138)",
+  "[15:16] 15:16 RL 15:15 NOTHING (br -0.0157)",
+  "[15:22] 15:21 RL 15:20 NOTHING (br -0.0170)",
+  "[15:27] 15:26 RL 15:25 NOTHING (br -0.0162)"
  ],
  "errors": [],
  "ops": {
@@ -116,6 +122,6 @@
    "at_et": "09:11"
   },
   "session": "TRADING 2026-10-06 full (close 16:00)",
-  "last_cycle": "15:01:19"
+  "last_cycle": "15:27:00"
  }
 }
