@@ -11,7 +11,11 @@
   "[09:12] Session clock: TRADING 2026-10-06 full (close 16:00). Universe asof 2026-10-02 (current month, no refresh). R15 earnings calendar (2026-10-06, days=-2): 21 rows, 18 in window, 0 in the 95-name universe -> R15 no fresh names (expected DONE at 09:36). Watchers r4/r15/rl launched DETACHED via PowerShell Start-Process (PIDs 14404/11572/16740); logs data/paper/watch_{book}_2026-10-06.log/.err",
   "[09:37] R4 grid 09:35 (scan 09:36:1x, 67 rows, 50 traded transcribed; top8 XHG PLU ASTY FLYT TSEG SPCL ASTG RPGL; bars 04:00->now spilled+ingested): ENTER XHG. Check 09:37: XHG LULD-HALTED (last trade 09:32:03 @3.75; quote locked 3.61/3.61; price book CROSSED best bid 5.00 > best ask 2.75 = halt auction). No official fill possible in a halt; locked quote NOT fed to --check-book (would mechanically PASS spread 0) -- same handling as JAGX 2026-10-05. Re-check each minute while the script keeps saying ENTER; enter on the first live two-sided quote that PASSes (late entry, noted). RL 09:30 NOTHING (br 0.0), 09:35 NOTHING (br +0.00131). R15 09:36 DONE (no fresh name).",
   "[09:41] R4 XHG model leg entered 09:37 @3.46 (first bar after the halt; shares_cap 971). Official leg: 09:37 VETO (3.79/3.84, 1.31%), 09:39 VETO (3.77/3.85, 2.10%), 09:40 VETO (4.10/4.18, 1.93%), 09:41 LULD-halted again (locked 4.65/4.65 after 4.70 print) -> no check. RL 09:40 NOTHING (br +0.00167).",
-  "[09:46] 09:42-09:45 XHG halted (no trade since 09:40:47, quote locked 4.70) -> no check. 09:46 reopened (09:45 bar O4.59 H5.51 C5.40); quote 4.96/5.05 VETO (1.80%). RL 09:45 NOTHING (br +0.00124)."
+  "[09:46] 09:42-09:45 XHG halted (no trade since 09:40:47, quote locked 4.70) -> no check. 09:46 reopened (09:45 bar O4.59 H5.51 C5.40); quote 4.96/5.05 VETO (1.80%). RL 09:45 NOTHING (br +0.00124).",
+  "[09:48] R4 XHG model leg CLOSED: entry 09:37 @3.46 -> exit 09:47 @4.408 (trail 20% from peak high 5.51; 09:47 bar O4.72 L3.83, then LULD-halted down ~09:48 locked 3.53). Official leg never entered (VETO every live check 09:37-09:47: spread 1.3-2.1%; halted 09:32-09:37, 09:41-09:45). SHADOW leg: first veto ask 3.84 (09:37) -> model exit 4.408 (scored by p3_eod). R4 flat; next decision grid 09:50.",
+  "[09:52] R4 grid 09:50 (scan 09:51:0x, 80 rows/70 traded; top8 APUS NEBX NBIG ASTG SPCL PANG ASUP BBUL; bars spilled+ingested): ENTER APUS. 09:51 VETO (6.36/6.48 spread 1.87%, depth 2013). Model leg entered 09:51 @6.155 (cap 1624). 09:52 VETO (6.39/6.50, 1.71%). RL 09:50 NOTHING (br -0.00002).",
+  "[09:56] R4 APUS VETO 09:53 (2.0%..1.9%), 09:54 (2.38%), 09:55 (0.64%), 09:56 (1.14%); model leg holding @6.155. RL 09:55 NOTHING (br +0.00219).",
+  "[10:01] R4 APUS VETO 09:57 (0.81%), 09:58 (1.09%), 09:59 (2.02%), 10:00 (1.83%), 10:01 (3.59%); model leg holding @6.155. RL 10:00 NOTHING (br -0.00109)."
  ],
  "errors": [],
  "ops": {
@@ -24,6 +28,6 @@
    "at_et": "09:11"
   },
   "session": "TRADING 2026-10-06 full (close 16:00)",
-  "last_cycle": "09:46:36"
+  "last_cycle": "10:01:33"
  }
 }
