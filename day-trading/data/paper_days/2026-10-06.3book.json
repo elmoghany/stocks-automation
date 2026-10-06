@@ -15,7 +15,11 @@
   "[09:48] R4 XHG model leg CLOSED: entry 09:37 @3.46 -> exit 09:47 @4.408 (trail 20% from peak high 5.51; 09:47 bar O4.72 L3.83, then LULD-halted down ~09:48 locked 3.53). Official leg never entered (VETO every live check 09:37-09:47: spread 1.3-2.1%; halted 09:32-09:37, 09:41-09:45). SHADOW leg: first veto ask 3.84 (09:37) -> model exit 4.408 (scored by p3_eod). R4 flat; next decision grid 09:50.",
   "[09:52] R4 grid 09:50 (scan 09:51:0x, 80 rows/70 traded; top8 APUS NEBX NBIG ASTG SPCL PANG ASUP BBUL; bars spilled+ingested): ENTER APUS. 09:51 VETO (6.36/6.48 spread 1.87%, depth 2013). Model leg entered 09:51 @6.155 (cap 1624). 09:52 VETO (6.39/6.50, 1.71%). RL 09:50 NOTHING (br -0.00002).",
   "[09:56] R4 APUS VETO 09:53 (2.0%..1.9%), 09:54 (2.38%), 09:55 (0.64%), 09:56 (1.14%); model leg holding @6.155. RL 09:55 NOTHING (br +0.00219).",
-  "[10:01] R4 APUS VETO 09:57 (0.81%), 09:58 (1.09%), 09:59 (2.02%), 10:00 (1.83%), 10:01 (3.59%); model leg holding @6.155. RL 10:00 NOTHING (br -0.00109)."
+  "[10:01] R4 APUS VETO 09:57 (0.81%), 09:58 (1.09%), 09:59 (2.02%), 10:00 (1.83%), 10:01 (3.59%); model leg holding @6.155. RL 10:00 NOTHING (br -0.00109).",
+  "[10:05] R4 APUS model leg CLOSED: entry 09:51 @6.155 -> exit 10:03 @6.1469 (trail 10%, pressure tightened; peak high 6.83). Official leg never entered (VETO every check 09:51-10:04: spread 0.64%-3.59%). SHADOW leg: first veto ask 6.48 (09:51) -> model exit 6.1469. (10:04 check ran after model exit; ignore.) R4 flat; next decision grid 10:05.",
+  "[10:07] R4 grid 10:05 (scan 10:06:0x, 100 rows/95 traded; top8 BESS CRWU GEVG TEUP EO RPGL RFAI NBIC; bars spilled+ingested): ENTER BESS. 10:06 VETO (2.02/2.15 spread 6.24%, depth 400 < 25% of 4651). Model leg entered 10:06 @2.069 but shares_cap only 60 (very thin: ~500 sh/min). 10:07 VETO (same quote, last quote update 10:03:25). RL 10:05 NOTHING (br -0.00485).",
+  "[10:11] R4 BESS VETO 10:08-10:11 (2.02/2.14, 5.77%; BESS no prints since 10:07); model leg holding @2.069 (cap 60 sh). RL 10:10 NOTHING (br -0.00734).",
+  "[10:16] R4 BESS VETO 10:12-10:16 (2.02/2.14 5.77%, quote unchanged since 10:07:29; 1 print 10:13 @2.035). RL 10:15 NOTHING (br -0.0084)."
  ],
  "errors": [],
  "ops": {
@@ -28,6 +32,6 @@
    "at_et": "09:11"
   },
   "session": "TRADING 2026-10-06 full (close 16:00)",
-  "last_cycle": "10:01:33"
+  "last_cycle": "10:16:31"
  }
 }
