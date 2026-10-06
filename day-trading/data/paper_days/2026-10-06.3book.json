@@ -6,7 +6,28 @@
   "r15",
   "rl"
  ],
- "trades": [],
+ "trades": [
+  {
+   "book": "r4",
+   "sym": "GLWG",
+   "decision_min": "14:05",
+   "entry_time": "14:07",
+   "ask": 16.08,
+   "bid": 16.03,
+   "mid": 16.055,
+   "shares": 621,
+   "notional": 9985.68,
+   "halal": "REFUSE-TO-EVALUATE",
+   "halal_pass": false,
+   "book_check": {
+    "result": "PASS",
+    "spread_pct": 0.311,
+    "depth": 36082,
+    "want": 621
+   },
+   "model_note": "R4 coil rank #1 at grid 14:05 (top8 GLWG FNG LNOK SEGG OKLC EUDA NBIC SMRX); entered at ask, watcher r4 owns exit (flatten 15:00)"
+  }
+ ],
  "notes": [
   "[09:12] Session clock: TRADING 2026-10-06 full (close 16:00). Universe asof 2026-10-02 (current month, no refresh). R15 earnings calendar (2026-10-06, days=-2): 21 rows, 18 in window, 0 in the 95-name universe -> R15 no fresh names (expected DONE at 09:36). Watchers r4/r15/rl launched DETACHED via PowerShell Start-Process (PIDs 14404/11572/16740); logs data/paper/watch_{book}_2026-10-06.log/.err",
   "[09:37] R4 grid 09:35 (scan 09:36:1x, 67 rows, 50 traded transcribed; top8 XHG PLU ASTY FLYT TSEG SPCL ASTG RPGL; bars 04:00->now spilled+ingested): ENTER XHG. Check 09:37: XHG LULD-HALTED (last trade 09:32:03 @3.75; quote locked 3.61/3.61; price book CROSSED best bid 5.00 > best ask 2.75 = halt auction). No official fill possible in a halt; locked quote NOT fed to --check-book (would mechanically PASS spread 0) -- same handling as JAGX 2026-10-05. Re-check each minute while the script keeps saying ENTER; enter on the first live two-sided quote that PASSes (late entry, noted). RL 09:30 NOTHING (br 0.0), 09:35 NOTHING (br +0.00131). R15 09:36 DONE (no fresh name).",
@@ -62,7 +83,9 @@
   "[13:43] R4 BESS VETO 13:39-13:43 (2.19-2.20/2.28, 3.6-4.0%). RL 13:40 step run late at 13:42 (box slow; within 5-min window) NOTHING (br -0.01255).",
   "[13:50] 13:50 R4 BESS still VETO (spread 3.6-4.5%), shadow leg open; RL 13:45 NOTHING (br -0.0138); R15 DONE; no official trades",
   "[13:55] 13:55 R4 BESS VETO (spread 3.2%), RL 13:50 NOTHING (br -0.0115)",
-  "[14:00] 14:00 R4 BESS VETO (spread 2.3%); RL 13:55 NOTHING (br -0.0106); 13:58 tick skipped (slow box)"
+  "[14:00] 14:00 R4 BESS VETO (spread 2.3%); RL 13:55 NOTHING (br -0.0106); 13:58 tick skipped (slow box)",
+  "[14:05] 14:05 R4 BESS model leg closed 13:59 @2.23 (bearish; entry 2.069 @10:06) -- shadow only, never PASSed the book check. R4 FLAT; R4 grid 14:00 MISSED (BESS exit only visible after 14:03 bar ingest; R4 was running --check-book only). Resuming R4 scans 14:05-14:25.",
+  "14:07 R4 ENTER GLWG x621 @16.08 (bid 16.03, spread 0.31%, depth 36082 >= 25% of 621) decision 14:05 -- PASS; halal REFUSE-TO-EVALUATE (tag only)"
  ],
  "errors": [],
  "ops": {
@@ -75,6 +98,6 @@
    "at_et": "09:11"
   },
   "session": "TRADING 2026-10-06 full (close 16:00)",
-  "last_cycle": "14:00:10"
+  "last_cycle": "14:05:30"
  }
 }
