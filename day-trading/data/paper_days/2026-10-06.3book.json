@@ -116,7 +116,8 @@
   "[15:46] 15:46 RL 15:45 NOTHING (br -0.0166)",
   "[15:51] 15:51 RL 15:50 NOTHING (br -0.0166)",
   "[15:56] 15:56 RL 15:55 NOTHING (br -0.0158) -- RL grid done, no RL trade today. All books flat.",
-  "[16:01] 16:03 EOD: p3_eod run (r4 1 trade -267.03, model -257.71; r15 0; rl 0). All books flat, watchers done. NOTES-DAYTRADING.md updated."
+  "[16:01] 16:03 EOD: p3_eod run (r4 1 trade -267.03, model -257.71; r15 0; rl 0). All books flat, watchers done. NOTES-DAYTRADING.md updated.",
+  "[16:08] 16:08 RL watcher BOOK FLAT -- watcher done (16:04:09). All three watchers done; session complete."
  ],
  "errors": [],
  "ops": {
@@ -129,7 +130,7 @@
    "at_et": "09:11"
   },
   "session": "TRADING 2026-10-06 full (close 16:00)",
-  "last_cycle": "16:01:36"
+  "last_cycle": "16:08:05"
  },
  "eod": {
   "r4": {
