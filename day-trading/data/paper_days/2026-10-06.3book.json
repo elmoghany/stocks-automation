@@ -25,7 +25,15 @@
     "depth": 36082,
     "want": 621
    },
-   "model_note": "R4 coil rank #1 at grid 14:05 (top8 GLWG FNG LNOK SEGG OKLC EUDA NBIC SMRX); entered at ask, watcher r4 owns exit (flatten 15:00)"
+   "model_note": "R4 coil rank #1 at grid 14:05 (top8 GLWG FNG LNOK SEGG OKLC EUDA NBIC SMRX); entered at ask, watcher r4 owns exit (flatten 15:00)",
+   "exit_time": "15:01",
+   "exit_decided": "14:59",
+   "exit_reason": "R4 flatten (15:00)",
+   "exit_bid": 15.65,
+   "exit_ask": 15.68,
+   "exit_fill": 15.65,
+   "model_exit": 15.665,
+   "pnl_quote": -267.03
   }
  ],
  "notes": [
@@ -87,7 +95,15 @@
   "[14:05] 14:05 R4 BESS model leg closed 13:59 @2.23 (bearish; entry 2.069 @10:06) -- shadow only, never PASSed the book check. R4 FLAT; R4 grid 14:00 MISSED (BESS exit only visible after 14:03 bar ingest; R4 was running --check-book only). Resuming R4 scans 14:05-14:25.",
   "14:07 R4 ENTER GLWG x621 @16.08 (bid 16.03, spread 0.31%, depth 36082 >= 25% of 621) decision 14:05 -- PASS; halal REFUSE-TO-EVALUATE (tag only)",
   "[14:22] 14:22 OUTAGE/STALL ~14:09-14:19 (tool call hung; box stalled): RL grid 14:10 and 14:15 MISSED (no snapshot; p3_rl logged GAP); RL 14:05 NOTHING (br -0.0106), RL 14:20 NOTHING (br -0.0116). R4 holds GLWG (watcher r4 open, last TICK on bar 14:05 until bars re-ingested 14:21). R4 grid 14:10-14:25 BLOCKED (book holds GLWG).",
-  "[14:26] 14:26 RL 14:25 NOTHING (br -0.0138); R4 grid closed (14:25 last; book held GLWG). GLWG bid 15.76/15.81 (entry 16.08)"
+  "[14:26] 14:26 RL 14:25 NOTHING (br -0.0138); R4 grid closed (14:25 last; book held GLWG). GLWG bid 15.76/15.81 (entry 16.08)",
+  "[14:31] 14:31 RL 14:30 NOTHING (br -0.0123); R4 GLWG bid 15.77 (open P&L ~-90)",
+  "[14:37] 14:36 RL 14:35 NOTHING (br -0.0145); R4 GLWG bid 15.77",
+  "[14:41] 14:41 RL 14:40 NOTHING (br -0.0143); R4 GLWG bid 15.70",
+  "[14:47] 14:46 RL 14:45 NOTHING (br -0.0146); R4 GLWG bid 15.69",
+  "[14:51] 14:51 RL 14:50 NOTHING (br -0.0136); R4 GLWG bid 15.62",
+  "[14:56] 14:56 RL 14:55 NOTHING (br -0.0126); R4 GLWG bid 15.65, watcher flatten 15:00",
+  "[15:01:16] EXIT-SIGNAL GLWG flatten decided 14:59 model px 15.665 quote bid 15.65 ask 15.68 (age 77s)",
+  "[15:01:16] EXIT-R4-FLATTEN GLWG @ 15.6500 x621 P&L $-267.03 -- R4 book FLAT"
  ],
  "errors": [],
  "ops": {
@@ -100,6 +116,6 @@
    "at_et": "09:11"
   },
   "session": "TRADING 2026-10-06 full (close 16:00)",
-  "last_cycle": "14:29:30"
+  "last_cycle": "15:01:19"
  }
 }

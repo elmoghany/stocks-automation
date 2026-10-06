@@ -1,0 +1,62 @@
+{
+ "date": "2026-10-06",
+ "records": [
+  {
+   "sym": "GLWG",
+   "ticket": null,
+   "date": "2026-10-06",
+   "mode": "r4",
+   "entry": 16.08,
+   "shares_initial": 621,
+   "entry_bar_utc": "2026-10-06T18:07:00Z",
+   "prev_close": null,
+   "exit_kind": "exit-r4-flatten",
+   "fills": [
+    {
+     "kind": "EXIT-R4-FLATTEN",
+     "time": "2026-10-06T15:01:14.423514-04:00",
+     "shares": 621,
+     "px": 15.65,
+     "src": "stop level"
+    }
+   ],
+   "vwap": 15.65,
+   "shares_exited": 621,
+   "scale_out": null,
+   "banked": 0.0,
+   "pnl": -267.03,
+   "peak": 16.1,
+   "rungs": [],
+   "deployed": 9985.68,
+   "exit_time": "2026-10-06T15:01:14.423514-04:00",
+   "booked_at": "2026-10-06T15:01:14.423514-04:00",
+   "exit_parity": null,
+   "p3": {
+    "book": "r4",
+    "mode": "r4",
+    "reason": "flatten",
+    "decided_min": "14:59",
+    "model_exit": 15.665,
+    "model_exit_min": "14:59",
+    "model_entry": 16.08,
+    "model_entry_min": "14:06",
+    "model_pnl": -257.71,
+    "exit_quote": {
+     "bid": 15.65,
+     "ask": 15.68,
+     "mid": 15.665,
+     "ts": "2026-10-06T18:59:57Z",
+     "age_s": 77.4
+    },
+    "entry_quote": {
+     "bid": 16.03,
+     "ask": 16.08,
+     "mid": 16.055,
+     "cost_bps_vs_mid": 15.57
+    },
+    "exit_cost_bps_vs_mid": 9.58,
+    "official_src": "quote-bid"
+   }
+  }
+ ]
+}
