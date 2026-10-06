@@ -39,7 +39,13 @@
   "[11:42] R4 BESS VETO 11:38-11:42 (2.00/2.32 14.8%, quote frozen since 11:32:24). RL 11:40 NOTHING (br -0.00753).",
   "[11:51] R4 BESS VETO 11:43-11:51 (2.11-2.17/2.32-2.34, 6.7-10.3%; BESS woke up: prints 11:46-11:49 2.21-2.29, ~5.7k sh; model leg peak 2.2899 vs entry 2.069). RL 11:45 NOTHING (br -0.00746), 11:50 NOTHING (br -0.00727).",
   "[11:57] R4 BESS VETO 11:52-11:57 (2.09-2.18/2.31-2.34, 7.1-10.4%; BESS active 2.13-2.26, 10k sh in 11:54 bar). RL 11:55 NOTHING (br -0.00881).",
-  "[12:01] R4 BESS VETO 11:58-12:01 (2.15-2.18/2.26-2.34, 5.0-8.5%; BESS climbing 2.28-2.34 prints, model leg peak high 2.34). RL 12:00 NOTHING (br -0.00865)."
+  "[12:01] R4 BESS VETO 11:58-12:01 (2.15-2.18/2.26-2.34, 5.0-8.5%; BESS climbing 2.28-2.34 prints, model leg peak high 2.34). RL 12:00 NOTHING (br -0.00865).",
+  "[12:07] R4 BESS VETO 12:02-12:07 (2.09-2.12/2.26, 6.4-7.8%). RL 12:05 NOTHING (br -0.00994).",
+  "[12:12] R4 BESS VETO 12:08-12:12 (2.09-2.11/2.26). RL 12:10 NOTHING (br -0.01332).",
+  "[12:17] R4 BESS VETO 12:13-12:17 (2.11/2.26 6.9%). RL 12:15 NOTHING (br -0.01144).",
+  "[12:22] R4 BESS VETO 12:18-12:22 (2.11/2.25 6.4%). RL 12:20 NOTHING (br -0.01014).",
+  "[12:27] R4 BESS VETO 12:23-12:27 (2.11/2.25 6.4%, quote frozen since 12:21:50). RL 12:25 NOTHING (br -0.01192).",
+  "[12:31] R4 BESS VETO 12:28-12:31 (2.11-2.12/2.25, 6.0-6.4%). RL 12:30 NOTHING."
  ],
  "errors": [],
  "ops": {
@@ -52,6 +58,6 @@
    "at_et": "09:11"
   },
   "session": "TRADING 2026-10-06 full (close 16:00)",
-  "last_cycle": "12:01:35"
+  "last_cycle": "12:31:27"
  }
 }
