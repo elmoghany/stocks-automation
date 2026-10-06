@@ -2,6 +2,27 @@
 
 ## PAPER-3BOOK
 
+### 2026-10-06 (PAPER-3BOOK day 3): full headless session; R4 −$267.03 on one trade, R15 and RL flat
+
+The session ran headless from 09:10 to after 16:00. The watchers ran detached (PIDs 14404/11572/16740) and each logged BOOK FLAT. Zero real orders.
+
+- **R4**: 1 official trade, GLWG, −$267.03 on quote fills (−$257.71 at model fills).
+  - Entry: 621 shares at 16.08, decision 14:05, filled 14:07. The book check passed (spread 0.31%, depth 36,082 sh).
+  - Exit: the watcher's 15:00 flatten at bid 15.65. Cost vs mid was 12.6 bps per side. Halal verdict: REFUSE-TO-EVALUATE.
+  - Three earlier model legs were vetoed every minute and scored as shadow legs:
+    - XHG (09:35): spread 1.3–2.1%, plus LULD halts. Trail exit 4.408. Shadow +$1,479.
+    - APUS (09:50): spread 0.64–3.6%. Trail exit 6.147. Shadow −$514.
+    - BESS (10:05): spread 2.3–14.8%, depth 400 sh. Held all day, bearish exit 13:59 at 2.23. Shadow +$372.
+  - The R4 parity book (trades plus shadow legs) was +$1,070. Today the veto cost money, unlike day 2.
+  - The day was −$263.84 against the −$3.19/day expectation. Cumulative over 3 days: −$60.39 on 2 trades.
+- **R15**: 0 trades. None of the earnings-calendar names were in the universe, so R15 printed DONE at 09:36. Flat, against +$21.71/day expected.
+- **RL**: 0 trades. Every grid step printed NOTHING. Breadth ran from about +0.002 down to −0.018, never below the −0.02379 gate. Flat, against +$5.77/day expected.
+- **Ops lessons**:
+  - BESS's model exit (13:59) only became visible after its bars were ingested at 14:03, so the R4 14:00 grid step was MISSED. While a model leg is open, ingest its bars every minute, not only on the check-book cadence.
+  - The machine stalled from about 14:09 to 14:19. One RL transcription call hung past the 120 s tool timeout, so the RL 14:10 and 14:15 steps were missed (p3_rl logged GAP).
+  - A `wait_until` of more than 2 minutes needs an explicit Bash `timeout`. Without it, the call gets backgrounded at 120 s.
+  - The R4 watcher books the 15:00 flatten only once a fresh quote is present. It fired at 15:01:16 using the 14:59:57 quote (77 s old).
+
 ### 2026-10-05 (PAPER-3BOOK day 2): full headless session; R4 +$206.64 on one trade, R15 and RL flat
 
 The session ran headless from 09:10 to after 16:00, with no gaps. The capability probe was green. The watchers ran detached via PowerShell Start-Process (PIDs 13844/4900/7364), so the harness time limit could not kill them. The ledger was committed every ≤30 min and after the one entry and the one exit. Zero real orders.

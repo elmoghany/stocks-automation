@@ -109,7 +109,14 @@
   "[15:11] 15:11 RL 15:10 NOTHING (br -0.0138)",
   "[15:16] 15:16 RL 15:15 NOTHING (br -0.0157)",
   "[15:22] 15:21 RL 15:20 NOTHING (br -0.0170)",
-  "[15:27] 15:26 RL 15:25 NOTHING (br -0.0162)"
+  "[15:27] 15:26 RL 15:25 NOTHING (br -0.0162)",
+  "[15:32] 15:31 RL 15:30 NOTHING (br -0.0171)",
+  "[15:36] 15:36 RL 15:35 NOTHING (br -0.0174)",
+  "[15:41] 15:41 RL 15:40 NOTHING (br -0.0179)",
+  "[15:46] 15:46 RL 15:45 NOTHING (br -0.0166)",
+  "[15:51] 15:51 RL 15:50 NOTHING (br -0.0166)",
+  "[15:56] 15:56 RL 15:55 NOTHING (br -0.0158) -- RL grid done, no RL trade today. All books flat.",
+  "[16:01] 16:03 EOD: p3_eod run (r4 1 trade -267.03, model -257.71; r15 0; rl 0). All books flat, watchers done. NOTES-DAYTRADING.md updated."
  ],
  "errors": [],
  "ops": {
@@ -122,6 +129,178 @@
    "at_et": "09:11"
   },
   "session": "TRADING 2026-10-06 full (close 16:00)",
-  "last_cycle": "15:27:00"
+  "last_cycle": "16:01:36"
+ },
+ "eod": {
+  "r4": {
+   "trades": 1,
+   "pnl": -267.03,
+   "model_pnl": -257.71,
+   "halal_pass_trades": 0,
+   "pnl_halal_pass": 0.0,
+   "per_trade": -267.03,
+   "cost_bps_per_side_vs_mid_mean": 12.61,
+   "cost_usd_vs_mid": 24.84,
+   "expectation": {
+    "per_trade": -1.21,
+    "per_day": -3.19,
+    "trades_per_day": 2.637,
+    "per_trade_at_28_75bps": -23.65,
+    "per_day_at_28_75bps": -62.38,
+    "backtest_per_trade": -2.21,
+    "backtest_per_trade_ex_top5": -65.17,
+    "aug2026_note": "R4 lost -$4,392 over the 22 out-of-sample August-2026 sessions (LEGACY-14 / champion-replay OOS block); a red first weeks is inside expectation",
+    "legacy2_note": "causal coil tie-break (volume so far, then seeded hash) replaces the published pool-file order, which leaked full-day volume: realistic R4 is about break-even after costs",
+    "legacy15_note": "with the live 0.5% spread veto the kept legs are ~ -$28 gross per $10k ex-top-5 (LEGACY-15); the backtest edge lives in the thin names the veto refuses -- the SHADOW book measures that"
+   },
+   "vs_expectation": {
+    "pnl_minus_expected_day": -263.84,
+    "per_trade_minus_expected": -265.82,
+    "trades_minus_expected_rate": -1.64
+   },
+   "trade_list": [
+    {
+     "sym": "GLWG",
+     "shares": 621,
+     "entry": 16.08,
+     "exit": 15.65,
+     "pnl": -267.03,
+     "model_entry": 16.08,
+     "model_exit": 15.665,
+     "model_pnl": -257.71,
+     "reason": "flatten",
+     "entry_cost_bps_vs_mid": 15.57,
+     "exit_cost_bps_vs_mid": 9.58,
+     "cost_usd_vs_mid": 24.84,
+     "cost_bps_per_side_vs_mid": 12.61,
+     "official_src": "quote-bid",
+     "halal": "REFUSE-TO-EVALUATE",
+     "halal_pass": false
+    }
+   ],
+   "shadow_legs": [
+    {
+     "key": "XHG@09:35",
+     "sym": "XHG",
+     "shares": 2604,
+     "entry": 3.84,
+     "exit": 4.408,
+     "exit_min": "09:47",
+     "reason": "trail 0.20",
+     "why": "SPREAD 1.31% > 0.50%",
+     "pnl": 1479.07
+    },
+    {
+     "key": "APUS@09:50",
+     "sym": "APUS",
+     "shares": 1543,
+     "entry": 6.48,
+     "exit": 6.14691,
+     "exit_min": "10:03",
+     "reason": "trail 0.10",
+     "why": "SPREAD 1.87% > 0.50%",
+     "pnl": -513.96
+    },
+    {
+     "key": "BESS@10:05",
+     "sym": "BESS",
+     "shares": 4651,
+     "entry": 2.15,
+     "exit": 2.23,
+     "exit_min": "13:59",
+     "reason": "bearish",
+     "why": "SPREAD 6.24% > 0.50%; DEPTH 400.0 sh < 25% of 4651",
+     "pnl": 372.08
+    }
+   ],
+   "shadow_pnl": 1337.19,
+   "parity_book_pnl": 1070.16
+  },
+  "r15": {
+   "trades": 0,
+   "pnl": 0.0,
+   "model_pnl": 0.0,
+   "halal_pass_trades": 0,
+   "pnl_halal_pass": 0.0,
+   "per_trade": null,
+   "cost_bps_per_side_vs_mid_mean": null,
+   "cost_usd_vs_mid": 0.0,
+   "expectation": {
+    "per_trade": 87.62,
+    "per_day": 21.71,
+    "trades_per_day": 0.2478,
+    "backtest_per_trade": 87.15,
+    "backtest_per_trade_ex_top5": 36.07
+   },
+   "vs_expectation": {
+    "pnl_minus_expected_day": -21.71,
+    "per_trade_minus_expected": null,
+    "trades_minus_expected_rate": -0.25
+   },
+   "trade_list": []
+  },
+  "rl": {
+   "trades": 0,
+   "pnl": 0.0,
+   "model_pnl": 0.0,
+   "halal_pass_trades": 0,
+   "pnl_halal_pass": 0.0,
+   "per_trade": null,
+   "cost_bps_per_side_vs_mid_mean": null,
+   "cost_usd_vs_mid": 0.0,
+   "expectation": {
+    "per_trade": 16.92,
+    "per_day": 5.77,
+    "trades_per_day": 0.341,
+    "backtest_per_trade": 30.95,
+    "backtest_per_trade_ex_top5": 18.1
+   },
+   "vs_expectation": {
+    "pnl_minus_expected_day": -5.77,
+    "per_trade_minus_expected": null,
+    "trades_minus_expected_rate": -0.34
+   },
+   "trade_list": []
+  }
+ },
+ "cumulative": {
+  "r4": {
+   "days": 3,
+   "trades": 2,
+   "pnl": -60.39,
+   "model_pnl": -8.71,
+   "pnl_halal_pass": 0.0,
+   "cost_usd_vs_mid": 50.67,
+   "pnl_ex_top5": null,
+   "per_trade_ex_top5": null,
+   "shadow_pnl": -1419.67,
+   "parity_book_pnl": -1480.06,
+   "expected_pnl": -9.57,
+   "expected_trades": 7.91
+  },
+  "r15": {
+   "days": 3,
+   "trades": 0,
+   "pnl": 0.0,
+   "model_pnl": 0.0,
+   "pnl_halal_pass": 0.0,
+   "cost_usd_vs_mid": 0,
+   "pnl_ex_top5": null,
+   "per_trade_ex_top5": null,
+   "expected_pnl": 65.13,
+   "expected_trades": 0.74
+  },
+  "rl": {
+   "days": 3,
+   "trades": 0,
+   "pnl": 0.0,
+   "model_pnl": 0.0,
+   "pnl_halal_pass": 0.0,
+   "cost_usd_vs_mid": 0,
+   "pnl_ex_top5": null,
+   "per_trade_ex_top5": null,
+   "expected_pnl": 17.31,
+   "expected_trades": 1.02
+  }
  }
 }
