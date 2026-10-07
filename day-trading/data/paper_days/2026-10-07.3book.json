@@ -25,7 +25,12 @@
   "[10:36] RL 10:35 NOTHING (br -0.00156).",
   "[10:41] RL 10:40 NOTHING (br -0.0002).",
   "[10:46] RL 10:45 NOTHING (br -0.00334).",
-  "[10:51] RL 10:50 scan ingested."
+  "[10:51] RL 10:50 scan ingested.",
+  "[10:56] RL 10:50 NOTHING (br -0.0031), 10:55 NOTHING (br -0.00204).",
+  "[11:01] RL 11:00 NOTHING (br -0.00379).",
+  "[11:06] RL 11:05 NOTHING (br -0.00285).",
+  "[11:11] RL 11:10 NOTHING (br -0.00185).",
+  "[11:16] RL 11:15 scan ingested."
  ],
  "errors": [],
  "ops": {
@@ -38,7 +43,7 @@
    "at_et": "09:11"
   },
   "session": "TRADING 2026-10-07 full (close 16:00)",
-  "last_cycle": "10:51:31"
+  "last_cycle": "11:16:30"
  },
  "divergences": [
   "[10:04] R4 PENU@09:50 MISSED: SMZ (rank #2) first printed after 09:50 only at 10:03 (250 sh) with 0 volume in the 5 prior bars -> model fill size 0 < $500 -> model fell through to PENU (rank #3), whose model fill is 09:51 @37.6101 (cap 265 sh) -- a retroactive (look-ahead) leg; became known 10:04 > 5 min after decision -> MISSED, no entry, no shadow. SMZ checks 09:56-10:04 all VETO (spread 0.60-0.94%)."
