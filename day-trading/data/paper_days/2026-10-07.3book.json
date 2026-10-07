@@ -15,7 +15,12 @@
   "[09:42] 09:39-09:40 SMXT still halted (locked 4.06, 4.02). 09:40 reopened (bar O4.20 H4.35 L3.80 C3.87 v58.8k). R4 model leg entered 09:40 @4.20 (shares_cap 1935). Official 09:41 VETO (3.84/4.00 spread 4.08%, depth 1721 vs want 2500) -> SHADOW leg (ask 4.00 @09:41). Re-check every minute while the model leg is open. RL 09:40 NOTHING (br -0.0001).",
   "[09:52] R4 SMXT model leg CLOSED: entry 09:40 @4.20 -> exit 09:49 @3.7466 (trail 10%, pressure tightened; peak high 4.35). Official leg never entered (VETO every live check 09:41-09:49: spread 2.9%-7.0%, depth 100-1721 vs want ~2500). SHADOW leg: first veto ask 4.00 (09:41) -> model exit 3.7466. (09:50 check ran after model exit; ignore.) R4 grid 09:50 (scan 09:51:0x, 45 rows; top8 FEDU SMZ PENU COHQ BMNZ CRCD RKLZ AAOZ; bars spilled+ingested): ENTER FEDU (only 2 bars all day; last trade 09:44). 09:51 VETO (11.51/13.26 spread 14.1%, depth 91 vs want 754). RL 09:45 NOTHING (br +0.00283), 09:50 NOTHING (br +0.00155).",
   "[09:56] R4 FEDU: first print after 09:50 was the 09:54 bar (100 sh @11.51) -> model fill below $500 (size cap) -> model fell through to SMZ (rank #2, decided at grid 09:50, became known 09:55 = 5 min, not stale). FEDU checks 09:52-09:55 all VETO (spread 7-19%, depth 91-253). SMZ 09:56 VETO (20.18/20.31 spread 0.64%, depth 600 vs want 492) -> SHADOW. RL 09:55 NOTHING (br +0.0021).",
-  "[10:01] R4 SMZ VETO 09:57 (0.64%), 09:58 (0.79%), 09:59 (0.65%), 10:00 (0.60%), 10:01 (0.69%); SMZ no prints since ~09:44, model leg not yet entered (ARMED). RL 10:00 NOTHING (br +0.00075)."
+  "[10:01] R4 SMZ VETO 09:57 (0.64%), 09:58 (0.79%), 09:59 (0.65%), 10:00 (0.60%), 10:01 (0.69%); SMZ no prints since ~09:44, model leg not yet entered (ARMED). RL 10:00 NOTHING (br +0.00075).",
+  "[10:04] R4: model leg PENU (decided 09:50, model entry 09:51 @37.6101) is MISSED live (stale, see divergences); the model holds it -> R4 tracks PENU bars each minute until the model exits, then resumes at the next grid.",
+  "[10:11] RL 10:05 NOTHING (br -0.00114), 10:10 NOTHING (br -0.00391). R4 model PENU holding (MISSED live), tracked each minute.",
+  "[10:16] RL 10:15 NOTHING (br -0.00213).",
+  "[10:21] RL 10:20 NOTHING (br +0.0001).",
+  "[10:26] RL 10:25 scan ingested."
  ],
  "errors": [],
  "ops": {
@@ -28,6 +33,9 @@
    "at_et": "09:11"
   },
   "session": "TRADING 2026-10-07 full (close 16:00)",
-  "last_cycle": "10:01:39"
- }
+  "last_cycle": "10:26:30"
+ },
+ "divergences": [
+  "[10:04] R4 PENU@09:50 MISSED: SMZ (rank #2) first printed after 09:50 only at 10:03 (250 sh) with 0 volume in the 5 prior bars -> model fill size 0 < $500 -> model fell through to PENU (rank #3), whose model fill is 09:51 @37.6101 (cap 265 sh) -- a retroactive (look-ahead) leg; became known 10:04 > 5 min after decision -> MISSED, no entry, no shadow. SMZ checks 09:56-10:04 all VETO (spread 0.60-0.94%)."
+ ]
 }
