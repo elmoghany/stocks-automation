@@ -9,7 +9,10 @@
  "trades": [],
  "notes": [
   "[09:10] Session clock: TRADING 2026-10-07 full (close 16:00). Capability probe green (python, git, MCP SPY quote). Universe asof 2026-10-02 (current month, no refresh).",
-  "[09:11] R15 earnings calendar (2026-10-07, days=-2): 31 rows, 28 in window, 0 in the 95-name universe -> R15 no fresh names (expected DONE at 09:36). Watchers r4/r15/rl launched DETACHED via PowerShell Start-Process (PIDs 828/18060/1532); logs data/paper/watch_{book}_2026-10-07.log/.err"
+  "[09:11] R15 earnings calendar (2026-10-07, days=-2): 31 rows, 28 in window, 0 in the 95-name universe -> R15 no fresh names (expected DONE at 09:36). Watchers r4/r15/rl launched DETACHED via PowerShell Start-Process (PIDs 828/18060/1532); logs data/paper/watch_{book}_2026-10-07.log/.err",
+  "[09:31] RL 09:30 NOTHING (br 0.0, n_cand 0; scan 09:31:0x).",
+  "[09:37] R4 grid 09:35 (scan 09:36:1x, 26 rows; top8 SMXT ACYQ ASTN ETHD GDXD MSTZ BMNZ CRCD; bars 04:00->now spilled+ingested): ENTER SMXT. Check 09:37: SMXT LULD-HALTED (last trade 09:35:27 @4.06; quote locked 4.35/4.35; price book CROSSED best bid 4.79 > best ask 3.33 = halt auction). Locked quote NOT fed to --check-book (same handling as XHG 10-06). 09:38 still locked 4.20/4.20. Re-check each minute while ENTER. RL 09:30 NOTHING (br 0.0), 09:35 NOTHING (br +0.00454). R15 09:36 DONE (no fresh name).",
+  "[09:42] 09:39-09:40 SMXT still halted (locked 4.06, 4.02). 09:40 reopened (bar O4.20 H4.35 L3.80 C3.87 v58.8k). R4 model leg entered 09:40 @4.20 (shares_cap 1935). Official 09:41 VETO (3.84/4.00 spread 4.08%, depth 1721 vs want 2500) -> SHADOW leg (ask 4.00 @09:41). Re-check every minute while the model leg is open. RL 09:40 NOTHING (br -0.0001)."
  ],
  "errors": [],
  "ops": {
@@ -22,6 +25,6 @@
    "at_et": "09:11"
   },
   "session": "TRADING 2026-10-07 full (close 16:00)",
-  "last_cycle": "09:11:43"
+  "last_cycle": "09:42:00"
  }
 }
