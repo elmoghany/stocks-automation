@@ -87,7 +87,8 @@
   "[15:46] RL 15:45 NOTHING (br -0.00172).",
   "[15:51] RL 15:50 NOTHING (br +0.00066).",
   "[15:56] RL 15:55 NOTHING (br +0.00016). RL decision window closed (last grid 15:55): no RL entries today.",
-  "[16:01] EOD: p3_eod run (all books 0 trades, /usr/bin/bash.00; R4 parity book -633.50 from SMXT shadow). NOTES-DAYTRADING.md PAPER-3BOOK day-4 paragraph added. Watchers r4/r15 BOOK FLAT done; rl watcher finishing after 16:02 rung."
+  "[16:01] EOD: p3_eod run (all books 0 trades, /usr/bin/bash.00; R4 parity book -633.50 from SMXT shadow). NOTES-DAYTRADING.md PAPER-3BOOK day-4 paragraph added. Watchers r4/r15 BOOK FLAT done; rl watcher finishing after 16:02 rung.",
+  "[16:05] Watchers verified stopped: r4 BOOK FLAT 15:07:27, r15 15:02:27, rl 16:04:15; PIDs 828/18060/1532 gone. Session complete, zero real orders."
  ],
  "errors": [],
  "ops": {
@@ -100,7 +101,7 @@
    "at_et": "09:11"
   },
   "session": "TRADING 2026-10-07 full (close 16:00)",
-  "last_cycle": "16:01:36"
+  "last_cycle": "16:05:08"
  },
  "divergences": [
   "[10:04] R4 PENU@09:50 MISSED: SMZ (rank #2) first printed after 09:50 only at 10:03 (250 sh) with 0 volume in the 5 prior bars -> model fill size 0 < $500 -> model fell through to PENU (rank #3), whose model fill is 09:51 @37.6101 (cap 265 sh) -- a retroactive (look-ahead) leg; became known 10:04 > 5 min after decision -> MISSED, no entry, no shadow. SMZ checks 09:56-10:04 all VETO (spread 0.60-0.94%)."
