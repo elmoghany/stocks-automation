@@ -2,6 +2,21 @@
 
 ## PAPER-3BOOK
 
+### 2026-10-07 (PAPER-3BOOK day 4): full headless session; no trades in any book (all flat, $0.00)
+
+The session ran headless from 09:10 to after 16:00. The capability probe was green. The watchers ran detached (PIDs 828/18060/1532). The ledger was committed every ≤30 min. Zero real orders.
+
+- **R4**: 0 official trades, $0.00.
+  - SMXT (09:35 grid) halted on LULD. When it reopened, the model leg entered at 09:40 @4.20 and trailed out at 09:49 @3.7466. The official leg was vetoed every minute (spread 2.9–7.0%, depth below 25%). It was scored as a shadow leg: ask 4.00 → 3.7466, −$633.50.
+  - At the 09:50 grid, FEDU (only 2 prints, model fill under $500) and then SMZ (no prints until 10:03) fell through to PENU. PENU's model fill was 09:51, but the leg only became known at 10:04, so it was MISSED (look-ahead, no shadow).
+  - The model held PENU (37.61 → about 34.3) past the last grid at 14:25, so R4 made no further decisions.
+  - The parity book was −$633.50. The day was +$3.19 vs the −$3.19/day expectation. Cumulative over 4 days: −$60.39 on 2 trades.
+- **R15**: 0 trades. None of the 28 calendar names were in the universe, so R15 printed DONE at 09:36. Flat, against +$21.71/day expected.
+- **RL**: 0 trades. All 78 grid steps (09:30–15:55) printed NOTHING. Breadth stayed between about −0.004 and +0.005, far from the −0.02379 gate. Flat, against +$5.77/day expected.
+- **Ops lessons**:
+  - A fall-through to a lower-ranked name can surface a leg whose model fill is already more than 5 minutes old. That leg is correctly MISSED, but it then blocks R4 for the rest of the day while the model holds it. Worth checking in the backtest how often a stale fall-through freezes the book.
+  - There were no gaps today. Keeping each RL transcription in a single call, with waits run separately, avoided the 10-06 stall.
+
 ### 2026-10-06 (PAPER-3BOOK day 3): full headless session; R4 −$267.03 on one trade, R15 and RL flat
 
 The session ran headless from 09:10 to after 16:00. The watchers ran detached (PIDs 14404/11572/16740) and each logged BOOK FLAT. Zero real orders.

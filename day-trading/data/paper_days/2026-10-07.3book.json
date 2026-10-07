@@ -80,7 +80,14 @@
   "[15:11] RL 15:10 NOTHING (br +0.00223).",
   "[15:16] RL 15:15 NOTHING (br -0.00105).",
   "[15:21] RL 15:20 NOTHING (br +0.00108).",
-  "[15:26] RL 15:25 NOTHING (br -0.00157)."
+  "[15:26] RL 15:25 NOTHING (br -0.00157).",
+  "[15:31] RL 15:30 NOTHING (br -0.00001).",
+  "[15:36] RL 15:35 NOTHING (br -0.00056).",
+  "[15:41] RL 15:40 NOTHING (br -0.00173).",
+  "[15:46] RL 15:45 NOTHING (br -0.00172).",
+  "[15:51] RL 15:50 NOTHING (br +0.00066).",
+  "[15:56] RL 15:55 NOTHING (br +0.00016). RL decision window closed (last grid 15:55): no RL entries today.",
+  "[16:01] EOD: p3_eod run (all books 0 trades, /usr/bin/bash.00; R4 parity book -633.50 from SMXT shadow). NOTES-DAYTRADING.md PAPER-3BOOK day-4 paragraph added. Watchers r4/r15 BOOK FLAT done; rl watcher finishing after 16:02 rung."
  ],
  "errors": [],
  "ops": {
@@ -93,9 +100,150 @@
    "at_et": "09:11"
   },
   "session": "TRADING 2026-10-07 full (close 16:00)",
-  "last_cycle": "15:26:39"
+  "last_cycle": "16:01:36"
  },
  "divergences": [
   "[10:04] R4 PENU@09:50 MISSED: SMZ (rank #2) first printed after 09:50 only at 10:03 (250 sh) with 0 volume in the 5 prior bars -> model fill size 0 < $500 -> model fell through to PENU (rank #3), whose model fill is 09:51 @37.6101 (cap 265 sh) -- a retroactive (look-ahead) leg; became known 10:04 > 5 min after decision -> MISSED, no entry, no shadow. SMZ checks 09:56-10:04 all VETO (spread 0.60-0.94%)."
- ]
+ ],
+ "eod": {
+  "r4": {
+   "trades": 0,
+   "pnl": 0.0,
+   "model_pnl": 0.0,
+   "halal_pass_trades": 0,
+   "pnl_halal_pass": 0.0,
+   "per_trade": null,
+   "cost_bps_per_side_vs_mid_mean": null,
+   "cost_usd_vs_mid": 0.0,
+   "expectation": {
+    "per_trade": -1.21,
+    "per_day": -3.19,
+    "trades_per_day": 2.637,
+    "per_trade_at_28_75bps": -23.65,
+    "per_day_at_28_75bps": -62.38,
+    "backtest_per_trade": -2.21,
+    "backtest_per_trade_ex_top5": -65.17,
+    "aug2026_note": "R4 lost -$4,392 over the 22 out-of-sample August-2026 sessions (LEGACY-14 / champion-replay OOS block); a red first weeks is inside expectation",
+    "legacy2_note": "causal coil tie-break (volume so far, then seeded hash) replaces the published pool-file order, which leaked full-day volume: realistic R4 is about break-even after costs",
+    "legacy15_note": "with the live 0.5% spread veto the kept legs are ~ -$28 gross per $10k ex-top-5 (LEGACY-15); the backtest edge lives in the thin names the veto refuses -- the SHADOW book measures that"
+   },
+   "vs_expectation": {
+    "pnl_minus_expected_day": 3.19,
+    "per_trade_minus_expected": null,
+    "trades_minus_expected_rate": -2.64
+   },
+   "trade_list": [],
+   "shadow_legs": [
+    {
+     "key": "SMXT@09:35",
+     "sym": "SMXT",
+     "shares": 2500,
+     "entry": 4.0,
+     "exit": 3.7466,
+     "exit_min": "09:49",
+     "reason": "trail 0.10",
+     "why": "SPREAD 4.08% > 0.50%",
+     "pnl": -633.5
+    },
+    {
+     "key": "FEDU@09:50",
+     "sym": "FEDU",
+     "status": "no model exit"
+    },
+    {
+     "key": "SMZ@09:50",
+     "sym": "SMZ",
+     "status": "no model exit"
+    }
+   ],
+   "shadow_pnl": -633.5,
+   "parity_book_pnl": -633.5
+  },
+  "r15": {
+   "trades": 0,
+   "pnl": 0.0,
+   "model_pnl": 0.0,
+   "halal_pass_trades": 0,
+   "pnl_halal_pass": 0.0,
+   "per_trade": null,
+   "cost_bps_per_side_vs_mid_mean": null,
+   "cost_usd_vs_mid": 0.0,
+   "expectation": {
+    "per_trade": 87.62,
+    "per_day": 21.71,
+    "trades_per_day": 0.2478,
+    "backtest_per_trade": 87.15,
+    "backtest_per_trade_ex_top5": 36.07
+   },
+   "vs_expectation": {
+    "pnl_minus_expected_day": -21.71,
+    "per_trade_minus_expected": null,
+    "trades_minus_expected_rate": -0.25
+   },
+   "trade_list": []
+  },
+  "rl": {
+   "trades": 0,
+   "pnl": 0.0,
+   "model_pnl": 0.0,
+   "halal_pass_trades": 0,
+   "pnl_halal_pass": 0.0,
+   "per_trade": null,
+   "cost_bps_per_side_vs_mid_mean": null,
+   "cost_usd_vs_mid": 0.0,
+   "expectation": {
+    "per_trade": 16.92,
+    "per_day": 5.77,
+    "trades_per_day": 0.341,
+    "backtest_per_trade": 30.95,
+    "backtest_per_trade_ex_top5": 18.1
+   },
+   "vs_expectation": {
+    "pnl_minus_expected_day": -5.77,
+    "per_trade_minus_expected": null,
+    "trades_minus_expected_rate": -0.34
+   },
+   "trade_list": []
+  }
+ },
+ "cumulative": {
+  "r4": {
+   "days": 4,
+   "trades": 2,
+   "pnl": -60.39,
+   "model_pnl": -8.71,
+   "pnl_halal_pass": 0.0,
+   "cost_usd_vs_mid": 50.67,
+   "pnl_ex_top5": null,
+   "per_trade_ex_top5": null,
+   "shadow_pnl": -2053.17,
+   "parity_book_pnl": -2113.56,
+   "expected_pnl": -12.76,
+   "expected_trades": 10.55
+  },
+  "r15": {
+   "days": 4,
+   "trades": 0,
+   "pnl": 0.0,
+   "model_pnl": 0.0,
+   "pnl_halal_pass": 0.0,
+   "cost_usd_vs_mid": 0,
+   "pnl_ex_top5": null,
+   "per_trade_ex_top5": null,
+   "expected_pnl": 86.84,
+   "expected_trades": 0.99
+  },
+  "rl": {
+   "days": 4,
+   "trades": 0,
+   "pnl": 0.0,
+   "model_pnl": 0.0,
+   "pnl_halal_pass": 0.0,
+   "cost_usd_vs_mid": 0,
+   "pnl_ex_top5": null,
+   "per_trade_ex_top5": null,
+   "expected_pnl": 23.08,
+   "expected_trades": 1.36
+  }
+ }
 }
