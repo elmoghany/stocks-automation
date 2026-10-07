@@ -13,7 +13,9 @@
   "[09:31] RL 09:30 NOTHING (br 0.0, n_cand 0; scan 09:31:0x).",
   "[09:37] R4 grid 09:35 (scan 09:36:1x, 26 rows; top8 SMXT ACYQ ASTN ETHD GDXD MSTZ BMNZ CRCD; bars 04:00->now spilled+ingested): ENTER SMXT. Check 09:37: SMXT LULD-HALTED (last trade 09:35:27 @4.06; quote locked 4.35/4.35; price book CROSSED best bid 4.79 > best ask 3.33 = halt auction). Locked quote NOT fed to --check-book (same handling as XHG 10-06). 09:38 still locked 4.20/4.20. Re-check each minute while ENTER. RL 09:30 NOTHING (br 0.0), 09:35 NOTHING (br +0.00454). R15 09:36 DONE (no fresh name).",
   "[09:42] 09:39-09:40 SMXT still halted (locked 4.06, 4.02). 09:40 reopened (bar O4.20 H4.35 L3.80 C3.87 v58.8k). R4 model leg entered 09:40 @4.20 (shares_cap 1935). Official 09:41 VETO (3.84/4.00 spread 4.08%, depth 1721 vs want 2500) -> SHADOW leg (ask 4.00 @09:41). Re-check every minute while the model leg is open. RL 09:40 NOTHING (br -0.0001).",
-  "[09:52] R4 SMXT model leg CLOSED: entry 09:40 @4.20 -> exit 09:49 @3.7466 (trail 10%, pressure tightened; peak high 4.35). Official leg never entered (VETO every live check 09:41-09:49: spread 2.9%-7.0%, depth 100-1721 vs want ~2500). SHADOW leg: first veto ask 4.00 (09:41) -> model exit 3.7466. (09:50 check ran after model exit; ignore.) R4 grid 09:50 (scan 09:51:0x, 45 rows; top8 FEDU SMZ PENU COHQ BMNZ CRCD RKLZ AAOZ; bars spilled+ingested): ENTER FEDU (only 2 bars all day; last trade 09:44). 09:51 VETO (11.51/13.26 spread 14.1%, depth 91 vs want 754). RL 09:45 NOTHING (br +0.00283), 09:50 NOTHING (br +0.00155)."
+  "[09:52] R4 SMXT model leg CLOSED: entry 09:40 @4.20 -> exit 09:49 @3.7466 (trail 10%, pressure tightened; peak high 4.35). Official leg never entered (VETO every live check 09:41-09:49: spread 2.9%-7.0%, depth 100-1721 vs want ~2500). SHADOW leg: first veto ask 4.00 (09:41) -> model exit 3.7466. (09:50 check ran after model exit; ignore.) R4 grid 09:50 (scan 09:51:0x, 45 rows; top8 FEDU SMZ PENU COHQ BMNZ CRCD RKLZ AAOZ; bars spilled+ingested): ENTER FEDU (only 2 bars all day; last trade 09:44). 09:51 VETO (11.51/13.26 spread 14.1%, depth 91 vs want 754). RL 09:45 NOTHING (br +0.00283), 09:50 NOTHING (br +0.00155).",
+  "[09:56] R4 FEDU: first print after 09:50 was the 09:54 bar (100 sh @11.51) -> model fill below $500 (size cap) -> model fell through to SMZ (rank #2, decided at grid 09:50, became known 09:55 = 5 min, not stale). FEDU checks 09:52-09:55 all VETO (spread 7-19%, depth 91-253). SMZ 09:56 VETO (20.18/20.31 spread 0.64%, depth 600 vs want 492) -> SHADOW. RL 09:55 NOTHING (br +0.0021).",
+  "[10:01] R4 SMZ VETO 09:57 (0.64%), 09:58 (0.79%), 09:59 (0.65%), 10:00 (0.60%), 10:01 (0.69%); SMZ no prints since ~09:44, model leg not yet entered (ARMED). RL 10:00 NOTHING (br +0.00075)."
  ],
  "errors": [],
  "ops": {
@@ -26,6 +28,6 @@
    "at_et": "09:11"
   },
   "session": "TRADING 2026-10-07 full (close 16:00)",
-  "last_cycle": "09:52:15"
+  "last_cycle": "10:01:39"
  }
 }
