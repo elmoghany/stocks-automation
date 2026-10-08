@@ -53,7 +53,7 @@
    "at_et": "09:11"
   },
   "session": "TRADING 2026-10-08 full (close 16:00)",
-  "last_cycle": "13:51:21"
+  "last_cycle": "14:21:30"
  },
  "divergences": [
   "[10:13] R4 INHD decided at grid 10:05: LULD-halted from 14:03:24Z (quote locked, book crossed) through 10:12; script marks the leg MISSED at 10:12 (stale: no fill bar within 5 min of decision). No entry, no shadow. Model stays ARMED on INHD; R4 tracks INHD bars each minute until the model resolves, then resumes at the next grid.",
