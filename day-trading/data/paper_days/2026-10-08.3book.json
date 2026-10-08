@@ -34,7 +34,10 @@
   "[10:41] 10:41: R4 grid 10:40 ingested (51 rows), model HOLDING PCRX (MISSED live). RL 10:40 scan ingested.",
   "[10:46] 10:46: R4 grid 10:45 ingested (52 rows), model HOLDING PCRX (MISSED live). RL 10:45 scan ingested.",
   "[10:51] 10:51: R4 grid 10:50 ingested (53 rows), model HOLDING PCRX (MISSED live). RL 10:50 scan ingested.",
-  "[10:56] 10:56: R4 grid 10:55 ingested (54 rows), model HOLDING PCRX (MISSED live). RL 10:55 scan ingested."
+  "[10:56] 10:56: R4 grid 10:55 ingested (54 rows), model HOLDING PCRX (MISSED live). RL 10:55 scan ingested.",
+  "[11:01] 11:01: R4 grid 11:00 ingested (54 rows), model HOLDING PCRX (MISSED live). RL 11:00 scan ingested.",
+  "[11:11] 11:11 grid 11:10: RL NOTHING br -0.0052; R4 model HOLDING PCRX (MISSED leg, pinned 36.29-36.30); R15 done",
+  "[11:16] 11:16 grid 11:15: RL NOTHING; R4 HOLDING PCRX model leg. From now R4 scans are not ingested while the R4 model is HOLDING (no decision possible); model leg tracked via PCRX bars each grid; R4 scans resume the grid after the model exits"
  ],
  "errors": [],
  "ops": {
@@ -47,7 +50,7 @@
    "at_et": "09:11"
   },
   "session": "TRADING 2026-10-08 full (close 16:00)",
-  "last_cycle": "10:59:08"
+  "last_cycle": "11:21:19"
  },
  "divergences": [
   "[10:13] R4 INHD decided at grid 10:05: LULD-halted from 14:03:24Z (quote locked, book crossed) through 10:12; script marks the leg MISSED at 10:12 (stale: no fill bar within 5 min of decision). No entry, no shadow. Model stays ARMED on INHD; R4 tracks INHD bars each minute until the model resolves, then resumes at the next grid.",
