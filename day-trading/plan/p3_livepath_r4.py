@@ -74,5 +74,6 @@ print("LIVE-PATH", "PASS" if got == truth else f"FAIL {got} vs {truth}")
 shutil.rmtree(SCR, ignore_errors=True)
 for f in made:
     f.unlink(missing_ok=True)
-for f in (P.book_dir("r4") / f"snaps_{D}.jsonl",):
+for f in (P.book_dir("r4") / f"snaps_{D}.jsonl", R.refusals_path(D),
+          R.vetoes_path(D)):
     f.unlink(missing_ok=True)

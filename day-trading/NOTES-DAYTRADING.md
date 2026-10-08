@@ -2,6 +2,39 @@
 
 ## PAPER-3BOOK
 
+### 2026-10-08 (evening): R4-FIX. The live R4 book moves on; PINNED filter added (user-approved, paper only, effective from the 2026-10-09 session)
+
+**Problem.** Live R4 ran in lockstep with the model, one position at a time. When the model "entered" a name live could not trade (halt, spread/depth veto, stale), live waited until the model exited. On 10-07 (PENU) and 10-08 (PCRX, a buyout target pinned at $36.29) that idled live R4 from about 10:00 to the close: 2 live trades in 5 days against about 13 expected.
+
+**Change 1: two tracks.**
+- The **PARITY/MODEL** track is `p3_r4.run_live`, unchanged. It is replayed from the same scans and bars for scoring only and never blocks the live book.
+- The **LIVE** track is `p3_r4.live_screen` / `live_step`, the `--now` action. At each grid 09:35–14:25 while the live book is flat, it walks the ranked top 8 (same coil key, same causal tie-break) and takes the first name that passes every check:
+  - GAP7, PRICE, PINNED and VOLCAP (script);
+  - HALT, SPREAD > 0.5% and DEPTH < 25% (`--check-book`, now with `--halted` and locked/crossed detection).
+- A VETO skips that name at that grid only, and `--now` prints the next candidate. Refusals are logged in `data/paper/r4/refusals_{D}.json`.
+- Exits, $10k, at most 7 tickets, entries until 14:30 and the 15:00 flatten are unchanged. The watcher and R15/RL are untouched.
+
+**Change 2: PINNED.** Skip a name when the last 15 printed bars at or before t span less than 0.6% of the last close.
+- Backtest (`plan/p3_r4_live.py --pinned`): it removes 5/965 published legs (0.52%, gross +$10.20) and 12/1,171 live-config legs at $10k (1.02%, gross −$406.78).
+- It removes none of the top-5 tail legs in either set, so 0.6% is kept.
+- On 10-08 it flags PCRX at 09:35.
+
+**Tests.**
+- `p3_watch_selftest` ALL PASS.
+- Model track unchanged: `p3_parity_r4` A 53/54, B 53/54, C 58/58, D 58/58 (identical to 10-01); `p3_livepath_r4` LIVE-PATH PASS. R15/RL code and `p3_lib` untouched.
+- Live-track replay: `live_step` minute by minute on 8 cached days × 3 simulated vetoes, **24/24 identical** to the event-driven live simulation.
+  - When every name is halted at 09:35, the live book trades at the 09:40 grid on 8/8 days.
+  - When the top pick is refused, it takes the next candidate at the same grid.
+- The CLI glue test passes.
+- The 10-05…10-08 replay from the saved snapshots shows live taking APT, PLU, ASTN and HAE at 09:35 instead of waiting behind MI, XHG, SMXT and CCG. With full-day 10-08 bars fetched after the close (Robinhood historicals, 33 names; saved snapshots run to 11:10 only; unlogged book checks proxied from bars), live R4 on 10-08 would have traded HAE 09:35 → bearish 09:47 (+$237), AMOD 09:50 → trail 10:12 (−$2,000), IREZ 10:15 → bearish 11:23 (+$126): 3 trades, about −$1,637 gross at model fills, instead of 0 trades.
+
+**New live expectation** (`p3_expectations.json` key `r4_live`; `r4` stays the parity/model key). The live policy was backtested over 444 days at $10k and 15 bps/side. The spread veto is proxied by the LEGACY-9 estimator (2 × half > 50 bps). Result:
+- **−$30.01/trade**, 2.18 trades/day, **−$65.43/day**, gross −$6.33, ex-top-5 −$52.72;
+- Aug-2026 OOS: −$55.10/trade.
+- Without the spread proxy it would be +$14.89/trade: R4's edge lives in the names the live veto refuses (LEGACY-15).
+- **Expect the live R4 book to bleed about −$65/day.** The PARITY row keeps scoring the model at −$3.19/day.
+- The EOD now shows R4 LIVE and R4 PARITY as separate rows, plus refused-candidate counts by reason.
+
 ### 2026-10-08 (PAPER-3BOOK day 5): full headless session; no trades in any book (all flat, $0.00)
 
 The session ran headless from 09:10 to after 16:00. The capability probe was green. The watchers ran detached (PIDs 12748/5608/14796), and each ended with 0 open. The ledger was committed every ≤30 min. Zero real orders.

@@ -45,10 +45,10 @@ Source: champion-replay-audit.md Part 4, row R4. Engine: `plan/cp_sim.py`, `defa
    - Live source: the scan's Coil column (RTH price / all-session high) and its Volume column, observed at wall t+1.
 4. **Gate.** gap7 = (last print at or before 07:00) / prev close - 1. The top-ranked name may have gap7 up to 35%; every other name is held to 20%. Try the first 8 in rank order; the first name that passes is taken.
    - Live: the decision prints `need_bars` for the top 8. The agent fetches their minute bars from 04:00 (`bounds=extended`) so gap7, the fill bar and the size cap are exact.
-5. **Book veto (LEGACY-15, live only).** Before the entry, check the quote and the price book:
+5. **Book veto (LEGACY-15, live only).** Before the entry, check the quote and the price book (since R4-FIX this is part of the LIVE track's candidate walk, below):
    - Refuse if the inside spread is more than 0.5% of mid.
    - Refuse if the displayed ask depth up to ask x 1.005 is under 25% of the intended shares.
-   - A refused leg becomes a **SHADOW leg**: its entry is the ask at the veto minute and its exits are the model's. The agent re-checks every minute while the model leg is open and enters on the first PASS.
+   - **Superseded 2026-10-08 (R4-FIX):** the live book no longer re-checks the model's leg every minute and waits. It moves on to the next candidate, as described in *R4 LIVE track* below. A model leg the live book did not take is a **SHADOW leg**. Its entry is the first refusal ask if one was logged, otherwise the model entry, and its exits are the model's.
    - Never loosen the cap and never "defer to the open".
 6. **Entry.**
    - Model: the OPEN of the next printed bar after t, at a price of at least $2.
@@ -59,6 +59,50 @@ Source: champion-replay-audit.md Part 4, row R4. Engine: `plan/cp_sim.py`, `defa
    - **Bearish engulfing** bar while close > entry. The model fill is the **next printed bar's OPEN** (LEGACY-14; see the deviations section).
    - **Flatten**: the last printed bar at or before 15:00, at its close.
 8. **Structure.** At most 7 tickets a day, at most $100k a day, rotation on, one position at a time.
+
+### R4 LIVE track vs R4 PARITY/MODEL track (R4-FIX, user-approved 2026-10-08, paper only)
+
+**Why.** Until 2026-10-08 the live R4 book ran in lockstep with the model: one position at a time, so when the model "entered" a name live could not trade (LULD halt, spread/depth veto, stale), the live book waited until the model exited. On 10-07 (PENU) and 10-08 (PCRX, pinned at $36.29 all day, almost certainly a buyout target) that left live R4 idle from about 10:00 to the close: 2 live trades in 5 days against about 13 expected.
+
+**Two tracks.**
+- **PARITY / MODEL track.** Steps 1–8 above, unchanged (`p3_r4.run_live`), replayed from the same scans and bars **for scoring only**. Its legs are the parity book; the ones the live book did not take are listed as SHADOW legs. It **never blocks** the live book. The agent fetches its armed/held name's bars each minute (`track_bars`, `model_need_bars`) so the EOD replay can score it.
+- **LIVE track** (`p3_r4.live_screen` / `live_step`; the `--now` action). At every grid t, 09:35 … 14:25, while the live book is flat:
+  1. Walk the ranked list in order: the same coil key, the same causal tie-break (LEGACY-2), at most the **top 8**.
+  2. Take the **first** name that passes every entry check right now:
+     - eligibility (the sticky +10% LAST universe, last ≥ $2) and the 07:00 gap gate (35% for the top-ranked name, 20% for the rest) — script, `GAP7` / `PRICE`;
+     - **PINNED** filter (script): skip a name whose last 15 printed 1-minute bars at or before t have (max high − min low) / last close **< 0.6%**. A buyout target sits at the deal price and has no upside. Names with fewer than 15 printed bars are not judged pinned. Live track only;
+     - size cap: 20% of the volume of the 5 bars ≤ t must allow at least 1 share — script, `VOLCAP`;
+     - not halted: quote locked or crossed, LULD halt, crossed book, or no trades for minutes — `--check-book … --halted`, `HALT`;
+     - spread ≤ 0.5% of mid — `--check-book`, `SPREAD`;
+     - displayed ask depth to ask × 1.005 ≥ 25% of the intended shares — `--check-book … --depth`, `DEPTH`;
+     - not stale: a grid's candidates are checked only until 5 minutes after its wall minute t+1.
+  3. A refusal at grid t skips that name **at t only**; `--now` then prints the next candidate. A name refused at one grid may be taken at a later grid. If all top-8 names are refused, wait for the next grid.
+  4. Entry: the ask at about wall t+1; shares = floor(min($10,000, shares_cap × ask) / ask). The watcher is opened with `--decision-min t`.
+  5. Exits: the same R4 exits (trail / bearish next open / 15:00 flatten), owned by the r4 watcher (`watch_exit` with decision_min = t).
+  6. One live position at a time, $10,000, at most 7 tickets and $100k a day, entries until 14:30, flatten 15:00. After a live exit, the next live decision is the first grid at or after the exit minute.
+  7. Every refused candidate is logged with its reason in `data/paper/r4/refusals_{D}.json` (book checks also in `vetoes_{D}.json`). The EOD counts them by reason.
+  8. A top-8 name whose bars the agent cannot get is marked with `--no-bars SYM --decision t` (`NOBARS`) and skipped at that grid; NEED_DATA never loops.
+
+**PINNED filter on the backtest** (`plan/p3_r4_live.py --pinned`, `data/paper/parity/r4_live.json`). At 0.6% it removes 5 of the 965 published legs (0.52%, gross +$10.20 at dump size) and 12 of the 1,171 live-config model legs at $10k (1.02%, gross −$406.78). It removes **none of the top-5 tail legs** in either set (MNPR, YIBO, ARMP/FLYE, SGN, RNAZ/STBX). Both are under the 5% / no-tail rule, so the threshold stays **0.6%** (0.4% would remove 2 and 4 legs).
+
+**Live-track replay tests** (`plan/p3_r4_live.py --replay`, `--cli`). `live_step` driven minute by minute on 8 cached days (emulated scan snapshots ≤ now−1, physically truncated bars, the watcher's `watch_exit` closing legs), with three simulated vetoes:
+- the LEGACY-9 spread proxy;
+- every name halted at 09:35;
+- the top pick of every grid refused on spread.
+
+All **24/24** day-runs are identical to the event-driven live simulation. With every name halted at 09:35, the live book traded at the **next grid (09:40, wall 09:41) on 8/8 days**. With the top pick refused, the live book took the next candidate **at the same grid**.
+
+The model track is unchanged: `p3_parity_r4` re-run on 2026-10-08 gives A 53/54, B 53/54, C 58/58, D 58/58, `p3_livepath_r4` PASS, and `p3_watch_selftest` ALL PASS.
+
+The CLI test (scan file → `--scan` → NEED_DATA → bars → `--now` ENTER → `--check-book` SPREAD → `--now` gives the next name → `--check-book` HALT → the next name → a position file gives HOLD → the refusal log) passes.
+
+**10-05…10-08 replay** (`--oct`, saved snapshots and bars; partial coverage, because the sessions only saved scans and bars for some grids and names):
+- 10-08: CCG was refused (spread 13.95%), **PCRX was flagged PINNED**, and the live book would have taken **HAE at 09:35**.
+- 10-07: SMXT was refused, then ASTN was taken.
+- 10-06: XHG was refused, then PLU was taken.
+- 10-05: MI was refused, then APT was taken.
+
+The exits of these replacement picks cannot be scored, because the sessions fetched their bars only once. With full-day 10-08 bars fetched after the close (Robinhood historicals, 33 names; saved snapshots run to 11:10 only; unlogged book checks proxied from bars), live R4 on 10-08 would have traded HAE 09:35 → bearish 09:47 (+$237), AMOD 09:50 → trail 10:12 (−$2,000), IREZ 10:15 → bearish 11:23 (+$126): 3 trades, about −$1,637 gross at model fills, instead of 0 trades.
 
 ## R15: CATALYST-MINER fresh earnings & green @09:35, h60
 
@@ -111,6 +155,7 @@ Source: rl2-audit.md §3.3. Rule file: `plan/rl2/results/rules_holdout_s0.json`.
 | R4 | **Bearish-engulfing exit fills at the NEXT printed bar's open**; the published backtest used the same bar's close | That close is gone by the time the pattern is known (LEGACY-14). LEGACY-1 shows the next open is slightly *better* per ticket (+$4–6) on the same entries; the rotation path changes, so replay totals move about ±$19/ticket | Next-open alone: 952/952 legs identical to cp_sim with only that fill moved. With the tie-break as well: modes C/D and the 1,173-leg full identity |
 | R4 | **Coil ties broken by volume so far, then a seeded hash**; the published backtest used pool-file order | LEGACY-2: file order correlates with full-day volume (a leak). With random tie-breaks R4 earns about +37 bps gross instead of +81, roughly break-even net | Modes C/D below compare against cp_sim with the same causal tie-break |
 | R4 | Universe and coil come from the saved scan, observed at wall t+1, not from bar closes. The sticky +10% LAST rule is observed only at snapshots. Coil's high is Robinhood's all-session high (may include the 20:00–04:00 overnight session) | Robinhood MCP is agent-only, and minute bars for ~150 names every 5 minutes are not affordable | Mode B (emulated 5-minute snapshots, top-200 by coil): **53/54, same as exact-bar mode A**. The overnight-high difference is not measurable offline |
+| R4 | **LIVE track moves on** (R4-FIX 2026-10-08): the first top-8 name passing gap gate, PINNED (< 0.6% 15-bar range), halt, spread ≤ 0.5%, depth ≥ 25% at each grid while flat; the model track is scored apart | Lockstep idled live R4 behind untradeable model picks (PENU 10-07, PCRX 10-08): 2 live trades in 5 days | Live legs are no longer model legs. Replay 24/24 identical to the live-policy sim; the PARITY row is the model track |
 | R4 | Spread/depth **veto** (spread > 0.5% or depth < 25%) with SHADOW legs | LEGACY-15: refused names lost about 2.6 pp vs traded ones. The backtest's tail lives in those thin names (255 of 965 legs would be refused) | The SHADOW book (official trades + vetoed legs at the model exit) is the backtest-parity book. Both are reported |
 | R4 | cp_sim skips a top-ranked name that does **not print for 60 minutes** after the decision, then takes the next name at its fill minute in the past | A **60-minute look-ahead** in `_try_ticket`/`_next_print`; live cannot know. Live marks such a late leg **MISSED** (it is stale by then) | 1 of 54 legs in the sampled days (2025-08-25 TWIN, behind SPHL); this is the only mode-A/B miss |
 | R4 | Tickets are $10,000; the backtest used $15k x 6 + $10k | User's number | Leg timing is identical. Only the size and the 20% volume cap scale |
@@ -174,7 +219,8 @@ In every case the model exit minute and price were exact, the official fill was 
 
 | book | per trade (realistic cost) | trades / day | per day | backtest per trade ex-top-5 | notes |
 |---|---:|---:|---:|---:|---|
-| R4 | **−$1.21** (gross +$23.27; at 28.75 bps: −$23.65) | 2.64 | **−$3.19** (gross +$61.37; at 28.75: −$62.38) | **−$65.17** | LIVE config (next-open bearish fill + causal tie-break), $10k, live-code replay over 444 days. Published backtest at $10k: +$53.91/ticket at 10 bps; the pool-file tie-break leak (LEGACY-2) is most of the difference |
+| R4 LIVE track (from 2026-10-09; key `r4_live`) | **−$30.01** (gross −$6.33) | 2.18 | **−$65.43** | **−$52.72** | live policy backtest, 444 days, $10k, 15 bps/side: first top-8 name passing gate + PINNED 0.6% + halt (no print within 5 min) + spread proxy (LEGACY-9 2 × half > 50 bps); depth not modelled. Aug-2026 OOS: −$55.10/trade, 2.09/day. Without the spread proxy: +$14.89/trade (the edge is in the names the veto refuses, LEGACY-15) |
+| R4 PARITY / MODEL track (key `r4`) | **−$1.21** (gross +$23.27; at 28.75 bps: −$23.65) | 2.64 | **−$3.19** (gross +$61.37; at 28.75: −$62.38) | **−$65.17** | LIVE config (next-open bearish fill + causal tie-break), $10k, live-code replay over 444 days. Published backtest at $10k: +$53.91/ticket at 10 bps; the pool-file tie-break leak (LEGACY-2) is most of the difference |
 | R15 | **+$87.62** | 0.248 | **+$21.71** | +$36.07 | 111 tickets in 448 days |
 | RL | **+$16.91** | 0.341 | **+$5.77** | +$18.10 (published 7 x $15k legs) | one position at a time, RTH flatten |
 
@@ -192,7 +238,8 @@ In every case the model exit minute and price were exact, the official fill was 
 - **R15 fires on about one day in four.** Most days are no-trade days. That is a no-loss day, not a miss. 61% of its backtest P&L is five tickets.
 - **The brief's R4 figure** (+$59…+$111/day) is the published backtest with its tie-break leak and same-bar bearish fills. The honest live configuration above replaces it.
 - **RL is small.** The user's brief said +$14–16/trade at about 1.2/day; that is the published 7 x $15k concurrent configuration. Under the live frame (one position at a time, $10k, RTH), the replay gives 0.34 trades/day at +$16.91/trade (6 bps), about +$5.77/day.
-- **Scoring.** Every EOD reports each book raw and ex-top-5, all trades and halal-PASS only, against these rows (`plan/p3_eod.py`).
+- **Scoring.** Every EOD reports each book raw and ex-top-5, all trades and halal-PASS only, against these rows (`plan/p3_eod.py`). R4 is reported as two rows: the R4 LIVE book against `r4_live` and the R4 PARITY (model) track against `r4`, plus the refused-candidate counts by reason.
+- **R4 LIVE is expected to lose about −$30/trade (−$65/day) at 15 bps.** Moving on puts the live book into the names the spread veto keeps, which are negative gross ex-tail (LEGACY-15). The live book now measures that honestly, about 2.2 times a day. The PARITY row keeps measuring the model.
 
 ## Call budget (Robinhood MCP is agent-only; at most 10 symbols per historicals call)
 
@@ -217,7 +264,8 @@ Full breadth via bars (95 names x 78 steps) would have needed about 750 historic
   - `plan/p3_lib.py`
   - `plan/p3_gd_fetch.py`
   - `plan/p3_expect.py`
-  - `plan/p3_r4.py`
+  - `plan/p3_r4.py` (PARITY/MODEL track `run_live` + LIVE track `live_screen`/`live_step`)
+  - `plan/p3_r4_live.py` (R4-FIX: PINNED backtest, live-policy expectation, replay + CLI tests → `data/paper/parity/r4_live.json`)
   - `plan/p3_r15.py`
   - `plan/p3_rl.py`
   - `plan/p3_universe.py`

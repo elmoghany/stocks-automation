@@ -17,7 +17,8 @@
   "backtest_per_trade_ex_top5": -65.17,
   "aug2026_note": "R4 lost -$4,392 over the 22 out-of-sample August-2026 sessions (LEGACY-14 / champion-replay OOS block); a red first weeks is inside expectation",
   "legacy2_note": "causal coil tie-break (volume so far, then seeded hash) replaces the published pool-file order, which leaked full-day volume: realistic R4 is about break-even after costs",
-  "legacy15_note": "with the live 0.5% spread veto the kept legs are ~ -$28 gross per $10k ex-top-5 (LEGACY-15); the backtest edge lives in the thin names the veto refuses -- the SHADOW book measures that"
+  "legacy15_note": "with the live 0.5% spread veto the kept legs are ~ -$28 gross per $10k ex-top-5 (LEGACY-15); the backtest edge lives in the thin names the veto refuses -- the SHADOW book measures that",
+  "role": "PARITY/MODEL track (unchanged backtest)"
  },
  "r15": {
   "per_trade": 87.62,
@@ -32,5 +33,21 @@
   "trades_per_day": 0.341,
   "backtest_per_trade": 30.95,
   "backtest_per_trade_ex_top5": 18.1
+ },
+ "r4_live": {
+  "per_trade": -30.01,
+  "per_day": -65.43,
+  "trades_per_day": 2.18,
+  "gross_per_trade": -6.33,
+  "backtest_per_trade_ex_top5": -52.72,
+  "pin_threshold": 0.006,
+  "variant": "live_pin06_spread",
+  "oos_aug2026": {
+   "per_trade": -55.1,
+   "trades_per_day": 2.091,
+   "total": -2534.68
+  },
+  "built": "2026-10-08T17:22:30.796641-04:00",
+  "note": "R4 LIVE track (R4-FIX 2026-10-08): first of the ranked top 8 passing gap gate, PINNED filter, halt, spread <= 0.5% (bar proxy: LEGACY-9 2*half > 50 bps) at each grid while flat; $10k; 15 bps/side; 444 in-sample days (plan/p3_r4_live.py, data/paper/parity/r4_live.json). The 'r4' key stays the PARITY/MODEL track expectation."
  }
 }

@@ -39,6 +39,19 @@ LIVE DATA (the session agent fetches; this file only reads files)
     sizing cap) and for the held name every minute.
   * decision:  python plan/p3_r4.py --date D --now HH:MM
 
+TWO TRACKS (R4-FIX, user-approved 2026-10-08, paper only)
+  * PARITY/MODEL track = run_live (the rule above, unchanged): replayed
+    every --now for scoring only (the "model" block of the output, its
+    closed_legs, track_bars / model_need_bars); it never blocks the live
+    book. p3_eod scores it as the R4 PARITY row; model legs the live book
+    did not take are SHADOW legs.
+  * LIVE track = live_screen / live_step (the top-level action): at each
+    grid while the live book is flat, the first of the ranked top 8 that
+    passes GAP7, PRICE, PINNED (15 printed bars range < PIN_THR), VOLCAP
+    and then the agent's --check-book (HALT / SPREAD / DEPTH). A VETO skips
+    that name at that grid; re-run --now for the next candidate. Refusals:
+    data/paper/r4/refusals_{D}.json. Tests/backtest: plan/p3_r4_live.py.
+
 The same engine (`run_live`) is driven by plan/p3_parity_r4.py with the
 historical minute caches as the feed; `watch_exit` is what
 plan/paper_watch.py EXIT_MODE r4 calls, so live exits, replay exits and the
@@ -314,6 +327,141 @@ def run_live(day, Fd, now, tickets=TICKETS_LIVE, cfg=CFG_LIVE,
     return legs, dict(state="DONE", tickets_used=ti)
 
 
+# --------------------------------------------------------------- LIVE track
+# R4-FIX (2026-10-08, user-approved, paper only). run_live above is the
+# PARITY/MODEL track: the unchanged backtest, tracked from bars for scoring
+# only -- it never blocks the live book. The LIVE track below moves on: at
+# each grid t (09:35..14:25) while the live book is flat it walks the same
+# ranked top 8 (same rank key, same causal tie-break, same 07:00 gap gate)
+# and takes the FIRST name that passes every entry check right now:
+#   bar checks (here):  eligibility, GAP7 gate, PRICE >= $2, PINNED
+#                       (range of the last 15 printed bars <= t, over the
+#                       last close, < PIN_THR -- a buyout target sits at the
+#                       deal price), VOLCAP (20%-of-5-bar size cap < 1 sh)
+#   book checks (agent quote + price book, check_book): HALT (locked /
+#                       crossed quote or halted), SPREAD > 0.5%, DEPTH < 25%
+#   staleness:          a grid is acted on only until wall t+1+STALE_MIN
+# A name refused at t may be reconsidered at later grids. Exits are the R4
+# exits (the watcher's watch_exit, decision_min = t). One live position,
+# $10k, <= 7 tickets, <= $100k/day, entries until 14:30, flatten 15:00.
+LIVE_TOPN = 8
+PIN_BARS = 15
+PIN_THR = 0.006              # set by plan/p3_r4_live.py --pinned (see notes)
+
+
+def pinned_range(day, i, t, nb=PIN_BARS):
+    """(max high - min low) / last close over the last `nb` PRINTED bars at
+    or before t; None when fewer than `nb` bars printed since 04:00 (a thin
+    name is not a pinned one)."""
+    idx = np.flatnonzero(day.printed[i, :t + 1])
+    if idx.size < nb:
+        return None
+    idx = idx[-nb:]
+    c = float(day.c[i, idx[-1]])
+    if not c > 0:
+        return None
+    return float((np.nanmax(day.h[i, idx]) - np.nanmin(day.l[i, idx])) / c)
+
+
+def live_screen(day, Fd, gi, cfgr, refused=None, fresh=None, pin_thr=None):
+    """The ranked top 8 at grid index gi with every BAR-based verdict.
+    cfgr = cfg_for(...) resolved. refused: {(sym, t): reason} from the book
+    checks. fresh(sym, t): True when the agent's bars for sym include bar t
+    (None = always). Verdicts: OK | NEED_BARS | GAP7 | PRICE | PINNED |
+    VOLCAP | <book reason already logged at t>."""
+    pin_thr = PIN_THR if pin_thr is None else pin_thr
+    t = int(Fd["grid"][gi])
+    cand = np.where(Fd["elig_last"][:, gi])[0]
+    if len(cand) == 0:
+        return []
+    key = S.rank_key(Fd, gi, cfgr)[cand]
+    order = [int(i) for i in cand[np.argsort(key, kind="stable")]][:LIVE_TOPN]
+    gate_top, gate_oth = S.gates(Fd, cfgr)
+    hb = Fd.get("has_bars")
+    out = []
+    for r, i in enumerate(order):
+        sym = str(day.syms[i])
+        d = dict(i=i, sym=sym, rank=r + 1, verdict="OK", detail="")
+        if refused and (sym, t) in refused:
+            d.update(verdict=refused[(sym, t)], detail="refused at this grid")
+            out.append(d)
+            continue
+        if (hb is not None and not hb[i]) or (fresh and not fresh(sym, t)):
+            d["verdict"] = "NEED_BARS"
+            out.append(d)
+            continue
+        g7 = float(Fd["gap7"][i])
+        if not (gate_top[i] if r == 0 else gate_oth[i]):
+            d.update(verdict="GAP7", detail=f"07:00 gap {g7 * 100:.1f}% > "
+                     f"{(cfgr['gap7_max'] if r == 0 else cfgr['gap7_max_other']) * 100:.0f}%")
+            out.append(d)
+            continue
+        last = P.ffill_last(day.c[i], t)
+        pr = pinned_range(day, i, t)
+        v5 = float(day.cumv[i, t] - day.cumv[i, max(t - 5, 0)])
+        cap = int(S.VOL_CAP * v5)
+        d.update(last=last, range15=None if pr is None else round(pr, 5),
+                 shares_cap=cap)
+        if not (np.isfinite(last) and last >= cfgr["min_px"]):
+            d.update(verdict="PRICE", detail=f"last {last} < $2")
+        elif pr is not None and pr < pin_thr:
+            d.update(verdict="PINNED", detail=f"15-bar range {pr * 100:.2f}%"
+                     f" < {pin_thr * 100:.1f}%")
+        elif cap < 1:
+            d.update(verdict="VOLCAP", detail="20% of the 5-bar volume < 1 sh")
+        out.append(d)
+    return out
+
+
+def live_step(day, Fd, now, hist, refused, date, cfg=CFG_LIVE, fresh=None,
+              pin_thr=None):
+    """The LIVE-track decision at wall minute `now`. hist: today's live
+    legs [{sym, t, open, exit_min, notional}] (open legs from the watcher's
+    position files, closed ones from its flatten file); refused: {(sym, t):
+    reason} book-check refusals. Returns a dict with state HOLDING | DONE |
+    WAIT | NEED_DATA | PICK | NONE (rows = the screened top 8)."""
+    held = [h for h in hist if h.get("open")]
+    if held:
+        return dict(state="HOLDING", sym=held[0]["sym"], t=held[0].get("t"))
+    used = len(hist)
+    if used >= cfg["ntickets"]:
+        return dict(state="DONE", reason="7 live tickets used")
+    if sum(h.get("notional") or P.TICKET for h in hist) + P.TICKET > DAY_CAP:
+        return dict(state="DONE", reason="$100k/day cap")
+    t0 = int(cfg["t_start"])
+    for h in hist:
+        if h.get("exit_min") is not None:
+            t0 = max(t0, int(h["exit_min"]) + 1)
+        if h.get("t") is not None:
+            t0 = max(t0, int(h["t"]) + cfg["step"])
+    grids = [int(g) for g in GRID if t0 <= g < cfg["cutoff"]]
+    if not grids:
+        return dict(state="DONE", reason="entry window closed (14:30)")
+    cur = [g for g in grids if g <= now - 1]
+    if not cur:
+        return dict(state="WAIT", next_t=grids[0])
+    t = cur[-1]
+    nxt = next((g for g in grids if g > t), None)
+    if now - (t + 1) > STALE_MIN:
+        return dict(state="WAIT", next_t=nxt, stale_t=t, reason=(
+            f"grid {P.hhmm(t)} is stale at {P.hhmm(now)} (> {STALE_MIN} min)"))
+    gi = {int(m): k for k, m in enumerate(Fd["grid"])}[t]
+    cfgr = cfg_for(cfg, Fd, date)
+    rows = live_screen(day, Fd, gi, cfgr, refused, fresh, pin_thr)
+    need = [r["sym"] for r in rows if r["verdict"] == "NEED_BARS"]
+    ok = [r for r in rows if r["verdict"] == "OK"]
+    # bars are needed only when a name ranked ABOVE the first passing one
+    # cannot be judged yet (then fetch every missing top-8 name, one call)
+    if need and (not ok or any(r["verdict"] == "NEED_BARS"
+                               for r in rows[:rows.index(ok[0])])):
+        return dict(state="NEED_DATA", t=t, need_bars=need, rows=rows)
+    if ok:
+        return dict(state="PICK", t=t, sym=ok[0]["sym"], i=ok[0]["i"],
+                    shares_cap=ok[0]["shares_cap"], rows=rows,
+                    candidates=[r["sym"] for r in ok], next_t=nxt)
+    return dict(state="NONE", t=t, rows=rows, next_t=nxt)
+
+
 # --------------------------------------------------------------- watcher
 def watch_exit(date, st, bars, now):
     """EXIT_MODE r4 for plan/paper_watch.py. st: sym, decision_min,
@@ -374,7 +522,8 @@ def ingest_scan(path, date, at):
                 top8=[s for s, _ in top], need_bars=need))
 
 
-def live_decision(date, now):
+def load_live(date, now):
+    """(day, Fd) from today's scan snapshots + the agent's bars, or None."""
     snaps = []
     f = snaps_path(date)
     if f.exists():
@@ -385,12 +534,20 @@ def live_decision(date, now):
             if s not in syms:
                 syms.append(s)
                 pcs.append(r["pc"])
+    if not syms:
+        return None
     feed = P.LiveFeed(date, now)
-    day = make_day(syms, pcs, feed) if syms else None
-    if day is None:
+    day = make_day(syms, pcs, feed)
+    return day, fd_from_snaps(day, snaps)
+
+
+def live_decision(date, now):
+    """PARITY/MODEL track at wall `now` (also what p3_eod replays)."""
+    ld = load_live(date, now)
+    if ld is None:
         return [], dict(state="FLAT", next_t=int(CFG["t_start"]),
                         reason="no scan snapshot yet")
-    Fd = fd_from_snaps(day, snaps)
+    day, Fd = ld
     return run_live(day, Fd, now, live=True, date=date)
 
 
@@ -405,33 +562,137 @@ def vetoes_path(date):
     return P.book_dir(BOOK) / f"vetoes_{date}.json"
 
 
-def check_book(date, now, sym, decision, bid, ask, depth):
-    """LEGACY-15 book veto for an R4 entry. Every check is logged; the
-    first VETO of a (sym, decision) opens a SHADOW leg (entry = this ask,
-    exits = the model's), which p3_eod scores as the backtest-parity book."""
+def refusals_path(date):
+    """LIVE-track refusal log: every refused candidate with its reason."""
+    return P.book_dir(BOOK) / f"refusals_{date}.json"
+
+
+def log_refusals(date, now, t, rows):
+    """Append bar-based refusals (and book ones passed as rows), one entry
+    per (sym, grid, reason)."""
+    log = P.read_json(refusals_path(date), []) or []
+    seen = {(x["sym"], x["grid"], x["reason"]) for x in log}
+    add = 0
+    for r in rows:
+        if r["verdict"] in ("OK", "NEED_BARS"):
+            continue
+        k = (r["sym"], P.hhmm(t), r["verdict"])
+        if k in seen:
+            continue
+        seen.add(k)
+        log.append(dict(sym=r["sym"], grid=P.hhmm(t), reason=r["verdict"],
+                        rank=r.get("rank"), detail=r.get("detail", ""),
+                        at=P.hhmm(now)))
+        add += 1
+    if add:
+        P.write_atomic(refusals_path(date), log)
+
+
+def check_book(date, now, sym, decision, bid, ask, depth, halted=False):
+    """LEGACY-15 book veto for an R4 LIVE-track entry (plus the halt check).
+    Every check is logged in vetoes_{D}.json; a refusal also goes to the
+    live-track refusal log, and the next `--now` run skips this name at this
+    grid (it may come back at a later grid). p3_eod uses the first refusal
+    ask of a model leg as that SHADOW leg's entry."""
+    bid = bid or 0.0
+    ask = ask or 0.0
     mid = (bid + ask) / 2.0
-    spread = (ask - bid) / mid if mid > 0 else float("inf")
+    locked = bid > 0 and ask > 0 and bid >= ask
+    spread = (ask - bid) / mid if (mid > 0 and not locked) else float("inf")
     want = int(P.TICKET // ask) if ask > 0 else 0
     depth_ok = depth is None or (want > 0 and depth >= DEPTH_MIN * want)
-    ok = spread <= SPREAD_CAP and depth_ok
-    why = []
-    if spread > SPREAD_CAP:
+    why, reason = [], None
+    if halted or locked or bid <= 0 or ask <= 0:
+        reason = "HALT"
+        why.append("HALT: " + ("halted (agent)" if halted else
+                               "locked/crossed or missing quote "
+                               f"{bid}/{ask}"))
+    elif spread > SPREAD_CAP:
+        reason = "SPREAD"
         why.append(f"SPREAD {spread * 100:.2f}% > 0.50%")
-    if not depth_ok:
+    if reason != "HALT" and not depth_ok:
+        reason = reason or "DEPTH"
         why.append(f"DEPTH {depth} sh < 25% of {want}")
+    ok = reason is None
     log = P.read_json(vetoes_path(date), []) or []
     key = f"{sym}@{decision}"
     log.append(dict(key=key, sym=sym, decision=decision, at=P.hhmm(now),
                     bid=bid, ask=ask, mid=round(mid, 4),
-                    spread_pct=round(spread * 100, 3), depth=depth,
+                    spread_pct=None if not np.isfinite(spread)
+                    else round(spread * 100, 3), depth=depth,
                     want=want, result="PASS" if ok else "VETO",
-                    why="; ".join(why)))
+                    reason=reason, track="live", why="; ".join(why)))
     P.write_atomic(vetoes_path(date), log)
+    if not ok:
+        t = P.parse_hhmm(decision) if decision else ((now - 1) // 5) * 5
+        log_refusals(date, now, t, [dict(sym=sym, verdict=reason, rank=None,
+                                         detail="; ".join(why))])
     P.emit(dict(book=BOOK, check=key, result="PASS" if ok else "VETO",
-                spread_pct=round(spread * 100, 3), depth=depth, want=want,
+                reason=reason,
+                spread_pct=None if not np.isfinite(spread)
+                else round(spread * 100, 3), depth=depth, want=want,
                 shares=want, why="; ".join(why) or "book passes",
-                next="ENTER now at the ask" if ok else
-                "do NOT enter; logged as SHADOW; re-check next minute"))
+                next="ENTER now at the ask (live track)" if ok else
+                "do NOT enter; re-run --now NOW for the next candidate at "
+                "this grid"))
+
+
+def read_refused(date):
+    """{(sym, grid_min): reason} for every book-check refusal today (and
+    every NOBARS mark: the agent's bars call returned nothing for it)."""
+    out = {}
+    for x in P.read_json(refusals_path(date), []) or []:
+        if x.get("reason") == "NOBARS":
+            out.setdefault((x["sym"], P.parse_hhmm(x["grid"])), "NOBARS")
+    for v in P.read_json(vetoes_path(date), []) or []:
+        if v.get("result") == "VETO" and v.get("decision"):
+            r = v.get("reason") or ("SPREAD" if "SPREAD" in (v.get("why") or "")
+                                    else "DEPTH")
+            out.setdefault((v["sym"], P.parse_hhmm(v["decision"])), r)
+    return out
+
+
+def live_hist(date):
+    """Today's LIVE legs from the r4 watcher's files: open positions
+    (position_*.json) and booked exits ({D}.r4.flatten.json)."""
+    hist = []
+    fl = P.read_json(P.DATA / "paper_days" / f"{date}.{BOOK}.flatten.json",
+                     {}) or {}
+    for r in fl.get("records", []):
+        xt = str(r.get("exit_time") or r.get("booked_at") or "")
+        xm = None
+        if len(xt) >= 16:          # booked at wall w -> exit bar w-1, so
+            xm = int(xt[11:13]) * 60 + int(xt[14:16]) - P.BASE - 1
+            # the next live grid is the first one >= w (as the replay)
+        hist.append(dict(sym=r["sym"], open=False, exit_min=xm, t=None,
+                         notional=r.get("deployed")
+                         or (r.get("entry") or 0) * (r.get("shares_initial")
+                                                     or 0)))
+    for f in sorted(P.book_dir(BOOK).glob("position_*.json")):
+        st = P.read_json(f, {}) or {}
+        if st.get("date") not in (None, date):
+            continue
+        hist.append(dict(sym=st.get("sym") or f.stem[9:], open=True,
+                         t=st.get("decision_min"), exit_min=None,
+                         notional=(st.get("entry") or 0) * (st.get("shares")
+                                                            or 0)))
+    return hist
+
+
+def bars_fresh(date):
+    """fresh(sym, t): the agent's bars file for sym was written at or after
+    wall t+1 (so it holds bar t). Live only; replays pass fresh=None."""
+    from datetime import datetime as _dt
+
+    def f(sym, t):
+        p = P.RH_BARS / f"{sym}_{date}.csv"
+        if not p.exists():
+            return False
+        k = int(t) + 1 + P.BASE
+        due = _dt.strptime(date, "%Y-%m-%d").replace(
+            hour=k // 60, minute=k % 60, tzinfo=P.ET).timestamp()
+        return p.stat().st_mtime >= due
+    return f
 
 
 def booked(date, sym, t):
@@ -445,6 +706,23 @@ def booked(date, sym, t):
     return False
 
 
+def model_summary(legs, st):
+    """The PARITY/MODEL track, for scoring only (never an order)."""
+    m = dict(state=st["state"], tickets_used=st.get("tickets_used", 0))
+    if st.get("sym"):
+        m.update(sym=st["sym"], decision_min=P.hhmm(st["t"]))
+    if st["state"] == "HOLDING" and legs:
+        lg = legs[-1]
+        m.update(model_entry=lg["entry"],
+                 model_entry_min=P.hhmm(lg["entry_min"]))
+    if st["state"] == "FLAT":
+        m["next_t"] = P.hhmm(st["next_t"])
+    if st["state"] == "NEED_DATA":
+        m.update(decision_min=P.hhmm(st["t"]), ranked=st.get("ranked"))
+    m["closed"] = len([x for x in legs if not x["open"]])
+    return m
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--date")
@@ -452,7 +730,8 @@ def main():
     ap.add_argument("--scan", help="saved run_scan result to ingest")
     ap.add_argument("--at", help="grid minute HH:MM the scan represents")
     ap.add_argument("--check-book", metavar="SYM",
-                    help="LEGACY-15 spread/depth veto check for an entry")
+                    help="LIVE-track book check (halt / spread / depth) for "
+                         "an ENTER candidate")
     ap.add_argument("--decision", help="grid HH:MM of the decision")
     ap.add_argument("--bid", type=float)
     ap.add_argument("--ask", type=float)
@@ -460,6 +739,12 @@ def main():
                     help="displayed ask shares from the inside ask up to "
                          "ask x 1.005 (get_equity_price_book); omit if the "
                          "book call failed (then spread-only)")
+    ap.add_argument("--no-bars", nargs="+", metavar="SYM",
+                    help="the bars call returned no bars for these need_bars"
+                         " names: skip them at --decision's grid (NOBARS)")
+    ap.add_argument("--halted", action="store_true",
+                    help="the agent saw a halt (LULD / crossed book / no "
+                         "trade for minutes) even if the quote looks normal")
     a = ap.parse_args()
     date = a.date or P.now_et().date().isoformat()
     now = P.parse_hhmm(a.now) if a.now else P.now_min()
@@ -468,69 +753,90 @@ def main():
         return ingest_scan(a.scan, date, at)
     if a.check_book:
         return check_book(date, now, a.check_book.upper(), a.decision,
-                          a.bid, a.ask, a.depth)
-    legs, st = live_decision(date, now)
-    pos = P.book_dir(BOOK) / f"position_{st.get('sym', '')}.json"
-    out = dict(book=BOOK, now=P.hhmm(now), state=st["state"],
-               tickets_used=st.get("tickets_used", 0))
-    closed = [lg for lg in legs if not lg["open"]]
+                          a.bid, a.ask, a.depth, a.halted)
+    if a.no_bars:
+        t = P.parse_hhmm(a.decision) if a.decision else ((now - 1) // 5) * 5
+        log_refusals(date, now, t, [dict(sym=x.upper(), verdict="NOBARS",
+                                         detail="bars call returned none")
+                                    for x in a.no_bars])
+        return P.emit(dict(book=BOOK, no_bars=[x.upper() for x in a.no_bars],
+                           grid=P.hhmm(t), next="re-run --now"))
+    out = dict(book=BOOK, now=P.hhmm(now), track="live")
+    ld = load_live(date, now)
+    if ld is None:
+        out.update(action="NOTHING", state="WAIT",
+                   reason="no scan snapshot yet",
+                   model=dict(state="FLAT"), closed_legs=[])
+        return P.emit(out)
+    day, Fd = ld
+    # ---- PARITY / MODEL track (scoring only; never blocks the live book)
+    legs, mst = run_live(day, Fd, now, live=True, date=date)
+    out["model"] = model_summary(legs, mst)
     out["closed_legs"] = [dict(sym=lg["sym"], decision=P.hhmm(lg["t"]),
                                entry_min=P.hhmm(lg["entry_min"]),
                                entry=lg["entry"],
                                exit_min=P.hhmm(lg["exit_min"]),
                                exit=lg["exit"], reason=lg["reason"])
-                          for lg in closed]
+                          for lg in legs if not lg["open"]]
+    track = []
+    if mst["state"] in ("ARMED", "HOLDING"):
+        track.append(mst["sym"])          # model leg bars, for the EOD score
+    # ---- LIVE track
+    hist = live_hist(date)
+    fresh = bars_fresh(date) if not a.date or a.date == \
+        P.now_et().date().isoformat() else None
+    st = live_step(day, Fd, now, hist, read_refused(date), date, fresh=fresh)
     s = st["state"]
-    if s == "FLAT":
-        out.update(action="NOTHING", reason=st.get("reason") or
-                   f"next decision at grid {P.hhmm(st['next_t'])} "
-                   f"(run at wall {P.hhmm(st['next_t'] + 1)})")
+    out["state"] = s
+    out["tickets_used"] = len(hist)
+    if st.get("rows") is not None:
+        log_refusals(date, now, st["t"], st["rows"])
+        out["screen"] = [f"{r['rank']}:{r['sym']}:{r['verdict']}"
+                         for r in st["rows"]]
+    need = list(st.get("need_bars") or [])
+    mneed = list(mst.get("need_bars") or [])         if mst["state"] == "NEED_DATA" else []
+    if mneed:
+        out["model_need_bars"] = mneed     # scoring only: fetch, no re-run
+    if s == "HOLDING":
+        out.update(action="HOLD", sym=st["sym"],
+                   reason="live position open; exits owned by the r4 watcher")
+        track.append(st["sym"])
+    elif s == "DONE":
+        out.update(action="DONE", reason=st["reason"])
+    elif s == "WAIT":
+        out.update(action="NOTHING", reason=st.get("reason") or (
+            f"next live decision at grid {P.hhmm(st['next_t'])} (run at "
+            f"wall {P.hhmm(st['next_t'] + 1)})" if st.get("next_t") is not None
+            else "no grid left"))
     elif s == "NEED_DATA":
-        out.update(action="NEED_DATA", need_bars=st["need_bars"],
-                   decision_min=P.hhmm(st["t"]), ranked=st["ranked"],
-                   reason="fetch minute bars 04:00->now (bounds=extended) "
-                          "for need_bars, ingest, re-run")
-    elif s in ("ARMED", "HOLDING"):
-        sym, t = st["sym"], st["t"]
-        out.update(sym=sym, decision_min=P.hhmm(t), ticket_usd=P.TICKET,
-                   track_bars=[sym])
-        checks = [v for v in (P.read_json(vetoes_path(date), []) or [])
-                  if v["key"] == f"{sym}@{P.hhmm(t)}"]
-        others = [f.stem[9:] for f in P.book_dir(BOOK).glob("position_*.json")
-                  if f != pos]
-        if pos.exists():
-            out.update(action="HOLD", reason="exits owned by the r4 watcher")
-        elif others:
-            out.update(action="BLOCKED", reason=(
-                f"the r4 book still holds {others} (one position at a time); "
-                f"this model leg is NOT entered -- log it as a divergence"))
-        elif booked(date, sym, t):
-            out.update(action="HOLD", reason="leg already exited (booked by "
-                       "the watcher); waiting for the model to release the "
-                       "ticket")
-        elif now - (t + 1) > STALE_MIN and not checks:
-            # the model reached this leg late (e.g. cp_sim's 60-minute
-            # look-ahead past a top name that never printed): a live trader
-            # could not have acted at t -- never enter on a stale signal
-            out.update(action="MISSED", reason=(
-                f"stale: leg decided at grid {P.hhmm(t)} only became known "
-                f"at {P.hhmm(now)}; log as MISSED (no entry, no shadow)"))
-        else:
-            out.update(action="ENTER", reason=(
-                "coil rank, decided at grid " + P.hhmm(t) + ". FIRST run "
-                "--check-book (quote + price book); enter at the ask ONLY on "
-                "PASS, opening the watcher with --decision-min " + P.hhmm(t)
-                + ". A VETO is logged as a SHADOW leg; re-check every minute "
-                "while the model leg is open."),
-                ranked=st.get("ranked"), book_checks=len(checks),
-                last_check=checks[-1]["result"] if checks else None)
-        if s == "HOLDING":
-            lg = legs[-1]
-            out.update(model_entry=lg["entry"],
-                       model_entry_min=P.hhmm(lg["entry_min"]),
-                       shares_cap=lg["shares"])
-    else:
-        out.update(action="DONE", reason="7 tickets used or window closed")
+        need += [x for x in mneed if x not in need]
+        out.update(action="NEED_DATA", need_bars=need,
+                   decision_min=P.hhmm(st.get("t", mst.get("t", now - 1))),
+                   reason="fetch minute bars 04:00->now (bounds=extended, "
+                          "from 08:00Z) for need_bars, ingest, re-run --now")
+    elif s == "PICK":
+        t = st["t"]
+        out.update(action="ENTER", sym=st["sym"], decision_min=P.hhmm(t),
+                   ticket_usd=P.TICKET, shares_cap=st["shares_cap"],
+                   candidates=st["candidates"], reason=(
+                       f"LIVE track, grid {P.hhmm(t)}: first of the ranked "
+                       "top 8 passing the bar checks. Quote it (one "
+                       "get_equity_quotes for all `candidates`), then run "
+                       "--check-book SYM --decision " + P.hhmm(t) + " (price "
+                       "book only when the spread is <= 0.5%). PASS -> enter "
+                       "at the ask, watcher --decision-min " + P.hhmm(t) +
+                       ". VETO -> re-run --now at once: the next candidate."))
+    else:                                              # NONE
+        nt = st.get("next_t")
+        out.update(action="NOTHING", decision_min=P.hhmm(st["t"]),
+                   reason=f"no top-8 name passes at grid {P.hhmm(st['t'])}"
+                   + (f"; next grid {P.hhmm(nt)} (wall {P.hhmm(nt + 1)})"
+                      if nt is not None else "; entry window closed"))
+    tb = []
+    for x in track:
+        if x not in tb:
+            tb.append(x)
+    out["track_bars"] = tb
     P.emit(out)
 
 

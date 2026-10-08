@@ -1,0 +1,2459 @@
+{
+ "pinned": {
+  "published_965": {
+   "legs": 965,
+   "size": "dump size",
+   "top5_by_gross": [
+    [
+     "2024-10-24",
+     "MNPR",
+     32155.5
+    ],
+    [
+     "2025-01-27",
+     "YIBO",
+     15300.22
+    ],
+    [
+     "2025-10-22",
+     "ARMP",
+     13913.48
+    ],
+    [
+     "2025-01-29",
+     "SGN",
+     9352.38
+    ],
+    [
+     "2025-02-05",
+     "RNAZ",
+     8899.08
+    ]
+   ],
+   "thr_0.006": {
+    "removed": 5,
+    "removed_pct": 0.52,
+    "removed_gross": 10.2,
+    "removed_gross_per_10k": -347.14,
+    "removed_top5": [],
+    "removed_list": [
+     [
+      "2025-06-13",
+      "ORCX",
+      0.583,
+      4.74
+     ],
+     [
+      "2026-01-26",
+      "ATPC",
+      0.347,
+      -35.85
+     ],
+     [
+      "2026-01-29",
+      "BKD",
+      0.549,
+      20.58
+     ],
+     [
+      "2026-03-09",
+      "LSTA",
+      0.198,
+      -0.35
+     ],
+     [
+      "2026-05-29",
+      "HUBS",
+      0.564,
+      21.08
+     ]
+    ]
+   },
+   "thr_0.004": {
+    "removed": 2,
+    "removed_pct": 0.21,
+    "removed_gross": -36.2,
+    "removed_gross_per_10k": -382.35,
+    "removed_top5": [],
+    "removed_list": [
+     [
+      "2026-01-26",
+      "ATPC",
+      0.347,
+      -35.85
+     ],
+     [
+      "2026-03-09",
+      "LSTA",
+      0.198,
+      -0.35
+     ]
+    ]
+   }
+  },
+  "live_cfg_model_10k": {
+   "legs": 1171,
+   "size": "$10k",
+   "top5_by_gross": [
+    [
+     "2024-10-24",
+     "MNPR",
+     18465.84
+    ],
+    [
+     "2025-01-27",
+     "YIBO",
+     15300.22
+    ],
+    [
+     "2025-12-01",
+     "FLYE",
+     8607.78
+    ],
+    [
+     "2025-04-15",
+     "STBX",
+     8139.25
+    ],
+    [
+     "2025-01-29",
+     "SGN",
+     6222.96
+    ]
+   ],
+   "thr_0.006": {
+    "removed": 12,
+    "removed_pct": 1.02,
+    "removed_gross": -406.78,
+    "removed_gross_per_10k": -638.42,
+    "removed_top5": [],
+    "removed_list": [
+     [
+      "2024-11-07",
+      "CHAU",
+      0.488,
+      6.03
+     ],
+     [
+      "2024-12-26",
+      "SPWH",
+      0.556,
+      -16.54
+     ],
+     [
+      "2025-05-21",
+      "SGMA",
+      0.337,
+      -8.69
+     ],
+     [
+      "2025-06-13",
+      "ORCX",
+      0.583,
+      7.51
+     ],
+     [
+      "2025-08-15",
+      "ARGD",
+      0.198,
+      5.66
+     ],
+     [
+      "2025-10-07",
+      "TTSH",
+      0.0,
+      0.0
+     ],
+     [
+      "2025-11-13",
+      "ECO",
+      0.504,
+      -243.18
+     ],
+     [
+      "2025-12-04",
+      "YSXT",
+      0.42,
+      -122.75
+     ],
+     [
+      "2026-01-29",
+      "BKD",
+      0.549,
+      13.72
+     ],
+     [
+      "2026-02-02",
+      "PLX",
+      0.57,
+      -28.1
+     ],
+     [
+      "2026-03-09",
+      "LSTA",
+      0.198,
+      -0.35
+     ],
+     [
+      "2026-06-15",
+      "FNGU",
+      0.52,
+      -20.1
+     ]
+    ]
+   },
+   "thr_0.004": {
+    "removed": 4,
+    "removed_pct": 0.34,
+    "removed_gross": -3.37,
+    "removed_gross_per_10k": -45.9,
+    "removed_top5": [],
+    "removed_list": [
+     [
+      "2025-05-21",
+      "SGMA",
+      0.337,
+      -8.69
+     ],
+     [
+      "2025-08-15",
+      "ARGD",
+      0.198,
+      5.66
+     ],
+     [
+      "2025-10-07",
+      "TTSH",
+      0.0,
+      0.0
+     ],
+     [
+      "2026-03-09",
+      "LSTA",
+      0.198,
+      -0.35
+     ]
+    ]
+   }
+  }
+ },
+ "pin_threshold": 0.006,
+ "pin_rule": "0.6% kept (<= 5% of legs, no top-5 tail leg)",
+ "model_track": {
+  "insample": {
+   "n": 1171,
+   "trades_per_day": 2.637,
+   "gross_per_trade": 23.27,
+   "per_trade": -1.21,
+   "per_day": -3.2,
+   "total": -1418.96,
+   "per_trade_ex_top5": -49.69,
+   "ex_top5_total": -57942.43,
+   "top5": [
+    18408.14,
+    15261.28,
+    8573.36,
+    8097.04,
+    6183.63
+   ]
+  },
+  "oos_aug2026": {
+   "n": 52,
+   "trades_per_day": 2.364,
+   "gross_per_trade": -90.78,
+   "per_trade": -116.31,
+   "per_day": -274.92,
+   "total": -6048.21,
+   "per_trade_ex_top5": -187.25,
+   "ex_top5_total": -8800.86,
+   "top5": [
+    945.17,
+    663.3,
+    490.64,
+    347.51,
+    306.03
+   ]
+  }
+ },
+ "variants": {
+  "live_pin06_spread": {
+   "insample": {
+    "n": 968,
+    "trades_per_day": 2.18,
+    "gross_per_trade": -6.33,
+    "per_trade": -30.01,
+    "per_day": -65.43,
+    "total": -29051.98,
+    "per_trade_ex_top5": -52.72,
+    "ex_top5_total": -50769.19,
+    "top5": [
+     8573.36,
+     4686.41,
+     3451.47,
+     2670.09,
+     2335.88
+    ]
+   },
+   "oos_aug2026": {
+    "n": 46,
+    "trades_per_day": 2.091,
+    "gross_per_trade": -30.57,
+    "per_trade": -55.1,
+    "per_day": -115.21,
+    "total": -2534.68,
+    "per_trade_ex_top5": -113.41,
+    "ex_top5_total": -4649.65,
+    "top5": [
+     663.3,
+     490.64,
+     347.51,
+     307.49,
+     306.03
+    ]
+   }
+  },
+  "live_pin04_spread": {
+   "insample": {
+    "n": 973,
+    "trades_per_day": 2.191,
+    "gross_per_trade": -6.55,
+    "per_trade": -30.23,
+    "per_day": -66.25,
+    "total": -29414.09,
+    "per_trade_ex_top5": -52.82,
+    "ex_top5_total": -51131.3,
+    "top5": [
+     8573.36,
+     4686.41,
+     3451.47,
+     2670.09,
+     2335.88
+    ]
+   },
+   "oos_aug2026": {
+    "n": 46,
+    "trades_per_day": 2.091,
+    "gross_per_trade": -35.69,
+    "per_trade": -60.87,
+    "per_day": -127.28,
+    "total": -2800.15,
+    "per_trade_ex_top5": -119.88,
+    "ex_top5_total": -4915.13,
+    "top5": [
+     663.3,
+     490.64,
+     347.51,
+     307.49,
+     306.03
+    ]
+   }
+  },
+  "live_nopin_spread": {
+   "insample": {
+    "n": 972,
+    "trades_per_day": 2.189,
+    "gross_per_trade": -7.61,
+    "per_trade": -31.33,
+    "per_day": -68.59,
+    "total": -30456.12,
+    "per_trade_ex_top5": -53.95,
+    "ex_top5_total": -52173.34,
+    "top5": [
+     8573.36,
+     4686.41,
+     3451.47,
+     2670.09,
+     2335.88
+    ]
+   },
+   "oos_aug2026": {
+    "n": 46,
+    "trades_per_day": 2.091,
+    "gross_per_trade": -35.69,
+    "per_trade": -60.87,
+    "per_day": -127.28,
+    "total": -2800.15,
+    "per_trade_ex_top5": -119.88,
+    "ex_top5_total": -4915.13,
+    "top5": [
+     663.3,
+     490.64,
+     347.51,
+     307.49,
+     306.03
+    ]
+   }
+  },
+  "live_pin06_half": {
+   "insample": {
+    "n": 1044,
+    "trades_per_day": 2.351,
+    "gross_per_trade": 3.78,
+    "per_trade": -20.62,
+    "per_day": -48.48,
+    "total": -21526.96,
+    "per_trade_ex_top5": -47.94,
+    "ex_top5_total": -49810.01,
+    "top5": [
+     8573.36,
+     8097.04,
+     4686.41,
+     3474.76,
+     3451.47
+    ]
+   },
+   "oos_aug2026": {
+    "n": 45,
+    "trades_per_day": 2.045,
+    "gross_per_trade": 485.06,
+    "per_trade": 458.66,
+    "per_day": 938.17,
+    "total": 20639.64,
+    "per_trade_ex_top5": -123.87,
+    "ex_top5_total": -4954.68,
+    "top5": [
+     23786.84,
+     663.3,
+     490.64,
+     347.51,
+     306.03
+    ]
+   }
+  },
+  "live_pin04_half": {
+   "insample": {
+    "n": 1048,
+    "trades_per_day": 2.36,
+    "gross_per_trade": 2.26,
+    "per_trade": -22.14,
+    "per_day": -52.26,
+    "total": -23203.4,
+    "per_trade_ex_top5": -49.36,
+    "ex_top5_total": -51486.46,
+    "top5": [
+     8573.36,
+     8097.04,
+     4686.41,
+     3474.76,
+     3451.47
+    ]
+   },
+   "oos_aug2026": {
+    "n": 45,
+    "trades_per_day": 2.045,
+    "gross_per_trade": 479.22,
+    "per_trade": 452.15,
+    "per_day": 924.85,
+    "total": 20346.75,
+    "per_trade_ex_top5": -131.19,
+    "ex_top5_total": -5247.57,
+    "top5": [
+     23786.84,
+     663.3,
+     490.64,
+     347.51,
+     306.03
+    ]
+   }
+  },
+  "live_pin06_noveto": {
+   "insample": {
+    "n": 1121,
+    "trades_per_day": 2.525,
+    "gross_per_trade": 39.98,
+    "per_trade": 14.89,
+    "per_day": 37.6,
+    "total": 16694.97,
+    "per_trade_ex_top5": -47.68,
+    "ex_top5_total": -53207.96,
+    "top5": [
+     28640.75,
+     18408.14,
+     8573.36,
+     8097.04,
+     6183.63
+    ]
+   },
+   "oos_aug2026": {
+    "n": 46,
+    "trades_per_day": 2.091,
+    "gross_per_trade": -78.67,
+    "per_trade": -104.09,
+    "per_day": -217.64,
+    "total": -4787.99,
+    "per_trade_ex_top5": -167.73,
+    "ex_top5_total": -6876.98,
+    "top5": [
+     663.3,
+     490.64,
+     347.51,
+     306.03,
+     281.51
+    ]
+   }
+  },
+  "live_nopin_noveto": {
+   "insample": {
+    "n": 1123,
+    "trades_per_day": 2.529,
+    "gross_per_trade": 39.75,
+    "per_trade": 14.66,
+    "per_day": 37.09,
+    "total": 16466.8,
+    "per_trade_ex_top5": -47.8,
+    "ex_top5_total": -53436.13,
+    "top5": [
+     28640.75,
+     18408.14,
+     8573.36,
+     8097.04,
+     6183.63
+    ]
+   },
+   "oos_aug2026": {
+    "n": 46,
+    "trades_per_day": 2.091,
+    "gross_per_trade": -84.38,
+    "per_trade": -110.45,
+    "per_day": -230.95,
+    "total": -5080.88,
+    "per_trade_ex_top5": -174.88,
+    "ex_top5_total": -7169.88,
+    "top5": [
+     663.3,
+     490.64,
+     347.51,
+     306.03,
+     281.51
+    ]
+   }
+  }
+ },
+ "days": {
+  "insample": 444,
+  "oos": 22
+ },
+ "notes": "LIVE-track policy backtest (p3_r4.live_screen through p3_r4_live.live_sim): model fills (open of the first print after t, within 5 min, else HALT), $10k, 15 bps/side. Spread veto proxy = LEGACY-9 max(CS,AR) on bars [t-29,t]: 'spread' refuses 2*half > 50 bps (the live 0.5% full-spread cap, LEGACY-15's proxy); 'half' refuses half > 50 bps (literal). Depth (25%) is not modelled.",
+ "chosen": "live_pin06_spread",
+ "replay": {
+  "days": [
+   "2024-10-22",
+   "2024-10-24",
+   "2025-04-03",
+   "2025-06-04",
+   "2025-06-13",
+   "2025-07-01",
+   "2025-09-12",
+   "2026-02-23"
+  ],
+  "cases": [
+   {
+    "kind": "proxy",
+    "day": "2024-10-22",
+    "replay": 1,
+    "sim": 1,
+    "identical": true,
+    "bar_universe_sim": 1,
+    "bar_universe_same": true,
+    "replay_legs": [
+     [
+      "FLXS",
+      "09:35",
+      "14:58"
+     ]
+    ]
+   },
+   {
+    "kind": "proxy",
+    "day": "2024-10-24",
+    "replay": 2,
+    "sim": 2,
+    "identical": true,
+    "bar_universe_sim": 2,
+    "bar_universe_same": true,
+    "replay_legs": [
+     [
+      "TSL",
+      "09:35",
+      "09:47"
+     ],
+     [
+      "XLO",
+      "09:50",
+      "14:58"
+     ]
+    ]
+   },
+   {
+    "kind": "proxy",
+    "day": "2025-04-03",
+    "replay": 2,
+    "sim": 2,
+    "identical": true,
+    "bar_universe_sim": 2,
+    "bar_universe_same": true,
+    "replay_legs": [
+     [
+      "SKRE",
+      "09:35",
+      "14:14"
+     ],
+     [
+      "DUG",
+      "14:15",
+      "14:53"
+     ]
+    ]
+   },
+   {
+    "kind": "proxy",
+    "day": "2025-06-04",
+    "replay": 3,
+    "sim": 3,
+    "identical": true,
+    "bar_universe_sim": 3,
+    "bar_universe_same": true,
+    "replay_legs": [
+     [
+      "ZONE",
+      "09:35",
+      "09:50"
+     ],
+     [
+      "MOB",
+      "09:55",
+      "11:21"
+     ],
+     [
+      "NBTX",
+      "11:25",
+      "12:07"
+     ]
+    ]
+   },
+   {
+    "kind": "proxy",
+    "day": "2025-06-13",
+    "replay": 5,
+    "sim": 5,
+    "identical": true,
+    "bar_universe_sim": 5,
+    "bar_universe_same": true,
+    "replay_legs": [
+     [
+      "GPRE",
+      "09:35",
+      "10:52"
+     ],
+     [
+      "DAR",
+      "10:55",
+      "11:38"
+     ],
+     [
+      "DAR",
+      "11:40",
+      "12:17"
+     ],
+     [
+      "URGN",
+      "12:20",
+      "13:09"
+     ],
+     [
+      "VSAT",
+      "13:10",
+      "15:00"
+     ]
+    ]
+   },
+   {
+    "kind": "proxy",
+    "day": "2025-07-01",
+    "replay": 2,
+    "sim": 2,
+    "identical": true,
+    "bar_universe_sim": 2,
+    "bar_universe_same": true,
+    "replay_legs": [
+     [
+      "LVLU",
+      "09:35",
+      "09:43"
+     ],
+     [
+      "PTNM",
+      "09:45",
+      "14:42"
+     ]
+    ]
+   },
+   {
+    "kind": "proxy",
+    "day": "2025-09-12",
+    "replay": 2,
+    "sim": 2,
+    "identical": true,
+    "bar_universe_sim": 2,
+    "bar_universe_same": true,
+    "replay_legs": [
+     [
+      "WOLF",
+      "09:35",
+      "11:44"
+     ],
+     [
+      "CODA",
+      "11:45",
+      "15:00"
+     ]
+    ]
+   },
+   {
+    "kind": "proxy",
+    "day": "2026-02-23",
+    "replay": 2,
+    "sim": 2,
+    "identical": true,
+    "bar_universe_sim": 2,
+    "bar_universe_same": true,
+    "replay_legs": [
+     [
+      "NEWP",
+      "09:35",
+      "10:09"
+     ],
+     [
+      "AEHR",
+      "10:10",
+      "15:00"
+     ]
+    ]
+   },
+   {
+    "kind": "halt_0935",
+    "day": "2024-10-22",
+    "replay": 1,
+    "sim": 1,
+    "identical": true,
+    "bar_universe_sim": 1,
+    "bar_universe_same": true,
+    "replay_legs": [
+     [
+      "FLXS",
+      "09:40",
+      "14:58"
+     ]
+    ],
+    "events": [
+     [
+      "09:36",
+      "REFUSED",
+      "MLI",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "FLXS",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "XYLO",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "ARQQ",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "PHUN",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "NRXS",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "SHPH",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:41",
+      "ENTER",
+      "FLXS",
+      "09:40"
+     ],
+     [
+      "14:59",
+      "EXIT",
+      "FLXS",
+      "bearish"
+     ]
+    ],
+    "first_entry": [
+     "09:41",
+     "ENTER",
+     "FLXS",
+     "09:40"
+    ],
+    "traded_by_0945": true
+   },
+   {
+    "kind": "halt_0935",
+    "day": "2024-10-24",
+    "replay": 3,
+    "sim": 3,
+    "identical": true,
+    "bar_universe_sim": 3,
+    "bar_universe_same": true,
+    "replay_legs": [
+     [
+      "ZLAB",
+      "09:40",
+      "11:08"
+     ],
+     [
+      "PCT",
+      "11:10",
+      "11:23"
+     ],
+     [
+      "TSL",
+      "11:25",
+      "15:00"
+     ]
+    ],
+    "events": [
+     [
+      "09:36",
+      "REFUSED",
+      "TSL",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "LNN",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "PMAX",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "TSLY",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:41",
+      "ENTER",
+      "ZLAB",
+      "09:40"
+     ],
+     [
+      "11:09",
+      "EXIT",
+      "ZLAB",
+      "trail 0.10"
+     ],
+     [
+      "11:11",
+      "ENTER",
+      "PCT",
+      "11:10"
+     ],
+     [
+      "11:24",
+      "EXIT",
+      "PCT",
+      "bearish"
+     ],
+     [
+      "11:26",
+      "ENTER",
+      "TSL",
+      "11:25"
+     ],
+     [
+      "15:01",
+      "EXIT",
+      "TSL",
+      "flatten"
+     ]
+    ],
+    "first_entry": [
+     "09:41",
+     "ENTER",
+     "ZLAB",
+     "09:40"
+    ],
+    "traded_by_0945": true
+   },
+   {
+    "kind": "halt_0935",
+    "day": "2025-04-03",
+    "replay": 4,
+    "sim": 4,
+    "identical": true,
+    "bar_universe_sim": 4,
+    "bar_universe_same": true,
+    "replay_legs": [
+     [
+      "MEXX",
+      "09:40",
+      "12:17"
+     ],
+     [
+      "BGLC",
+      "12:20",
+      "13:48"
+     ],
+     [
+      "MSTZ",
+      "13:50",
+      "14:01"
+     ],
+     [
+      "SMST",
+      "14:05",
+      "14:30"
+     ]
+    ],
+    "events": [
+     [
+      "09:36",
+      "REFUSED",
+      "NIVF",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "HTCO",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "WTID",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "SKRE",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "DRIP",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "FLYD",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:41",
+      "ENTER",
+      "MEXX",
+      "09:40"
+     ],
+     [
+      "12:18",
+      "EXIT",
+      "MEXX",
+      "bearish"
+     ],
+     [
+      "12:21",
+      "ENTER",
+      "BGLC",
+      "12:20"
+     ],
+     [
+      "13:49",
+      "EXIT",
+      "BGLC",
+      "bearish"
+     ],
+     [
+      "13:51",
+      "REFUSED",
+      "ELTX",
+      "13:50",
+      "HALT"
+     ],
+     [
+      "13:51",
+      "REFUSED",
+      "NRGD",
+      "13:50",
+      "HALT"
+     ],
+     [
+      "13:51",
+      "ENTER",
+      "MSTZ",
+      "13:50"
+     ],
+     [
+      "14:02",
+      "EXIT",
+      "MSTZ",
+      "bearish"
+     ]
+    ],
+    "first_entry": [
+     "09:41",
+     "ENTER",
+     "MEXX",
+     "09:40"
+    ],
+    "traded_by_0945": true
+   },
+   {
+    "kind": "halt_0935",
+    "day": "2025-06-04",
+    "replay": 3,
+    "sim": 3,
+    "identical": true,
+    "bar_universe_sim": 3,
+    "bar_universe_same": true,
+    "replay_legs": [
+     [
+      "ROLR",
+      "09:40",
+      "11:11"
+     ],
+     [
+      "NFE",
+      "11:15",
+      "13:52"
+     ],
+     [
+      "BLRX",
+      "13:55",
+      "15:00"
+     ]
+    ],
+    "events": [
+     [
+      "09:36",
+      "REFUSED",
+      "AGEN",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "ZONE",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "SPCB",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "DDC",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "YEXT",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "HIMZ",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:41",
+      "ENTER",
+      "ROLR",
+      "09:40"
+     ],
+     [
+      "11:12",
+      "EXIT",
+      "ROLR",
+      "trail 0.20"
+     ],
+     [
+      "11:16",
+      "ENTER",
+      "NFE",
+      "11:15"
+     ],
+     [
+      "13:53",
+      "EXIT",
+      "NFE",
+      "bearish"
+     ],
+     [
+      "13:56",
+      "ENTER",
+      "BLRX",
+      "13:55"
+     ],
+     [
+      "15:01",
+      "EXIT",
+      "BLRX",
+      "flatten"
+     ]
+    ],
+    "first_entry": [
+     "09:41",
+     "ENTER",
+     "ROLR",
+     "09:40"
+    ],
+    "traded_by_0945": true
+   },
+   {
+    "kind": "halt_0935",
+    "day": "2025-06-13",
+    "replay": 2,
+    "sim": 2,
+    "identical": true,
+    "bar_universe_sim": 2,
+    "bar_universe_same": true,
+    "replay_legs": [
+     [
+      "EYEN",
+      "09:40",
+      "09:50"
+     ],
+     [
+      "CODA",
+      "09:55",
+      "14:49"
+     ]
+    ],
+    "events": [
+     [
+      "09:36",
+      "REFUSED",
+      "GPRE",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "PED",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "MDBH",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "SSL",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "ZENA",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "RH",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:41",
+      "ENTER",
+      "EYEN",
+      "09:40"
+     ],
+     [
+      "09:51",
+      "EXIT",
+      "EYEN",
+      "bearish"
+     ],
+     [
+      "09:56",
+      "ENTER",
+      "CODA",
+      "09:55"
+     ],
+     [
+      "15:01",
+      "EXIT",
+      "CODA",
+      "flatten"
+     ]
+    ],
+    "first_entry": [
+     "09:41",
+     "ENTER",
+     "EYEN",
+     "09:40"
+    ],
+    "traded_by_0945": true
+   },
+   {
+    "kind": "halt_0935",
+    "day": "2025-07-01",
+    "replay": 2,
+    "sim": 2,
+    "identical": true,
+    "bar_universe_sim": 2,
+    "bar_universe_same": true,
+    "replay_legs": [
+     [
+      "RCT",
+      "09:40",
+      "10:00"
+     ],
+     [
+      "SVM",
+      "10:05",
+      "15:00"
+     ]
+    ],
+    "events": [
+     [
+      "09:36",
+      "REFUSED",
+      "BMNR",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "LVLU",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "EEIQ",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "SCNI",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "MUX",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "TSLZ",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "TSDD",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:41",
+      "ENTER",
+      "RCT",
+      "09:40"
+     ],
+     [
+      "10:01",
+      "EXIT",
+      "RCT",
+      "trail 0.10"
+     ],
+     [
+      "10:06",
+      "REFUSED",
+      "EEIQ",
+      "10:05",
+      "HALT"
+     ],
+     [
+      "10:06",
+      "ENTER",
+      "SVM",
+      "10:05"
+     ],
+     [
+      "15:01",
+      "EXIT",
+      "SVM",
+      "flatten"
+     ]
+    ],
+    "first_entry": [
+     "09:41",
+     "ENTER",
+     "RCT",
+     "09:40"
+    ],
+    "traded_by_0945": true
+   },
+   {
+    "kind": "halt_0935",
+    "day": "2025-09-12",
+    "replay": 4,
+    "sim": 4,
+    "identical": true,
+    "bar_universe_sim": 4,
+    "bar_universe_same": true,
+    "replay_legs": [
+     [
+      "QSG",
+      "09:40",
+      "10:32"
+     ],
+     [
+      "HSDT",
+      "10:35",
+      "11:34"
+     ],
+     [
+      "GLXG",
+      "11:35",
+      "13:05"
+     ],
+     [
+      "LEXX",
+      "13:10",
+      "14:57"
+     ]
+    ],
+    "events": [
+     [
+      "09:36",
+      "REFUSED",
+      "WOLF",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "STRR",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "THH",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "SOGP",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "SOLT",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "SLON",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:41",
+      "ENTER",
+      "QSG",
+      "09:40"
+     ],
+     [
+      "10:33",
+      "EXIT",
+      "QSG",
+      "bearish"
+     ],
+     [
+      "10:36",
+      "ENTER",
+      "HSDT",
+      "10:35"
+     ],
+     [
+      "11:35",
+      "EXIT",
+      "HSDT",
+      "trail 0.10"
+     ],
+     [
+      "11:36",
+      "ENTER",
+      "GLXG",
+      "11:35"
+     ],
+     [
+      "13:06",
+      "EXIT",
+      "GLXG",
+      "bearish"
+     ],
+     [
+      "13:11",
+      "ENTER",
+      "LEXX",
+      "13:10"
+     ],
+     [
+      "15:01",
+      "EXIT",
+      "LEXX",
+      "flatten"
+     ]
+    ],
+    "first_entry": [
+     "09:41",
+     "ENTER",
+     "QSG",
+     "09:40"
+    ],
+    "traded_by_0945": true
+   },
+   {
+    "kind": "halt_0935",
+    "day": "2026-02-23",
+    "replay": 1,
+    "sim": 1,
+    "identical": true,
+    "bar_universe_sim": 1,
+    "bar_universe_same": true,
+    "replay_legs": [
+     [
+      "PLTZ",
+      "09:40",
+      "15:00"
+     ]
+    ],
+    "events": [
+     [
+      "09:36",
+      "REFUSED",
+      "NEWP",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "OPEG",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "ISPR",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "VKTX",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "FFAI",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "IBRX",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:41",
+      "ENTER",
+      "PLTZ",
+      "09:40"
+     ],
+     [
+      "15:01",
+      "EXIT",
+      "PLTZ",
+      "flatten"
+     ]
+    ],
+    "first_entry": [
+     "09:41",
+     "ENTER",
+     "PLTZ",
+     "09:40"
+    ],
+    "traded_by_0945": true
+   },
+   {
+    "kind": "first_at_grid",
+    "day": "2024-10-22",
+    "replay": 1,
+    "sim": 1,
+    "identical": true,
+    "bar_universe_sim": 1,
+    "bar_universe_same": true,
+    "replay_legs": [
+     [
+      "FLXS",
+      "09:35",
+      "14:58"
+     ]
+    ],
+    "events": [
+     [
+      "09:36",
+      "REFUSED",
+      "MLI",
+      "09:35",
+      "SPREAD"
+     ],
+     [
+      "09:36",
+      "ENTER",
+      "FLXS",
+      "09:35"
+     ],
+     [
+      "14:59",
+      "EXIT",
+      "FLXS",
+      "bearish"
+     ]
+    ],
+    "same_grid_fallthrough": 1
+   },
+   {
+    "kind": "first_at_grid",
+    "day": "2024-10-24",
+    "replay": 2,
+    "sim": 2,
+    "identical": true,
+    "bar_universe_sim": 2,
+    "bar_universe_same": true,
+    "replay_legs": [
+     [
+      "LNN",
+      "09:35",
+      "09:42"
+     ],
+     [
+      "XLO",
+      "09:45",
+      "14:58"
+     ]
+    ],
+    "events": [
+     [
+      "09:36",
+      "REFUSED",
+      "TSL",
+      "09:35",
+      "SPREAD"
+     ],
+     [
+      "09:36",
+      "ENTER",
+      "LNN",
+      "09:35"
+     ],
+     [
+      "09:43",
+      "EXIT",
+      "LNN",
+      "bearish"
+     ],
+     [
+      "09:46",
+      "REFUSED",
+      "LSH",
+      "09:45",
+      "SPREAD"
+     ],
+     [
+      "09:46",
+      "ENTER",
+      "XLO",
+      "09:45"
+     ],
+     [
+      "15:01",
+      "EXIT",
+      "XLO",
+      "flatten"
+     ]
+    ],
+    "same_grid_fallthrough": 2
+   },
+   {
+    "kind": "first_at_grid",
+    "day": "2025-04-03",
+    "replay": 1,
+    "sim": 1,
+    "identical": true,
+    "bar_universe_sim": 1,
+    "bar_universe_same": true,
+    "replay_legs": [
+     [
+      "HTCO",
+      "09:35",
+      "14:45"
+     ]
+    ],
+    "events": [
+     [
+      "09:36",
+      "REFUSED",
+      "NIVF",
+      "09:35",
+      "SPREAD"
+     ],
+     [
+      "09:36",
+      "ENTER",
+      "HTCO",
+      "09:35"
+     ],
+     [
+      "15:01",
+      "EXIT",
+      "HTCO",
+      "flatten"
+     ]
+    ],
+    "same_grid_fallthrough": 1
+   },
+   {
+    "kind": "first_at_grid",
+    "day": "2025-06-04",
+    "replay": 3,
+    "sim": 3,
+    "identical": true,
+    "bar_universe_sim": 3,
+    "bar_universe_same": true,
+    "replay_legs": [
+     [
+      "ZONE",
+      "09:35",
+      "09:50"
+     ],
+     [
+      "MOB",
+      "09:55",
+      "11:21"
+     ],
+     [
+      "NBTX",
+      "11:25",
+      "12:07"
+     ]
+    ],
+    "events": [
+     [
+      "09:36",
+      "REFUSED",
+      "AGEN",
+      "09:35",
+      "SPREAD"
+     ],
+     [
+      "09:36",
+      "ENTER",
+      "ZONE",
+      "09:35"
+     ],
+     [
+      "09:51",
+      "EXIT",
+      "ZONE",
+      "trail 0.10"
+     ],
+     [
+      "09:56",
+      "REFUSED",
+      "PRE",
+      "09:55",
+      "SPREAD"
+     ],
+     [
+      "09:56",
+      "ENTER",
+      "MOB",
+      "09:55"
+     ],
+     [
+      "11:22",
+      "EXIT",
+      "MOB",
+      "bearish"
+     ],
+     [
+      "11:26",
+      "REFUSED",
+      "NA",
+      "11:25",
+      "SPREAD"
+     ],
+     [
+      "11:26",
+      "REFUSED",
+      "OCC",
+      "11:25",
+      "HALT"
+     ],
+     [
+      "11:26",
+      "ENTER",
+      "NBTX",
+      "11:25"
+     ],
+     [
+      "15:01",
+      "EXIT",
+      "NBTX",
+      "flatten"
+     ]
+    ],
+    "same_grid_fallthrough": 4
+   },
+   {
+    "kind": "first_at_grid",
+    "day": "2025-06-13",
+    "replay": 1,
+    "sim": 1,
+    "identical": true,
+    "bar_universe_sim": 1,
+    "bar_universe_same": true,
+    "replay_legs": [
+     [
+      "PED",
+      "09:35",
+      "15:00"
+     ]
+    ],
+    "events": [
+     [
+      "09:36",
+      "REFUSED",
+      "GPRE",
+      "09:35",
+      "SPREAD"
+     ],
+     [
+      "09:36",
+      "ENTER",
+      "PED",
+      "09:35"
+     ],
+     [
+      "15:01",
+      "EXIT",
+      "PED",
+      "flatten"
+     ]
+    ],
+    "same_grid_fallthrough": 1
+   },
+   {
+    "kind": "first_at_grid",
+    "day": "2025-07-01",
+    "replay": 2,
+    "sim": 2,
+    "identical": true,
+    "bar_universe_sim": 2,
+    "bar_universe_same": true,
+    "replay_legs": [
+     [
+      "LVLU",
+      "09:35",
+      "09:43"
+     ],
+     [
+      "PTNM",
+      "09:45",
+      "14:42"
+     ]
+    ],
+    "events": [
+     [
+      "09:36",
+      "REFUSED",
+      "BMNR",
+      "09:35",
+      "SPREAD"
+     ],
+     [
+      "09:36",
+      "ENTER",
+      "LVLU",
+      "09:35"
+     ],
+     [
+      "09:44",
+      "EXIT",
+      "LVLU",
+      "trail 0.20"
+     ],
+     [
+      "09:46",
+      "REFUSED",
+      "SOND",
+      "09:45",
+      "SPREAD"
+     ],
+     [
+      "09:46",
+      "ENTER",
+      "PTNM",
+      "09:45"
+     ],
+     [
+      "14:43",
+      "EXIT",
+      "PTNM",
+      "bearish"
+     ]
+    ],
+    "same_grid_fallthrough": 2
+   },
+   {
+    "kind": "first_at_grid",
+    "day": "2025-09-12",
+    "replay": 4,
+    "sim": 4,
+    "identical": true,
+    "bar_universe_sim": 4,
+    "bar_universe_same": true,
+    "replay_legs": [
+     [
+      "THH",
+      "09:35",
+      "12:00"
+     ],
+     [
+      "MFI",
+      "12:05",
+      "12:21"
+     ],
+     [
+      "ECDA",
+      "12:25",
+      "12:32"
+     ],
+     [
+      "ELON",
+      "12:35",
+      "14:32"
+     ]
+    ],
+    "events": [
+     [
+      "09:36",
+      "REFUSED",
+      "WOLF",
+      "09:35",
+      "SPREAD"
+     ],
+     [
+      "09:36",
+      "REFUSED",
+      "STRR",
+      "09:35",
+      "HALT"
+     ],
+     [
+      "09:36",
+      "ENTER",
+      "THH",
+      "09:35"
+     ],
+     [
+      "12:01",
+      "EXIT",
+      "THH",
+      "bearish"
+     ],
+     [
+      "12:06",
+      "REFUSED",
+      "EVTV",
+      "12:05",
+      "SPREAD"
+     ],
+     [
+      "12:06",
+      "ENTER",
+      "MFI",
+      "12:05"
+     ],
+     [
+      "12:22",
+      "EXIT",
+      "MFI",
+      "bearish"
+     ],
+     [
+      "12:26",
+      "REFUSED",
+      "AIIO",
+      "12:25",
+      "SPREAD"
+     ],
+     [
+      "12:26",
+      "ENTER",
+      "ECDA",
+      "12:25"
+     ],
+     [
+      "12:33",
+      "EXIT",
+      "ECDA",
+      "bearish"
+     ],
+     [
+      "12:36",
+      "REFUSED",
+      "BHST",
+      "12:35",
+      "SPREAD"
+     ],
+     [
+      "12:36",
+      "ENTER",
+      "ELON",
+      "12:35"
+     ],
+     [
+      "15:01",
+      "EXIT",
+      "ELON",
+      "flatten"
+     ]
+    ],
+    "same_grid_fallthrough": 5
+   },
+   {
+    "kind": "first_at_grid",
+    "day": "2026-02-23",
+    "replay": 2,
+    "sim": 2,
+    "identical": true,
+    "bar_universe_sim": 2,
+    "bar_universe_same": true,
+    "replay_legs": [
+     [
+      "OPEG",
+      "09:35",
+      "13:41"
+     ],
+     [
+      "CV",
+      "13:45",
+      "14:26"
+     ]
+    ],
+    "events": [
+     [
+      "09:36",
+      "REFUSED",
+      "NEWP",
+      "09:35",
+      "SPREAD"
+     ],
+     [
+      "09:36",
+      "ENTER",
+      "OPEG",
+      "09:35"
+     ],
+     [
+      "13:42",
+      "EXIT",
+      "OPEG",
+      "trail 0.20"
+     ],
+     [
+      "13:46",
+      "REFUSED",
+      "BEX",
+      "13:45",
+      "SPREAD"
+     ],
+     [
+      "13:46",
+      "ENTER",
+      "CV",
+      "13:45"
+     ],
+     [
+      "14:27",
+      "EXIT",
+      "CV",
+      "bearish"
+     ]
+    ],
+    "same_grid_fallthrough": 2
+   }
+  ],
+  "all_identical": true,
+  "bar_universe_same": 24,
+  "halt_0935_traded_by_0945": [
+   true,
+   true,
+   true,
+   true,
+   true,
+   true,
+   true,
+   true
+  ]
+ },
+ "oct_replay": {
+  "2026-10-05": {
+   "grids_with_snapshots": [
+    "09:35",
+    "09:40",
+    "09:55",
+    "10:20",
+    "11:10"
+   ],
+   "events": [
+    [
+     "09:36",
+     "REFUSED",
+     "MI",
+     "09:35",
+     "SPREAD 1.79% > 0.50%; DEPTH 200.0 sh < 2"
+    ],
+    [
+     "09:36",
+     "ENTER",
+     "APT",
+     "09:35",
+     "unchecked",
+     [
+      "MI:SPREAD 1.79% > 0.50%; DEPTH 200.0 sh < 2",
+      "APT:OK",
+      "FLBR:OK",
+      "NUG:GAP7",
+      "INSE:OK",
+      "UBR:GAP7",
+      "PUR:OK",
+      "BRF:NEED_BARS"
+     ]
+    ],
+    [
+     "15:02",
+     "NO-EXIT (bars end)",
+     "APT",
+     null
+    ]
+   ]
+  },
+  "2026-10-06": {
+   "grids_with_snapshots": [
+    "09:35",
+    "09:50",
+    "10:05",
+    "14:05"
+   ],
+   "events": [
+    [
+     "09:36",
+     "REFUSED",
+     "XHG",
+     "09:35",
+     "SPREAD 1.31% > 0.50%"
+    ],
+    [
+     "09:36",
+     "ENTER",
+     "PLU",
+     "09:35",
+     "unchecked",
+     [
+      "XHG:SPREAD 1.31% > 0.50%",
+      "PLU:OK",
+      "ASTY:OK",
+      "FLYT:OK",
+      "TSEG:OK",
+      "SPCL:OK",
+      "ASTG:OK",
+      "RPGL:OK"
+     ]
+    ],
+    [
+     "15:02",
+     "NO-EXIT (bars end)",
+     "PLU",
+     null
+    ]
+   ]
+  },
+  "2026-10-07": {
+   "grids_with_snapshots": [
+    "09:35",
+    "09:50"
+   ],
+   "events": [
+    [
+     "09:36",
+     "REFUSED",
+     "SMXT",
+     "09:35",
+     "SPREAD 4.08% > 0.50%"
+    ],
+    [
+     "09:36",
+     "ENTER",
+     "ASTN",
+     "09:35",
+     "unchecked",
+     [
+      "SMXT:SPREAD 4.08% > 0.50%",
+      "ASTN:OK",
+      "GDXD:OK",
+      "LGCL:NEED_BARS",
+      "APUS:NEED_BARS",
+      "PENG:NEED_BARS",
+      "PENU:OK",
+      "LPCN:NEED_BARS"
+     ]
+    ],
+    [
+     "15:02",
+     "NO-EXIT (bars end)",
+     "ASTN",
+     null
+    ]
+   ]
+  },
+  "2026-10-08": {
+   "grids_with_snapshots": [
+    "09:35",
+    "09:40",
+    "09:45",
+    "09:50",
+    "09:55",
+    "10:00",
+    "10:05",
+    "10:10",
+    "10:15",
+    "10:20",
+    "10:25",
+    "10:30",
+    "10:35",
+    "10:40",
+    "10:45",
+    "10:50",
+    "10:55",
+    "11:00",
+    "11:05",
+    "11:10"
+   ],
+   "events": [
+    [
+     "09:36",
+     "REFUSED",
+     "CCG",
+     "09:35",
+     "SPREAD 13.95% > 0.50%; DEPTH 123.0 sh < "
+    ],
+    [
+     "09:36",
+     "ENTER",
+     "HAE",
+     "09:35",
+     "unchecked",
+     [
+      "CCG:SPREAD 13.95% > 0.50%; DEPTH 123.0 sh < ",
+      "PCRX:PINNED",
+      "HAE:OK",
+      "HNRG:OK",
+      "GFUZ:OK",
+      "BYAH:OK",
+      "PROF:OK",
+      "AXTQ:OK"
+     ]
+    ],
+    [
+     "15:02",
+     "NO-EXIT (bars end)",
+     "HAE",
+     null
+    ]
+   ]
+  }
+ },
+ "cli_test": {
+  "steps": [
+   [
+    "now 09:36",
+    "NEED_DATA",
+    "['TSL', 'LNN', 'TSLW', 'MOLN', 'PMAX', 'HCWC', 'TSLY', 'TSLL']"
+   ],
+   [
+    "now 09:36",
+    "ENTER",
+    "TSL",
+    "['1:TSL:OK', '2:LNN:OK', '3:TSLW:VOLCAP', '4:MOLN:VOLCAP', '5:PMAX:OK', '6:HCWC:VOLCAP', '7:TSLY:OK', '8:TSLL:GAP7']"
+   ],
+   [
+    "check",
+    "TSL",
+    "VETO",
+    "SPREAD"
+   ],
+   [
+    "now 09:37",
+    "ENTER",
+    "LNN"
+   ],
+   [
+    "check",
+    "LNN",
+    "VETO",
+    "HALT"
+   ],
+   [
+    "now 09:37",
+    "ENTER",
+    "PMAX",
+    "['1:TSL:SPREAD', '2:LNN:HALT', '3:TSLW:VOLCAP', '4:MOLN:VOLCAP', '5:PMAX:OK', '6:HCWC:VOLCAP', '7:TSLY:OK', '8:TSLL:GAP7']"
+   ],
+   [
+    "now 09:43 (grid 09:40 has no scan snapshot)",
+    "NOTHING",
+    "no top-8 name passes at grid 09:40; next grid 09:45 (wall 09:46)"
+   ],
+   [
+    "now 09:41 holding",
+    "HOLD",
+    "PMAX",
+    "['TSL', 'PMAX']"
+   ],
+   [
+    "refusals",
+    "[('TSLW', '09:35', 'VOLCAP'), ('MOLN', '09:35', 'VOLCAP'), ('HCWC', '09:35', 'VOLCAP'), ('TSLL', '09:35', 'GAP7'), ('TSL', '09:35', 'SPREAD'), ('LNN', '09:35', 'HALT')]"
+   ]
+  ],
+  "passed": true
+ },
+ "oct_replay_1008_full": {
+  "2026-10-08": {
+   "grids_with_snapshots": [
+    "09:35",
+    "09:40",
+    "09:45",
+    "09:50",
+    "09:55",
+    "10:00",
+    "10:05",
+    "10:10",
+    "10:15",
+    "10:20",
+    "10:25",
+    "10:30",
+    "10:35",
+    "10:40",
+    "10:45",
+    "10:50",
+    "10:55",
+    "11:00",
+    "11:05",
+    "11:10"
+   ],
+   "events": [
+    [
+     "09:36",
+     "REFUSED",
+     "CCG",
+     "09:35",
+     "SPREAD 13.95% > 0.50%; DEPTH 123.0 sh < "
+    ],
+    [
+     "09:36",
+     "ENTER",
+     "HAE",
+     "09:35",
+     "unchecked",
+     [
+      "CCG:SPREAD 13.95% > 0.50%; DEPTH 123.0 sh < ",
+      "PCRX:PINNED",
+      "HAE:OK",
+      "HNRG:OK",
+      "GFUZ:OK",
+      "BYAH:OK",
+      "PROF:OK",
+      "AXTQ:OK"
+     ]
+    ],
+    [
+     "09:47",
+     "EXIT",
+     "HAE",
+     "bearish",
+     119.255,
+     "entry",
+     116.465,
+     "gross_10k",
+     237.15
+    ],
+    [
+     "09:51",
+     "REFUSED",
+     "MEDS",
+     "09:50",
+     "SPREAD (bar proxy)"
+    ],
+    [
+     "09:51",
+     "ENTER",
+     "AMOD",
+     "09:50",
+     "unchecked",
+     [
+      "PCRX:PINNED",
+      "MEDS:SPREAD (bar proxy)",
+      "AMOD:OK",
+      "MANE:OK",
+      "FEAM:OK",
+      "GFUZ:OK",
+      "PROF:OK",
+      "HAE:OK"
+     ]
+    ],
+    [
+     "10:12",
+     "EXIT",
+     "AMOD",
+     "trail 0.20",
+     2.3439,
+     "entry",
+     2.9299,
+     "gross_10k",
+     -1999.95
+    ],
+    [
+     "10:16",
+     "ENTER",
+     "IREZ",
+     "10:15",
+     "unchecked",
+     [
+      "PCRX:PINNED",
+      "IREZ:OK",
+      "BEZ:OK",
+      "BWET:VOLCAP",
+      "MEDS:OK",
+      "GFSG:OK",
+      "BOXL:VOLCAP",
+      "AXTQ:VOLCAP"
+     ]
+    ],
+    [
+     "11:23",
+     "EXIT",
+     "IREZ",
+     "bearish",
+     12.0401,
+     "entry",
+     11.89,
+     "gross_10k",
+     126.23
+    ]
+   ]
+  }
+ }
+}
