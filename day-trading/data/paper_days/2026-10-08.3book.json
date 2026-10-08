@@ -15,7 +15,11 @@
   "[09:38] R4 CCG model leg entered 09:36 @6.0006 (shares_cap 423). 09:38 check VETO (6.00/6.90 spread 13.95%, depth 123). Tracking CCG each minute.",
   "[09:39] R4 CCG 09:39 VETO (6.15/6.89 spread 11.35%, depth 223).",
   "[09:40] R4 CCG 09:40 VETO (5.50/5.99 spread 8.53%, depth 0 within ask+0.5%).",
-  "[09:41] 09:41: R4 CCG VETO (5.50/6.12 spread 10.67%, depth 200). R4 grid 09:40 scan ingested (36 rows); model still HOLDING CCG (entered 09:36 @6.0006). RL 09:40 NOTHING (br -0.00073). From here, while the CCG quote spread alone exceeds 0.5% the price book is not fetched (check-book run with depth 0 = spread veto decides); the book is fetched whenever the spread is <= 0.5%."
+  "[09:41] 09:41: R4 CCG VETO (5.50/6.12 spread 10.67%, depth 200). R4 grid 09:40 scan ingested (36 rows); model still HOLDING CCG (entered 09:36 @6.0006). RL 09:40 NOTHING (br -0.00073). From here, while the CCG quote spread alone exceeds 0.5% the price book is not fetched (check-book run with depth 0 = spread veto decides); the book is fetched whenever the spread is <= 0.5%.",
+  "[09:46] 09:46: R4 CCG VETO (5.50/5.79 spread 5.14%); R4 grid 09:45 ingested (37 rows), model HOLDING CCG. RL 09:45 scan ingested.",
+  "[09:50] R4 CCG 09:42-09:50 VETO every minute (spread 3.7%-10.3%); no CCG prints since 09:40.",
+  "[09:51] 09:51: R4 CCG VETO (5.50/5.71, 3.75%); R4 grid 09:50 ingested, model HOLDING CCG. RL 09:50 NOTHING (br +0.00241).",
+  "[09:56] 09:56: R4 CCG VETO (3.75%); R4 grid 09:55 ingested (40 rows), model HOLDING CCG. RL 09:55 NOTHING (br +0.00234)."
  ],
  "errors": [],
  "ops": {
@@ -28,6 +32,6 @@
    "at_et": "09:11"
   },
   "session": "TRADING 2026-10-08 full (close 16:00)",
-  "last_cycle": "09:41:46"
+  "last_cycle": "10:00:12"
  }
 }
