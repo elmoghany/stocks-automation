@@ -54,10 +54,12 @@
    "at_et": "09:11"
   },
   "session": "TRADING 2026-10-08 full (close 16:00)",
-  "last_cycle": "14:51:22"
+  "last_cycle": "15:01:34",
+  "r4": "DONE 15:01 (model PCRX flatten 15:00 @36.335; no paper fills)"
  },
  "divergences": [
   "[10:13] R4 INHD decided at grid 10:05: LULD-halted from 14:03:24Z (quote locked, book crossed) through 10:12; script marks the leg MISSED at 10:12 (stale: no fill bar within 5 min of decision). No entry, no shadow. Model stays ARMED on INHD; R4 tracks INHD bars each minute until the model resolves, then resumes at the next grid.",
-  "[10:15] R4 grid 10:05: after INHD (halted; reopened 14:13Z) the model fell through to rank #2 PCRX (model entry 10:06 @36.2999, cap 275 sh). This became known only at 10:14 (it needed the INHD reopen bar) -> MISSED (stale), no entry, no shadow. Model holds PCRX; R4 tracks PCRX bars each minute until the model exits."
+  "[10:15] R4 grid 10:05: after INHD (halted; reopened 14:13Z) the model fell through to rank #2 PCRX (model entry 10:06 @36.2999, cap 275 sh). This became known only at 10:14 (it needed the INHD reopen bar) -> MISSED (stale), no entry, no shadow. Model holds PCRX; R4 tracks PCRX bars each minute until the model exits.",
+  "[15:01] [15:01] R4 PCRX model leg (MISSED, model-only) exited at the 15:00 flatten @36.335 (entry 10:06 @36.2999, 275 sh cap -> model gross +$9.65, not booked). R4 state DONE: 2 tickets used (CCG SHADOW trail 10:03 @5.16; PCRX MISSED). R4 paper book: 0 fills today."
  ]
 }
