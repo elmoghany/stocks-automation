@@ -9,7 +9,13 @@
  "trades": [],
  "notes": [
   "[09:10] Session clock: TRADING 2026-10-08 full (close 16:00). Capability probe green (python, git, MCP SPY quote). Universe asof 2026-10-02 (current month, no refresh).",
-  "[09:12] R15 earnings calendar (2026-10-08, days=-2): 23 rows, 20 in window, 1 in the 95-name universe: ANGO (2026-10-08 am, EPS -0.04 vs est -0.11). Watchers r4/r15/rl launched DETACHED via PowerShell Start-Process (PIDs 12748/5608/14796); logs data/paper/watch_{book}_2026-10-08.log/.err; all three alive (0 open)."
+  "[09:12] R15 earnings calendar (2026-10-08, days=-2): 23 rows, 20 in window, 1 in the 95-name universe: ANGO (2026-10-08 am, EPS -0.04 vs est -0.11). Watchers r4/r15/rl launched DETACHED via PowerShell Start-Process (PIDs 12748/5608/14796); logs data/paper/watch_{book}_2026-10-08.log/.err; all three alive (0 open).",
+  "[09:31] RL 09:30 NOTHING (br 0.0, n_cand 0; scan 09:31:0x). (A premarket test scan at 09:28 was discarded, not ingested.)",
+  "[09:37] R15 09:36 NEED_DATA ANGO -> bars fetched (with R4 need_bars, 08:00Z) -> 09:37 DONE: ANGO printed 09:35 but red (-198 bp since open). R15 no trade today. R4 grid 09:35 (scan 09:36:0x, 35 rows; top8 CCG PCRX HAE HNRG PTIR PLTU COHQ BIAF; ranked CCG PCRX HAE HNRG GFUZ BYAH PROF AXTQ; bars 04:00->now spilled+ingested): ENTER CCG. Check 09:37: VETO (6.00/6.90 spread 13.95%, depth 123 vs want 1449) -> SHADOW leg (ask 6.90). Re-check each minute while ENTER. RL 09:35 NOTHING (br +0.001, scan 09:36:0x, ingested 09:38).",
+  "[09:38] R4 CCG model leg entered 09:36 @6.0006 (shares_cap 423). 09:38 check VETO (6.00/6.90 spread 13.95%, depth 123). Tracking CCG each minute.",
+  "[09:39] R4 CCG 09:39 VETO (6.15/6.89 spread 11.35%, depth 223).",
+  "[09:40] R4 CCG 09:40 VETO (5.50/5.99 spread 8.53%, depth 0 within ask+0.5%).",
+  "[09:41] 09:41: R4 CCG VETO (5.50/6.12 spread 10.67%, depth 200). R4 grid 09:40 scan ingested (36 rows); model still HOLDING CCG (entered 09:36 @6.0006). RL 09:40 NOTHING (br -0.00073). From here, while the CCG quote spread alone exceeds 0.5% the price book is not fetched (check-book run with depth 0 = spread veto decides); the book is fetched whenever the spread is <= 0.5%."
  ],
  "errors": [],
  "ops": {
@@ -22,6 +28,6 @@
    "at_et": "09:11"
   },
   "session": "TRADING 2026-10-08 full (close 16:00)",
-  "last_cycle": "09:12:06"
+  "last_cycle": "09:41:46"
  }
 }
