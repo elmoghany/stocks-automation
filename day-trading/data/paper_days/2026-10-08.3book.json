@@ -19,7 +19,9 @@
   "[09:46] 09:46: R4 CCG VETO (5.50/5.79 spread 5.14%); R4 grid 09:45 ingested (37 rows), model HOLDING CCG. RL 09:45 scan ingested.",
   "[09:50] R4 CCG 09:42-09:50 VETO every minute (spread 3.7%-10.3%); no CCG prints since 09:40.",
   "[09:51] 09:51: R4 CCG VETO (5.50/5.71, 3.75%); R4 grid 09:50 ingested, model HOLDING CCG. RL 09:50 NOTHING (br +0.00241).",
-  "[09:56] 09:56: R4 CCG VETO (3.75%); R4 grid 09:55 ingested (40 rows), model HOLDING CCG. RL 09:55 NOTHING (br +0.00234)."
+  "[09:56] 09:56: R4 CCG VETO (3.75%); R4 grid 09:55 ingested (40 rows), model HOLDING CCG. RL 09:55 NOTHING (br +0.00234).",
+  "[10:01] 10:01: R4 CCG VETO (5.50/5.69, 3.40%); R4 grid 10:00 ingested (44 rows), model HOLDING CCG. RL 10:00 NOTHING (br +0.00074).",
+  "[10:04] R4 CCG model leg CLOSED: entry 09:36 @6.0006 -> exit 10:03 @5.16 (trail 20% off peak high 6.66; first print since 09:40 was the 10:03 bar O5.5161 L5.16 v500). Official leg never entered (VETO every live check 09:37-10:04: spread 3.4%-14%, depth 0-223 vs want ~1450-1820). SHADOW leg: first veto ask 6.90 (09:37) -> model exit 5.16. R4 FLAT, next decision grid 10:05 (wall 10:06)."
  ],
  "errors": [],
  "ops": {
@@ -32,6 +34,6 @@
    "at_et": "09:11"
   },
   "session": "TRADING 2026-10-08 full (close 16:00)",
-  "last_cycle": "10:00:12"
+  "last_cycle": "10:04:16"
  }
 }
