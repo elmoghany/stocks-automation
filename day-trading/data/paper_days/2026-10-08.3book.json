@@ -40,7 +40,8 @@
   "[11:16] 11:16 grid 11:15: RL NOTHING; R4 HOLDING PCRX model leg. From now R4 scans are not ingested while the R4 model is HOLDING (no decision possible); model leg tracked via PCRX bars each grid; R4 scans resume the grid after the model exits",
   "[11:46] 11:46 grid 11:45: RL NOTHING (br -0.008); R4 PCRX model HOLDING ~36.285",
   "[13:16] 13:16 grid 13:15: RL NOTHING (br -0.010..-0.014 over 13:00-13:15, threshold -0.0238); R4 PCRX model HOLDING ~36.305",
-  "[13:46] 13:46 grid 13:45: RL NOTHING (br ~-0.010); R4 PCRX model HOLDING ~36.29"
+  "[13:46] 13:46 grid 13:45: RL NOTHING (br ~-0.010); R4 PCRX model HOLDING ~36.29",
+  "[14:26] 14:26 R4 decision grid closed (last grid 14:25) with model still HOLDING PCRX (MISSED, model-only); no R4 scans ingested 10:06-14:25 per holding policy; PCRX tracked to 15:00 flatten."
  ],
  "errors": [],
  "ops": {
@@ -53,7 +54,7 @@
    "at_et": "09:11"
   },
   "session": "TRADING 2026-10-08 full (close 16:00)",
-  "last_cycle": "14:21:30"
+  "last_cycle": "14:51:22"
  },
  "divergences": [
   "[10:13] R4 INHD decided at grid 10:05: LULD-halted from 14:03:24Z (quote locked, book crossed) through 10:12; script marks the leg MISSED at 10:12 (stale: no fill bar within 5 min of decision). No entry, no shadow. Model stays ARMED on INHD; R4 tracks INHD bars each minute until the model resolves, then resumes at the next grid.",
