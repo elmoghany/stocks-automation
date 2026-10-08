@@ -1,0 +1,166 @@
+{
+ "date": "2026-10-08",
+ "source": "data/paper/r15/earnings_cal_2026-10-08.json",
+ "events": [
+  {
+   "symbol": "ADVB",
+   "report_date": "2026-10-07",
+   "timing": "pm",
+   "reported": false,
+   "verified": false,
+   "in_universe": false
+  },
+  {
+   "symbol": "ANGO",
+   "report_date": "2026-10-08",
+   "timing": "am",
+   "reported": true,
+   "verified": true,
+   "in_universe": true
+  },
+  {
+   "symbol": "APLD",
+   "report_date": "2026-10-07",
+   "timing": "pm",
+   "reported": true,
+   "verified": true,
+   "in_universe": false
+  },
+  {
+   "symbol": "BYRN",
+   "report_date": "2026-10-08",
+   "timing": "am",
+   "reported": true,
+   "verified": true,
+   "in_universe": false
+  },
+  {
+   "symbol": "CGTL",
+   "report_date": "2026-10-07",
+   "timing": "pm",
+   "reported": false,
+   "verified": false,
+   "in_universe": false
+  },
+  {
+   "symbol": "HELE",
+   "report_date": "2026-10-08",
+   "timing": "am",
+   "reported": true,
+   "verified": true,
+   "in_universe": false
+  },
+  {
+   "symbol": "HKD",
+   "report_date": "2026-10-07",
+   "timing": "pm",
+   "reported": false,
+   "verified": false,
+   "in_universe": false
+  },
+  {
+   "symbol": "IPW",
+   "report_date": "2026-10-08",
+   "timing": "pm",
+   "reported": false,
+   "verified": false,
+   "in_universe": false
+  },
+  {
+   "symbol": "LEVI",
+   "report_date": "2026-10-07",
+   "timing": "pm",
+   "reported": true,
+   "verified": true,
+   "in_universe": false
+  },
+  {
+   "symbol": "LFS",
+   "report_date": "2026-10-07",
+   "timing": "pm",
+   "reported": true,
+   "verified": true,
+   "in_universe": false
+  },
+  {
+   "symbol": "NG",
+   "report_date": "2026-10-08",
+   "timing": "am",
+   "reported": true,
+   "verified": true,
+   "in_universe": false
+  },
+  {
+   "symbol": "NPT",
+   "report_date": "2026-10-07",
+   "timing": "pm",
+   "reported": false,
+   "verified": false,
+   "in_universe": false
+  },
+  {
+   "symbol": "NXTT",
+   "report_date": "2026-10-07",
+   "timing": "pm",
+   "reported": false,
+   "verified": false,
+   "in_universe": false
+  },
+  {
+   "symbol": "ODC",
+   "report_date": "2026-10-08",
+   "timing": "pm",
+   "reported": false,
+   "verified": true,
+   "in_universe": false
+  },
+  {
+   "symbol": "PEP",
+   "report_date": "2026-10-08",
+   "timing": "am",
+   "reported": true,
+   "verified": true,
+   "in_universe": false
+  },
+  {
+   "symbol": "PKE",
+   "report_date": "2026-10-08",
+   "timing": "pm",
+   "reported": false,
+   "verified": true,
+   "in_universe": false
+  },
+  {
+   "symbol": "RELL",
+   "report_date": "2026-10-07",
+   "timing": "pm",
+   "reported": true,
+   "verified": true,
+   "in_universe": false
+  },
+  {
+   "symbol": "RGP",
+   "report_date": "2026-10-07",
+   "timing": "pm",
+   "reported": true,
+   "verified": true,
+   "in_universe": false
+  },
+  {
+   "symbol": "SVNDY",
+   "report_date": "2026-10-08",
+   "timing": "am",
+   "reported": true,
+   "verified": true,
+   "in_universe": false
+  },
+  {
+   "symbol": "TLRY",
+   "report_date": "2026-10-08",
+   "timing": "am",
+   "reported": true,
+   "verified": true,
+   "in_universe": false
+  }
+ ]
+}

@@ -7,7 +7,21 @@
   "rl"
  ],
  "trades": [],
- "notes": [],
+ "notes": [
+  "[09:10] Session clock: TRADING 2026-10-08 full (close 16:00). Capability probe green (python, git, MCP SPY quote). Universe asof 2026-10-02 (current month, no refresh).",
+  "[09:12] R15 earnings calendar (2026-10-08, days=-2): 23 rows, 20 in window, 1 in the 95-name universe: ANGO (2026-10-08 am, EPS -0.04 vs est -0.11). Watchers r4/r15/rl launched DETACHED via PowerShell Start-Process (PIDs 12748/5608/14796); logs data/paper/watch_{book}_2026-10-08.log/.err; all three alive (0 open)."
+ ],
  "errors": [],
- "ops": {}
+ "ops": {
+  "session_start_et": "09:10",
+  "launched_et": "09:10",
+  "capability_probe": {
+   "python": "ok",
+   "git_status": "ok",
+   "mcp_get_equity_quotes_SPY": "ok bid 774.81 ask 774.88 @13:10:38Z",
+   "at_et": "09:11"
+  },
+  "session": "TRADING 2026-10-08 full (close 16:00)",
+  "last_cycle": "09:12:06"
+ }
 }
