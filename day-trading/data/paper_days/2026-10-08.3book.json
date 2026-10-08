@@ -25,7 +25,9 @@
   "[10:06] R4 grid 10:05 (scan 10:06:0x, 43 rows; top8 INHD PCRX GFSG COHQ IREZ BEZ BWET CORD; ranked INHD PCRX GFSG IREZ BEZ BWET BOXL PROF; bars 04:00->now spilled+ingested): ENTER INHD. Check 10:07: INHD LULD-HALTED (last trade 14:03:24Z @4.39; quote locked 4.50/4.50; price book CROSSED best bid 7.00 > best ask 3.60 = halt auction). Locked quote NOT fed to --check-book (same handling as SMXT 10-07). Re-check each minute while ENTER.",
   "[10:09] R4 INHD 10:07-10:09 still HALTED (locked 4.53, 4.53, 4.65; no prints since 14:03Z). Model ARMED, not filled.",
   "[10:11] 10:11: R4 INHD still HALTED (locked 4.66; no prints since 14:03Z); R4 grid 10:10 ingested (43 rows), model ARMED INHD. RL 10:05/10:10 scans ingested.",
-  "[10:13] R4 INHD leg MISSED at 10:12 (halt; see divergences). Tracking INHD bars each minute (track_bars)."
+  "[10:13] R4 INHD leg MISSED at 10:12 (halt; see divergences). Tracking INHD bars each minute (track_bars).",
+  "[10:16] 10:16: R4 grid 10:15 ingested (44 rows); model HOLDING PCRX (MISSED live, tracked). RL 10:10/10:15 NOTHING.",
+  "[10:21] 10:21: R4 grid 10:20 ingested (44 rows), model HOLDING PCRX (MISSED live). RL 10:20 scan ingested."
  ],
  "errors": [],
  "ops": {
@@ -38,9 +40,10 @@
    "at_et": "09:11"
   },
   "session": "TRADING 2026-10-08 full (close 16:00)",
-  "last_cycle": "10:13:06"
+  "last_cycle": "10:21:37"
  },
  "divergences": [
-  "[10:13] R4 INHD decided at grid 10:05: LULD-halted from 14:03:24Z (quote locked, book crossed) through 10:12; script marks the leg MISSED at 10:12 (stale: no fill bar within 5 min of decision). No entry, no shadow. Model stays ARMED on INHD; R4 tracks INHD bars each minute until the model resolves, then resumes at the next grid."
+  "[10:13] R4 INHD decided at grid 10:05: LULD-halted from 14:03:24Z (quote locked, book crossed) through 10:12; script marks the leg MISSED at 10:12 (stale: no fill bar within 5 min of decision). No entry, no shadow. Model stays ARMED on INHD; R4 tracks INHD bars each minute until the model resolves, then resumes at the next grid.",
+  "[10:15] R4 grid 10:05: after INHD (halted; reopened 14:13Z) the model fell through to rank #2 PCRX (model entry 10:06 @36.2999, cap 275 sh). This became known only at 10:14 (it needed the INHD reopen bar) -> MISSED (stale), no entry, no shadow. Model holds PCRX; R4 tracks PCRX bars each minute until the model exits."
  ]
 }
