@@ -2,6 +2,22 @@
 
 ## PAPER-3BOOK
 
+### 2026-10-08 (PAPER-3BOOK day 5): full headless session; no trades in any book (all flat, $0.00)
+
+The session ran headless from 09:10 to after 16:00. The capability probe was green. The watchers ran detached (PIDs 12748/5608/14796), and each ended with 0 open. The ledger was committed every ≤30 min. Zero real orders.
+
+- **R4**: 0 official trades, $0.00.
+  - CCG (09:35 grid): the model leg entered at 09:36 @6.0006 and trailed out at 10:03 @5.16. The official leg was vetoed at every live check (spread 3.4–14%, depth 0–223 vs about 1,450 wanted). It was scored as a shadow leg: ask 6.90 → 5.16, −$2,521.26.
+  - At the 10:05 grid, INHD was LULD-halted, with a locked quote and a crossed book, and was MISSED at 10:12. The model then fell through to PCRX, with a model fill at 10:06 @36.2999. That leg only became known at 10:14, after INHD's reopen bar, so it was MISSED (stale, no shadow).
+  - PCRX is merger-pinned and traded 36.27–36.34 all day. The model held it until the 15:00 flatten @36.335, a model-only +$9.65, so R4 made no further decisions after 10:05.
+  - The parity book was −$2,521.26. The day was +$3.19 vs the −$3.19/day expectation. Cumulative over 5 days: −$60.39 on 2 trades; shadow −$4,574.43; parity book −$4,634.82.
+- **R15**: 0 trades. Of the 20 calendar names in window, only ANGO was in the universe. It printed at 09:35 but was red (−198 bp since the open), so R15 printed DONE at 09:37. Flat, against +$21.71/day expected.
+- **RL**: 0 trades. All 78 grid steps (09:30–15:55) printed NOTHING. Breadth ran from about +0.002 down to −0.014 (13:05) and closed near −0.004, never below the −0.02379 gate. Flat, against +$5.77/day expected.
+- **Ops lessons**:
+  - This is the second day running (after PENU on 10-07) that a stale fall-through leg froze R4 from mid-morning to the flatten. Today's leg was a merger-pinned name with near-zero range, so it could never trail or stop out. Worth adding to the backtest check: how often a coil pick is a pinned or deal stock that parks the book all day.
+  - From 11:16, R4 scans were not ingested while the model was HOLDING, because no decision was possible. The model leg was tracked on 5 minutes of PCRX bars per grid instead. This saved most of the transcription load and lost no information. The flatten was booked correctly at the 15:01 run, once the 19:00Z bar was in.
+  - There were no gaps: every RL step was transcribed in one call, with waits run separately.
+
 ### 2026-10-07 (PAPER-3BOOK day 4): full headless session; no trades in any book (all flat, $0.00)
 
 The session ran headless from 09:10 to after 16:00. The capability probe was green. The watchers ran detached (PIDs 828/18060/1532). The ledger was committed every ≤30 min. Zero real orders.
