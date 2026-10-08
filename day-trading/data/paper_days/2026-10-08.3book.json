@@ -27,7 +27,9 @@
   "[10:11] 10:11: R4 INHD still HALTED (locked 4.66; no prints since 14:03Z); R4 grid 10:10 ingested (43 rows), model ARMED INHD. RL 10:05/10:10 scans ingested.",
   "[10:13] R4 INHD leg MISSED at 10:12 (halt; see divergences). Tracking INHD bars each minute (track_bars).",
   "[10:16] 10:16: R4 grid 10:15 ingested (44 rows); model HOLDING PCRX (MISSED live, tracked). RL 10:10/10:15 NOTHING.",
-  "[10:21] 10:21: R4 grid 10:20 ingested (44 rows), model HOLDING PCRX (MISSED live). RL 10:20 scan ingested."
+  "[10:21] 10:21: R4 grid 10:20 ingested (44 rows), model HOLDING PCRX (MISSED live). RL 10:20 scan ingested.",
+  "[10:26] 10:26: R4 grid 10:25 ingested (47 rows), model HOLDING PCRX (MISSED live). RL 10:25 scan ingested.",
+  "[10:31] 10:31: R4 grid 10:30 ingested (49 rows), model HOLDING PCRX (MISSED live). RL 10:30 scan ingested."
  ],
  "errors": [],
  "ops": {
@@ -40,7 +42,7 @@
    "at_et": "09:11"
   },
   "session": "TRADING 2026-10-08 full (close 16:00)",
-  "last_cycle": "10:21:37"
+  "last_cycle": "10:31:38"
  },
  "divergences": [
   "[10:13] R4 INHD decided at grid 10:05: LULD-halted from 14:03:24Z (quote locked, book crossed) through 10:12; script marks the leg MISSED at 10:12 (stale: no fill bar within 5 min of decision). No entry, no shadow. Model stays ARMED on INHD; R4 tracks INHD bars each minute until the model resolves, then resumes at the next grid.",
