@@ -6,9 +6,26 @@
   "r15",
   "rl"
  ],
- "trades": [],
+ "trades": [
+  {
+   "book": "r4",
+   "sym": "HUM",
+   "decision_min": "09:40",
+   "entry_time": "09:42:37",
+   "ask": 452.27,
+   "bid": 451.35,
+   "mid": 451.81,
+   "shares": 22,
+   "notional": 9949.94,
+   "halal": "REFUSE-TO-EVALUATE (pass=false)",
+   "model_note": "LIVE track grid 09:40, candidate #7 after WFF HALT(locked 3.46), LITG VOLCAP, LITC/COHC NOBARS, MOGU SPREAD 6.37%, TDOT HALT(no trade since 09:36); spread 0.204%, depth 30>=25% of 22; shares_cap 24507. Model track HOLDING ASTN (09:36 @21.44)"
+  }
+ ],
  "notes": [
-  "[09:11] pre-open: universe asof 2026-10-02 (Oct, no refresh); R15 calendar 20 rows, 1 in universe (ANGO 2026-10-08 am, >18h old at 09:35 => expected not fresh); watchers r4/r15/rl started, WATCH_ALIVE x3"
+  "[09:11] pre-open: universe asof 2026-10-02 (Oct, no refresh); R15 calendar 20 rows, 1 in universe (ANGO 2026-10-08 am, >18h old at 09:35 => expected not fresh); watchers r4/r15/rl started, WATCH_ALIVE x3",
+  "[09:37] R4 grid 09:35: refused ASTN SPREAD 2.59%, AXTC SPREAD 1.00%, MPU/LITC NOBARS, NN SPREAD 0.53%, CIEX SPREAD ~6.5%; TDOT/LITG VOLCAP (script) -> NOTHING; model ARMED ASTN. RL 09:30/09:35 NOTHING. R15 DONE (no fresh earnings)",
+  "[09:38] ops: quotes are fetched/written each minute for HELD names only (watchers price exits off them); model-only track_bars names get bars each minute (scoring) but no quote",
+  "[09:42] R4 grid 09:40 refusals: WFF HALT, LITC/COHC NOBARS, MOGU SPREAD 6.37%, TDOT HALT (stale prints), LITG VOLCAP -> ENTER HUM 22 @452.27 (bid 451.35)"
  ],
  "errors": [],
  "ops": {
@@ -20,6 +37,6 @@
    "result": "GREEN"
   },
   "session": "TRADING 2026-10-09 full (close 16:00)",
-  "last_cycle": "09:11:59"
+  "last_cycle": "09:42:03"
  }
 }
