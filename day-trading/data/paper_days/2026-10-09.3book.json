@@ -30,7 +30,8 @@
   "[10:57] [10:57] R4 scans skipped while LIVE holds HUM and MODEL holds ASTN (no track can act on a new name); r4s.py now prints model state each cycle, scanning resumes at the first grid after either track goes flat",
   "[12:15] [12:13] R4 MODEL track: ASTN closed 12:11 @24.64 (entry 09:36 @21.44, reason bearish) -> model FLAT; R4 scans resume from grid 12:15 (live still HOLD HUM)",
   "[12:16] [12:17] R4 grid 12:15 (scan from spill file, 134 rows): top8 COE OCNL CMCM TDOT PICS IMUX COIG NAUT; MODEL ARMED COE (live HOLD HUM, no live walk)",
-  "[13:22] [13:23] R4 MODEL: OCNL never printed after arming (12:15 decision lapsed); grid-12:20 rescored with bars for KBAB/CIR/MPU/BABX -> model HOLDING KBAB (entry 12:21 @6.68, ticket 2). Live still HOLD HUM. R4 scans paused again while both tracks hold (resume at first grid after either goes flat)"
+  "[13:22] [13:23] R4 MODEL: OCNL never printed after arming (12:15 decision lapsed); grid-12:20 rescored with bars for KBAB/CIR/MPU/BABX -> model HOLDING KBAB (entry 12:21 @6.68, ticket 2). Live still HOLD HUM. R4 scans paused again while both tracks hold (resume at first grid after either goes flat)",
+  "[14:26] [14:27] R4 last grid 14:25 passed with LIVE holding HUM and MODEL holding KBAB (no new-name decision possible; scans skipped). No further R4 entries today; HUM flatten owned by the r4 watcher at 15:00, model KBAB closes at 15:00 parity"
  ],
  "errors": [
   "[11:13] [11:13] all 3 watchers killed by the harness 2h background-task limit (started 09:11); last r4 tick 11:11:40, restarted 11:13:17 (gap ~1.6 min, no bar closed past any exit level in the gap; HUM state reloaded, peak 456.50). Next forced restart due ~13:13 and ~15:13",
@@ -45,6 +46,6 @@
    "result": "GREEN"
   },
   "session": "TRADING 2026-10-09 full (close 16:00)",
-  "last_cycle": "14:19:13"
+  "last_cycle": "14:41:31"
  }
 }
