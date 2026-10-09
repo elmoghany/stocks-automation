@@ -35,6 +35,30 @@
 - **Expect the live R4 book to bleed about −$65/day.** The PARITY row keeps scoring the model at −$3.19/day.
 - The EOD now shows R4 LIVE and R4 PARITY as separate rows, plus refused-candidate counts by reason.
 
+### 2026-10-09 (PAPER-3BOOK day 6): full headless session; R4 LIVE HUM flatten −$379.94, R15/RL no trades (all flat)
+
+The session ran headless from 09:11 to after 16:00. The capability probe was green. Watchers ran detached for r4, r15 and rl. R15 exited flat at 15:02, R4 at 15:07, and RL ended flat after 16:00. The ledger was committed every ≤30 min and after the exit. Zero real orders.
+
+- **R4 LIVE**: 1 trade, −$379.94.
+  - At the 09:40 grid the walk went down to candidate #7, HUM. The ones ahead of it were refused: WFF HALT, LITG VOLCAP, LITC/COHC NOBARS, MOGU SPREAD 6.37%, and TDOT HALT on stale prints.
+  - Entered 22 @452.27 ask at 09:42:37 (spread 0.20%).
+  - HUM peaked at 456.50 and then drifted around 435–437 all afternoon without hitting any exit rung. The r4 watcher flattened it at 15:01:18 @435.00 bid. The decision used the 14:59 bar close 435.06 and a quote 77 s old.
+  - Halal: REFUSE-TO-EVALUATE.
+  - Refusals by unique name×grid: SPREAD 5, NOBARS 4, VOLCAP 3, HALT 2.
+  - The day was −$314.51 vs the −$65.43/day expectation. Cumulative over 6 days: −$440.33 on 3 trades.
+- **R4 PARITY (model)**: 2 legs, +$1,491.80 (net of 15 bps: +$1,459.19).
+  - ASTN 09:36 @21.44 → 12:11 @24.64 bearish exit, 466 shares, +$1,491.20. Live refused ASTN at 09:35 on SPREAD 2.59%. As a shadow leg from the first refusal ask 21.51 it was +$1,452.32, so the spread veto cost the official book that win.
+  - At the 12:15 grid the model armed OCNL, but OCNL never printed and the decision lapsed. Rescoring grid 12:20 with fetched bars for KBAB/CIR/MPU/BABX gave KBAB 12:21 @6.68 → 14:52 flatten @6.71, +$0.60.
+  - Cumulative parity book: −$3,143.02.
+- **R15**: 0 trades. ANGO was the only calendar name in the universe (2026-10-08 am report, >18h old by 09:35), so it was not fresh. DONE all day. Flat, against +$21.71/day expected.
+- **RL**: 0 trades. Every grid step run (09:30–15:55, 77 of 78) printed NOTHING. Breadth stayed positive at about +0.002 to +0.01, with n_cand 0 throughout, far above the −0.02379 gate. The 15:00 step was missed (see ops). Flat, against +$5.77/day expected.
+- **Ops lessons**:
+  - The 2 h background-task limit killed all three watchers at about 11:13 and 13:13, and the RL watcher again at about 15:14. Each was restarted within about 1.5 min with state reloaded, and no exit level was crossed in any gap. A launcher that respawns watchers before the 2 h mark, or one detached outside the harness, would remove this chore.
+  - The RL 15:00 step was skipped while I handled the HUM flatten (p3_rl logged a GAP). The 15:00–15:02 window is the busiest of the day: R4 flatten, R15 safety and the RL step all land in it. Scan RL first in that window, because the flatten is owned by the watcher.
+  - The HUM flatten did not fire with only the 14:59 bar ingested. It needed the 15:00 (19:00Z) bar plus a quote ≤90 s old, and fired at 15:01:18 once both were written. At 15:00, push the 19:00Z bar and a fresh quote for any held R4 name right away.
+  - R4 scans spilled to file twice: the 10:46 rows were lost before ingest and re-run at 10:48, and grid 12:15 was ingested from a 134-row spill. r4spill/spill2 handled both. While both tracks hold, R4 scans can be skipped (no new-name decision is possible); this saved many calls today.
+  - A model arm on a name that never prints (OCNL) leaves the model track stuck in NEED_DATA until the next grid is rescored with bars for the fallback names. Worth teaching p3_r4 to fall through automatically when the armed name has no print within N minutes.
+
 ### 2026-10-08 (PAPER-3BOOK day 5): full headless session; no trades in any book (all flat, $0.00)
 
 The session ran headless from 09:10 to after 16:00. The capability probe was green. The watchers ran detached (PIDs 12748/5608/14796), and each ended with 0 open. The ledger was committed every ≤30 min. Zero real orders.

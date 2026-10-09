@@ -33,7 +33,8 @@
   "[13:22] [13:23] R4 MODEL: OCNL never printed after arming (12:15 decision lapsed); grid-12:20 rescored with bars for KBAB/CIR/MPU/BABX -> model HOLDING KBAB (entry 12:21 @6.68, ticket 2). Live still HOLD HUM. R4 scans paused again while both tracks hold (resume at first grid after either goes flat)",
   "[14:26] [14:27] R4 last grid 14:25 passed with LIVE holding HUM and MODEL holding KBAB (no new-name decision possible; scans skipped). No further R4 entries today; HUM flatten owned by the r4 watcher at 15:00, model KBAB closes at 15:00 parity",
   "[15:02] [15:01] R4 LIVE EXIT: [15:01:18] EXIT-R4-FLATTEN HUM @ 435.0000 x22 P&L $-379.94 (flatten decided on 14:59 bar close 435.06; official = bid 435.00, quote age 77s; entry 09:42 @452.27). R4 MODEL track DONE: ASTN 21.44->24.64 bearish 12:11; KBAB 6.68->6.71 flatten. LIVE book flat; R4 done for the day",
-  "[15:02] [15:02] R15 watcher exited normally at 15:02:08 ('BOOK FLAT -- watcher done') after its 15:00 safety time with a flat book (R15 DONE all day). R4 watcher flat, runs to its 15:05 safety rung. Only RL remains (steps to 15:56, flatten 15:59)"
+  "[15:02] [15:02] R15 watcher exited normally at 15:02:08 ('BOOK FLAT -- watcher done') after its 15:00 safety time with a flat book (R15 DONE all day). R4 watcher flat, runs to its 15:05 safety rung. Only RL remains (steps to 15:56, flatten 15:59)",
+  "[16:09] [16:10] EOD: all 3 books flat (RL watcher 'BOOK FLAT -- watcher done' 16:04:19; R4 15:07; R15 15:02). R4 LIVE 1 trade HUM -379.94; R4 parity +1,491.80; R15 0; RL 0 (steps 09:30-15:55 all NOTHING, 15:00 missed). p3_eod run"
  ],
  "errors": [
   "[11:13] [11:13] all 3 watchers killed by the harness 2h background-task limit (started 09:11); last r4 tick 11:11:40, restarted 11:13:17 (gap ~1.6 min, no bar closed past any exit level in the gap; HUM state reloaded, peak 456.50). Next forced restart due ~13:13 and ~15:13",
@@ -50,6 +51,235 @@
    "result": "GREEN"
   },
   "session": "TRADING 2026-10-09 full (close 16:00)",
-  "last_cycle": "15:51:22"
+  "last_cycle": "16:09:17"
+ },
+ "eod": {
+  "r4": {
+   "trades": 1,
+   "pnl": -379.94,
+   "model_pnl": -380.82,
+   "halal_pass_trades": 0,
+   "pnl_halal_pass": 0.0,
+   "per_trade": -379.94,
+   "cost_bps_per_side_vs_mid_mean": 11.72,
+   "cost_usd_vs_mid": 22.88,
+   "expectation": {
+    "per_trade": -30.01,
+    "per_day": -65.43,
+    "trades_per_day": 2.18,
+    "gross_per_trade": -6.33,
+    "backtest_per_trade_ex_top5": -52.72,
+    "pin_threshold": 0.006,
+    "variant": "live_pin06_spread",
+    "oos_aug2026": {
+     "per_trade": -55.1,
+     "trades_per_day": 2.091,
+     "total": -2534.68
+    },
+    "built": "2026-10-08T17:22:30.796641-04:00",
+    "note": "R4 LIVE track (R4-FIX 2026-10-08): first of the ranked top 8 passing gap gate, PINNED filter, halt, spread <= 0.5% (bar proxy: LEGACY-9 2*half > 50 bps) at each grid while flat; $10k; 15 bps/side; 444 in-sample days (plan/p3_r4_live.py, data/paper/parity/r4_live.json). The 'r4' key stays the PARITY/MODEL track expectation."
+   },
+   "vs_expectation": {
+    "pnl_minus_expected_day": -314.51,
+    "per_trade_minus_expected": -349.93,
+    "trades_minus_expected_rate": -1.18
+   },
+   "trade_list": [
+    {
+     "sym": "HUM",
+     "shares": 22,
+     "entry": 452.27,
+     "exit": 435.0,
+     "pnl": -379.94,
+     "model_entry": 452.37,
+     "model_exit": 435.06,
+     "model_pnl": -380.82,
+     "reason": "flatten",
+     "entry_cost_bps_vs_mid": 10.18,
+     "exit_cost_bps_vs_mid": 13.32,
+     "cost_usd_vs_mid": 22.88,
+     "cost_bps_per_side_vs_mid": 11.72,
+     "official_src": "quote-bid",
+     "halal": "REFUSE-TO-EVALUATE",
+     "halal_pass": false
+    }
+   ],
+   "shadow_legs": [
+    {
+     "key": "ASTN@09:35",
+     "sym": "ASTN",
+     "shares": 464,
+     "entry": 21.51,
+     "entry_src": "first refusal ask",
+     "exit": 24.64,
+     "exit_min": "12:11",
+     "reason": "bearish",
+     "why": "SPREAD 2.59% > 0.50%",
+     "pnl": 1452.32
+    },
+    {
+     "key": "KBAB@12:20",
+     "sym": "KBAB",
+     "shares": 20,
+     "entry": 6.68,
+     "entry_src": "model entry (not checked)",
+     "exit": 6.71,
+     "exit_min": "14:52",
+     "reason": "flatten",
+     "why": "live took another name or was holding",
+     "pnl": 0.6
+    }
+   ],
+   "shadow_pnl": 1452.92,
+   "parity": {
+    "trades": 2,
+    "pnl": 1491.8,
+    "net15": 1459.19,
+    "legs": [
+     {
+      "sym": "ASTN",
+      "decision": "09:35",
+      "entry_min": "09:36",
+      "entry": 21.44,
+      "exit_min": "12:11",
+      "exit": 24.64,
+      "shares": 466,
+      "reason": "bearish",
+      "gross": 1491.2,
+      "net15": 1458.99
+     },
+     {
+      "sym": "KBAB",
+      "decision": "12:20",
+      "entry_min": "12:21",
+      "entry": 6.68,
+      "exit_min": "14:52",
+      "exit": 6.71,
+      "shares": 20,
+      "reason": "flatten",
+      "gross": 0.6,
+      "net15": 0.2
+     }
+    ],
+    "error": null,
+    "expectation": {
+     "per_trade": -1.21,
+     "per_day": -3.19,
+     "trades_per_day": 2.637,
+     "per_trade_at_28_75bps": -23.65,
+     "per_day_at_28_75bps": -62.38,
+     "backtest_per_trade": -2.21,
+     "backtest_per_trade_ex_top5": -65.17,
+     "aug2026_note": "R4 lost -$4,392 over the 22 out-of-sample August-2026 sessions (LEGACY-14 / champion-replay OOS block); a red first weeks is inside expectation",
+     "legacy2_note": "causal coil tie-break (volume so far, then seeded hash) replaces the published pool-file order, which leaked full-day volume: realistic R4 is about break-even after costs",
+     "legacy15_note": "with the live 0.5% spread veto the kept legs are ~ -$28 gross per $10k ex-top-5 (LEGACY-15); the backtest edge lives in the thin names the veto refuses -- the SHADOW book measures that",
+     "role": "PARITY/MODEL track (unchanged backtest)"
+    },
+    "pnl_minus_expected_day": 1462.38
+   },
+   "parity_book_pnl": 1491.8,
+   "refused_by_reason": {
+    "SPREAD": 5,
+    "NOBARS": 4,
+    "VOLCAP": 3,
+    "HALT": 2
+   }
+  },
+  "r15": {
+   "trades": 0,
+   "pnl": 0.0,
+   "model_pnl": 0.0,
+   "halal_pass_trades": 0,
+   "pnl_halal_pass": 0.0,
+   "per_trade": null,
+   "cost_bps_per_side_vs_mid_mean": null,
+   "cost_usd_vs_mid": 0.0,
+   "expectation": {
+    "per_trade": 87.62,
+    "per_day": 21.71,
+    "trades_per_day": 0.2478,
+    "backtest_per_trade": 87.15,
+    "backtest_per_trade_ex_top5": 36.07
+   },
+   "vs_expectation": {
+    "pnl_minus_expected_day": -21.71,
+    "per_trade_minus_expected": null,
+    "trades_minus_expected_rate": -0.25
+   },
+   "trade_list": []
+  },
+  "rl": {
+   "trades": 0,
+   "pnl": 0.0,
+   "model_pnl": 0.0,
+   "halal_pass_trades": 0,
+   "pnl_halal_pass": 0.0,
+   "per_trade": null,
+   "cost_bps_per_side_vs_mid_mean": null,
+   "cost_usd_vs_mid": 0.0,
+   "expectation": {
+    "per_trade": 16.92,
+    "per_day": 5.77,
+    "trades_per_day": 0.341,
+    "backtest_per_trade": 30.95,
+    "backtest_per_trade_ex_top5": 18.1
+   },
+   "vs_expectation": {
+    "pnl_minus_expected_day": -5.77,
+    "per_trade_minus_expected": null,
+    "trades_minus_expected_rate": -0.34
+   },
+   "trade_list": []
+  }
+ },
+ "cumulative": {
+  "r4": {
+   "days": 6,
+   "trades": 3,
+   "pnl": -440.33,
+   "model_pnl": -389.53,
+   "pnl_halal_pass": 0.0,
+   "cost_usd_vs_mid": 73.55,
+   "pnl_ex_top5": null,
+   "per_trade_ex_top5": null,
+   "shadow_pnl": -3121.51,
+   "parity_book_pnl": -3143.02,
+   "parity_trades": 2,
+   "parity_net15": 1459.19,
+   "parity_expected_pnl": -19.14,
+   "live_track_days": 1,
+   "refused_by_reason": {
+    "SPREAD": 5,
+    "NOBARS": 4,
+    "VOLCAP": 3,
+    "HALT": 2
+   },
+   "expected_pnl": -392.58,
+   "expected_trades": 13.08
+  },
+  "r15": {
+   "days": 6,
+   "trades": 0,
+   "pnl": 0.0,
+   "model_pnl": 0.0,
+   "pnl_halal_pass": 0.0,
+   "cost_usd_vs_mid": 0,
+   "pnl_ex_top5": null,
+   "per_trade_ex_top5": null,
+   "expected_pnl": 130.26,
+   "expected_trades": 1.49
+  },
+  "rl": {
+   "days": 6,
+   "trades": 0,
+   "pnl": 0.0,
+   "model_pnl": 0.0,
+   "pnl_halal_pass": 0.0,
+   "cost_usd_vs_mid": 0,
+   "pnl_ex_top5": null,
+   "per_trade_ex_top5": null,
+   "expected_pnl": 34.62,
+   "expected_trades": 2.05
+  }
  }
 }
