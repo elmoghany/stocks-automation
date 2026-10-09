@@ -25,7 +25,9 @@
   "[09:11] pre-open: universe asof 2026-10-02 (Oct, no refresh); R15 calendar 20 rows, 1 in universe (ANGO 2026-10-08 am, >18h old at 09:35 => expected not fresh); watchers r4/r15/rl started, WATCH_ALIVE x3",
   "[09:37] R4 grid 09:35: refused ASTN SPREAD 2.59%, AXTC SPREAD 1.00%, MPU/LITC NOBARS, NN SPREAD 0.53%, CIEX SPREAD ~6.5%; TDOT/LITG VOLCAP (script) -> NOTHING; model ARMED ASTN. RL 09:30/09:35 NOTHING. R15 DONE (no fresh earnings)",
   "[09:38] ops: quotes are fetched/written each minute for HELD names only (watchers price exits off them); model-only track_bars names get bars each minute (scoring) but no quote",
-  "[09:42] R4 grid 09:40 refusals: WFF HALT, LITC/COHC NOBARS, MOGU SPREAD 6.37%, TDOT HALT (stale prints), LITG VOLCAP -> ENTER HUM 22 @452.27 (bid 451.35)"
+  "[09:42] R4 grid 09:40 refusals: WFF HALT, LITC/COHC NOBARS, MOGU SPREAD 6.37%, TDOT HALT (stale prints), LITG VOLCAP -> ENTER HUM 22 @452.27 (bid 451.35)",
+  "[10:53] [10:53] R4 grid 10:45: 10:46 scan rows lost before ingest -> re-ran scan 10:48 and ingested --at 10:45 (top30+HUM). From 10:50 on, while LIVE holds HUM and MODEL holds ASTN, R4 scans are transcribed top30+HUM only (neither track can take a new name while holding)",
+  "[10:57] [10:57] R4 scans skipped while LIVE holds HUM and MODEL holds ASTN (no track can act on a new name); r4s.py now prints model state each cycle, scanning resumes at the first grid after either track goes flat"
  ],
  "errors": [],
  "ops": {
@@ -37,6 +39,6 @@
    "result": "GREEN"
   },
   "session": "TRADING 2026-10-09 full (close 16:00)",
-  "last_cycle": "10:42:31"
+  "last_cycle": "11:01:33"
  }
 }
