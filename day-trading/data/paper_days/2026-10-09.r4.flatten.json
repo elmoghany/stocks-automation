@@ -1,0 +1,62 @@
+{
+ "date": "2026-10-09",
+ "records": [
+  {
+   "sym": "HUM",
+   "ticket": null,
+   "date": "2026-10-09",
+   "mode": "r4",
+   "entry": 452.27,
+   "shares_initial": 22,
+   "entry_bar_utc": "2026-10-09T13:42:00Z",
+   "prev_close": null,
+   "exit_kind": "exit-r4-flatten",
+   "fills": [
+    {
+     "kind": "EXIT-R4-FLATTEN",
+     "time": "2026-10-09T15:01:17.966293-04:00",
+     "shares": 22,
+     "px": 435.0,
+     "src": "stop level"
+    }
+   ],
+   "vwap": 435.0,
+   "shares_exited": 22,
+   "scale_out": null,
+   "banked": 0.0,
+   "pnl": -379.94,
+   "peak": 456.5,
+   "rungs": [],
+   "deployed": 9949.94,
+   "exit_time": "2026-10-09T15:01:17.966293-04:00",
+   "booked_at": "2026-10-09T15:01:17.966293-04:00",
+   "exit_parity": null,
+   "p3": {
+    "book": "r4",
+    "mode": "r4",
+    "reason": "flatten",
+    "decided_min": "14:59",
+    "model_exit": 435.06,
+    "model_exit_min": "14:59",
+    "model_entry": 452.37,
+    "model_entry_min": "09:41",
+    "model_pnl": -380.82,
+    "exit_quote": {
+     "bid": 435.0,
+     "ask": 436.16,
+     "mid": 435.58000000000004,
+     "ts": "2026-10-09T19:00:01Z",
+     "age_s": 77.0
+    },
+    "entry_quote": {
+     "bid": 451.35,
+     "ask": 452.27,
+     "mid": 451.81,
+     "cost_bps_vs_mid": 10.18
+    },
+    "exit_cost_bps_vs_mid": 13.32,
+    "official_src": "quote-bid"
+   }
+  }
+ ]
+}
