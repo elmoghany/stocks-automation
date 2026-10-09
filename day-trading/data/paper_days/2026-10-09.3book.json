@@ -32,7 +32,8 @@
   "[12:16] [12:17] R4 grid 12:15 (scan from spill file, 134 rows): top8 COE OCNL CMCM TDOT PICS IMUX COIG NAUT; MODEL ARMED COE (live HOLD HUM, no live walk)"
  ],
  "errors": [
-  "[11:13] [11:13] all 3 watchers killed by the harness 2h background-task limit (started 09:11); last r4 tick 11:11:40, restarted 11:13:17 (gap ~1.6 min, no bar closed past any exit level in the gap; HUM state reloaded, peak 456.50). Next forced restart due ~13:13 and ~15:13"
+  "[11:13] [11:13] all 3 watchers killed by the harness 2h background-task limit (started 09:11); last r4 tick 11:11:40, restarted 11:13:17 (gap ~1.6 min, no bar closed past any exit level in the gap; HUM state reloaded, peak 456.50). Next forced restart due ~13:13 and ~15:13",
+  "[13:14] [13:14] all 3 watchers killed again by the 2h background limit (~13:13:17); last r4 tick 13:12:48, restarted ~13:14:20 (gap ~1.5 min; HUM bars 13:11-13:13 closed 436.3-437.1, far above any exit level; state reloaded). Next forced restart ~15:14"
  ],
  "ops": {
   "capability_probe": {
@@ -43,6 +44,6 @@
    "result": "GREEN"
   },
   "session": "TRADING 2026-10-09 full (close 16:00)",
-  "last_cycle": "13:01:40"
+  "last_cycle": "13:14:22"
  }
 }
