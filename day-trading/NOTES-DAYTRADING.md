@@ -35,6 +35,28 @@
 - **Expect the live R4 book to bleed about −$65/day.** The PARITY row keeps scoring the model at −$3.19/day.
 - The EOD now shows R4 LIVE and R4 PARITY as separate rows, plus refused-candidate counts by reason.
 
+### 2026-10-12 (PAPER-3BOOK day 7): full headless session; R4 LIVE NOWL flatten −$987.84, R15/RL no trades (all flat)
+
+The session ran headless from 09:11 to after 16:00. The capability probe was green. Watchers for r4, r15 and rl were started detached (Start-Process), and none was killed by the 2 h limit today. R15 exited flat at 15:02, R4 at 15:07, and RL ended flat after 16:00. The ledger was committed every ≤30 min and after the exit. Zero real orders.
+
+- **R4 LIVE**: 1 trade, −$987.84.
+  - At the 09:35 grid, COHQ was refused on SPREAD 4.40%, ASTT on DEPTH (200 shares < 25% of 806) and NRR on GAP7. The walk took candidate #3, NOWL: 1176 @8.50 ask at 09:37:45 (bid 8.49, spread 0.12%).
+  - NOWL never got above the 8.54 peak. It bled to about 7.66–7.73 through the afternoon without a trail or bearish exit. The r4 watcher flattened it at 15:01:19 @7.66 bid, on the 14:59 decision with model px 7.67 and a quote 76.5 s old. Model P&L was −$970.20; exit cost was 6.52 bps vs mid.
+  - Halal: REFUSE-TO-EVALUATE.
+  - Refusals: GAP7 1, SPREAD 1, DEPTH 1.
+  - The day was −$922.41 vs the −$65.43/day expectation. Cumulative over 7 days: −$1,428.17 on 4 trades.
+- **R4 PARITY (model)**: 1 leg, +$29.16 (net of 15 bps: +$27.56).
+  - COHQ 09:38 open 26.0268 → flatten at its last print ≤15:00 (14:50 @27.485), 20 shares at the depth-capped size.
+  - As a shadow leg from the first refusal ask 26.93 (371 shares) it would have been +$205.90. For the second straight day, the spread veto refused the name the model then won on.
+  - Cumulative parity book: −$3,113.86.
+- **R15**: 0 trades (no fresh earnings in the universe). DONE all day. Flat, against +$21.71/day expected.
+- **RL**: 0 trades. Every grid step run printed NOTHING (step 15:00 missed). Breadth was negative most of the day, about −0.012 to −0.019 after mid-morning, but never reached the −0.02379 gate. n_cand was 0 throughout. Flat, against +$5.77/day expected.
+- **Ops lessons**:
+  - **MODEL track held-name bars.** While both tracks held, the minute loop fetched bars only for the LIVE name (NOWL). COHQ, the MODEL track's name, was last fetched at 11:24. At 15:01 the model therefore showed a false flatten at 11:23 @26.8486. I backfilled 10 printed COHQ bars (11:34–14:50 ET) at 15:02, re-ran, and got the correct 14:50 @27.485. COHQ is very thin, with 19 prints all day. Fix: keep fetching every held name on both tracks, at least every few minutes.
+  - **Flatten bar timing (same as 10-09).** The NOWL flatten again fired only once the 15:00 (19:00Z) bar was ingested at 15:01. Push the 19:00Z bar and a fresh quote at 15:01 sharp.
+  - **RL step 15:00 missed again (same as 10-09).** The 15:01 scan was skipped while I handled the flatten and the COHQ backfill, and p3_rl logged a GAP. In the 15:00–15:02 window, run the RL scan first.
+  - **One rule slip.** At 13:45 one tool call combined `cyc3` and `wait_until`, which breaks the rule that no call may both read a signal and wait. It had no effect on trading, and the two stayed in separate calls after that.
+
 ### 2026-10-09 (PAPER-3BOOK day 6): full headless session; R4 LIVE HUM flatten −$379.94, R15/RL no trades (all flat)
 
 The session ran headless from 09:11 to after 16:00. The capability probe was green. Watchers ran detached for r4, r15 and rl. R15 exited flat at 15:02, R4 at 15:07, and RL ended flat after 16:00. The ledger was committed every ≤30 min and after the exit. Zero real orders.
