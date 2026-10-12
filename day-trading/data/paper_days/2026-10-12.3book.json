@@ -6,9 +6,24 @@
   "r15",
   "rl"
  ],
- "trades": [],
+ "trades": [
+  {
+   "book": "r4",
+   "sym": "NOWL",
+   "decision_min": "09:35",
+   "entry_time": "09:37:45",
+   "ask": 8.5,
+   "bid": 8.49,
+   "mid": 8.495,
+   "shares": 1176,
+   "notional": 9996.0,
+   "halal": "REFUSE-TO-EVALUATE (pass=false)",
+   "model_note": "LIVE track grid 09:35, candidate #3 after COHQ SPREAD 4.40%, ASTT DEPTH (200 sh within ask+0.5% < 25% of script want 806; note shares_cap was 320 -> 25% of capped size would be 80, script sizes depth on the uncapped $10k ticket); NRR GAP7 (script). NOWL quote 8.49/8.50 @13:37:31Z spread 0.118%, depth 14485 >= 25% of 1176; shares_cap 67679. MODEL track ARMED COHQ (09:35)."
+  }
+ ],
  "notes": [
-  "[09:12] pre-open: probe GREEN; full day; universe asof 2026-10-02 (Oct, no refresh); R15 calendar 4 rows (all pm today, no actuals), 0 in universe -> expect R15 DONE; watchers r4/r15/rl started 09:11 via detached Start-Process (pids 8156/20200/2632, not harness background tasks, so no 2h kill), WATCH_ALIVE x3"
+  "[09:12] pre-open: probe GREEN; full day; universe asof 2026-10-02 (Oct, no refresh); R15 calendar 4 rows (all pm today, no actuals), 0 in universe -> expect R15 DONE; watchers r4/r15/rl started 09:11 via detached Start-Process (pids 8156/20200/2632, not harness background tasks, so no 2h kill), WATCH_ALIVE x3",
+  "[09:38] R4 grid 09:35: refused COHQ SPREAD 4.40%, ASTT DEPTH (200<25% of 806), NRR GAP7 -> ENTER NOWL 1176 @8.50 (bid 8.49) 09:37:45; MODEL ARMED COHQ. R15 DONE (no fresh earnings). RL 09:30/09:35 NOTHING (br 0.0/-0.0024)"
  ],
  "errors": [],
  "ops": {
@@ -21,6 +36,6 @@
   },
   "session": "TRADING 2026-10-12 full (close 16:00)",
   "universe": "universe_wide.json asof 2026-10-02 (current month, no refresh)",
-  "last_cycle": "09:12:11"
+  "last_cycle": "09:38:01"
  }
 }

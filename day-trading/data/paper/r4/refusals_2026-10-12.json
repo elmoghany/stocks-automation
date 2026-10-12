@@ -1,0 +1,26 @@
+[
+ {
+  "sym": "NRR",
+  "grid": "09:35",
+  "reason": "GAP7",
+  "rank": 6,
+  "detail": "07:00 gap 23.4% > 20%",
+  "at": "09:37"
+ },
+ {
+  "sym": "COHQ",
+  "grid": "09:35",
+  "reason": "SPREAD",
+  "rank": null,
+  "detail": "SPREAD 4.40% > 0.50%",
+  "at": "09:37"
+ },
+ {
+  "sym": "ASTT",
+  "grid": "09:35",
+  "reason": "DEPTH",
+  "rank": null,
+  "detail": "DEPTH 200.0 sh < 25% of 806",
+  "at": "09:37"
+ }
+]

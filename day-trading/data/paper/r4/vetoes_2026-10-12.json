@@ -1,0 +1,50 @@
+[
+ {
+  "key": "COHQ@09:35",
+  "sym": "COHQ",
+  "decision": "09:35",
+  "at": "09:37",
+  "bid": 25.77,
+  "ask": 26.93,
+  "mid": 26.35,
+  "spread_pct": 4.402,
+  "depth": null,
+  "want": 371,
+  "result": "VETO",
+  "reason": "SPREAD",
+  "track": "live",
+  "why": "SPREAD 4.40% > 0.50%"
+ },
+ {
+  "key": "ASTT@09:35",
+  "sym": "ASTT",
+  "decision": "09:35",
+  "at": "09:37",
+  "bid": 12.34,
+  "ask": 12.4,
+  "mid": 12.37,
+  "spread_pct": 0.485,
+  "depth": 200.0,
+  "want": 806,
+  "result": "VETO",
+  "reason": "DEPTH",
+  "track": "live",
+  "why": "DEPTH 200.0 sh < 25% of 806"
+ },
+ {
+  "key": "NOWL@09:35",
+  "sym": "NOWL",
+  "decision": "09:35",
+  "at": "09:37",
+  "bid": 8.49,
+  "ask": 8.5,
+  "mid": 8.495,
+  "spread_pct": 0.118,
+  "depth": 14485.0,
+  "want": 1176,
+  "result": "PASS",
+  "reason": null,
+  "track": "live",
+  "why": ""
+ }
+]
