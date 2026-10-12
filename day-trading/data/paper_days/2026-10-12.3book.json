@@ -24,7 +24,8 @@
  "notes": [
   "[09:12] pre-open: probe GREEN; full day; universe asof 2026-10-02 (Oct, no refresh); R15 calendar 4 rows (all pm today, no actuals), 0 in universe -> expect R15 DONE; watchers r4/r15/rl started 09:11 via detached Start-Process (pids 8156/20200/2632, not harness background tasks, so no 2h kill), WATCH_ALIVE x3",
   "[09:38] R4 grid 09:35: refused COHQ SPREAD 4.40%, ASTT DEPTH (200<25% of 806), NRR GAP7 -> ENTER NOWL 1176 @8.50 (bid 8.49) 09:37:45; MODEL ARMED COHQ. R15 DONE (no fresh earnings). RL 09:30/09:35 NOTHING (br 0.0/-0.0024)",
-  "[09:46] R4 grid 09:45: R4 scan skipped -- LIVE holds NOWL and MODEL holds COHQ (model filled 09:38 open 26.0268), no track can take a new name (same practice as 10-09); R4 scans resume at the first grid after either track goes flat. Held-name bars fetched each minute from ~2-5 min back (ingest merges) instead of a full 10-min window. RL 09:40/09:45 NOTHING"
+  "[09:46] R4 grid 09:45: R4 scan skipped -- LIVE holds NOWL and MODEL holds COHQ (model filled 09:38 open 26.0268), no track can take a new name (same practice as 10-09); R4 scans resume at the first grid after either track goes flat. Held-name bars fetched each minute from ~2-5 min back (ingest merges) instead of a full 10-min window. RL 09:40/09:45 NOTHING",
+  "[15:02] R4 LIVE EXIT-R4-FLATTEN NOWL @ 7.6600 x1176 P&L $-987.84 (watcher 15:01:19; decided 14:59 bar, model px 7.67 model P&L $-970.20; quote 7.66/7.67 @19:00:03Z age 76.5s; exit cost 6.52 bps vs mid). Watcher booked only after the 15:00 bar (19:00Z) was ingested at 15:01 -- flatten = last printed bar <= 15:00. R4 MODEL track: COHQ entry 09:38 open 26.0268 -> flatten 14:50 last print 27.485. COHQ bars had not been fetched after 11:24 (held-name loop fetched NOWL only), so the model first showed a false 11:23 flatten @26.8486; backfilled 10 printed COHQ bars 11:34-14:50 ET at 15:02 and re-ran -> corrected. LESSON: keep fetching the MODEL track's held name too. R15 watcher BOOK FLAT -- done 15:02. RL nothing through 14:55 (br -0.0144..-0.0187 vs -0.0238)."
  ],
  "errors": [],
  "ops": {
@@ -37,6 +38,6 @@
   },
   "session": "TRADING 2026-10-12 full (close 16:00)",
   "universe": "universe_wide.json asof 2026-10-02 (current month, no refresh)",
-  "last_cycle": "14:56:23"
+  "last_cycle": "15:02:31"
  }
 }
