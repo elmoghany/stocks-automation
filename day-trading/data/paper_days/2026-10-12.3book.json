@@ -23,7 +23,8 @@
  ],
  "notes": [
   "[09:12] pre-open: probe GREEN; full day; universe asof 2026-10-02 (Oct, no refresh); R15 calendar 4 rows (all pm today, no actuals), 0 in universe -> expect R15 DONE; watchers r4/r15/rl started 09:11 via detached Start-Process (pids 8156/20200/2632, not harness background tasks, so no 2h kill), WATCH_ALIVE x3",
-  "[09:38] R4 grid 09:35: refused COHQ SPREAD 4.40%, ASTT DEPTH (200<25% of 806), NRR GAP7 -> ENTER NOWL 1176 @8.50 (bid 8.49) 09:37:45; MODEL ARMED COHQ. R15 DONE (no fresh earnings). RL 09:30/09:35 NOTHING (br 0.0/-0.0024)"
+  "[09:38] R4 grid 09:35: refused COHQ SPREAD 4.40%, ASTT DEPTH (200<25% of 806), NRR GAP7 -> ENTER NOWL 1176 @8.50 (bid 8.49) 09:37:45; MODEL ARMED COHQ. R15 DONE (no fresh earnings). RL 09:30/09:35 NOTHING (br 0.0/-0.0024)",
+  "[09:46] R4 grid 09:45: R4 scan skipped -- LIVE holds NOWL and MODEL holds COHQ (model filled 09:38 open 26.0268), no track can take a new name (same practice as 10-09); R4 scans resume at the first grid after either track goes flat. Held-name bars fetched each minute from ~2-5 min back (ingest merges) instead of a full 10-min window. RL 09:40/09:45 NOTHING"
  ],
  "errors": [],
  "ops": {
@@ -36,6 +37,6 @@
   },
   "session": "TRADING 2026-10-12 full (close 16:00)",
   "universe": "universe_wide.json asof 2026-10-02 (current month, no refresh)",
-  "last_cycle": "09:38:01"
+  "last_cycle": "10:00:12"
  }
 }
