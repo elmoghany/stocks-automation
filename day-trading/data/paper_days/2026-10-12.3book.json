@@ -7,7 +7,20 @@
   "rl"
  ],
  "trades": [],
- "notes": [],
+ "notes": [
+  "[09:12] pre-open: probe GREEN; full day; universe asof 2026-10-02 (Oct, no refresh); R15 calendar 4 rows (all pm today, no actuals), 0 in universe -> expect R15 DONE; watchers r4/r15/rl started 09:11 via detached Start-Process (pids 8156/20200/2632, not harness background tasks, so no 2h kill), WATCH_ALIVE x3"
+ ],
  "errors": [],
- "ops": {}
+ "ops": {
+  "capability_probe": {
+   "python": "OK print(1)",
+   "git_status": "OK",
+   "mcp_get_equity_quotes_SPY": "OK bid 778.94 ask 779.01 @13:10:53Z",
+   "at": "09:11 ET",
+   "result": "GREEN"
+  },
+  "session": "TRADING 2026-10-12 full (close 16:00)",
+  "universe": "universe_wide.json asof 2026-10-02 (current month, no refresh)",
+  "last_cycle": "09:12:11"
+ }
 }
