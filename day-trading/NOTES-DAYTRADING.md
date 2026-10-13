@@ -35,6 +35,24 @@
 - **Expect the live R4 book to bleed about −$65/day.** The PARITY row keeps scoring the model at −$3.19/day.
 - The EOD now shows R4 LIVE and R4 PARITY as separate rows, plus refused-candidate counts by reason.
 
+### 2026-10-13 (PAPER-3BOOK day 8): full headless session; R4 LIVE RAMZ flatten −$223.04, R15/RL no trades (all flat)
+
+The session ran headless from 09:10 to after 16:00. The capability probe was green, and the r4/r15/rl watchers started at 09:11. R15 exited flat at 15:02 and R4 at 15:07. RL ended flat after 16:00 (still logging `0 open` at 16:02). The ledger was committed every ≤30 min and after the exit. Zero real orders.
+
+- **R4 LIVE**: 1 trade, −$223.04.
+  - At the 09:35 grid, six names were refused on SPREAD (AIXI 2.48%, ITOC 11.73%, ASTN 1.74%, COHQ 0.61%, EOSEW 21.11%, NBIZ 0.52%) and DCX on GAP7. The walk took candidate #7, RAMZ: 544 @18.36 ask at 09:37:07 (bid 18.33, spread 0.16%, depth OK).
+  - RAMZ drifted lower all day with no trail or bearish exit. The r4 watcher flattened it at 15:01:13 @17.95 bid, on the 14:59 decision (model px 17.9649, quote 17.95/17.98). Model P&L was −$296.53; cost was 8.26 bps/side vs mid.
+  - Halal: REFUSE-TO-EVALUATE.
+  - Refusals: SPREAD 6, GAP7 1.
+  - The day was −$157.61 vs the −$65.43/day expectation. Cumulative over 8 days: −$1,651.21 on 5 trades.
+- **R4 PARITY (model)**: 2 legs, −$970.67 (net of 15 bps: −$1,004.88). Cumulative parity book: −$4,084.53.
+  - AIXI: 09:36 @3.6647 → 10% trail at 10:04 @3.33, −$913.06.
+  - SPHL: 10:06 @2.4856 → flatten @2.41, −$57.61. The 10:05 pick was FLYE, but it had been halted 09:46–10:18 and the replay re-picked SPHL.
+  - Shadow legs came to −$1,008.56: AIXI from the first refusal ask 3.68 was −$950.95. **This time the spread veto saved the live book about $950**, unlike 10-09 and 10-12, when the refused name won.
+- **R15**: 0 trades. The calendar had 19 rows in the window but none in the 95-name universe, so the book was DONE from 09:37. Flat, against +$21.71/day expected.
+- **RL**: 0 trades. All 78 grid steps (09:30–15:55, none missed, including 15:00) printed NOTHING. Breadth stayed near flat all day, from −0.00417 (11:35) to +0.01325 (09:45), and was negative on only 14 steps. It never came close to the −0.02379 gate, and n_cand was 0 throughout. Flat, against +$5.77/day expected.
+- **Ops**: no incidents. The 10-12 lessons held: the 15:00 RL step was run, and the flatten booked on the 14:59 decision at 15:01. Long `wait_until` calls need an explicit tool timeout (300 s) so they don't drop into the background.
+
 ### 2026-10-12 (PAPER-3BOOK day 7): full headless session; R4 LIVE NOWL flatten −$987.84, R15/RL no trades (all flat)
 
 The session ran headless from 09:11 to after 16:00. The capability probe was green. Watchers for r4, r15 and rl were started detached (Start-Process), and none was killed by the 2 h limit today. R15 exited flat at 15:02, R4 at 15:07, and RL ended flat after 16:00. The ledger was committed every ≤30 min and after the exit. Zero real orders.
