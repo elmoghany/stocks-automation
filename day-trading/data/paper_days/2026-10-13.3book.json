@@ -30,7 +30,8 @@
   "[10:20] R4 MODEL: FLYE (armed 10:05) was halted 09:46-10:18 then reopened @5.20; model replay re-picked SPHL for grid 10:05 (now HOLDING SPHL, scoring only). LIVE still HOLD RAMZ.",
   "[15:01] EXIT-SIGNAL RAMZ flatten decided 14:59 model px 17.9649 quote bid 17.95/ask 17.98 @19:00:01Z",
   "[15:01] EXIT-R4-FLATTEN RAMZ @ 17.9500 x544 P&L $-223.04 (entry ask 18.36 @09:37:07). R4 book flat. MODEL track still scoring SPHL (entry 2.4856 @10:06).",
-  "[15:56] RL grids 15:30-15:55 all NOTHING (br 0.0016-0.0064, n_cand 0). RL took no trades all day; book flat $0.00. Final RL grid done; awaiting watcher EOD line."
+  "[15:56] RL grids 15:30-15:55 all NOTHING (br 0.0016-0.0064, n_cand 0). RL took no trades all day; book flat $0.00. Final RL grid done; awaiting watcher EOD line.",
+  "[16:04] RL watcher: BOOK FLAT -- watcher done (16:04:05). All three books flat; EOD written (p3_eod)."
  ],
  "errors": [],
  "ops": {
