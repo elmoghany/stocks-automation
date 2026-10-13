@@ -1,1 +1,34 @@
-{"date": "2026-10-13", "mode": "PAPER-3BOOK", "books": ["r4", "r15", "rl"], "trades": [], "notes": [], "errors": [], "ops": {"launched_et": "09:10"}}
+{
+ "date": "2026-10-13",
+ "mode": "PAPER-3BOOK",
+ "books": [
+  "r4",
+  "r15",
+  "rl"
+ ],
+ "trades": [
+  {
+   "book": "r4",
+   "sym": "RAMZ",
+   "decision_min": "09:35",
+   "entry_time": "09:37:07",
+   "ask": 18.36,
+   "bid": 18.33,
+   "mid": 18.345,
+   "shares": 544,
+   "notional": 9987.84,
+   "halal": "REFUSE-TO-EVALUATE (pass=false)",
+   "model_note": "LIVE track grid 09:35, candidate #7 after SPREAD refusals AIXI 2.48%, ITOC 11.73%, ASTN 1.74%, COHQ 0.61%, EOSEW 21.11%, NBIZ 0.52% (DCX GAP7 by script). RAMZ quote 18.33/18.36 @13:36:57Z spread 0.164%, depth 936 within ask*1.005 >= 25% of 544; shares_cap 2321. MODEL track ARMED AIXI (09:35)."
+  }
+ ],
+ "notes": [
+  "[09:11] R15 calendar ingested: 19 rows in window (12 pm .. 13 am), 0 in the 95-name universe -> R15 expected no-trade today. Universe asof 2026-10-02 (current month OK). Session full day (market_calendar: TRADING full). Watchers r4/r15/rl started 09:11.",
+  "[09:37] R4 grid 09:35: refused AIXI/ITOC/ASTN/COHQ/EOSEW/NBIZ SPREAD, DCX GAP7 -> ENTER RAMZ 544 @18.36 (bid 18.33). MODEL ARMED AIXI. R15 DONE (no fresh earnings in universe). RL 09:30 NOTHING (br 0.0)."
+ ],
+ "errors": [],
+ "ops": {
+  "launched_et": "09:10",
+  "last_cycle": "09:36:00",
+  "capability_probe": "09:12 python OK; git status OK; MCP get_equity_quotes SPY OK (bid 777.46 ask 777.51 13:10:49Z); earnings calendar OK"
+ }
+}
