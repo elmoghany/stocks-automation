@@ -27,12 +27,14 @@
   "[10:01] RL 09:30-10:00 all NOTHING (breadth >= 0, no qualifier). R4 LIVE holds RAMZ (watcher), MODEL holds AIXI (entry 3.6647 @09:36).",
   "[10:05] R4 MODEL leg AIXI closed: entry 09:36 @3.6647 -> trail 10% exit 10:04 @3.33 (model). Live book did not take AIXI (SPREAD 2.48% at 09:35) -> SHADOW leg.",
   "[10:06] R4 grid 10:05: LIVE holds RAMZ; MODEL armed FLYE (top coil after AIXI trail exit 10:04).",
-  "[10:20] R4 MODEL: FLYE (armed 10:05) was halted 09:46-10:18 then reopened @5.20; model replay re-picked SPHL for grid 10:05 (now HOLDING SPHL, scoring only). LIVE still HOLD RAMZ."
+  "[10:20] R4 MODEL: FLYE (armed 10:05) was halted 09:46-10:18 then reopened @5.20; model replay re-picked SPHL for grid 10:05 (now HOLDING SPHL, scoring only). LIVE still HOLD RAMZ.",
+  "[15:01] EXIT-SIGNAL RAMZ flatten decided 14:59 model px 17.9649 quote bid 17.95/ask 17.98 @19:00:01Z",
+  "[15:01] EXIT-R4-FLATTEN RAMZ @ 17.9500 x544 P&L $-223.04 (entry ask 18.36 @09:37:07). R4 book flat. MODEL track still scoring SPHL (entry 2.4856 @10:06)."
  ],
  "errors": [],
  "ops": {
   "launched_et": "09:10",
-  "last_cycle": "14:50:09",
+  "last_cycle": "15:01:23",
   "capability_probe": "09:12 python OK; git status OK; MCP get_equity_quotes SPY OK (bid 777.46 ask 777.51 13:10:49Z); earnings calendar OK"
  }
 }
