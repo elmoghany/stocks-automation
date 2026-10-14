@@ -64,11 +64,12 @@
   "[13:42] 13:42 status: R4 live holds QBTZ (bid 29.11, watcher P&L +$456); RL holds AMPX from 13:11 (bid 7.96, watcher P&L -$209, model HOLD); R4 model HOLDING QBTZ; R15 done",
   "[14:07] 14:07 status: R4 LIVE holds QBTZ 362@27.58 (bid ~28.96, watcher +$525); R4 MODEL holding QBTZ (28.19). RL holds AMPX 1230@8.13 (bid 7.89, watcher -$290), model HOLD. Grids through 14:05 ingested, no new actions.",
   "14:12:26 EXIT-RL-TRAIL AMPX @ 7.8800 x1230 P&L $-307.50 (RL model: EXIT-FILL 7.875 @14:11 trail, pnl -333.21). Watcher logged EXIT-SIGNAL 14:11:26 (quote 84 s old, no post-entry bar yet) and booked at its next tick after fresh quote/bar ingest; within the 2-min window, no restart needed.",
-  "14:13 RL ENTER BB 1225 @ 8.16 (decision 14:10, bid 8.15). halal REFUSE-TO-EVALUATE (tag only)."
+  "14:13 RL ENTER BB 1225 @ 8.16 (decision 14:10, bid 8.15). halal REFUSE-TO-EVALUATE (tag only).",
+  "[14:36] 14:36 status: R4 LIVE holds QBTZ 362@27.58 (bid 29.33, watcher +$630), R4 grids done (last 14:25 HOLD), flatten 15:00. RL holds BB 1225@8.16 (bid 8.14); RL book -$326 incl AMPX -$307.50. RL grids through 14:35 HOLD."
  ],
  "errors": [],
  "ops": {
-  "last_cycle": "14:13:18",
+  "last_cycle": "14:36:41",
   "capability_probe": "09:11 ET GREEN: python print(1) ok; git status ok; get_equity_quotes SPY ok (bid 775.27 ask 775.32)",
   "launched_et": "09:10"
  }
