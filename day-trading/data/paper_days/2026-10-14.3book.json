@@ -32,6 +32,19 @@
    "notional": 9999.9,
    "halal": "REFUSE-TO-EVALUATE (pass=false)",
    "model_note": "RL-SCOUT v2 grid 13:10 (wall 13:11): breadth -0.02445 < -0.02379, dist_vwap -0.01886, log_price 2.0949, mark 8.125; candidate bars fetched 13:11 (NEED_DATA->ENTER). Quote 8.12/8.13 @17:11:38Z. model_entry=next bar open (13:11 bar pending)."
+  },
+  {
+   "book": "rl",
+   "sym": "BB",
+   "decision_min": "14:10",
+   "entry_time": "14:13:05",
+   "ask": 8.16,
+   "bid": 8.15,
+   "mid": 8.155,
+   "shares": 1225,
+   "notional": 9996.0,
+   "halal": "REFUSE-TO-EVALUATE (pass=false)",
+   "model_note": "RL-SCOUT v2 grid 14:10 (wall 14:11): breadth -0.02959 < -0.02379, dist_vwap -0.00742, log_price 2.098, mark 8.15. Same step: model EXIT AMPX trail -> ENTER BB. Live book waited for watcher to book AMPX exit (14:12:26), then entered BB 14:13 within the 5-min window. Model ENTER-FILL 8.15 at 14:11 bar x1226. Quote 8.15/8.16 @18:12:51Z."
   }
  ],
  "notes": [
@@ -49,11 +62,13 @@
   "[12:23] 12:23 R4 MODEL replay (after bars): AAOZ 11:21@14.535->11:28@14.57 bearish; DFNS 11:31@6.455->11:42@6.624 trail; now HOLDING QBTZ from 11:47@28.19 (decision 11:45). LIVE still HOLD QBTZ from 09:37@27.58.",
   "[12:46] 12:47 status: R4 live holds QBTZ (bid 28.66, watcher P&L +$391); model HOLDING QBTZ; RL NOTHING through grid 12:45 (breadth -0.019); R15 done",
   "[13:42] 13:42 status: R4 live holds QBTZ (bid 29.11, watcher P&L +$456); RL holds AMPX from 13:11 (bid 7.96, watcher P&L -$209, model HOLD); R4 model HOLDING QBTZ; R15 done",
-  "[14:07] 14:07 status: R4 LIVE holds QBTZ 362@27.58 (bid ~28.96, watcher +$525); R4 MODEL holding QBTZ (28.19). RL holds AMPX 1230@8.13 (bid 7.89, watcher -$290), model HOLD. Grids through 14:05 ingested, no new actions."
+  "[14:07] 14:07 status: R4 LIVE holds QBTZ 362@27.58 (bid ~28.96, watcher +$525); R4 MODEL holding QBTZ (28.19). RL holds AMPX 1230@8.13 (bid 7.89, watcher -$290), model HOLD. Grids through 14:05 ingested, no new actions.",
+  "14:12:26 EXIT-RL-TRAIL AMPX @ 7.8800 x1230 P&L $-307.50 (RL model: EXIT-FILL 7.875 @14:11 trail, pnl -333.21). Watcher logged EXIT-SIGNAL 14:11:26 (quote 84 s old, no post-entry bar yet) and booked at its next tick after fresh quote/bar ingest; within the 2-min window, no restart needed.",
+  "14:13 RL ENTER BB 1225 @ 8.16 (decision 14:10, bid 8.15). halal REFUSE-TO-EVALUATE (tag only)."
  ],
  "errors": [],
  "ops": {
-  "last_cycle": "14:07:06",
+  "last_cycle": "14:13:18",
   "capability_probe": "09:11 ET GREEN: python print(1) ok; git status ok; get_equity_quotes SPY ok (bid 775.27 ask 775.32)",
   "launched_et": "09:10"
  }
