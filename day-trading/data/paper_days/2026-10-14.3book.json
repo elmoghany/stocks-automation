@@ -6,14 +6,30 @@
   "r15",
   "rl"
  ],
- "trades": [],
+ "trades": [
+  {
+   "book": "r4",
+   "sym": "QBTZ",
+   "decision_min": "09:35",
+   "entry_time": "09:37:07",
+   "ask": 27.58,
+   "bid": 27.47,
+   "mid": 27.525,
+   "shares": 362,
+   "notional": 9983.96,
+   "halal": "REFUSE-TO-EVALUATE (pass=false)",
+   "model_note": "LIVE track grid 09:35, candidate #2 after SPREAD refusal ASTN 1.14% (LQDA GAP7 by script). QBTZ quote 27.47/27.58 @13:36:48Z spread 0.40%, depth 2701 within ask*1.005 >= 25% of 362; shares_cap 379. MODEL track ARMED ASTN (09:35)."
+  }
+ ],
  "notes": [
   "[09:11] SESSION full day (market_calendar: TRADING 2026-10-14 full). Universe asof 2026-10-02 (current month, no refresh).",
-  "[09:12] R15 calendar ingested: 37 rows in window (10-13..10-14), 0 in the 95-name universe -> R15 expected no-trade today. Watchers r4/r15/rl started 09:11."
+  "[09:12] R15 calendar ingested: 37 rows in window (10-13..10-14), 0 in the 95-name universe -> R15 expected no-trade today. Watchers r4/r15/rl started 09:11.",
+  "[09:31] RL 09:30 NOTHING (br 0.0, n_cand 0).",
+  "[09:37] R4 grid 09:35: refused ASTN SPREAD 1.14%, LQDA GAP7 -> ENTER QBTZ 362 @27.58 (bid 27.47). MODEL ARMED ASTN. R15 DONE (no fresh earnings in universe)."
  ],
  "errors": [],
  "ops": {
-  "last_cycle": "09:12:20",
+  "last_cycle": "09:37:30",
   "capability_probe": "09:11 ET GREEN: python print(1) ok; git status ok; get_equity_quotes SPY ok (bid 775.27 ask 775.32)",
   "launched_et": "09:10"
  }
