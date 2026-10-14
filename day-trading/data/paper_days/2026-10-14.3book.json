@@ -7,7 +7,14 @@
   "rl"
  ],
  "trades": [],
- "notes": [],
+ "notes": [
+  "[09:11] SESSION full day (market_calendar: TRADING 2026-10-14 full). Universe asof 2026-10-02 (current month, no refresh).",
+  "[09:12] R15 calendar ingested: 37 rows in window (10-13..10-14), 0 in the 95-name universe -> R15 expected no-trade today. Watchers r4/r15/rl started 09:11."
+ ],
  "errors": [],
- "ops": {}
+ "ops": {
+  "last_cycle": "09:12:20",
+  "capability_probe": "09:11 ET GREEN: python print(1) ok; git status ok; get_equity_quotes SPY ok (bid 775.27 ask 775.32)",
+  "launched_et": "09:10"
+ }
 }
