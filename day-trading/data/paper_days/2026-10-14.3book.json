@@ -19,6 +19,19 @@
    "notional": 9983.96,
    "halal": "REFUSE-TO-EVALUATE (pass=false)",
    "model_note": "LIVE track grid 09:35, candidate #2 after SPREAD refusal ASTN 1.14% (LQDA GAP7 by script). QBTZ quote 27.47/27.58 @13:36:48Z spread 0.40%, depth 2701 within ask*1.005 >= 25% of 362; shares_cap 379. MODEL track ARMED ASTN (09:35)."
+  },
+  {
+   "book": "rl",
+   "sym": "AMPX",
+   "decision_min": "13:10",
+   "entry_time": "13:11:45",
+   "ask": 8.13,
+   "bid": 8.12,
+   "mid": 8.125,
+   "shares": 1230,
+   "notional": 9999.9,
+   "halal": "REFUSE-TO-EVALUATE (pass=false)",
+   "model_note": "RL-SCOUT v2 grid 13:10 (wall 13:11): breadth -0.02445 < -0.02379, dist_vwap -0.01886, log_price 2.0949, mark 8.125; candidate bars fetched 13:11 (NEED_DATA->ENTER). Quote 8.12/8.13 @17:11:38Z. model_entry=next bar open (13:11 bar pending)."
   }
  ],
  "notes": [
@@ -38,7 +51,7 @@
  ],
  "errors": [],
  "ops": {
-  "last_cycle": "12:46:57",
+  "last_cycle": "13:11:24",
   "capability_probe": "09:11 ET GREEN: python print(1) ok; git status ok; get_equity_quotes SPY ok (bid 775.27 ask 775.32)",
   "launched_et": "09:10"
  }
