@@ -35,6 +35,30 @@
 - **Expect the live R4 book to bleed about −$65/day.** The PARITY row keeps scoring the model at −$3.19/day.
 - The EOD now shows R4 LIVE and R4 PARITY as separate rows, plus refused-candidate counts by reason.
 
+### 2026-10-15 (PAPER-3BOOK day 9 on the scoreboard): full headless session; R4 LIVE SKDD flatten −$750.27, R15/RL no trades (all flat)
+
+The session ran headless from 09:10 to after 16:00. The capability probe was green and the r4/r15/rl watchers started at 09:14. R15 exited flat at 15:02 (`BOOK FLAT -- watcher done`), R4 at 15:07 and RL ended flat after 16:00. The ledger was committed every ≤30 min and after the exit. Zero real orders.
+
+- **10-14 left broken state.** The 10-14 session and all three watchers died around 14:37 with no EOD, so 10-14 is not on the scoreboard (today counts as day 9).
+  - It left an open r4 `position_QBTZ.json` (all NUL bytes, corrupt) and rl `position_BB.json` (1225 @8.16). Watchers exit 2 on another day's state, so both were moved to `data/paper/{r4,rl}/stale/*.2026-10-14.json` at 09:11.
+  - **The 10-14 QBTZ/BB legs were never flattened and the 10-14 EOD still needs reconstructing.**
+- **R4 LIVE**: 1 trade, −$750.27.
+  - At the 09:35 grid the top pick passed: SKDD, 843 @11.86 ask (bid 11.84, check-book PASS). There were no refusals.
+  - SKDD peaked at 12.24 early, then faded to a low of 10.88 at 12:01 and never triggered a trail or bearish exit. The r4 watcher flattened it at 15:01:06 @10.97 bid, on the 14:59 decision (model px 10.98, quote 10.97/10.98).
+  - Model P&L −$775.56; cost 6.57 bps/side vs mid.
+  - Halal: REFUSE-TO-EVALUATE.
+  - The day was −$684.84 vs the −$65.43/day expectation. Cumulative over 9 days: −$2,401.48 on 6 trades (ex-top-5 −$987.84).
+- **R4 PARITY (model)**: 1 leg, the same name: SKDD 09:36 @11.90 → flatten 14:59 @10.98, −$772.80 (net 15 bps −$801.63). No shadow legs. Cumulative parity book: −$4,857.33.
+- **R15**: 0 trades. The calendar had 43 rows, 1 in the universe: CHRN (10-14 pm, fresh). Its 09:35 bar had not printed and it was red (−465 bp), so the book was DONE with no trade. Flat, against +$21.71/day expected.
+- **RL**: 0 trades. All 78 grid steps (09:30–15:55, none missed) printed NOTHING.
+  - Breadth stayed positive almost all day: low −0.0080 (09:55), high +0.0310 (15:40). It never came near the −0.0238 gate, and n_cand was 0 throughout.
+  - Flat, against +$5.77/day expected.
+- **Ops**:
+  - The harness 2 h background limit killed all three watchers at 11:13 and again at 13:13. Each time they were restarted in append mode within about a minute. State is re-read from `position_*.json`, so the SKDD peak of 12.24 was kept, and no exit trigger fell in either gap.
+  - At 15:07, with RL flat, the RL watcher was restarted early so it would cover the 15:59 flatten instead of dying at about 15:13.
+  - `git push` over SSH timed out at 10:13 (so the 10:13 minute was skipped and its bars backfilled at 10:14), 14:48 and 15:01. Every retry succeeded within a minute.
+  - From 11:15 the R4 scan spilled to a file (117–184 rows). It was ingested in full via `data/paper/r4spill.py`.
+
 ### 2026-10-13 (PAPER-3BOOK day 8): full headless session; R4 LIVE RAMZ flatten −$223.04, R15/RL no trades (all flat)
 
 The session ran headless from 09:10 to after 16:00. The capability probe was green, and the r4/r15/rl watchers started at 09:11. R15 exited flat at 15:02 and R4 at 15:07. RL ended flat after 16:00 (still logging `0 open` at 16:02). The ledger was committed every ≤30 min and after the exit. Zero real orders.

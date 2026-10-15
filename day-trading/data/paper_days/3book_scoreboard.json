@@ -324,24 +324,67 @@
    "cost_usd_vs_mid": 0.0,
    "trade_pnls": [],
    "shadow_pnl": 0.0
+  },
+  {
+   "date": "2026-10-15",
+   "book": "r15",
+   "trades": 0,
+   "pnl": 0.0,
+   "model_pnl": 0.0,
+   "pnl_halal_pass": 0.0,
+   "halal_pass_trades": 0,
+   "cost_usd_vs_mid": 0.0,
+   "trade_pnls": [],
+   "shadow_pnl": 0.0
+  },
+  {
+   "date": "2026-10-15",
+   "book": "r4",
+   "trades": 1,
+   "pnl": -750.27,
+   "model_pnl": -775.56,
+   "pnl_halal_pass": 0.0,
+   "halal_pass_trades": 0,
+   "cost_usd_vs_mid": 12.65,
+   "trade_pnls": [
+    -750.27
+   ],
+   "shadow_pnl": 0,
+   "parity_trades": 1,
+   "parity_pnl": -772.8,
+   "parity_net15": -801.63,
+   "refused": {},
+   "live_track": true
+  },
+  {
+   "date": "2026-10-15",
+   "book": "rl",
+   "trades": 0,
+   "pnl": 0.0,
+   "model_pnl": 0.0,
+   "pnl_halal_pass": 0.0,
+   "halal_pass_trades": 0,
+   "cost_usd_vs_mid": 0.0,
+   "trade_pnls": [],
+   "shadow_pnl": 0.0
   }
  ],
  "cumulative": {
   "r4": {
-   "days": 8,
-   "trades": 5,
-   "pnl": -1651.21,
-   "model_pnl": -1656.26,
+   "days": 9,
+   "trades": 6,
+   "pnl": -2401.48,
+   "model_pnl": -2431.82,
    "pnl_halal_pass": 0.0,
-   "cost_usd_vs_mid": 101.63,
-   "pnl_ex_top5": null,
-   "per_trade_ex_top5": null,
+   "cost_usd_vs_mid": 114.28,
+   "pnl_ex_top5": -987.84,
+   "per_trade_ex_top5": -987.84,
    "shadow_pnl": -3924.17,
-   "parity_book_pnl": -4084.53,
-   "parity_trades": 5,
-   "parity_net15": 481.87,
-   "parity_expected_pnl": -25.52,
-   "live_track_days": 3,
+   "parity_book_pnl": -4857.33,
+   "parity_trades": 6,
+   "parity_net15": -319.76,
+   "parity_expected_pnl": -28.71,
+   "live_track_days": 4,
    "refused_by_reason": {
     "SPREAD": 12,
     "NOBARS": 4,
@@ -350,11 +393,11 @@
     "GAP7": 2,
     "DEPTH": 1
    },
-   "expected_pnl": -523.44,
-   "expected_trades": 17.44
+   "expected_pnl": -588.87,
+   "expected_trades": 19.62
   },
   "r15": {
-   "days": 8,
+   "days": 9,
    "trades": 0,
    "pnl": 0.0,
    "model_pnl": 0.0,
@@ -362,11 +405,11 @@
    "cost_usd_vs_mid": 0,
    "pnl_ex_top5": null,
    "per_trade_ex_top5": null,
-   "expected_pnl": 173.68,
-   "expected_trades": 1.98
+   "expected_pnl": 195.39,
+   "expected_trades": 2.23
   },
   "rl": {
-   "days": 8,
+   "days": 9,
    "trades": 0,
    "pnl": 0.0,
    "model_pnl": 0.0,
@@ -374,8 +417,8 @@
    "cost_usd_vs_mid": 0,
    "pnl_ex_top5": null,
    "per_trade_ex_top5": null,
-   "expected_pnl": 46.16,
-   "expected_trades": 2.73
+   "expected_pnl": 51.93,
+   "expected_trades": 3.07
   }
  }
 }
