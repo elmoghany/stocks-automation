@@ -35,7 +35,8 @@
   "[12:36] 12:36 R4 HOLD SKDD (11.15/11.16, book -$556); RL NOTHING grids 12:30/12:35 (br +0.0115/+0.0143); R15 done flat",
   "[13:01] 13:01 R4 HOLD SKDD (11.21/11.22, book -$548); RL NOTHING grids 12:40-13:00 (br +0.0119..+0.0138); R15 done flat",
   "[13:41] 13:41 R4 HOLD SKDD (11.01/11.02, book ~-$680); RL NOTHING grids 13:05-13:40 (br +0.0119..+0.0156); R15 done flat; watchers restarted 13:14",
-  "[14:06] 14:06 R4 HOLD SKDD (11.11/11.12, book ~-$650); RL NOTHING grids 13:45-14:05 (br +0.015..+0.019); R15 done flat"
+  "[14:06] 14:06 R4 HOLD SKDD (11.11/11.12, book ~-$650); RL NOTHING grids 13:45-14:05 (br +0.015..+0.019); R15 done flat",
+  "[14:26] 14:26 R4 decision window closed (last grid 14:25 HOLD SKDD, 11.14/11.15, book ~-$582); watcher flattens 15:00. RL NOTHING grids 14:10-14:25 (br +0.0138..+0.0151); R15 done flat"
  ],
  "errors": [
   "[09:11] 10-14 session + all 3 watchers died ~14:37 ET (last ticks 14:36-14:37; no 10-14 EOD). Left OPEN paper state: r4 position_QBTZ.json (file was all NUL/blank bytes, corrupt) and rl position_BB.json (date 2026-10-14, 1225@8.16). Watchers exit 2 on another day's state -> moved both to data/paper/{r4,rl}/stale/*.2026-10-14.json. 10-14 QBTZ/BB were never flattened by a watcher; 10-14 EOD needs reconstruction (not done by this session's live loop).",
@@ -49,7 +50,7 @@
    "mcp_get_equity_quotes_SPY": "OK bid 766.96 ask 767.02 @13:10:48Z",
    "at_et": "09:10"
   },
-  "last_cycle": "14:06:47",
+  "last_cycle": "14:26:55",
   "r15": "DONE 09:37 (no fresh name printed@09:35 and green)"
  }
 }
