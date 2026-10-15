@@ -37,7 +37,8 @@
  ],
  "errors": [
   "[09:11] 10-14 session + all 3 watchers died ~14:37 ET (last ticks 14:36-14:37; no 10-14 EOD). Left OPEN paper state: r4 position_QBTZ.json (file was all NUL/blank bytes, corrupt) and rl position_BB.json (date 2026-10-14, 1225@8.16). Watchers exit 2 on another day's state -> moved both to data/paper/{r4,rl}/stale/*.2026-10-14.json. 10-14 QBTZ/BB were never flattened by a watcher; 10-14 EOD needs reconstruction (not done by this session's live loop).",
-  "[11:13] 11:13 all 3 watchers killed by the harness 2h background limit (started ~09:13); restarted 11:13 in append mode (>>). State is re-read from position_*.json every tick (SKDD peak 12.24 preserved); gap about 11:12:27-11:13:40, no SKDD exit trigger in that window (bars 11.06-11.19). Next restart due ~13:13 and ~15:13."
+  "[11:13] 11:13 all 3 watchers killed by the harness 2h background limit (started ~09:13); restarted 11:13 in append mode (>>). State is re-read from position_*.json every tick (SKDD peak 12.24 preserved); gap about 11:12:27-11:13:40, no SKDD exit trigger in that window (bars 11.06-11.19). Next restart due ~13:13 and ~15:13.",
+  "[13:14] 13:13 watchers r4/r15/rl killed again by 2h bg limit; restarted 13:14 (append logs). next expected ~15:14 -> restart again for RL 15:59 flatten"
  ],
  "ops": {
   "capability_probe": {
@@ -46,7 +47,7 @@
    "mcp_get_equity_quotes_SPY": "OK bid 766.96 ask 767.02 @13:10:48Z",
    "at_et": "09:10"
   },
-  "last_cycle": "13:01:48",
+  "last_cycle": "13:16:44",
   "r15": "DONE 09:37 (no fresh name printed@09:35 and green)"
  }
 }
