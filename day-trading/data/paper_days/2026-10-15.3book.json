@@ -7,7 +7,20 @@
   "rl"
  ],
  "trades": [],
- "notes": [],
- "errors": [],
- "ops": {}
+ "notes": [
+  "[09:10] capability probe green (python, git, MCP quotes)",
+  "[09:12] SESSION full day (market_calendar TRADING 2026-10-15 full). Universe asof 2026-10-02 (current month). R15 calendar: 43 rows, 1 in universe: CHRN 2026-10-14 pm (fresh). Watchers r4/r15/rl started 09:14."
+ ],
+ "errors": [
+  "[09:11] 10-14 session + all 3 watchers died ~14:37 ET (last ticks 14:36-14:37; no 10-14 EOD). Left OPEN paper state: r4 position_QBTZ.json (file was all NUL/blank bytes, corrupt) and rl position_BB.json (date 2026-10-14, 1225@8.16). Watchers exit 2 on another day's state -> moved both to data/paper/{r4,rl}/stale/*.2026-10-14.json. 10-14 QBTZ/BB were never flattened by a watcher; 10-14 EOD needs reconstruction (not done by this session's live loop)."
+ ],
+ "ops": {
+  "capability_probe": {
+   "python": "OK (print 1)",
+   "git_status": "OK",
+   "mcp_get_equity_quotes_SPY": "OK bid 766.96 ask 767.02 @13:10:48Z",
+   "at_et": "09:10"
+  },
+  "last_cycle": "09:12:55"
+ }
 }
