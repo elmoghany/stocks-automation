@@ -6,10 +6,25 @@
   "r15",
   "rl"
  ],
- "trades": [],
+ "trades": [
+  {
+   "book": "r4",
+   "sym": "SKDD",
+   "decision_min": "09:35",
+   "entry_time": "09:37:10",
+   "ask": 11.86,
+   "bid": 11.84,
+   "mid": 11.85,
+   "shares": 843,
+   "notional": 9997.98,
+   "halal": "REFUSE-TO-EVALUATE (pass=false)",
+   "model_note": "LIVE track grid 09:35, candidate #1 (top8 SKDD,BEZ,DAMD,RAMZ,BBCI,AXTQ,SKHQ,LOFD all bar-OK). Quote 11.84/11.86 @13:36:58Z spread 0.169%, depth 31288 within ask*1.005 >= 25% of 843; shares_cap 32498. MODEL track ARMED SKDD (09:35)."
+  }
+ ],
  "notes": [
   "[09:10] capability probe green (python, git, MCP quotes)",
-  "[09:12] SESSION full day (market_calendar TRADING 2026-10-15 full). Universe asof 2026-10-02 (current month). R15 calendar: 43 rows, 1 in universe: CHRN 2026-10-14 pm (fresh). Watchers r4/r15/rl started 09:14."
+  "[09:12] SESSION full day (market_calendar TRADING 2026-10-15 full). Universe asof 2026-10-02 (current month). R15 calendar: 43 rows, 1 in universe: CHRN 2026-10-14 pm (fresh). Watchers r4/r15/rl started 09:14.",
+  "[09:37] RL 09:30 NOTHING (br 0.0), 09:35 NOTHING (br -0.00077). R15 09:35: CHRN fresh but 09:35 bar not printed and red (-465 bp) -> DONE, no trade. R4 grid 09:35: ENTER SKDD 843 @11.86 (bid 11.84), check-book PASS; MODEL ARMED SKDD."
  ],
  "errors": [
   "[09:11] 10-14 session + all 3 watchers died ~14:37 ET (last ticks 14:36-14:37; no 10-14 EOD). Left OPEN paper state: r4 position_QBTZ.json (file was all NUL/blank bytes, corrupt) and rl position_BB.json (date 2026-10-14, 1225@8.16). Watchers exit 2 on another day's state -> moved both to data/paper/{r4,rl}/stale/*.2026-10-14.json. 10-14 QBTZ/BB were never flattened by a watcher; 10-14 EOD needs reconstruction (not done by this session's live loop)."
@@ -21,6 +36,7 @@
    "mcp_get_equity_quotes_SPY": "OK bid 766.96 ask 767.02 @13:10:48Z",
    "at_et": "09:10"
   },
-  "last_cycle": "09:12:55"
+  "last_cycle": "09:37:49",
+  "r15": "DONE 09:37 (no fresh name printed@09:35 and green)"
  }
 }
