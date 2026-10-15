@@ -30,7 +30,8 @@
   "[10:32] RL 10:15-10:30 NOTHING (br +0.0023/+0.0057/+0.0028/+0.0003). R4 LIVE HOLD SKDD through grid 10:30 (bid ~11.40-11.60, watcher ~-$220..-$360); MODEL HOLDING SKDD. 10:13 minute cycle skipped (git push SSH timeout ~60s; bars backfilled 10:14).",
   "[10:51] 10:52 grids 10:35-10:50 done: RL NOTHING (breadth +0.0118, gate -0.0238); R4 HOLD SKDD (book -$430 @ 11.39/11.40); R15 DONE no trade",
   "[11:17] 11:17 grids 10:55-11:15: RL NOTHING (breadth +0.011..+0.022); R4 HOLD SKDD (book -$725 @10.97/10.98); R4 scan now spills to file (117-120 rows), ingested in full via data/paper/r4spill.py",
-  "[11:42] 11:42 grids 11:20-11:40: RL NOTHING (breadth +0.016..+0.020); R4 HOLD SKDD (book -$658 @11.05/11.06, intraday low 10.925 at 11:15); R15 DONE"
+  "[11:42] 11:42 grids 11:20-11:40: RL NOTHING (breadth +0.016..+0.020); R4 HOLD SKDD (book -$658 @11.05/11.06, intraday low 10.925 at 11:15); R15 DONE",
+  "[12:08] 12:08 grids 11:45-12:05: RL NOTHING (breadth +0.015..+0.018); R4 HOLD SKDD (book -$742 @10.94/10.96, intraday low 10.88 at 12:01); R15 DONE"
  ],
  "errors": [
   "[09:11] 10-14 session + all 3 watchers died ~14:37 ET (last ticks 14:36-14:37; no 10-14 EOD). Left OPEN paper state: r4 position_QBTZ.json (file was all NUL/blank bytes, corrupt) and rl position_BB.json (date 2026-10-14, 1225@8.16). Watchers exit 2 on another day's state -> moved both to data/paper/{r4,rl}/stale/*.2026-10-14.json. 10-14 QBTZ/BB were never flattened by a watcher; 10-14 EOD needs reconstruction (not done by this session's live loop).",
@@ -43,7 +44,7 @@
    "mcp_get_equity_quotes_SPY": "OK bid 766.96 ask 767.02 @13:10:48Z",
    "at_et": "09:10"
   },
-  "last_cycle": "11:42:21",
+  "last_cycle": "12:08:27",
   "r15": "DONE 09:37 (no fresh name printed@09:35 and green)"
  }
 }
