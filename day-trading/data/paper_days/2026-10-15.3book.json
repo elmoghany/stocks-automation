@@ -24,7 +24,8 @@
  "notes": [
   "[09:10] capability probe green (python, git, MCP quotes)",
   "[09:12] SESSION full day (market_calendar TRADING 2026-10-15 full). Universe asof 2026-10-02 (current month). R15 calendar: 43 rows, 1 in universe: CHRN 2026-10-14 pm (fresh). Watchers r4/r15/rl started 09:14.",
-  "[09:37] RL 09:30 NOTHING (br 0.0), 09:35 NOTHING (br -0.00077). R15 09:35: CHRN fresh but 09:35 bar not printed and red (-465 bp) -> DONE, no trade. R4 grid 09:35: ENTER SKDD 843 @11.86 (bid 11.84), check-book PASS; MODEL ARMED SKDD."
+  "[09:37] RL 09:30 NOTHING (br 0.0), 09:35 NOTHING (br -0.00077). R15 09:35: CHRN fresh but 09:35 bar not printed and red (-465 bp) -> DONE, no trade. R4 grid 09:35: ENTER SKDD 843 @11.86 (bid 11.84), check-book PASS; MODEL ARMED SKDD.",
+  "[09:52] RL 09:40-09:50 NOTHING (br +0.0009/+0.0017/-0.0020). R4 grids 09:40-09:50 LIVE HOLD SKDD (bid ~11.4-11.65, watcher open P&L ~-$220..-$410); MODEL HOLDING SKDD (09:36 @11.90). R4 scan files while HOLDING carry only rows that can matter (09:41/09:47 drop zero-volume rows with PriceReg=PrevClose; 09:51 top-31 by coil) - scan total_items recorded; sticky set preserved because the scan filter itself is the RTH-high>=+10% rule."
  ],
  "errors": [
   "[09:11] 10-14 session + all 3 watchers died ~14:37 ET (last ticks 14:36-14:37; no 10-14 EOD). Left OPEN paper state: r4 position_QBTZ.json (file was all NUL/blank bytes, corrupt) and rl position_BB.json (date 2026-10-14, 1225@8.16). Watchers exit 2 on another day's state -> moved both to data/paper/{r4,rl}/stale/*.2026-10-14.json. 10-14 QBTZ/BB were never flattened by a watcher; 10-14 EOD needs reconstruction (not done by this session's live loop)."
@@ -36,7 +37,7 @@
    "mcp_get_equity_quotes_SPY": "OK bid 766.96 ask 767.02 @13:10:48Z",
    "at_et": "09:10"
   },
-  "last_cycle": "09:37:49",
+  "last_cycle": "09:52:08",
   "r15": "DONE 09:37 (no fresh name printed@09:35 and green)"
  }
 }
