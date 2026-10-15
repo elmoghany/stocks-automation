@@ -1346,3 +1346,16 @@ WATCH-BOOK mode r4 date 2026-10-15 state C:\cornell\stocks-automation\day-tradin
 [15:01:06] EXIT-SIGNAL SKDD flatten decided 14:59 model px 10.98 quote {'bid': 10.97, 'ask': 10.98, 'mid': 10.975000000000001, 'ts': '2026-10-15T19:00:09Z', 'age_s': 57.1}
 [15:01:06] EXIT-R4-FLATTEN SKDD @ 10.9700 x843 P&L $-750.27
 [15:01:06] BOOK 0 open [] book P&L $-750.27 mode r4
+[15:01:36] BOOK 0 open [] book P&L $-750.27 mode r4
+[15:02:06] BOOK 0 open [] book P&L $-750.27 mode r4
+[15:02:36] BOOK 0 open [] book P&L $-750.27 mode r4
+[15:03:06] BOOK 0 open [] book P&L $-750.27 mode r4
+[15:03:36] BOOK 0 open [] book P&L $-750.27 mode r4
+[15:04:06] BOOK 0 open [] book P&L $-750.27 mode r4
+[15:04:36] BOOK 0 open [] book P&L $-750.27 mode r4
+[15:05:06] BOOK 0 open [] book P&L $-750.27 mode r4
+[15:05:36] BOOK 0 open [] book P&L $-750.27 mode r4
+[15:06:06] BOOK 0 open [] book P&L $-750.27 mode r4
+[15:06:36] BOOK 0 open [] book P&L $-750.27 mode r4
+[15:07:06] BOOK 0 open [] book P&L $-750.27 mode r4
+[15:07:06] BOOK FLAT -- watcher done
