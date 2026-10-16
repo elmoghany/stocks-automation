@@ -6,17 +6,33 @@
   "r15",
   "rl"
  ],
- "trades": [],
+ "trades": [
+  {
+   "book": "r4",
+   "sym": "IREZ",
+   "decision_min": "09:35",
+   "entry_time": "09:37:45",
+   "ask": 18.23,
+   "bid": 18.19,
+   "mid": 18.21,
+   "shares": 548,
+   "halal": "REFUSE-TO-EVALUATE (not PASS)",
+   "model_note": "R4 LIVE track grid 09:35: QXL/APLZ/NBIZ/SITC refused SPREAD (5.27/1.15/1.32/0.56%), POAS/CCEL VOLCAP; IREZ (rank 7) PASS spread 0.22% depth 4119>=25% of 548; shares_cap 719; MODEL track ARMED QXL"
+  }
+ ],
  "notes": [
-  "[09:12] R15 calendar ingested: 41 rows, 0 fresh in-universe names -> R15 expected no-trade"
+  "[09:12] R15 calendar ingested: 41 rows, 0 fresh in-universe names -> R15 expected no-trade",
+  "[09:38] R4 grid 09:35 LIVE ENTER IREZ 548 @18.23 (bid 18.19, quote 13:37:37Z; first quote 18.08/18.11 moved before book check). Refusals: QXL SPREAD 5.27%, APLZ SPREAD 1.15%, NBIZ SPREAD 1.32%, SITC SPREAD 0.56%, POAS VOLCAP, CCEL VOLCAP. MODEL ARMED QXL. RL 09:30 NOTHING (br 0), 09:35 NOTHING (br -0.0058). R15 DONE (no fresh name).",
+  "[09:38] OPS: 09:31/09:36 helper stdin carried a UTF-8 BOM onto the first scan row (\\ufeffMDB / \\ufeffAPLZ); stripped from rl scan_0931, rl snap, r4 scan_0936, r4 snaps at 09:37 and patched scan3/cyc3/bars.py to drop BOM"
  ],
  "errors": [],
  "ops": {
   "session_start": "09:10 ET",
-  "last_cycle": "09:12:06",
+  "last_cycle": "09:38:47",
   "capability_probe": "09:11 ET GREEN: python print(1) OK; git status --short OK (3046 lines, other sessions' files ignored); get_equity_quotes SPY OK bid 773.50 ask 773.55 @13:10:32Z",
   "session_clock": "TRADING 2026-10-16 full: R4 09:35-14:25 flatten 15:00; R15 09:35 exit 10:36; RL 09:30-15:55 flatten 15:59",
   "universe": "universe_wide.json asof 2026-10-02 (current month) - no refresh",
-  "watchers": "09:11 started r4 pid 5552, r15 pid 3424, rl pid 1536 (logs data/paper_days/watch_2026-10-16.{book}.log)"
+  "watchers": "09:11 started r4 pid 5552, r15 pid 3424, rl pid 1536 (logs data/paper_days/watch_2026-10-16.{book}.log)",
+  "r15": "DONE 09:36 (no fresh-earnings name in universe)"
  }
 }
