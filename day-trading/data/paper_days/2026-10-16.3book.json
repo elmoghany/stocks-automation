@@ -104,12 +104,14 @@
   "[14:51] 14:51 RL grids 14:30-14:50 HOLD ABUS (peak 4.255, bid 4.24-4.25); R4 LIVE HOLD QBTZ (bid 29.62-29.86, watcher owns exit, flatten 15:00); MODEL HOLDING QXL; R15 DONE. Books: r4 +275 (watcher), rl +131 open",
   "[15:01] 15:01 R4 EXIT-R4-FLATTEN QBTZ @29.83 x135 P&L +125.55 (watcher 15:01:26, flatten decided 14:58, quote bid 29.83 @19:00:13Z). R4 LIVE book flat, +299.65 for the day (IREZ +153.44, MSTZ +0.00, CORD +20.66, QBTZ +125.55). R4 MODEL closed QXL 4.33->4.23 flatten. RL HOLD ABUS (peak 4.255), flatten 15:59 bar",
   "[15:26] 15:26 RL grids 15:00-15:25 HOLD ABUS (peak 4.255, bid 4.24-4.25), flatten on 15:59 bar; R4 flat +299.65 (watcher done 15:07); R15 DONE flat. RL book +119 open",
-  "[15:37] 15:35 RL EXIT-RL-TMAX ABUS @4.255 x2380 P&L +130.90 (watcher 15:35:01, decided 15:30; official fill LAST-CLOSE - no fresh quote at the 15:31:01 tick, model px pending because the 15:31 bar was ingested ~15:32:15 after the 15:32:01 tick, so the watcher took its 3-min late rule). The model's own step 15:30 likewise carried the ABUS exit and gave KOPN NO-FILL. 15:36 RL step 15:35 ENTER KOPN 3058 @3.27 (bid 3.26), halal PASS"
+  "[15:37] 15:35 RL EXIT-RL-TMAX ABUS @4.255 x2380 P&L +130.90 (watcher 15:35:01, decided 15:30; official fill LAST-CLOSE - no fresh quote at the 15:31:01 tick, model px pending because the 15:31 bar was ingested ~15:32:15 after the 15:32:01 tick, so the watcher took its 3-min late rule). The model's own step 15:30 likewise carried the ABUS exit and gave KOPN NO-FILL. 15:36 RL step 15:35 ENTER KOPN 3058 @3.27 (bid 3.26), halal PASS",
+  "[15:56] 15:56 RL last grid (step 15:55) HOLD KOPN; rides to 15:59 flatten. R4/R15 flat.",
+  "[16:00] 16:00:06 watcher: EXIT-RL-FLATTEN KOPN @ 3.2700 x3058 P&L $+0.00 (fill = bid of fresh 19:59:10Z quote 3.27/3.28); BOOK 0 open, RL book P&L $+130.90. Model: EXIT-FILL KOPN flatten 3.285 (15:59 close) pnl +41.18 vs model entry 3.265. All three books flat."
  ],
  "errors": [],
  "ops": {
   "session_start": "09:10 ET",
-  "last_cycle": "15:37:03",
+  "last_cycle": "16:00:28",
   "capability_probe": "09:11 ET GREEN: python print(1) OK; git status --short OK (3046 lines, other sessions' files ignored); get_equity_quotes SPY OK bid 773.50 ask 773.55 @13:10:32Z",
   "session_clock": "TRADING 2026-10-16 full: R4 09:35-14:25 flatten 15:00; R15 09:35 exit 10:36; RL 09:30-15:55 flatten 15:59",
   "universe": "universe_wide.json asof 2026-10-02 (current month) - no refresh",
