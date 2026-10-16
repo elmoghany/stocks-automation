@@ -66,6 +66,18 @@
    "shares": 135,
    "halal": "REFUSE-TO-EVALUATE (not PASS)",
    "model_note": "R4 LIVE track grid 11:25 (4th ticket): IONZ refused SPREAD 1.52%, CBRZ VOLCAP; QBTZ (rank 3) PASS spread 0.42% depth 4910; shares_cap 135 binds (135 x 28.90 = 3901.50 < 10k); quote 15:28:36Z"
+  },
+  {
+   "book": "rl",
+   "sym": "KOPN",
+   "decision_min": "15:35",
+   "entry_time": "15:36:45",
+   "ask": 3.27,
+   "bid": 3.26,
+   "mid": 3.265,
+   "shares": 3058,
+   "halal": "PASS",
+   "model_note": "RL step 15:35 ENTER (2nd ticket after ABUS tmax exit): breadth -0.03972 < -0.02379, dist_vwap -0.04328, log_price 1.1833; quote 19:36:12Z; step 15:30 ENTER KOPN got NO-FILL in the model (15:31 bar ingested late) and the live book still held ABUS"
   }
  ],
  "notes": [
@@ -91,16 +103,20 @@
   "[14:26] 14:26 R4 grids 14:00-14:25 LIVE HOLD QBTZ (bid 29.37-29.75; last R4 entry grid 14:25 done, watcher owns exit/15:00 flatten); RL HOLD ABUS (peak 4.25, bid 4.23-4.24); MODEL HOLDING QXL; R15 DONE. Books: r4 +269 (watcher), rl +107 open",
   "[14:51] 14:51 RL grids 14:30-14:50 HOLD ABUS (peak 4.255, bid 4.24-4.25); R4 LIVE HOLD QBTZ (bid 29.62-29.86, watcher owns exit, flatten 15:00); MODEL HOLDING QXL; R15 DONE. Books: r4 +275 (watcher), rl +131 open",
   "[15:01] 15:01 R4 EXIT-R4-FLATTEN QBTZ @29.83 x135 P&L +125.55 (watcher 15:01:26, flatten decided 14:58, quote bid 29.83 @19:00:13Z). R4 LIVE book flat, +299.65 for the day (IREZ +153.44, MSTZ +0.00, CORD +20.66, QBTZ +125.55). R4 MODEL closed QXL 4.33->4.23 flatten. RL HOLD ABUS (peak 4.255), flatten 15:59 bar",
-  "[15:26] 15:26 RL grids 15:00-15:25 HOLD ABUS (peak 4.255, bid 4.24-4.25), flatten on 15:59 bar; R4 flat +299.65 (watcher done 15:07); R15 DONE flat. RL book +119 open"
+  "[15:26] 15:26 RL grids 15:00-15:25 HOLD ABUS (peak 4.255, bid 4.24-4.25), flatten on 15:59 bar; R4 flat +299.65 (watcher done 15:07); R15 DONE flat. RL book +119 open",
+  "[15:37] 15:35 RL EXIT-RL-TMAX ABUS @4.255 x2380 P&L +130.90 (watcher 15:35:01, decided 15:30; official fill LAST-CLOSE - no fresh quote at the 15:31:01 tick, model px pending because the 15:31 bar was ingested ~15:32:15 after the 15:32:01 tick, so the watcher took its 3-min late rule). The model's own step 15:30 likewise carried the ABUS exit and gave KOPN NO-FILL. 15:36 RL step 15:35 ENTER KOPN 3058 @3.27 (bid 3.26), halal PASS"
  ],
  "errors": [],
  "ops": {
   "session_start": "09:10 ET",
-  "last_cycle": "15:26:29",
+  "last_cycle": "15:37:03",
   "capability_probe": "09:11 ET GREEN: python print(1) OK; git status --short OK (3046 lines, other sessions' files ignored); get_equity_quotes SPY OK bid 773.50 ask 773.55 @13:10:32Z",
   "session_clock": "TRADING 2026-10-16 full: R4 09:35-14:25 flatten 15:00; R15 09:35 exit 10:36; RL 09:30-15:55 flatten 15:59",
   "universe": "universe_wide.json asof 2026-10-02 (current month) - no refresh",
   "watchers": "09:11 started r4 pid 5552, r15 pid 3424, rl pid 1536 (logs data/paper_days/watch_2026-10-16.{book}.log)",
   "r15": "DONE 09:36 (no fresh-earnings name in universe)"
- }
+ },
+ "divergences": [
+  "[15:37] 15:30 RL step ENTER KOPN not taken: model NO-FILL (bar 15:31 unprinted at the 15:32 run - ops ingest lag) and live book still held ABUS; re-signalled and entered at step 15:35"
+ ]
 }

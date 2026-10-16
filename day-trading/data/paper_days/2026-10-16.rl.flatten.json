@@ -1,0 +1,56 @@
+{
+ "date": "2026-10-16",
+ "records": [
+  {
+   "sym": "ABUS",
+   "ticket": null,
+   "date": "2026-10-16",
+   "mode": "rl",
+   "entry": 4.2,
+   "shares_initial": 2380,
+   "entry_bar_utc": "2026-10-16T15:28:00Z",
+   "prev_close": null,
+   "exit_kind": "exit-rl-tmax",
+   "fills": [
+    {
+     "kind": "EXIT-RL-TMAX",
+     "time": "2026-10-16T15:31:01.176742-04:00",
+     "shares": 2380,
+     "px": 4.255,
+     "src": "stop level"
+    }
+   ],
+   "vwap": 4.255,
+   "shares_exited": 2380,
+   "scale_out": null,
+   "banked": 0.0,
+   "pnl": 130.9,
+   "peak": 4.29,
+   "rungs": [],
+   "deployed": 9996.0,
+   "exit_time": "2026-10-16T15:31:01.176742-04:00",
+   "booked_at": "2026-10-16T15:35:01.850860-04:00",
+   "exit_parity": null,
+   "p3": {
+    "book": "rl",
+    "mode": "rl",
+    "reason": "tmax",
+    "decided_min": "15:30",
+    "model_exit": null,
+    "model_exit_min": "15:31",
+    "model_entry": 4.190000057220459,
+    "model_entry_min": null,
+    "model_pnl": null,
+    "exit_quote": null,
+    "entry_quote": {
+     "bid": 4.19,
+     "ask": 4.2,
+     "mid": 4.195,
+     "cost_bps_vs_mid": 11.92
+    },
+    "exit_cost_bps_vs_mid": null,
+    "official_src": "LAST-CLOSE (no quote/model)"
+   }
+  }
+ ]
+}
