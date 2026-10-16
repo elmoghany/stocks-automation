@@ -89,12 +89,13 @@
   "[13:32] 13:32 R4 grids 13:05-13:30 LIVE HOLD QBTZ (bid 29.34-29.74); RL HOLD ABUS (peak 4.25, bid 4.21-4.23); MODEL HOLDING QXL; R15 DONE. Books: r4 +277 (incl. open), rl +24 open",
   "[13:58] 13:58 R4 grids 13:35-13:55 LIVE HOLD QBTZ (bid 29.35-29.68); RL HOLD ABUS (peak 4.25, bid 4.23-4.24); MODEL HOLDING QXL; R15 DONE. Books: r4 +235 (watcher, last print 29.3519), rl +83 open",
   "[14:26] 14:26 R4 grids 14:00-14:25 LIVE HOLD QBTZ (bid 29.37-29.75; last R4 entry grid 14:25 done, watcher owns exit/15:00 flatten); RL HOLD ABUS (peak 4.25, bid 4.23-4.24); MODEL HOLDING QXL; R15 DONE. Books: r4 +269 (watcher), rl +107 open",
-  "[14:51] 14:51 RL grids 14:30-14:50 HOLD ABUS (peak 4.255, bid 4.24-4.25); R4 LIVE HOLD QBTZ (bid 29.62-29.86, watcher owns exit, flatten 15:00); MODEL HOLDING QXL; R15 DONE. Books: r4 +275 (watcher), rl +131 open"
+  "[14:51] 14:51 RL grids 14:30-14:50 HOLD ABUS (peak 4.255, bid 4.24-4.25); R4 LIVE HOLD QBTZ (bid 29.62-29.86, watcher owns exit, flatten 15:00); MODEL HOLDING QXL; R15 DONE. Books: r4 +275 (watcher), rl +131 open",
+  "[15:01] 15:01 R4 EXIT-R4-FLATTEN QBTZ @29.83 x135 P&L +125.55 (watcher 15:01:26, flatten decided 14:58, quote bid 29.83 @19:00:13Z). R4 LIVE book flat, +299.65 for the day (IREZ +153.44, MSTZ +0.00, CORD +20.66, QBTZ +125.55). R4 MODEL closed QXL 4.33->4.23 flatten. RL HOLD ABUS (peak 4.255), flatten 15:59 bar"
  ],
  "errors": [],
  "ops": {
   "session_start": "09:10 ET",
-  "last_cycle": "14:51:32",
+  "last_cycle": "15:01:39",
   "capability_probe": "09:11 ET GREEN: python print(1) OK; git status --short OK (3046 lines, other sessions' files ignored); get_equity_quotes SPY OK bid 773.50 ask 773.55 @13:10:32Z",
   "session_clock": "TRADING 2026-10-16 full: R4 09:35-14:25 flatten 15:00; R15 09:35 exit 10:36; RL 09:30-15:55 flatten 15:59",
   "universe": "universe_wide.json asof 2026-10-02 (current month) - no refresh",
