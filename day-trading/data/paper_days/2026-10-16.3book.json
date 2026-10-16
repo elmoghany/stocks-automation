@@ -120,5 +120,301 @@
  },
  "divergences": [
   "[15:37] 15:30 RL step ENTER KOPN not taken: model NO-FILL (bar 15:31 unprinted at the 15:32 run - ops ingest lag) and live book still held ABUS; re-signalled and entered at step 15:35"
- ]
+ ],
+ "eod": {
+  "r4": {
+   "trades": 4,
+   "pnl": 299.65,
+   "model_pnl": 414.31,
+   "halal_pass_trades": 0,
+   "pnl_halal_pass": 0.0,
+   "per_trade": 74.91,
+   "cost_bps_per_side_vs_mid_mean": 14.88,
+   "cost_usd_vs_mid": 91.4,
+   "expectation": {
+    "per_trade": -30.01,
+    "per_day": -65.43,
+    "trades_per_day": 2.18,
+    "gross_per_trade": -6.33,
+    "backtest_per_trade_ex_top5": -52.72,
+    "pin_threshold": 0.006,
+    "variant": "live_pin06_spread",
+    "oos_aug2026": {
+     "per_trade": -55.1,
+     "trades_per_day": 2.091,
+     "total": -2534.68
+    },
+    "built": "2026-10-08T17:22:30.796641-04:00",
+    "note": "R4 LIVE track (R4-FIX 2026-10-08): first of the ranked top 8 passing gap gate, PINNED filter, halt, spread <= 0.5% (bar proxy: LEGACY-9 2*half > 50 bps) at each grid while flat; $10k; 15 bps/side; 444 in-sample days (plan/p3_r4_live.py, data/paper/parity/r4_live.json). The 'r4' key stays the PARITY/MODEL track expectation."
+   },
+   "vs_expectation": {
+    "pnl_minus_expected_day": 365.08,
+    "per_trade_minus_expected": 104.92,
+    "trades_minus_expected_rate": 1.82
+   },
+   "trade_list": [
+    {
+     "sym": "IREZ",
+     "shares": 548,
+     "entry": 18.23,
+     "exit": 18.51,
+     "pnl": 153.44,
+     "model_entry": 18.35,
+     "model_exit": 18.54,
+     "model_pnl": 104.12,
+     "reason": "bearish",
+     "entry_cost_bps_vs_mid": 10.98,
+     "exit_cost_bps_vs_mid": 8.1,
+     "cost_usd_vs_mid": 19.18,
+     "cost_bps_per_side_vs_mid": 9.53,
+     "official_src": "quote-bid",
+     "halal": "REFUSE-TO-EVALUATE",
+     "halal_pass": false
+    },
+    {
+     "sym": "MSTZ",
+     "shares": 3333,
+     "entry": 3.0,
+     "exit": 3.0,
+     "pnl": 0.0,
+     "model_entry": 2.9902,
+     "model_exit": 3.015,
+     "model_pnl": 82.66,
+     "reason": "bearish",
+     "entry_cost_bps_vs_mid": 16.69,
+     "exit_cost_bps_vs_mid": 16.64,
+     "cost_usd_vs_mid": 33.33,
+     "cost_bps_per_side_vs_mid": 16.67,
+     "official_src": "quote-bid",
+     "halal": "REFUSE-TO-EVALUATE",
+     "halal_pass": false
+    },
+    {
+     "sym": "CORD",
+     "shares": 2066,
+     "entry": 4.84,
+     "exit": 4.85,
+     "pnl": 20.66,
+     "model_entry": 4.835,
+     "model_exit": 4.865,
+     "model_pnl": 61.98,
+     "reason": "bearish",
+     "entry_cost_bps_vs_mid": 10.34,
+     "exit_cost_bps_vs_mid": 10.3,
+     "cost_usd_vs_mid": 20.66,
+     "cost_bps_per_side_vs_mid": 10.32,
+     "official_src": "quote-bid",
+     "halal": "REFUSE-TO-EVALUATE",
+     "halal_pass": false
+    },
+    {
+     "sym": "QBTZ",
+     "shares": 135,
+     "entry": 28.9,
+     "exit": 29.83,
+     "pnl": 125.55,
+     "model_entry": 28.7537,
+     "model_exit": 29.98,
+     "model_pnl": 165.55,
+     "reason": "flatten",
+     "entry_cost_bps_vs_mid": 20.8,
+     "exit_cost_bps_vs_mid": 25.08,
+     "cost_usd_vs_mid": 18.23,
+     "cost_bps_per_side_vs_mid": 22.99,
+     "official_src": "quote-bid",
+     "halal": "REFUSE-TO-EVALUATE",
+     "halal_pass": false
+    }
+   ],
+   "shadow_legs": [
+    {
+     "key": "QXL@09:35",
+     "sym": "QXL",
+     "shares": 2232,
+     "entry": 4.48,
+     "entry_src": "first refusal ask",
+     "exit": 4.23,
+     "exit_min": "14:47",
+     "reason": "flatten",
+     "why": "SPREAD 5.27% > 0.50%",
+     "pnl": -558.0
+    }
+   ],
+   "shadow_pnl": -558.0,
+   "parity": {
+    "trades": 1,
+    "pnl": -71.9,
+    "net15": -81.13,
+    "legs": [
+     {
+      "sym": "QXL",
+      "decision": "09:35",
+      "entry_min": "09:36",
+      "entry": 4.33,
+      "exit_min": "14:47",
+      "exit": 4.23,
+      "shares": 719,
+      "reason": "flatten",
+      "gross": -71.9,
+      "net15": -81.13
+     }
+    ],
+    "error": null,
+    "expectation": {
+     "per_trade": -1.21,
+     "per_day": -3.19,
+     "trades_per_day": 2.637,
+     "per_trade_at_28_75bps": -23.65,
+     "per_day_at_28_75bps": -62.38,
+     "backtest_per_trade": -2.21,
+     "backtest_per_trade_ex_top5": -65.17,
+     "aug2026_note": "R4 lost -$4,392 over the 22 out-of-sample August-2026 sessions (LEGACY-14 / champion-replay OOS block); a red first weeks is inside expectation",
+     "legacy2_note": "causal coil tie-break (volume so far, then seeded hash) replaces the published pool-file order, which leaked full-day volume: realistic R4 is about break-even after costs",
+     "legacy15_note": "with the live 0.5% spread veto the kept legs are ~ -$28 gross per $10k ex-top-5 (LEGACY-15); the backtest edge lives in the thin names the veto refuses -- the SHADOW book measures that",
+     "role": "PARITY/MODEL track (unchanged backtest)"
+    },
+    "pnl_minus_expected_day": -77.94
+   },
+   "parity_book_pnl": -71.9,
+   "refused_by_reason": {
+    "VOLCAP": 8,
+    "SPREAD": 5
+   }
+  },
+  "r15": {
+   "trades": 0,
+   "pnl": 0.0,
+   "model_pnl": 0.0,
+   "halal_pass_trades": 0,
+   "pnl_halal_pass": 0.0,
+   "per_trade": null,
+   "cost_bps_per_side_vs_mid_mean": null,
+   "cost_usd_vs_mid": 0.0,
+   "expectation": {
+    "per_trade": 87.62,
+    "per_day": 21.71,
+    "trades_per_day": 0.2478,
+    "backtest_per_trade": 87.15,
+    "backtest_per_trade_ex_top5": 36.07
+   },
+   "vs_expectation": {
+    "pnl_minus_expected_day": -21.71,
+    "per_trade_minus_expected": null,
+    "trades_minus_expected_rate": -0.25
+   },
+   "trade_list": []
+  },
+  "rl": {
+   "trades": 2,
+   "pnl": 130.9,
+   "model_pnl": 15.29,
+   "halal_pass_trades": 1,
+   "pnl_halal_pass": 0.0,
+   "per_trade": 65.45,
+   "cost_bps_per_side_vs_mid_mean": 15.29,
+   "cost_usd_vs_mid": 30.58,
+   "expectation": {
+    "per_trade": 16.92,
+    "per_day": 5.77,
+    "trades_per_day": 0.341,
+    "backtest_per_trade": 30.95,
+    "backtest_per_trade_ex_top5": 18.1
+   },
+   "vs_expectation": {
+    "pnl_minus_expected_day": 125.13,
+    "per_trade_minus_expected": 48.53,
+    "trades_minus_expected_rate": 1.66
+   },
+   "trade_list": [
+    {
+     "sym": "ABUS",
+     "shares": 2380,
+     "entry": 4.2,
+     "exit": 4.255,
+     "pnl": 130.9,
+     "model_entry": 4.190000057220459,
+     "model_exit": null,
+     "model_pnl": null,
+     "reason": "tmax",
+     "entry_cost_bps_vs_mid": 11.92,
+     "exit_cost_bps_vs_mid": null,
+     "cost_usd_vs_mid": null,
+     "cost_bps_per_side_vs_mid": null,
+     "official_src": "LAST-CLOSE (no quote/model)",
+     "halal": "REFUSE-TO-EVALUATE",
+     "halal_pass": false
+    },
+    {
+     "sym": "KOPN",
+     "shares": 3058,
+     "entry": 3.27,
+     "exit": 3.27,
+     "pnl": 0.0,
+     "model_entry": 3.27,
+     "model_exit": 3.2750000953674316,
+     "model_pnl": 15.29,
+     "reason": "flatten",
+     "entry_cost_bps_vs_mid": 15.31,
+     "exit_cost_bps_vs_mid": 15.27,
+     "cost_usd_vs_mid": 30.58,
+     "cost_bps_per_side_vs_mid": 15.29,
+     "official_src": "quote-bid",
+     "halal": "PASS",
+     "halal_pass": true
+    }
+   ]
+  }
+ },
+ "cumulative": {
+  "r4": {
+   "days": 10,
+   "trades": 10,
+   "pnl": -2101.83,
+   "model_pnl": -2017.51,
+   "pnl_halal_pass": 0.0,
+   "cost_usd_vs_mid": 205.68,
+   "pnl_ex_top5": -2608.12,
+   "per_trade_ex_top5": -521.62,
+   "shadow_pnl": -4482.17,
+   "parity_book_pnl": -4929.23,
+   "parity_trades": 7,
+   "parity_net15": -400.89,
+   "parity_expected_pnl": -31.9,
+   "live_track_days": 5,
+   "refused_by_reason": {
+    "SPREAD": 17,
+    "NOBARS": 4,
+    "VOLCAP": 11,
+    "HALT": 2,
+    "GAP7": 2,
+    "DEPTH": 1
+   },
+   "expected_pnl": -654.3,
+   "expected_trades": 21.8
+  },
+  "r15": {
+   "days": 10,
+   "trades": 0,
+   "pnl": 0.0,
+   "model_pnl": 0.0,
+   "pnl_halal_pass": 0.0,
+   "cost_usd_vs_mid": 0,
+   "pnl_ex_top5": null,
+   "per_trade_ex_top5": null,
+   "expected_pnl": 217.1,
+   "expected_trades": 2.48
+  },
+  "rl": {
+   "days": 10,
+   "trades": 2,
+   "pnl": 130.9,
+   "model_pnl": 15.29,
+   "pnl_halal_pass": 0.0,
+   "cost_usd_vs_mid": 30.58,
+   "pnl_ex_top5": null,
+   "per_trade_ex_top5": null,
+   "expected_pnl": 57.7,
+   "expected_trades": 3.41
+  }
+ }
 }

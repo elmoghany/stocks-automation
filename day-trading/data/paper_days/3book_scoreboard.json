@@ -367,37 +367,89 @@
    "cost_usd_vs_mid": 0.0,
    "trade_pnls": [],
    "shadow_pnl": 0.0
+  },
+  {
+   "date": "2026-10-16",
+   "book": "r15",
+   "trades": 0,
+   "pnl": 0.0,
+   "model_pnl": 0.0,
+   "pnl_halal_pass": 0.0,
+   "halal_pass_trades": 0,
+   "cost_usd_vs_mid": 0.0,
+   "trade_pnls": [],
+   "shadow_pnl": 0.0
+  },
+  {
+   "date": "2026-10-16",
+   "book": "r4",
+   "trades": 4,
+   "pnl": 299.65,
+   "model_pnl": 414.31,
+   "pnl_halal_pass": 0.0,
+   "halal_pass_trades": 0,
+   "cost_usd_vs_mid": 91.4,
+   "trade_pnls": [
+    153.44,
+    0.0,
+    20.66,
+    125.55
+   ],
+   "shadow_pnl": -558.0,
+   "parity_trades": 1,
+   "parity_pnl": -71.9,
+   "parity_net15": -81.13,
+   "refused": {
+    "VOLCAP": 8,
+    "SPREAD": 5
+   },
+   "live_track": true
+  },
+  {
+   "date": "2026-10-16",
+   "book": "rl",
+   "trades": 2,
+   "pnl": 130.9,
+   "model_pnl": 15.29,
+   "pnl_halal_pass": 0.0,
+   "halal_pass_trades": 1,
+   "cost_usd_vs_mid": 30.58,
+   "trade_pnls": [
+    130.9,
+    0.0
+   ],
+   "shadow_pnl": 0.0
   }
  ],
  "cumulative": {
   "r4": {
-   "days": 9,
-   "trades": 6,
-   "pnl": -2401.48,
-   "model_pnl": -2431.82,
+   "days": 10,
+   "trades": 10,
+   "pnl": -2101.83,
+   "model_pnl": -2017.51,
    "pnl_halal_pass": 0.0,
-   "cost_usd_vs_mid": 114.28,
-   "pnl_ex_top5": -987.84,
-   "per_trade_ex_top5": -987.84,
-   "shadow_pnl": -3924.17,
-   "parity_book_pnl": -4857.33,
-   "parity_trades": 6,
-   "parity_net15": -319.76,
-   "parity_expected_pnl": -28.71,
-   "live_track_days": 4,
+   "cost_usd_vs_mid": 205.68,
+   "pnl_ex_top5": -2608.12,
+   "per_trade_ex_top5": -521.62,
+   "shadow_pnl": -4482.17,
+   "parity_book_pnl": -4929.23,
+   "parity_trades": 7,
+   "parity_net15": -400.89,
+   "parity_expected_pnl": -31.9,
+   "live_track_days": 5,
    "refused_by_reason": {
-    "SPREAD": 12,
+    "SPREAD": 17,
     "NOBARS": 4,
-    "VOLCAP": 3,
+    "VOLCAP": 11,
     "HALT": 2,
     "GAP7": 2,
     "DEPTH": 1
    },
-   "expected_pnl": -588.87,
-   "expected_trades": 19.62
+   "expected_pnl": -654.3,
+   "expected_trades": 21.8
   },
   "r15": {
-   "days": 9,
+   "days": 10,
    "trades": 0,
    "pnl": 0.0,
    "model_pnl": 0.0,
@@ -405,20 +457,20 @@
    "cost_usd_vs_mid": 0,
    "pnl_ex_top5": null,
    "per_trade_ex_top5": null,
-   "expected_pnl": 195.39,
-   "expected_trades": 2.23
+   "expected_pnl": 217.1,
+   "expected_trades": 2.48
   },
   "rl": {
-   "days": 9,
-   "trades": 0,
-   "pnl": 0.0,
-   "model_pnl": 0.0,
+   "days": 10,
+   "trades": 2,
+   "pnl": 130.9,
+   "model_pnl": 15.29,
    "pnl_halal_pass": 0.0,
-   "cost_usd_vs_mid": 0,
+   "cost_usd_vs_mid": 30.58,
    "pnl_ex_top5": null,
    "per_trade_ex_top5": null,
-   "expected_pnl": 51.93,
-   "expected_trades": 3.07
+   "expected_pnl": 57.7,
+   "expected_trades": 3.41
   }
  }
 }

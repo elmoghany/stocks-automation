@@ -35,6 +35,32 @@
 - **Expect the live R4 book to bleed about −$65/day.** The PARITY row keeps scoring the model at −$3.19/day.
 - The EOD now shows R4 LIVE and R4 PARITY as separate rows, plus refused-candidate counts by reason.
 
+### 2026-10-16 (PAPER-3BOOK day 10): full headless session; R4 LIVE +$299.65 on 4 trades, RL +$130.90 on 2 (its first trades), R15 no trade (all flat)
+
+The session ran headless from about 09:10 until after 16:00. R4 was flat at 15:01 (watcher done 15:07), R15 was DONE early (watcher done 15:02), and RL flattened at 16:00:06. The ledger was committed every ≤30 min and after every entry and exit. Zero real orders.
+
+- **R4 LIVE**: 4 trades, **+$299.65** (model fills +$414.31; cost 14.88 bps/side vs mid). That is +$365.08 vs the −$65.43/day expectation.
+  - IREZ 548 @18.23 (09:35 grid) → bearish @18.51, +$153.44.
+  - MSTZ 3333 @3.00 (11:00) → bearish @3.00, $0.00.
+  - CORD 2066 @4.84 (11:15) → bearish @4.85, +$20.66.
+  - QBTZ 135 @28.90 (11:25, cap-bound) → 15:00 flatten @29.83 bid, +$125.55.
+  - Refusals: VOLCAP 8, SPREAD 5. The model's top pick QXL was refused at 09:35 (SPREAD 5.27%).
+  - Halal: all four REFUSE-TO-EVALUATE.
+  - Cumulative over 10 days: −$2,101.83 on 10 trades.
+- **R4 PARITY (model)**: QXL 09:36 @4.33 → flatten @4.23, −$71.90 (net 15 bps −$81.13). The QXL shadow leg would have cost −$558.00, so the spread veto saved money today. Cumulative parity: −$4,929.23.
+- **R15**: 0 trades. The calendar had 41 rows and 0 fresh in-universe names, so the book was DONE at the open. Flat, against +$21.71/day expected.
+- **RL**: 2 trades, **+$130.90**. These are the first RL trades on the scoreboard; the day was +$125.13 vs the +$5.77/day expectation.
+  - At step 11:25 breadth (−0.0242) crossed the −0.0238 gate. Entered ABUS 2380 @4.20 (bid 4.19). At step 15:30 it exited on tmax @4.255, +$130.90.
+    - The official fill was LAST-CLOSE because of an ops slip: I ran `--now 15:32` before ingesting the 15:31 bar. The model carried the exit, and the watcher booked it at 15:35:01 via its 3-min late rule.
+    - The same slip gave the model's step-15:30 KOPN entry NO-FILL (logged as a divergence).
+  - At step 15:35 it took KOPN 3058 @3.27 (bid 3.26; halal PASS). That was HOLD through the 15:55 grid, then the 16:00:06 flatten @3.27 bid (fresh 19:59:10Z quote), $0.00.
+  - Model P&L +$15.29: the KOPN leg only, with ABUS model exit n/a.
+  - Small inconsistency to check: the watcher's flatten model px was 3.275 (15:58 close), but `p3_rl --now 16:00` reported EXIT-FILL 3.285 (15:59 close).
+- **Ops**:
+  - At 09:31/09:36 a UTF-8 BOM on helper stdin was attached to the first scan row. It was stripped, and scan3/cyc3/bars now drop it.
+  - From 12:36, scans, bars and quotes were copied verbatim from the session transcript by `data/paper/scanx.py` + `cycx.py` (no hand retyping).
+  - Lesson: always ingest bar m+1 before running `--now`, and write a fresh quote about 50 s before each watcher tick.
+
 ### 2026-10-15 (PAPER-3BOOK day 9 on the scoreboard): full headless session; R4 LIVE SKDD flatten −$750.27, R15/RL no trades (all flat)
 
 The session ran headless from 09:10 to after 16:00. The capability probe was green and the r4/r15/rl watchers started at 09:14. R15 exited flat at 15:02 (`BOOK FLAT -- watcher done`), R4 at 15:07 and RL ended flat after 16:00. The ledger was committed every ≤30 min and after the exit. Zero real orders.
