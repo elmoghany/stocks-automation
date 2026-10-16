@@ -41,12 +41,13 @@
   "[10:32] 10:32 RL grids 10:15-10:30 NOTHING (br -0.0109/-0.0114/-0.0098/-0.0149); R4 LIVE HOLD IREZ (bid 18.02-18.48 since 10:12), MODEL HOLDING QXL; R15 DONE",
   "[10:53] 10:53 RL grids 10:35-10:50 NOTHING (br -0.0078/-0.0097/-0.0109/-0.0097); R4 LIVE HOLD IREZ (bid 17.76-18.42), MODEL HOLDING QXL; R15 DONE. ops: minute bars fetched with a 3-4 min lookback (ingest merges) instead of 10 min to save calls; RL scans ingested as 4-col compact copies (Last, last time, vwap all - the decision columns)",
   "[10:59] 10:59 R4 EXIT-R4-BEARISH IREZ @18.51 x548 P&L +153.44 (watcher 10:58:30; signal decided 10:55, quote-bid 18.51 @14:56:11Z). R4 LIVE book flat, walks again from grid 11:00. MODEL still HOLDING QXL. RL 10:55 NOTHING (br -0.0132)",
-  "[11:03] 11:03 R4 grid 11:00 LIVE ENTER MSTZ 3333 @3.00 (bid 2.99). Screen: CCEL/CTSO/ANGH VOLCAP, MSTZ PASS. RL 11:00 NOTHING (br -0.0155)"
+  "[11:03] 11:03 R4 grid 11:00 LIVE ENTER MSTZ 3333 @3.00 (bid 2.99). Screen: CCEL/CTSO/ANGH VOLCAP, MSTZ PASS. RL 11:00 NOTHING (br -0.0155)",
+  "[11:14] 11:14 R4 EXIT-R4-BEARISH MSTZ @3.00 x3333 P&L +0.00 (watcher 11:12:31). R4 LIVE flat, book +153.44; walks again from grid 11:15. RL 11:05/11:10 NOTHING (br -0.0193/-0.0232). MODEL HOLDING QXL"
  ],
  "errors": [],
  "ops": {
   "session_start": "09:10 ET",
-  "last_cycle": "11:03:55",
+  "last_cycle": "11:14:28",
   "capability_probe": "09:11 ET GREEN: python print(1) OK; git status --short OK (3046 lines, other sessions' files ignored); get_equity_quotes SPY OK bid 773.50 ask 773.55 @13:10:32Z",
   "session_clock": "TRADING 2026-10-16 full: R4 09:35-14:25 flatten 15:00; R15 09:35 exit 10:36; RL 09:30-15:55 flatten 15:59",
   "universe": "universe_wide.json asof 2026-10-02 (current month) - no refresh",
