@@ -81,12 +81,13 @@
   "[11:14] 11:14 R4 EXIT-R4-BEARISH MSTZ @3.00 x3333 P&L +0.00 (watcher 11:12:31). R4 LIVE flat, book +153.44; walks again from grid 11:15. RL 11:05/11:10 NOTHING (br -0.0193/-0.0232). MODEL HOLDING QXL",
   "[11:18] 11:18 R4 grid 11:15 LIVE ENTER CORD 2066 @4.84 (bid 4.83). RL 11:15 NOTHING (br -0.0236)",
   "[11:28] 11:28 R4 EXIT-R4-BEARISH CORD @4.85 x2066 P&L +20.66 (watcher 11:24:33); R4 book +174.10, flat. RL step 11:25 breadth -0.0242 crossed -> need_bars 10 names -> ENTER ABUS 2380 @4.20 (bid 4.19)",
-  "[11:29] 11:29 R4 grid 11:25 LIVE ENTER QBTZ 135 @28.90 (cap-bound; IONZ SPREAD 1.52%, CBRZ VOLCAP). RL HOLDING ABUS"
+  "[11:29] 11:29 R4 grid 11:25 LIVE ENTER QBTZ 135 @28.90 (cap-bound; IONZ SPREAD 1.52%, CBRZ VOLCAP). RL HOLDING ABUS",
+  "[11:43] 11:44 R4 grids 11:30-11:40 LIVE HOLD QBTZ (bid 28.68-29.02); RL HOLD ABUS (peak 4.2199, bid 4.19-4.22); RL br 11:30-11:40 below/near threshold, book holds 1 ticket; MODEL HOLDING QXL; R15 DONE"
  ],
  "errors": [],
  "ops": {
   "session_start": "09:10 ET",
-  "last_cycle": "11:29:22",
+  "last_cycle": "11:43:48",
   "capability_probe": "09:11 ET GREEN: python print(1) OK; git status --short OK (3046 lines, other sessions' files ignored); get_equity_quotes SPY OK bid 773.50 ask 773.55 @13:10:32Z",
   "session_clock": "TRADING 2026-10-16 full: R4 09:35-14:25 flatten 15:00; R15 09:35 exit 10:36; RL 09:30-15:55 flatten 15:59",
   "universe": "universe_wide.json asof 2026-10-02 (current month) - no refresh",
