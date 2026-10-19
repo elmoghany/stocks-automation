@@ -1,1 +1,22 @@
-{"date": "2026-10-19", "mode": "PAPER-3BOOK", "books": ["r4", "r15", "rl"], "trades": [], "notes": [], "errors": [], "ops": {}}
+{
+ "date": "2026-10-19",
+ "mode": "PAPER-3BOOK",
+ "books": [
+  "r4",
+  "r15",
+  "rl"
+ ],
+ "trades": [],
+ "notes": [
+  "[09:11] R15 calendar ingested: 26 rows, 0 fresh in-universe names -> R15 expected no-trade"
+ ],
+ "errors": [],
+ "ops": {
+  "last_cycle": "09:11:38",
+  "session_start": "09:10 ET",
+  "capability_probe": "09:11 ET GREEN: python print(1) OK; git status --short OK (other sessions' files ignored); get_equity_quotes SPY OK bid 767.38 ask 767.43 @13:10:36Z",
+  "session_clock": "TRADING 2026-10-19 full: R4 09:35-14:25 flatten 15:00; R15 09:35 exit 10:36; RL 09:30-15:55 flatten 15:59",
+  "universe": "universe_wide.json asof 2026-10-02 (current month) - no refresh",
+  "watchers": "09:13 started r4 pid 6044, r15 pid 13352, rl pid 16536 (logs data/paper_days/watch_2026-10-19.{book}.log)"
+ }
+}
