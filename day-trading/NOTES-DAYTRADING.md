@@ -35,6 +35,26 @@
 - **Expect the live R4 book to bleed about −$65/day.** The PARITY row keeps scoring the model at −$3.19/day.
 - The EOD now shows R4 LIVE and R4 PARITY as separate rows, plus refused-candidate counts by reason.
 
+### 2026-10-19 (PAPER-3BOOK day 11): full headless session; R4 LIVE ASTX flatten −$332.64, R15/RL no trades (all flat)
+
+The session ran headless from about 09:10 until after 16:00. R4 was flat at 15:01 (watcher done 15:07), R15 was DONE at 09:36 (watcher done 15:02), and RL ran every grid through 15:55 with no entry. The ledger was committed every ≤30 min and after the exit. Zero real orders.
+
+- **R4 LIVE**: 1 trade, **−$332.64** (model fills −$395.01; cost 21.14 bps/side vs mid). That is −$267.21 vs the −$65.43/day expectation.
+  - ASTX 2079 @4.81 (09:45 grid, bid 4.79, spread 0.42%) → 15:00 flatten @4.65 bid.
+  - The peak was 5.00, so the 20% trail never came close. Bid range was 4.63–4.89.
+  - At 12:19 a bearish-engulfing bar did not exit. This is rule-correct: `p3_r4.watch_exit` gates on close > the MODEL entry (09:46 bar open 4.875), not the live fill of 4.81, and the 12:19 close was exactly 4.875. Verified read-only.
+  - Refusals: VOLCAP 6, SPREAD 6, NOBARS 5, DEPTH 1, PINNED 1.
+    - The INT DEPTH refusal at 09:35 used want=665. The script's `want` ignores shares_cap (100), and 100 sh were displayed. Worth a look.
+  - Halal: ASTX REFUSE-TO-EVALUATE.
+  - Cumulative over 11 days: −$2,434.47 on 11 trades.
+- **R4 PARITY (model)**: 0 legs. It was stuck NEED_DATA all day at grid 09:35 on MLCC. Robinhood returned only interpolated bars for MLCC (no prints), so `rh_bars_ingest` wrote 0 bars and `run_live` loops on NEED_DATA (`--no-bars` only applies to the LIVE track). Logged in ledger errors[]. The model-track parity for today needs review.
+- **R15**: 0 trades. The calendar had 26 rows and 0 fresh in-universe names, so the book was DONE at the open. Flat, against +$21.71/day expected.
+- **RL**: 0 trades. Breadth never approached the gate: br ranged about −0.012 to +0.005 across all 78 grids. Flat, against +$5.77/day expected. Cumulative: +$130.90 on 2 trades.
+- **Ops**:
+  - The R4 flatten was decided on the 14:59 bar but booked only at 15:01:22, once the 15:00 bar was ingested. It used a quote 55 s old.
+    - Lesson: right after 15:00, ingest the 14:59 and 15:00 bars and write a fresh quote.
+  - From 15:06, RL scans were copied verbatim from the transcript via `data/paper/scanx.py`; before that they were hand-typed.
+
 ### 2026-10-16 (PAPER-3BOOK day 10): full headless session; R4 LIVE +$299.65 on 4 trades, RL +$130.90 on 2 (its first trades), R15 no trade (all flat)
 
 The session ran headless from about 09:10 until after 16:00. R4 was flat at 15:01 (watcher done 15:07), R15 was DONE early (watcher done 15:02), and RL flattened at 16:00:06. The ledger was committed every ≤30 min and after every entry and exit. Zero real orders.
