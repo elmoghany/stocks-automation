@@ -36,13 +36,14 @@
   "[10:52] 10:52 RL 10:50 NOTHING (br -0.0033); R4 LIVE HOLD ASTX (bid ~4.75); grid 10:50 ingested",
   "[11:02] 11:02 RL 10:55/11:00 NOTHING (br -0.0025/-0.0047); R4 LIVE HOLD ASTX (bid 4.72-4.78); grids 10:55/11:00 ingested; MODEL stuck NEED_DATA (MLCC)",
   "[11:11] 11:11 RL 11:05/11:10 NOTHING (br -0.0019/-0.0013); R4 LIVE HOLD ASTX (bid 4.73-4.76); grids 11:05/11:10 ingested; MODEL stuck NEED_DATA (MLCC)",
-  "[11:22] 11:22 RL 11:15/11:20 NOTHING (br +0.0003/+0.0005); R4 LIVE HOLD ASTX (bid 4.72-4.75); grids 11:15/11:20 ingested; MODEL stuck NEED_DATA (MLCC)"
+  "[11:22] 11:22 RL 11:15/11:20 NOTHING (br +0.0003/+0.0005); R4 LIVE HOLD ASTX (bid 4.72-4.75); grids 11:15/11:20 ingested; MODEL stuck NEED_DATA (MLCC)",
+  "[11:32] 11:32 RL 11:25/11:30 NOTHING (br +0.0010/+0.0035); R4 LIVE HOLD ASTX (bid 4.72-4.75); grids 11:25/11:30 ingested; MODEL stuck NEED_DATA (MLCC)"
  ],
  "errors": [
   "[10:37] R4 MODEL track stuck NEED_DATA at grid 09:35 on MLCC: Robinhood returns only interpolated bars for MLCC (no prints all day), rh_bars_ingest writes 0 bars so has_bars stays False and run_live returns NEED_DATA forever (p3_r4.py ~L298; --no-bars only applies to the LIVE track). Live track unaffected. Model/parity legs for today need EOD/interactive review."
  ],
  "ops": {
-  "last_cycle": "11:22:01",
+  "last_cycle": "11:32:22",
   "session_start": "09:10 ET",
   "capability_probe": "09:11 ET GREEN: python print(1) OK; git status --short OK (other sessions' files ignored); get_equity_quotes SPY OK bid 767.38 ask 767.43 @13:10:36Z",
   "session_clock": "TRADING 2026-10-19 full: R4 09:35-14:25 flatten 15:00; R15 09:35 exit 10:36; RL 09:30-15:55 flatten 15:59",
