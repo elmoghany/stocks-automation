@@ -6,15 +6,30 @@
   "r15",
   "rl"
  ],
- "trades": [],
+ "trades": [
+  {
+   "book": "r4",
+   "sym": "ASTX",
+   "decision_min": "09:45",
+   "entry_time": "09:47:20",
+   "ask": 4.81,
+   "bid": 4.79,
+   "mid": 4.8,
+   "shares": 2079,
+   "halal": "REFUSE-TO-EVALUATE (not PASS)",
+   "model_note": "R4 LIVE track grid 09:45: RGTC/MNGZ/TAWN NOBARS (0 real bars), ASTX (rank 4) PASS spread 0.42% depth 6700>=25% of 2079; shares_cap 44372; quote 13:46:47Z; MODEL NEED_DATA (MLCC never printed)"
+  }
+ ],
  "notes": [
   "[09:11] R15 calendar ingested: 26 rows, 0 fresh in-universe names -> R15 expected no-trade",
   "[09:31] 09:31 RL grid 09:30 NOTHING (br 0.0)",
-  "[09:38] 09:38 R4 grid 09:35 LIVE NOTHING: all top-8 refused - TERG/MXLL/WDCC VOLCAP, MLCC NOBARS (0 real bars), CTSO SPREAD 2.79%, INT DEPTH (100 sh displayed to ask x1.005 < 25% of want 665; note: script's want ignores shares_cap 100), AKTX SPREAD 8.68%, ACMM SPREAD 1.73%. MODEL ARMED TERG. RL 09:35 NOTHING (br -0.0021; scan captured 09:36:2x, file named _0938 = ingest time). R15 DONE 09:36 (no fresh-earnings name)."
+  "[09:38] 09:38 R4 grid 09:35 LIVE NOTHING: all top-8 refused - TERG/MXLL/WDCC VOLCAP, MLCC NOBARS (0 real bars), CTSO SPREAD 2.79%, INT DEPTH (100 sh displayed to ask x1.005 < 25% of want 665; note: script's want ignores shares_cap 100), AKTX SPREAD 8.68%, ACMM SPREAD 1.73%. MODEL ARMED TERG. RL 09:35 NOTHING (br -0.0021; scan captured 09:36:2x, file named _0938 = ingest time). R15 DONE 09:36 (no fresh-earnings name).",
+  "[09:43] 09:43 R4 grid 09:40 LIVE NOTHING: SLN PINNED, AKTX/ACMM/VIAG VOLCAP, ASTT NOBARS, MXLL SPREAD 1.78%, EDSA SPREAD 7.85%, WDCC SPREAD 0.53%. MODEL NEED_DATA (MLCC no prints; TERG skipped by model). RL 09:40 NOTHING (br -0.0015)",
+  "[09:47] R4 grid 09:45 LIVE ENTER ASTX 2079 @4.81 (bid 4.79). Refusals: RGTC/MNGZ/TAWN NOBARS. RL 09:45 pending ingest. R15 DONE."
  ],
  "errors": [],
  "ops": {
-  "last_cycle": "09:38:41",
+  "last_cycle": "09:46:23",
   "session_start": "09:10 ET",
   "capability_probe": "09:11 ET GREEN: python print(1) OK; git status --short OK (other sessions' files ignored); get_equity_quotes SPY OK bid 767.38 ask 767.43 @13:10:36Z",
   "session_clock": "TRADING 2026-10-19 full: R4 09:35-14:25 flatten 15:00; R15 09:35 exit 10:36; RL 09:30-15:55 flatten 15:59",
