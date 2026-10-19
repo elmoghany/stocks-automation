@@ -88,6 +88,7 @@ The session ran headless from 09:10 to after 16:00. The capability probe was gre
 - **10-14 left broken state.** The 10-14 session and all three watchers died around 14:37 with no EOD, so 10-14 is not on the scoreboard (today counts as day 9).
   - It left an open r4 `position_QBTZ.json` (all NUL bytes, corrupt) and rl `position_BB.json` (1225 @8.16). Watchers exit 2 on another day's state, so both were moved to `data/paper/{r4,rl}/stale/*.2026-10-14.json` at 09:11.
   - **The 10-14 QBTZ/BB legs were never flattened and the 10-14 EOD still needs reconstructing.**
+  - **Reconstruction (2026-10-19, estimate from RH 5-min bars, not quotes; not on the scoreboard):** R4 LIVE QBTZ 362 @27.58 → 15:00 flatten ≈ 29.62 (thin: ~500 sh/5 min) ≈ **+$740**. RL AMPX −$307.50 (booked) + BB 1225 @8.16 → 15:59 flatten ≈ 8.225 (no +5% take, no 3% trail from the post-entry high 8.2985) ≈ **+$80**; RL day ≈ **−$228**. R15 no trade.
 - **R4 LIVE**: 1 trade, −$750.27.
   - At the 09:35 grid the top pick passed: SKDD, 843 @11.86 ask (bid 11.84, check-book PASS). There were no refusals.
   - SKDD peaked at 12.24 early, then faded to a low of 10.88 at 12:01 and never triggered a trail or bearish exit. The r4 watcher flattened it at 15:01:06 @10.97 bid, on the 14:59 decision (model px 10.98, quote 10.97/10.98).
