@@ -29,11 +29,15 @@
   "[09:51] 09:51 RL 09:45/09:50 NOTHING (br -0.0071/-0.0059); R4 LIVE HOLD ASTX (bid 4.78-4.85), grid 09:50 scan ingested (top8 RGTC/MNGZ/TAWN/SKHU/DRAL/HYNX/STXU/ASUP); MODEL NEED_DATA waiting on MLCC (no prints since 09:35); R15 DONE",
   "[10:01] 10:01 RL 09:55/10:00 NOTHING (br -0.0083/-0.0107); R4 LIVE HOLD ASTX (bid 4.70-4.80), grids 09:55/10:00 scans ingested; MODEL still NEED_DATA on MLCC; R15 DONE",
   "[10:12] 10:12 RL 10:05/10:10 NOTHING (br -0.0123/-0.0101); R4 LIVE HOLD ASTX (bid 4.66-4.72, open P&L ~-300), grids 10:05/10:10 ingested; MODEL NEED_DATA on MLCC",
-  "[10:21] 10:21 RL 10:15/10:20 NOTHING (br -0.0065/-0.0048); R4 LIVE HOLD ASTX (bid 4.75-4.80), grids 10:15/10:20 ingested; MODEL NEED_DATA on MLCC (no prints)"
+  "[10:21] 10:21 RL 10:15/10:20 NOTHING (br -0.0065/-0.0048); R4 LIVE HOLD ASTX (bid 4.75-4.80), grids 10:15/10:20 ingested; MODEL NEED_DATA on MLCC (no prints)",
+  "[10:31] 10:31 RL 10:25/10:30 NOTHING (br -0.0054/-0.0050); R4 LIVE HOLD ASTX (bid 4.67-4.77), grids 10:25/10:30 ingested; MODEL NEED_DATA on MLCC",
+  "[10:37] 10:36 RL 10:35 NOTHING (br -0.0056); R4 LIVE HOLD ASTX (bid ~4.70), grid 10:35 ingested (top8 CMCT/ACMM/SKHA/SLN/ASSX/MXLL/BNR/LRCU); MODEL stuck NEED_DATA on MLCC (see errors)"
  ],
- "errors": [],
+ "errors": [
+  "[10:37] R4 MODEL track stuck NEED_DATA at grid 09:35 on MLCC: Robinhood returns only interpolated bars for MLCC (no prints all day), rh_bars_ingest writes 0 bars so has_bars stays False and run_live returns NEED_DATA forever (p3_r4.py ~L298; --no-bars only applies to the LIVE track). Live track unaffected. Model/parity legs for today need EOD/interactive review."
+ ],
  "ops": {
-  "last_cycle": "10:21:55",
+  "last_cycle": "10:37:01",
   "session_start": "09:10 ET",
   "capability_probe": "09:11 ET GREEN: python print(1) OK; git status --short OK (other sessions' files ignored); get_equity_quotes SPY OK bid 767.38 ask 767.43 @13:10:36Z",
   "session_clock": "TRADING 2026-10-19 full: R4 09:35-14:25 flatten 15:00; R15 09:35 exit 10:36; RL 09:30-15:55 flatten 15:59",
