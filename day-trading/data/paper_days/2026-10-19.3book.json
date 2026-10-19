@@ -49,13 +49,14 @@
   "[14:28] 14:28 RL 14:05-14:25 NOTHING (br -0.0042/-0.0045/-0.0028/-0.0033/-0.0067); R4 LIVE HOLD ASTX (bid drifting 4.69->4.63, open ~-$240..-$364); R4 grids 14:05-14:25 ingested -- R4 decision window closed (last grid 14:25), ASTX flattens 15:00 via watcher; MODEL stuck NEED_DATA (MLCC)",
   "[14:52] 14:52 RL 14:30-14:50 NOTHING (br -0.0055/-0.0044/-0.0035/-0.0027/-0.0020); R4 LIVE HOLD ASTX (bid 4.63-4.71, open ~-$170..-$355), flatten 15:00 via watcher; MODEL stuck NEED_DATA (MLCC)",
   "[15:03] 15:01 R4 EXIT: [15:01:22] EXIT-SIGNAL ASTX flatten decided 14:59 model px 4.685 quote bid 4.65 ask 4.67 (age 55s); [15:01:22] EXIT-R4-FLATTEN ASTX @ 4.6500 x2079 P&L $-332.64. R4 book FLAT, DONE for the day. RL 14:55 NOTHING (br -0.0036); R15 DONE. RL continues to 15:55 grid / 15:59 flatten.",
-  "[15:21] 15:21 RL 15:00-15:20 NOTHING (br -0.0026/-0.0028/-0.0028/-0.0031/-0.0015); R4 FLAT (DONE), R15 DONE. From 15:06 RL scans copied verbatim via data/paper/scanx.py (no retyping)."
+  "[15:21] 15:21 RL 15:00-15:20 NOTHING (br -0.0026/-0.0028/-0.0028/-0.0031/-0.0015); R4 FLAT (DONE), R15 DONE. From 15:06 RL scans copied verbatim via data/paper/scanx.py (no retyping).",
+  "[15:51] 15:51 RL 15:25-15:50 NOTHING (br -0.0003/-0.0003/-0.0001/+0.0033/+0.0001/-0.0029); R4/R15 done/flat."
  ],
  "errors": [
   "[10:37] R4 MODEL track stuck NEED_DATA at grid 09:35 on MLCC: Robinhood returns only interpolated bars for MLCC (no prints all day), rh_bars_ingest writes 0 bars so has_bars stays False and run_live returns NEED_DATA forever (p3_r4.py ~L298; --no-bars only applies to the LIVE track). Live track unaffected. Model/parity legs for today need EOD/interactive review."
  ],
  "ops": {
-  "last_cycle": "15:21:40",
+  "last_cycle": "15:51:30",
   "session_start": "09:10 ET",
   "capability_probe": "09:11 ET GREEN: python print(1) OK; git status --short OK (other sessions' files ignored); get_equity_quotes SPY OK bid 767.38 ask 767.43 @13:10:36Z",
   "session_clock": "TRADING 2026-10-19 full: R4 09:35-14:25 flatten 15:00; R15 09:35 exit 10:36; RL 09:30-15:55 flatten 15:59",
