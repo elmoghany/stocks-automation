@@ -39,11 +39,12 @@
   "[10:42] 10:42 RL 10:40 NOTHING (br +0.0258); R4 grid 10:40 LIVE HOLD BRZE (bid 45.27); MODEL HOLDING CLIR",
   "[10:57] 10:57 R4 scan grid 10:55 spilled to file; ingested via new data/paper/spill2rows.py (121/121). RL br +0.028, NOTHING. BRZE pinned 45.28-45.30, watcher P&L ~-21.",
   "[11:23] 11:23 grids 10:50-11:20 all NOTHING for RL (br +0.021..+0.028); R4 scans 11:00+ spill to file, ingested via spillscan.sh; BRZE pinned 45.26-45.31.",
-  "[11:48] 11:48 grids 11:25-11:45 RL NOTHING (br +0.020..+0.022); R4 HOLD BRZE (~45.32, watcher P&L ~-12); model HOLDING CLIR (last bar 2.43 @11:23)."
+  "[11:48] 11:48 grids 11:25-11:45 RL NOTHING (br +0.020..+0.022); R4 HOLD BRZE (~45.32, watcher P&L ~-12); model HOLDING CLIR (last bar 2.43 @11:23).",
+  "[12:11] 12:12 grids 11:50-12:10 RL NOTHING (br +0.020..+0.024); R4 HOLD BRZE drifted up to ~45.44-45.52 (watcher P&L ~+15..+25); model HOLDING CLIR (2.485 @11:52)."
  ],
  "errors": [],
  "ops": {
-  "last_cycle": "11:48:13",
+  "last_cycle": "12:11:58",
   "session_start": "09:10 ET",
   "capability_probe": "09:11 ET GREEN: python print(1) OK; git status --short OK (other sessions' files ignored); get_equity_quotes SPY OK bid 765.79 ask 765.82 @13:10:42Z",
   "session_clock": "TRADING 2026-10-20 full: R4 09:35-14:25 flatten 15:00; R15 09:35 exit 10:36; RL 09:30-15:55 flatten 15:59",
