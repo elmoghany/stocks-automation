@@ -2,6 +2,29 @@
 
 ## PAPER-3BOOK
 
+### 2026-10-19 (evening): PAPER-VS-BT. Does the backtest agree with paper? Partly: totals yes, trades no; 4 live bugs (not fixed)
+
+Full write-up: `research-oct/PAPER-VS-BACKTEST.md`. Scripts `plan/pvb_*.py`, outputs `data/pvb/`.
+
+- **Data.**
+  - Polygon grouped-daily gave the R4 gapper universe for 10-05…10-16. For 10-19 the same-day file was 403, so that day used the scanner's names.
+  - Robinhood after-close 1-minute bars covered 1,898/1,936 gapper symbol-days, 04:00–15:05, and all 95 RL names.
+  - Polygon minute bars (5 req/min) were used as a per-leg cross-check.
+- **R4.** Paper −$1,698 on 12 trades (10-14 QBTZ rebuilt at ≈ +$737) vs the live-policy backtest on full bars −$1,804 on 22 trades.
+  - Only 1/12 paper trades is in the backtest (BCYC 10-05). The live top pick equals the backtest top pick at only 36% of grids.
+  - The live code replayed on the session's saved inputs reproduces 10/10 live-track entries, so the logic matches. The difference is data: near-tied coil ranks, snapshot timing, and the scanner's high.
+  - The bar spread proxy passed 5 legs the real quote refused. Using the real refusals instead moves the backtest −$822.
+  - Fills: official vs model −$1.23/trade; cost vs mid ≈ $22/trade vs the $28 the backtest charges.
+  - −$1,698 sits at the 37th percentile of 11-day windows of the 466-day live-policy backtest (median −$952): inside expectation.
+- **R15.** 11/11 days agree. Only ANGO (10-08, red −198 bp) and CHRN (10-15, unprinted, red −465 bp) were fresh in the universe, with identical values.
+- **RL.** Paper −$97 (AMPX −$307.50, BB ≈ +$80 rebuilt, ABUS +$130.90, KOPN $0) vs backtest +$92 (ABUS 10-14 12:15 +$90; ABUS 10-16 11:15 +$13; AGEN −$12).
+  - The same two signal days fired in both. Bar breadth crosses the −0.0238 gate one or more steps earlier than the scan breadth (0.1–0.3% gap).
+- **Bugs (report only; the live session runs this code):**
+  1. The R4 scan's HighAll/Coil is the RTH-only high, not premarket-inclusive: 93% of discriminating rows. On the 466-day backtest this changes −$30.01 to −$20.00/trade, so harmless in money.
+  2. Scanner coil > 1.0 is accepted (TERG/MLCC 10-19). MLCC froze the model track; clamp it.
+  3. `p3_r4.check_book` DEPTH `want` ignores shares_cap (`:602`). It wrongly refused ASTT 10-12 and INT 10-19, about −$1,330 to paper.
+  4. The `p3_rl --now` ENTER line has no volume cap (`:602-614`). ABUS 10-16 was bought at 2,380 sh vs the 1,505 cap.
+
 ### 2026-10-08 (evening): R4-FIX. The live R4 book moves on; PINNED filter added (user-approved, paper only, effective from the 2026-10-09 session)
 
 **Problem.** Live R4 ran in lockstep with the model, one position at a time. When the model "entered" a name live could not trade (halt, spread/depth veto, stale), live waited until the model exited. On 10-07 (PENU) and 10-08 (PCRX, a buyout target pinned at $36.29) that idled live R4 from about 10:00 to the close: 2 live trades in 5 days against about 13 expected.
