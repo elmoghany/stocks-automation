@@ -36,7 +36,15 @@
    "mid": 7.935,
    "shares": 1257,
    "halal": "REFUSE-TO-EVALUATE (not PASS)",
-   "model_note": "R4 LIVE track grid 12:35 (2nd live leg after BRZE exit): TLK PINNED, AGBK VOLCAP, COMP PINNED (script); CHPT rank 2 PASS spread 0.378% depth 770 >= 25% of 1257; shares_cap 1588; quote 16:38:16Z. Remaining candidates ARCT OTLY CSTE DMAC not checked. MODEL track still HOLDING CLIR (scoring only)"
+   "model_note": "R4 LIVE track grid 12:35 (2nd live leg after BRZE exit): TLK PINNED, AGBK VOLCAP, COMP PINNED (script); CHPT rank 2 PASS spread 0.378% depth 770 >= 25% of 1257; shares_cap 1588; quote 16:38:16Z. Remaining candidates ARCT OTLY CSTE DMAC not checked. MODEL track still HOLDING CLIR (scoring only)",
+   "exit": {
+    "time": "15:01:01",
+    "type": "EXIT-R4-FLATTEN",
+    "decided": "14:59",
+    "fill_bid": 7.92,
+    "model_px": 7.9,
+    "pnl": -37.71
+   }
   }
  ],
  "notes": [
@@ -60,11 +68,12 @@
   "[11:23] 11:23 grids 10:50-11:20 all NOTHING for RL (br +0.021..+0.028); R4 scans 11:00+ spill to file, ingested via spillscan.sh; BRZE pinned 45.26-45.31.",
   "[11:48] 11:48 grids 11:25-11:45 RL NOTHING (br +0.020..+0.022); R4 HOLD BRZE (~45.32, watcher P&L ~-12); model HOLDING CLIR (last bar 2.43 @11:23).",
   "[12:11] 12:12 grids 11:50-12:10 RL NOTHING (br +0.020..+0.024); R4 HOLD BRZE drifted up to ~45.44-45.52 (watcher P&L ~+15..+25); model HOLDING CLIR (2.485 @11:52).",
-  "[12:40] 12:37:09 [watcher r4] EXIT-R4-BEARISH BRZE @ 45.5200 x220 P&L $+30.80 (decided 12:34, quote bid 45.52). 12:40 R4 LIVE ENTER CHPT 1257 @7.95 (grid 12:35)."
+  "[12:40] 12:37:09 [watcher r4] EXIT-R4-BEARISH BRZE @ 45.5200 x220 P&L $+30.80 (decided 12:34, quote bid 45.52). 12:40 R4 LIVE ENTER CHPT 1257 @7.95 (grid 12:35).",
+  "[15:01:01] EXIT-R4-FLATTEN CHPT @ 7.9200 x1257 P&L $-37.71 (decided 14:59, model px 7.90, quote 7.92/7.93) -- R4 LIVE flat; R4 day realized $-6.91 (BRZE +30.80, CHPT -37.71)"
  ],
  "errors": [],
  "ops": {
-  "last_cycle": "14:33:39",
+  "last_cycle": "15:01:40",
   "session_start": "09:10 ET",
   "capability_probe": "09:11 ET GREEN: python print(1) OK; git status --short OK (other sessions' files ignored); get_equity_quotes SPY OK bid 765.79 ask 765.82 @13:10:42Z",
   "session_clock": "TRADING 2026-10-20 full: R4 09:35-14:25 flatten 15:00; R15 09:35 exit 10:36; RL 09:30-15:55 flatten 15:59",
