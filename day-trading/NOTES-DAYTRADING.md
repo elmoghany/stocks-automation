@@ -2,6 +2,24 @@
 
 ## PAPER-3BOOK
 
+### 2026-10-20 (PAPER-3BOOK day 12): full headless session, first day with the PVB-FIX live; R4 LIVE −$6.91 on 2 trades, R15/RL no trades (all flat)
+
+The session ran headless from about 09:10 until after 16:00. R4 was flat at 15:01:01 (watcher done 15:07), R15 was DONE at 09:36 (watcher done 15:02), and RL ran every grid through 15:55 with no entry. The ledger was committed every ≤30 min and after every entry and exit. Zero real orders.
+
+- **R4 LIVE**: 2 trades, **−$6.91** (model fills −$28.83; cost 7.12 bps/side vs mid). That is +$58.52 vs the −$65.43/day expectation.
+  - BRZE 220 @45.38 (09:35 grid, bid 45.37). Pinned at 45.26–45.52 all morning. EXIT-R4-BEARISH decided 12:34, booked 12:37:09 @45.52 bid: **+$30.80**.
+  - CHPT 1257 @7.95 (12:35 grid). EXIT-R4-FLATTEN decided 14:59, booked 15:01:01 @7.92 bid (quote 7.92/7.93, model px 7.90): **−$37.71**.
+  - Refusals (unique name × grid): SPREAD 4, HALT 2, PINNED 2, VOLCAP 1. XHG and XCH were halted at 09:35; CLIR, ASTN, AAOZ and MYGN were refused on SPREAD (CLIR 9.41%).
+  - Halal: BRZE and CHPT both REFUSE-TO-EVALUATE, so the halal-PASS P&L is $0.
+  - Cumulative over 12 days: −$2,441.38 on 13 trades.
+- **R4 PARITY (model)**: 1 leg. CLIR 260 @2.5129 (09:36) → 13:52 flatten @2.51: −$0.75 gross, −$2.71 net 15 bps. The SHADOW leg for CLIR (refused live on SPREAD, first refusal ask 2.67) would have lost **−$599.20**, so the spread gate saved money today. Unlike 10-19, the model track did not get stuck on NEED_DATA.
+- **R15**: 0 trades. The calendar had 86 rows and 0 fresh in-universe names, so the book was DONE at the open. Flat, against +$21.71/day expected.
+- **RL**: 0 trades. Breadth never qualified on any of the 78 grids. It ran from about −0.004 at the open to a peak of about +0.028 around 10:55, then +0.018..+0.023 all afternoon. Flat, against +$5.77/day expected. Cumulative: +$130.90 on 2 trades.
+- **Ops**:
+  - The R4 flatten booked at 15:01:01, about 20 s faster than on 10-19. It booked as soon as a fresh CHPT quote (<90 s old) was fed through `cyc3.py` after 15:00, so the 10-19 lesson held.
+  - From 10:55 the R4 scans spilled to a file and were ingested via the new `data/paper/spill2rows.py` / `spillscan.sh`. All RL scans came back inline and were transcribed into `scan3.py`.
+  - The R4 scan at 09:55 returned COMP (instrument_type CRYPTO) at coil 1.0. It was ingested as returned and never reached a live walk.
+
 ### 2026-10-19 (night): PVB-FIX. The 4 PAPER-VS-BT live bugs fixed (user: "fix them"); live from the 2026-10-20 session
 
 Paper only. Live == rules == backtest after each fix. No backtest expectation changes (reasons below).
