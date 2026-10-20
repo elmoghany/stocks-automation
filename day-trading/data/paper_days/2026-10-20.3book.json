@@ -6,17 +6,32 @@
   "r15",
   "rl"
  ],
- "trades": [],
+ "trades": [
+  {
+   "book": "r4",
+   "sym": "BRZE",
+   "decision_min": "09:35",
+   "entry_time": "09:37:49",
+   "ask": 45.38,
+   "bid": 45.37,
+   "mid": 45.375,
+   "shares": 220,
+   "halal": "REFUSE-TO-EVALUATE (not PASS)",
+   "model_note": "R4 LIVE track grid 09:35: XHG/XCH HALT (locked quotes), CLIR SPREAD 9.41%, ASTN SPREAD 2.95%, AAOZ SPREAD 2.08%, MYGN SPREAD 0.53% (fresh re-quote 5.65/5.68 @13:37:11Z; first quote 5.55/5.57 was 20s older, book had moved), BRZE (rank 8 after pm-high coil fix) PASS spread 0.02% depth 52870 >= 25% of 220; shares_cap 296704; quote 13:37:32Z. MODEL ARMED XHG (model track, scoring only)"
+  }
+ ],
  "notes": [
-  "[09:12] R15 calendar ingested: 86 rows, 0 fresh in-universe names -> R15 expected no-trade"
+  "[09:12] R15 calendar ingested: 86 rows, 0 fresh in-universe names -> R15 expected no-trade",
+  "[09:31] 09:31 RL grid 09:30 NOTHING (br 0.0)",
+  "[09:38] R4 grid 09:35 LIVE ENTER BRZE 220 @45.38 (bid 45.37). Refusals: XHG/XCH HALT, CLIR/ASTN/AAOZ/MYGN SPREAD (9.41/2.95/2.08/0.53%). MODEL ARMED XHG. RL 09:35 NOTHING (br -0.0037; scan captured 09:36:1x, file _0938 = ingest time). R15 DONE 09:36 (no fresh-earnings name)."
  ],
  "errors": [],
  "ops": {
-  "last_cycle": "09:12:25",
+  "last_cycle": "09:38:38",
   "session_start": "09:10 ET",
   "capability_probe": "09:11 ET GREEN: python print(1) OK; git status --short OK (other sessions' files ignored); get_equity_quotes SPY OK bid 765.79 ask 765.82 @13:10:42Z",
   "session_clock": "TRADING 2026-10-20 full: R4 09:35-14:25 flatten 15:00; R15 09:35 exit 10:36; RL 09:30-15:55 flatten 15:59",
   "universe": "universe_wide.json asof 2026-10-02 (current month) - no refresh",
-  "watchers": "09:13 started r4 pid 14176, r15 pid 296, rl pid 716 (logs data/paper_days/watch_2026-10-20.{book}.log)"
+  "watchers": "09:12 started r4 pid 14176, r15 pid 296, rl pid 716 (logs data/paper_days/watch_2026-10-20.{book}.log)"
  }
 }
