@@ -2,6 +2,43 @@
 
 ## PAPER-3BOOK
 
+### 2026-10-19 (night): PVB-FIX. The 4 PAPER-VS-BT live bugs fixed (user: "fix them"); live from the 2026-10-20 session
+
+Paper only. Live == rules == backtest after each fix. No backtest expectation changes (reasons below).
+
+- **Bug 1, R4 coil without the premarket high** (`plan/p3_r4.py` `snap_coil` + `fd_from_snaps`).
+  - For every name with bars, live coil = scan last / max(scan high, bar high 04:00..t). Every name ranked above the pick gets bars, and a correction can only lower a coil, so the pick is exact.
+  - Example: SKDD 10-15 09:35 scan coil 1.000 → 0.975 (premarket high 12.24); the live pick becomes BEZ.
+  - A second NEED_DATA at the same grid naming new names is now normal (prompt says so).
+- **Bug 2, coil > 1.0** (`snap_coil`; `run_live(skip=)`; `model_skip`; `live_decision`).
+  - The backtest's coil is ≤ 1 by construction (the running high includes the last close), and a name with no RTH print is not in its universe. So: coil > 1 **with** volume → clamped to 1.0; coil > 1 with **no** volume (all 76 such rows, TERG/MLCC 10-19) → bad row, ignored at that snapshot. Logged in `data/paper/r4/coilfix_{D}.json` and `coil_fixed` on the `--now` line.
+  - MODEL track: a `model_need_bars` name still bar-less 5 min after first asked (`model_asks_{D}.json`), or with any NOBARS mark, is passed over like a name that never prints and logged NOBARS; the EOD replay passes over every bar-less name. The 10-19 model track now trades CTSO 09:35 and ASSX 10:10 instead of freezing.
+- **Bug 3, DEPTH ignored the share cap** (`book_verdict`, `intended_shares`, `check_book`, `screen_cap`).
+  - want = min(floor($10k / ask), shares_cap). `--check-book` reads the cap the ENTER line printed (`screen_{D}.json`; `--shares-cap` overrides; else recomputed) and now prints the capped `shares`.
+  - ASTT 10-12 (cap 320, depth 200) and INT 10-19 (cap 100, depth 100) now PASS.
+- **Bug 4, RL ENTER had no cap** (`plan/p3_rl.py`).
+  - The ENTER line carries `shares_cap` = floor(20% of the 5 bars' volume at the step), the same cap the engine applies to the model leg. If the name had no bars at its step, the engine takes the cap from its bars at fill time.
+  - ABUS 10-16: shares_cap 1,505 (the session bought 2,380). The RL backtest already had the cap, so the RL expectation is unchanged.
+- **Tests (all pass).**
+  - `p3_parity_r4`: A 53/54, B 53/54, C 58/58, D 58/58 (same as before).
+  - `p3_parity_r15` 112/112. `p3_parity_rl`: 305/305, strict 0 mismatching days, snapshot path 86/87, watch_exit 74/74, live +$16.91/trade @6 bps (unchanged).
+  - `p3_livepath_r4` PASS, `p3_watch_selftest` ALL PASS, `p3_r4_live --replay` 24/24 identical, `--cli` PASS.
+  - New `plan/pvb_fix_selftest.py`: **18/18** (premarket high SKDD 10-15; TERG/MLCC 10-19 dropped and the model never waits > 5 min on a bar-less name; ASTT/INT pass DEPTH; ABUS capped at 1,505).
+- **Expectations: unchanged.** The live-policy backtest ranks on bar coil (already premarket-inclusive, never > 1), does not model depth, and the RL engine already capped. Re-run (`plan/pvb_dist.py`): all 466 days identical, r4_live −$30.01/trade, −$65.43/day, OOS −$55.10. `p3_expectations.json` untouched.
+- **What paper 10-09…10-19 would have been with the fixed code** (`plan/pvb_fix_replay.py` → `data/pvb/fix_replay.json`; the session's scans + logged checks, PAPER-VS-BT's full-day RH bars; the old code on the same inputs reproduces all 12 paper trades):
+
+  | day | paper (official) | fixed code | change |
+  |---|---|---|---:|
+  | 10-12 | NOWL −$987.84 | ASTT 320 sh → flatten **+$51.20** (logged quote, DEPTH re-judged) | **+$1,039.04** |
+  | 10-13 | RAMZ −$223.04 | BEZ 1,687 sh → flatten **−$700.11** (never quoted live; bar proxy) | −$477.07 |
+  | 10-15 | SKDD −$750.27 | DAMD +124, BBCI −1,210, RYOJ +1,650, APPX +68, NOWL +12, MAAS −297 = **+$347.05** (none quoted live; bar proxy) | +$1,097.32 |
+  | 10-19 | ASTX −$332.64 | INT 100 sh → flatten **−$40.00** (logged quote, DEPTH re-judged) | +$292.64 |
+  | 10-09, 10-14, 10-16 | −$379.94, +$736.67, +$299.65 | same trades | $0 |
+  | **total** | **−$1,637.41** | **+$314.52** (new legs at model fills, no cost; at 15 bps/side +$104.34) | **+$1,951.93** |
+
+  - Bug 3 alone: **+$1,331.68**, on real logged quotes. Bug 1: +$620.25, but every changed leg is a name the session never quoted, so it rests on the lenient bar spread proxy. Bug 2 changed no live trade; bug 4 changed size only (ABUS 1,505 sh instead of 2,380: +$82.77 instead of +$130.90 at the same prices, about −$48).
+- Files: `plan/p3_r4.py`, `plan/p3_rl.py`, `plan/p3_r4_live.py` (oct_replay re-judges DEPTH, optional exit bars), `plan/p3_livepath_r4.py` (cleanup), `plan/pvb_fix_selftest.py`, `plan/pvb_fix_replay.py`, `PAPER-3BOOK-RULES.md`, `plan/paper_3book_prompt.txt` (two clarifications; first line unchanged).
+
 ### 2026-10-19 (evening): PAPER-VS-BT. Does the backtest agree with paper? Partly: totals yes, trades no; 4 live bugs (not fixed)
 
 Full write-up: `research-oct/PAPER-VS-BACKTEST.md`. Scripts `plan/pvb_*.py`, outputs `data/pvb/`.
@@ -19,7 +56,7 @@ Full write-up: `research-oct/PAPER-VS-BACKTEST.md`. Scripts `plan/pvb_*.py`, out
 - **R15.** 11/11 days agree. Only ANGO (10-08, red −198 bp) and CHRN (10-15, unprinted, red −465 bp) were fresh in the universe, with identical values.
 - **RL.** Paper −$97 (AMPX −$307.50, BB ≈ +$80 rebuilt, ABUS +$130.90, KOPN $0) vs backtest +$92 (ABUS 10-14 12:15 +$90; ABUS 10-16 11:15 +$13; AGEN −$12).
   - The same two signal days fired in both. Bar breadth crosses the −0.0238 gate one or more steps earlier than the scan breadth (0.1–0.3% gap).
-- **Bugs (report only; the live session runs this code):**
+- **Bugs (report only here; fixed the same night by PVB-FIX, above):**
   1. The R4 scan's HighAll/Coil is the RTH-only high, not premarket-inclusive: 93% of discriminating rows. On the 466-day backtest this changes −$30.01 to −$20.00/trade, so harmless in money.
   2. Scanner coil > 1.0 is accepted (TERG/MLCC 10-19). MLCC froze the model track; clamp it.
   3. `p3_r4.check_book` DEPTH `want` ignores shares_cap (`:602`). It wrongly refused ASTT 10-12 and INT 10-19, about −$1,330 to paper.

@@ -127,15 +127,56 @@ def fd_from_bars(day):
                 vol=day.cumv[:, G].astype(float))
 
 
+COIL_TOL = 1e-6
+
+
+def snap_coil(r, bh=float("nan")):
+    """LIVE coil of one ingested scan row, as the rules define it (step 3:
+    last / session high INCLUDING premarket; the high includes the last
+    trade, so coil <= 1). PVB-FIX 2026-10-19. r: {last, high, coil, vol};
+    bh: max bar HIGH 04:00..t from the agent's bars (NaN = no bars).
+    Returns (coil, note):
+      note None       as scanned
+      'pm_high'       the bars hold a higher (premarket) high than the scan's
+                      HighAll, which is the RTH high on ~93% of such rows
+                      (PVB bug 1): coil = last / bar high
+      'clamp'         coil above 1 on a name WITH volume: the scan's high
+                      lags its last trade; the session high includes it -> 1
+      'bad'           coil above 1 on a name with NO volume (TERG, MLCC
+                      10-19: the scan's last is not an RTH print; the bar
+                      backtest has no such name in its universe) -> the
+                      row is ignored at this snapshot (coil None)."""
+    coil = r.get("coil")
+    if coil is None or not np.isfinite(coil):
+        return None, None
+    note = None
+    last, hi = r.get("last"), r.get("high")
+    if bh is not None and np.isfinite(bh) and bh > 0 and last and last > 0:
+        h0 = hi if (hi is not None and np.isfinite(hi) and hi > 0) else (
+            last / coil if coil > 0 else None)
+        if h0 is None or bh > h0 * (1.0 + COIL_TOL):
+            coil, note = last / bh, "pm_high"
+    if coil > 1.0 + COIL_TOL:
+        if (r.get("vol") or 0) > 0:
+            return 1.0, "clamp"
+        return None, "bad"
+    return min(coil, 1.0), note
+
+
 def fd_from_snaps(day, snaps):
     """LIVE: coil and the sticky LAST-rule universe from scan snapshots;
-    gap7 from bars where the agent fetched them (NaN = unknown)."""
+    gap7 from bars where the agent fetched them (NaN = unknown).
+    PVB-FIX: coil uses the bar high 04:00..t where the agent has bars (the
+    premarket high the scan omits) and drops coil > 1 rows without volume
+    (snap_coil); every change is listed in Fd['coil_notes']."""
     n = day.n
     sidx = {s: i for i, s in enumerate(day.syms)}
     coil = np.full((n, len(GRID)), np.nan, np.float32)
     vol = np.full((n, len(GRID)), np.nan)
     elig = np.zeros((n, len(GRID)), bool)
     seen = np.zeros(n, bool)
+    notes = {}
+    rh = day.runhigh
     by_t = {int(x["t"]): x["rows"] for x in snaps}
     for gi, m in enumerate(GRID):
         rows = by_t.get(int(m))
@@ -147,13 +188,19 @@ def fd_from_snaps(day, snaps):
             i = sidx.get(s)
             if i is None:
                 continue
+            c, note = snap_coil(r, rh[i, int(m)])
+            if note:
+                notes[(s, int(m))] = dict(scan=r.get("coil"), coil=c,
+                                          note=note)
+            if note == "bad":
+                continue
             pc, px = r.get("pc"), r.get("last")
             if pc and px and px >= CL.CROSS * pc:
                 seen[i] = True
             if px and px >= CL.MIN_PRICE:
                 cur[i] = True
-            if r.get("coil") is not None:
-                coil[i, gi] = r["coil"]
+            if c is not None:
+                coil[i, gi] = c
             if r.get("vol") is not None:
                 vol[i, gi] = r["vol"]
         elig[:, gi] = seen & cur
@@ -162,7 +209,7 @@ def fd_from_snaps(day, snaps):
     has_bars = day.printed.any(axis=1)
     return dict(syms=np.array(day.syms), grid=GRID.astype(np.int32),
                 coil=coil, gap7=gap7, elig_last=elig, elig_high=elig,
-                has_bars=has_bars, vol=vol)
+                has_bars=has_bars, vol=vol, coil_notes=notes)
 
 
 def causal_score(Fd, date):
@@ -269,9 +316,15 @@ def try_ticket(day, Fd, i, t, budget, now, cfg=CFG_LIVE):
 
 
 def run_live(day, Fd, now, tickets=TICKETS_LIVE, cfg=CFG_LIVE,
-             live=False, date=""):
-    """cp_sim.run_day, made clock-aware. Returns (legs, state)."""
+             live=False, date="", skip=None):
+    """cp_sim.run_day, made clock-aware. Returns (legs, state).
+    skip (live only, PVB-FIX): symbols whose bars the agent could not get
+    (NOBARS marks / asked > MODEL_NOBARS_MIN ago): while such a name still
+    has no bars it is passed over like a name that never prints (the bar
+    backtest has no such name in its universe), so the MODEL track can
+    never freeze on it for the day (MLCC 10-19)."""
     cfg = cfg_for(cfg, Fd, date)
+    skip = skip or set()
     gidx = {int(m): k for k, m in enumerate(Fd["grid"])}
     elig = Fd["elig_last"]
     gate_top, gate_oth = S.gates(Fd, cfg)
@@ -297,8 +350,11 @@ def run_live(day, Fd, now, tickets=TICKETS_LIVE, cfg=CFG_LIVE,
         for i in order[:8]:
             i = int(i)
             if live and not Fd["has_bars"][i]:
+                if day.syms[i] in skip:
+                    continue
                 need = [day.syms[int(j)] for j in order[:8]
-                        if not Fd["has_bars"][int(j)]]
+                        if not Fd["has_bars"][int(j)]
+                        and day.syms[int(j)] not in skip]
                 return legs, dict(state="NEED_DATA", t=int(t), need_bars=need,
                                   tickets_used=ti,
                                   ranked=[day.syms[int(j)] for j in order[:8]])
@@ -491,6 +547,33 @@ def snaps_path(date):
     return P.book_dir(BOOK) / f"snaps_{date}.jsonl"
 
 
+def coilfix_path(date):
+    """PVB-FIX: log of scan coil values changed by snap_coil (bad rows at
+    ingest; premarket-high / clamp / bad changes to ranked names at --now)."""
+    return P.book_dir(BOOK) / f"coilfix_{date}.json"
+
+
+def model_asks_path(date):
+    """PVB-FIX: {sym: {at, t}} the first wall minute the MODEL track asked
+    for a name's bars (model_need_bars) and its grid."""
+    return P.book_dir(BOOK) / f"model_asks_{date}.json"
+
+
+MODEL_NOBARS_MIN = 5   # a model_need_bars name still without bars this many
+                       # minutes after it was first asked is skipped (NOBARS)
+
+
+def model_skip(date, now, refused):
+    """Names the MODEL track passes over while they have no bars: every
+    NOBARS mark today (the agent's bars call returned none) plus every
+    model_need_bars name first asked >= MODEL_NOBARS_MIN minutes ago."""
+    nob = {s for (s, _t), r in refused.items() if r == "NOBARS"}
+    asks = P.read_json(model_asks_path(date), {}) or {}
+    late = {s: v for s, v in asks.items()
+            if now - int(v["at"]) >= MODEL_NOBARS_MIN and s not in nob}
+    return nob | set(late), late
+
+
 def ingest_scan(path, date, at):
     rows = {}
     for r in P.scan_rows(P.load_tool_json(path)):
@@ -514,12 +597,25 @@ def ingest_scan(path, date, at):
     keep.append(dict(t=at, n=len(rows), rows=rows))
     keep.sort(key=lambda x: x["t"])
     f.write_text("\n".join(json.dumps(x) for x in keep) + "\n")
-    top = sorted(rows.items(), key=lambda kv: (-(kv[1]["coil"] or 0),
-                                             -(kv[1]["vol"] or 0)))[:8]
+    fixed = {s: snap_coil(r) for s, r in rows.items()}
+    odd = {s: dict(scan=round(rows[s]["coil"], 4), note=nt)
+           for s, (_c, nt) in fixed.items() if nt}
+    if odd:                     # PVB-FIX bug 2: log every coil > 1 row
+        log = P.read_json(coilfix_path(date), []) or []
+        log += [dict(grid=P.hhmm(at), sym=s, at="ingest", **v)
+                for s, v in odd.items()]
+        P.write_atomic(coilfix_path(date), log)
+    top = sorted(((s, r) for s, r in rows.items()
+                  if fixed[s][1] != "bad"),
+                 key=lambda kv: (-(fixed[kv[0]][0] or 0),
+                                 -(kv[1]["vol"] or 0)))[:8]
     need = [s for s, _ in top
             if not (P.RH_BARS / f"{s}_{date}.csv").exists()]
-    P.emit(dict(book=BOOK, ingested=len(rows), at=P.hhmm(at),
-                top8=[s for s, _ in top], need_bars=need))
+    out = dict(book=BOOK, ingested=len(rows), at=P.hhmm(at),
+               top8=[s for s, _ in top], need_bars=need)
+    if odd:
+        out["coil_above_1"] = odd
+    P.emit(out)
 
 
 def load_live(date, now):
@@ -548,7 +644,13 @@ def live_decision(date, now):
         return [], dict(state="FLAT", next_t=int(CFG["t_start"]),
                         reason="no scan snapshot yet")
     day, Fd = ld
-    return run_live(day, Fd, now, live=True, date=date)
+    skip, _ = model_skip(date, now, read_refused(date))
+    if now >= CFG_LIVE["exit_end"]:
+        # end of day (p3_eod): a name still without bars was never going to
+        # get them; live, every such name the model asked for was skipped
+        # MODEL_NOBARS_MIN minutes after the ask -> skip them all
+        skip = set(day.syms)
+    return run_live(day, Fd, now, live=True, date=date, skip=skip)
 
 
 # --------------------------------------------------------------- veto
@@ -576,11 +678,12 @@ def log_refusals(date, now, t, rows):
     for r in rows:
         if r["verdict"] in ("OK", "NEED_BARS"):
             continue
-        k = (r["sym"], P.hhmm(t), r["verdict"])
+        tt = r["grid"] if r.get("grid") is not None else t
+        k = (r["sym"], P.hhmm(tt), r["verdict"])
         if k in seen:
             continue
         seen.add(k)
-        log.append(dict(sym=r["sym"], grid=P.hhmm(t), reason=r["verdict"],
+        log.append(dict(sym=r["sym"], grid=P.hhmm(tt), reason=r["verdict"],
                         rank=r.get("rank"), detail=r.get("detail", ""),
                         at=P.hhmm(now)))
         add += 1
@@ -588,18 +691,34 @@ def log_refusals(date, now, t, rows):
         P.write_atomic(refusals_path(date), log)
 
 
-def check_book(date, now, sym, decision, bid, ask, depth, halted=False):
-    """LEGACY-15 book veto for an R4 LIVE-track entry (plus the halt check).
-    Every check is logged in vetoes_{D}.json; a refusal also goes to the
-    live-track refusal log, and the next `--now` run skips this name at this
-    grid (it may come back at a later grid). p3_eod uses the first refusal
-    ask of a model leg as that SHADOW leg's entry."""
+def screen_path(date):
+    """PVB-FIX: {grid HH:MM: {sym: shares_cap}} of every candidate the
+    LIVE track printed (ENTER line), read back by --check-book."""
+    return P.book_dir(BOOK) / f"screen_{date}.json"
+
+
+def intended_shares(ask, shares_cap=None):
+    """Rules LIVE track 4: floor(min($10k, shares_cap x ask) / ask)
+    = min(floor($10k / ask), shares_cap)."""
+    if not ask or ask <= 0:
+        return 0
+    want = int(P.TICKET // ask)
+    if shares_cap is not None:
+        want = min(want, int(shares_cap))
+    return want
+
+
+def book_verdict(bid, ask, depth, halted=False, shares_cap=None):
+    """The LEGACY-15 book checks (pure). DEPTH is measured against the
+    shares actually intended -- after the 20% volume cap (PVB-FIX bug 3;
+    before 2026-10-20 it used the uncapped $10k / ask and wrongly refused
+    ASTT 10-12 and INT 10-19)."""
     bid = bid or 0.0
     ask = ask or 0.0
     mid = (bid + ask) / 2.0
     locked = bid > 0 and ask > 0 and bid >= ask
     spread = (ask - bid) / mid if (mid > 0 and not locked) else float("inf")
-    want = int(P.TICKET // ask) if ask > 0 else 0
+    want = intended_shares(ask, shares_cap)
     depth_ok = depth is None or (want > 0 and depth >= DEPTH_MIN * want)
     why, reason = [], None
     if halted or locked or bid <= 0 or ask <= 0:
@@ -613,14 +732,53 @@ def check_book(date, now, sym, decision, bid, ask, depth, halted=False):
     if reason != "HALT" and not depth_ok:
         reason = reason or "DEPTH"
         why.append(f"DEPTH {depth} sh < 25% of {want}")
-    ok = reason is None
+    return dict(ok=reason is None, reason=reason, why=why, bid=bid, ask=ask,
+                mid=mid, spread=spread, want=want)
+
+
+def screen_cap(date, now, sym, decision):
+    """shares_cap of `sym` at grid `decision` as the --now ENTER line gave
+    it (screen file), else recomputed from today's scans + bars."""
+    caps = (P.read_json(screen_path(date), {}) or {}).get(decision or "", {})
+    if sym in caps:
+        return caps[sym], "screen"
+    try:
+        ld = load_live(date, now)
+        t = P.parse_hhmm(decision)
+        if ld is not None and t in [int(g) for g in GRID]:
+            day, Fd = ld
+            gi = [int(g) for g in GRID].index(t)
+            for r in live_screen(day, Fd, gi, cfg_for(CFG_LIVE, Fd, date)):
+                if r["sym"] == sym and r.get("shares_cap") is not None:
+                    return r["shares_cap"], "recomputed"
+    except Exception:                                   # noqa: BLE001
+        pass
+    return None, "unknown"
+
+
+def check_book(date, now, sym, decision, bid, ask, depth, halted=False,
+               shares_cap=None):
+    """LEGACY-15 book veto for an R4 LIVE-track entry (plus the halt check).
+    Every check is logged in vetoes_{D}.json; a refusal also goes to the
+    live-track refusal log, and the next `--now` run skips this name at this
+    grid (it may come back at a later grid). p3_eod uses the first refusal
+    ask of a model leg as that SHADOW leg's entry. The DEPTH test uses the
+    capped intended shares (shares_cap: --shares-cap, else the ENTER line's
+    value saved in screen_{D}.json, else recomputed)."""
+    src = "arg"
+    if shares_cap is None:
+        shares_cap, src = screen_cap(date, now, sym, decision)
+    v = book_verdict(bid, ask, depth, halted, shares_cap)
+    bid, ask, mid, spread, want = v["bid"], v["ask"], v["mid"], v["spread"],         v["want"]
+    why, reason, ok = v["why"], v["reason"], v["ok"]
     log = P.read_json(vetoes_path(date), []) or []
     key = f"{sym}@{decision}"
     log.append(dict(key=key, sym=sym, decision=decision, at=P.hhmm(now),
                     bid=bid, ask=ask, mid=round(mid, 4),
                     spread_pct=None if not np.isfinite(spread)
                     else round(spread * 100, 3), depth=depth,
-                    want=want, result="PASS" if ok else "VETO",
+                    want=want, shares_cap=shares_cap, cap_src=src,
+                    result="PASS" if ok else "VETO",
                     reason=reason, track="live", why="; ".join(why)))
     P.write_atomic(vetoes_path(date), log)
     if not ok:
@@ -631,9 +789,10 @@ def check_book(date, now, sym, decision, bid, ask, depth, halted=False):
                 reason=reason,
                 spread_pct=None if not np.isfinite(spread)
                 else round(spread * 100, 3), depth=depth, want=want,
-                shares=want, why="; ".join(why) or "book passes",
-                next="ENTER now at the ask (live track)" if ok else
-                "do NOT enter; re-run --now NOW for the next candidate at "
+                shares=want, shares_cap=shares_cap,
+                why="; ".join(why) or "book passes",
+                next=f"ENTER now at the ask, {want} shares (live track)" if ok
+                else "do NOT enter; re-run --now NOW for the next candidate at "
                 "this grid"))
 
 
@@ -742,6 +901,9 @@ def main():
     ap.add_argument("--no-bars", nargs="+", metavar="SYM",
                     help="the bars call returned no bars for these need_bars"
                          " names: skip them at --decision's grid (NOBARS)")
+    ap.add_argument("--shares-cap", type=int,
+                    help="the ENTER line's shares_cap (optional: --check-book "
+                         "reads it from screen_{D}.json)")
     ap.add_argument("--halted", action="store_true",
                     help="the agent saw a halt (LULD / crossed book / no "
                          "trade for minutes) even if the quote looks normal")
@@ -753,7 +915,7 @@ def main():
         return ingest_scan(a.scan, date, at)
     if a.check_book:
         return check_book(date, now, a.check_book.upper(), a.decision,
-                          a.bid, a.ask, a.depth, a.halted)
+                          a.bid, a.ask, a.depth, a.halted, a.shares_cap)
     if a.no_bars:
         t = P.parse_hhmm(a.decision) if a.decision else ((now - 1) // 5) * 5
         log_refusals(date, now, t, [dict(sym=x.upper(), verdict="NOBARS",
@@ -769,8 +931,27 @@ def main():
                    model=dict(state="FLAT"), closed_legs=[])
         return P.emit(out)
     day, Fd = ld
+    refused = read_refused(date)
     # ---- PARITY / MODEL track (scoring only; never blocks the live book)
-    legs, mst = run_live(day, Fd, now, live=True, date=date)
+    skip, late = model_skip(date, now, refused)
+    hb = {s_: bool(h) for s_, h in zip(day.syms, Fd["has_bars"])}
+    late = {s_: v for s_, v in late.items() if not hb.get(s_, False)}
+    if late:                   # PVB-FIX bug 2: never freeze on a bar-less
+        log_refusals(date, now, None, [          # name: mark it NOBARS
+            dict(sym=s_, verdict="NOBARS", grid=v["t"], detail=(
+                f"model track: no bars {now - int(v['at'])} min after "
+                f"first asked at {P.hhmm(int(v['at']))}"))
+            for s_, v in late.items()])
+        refused = read_refused(date)
+        out["model_skipped_nobars"] = sorted(late)
+    legs, mst = run_live(day, Fd, now, live=True, date=date, skip=skip)
+    if mst["state"] == "NEED_DATA":
+        asks = P.read_json(model_asks_path(date), {}) or {}
+        new_ = {s_: dict(at=now, t=int(mst["t"])) for s_ in mst["need_bars"]
+                if s_ not in asks}
+        if new_:
+            asks.update(new_)
+            P.write_atomic(model_asks_path(date), asks)
     out["model"] = model_summary(legs, mst)
     out["closed_legs"] = [dict(sym=lg["sym"], decision=P.hhmm(lg["t"]),
                                entry_min=P.hhmm(lg["entry_min"]),
@@ -785,8 +966,26 @@ def main():
     hist = live_hist(date)
     fresh = bars_fresh(date) if not a.date or a.date == \
         P.now_et().date().isoformat() else None
-    st = live_step(day, Fd, now, hist, read_refused(date), date, fresh=fresh)
+    st = live_step(day, Fd, now, hist, refused, date, fresh=fresh)
     s = st["state"]
+    if st.get("rows") is not None:     # PVB-FIX: log coil changes of the
+        cn = Fd.get("coil_notes") or {}         # names screened at this grid
+        hit = [dict(grid=P.hhmm(st["t"]), sym=r["sym"], at=P.hhmm(now),
+                    scan=None if cn[(r["sym"], st["t"])]["scan"] is None
+                    else round(cn[(r["sym"], st["t"])]["scan"], 4),
+                    coil=None if cn[(r["sym"], st["t"])]["coil"] is None
+                    else round(cn[(r["sym"], st["t"])]["coil"], 4),
+                    note=cn[(r["sym"], st["t"])]["note"])
+               for r in st["rows"] if (r["sym"], st["t"]) in cn]
+        if hit:
+            log = P.read_json(coilfix_path(date), []) or []
+            seen_ = {(x["grid"], x["sym"], x.get("note")) for x in log}
+            add = [x for x in hit if (x["grid"], x["sym"], x["note"])
+                   not in seen_]
+            if add:
+                P.write_atomic(coilfix_path(date), log + add)
+            out["coil_fixed"] = [f"{x['sym']}:{x['scan']}->{x['coil']}"
+                                 f"({x['note']})" for x in hit]
     out["state"] = s
     out["tickets_used"] = len(hist)
     if st.get("rows") is not None:
@@ -816,6 +1015,11 @@ def main():
                           "from 08:00Z) for need_bars, ingest, re-run --now")
     elif s == "PICK":
         t = st["t"]
+        sc = P.read_json(screen_path(date), {}) or {}
+        sc.setdefault(P.hhmm(t), {}).update(
+            {r["sym"]: r["shares_cap"] for r in st["rows"]
+             if r["verdict"] == "OK"})
+        P.write_atomic(screen_path(date), sc)
         out.update(action="ENTER", sym=st["sym"], decision_min=P.hhmm(t),
                    ticket_usd=P.TICKET, shares_cap=st["shares_cap"],
                    candidates=st["candidates"], reason=(

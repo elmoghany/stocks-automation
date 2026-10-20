@@ -75,5 +75,6 @@ shutil.rmtree(SCR, ignore_errors=True)
 for f in made:
     f.unlink(missing_ok=True)
 for f in (P.book_dir("r4") / f"snaps_{D}.jsonl", R.refusals_path(D),
-          R.vetoes_path(D)):
+          R.vetoes_path(D), R.screen_path(D), R.model_asks_path(D),
+          R.coilfix_path(D)):
     f.unlink(missing_ok=True)

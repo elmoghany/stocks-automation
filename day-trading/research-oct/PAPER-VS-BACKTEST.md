@@ -147,7 +147,7 @@ Polygon was the intended independent source. At 5 requests/minute (12.5 s per ca
 - RL: KOPN (10-16) was PASS, $0.00. ABUS, AMPX and BB were REFUSE-TO-EVALUATE. The halal-PASS RL total is $0.00 on 1 trade.
 - Backtest legs were not halal-screened (selection ignores halal by mandate).
 
-## Bugs found in live code / live data (NOT fixed; the 09:10 session runs this code)
+## Bugs found in live code / live data (fixed the same night by PVB-FIX; see NOTES-DAYTRADING.md "PVB-FIX")
 
 1. **The R4 scanner's Coil omits the premarket high.**
    - The rules (step 3 and the deviation table) say coil = last / session high *including premarket*. The saved scan "P3 R4 gapper coil" (`0cc1cab3…`) column `HighAll`, which `plan/p3_r4.py:494-511 ingest_scan` takes as given, is the **regular-session high**.

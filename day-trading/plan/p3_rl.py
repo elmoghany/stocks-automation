@@ -127,6 +127,14 @@ class BarSrc:
     def mark(self, i, m):
         return float(self.cf[i, m])
 
+    def volcap_at(self, i, m):
+        """20% of the share volume of bars m-4..m (view()'s volcap)."""
+        if m >= self.N:
+            return None
+        lo = m - STEP
+        return float(0.2 * (self.cvol5[i, m] - (self.cvol5[i, lo]
+                                                if lo >= 0 else 0.0)))
+
     def open_at(self, i, k):
         """Open of bar k; NaN = did not print; None = not known yet."""
         if k >= self.N:
@@ -222,6 +230,12 @@ class SnapSrc:
         s = self.snaps.get(m) or {}
         return P.fnum((s.get(self.syms[i]) or {}).get("px"))
 
+    def volcap_at(self, i, m):
+        b = self._bars(i)
+        if b is None or not b.printed[0, :m + 1].any():
+            return None
+        return b.volcap_at(0, m)
+
     def open_at(self, i, k):
         b = self._bars(i)
         if b is None or k >= b.N:
@@ -303,6 +317,10 @@ class Engine:
                 continue
             sh = tk[self.st["used"]] / px
             cap = q.get("volcap")
+            if cap is None and hasattr(src, "volcap_at"):
+                # PVB-FIX: the name had no bars at its step (snapshot-only);
+                # its bars are in now (the fill needs them): same cap
+                cap = src.volcap_at(i, m)
             if cap is not None and np.isfinite(cap):
                 sh = min(sh, cap)
             if self.cfg["whole"]:
@@ -365,9 +383,11 @@ class Engine:
         self.st.setdefault("feat", {})[P.hhmm(m)] = dict(
             br=round(float(v["br"]), 5), n_cand=len(cand), src=v["src"])
         for i in cand[:free]:
-            self.st["pend_in"].append(dict(i=i, m=m, volcap=float(v["volcap"][i])
-                                           if np.isfinite(v["volcap"][i]) else None))
+            vc = (float(v["volcap"][i]) if np.isfinite(v["volcap"][i])
+                  else None)
+            self.st["pend_in"].append(dict(i=i, m=m, volcap=vc))
             self._ev(now, "ENTER", sym=self.syms[i], step=P.hhmm(m),
+                     volcap=vc,
                      features=dict(breadth=round(float(v["br"]), 5),
                                    dist_vwap=round(float(v["dv"][i]), 5),
                                    log_price=round(float(v["lp"][i]), 4),
@@ -599,6 +619,13 @@ def live(date, now_s, feed="live", reset=False):
     if "ENTER" in kinds:
         e = [x for x in new if x["type"] == "ENTER"][-1]
         stale = P.parse_hhmm(e["step"]) < now - 2
+        # PVB-FIX bug 4: the rule's size cap, floor(20% of the 5 bars'
+        # volume at the step) -- the engine applies the same cap to the
+        # model leg; the session buys floor(min($10k, cap x ask) / ask)
+        vc = e.get("volcap")
+        if vc is None and hasattr(src, "volcap_at"):
+            vc = src.volcap_at(syms.index(e["sym"]), P.parse_hhmm(e["step"]))
+        cap = int(math.floor(vc)) if vc is not None and np.isfinite(vc)             else None
         act = dict(action="ENTER-STALE" if stale else "ENTER", sym=e["sym"],
                    decision_min=e["step"],
                    reason=("STALE: decided at a step more than 2 minutes "
@@ -607,7 +634,10 @@ def live(date, now_s, feed="live", reset=False):
                            if stale else
                            "dist_vwap<-0.00006 & breadth<-0.02379 & "
                            "log_price<2.7537"), features=e["features"],
-                   model_entry=None)
+                   model_entry=None, ticket_usd=P.TICKET, shares_cap=cap)
+        if cap is None:
+            act["cap_note"] = ("size cap unknown (no bars for this name yet):"
+                               " fetch need_bars and re-run before entering")
     elif "EXIT" in kinds:
         e = [x for x in new if x["type"] == "EXIT"][-1]
         act = dict(action="EXIT", sym=e["sym"], decision_min=e["step"],

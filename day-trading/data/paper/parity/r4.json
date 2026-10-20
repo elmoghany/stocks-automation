@@ -22,118 +22,964 @@
  ],
  "per_day": {
   "2024-10-22": {
-   "A": "A 2024-10-22: bt 3 live 3 matched 3 missed [] extra [] retro 0 (56s)",
-   "B": "B 2024-10-22: bt 3 live 3 matched 3 missed [] extra [] retro 0 (275s)",
-   "C": "C 2024-10-22: bt 3 live 3 matched 3 missed [] extra [] retro 0 (546s)",
-   "D": "D 2024-10-22: bt 3 live 3 matched 3 missed [] extra [] retro 0 (986s)"
+   "A": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   },
+   "B": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   },
+   "C": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   },
+   "D": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   }
   },
   "2024-12-23": {
-   "A": "A 2024-12-23: bt 3 live 3 matched 3 missed [] extra [] retro 0 (73s)",
-   "B": "B 2024-12-23: bt 3 live 3 matched 3 missed [] extra [] retro 0 (295s)",
-   "C": "C 2024-12-23: bt 7 live 7 matched 7 missed [] extra [] retro 0 (599s)",
-   "D": "D 2024-12-23: bt 7 live 7 matched 7 missed [] extra [] retro 0 (1010s)"
+   "A": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   },
+   "B": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   },
+   "C": {
+    "bt": 7,
+    "live": 7,
+    "matched": 7,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 7,
+    "retro_changes": 0
+   },
+   "D": {
+    "bt": 7,
+    "live": 7,
+    "matched": 7,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 7,
+    "retro_changes": 0
+   }
   },
   "2024-12-24": {
-   "A": "A 2024-12-24: bt 2 live 2 matched 2 missed [] extra [] retro 0 (86s)",
-   "B": "B 2024-12-24: bt 2 live 2 matched 2 missed [] extra [] retro 0 (310s)",
-   "C": "C 2024-12-24: bt 2 live 2 matched 2 missed [] extra [] retro 0 (631s)",
-   "D": "D 2024-12-24: bt 2 live 2 matched 2 missed [] extra [] retro 0 (1032s)"
+   "A": {
+    "bt": 2,
+    "live": 2,
+    "matched": 2,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 2,
+    "retro_changes": 0
+   },
+   "B": {
+    "bt": 2,
+    "live": 2,
+    "matched": 2,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 2,
+    "retro_changes": 0
+   },
+   "C": {
+    "bt": 2,
+    "live": 2,
+    "matched": 2,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 2,
+    "retro_changes": 0
+   },
+   "D": {
+    "bt": 2,
+    "live": 2,
+    "matched": 2,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 2,
+    "retro_changes": 0
+   }
   },
   "2025-02-27": {
-   "A": "A 2025-02-27: bt 3 live 3 matched 3 missed [] extra [] retro 0 (97s)",
-   "B": "B 2025-02-27: bt 3 live 3 matched 3 missed [] extra [] retro 0 (322s)",
-   "C": "C 2025-02-27: bt 3 live 3 matched 3 missed [] extra [] retro 0 (662s)",
-   "D": "D 2025-02-27: bt 3 live 3 matched 3 missed [] extra [] retro 0 (1052s)"
+   "A": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   },
+   "B": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   },
+   "C": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   },
+   "D": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   }
   },
   "2025-03-03": {
-   "A": "A 2025-03-03: bt 2 live 2 matched 2 missed [] extra [] retro 0 (109s)",
-   "B": "B 2025-03-03: bt 2 live 2 matched 2 missed [] extra [] retro 0 (337s)",
-   "C": "C 2025-03-03: bt 3 live 3 matched 3 missed [] extra [] retro 0 (697s)",
-   "D": "D 2025-03-03: bt 3 live 3 matched 3 missed [] extra [] retro 0 (1070s)"
+   "A": {
+    "bt": 2,
+    "live": 2,
+    "matched": 2,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 2,
+    "retro_changes": 0
+   },
+   "B": {
+    "bt": 2,
+    "live": 2,
+    "matched": 2,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 2,
+    "retro_changes": 0
+   },
+   "C": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   },
+   "D": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   }
   },
   "2025-05-05": {
-   "A": "A 2025-05-05: bt 1 live 1 matched 1 missed [] extra [] retro 0 (113s)",
-   "B": "B 2025-05-05: bt 1 live 1 matched 1 missed [] extra [] retro 0 (342s)",
-   "C": "C 2025-05-05: bt 3 live 3 matched 3 missed [] extra [] retro 0 (710s)",
-   "D": "D 2025-05-05: bt 3 live 3 matched 3 missed [] extra [] retro 0 (1081s)"
+   "A": {
+    "bt": 1,
+    "live": 1,
+    "matched": 1,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 1,
+    "retro_changes": 0
+   },
+   "B": {
+    "bt": 1,
+    "live": 1,
+    "matched": 1,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 1,
+    "retro_changes": 0
+   },
+   "C": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   },
+   "D": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   }
   },
   "2025-05-07": {
-   "A": "A 2025-05-07: bt 3 live 3 matched 3 missed [] extra [] retro 0 (125s)",
-   "B": "B 2025-05-07: bt 3 live 3 matched 3 missed [] extra [] retro 0 (354s)",
-   "C": "C 2025-05-07: bt 2 live 2 matched 2 missed [] extra [] retro 0 (734s)",
-   "D": "D 2025-05-07: bt 2 live 2 matched 2 missed [] extra [] retro 0 (1101s)"
+   "A": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   },
+   "B": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   },
+   "C": {
+    "bt": 2,
+    "live": 2,
+    "matched": 2,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 2,
+    "retro_changes": 0
+   },
+   "D": {
+    "bt": 2,
+    "live": 2,
+    "matched": 2,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 2,
+    "retro_changes": 0
+   }
   },
   "2025-06-26": {
-   "A": "A 2025-06-26: bt 5 live 5 matched 5 missed [] extra [] retro 0 (139s)",
-   "B": "B 2025-06-26: bt 5 live 5 matched 5 missed [] extra [] retro 0 (368s)",
-   "C": "C 2025-06-26: bt 3 live 3 matched 3 missed [] extra [] retro 0 (756s)",
-   "D": "D 2025-06-26: bt 3 live 3 matched 3 missed [] extra [] retro 0 (1123s)"
+   "A": {
+    "bt": 5,
+    "live": 5,
+    "matched": 5,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 5,
+    "retro_changes": 0
+   },
+   "B": {
+    "bt": 5,
+    "live": 5,
+    "matched": 5,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 5,
+    "retro_changes": 0
+   },
+   "C": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   },
+   "D": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   }
   },
   "2025-07-09": {
-   "A": "A 2025-07-09: bt 1 live 1 matched 1 missed [] extra [] retro 0 (150s)",
-   "B": "B 2025-07-09: bt 1 live 1 matched 1 missed [] extra [] retro 0 (380s)",
-   "C": "C 2025-07-09: bt 1 live 1 matched 1 missed [] extra [] retro 0 (776s)",
-   "D": "D 2025-07-09: bt 1 live 1 matched 1 missed [] extra [] retro 0 (1141s)"
+   "A": {
+    "bt": 1,
+    "live": 1,
+    "matched": 1,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 1,
+    "retro_changes": 0
+   },
+   "B": {
+    "bt": 1,
+    "live": 1,
+    "matched": 1,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 1,
+    "retro_changes": 0
+   },
+   "C": {
+    "bt": 1,
+    "live": 1,
+    "matched": 1,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 1,
+    "retro_changes": 0
+   },
+   "D": {
+    "bt": 1,
+    "live": 1,
+    "matched": 1,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 1,
+    "retro_changes": 0
+   }
   },
   "2025-08-25": {
-   "A": "A 2025-08-25: bt 5 live 4 matched 4 missed [('TWIN', 614)] extra [] retro 0 (161s)",
-   "B": "B 2025-08-25: bt 5 live 4 matched 4 missed [('TWIN', 614)] extra [] retro 0 (392s)",
-   "C": "C 2025-08-25: bt 3 live 3 matched 3 missed [] extra [] retro 0 (794s)",
-   "D": "D 2025-08-25: bt 3 live 3 matched 3 missed [] extra [] retro 0 (1158s)"
+   "A": {
+    "bt": 5,
+    "live": 4,
+    "matched": 4,
+    "missed": [
+     [
+      "TWIN",
+      614
+     ]
+    ],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 4,
+    "retro_changes": 0
+   },
+   "B": {
+    "bt": 5,
+    "live": 4,
+    "matched": 4,
+    "missed": [
+     [
+      "TWIN",
+      614
+     ]
+    ],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 4,
+    "retro_changes": 0
+   },
+   "C": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   },
+   "D": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   }
   },
   "2025-09-10": {
-   "A": "A 2025-09-10: bt 2 live 2 matched 2 missed [] extra [] retro 0 (178s)",
-   "B": "B 2025-09-10: bt 2 live 2 matched 2 missed [] extra [] retro 0 (408s)",
-   "C": "C 2025-09-10: bt 2 live 2 matched 2 missed [] extra [] retro 0 (820s)",
-   "D": "D 2025-09-10: bt 2 live 2 matched 2 missed [] extra [] retro 0 (1183s)"
+   "A": {
+    "bt": 2,
+    "live": 2,
+    "matched": 2,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 2,
+    "retro_changes": 0
+   },
+   "B": {
+    "bt": 2,
+    "live": 2,
+    "matched": 2,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 2,
+    "retro_changes": 0
+   },
+   "C": {
+    "bt": 2,
+    "live": 2,
+    "matched": 2,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 2,
+    "retro_changes": 0
+   },
+   "D": {
+    "bt": 2,
+    "live": 2,
+    "matched": 2,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 2,
+    "retro_changes": 0
+   }
   },
   "2025-10-06": {
-   "A": "A 2025-10-06: bt 6 live 6 matched 6 missed [] extra [] retro 0 (197s)",
-   "B": "B 2025-10-06: bt 6 live 6 matched 6 missed [] extra [] retro 0 (429s)",
-   "C": "C 2025-10-06: bt 7 live 7 matched 7 missed [] extra [] retro 0 (851s)",
-   "D": "D 2025-10-06: bt 7 live 7 matched 7 missed [] extra [] retro 0 (1213s)"
+   "A": {
+    "bt": 6,
+    "live": 6,
+    "matched": 6,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 6,
+    "retro_changes": 0
+   },
+   "B": {
+    "bt": 6,
+    "live": 6,
+    "matched": 6,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 6,
+    "retro_changes": 0
+   },
+   "C": {
+    "bt": 7,
+    "live": 7,
+    "matched": 7,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 7,
+    "retro_changes": 0
+   },
+   "D": {
+    "bt": 7,
+    "live": 7,
+    "matched": 7,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 7,
+    "retro_changes": 0
+   }
   },
   "2025-11-11": {
-   "A": "A 2025-11-11: bt 1 live 1 matched 1 missed [] extra [] retro 0 (207s)",
-   "B": "B 2025-11-11: bt 1 live 1 matched 1 missed [] extra [] retro 0 (440s)",
-   "C": "C 2025-11-11: bt 2 live 2 matched 2 missed [] extra [] retro 0 (867s)",
-   "D": "D 2025-11-11: bt 2 live 2 matched 2 missed [] extra [] retro 0 (1229s)"
+   "A": {
+    "bt": 1,
+    "live": 1,
+    "matched": 1,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 1,
+    "retro_changes": 0
+   },
+   "B": {
+    "bt": 1,
+    "live": 1,
+    "matched": 1,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 1,
+    "retro_changes": 0
+   },
+   "C": {
+    "bt": 2,
+    "live": 2,
+    "matched": 2,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 2,
+    "retro_changes": 0
+   },
+   "D": {
+    "bt": 2,
+    "live": 2,
+    "matched": 2,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 2,
+    "retro_changes": 0
+   }
   },
   "2025-12-12": {
-   "A": "A 2025-12-12: bt 3 live 3 matched 3 missed [] extra [] retro 0 (213s)",
-   "B": "B 2025-12-12: bt 3 live 3 matched 3 missed [] extra [] retro 0 (449s)",
-   "C": "C 2025-12-12: bt 3 live 3 matched 3 missed [] extra [] retro 0 (880s)",
-   "D": "D 2025-12-12: bt 3 live 3 matched 3 missed [] extra [] retro 0 (1242s)"
+   "A": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   },
+   "B": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   },
+   "C": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   },
+   "D": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   }
   },
   "2026-01-15": {
-   "A": "A 2026-01-15: bt 1 live 1 matched 1 missed [] extra [] retro 0 (228s)",
-   "B": "B 2026-01-15: bt 1 live 1 matched 1 missed [] extra [] retro 0 (462s)",
-   "C": "C 2026-01-15: bt 1 live 1 matched 1 missed [] extra [] retro 0 (901s)",
-   "D": "D 2026-01-15: bt 1 live 1 matched 1 missed [] extra [] retro 0 (1263s)"
+   "A": {
+    "bt": 1,
+    "live": 1,
+    "matched": 1,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 1,
+    "retro_changes": 0
+   },
+   "B": {
+    "bt": 1,
+    "live": 1,
+    "matched": 1,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 1,
+    "retro_changes": 0
+   },
+   "C": {
+    "bt": 1,
+    "live": 1,
+    "matched": 1,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 1,
+    "retro_changes": 0
+   },
+   "D": {
+    "bt": 1,
+    "live": 1,
+    "matched": 1,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 1,
+    "retro_changes": 0
+   }
   },
   "2026-01-28": {
-   "A": "A 2026-01-28: bt 4 live 4 matched 4 missed [] extra [] retro 0 (238s)",
-   "B": "B 2026-01-28: bt 4 live 4 matched 4 missed [] extra [] retro 0 (472s)",
-   "C": "C 2026-01-28: bt 3 live 3 matched 3 missed [] extra [] retro 0 (919s)",
-   "D": "D 2026-01-28: bt 3 live 3 matched 3 missed [] extra [] retro 0 (1284s)"
+   "A": {
+    "bt": 4,
+    "live": 4,
+    "matched": 4,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 4,
+    "retro_changes": 0
+   },
+   "B": {
+    "bt": 4,
+    "live": 4,
+    "matched": 4,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 4,
+    "retro_changes": 0
+   },
+   "C": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   },
+   "D": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   }
   },
   "2026-03-20": {
-   "A": "A 2026-03-20: bt 4 live 4 matched 4 missed [] extra [] retro 0 (242s)",
-   "B": "B 2026-03-20: bt 4 live 4 matched 4 missed [] extra [] retro 0 (477s)",
-   "C": "C 2026-03-20: bt 4 live 4 matched 4 missed [] extra [] retro 0 (930s)",
-   "D": "D 2026-03-20: bt 4 live 4 matched 4 missed [] extra [] retro 0 (1294s)"
+   "A": {
+    "bt": 4,
+    "live": 4,
+    "matched": 4,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 4,
+    "retro_changes": 0
+   },
+   "B": {
+    "bt": 4,
+    "live": 4,
+    "matched": 4,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 4,
+    "retro_changes": 0
+   },
+   "C": {
+    "bt": 4,
+    "live": 4,
+    "matched": 4,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 4,
+    "retro_changes": 0
+   },
+   "D": {
+    "bt": 4,
+    "live": 4,
+    "matched": 4,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 4,
+    "retro_changes": 0
+   }
   },
   "2026-04-21": {
-   "A": "A 2026-04-21: bt 3 live 3 matched 3 missed [] extra [] retro 0 (252s)",
-   "B": "B 2026-04-21: bt 3 live 3 matched 3 missed [] extra [] retro 0 (487s)",
-   "C": "C 2026-04-21: bt 3 live 3 matched 3 missed [] extra [] retro 0 (947s)",
-   "D": "D 2026-04-21: bt 3 live 3 matched 3 missed [] extra [] retro 0 (1312s)"
+   "A": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   },
+   "B": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   },
+   "C": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   },
+   "D": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   }
   },
   "2026-05-22": {
-   "A": "A 2026-05-22: bt 2 live 2 matched 2 missed [] extra [] retro 0 (267s)",
-   "B": "B 2026-05-22: bt 2 live 2 matched 2 missed [] extra [] retro 0 (519s)",
-   "C": "C 2026-05-22: bt 3 live 3 matched 3 missed [] extra [] retro 0 (972s)",
-   "D": "D 2026-05-22: bt 3 live 3 matched 3 missed [] extra [] retro 0 (1343s)"
+   "A": {
+    "bt": 2,
+    "live": 2,
+    "matched": 2,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 2,
+    "retro_changes": 0
+   },
+   "B": {
+    "bt": 2,
+    "live": 2,
+    "matched": 2,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 2,
+    "retro_changes": 0
+   },
+   "C": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   },
+   "D": {
+    "bt": 3,
+    "live": 3,
+    "matched": 3,
+    "missed": [],
+    "extra": [],
+    "entry_px_maxdiff": 0.0,
+    "exit_px_maxdiff": 0.0,
+    "exit_min_maxdiff": 0,
+    "identical_exits": 3,
+    "retro_changes": 0
+   }
   }
  },
  "modes": {
@@ -319,5 +1165,6 @@
     }
    }
   }
- }
+ },
+ "pvb_fix_rerun": "2026-10-19 PVB-FIX: modes A-D re-run (no --full; full/expectation blocks kept from the earlier run, fd_from_bars path unchanged)"
 }

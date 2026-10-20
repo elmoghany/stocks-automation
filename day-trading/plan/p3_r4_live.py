@@ -473,7 +473,8 @@ def replay_tests():
 
 # ------------------------------------------------------------ Oct replay
 def oct_replay(days=("2026-10-05", "2026-10-06", "2026-10-07", "2026-10-08"),
-               bars_dir=None, proxy=False):
+               bars_dir=None, proxy=False, rejudge_depth=True,
+               exit_bars_dir=None):
     """2026-10-05..10-08 from the saved scan snapshots (data/paper/r4/
     snaps_*.jsonl) and the agent's bars (data/rh_bars). Coverage is partial:
     the sessions ingested scans only at some grids (every grid 09:35-10:30
@@ -503,15 +504,25 @@ def oct_replay(days=("2026-10-05", "2026-10-06", "2026-10-07", "2026-10-08"),
             feed = P.LiveFeed(d, now)
             day = R.make_day(syms, pcs, feed)
             if open_st is not None:
-                b = feed.bars(open_st["sym"])
+                b = None
+                if exit_bars_dir:      # PVB-FIX: exits on full-day bars
+                    b = P.read_bars_csv(Path(exit_bars_dir) /
+                                        f"{open_st['sym']}_{d}.csv", d,
+                                        upto=now - 1)
+                if b is None:
+                    b = feed.bars(open_st["sym"])
                 ex = R.watch_exit(d, open_st, b, now)
                 if ex is not None and ex.get("px") is not None:
                     me = open_st.get("model_entry")
                     sh = int(P.TICKET // me) if me else 0
+                    cap = open_st.get("shares_cap")
+                    shc = min(sh, int(cap)) if cap is not None else sh
                     ev.append((P.hhmm(now), "EXIT", open_st["sym"],
                                ex["reason"], round(ex["px"], 4),
                                "entry", me, "gross_10k",
-                               round((ex["px"] - me) * sh, 2) if me else None))
+                               round((ex["px"] - me) * sh, 2) if me else None,
+                               "gross_capped", round((ex["px"] - me) * shc, 2)
+                               if me else None, shc))
                     hist[-1].update(open=False, exit_min=now - 1)
                     open_st = None
                 elif now >= CL.M_1500 + 2:
@@ -538,6 +549,17 @@ def oct_replay(days=("2026-10-05", "2026-10-06", "2026-10-07", "2026-10-08"),
                     break
                 t, sym = st["t"], st["sym"]
                 chk = vmap.get((sym, P.hhmm(t)))
+                if chk and rejudge_depth:
+                    # PVB-FIX bug 3: a logged DEPTH veto is re-judged
+                    # against the capped intended shares (book_verdict)
+                    chk = [dict(c, result="PASS", reason=None,
+                                why=c["why"] + " [re-judged: PASS at cap "
+                                f"{st['shares_cap']}]")
+                           if c["result"] == "VETO" and c.get("reason") ==
+                           "DEPTH" and R.book_verdict(
+                               c["bid"], c["ask"], c["depth"],
+                               shares_cap=st["shares_cap"])["ok"] else c
+                           for c in chk]
                 if chk and all(c["result"] == "VETO" for c in chk):
                     why = chk[0].get("reason") or chk[0]["why"][:40]
                 elif chk is None and sym in ("SMXT", "INHD") and \
@@ -557,11 +579,13 @@ def oct_replay(days=("2026-10-05", "2026-10-06", "2026-10-07", "2026-10-08"),
                     refused[(sym, t)] = why
                     ev.append((P.hhmm(now), "REFUSED", sym, P.hhmm(t), why))
                     continue
-                open_st = dict(sym=sym, decision_min=t)
+                open_st = dict(sym=sym, decision_min=t,
+                               shares_cap=st["shares_cap"])
                 hist.append(dict(sym=sym, t=t, open=True))
                 ev.append((P.hhmm(now), "ENTER", sym, P.hhmm(t),
                            "checked PASS" if chk else "unchecked",
-                           [f"{r['sym']}:{r['verdict']}" for r in st["rows"]]))
+                           [f"{r['sym']}:{r['verdict']}" for r in st["rows"]],
+                           st["shares_cap"]))
                 break
         out[d] = dict(grids_with_snapshots=[P.hhmm(g) for g in grids],
                       events=ev)
@@ -659,7 +683,8 @@ def cli_test(d="2024-10-24"):
             any(x["reason"] == "HALT" for x in ref)
     finally:
         for f in made + [R.snaps_path(d), R.refusals_path(d),
-                         R.vetoes_path(d)]:
+                         R.vetoes_path(d), R.screen_path(d),
+                         R.model_asks_path(d), R.coilfix_path(d)]:
             Path(f).unlink(missing_ok=True)
     for r in res:
         print("  CLI", r, flush=True)
