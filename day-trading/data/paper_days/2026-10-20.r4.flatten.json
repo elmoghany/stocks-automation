@@ -1,0 +1,62 @@
+{
+ "date": "2026-10-20",
+ "records": [
+  {
+   "sym": "BRZE",
+   "ticket": null,
+   "date": "2026-10-20",
+   "mode": "r4",
+   "entry": 45.38,
+   "shares_initial": 220,
+   "entry_bar_utc": "2026-10-20T13:37:00Z",
+   "prev_close": null,
+   "exit_kind": "exit-r4-bearish",
+   "fills": [
+    {
+     "kind": "EXIT-R4-BEARISH",
+     "time": "2026-10-20T12:35:39.790408-04:00",
+     "shares": 220,
+     "px": 45.52,
+     "src": "stop level"
+    }
+   ],
+   "vwap": 45.52,
+   "shares_exited": 220,
+   "scale_out": null,
+   "banked": 0.0,
+   "pnl": 30.8,
+   "peak": 46.0,
+   "rungs": [],
+   "deployed": 9983.6,
+   "exit_time": "2026-10-20T12:35:39.790408-04:00",
+   "booked_at": "2026-10-20T12:37:09.989375-04:00",
+   "exit_parity": null,
+   "p3": {
+    "book": "r4",
+    "mode": "r4",
+    "reason": "bearish",
+    "decided_min": "12:34",
+    "model_exit": 45.535,
+    "model_exit_min": "12:35",
+    "model_entry": 45.4375,
+    "model_entry_min": "09:36",
+    "model_pnl": 21.45,
+    "exit_quote": {
+     "bid": 45.52,
+     "ask": 45.54,
+     "mid": 45.53,
+     "ts": "2026-10-20T16:35:00Z",
+     "age_s": 39.8
+    },
+    "entry_quote": {
+     "bid": 45.37,
+     "ask": 45.38,
+     "mid": 45.375,
+     "cost_bps_vs_mid": 1.1
+    },
+    "exit_cost_bps_vs_mid": 2.2,
+    "official_src": "quote-bid"
+   }
+  }
+ ]
+}

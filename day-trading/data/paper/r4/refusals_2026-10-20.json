@@ -1,0 +1,74 @@
+[
+ {
+  "sym": "XHG",
+  "grid": "09:35",
+  "reason": "HALT",
+  "rank": null,
+  "detail": "HALT: halted (agent)",
+  "at": "09:37"
+ },
+ {
+  "sym": "XCH",
+  "grid": "09:35",
+  "reason": "HALT",
+  "rank": null,
+  "detail": "HALT: halted (agent)",
+  "at": "09:37"
+ },
+ {
+  "sym": "CLIR",
+  "grid": "09:35",
+  "reason": "SPREAD",
+  "rank": null,
+  "detail": "SPREAD 9.41% > 0.50%",
+  "at": "09:37"
+ },
+ {
+  "sym": "ASTN",
+  "grid": "09:35",
+  "reason": "SPREAD",
+  "rank": null,
+  "detail": "SPREAD 2.95% > 0.50%",
+  "at": "09:37"
+ },
+ {
+  "sym": "AAOZ",
+  "grid": "09:35",
+  "reason": "SPREAD",
+  "rank": null,
+  "detail": "SPREAD 2.08% > 0.50%",
+  "at": "09:37"
+ },
+ {
+  "sym": "MYGN",
+  "grid": "09:35",
+  "reason": "SPREAD",
+  "rank": null,
+  "detail": "SPREAD 0.53% > 0.50%",
+  "at": "09:37"
+ },
+ {
+  "sym": "TLK",
+  "grid": "12:35",
+  "reason": "PINNED",
+  "rank": 1,
+  "detail": "15-bar range 0.56% < 0.6%",
+  "at": "12:37"
+ },
+ {
+  "sym": "AGBK",
+  "grid": "12:35",
+  "reason": "VOLCAP",
+  "rank": 3,
+  "detail": "20% of the 5-bar volume < 1 sh",
+  "at": "12:37"
+ },
+ {
+  "sym": "COMP",
+  "grid": "12:35",
+  "reason": "PINNED",
+  "rank": 8,
+  "detail": "15-bar range 0.59% < 0.6%",
+  "at": "12:37"
+ }
+]
