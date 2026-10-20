@@ -23,11 +23,16 @@
  "notes": [
   "[09:12] R15 calendar ingested: 86 rows, 0 fresh in-universe names -> R15 expected no-trade",
   "[09:31] 09:31 RL grid 09:30 NOTHING (br 0.0)",
-  "[09:38] R4 grid 09:35 LIVE ENTER BRZE 220 @45.38 (bid 45.37). Refusals: XHG/XCH HALT, CLIR/ASTN/AAOZ/MYGN SPREAD (9.41/2.95/2.08/0.53%). MODEL ARMED XHG. RL 09:35 NOTHING (br -0.0037; scan captured 09:36:1x, file _0938 = ingest time). R15 DONE 09:36 (no fresh-earnings name)."
+  "[09:38] R4 grid 09:35 LIVE ENTER BRZE 220 @45.38 (bid 45.37). Refusals: XHG/XCH HALT, CLIR/ASTN/AAOZ/MYGN SPREAD (9.41/2.95/2.08/0.53%). MODEL ARMED XHG. RL 09:35 NOTHING (br -0.0037; scan captured 09:36:1x, file _0938 = ingest time). R15 DONE 09:36 (no fresh-earnings name).",
+  "[09:42] 09:42 RL 09:40 NOTHING (br -0.0039); R4 grid 09:40 LIVE HOLD BRZE; MODEL ARMED XCH (09:35; XCH halted then -29% 2.47->1.76)",
+  "[09:47] 09:46 RL 09:45 NOTHING (br -0.0028); R4 grid 09:45 LIVE HOLD BRZE; MODEL HOLDING CLIR (model entry 2.5129 @09:36)",
+  "[09:52] 09:52 RL 09:50 NOTHING (br +0.0001); R4 grid 09:50 LIVE HOLD BRZE (bid 45.31); MODEL HOLDING CLIR",
+  "[09:57] 09:57 RL 09:55 NOTHING (br +0.0041); R4 grid 09:55 LIVE HOLD BRZE; MODEL HOLDING CLIR. Note: R4 scan 09:55 returned COMP (instrument_type CRYPTO, Compound) at coil 1.0 - ingested as returned; would be NOBARS if it ever reaches a live walk",
+  "[10:02] 10:02 RL 10:00 NOTHING (br +0.0094); R4 grid 10:00 LIVE HOLD BRZE (bid 45.29, ~-$15); MODEL HOLDING CLIR"
  ],
  "errors": [],
  "ops": {
-  "last_cycle": "09:38:38",
+  "last_cycle": "10:02:13",
   "session_start": "09:10 ET",
   "capability_probe": "09:11 ET GREEN: python print(1) OK; git status --short OK (other sessions' files ignored); get_equity_quotes SPY OK bid 765.79 ask 765.82 @13:10:42Z",
   "session_clock": "TRADING 2026-10-20 full: R4 09:35-14:25 flatten 15:00; R15 09:35 exit 10:36; RL 09:30-15:55 flatten 15:59",
