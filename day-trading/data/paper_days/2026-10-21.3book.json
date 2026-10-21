@@ -1,1 +1,22 @@
-{"date": "2026-10-21", "mode": "PAPER-3BOOK", "books": ["r4", "r15", "rl"], "trades": [], "notes": [], "errors": [], "ops": {"started_et": "09:10"}}
+{
+ "date": "2026-10-21",
+ "mode": "PAPER-3BOOK",
+ "books": [
+  "r4",
+  "r15",
+  "rl"
+ ],
+ "trades": [],
+ "notes": [
+  "[09:10] Universe asof 2026-10-02 (current month 2026-10) -> no refresh needed; scan_id 2f8e0fb0 (95 names)",
+  "[09:11] R15 calendar ingested: 169 rows, 2 in universe: LAD 2026-10-21 am (fresh, actual 10.34 vs 9.68), WDFC pm (not reported) -> R15 candidate LAD if green @09:35"
+ ],
+ "errors": [],
+ "ops": {
+  "started_et": "09:10",
+  "last_cycle": "09:12:30",
+  "capability_probe": "09:10 GREEN: python ok, git status ok, MCP get_equity_quotes SPY ok (bid 771.20 ask 771.27 @13:10:29Z)",
+  "session": "TRADING 2026-10-21 full (market_calendar.py): R4 09:35-14:25 flatten 15:00; R15 09:35 exit 10:36; RL 09:30-15:55 flatten 15:59",
+  "watchers": "09:12 started detached (Start-Process hidden): r4 pid 9520, r15 pid 15084, rl pid 10216; logs data/paper_days/watch_2026-10-21.{book}.log"
+ }
+}
