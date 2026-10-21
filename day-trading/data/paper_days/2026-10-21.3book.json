@@ -25,12 +25,15 @@
   "[09:11] R15 calendar ingested: 169 rows, 2 in universe: LAD 2026-10-21 am (fresh, actual 10.34 vs 9.68), WDFC pm (not reported) -> R15 candidate LAD if green @09:35",
   "[09:31] 09:31 RL grid 09:30 NOTHING (br 0.0, first step)",
   "[09:38] R15 DONE 09:37: LAD (only fresh in-universe name) not green @09:35 (-190 bp) -> no R15 trade today",
-  "[09:38] R4 grid 09:35 LIVE ENTER IMSR 3215 @3.11 (bid 3.10). Refusals: ECHX/AIAI/AXTC/BTDL SPREAD (0.86/10.44/0.98/1.11%), TESL VOLCAP, SPHL GAP7. MODEL HOLDING ECHX. RL 09:35 NOTHING (br +0.0009; scan captured ~09:37:15, file _0938; --now run with wall 09:39 label by mistake, decision unaffected)"
+  "[09:38] R4 grid 09:35 LIVE ENTER IMSR 3215 @3.11 (bid 3.10). Refusals: ECHX/AIAI/AXTC/BTDL SPREAD (0.86/10.44/0.98/1.11%), TESL VOLCAP, SPHL GAP7. MODEL HOLDING ECHX. RL 09:35 NOTHING (br +0.0009; scan captured ~09:37:15, file _0938; --now run with wall 09:39 label by mistake, decision unaffected)",
+  "[09:42] 09:42 RL 09:40 NOTHING (br +0.0030); R4 grid 09:40 LIVE HOLD IMSR (bid 3.02); MODEL HOLDING ECHX",
+  "[09:46] 09:47 RL 09:45 NOTHING (br -0.0023); R4 grid 09:45 LIVE HOLD IMSR (bid 2.97); MODEL HOLDING ECHX",
+  "[09:51] 09:52 RL 09:50 NOTHING (br +0.0019); R4 grid 09:50 LIVE HOLD IMSR (bid 2.94); MODEL HOLDING ECHX"
  ],
  "errors": [],
  "ops": {
   "started_et": "09:10",
-  "last_cycle": "09:38:14",
+  "last_cycle": "09:51:59",
   "capability_probe": "09:10 GREEN: python ok, git status ok, MCP get_equity_quotes SPY ok (bid 771.20 ask 771.27 @13:10:29Z)",
   "session": "TRADING 2026-10-21 full (market_calendar.py): R4 09:35-14:25 flatten 15:00; R15 09:35 exit 10:36; RL 09:30-15:55 flatten 15:59",
   "watchers": "09:12 started detached (Start-Process hidden): r4 pid 9520, r15 pid 15084, rl pid 10216; logs data/paper_days/watch_2026-10-21.{book}.log"
