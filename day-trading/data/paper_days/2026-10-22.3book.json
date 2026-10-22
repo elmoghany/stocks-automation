@@ -23,11 +23,12 @@
  "notes": [
   "[09:11] SESSION full day (market_calendar: TRADING 2026-10-22 full). Universe asof 2026-10-02 (current month, no refresh).",
   "[09:14] R15 calendar ingested: 4 in universe -- WDFC 10-21 pm (fresh), LAD 10-21 am (stale), BE/MXL 10-22 pm not reported. Watchers r4/r15/rl started 09:13 (pids 6616/2344/17140).",
-  "[09:38] R4 ENTER METQ 589 @16.95 (bid 16.89, grid 09:35). R15 DONE: WDFC 09:35 bar did not print (-55bp since open) -> no trade. RL 09:30/09:35 NOTHING."
+  "[09:38] R4 ENTER METQ 589 @16.95 (bid 16.89, grid 09:35). R15 DONE: WDFC 09:35 bar did not print (-55bp since open) -> no trade. RL 09:30/09:35 NOTHING.",
+  "[10:22] R4 scans while HOLD saved as compact rows with coil>=0.90 only (live HOLD; model track also HOLD METQ); total_items recorded."
  ],
  "errors": [],
  "ops": {
-  "last_cycle": "10:00:13",
+  "last_cycle": "10:26:53",
   "capability_probe": "09:11 ET GREEN: python print(1)=1; git status --short ok (4369 lines, other sessions' files); MCP get_equity_quotes SPY ok (bid 765.99 ask 766.04 @13:10:49Z)"
  }
 }
