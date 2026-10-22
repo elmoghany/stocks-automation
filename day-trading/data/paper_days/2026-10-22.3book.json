@@ -18,6 +18,18 @@
    "shares": 589,
    "halal": "REFUSE-TO-EVALUATE",
    "model_note": "LIVE track grid 09:35 rank 1 of top8 (coil 1.0); check-book PASS spread 0.355% depth 8400>=147; shares_cap 11321; model ARMED METQ (same leg)"
+  },
+  {
+   "book": "rl",
+   "sym": "ABUS",
+   "decision_min": "14:15",
+   "entry_time": "14:17:39",
+   "ask": 4.23,
+   "bid": 4.22,
+   "mid": 4.225,
+   "shares": 2364,
+   "halal": "REFUSE-TO-EVALUATE",
+   "model_note": "RL step 14:15 ENTER (first seen 14:16, not stale): breadth -0.02408 < -0.02379, dist_vwap -0.01344, log_price 1.4398; shares_cap 4787; NEED_DATA bars for 10 names fetched 08:00Z->now and ingested"
   }
  ],
  "notes": [
@@ -27,11 +39,12 @@
   "[10:22] R4 scans while HOLD saved as compact rows with coil>=0.90 only (live HOLD; model track also HOLD METQ); total_items recorded.",
   "[11:26] [11:27] R4 scans while HOLD: compact rows trimmed to coil>=0.97 (top8 always coil~1.0; total_items still recorded).",
   "[11:57] [11:57] R4 11:55 grid scan spilled to file (>50k chars); ingested all 119 rows via data/paper/r4file.py (no transcription).",
-  "[12:26] [12:26] RL 12:25 grid ingested verbatim from the session transcript via data/paper/rlfile.py (refuses if newest tick >180s old); no hand transcription from here on."
+  "[12:26] [12:26] RL 12:25 grid ingested verbatim from the session transcript via data/paper/rlfile.py (refuses if newest tick >180s old); no hand transcription from here on.",
+  "[14:17] RL ENTER ABUS 2364 @4.23 (bid 4.22, step 14:15). Breadth crossed -0.0238 at 14:15 grid (NEED_DATA -> bars -> ENTER)."
  ],
  "errors": [],
  "ops": {
-  "last_cycle": "13:51:18",
+  "last_cycle": "14:16:33",
   "capability_probe": "09:11 ET GREEN: python print(1)=1; git status --short ok (4369 lines, other sessions' files); MCP get_equity_quotes SPY ok (bid 765.99 ask 766.04 @13:10:49Z)"
  }
 }
