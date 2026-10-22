@@ -26,11 +26,12 @@
   "[09:38] R4 ENTER METQ 589 @16.95 (bid 16.89, grid 09:35). R15 DONE: WDFC 09:35 bar did not print (-55bp since open) -> no trade. RL 09:30/09:35 NOTHING.",
   "[10:22] R4 scans while HOLD saved as compact rows with coil>=0.90 only (live HOLD; model track also HOLD METQ); total_items recorded.",
   "[11:26] [11:27] R4 scans while HOLD: compact rows trimmed to coil>=0.97 (top8 always coil~1.0; total_items still recorded).",
-  "[11:57] [11:57] R4 11:55 grid scan spilled to file (>50k chars); ingested all 119 rows via data/paper/r4file.py (no transcription)."
+  "[11:57] [11:57] R4 11:55 grid scan spilled to file (>50k chars); ingested all 119 rows via data/paper/r4file.py (no transcription).",
+  "[12:26] [12:26] RL 12:25 grid ingested verbatim from the session transcript via data/paper/rlfile.py (refuses if newest tick >180s old); no hand transcription from here on."
  ],
  "errors": [],
  "ops": {
-  "last_cycle": "12:06:31",
+  "last_cycle": "12:26:31",
   "capability_probe": "09:11 ET GREEN: python print(1)=1; git status --short ok (4369 lines, other sessions' files); MCP get_equity_quotes SPY ok (bid 765.99 ask 766.04 @13:10:49Z)"
  }
 }
