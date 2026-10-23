@@ -23,11 +23,14 @@
  ],
  "notes": [
   "[09:14] pre-open: universe asof 2026-10-02 (current month, no refresh); R15 fresh in-universe: BE 10-22 pm, MXL 10-22 pm; 3 watchers started 09:15",
-  "[09:37] R4 09:35 refusals: NERV VOLCAP, RHI SPREAD 0.58% -> ENTER BEZ 1114 @8.97 (bid 8.95); model track ARMED NERV. R15 DONE 09:36 (BE -686bp, MXL -1080bp, neither green). RL 09:30 NOTHING."
+  "[09:37] R4 09:35 refusals: NERV VOLCAP, RHI SPREAD 0.58% -> ENTER BEZ 1114 @8.97 (bid 8.95); model track ARMED NERV. R15 DONE 09:36 (BE -686bp, MXL -1080bp, neither green). RL 09:30 NOTHING.",
+  "[11:12] R4 MODEL track: RHI closed 11:11 @45.00 (entry 44.50 09:36) bearish-engulf exit, +1.12%; model FLAT (1 ticket used). LIVE still HOLD BEZ."
  ],
- "errors": [],
+ "errors": [
+  "[11:14] 11:13 all 3 watchers killed by 2h background-task limit (started 09:13-09:15); restarted 11:14 (r4 b33swu6zt, r15 btlxbw7ww, rl bx4uv9ul9); state reloaded from disk, BEZ peak 9.1592 intact; gap ~1 min, no exit missed (BEZ bid 8.80-8.90 well above stop). Next restart due ~13:14."
+ ],
  "ops": {
-  "last_cycle": "10:56:29",
+  "last_cycle": "11:14:37",
   "capability_probe": "09:11 ET: python OK; git status OK; MCP get_equity_quotes SPY OK (bid 760.65 ask 760.70) -> GREEN"
  }
 }
