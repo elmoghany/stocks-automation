@@ -1,0 +1,119 @@
+{
+ "date": "2026-10-23",
+ "records": [
+  {
+   "sym": "BEZ",
+   "ticket": null,
+   "date": "2026-10-23",
+   "mode": "r4",
+   "entry": 8.97,
+   "shares_initial": 1114,
+   "entry_bar_utc": "2026-10-23T13:36:00Z",
+   "prev_close": null,
+   "exit_kind": "exit-r4-bearish",
+   "fills": [
+    {
+     "kind": "EXIT-R4-BEARISH",
+     "time": "2026-10-23T11:47:00.347448-04:00",
+     "shares": 1114,
+     "px": 9.02,
+     "src": "stop level"
+    }
+   ],
+   "vwap": 9.02,
+   "shares_exited": 1114,
+   "scale_out": null,
+   "banked": 0.0,
+   "pnl": 55.7,
+   "peak": 9.1592,
+   "rungs": [],
+   "deployed": 9992.58,
+   "exit_time": "2026-10-23T11:47:00.347448-04:00",
+   "booked_at": "2026-10-23T11:47:30.402876-04:00",
+   "exit_parity": null,
+   "p3": {
+    "book": "r4",
+    "mode": "r4",
+    "reason": "bearish",
+    "decided_min": "11:45",
+    "model_exit": 9.04,
+    "model_exit_min": "11:46",
+    "model_entry": 9.02,
+    "model_entry_min": "09:36",
+    "model_pnl": 22.28,
+    "exit_quote": {
+     "bid": 9.02,
+     "ask": 9.04,
+     "mid": 9.03,
+     "ts": "2026-10-23T15:46:24Z",
+     "age_s": 36.3
+    },
+    "entry_quote": {
+     "bid": 8.95,
+     "ask": 8.97,
+     "mid": 8.96,
+     "cost_bps_vs_mid": 11.16
+    },
+    "exit_cost_bps_vs_mid": 11.07,
+    "official_src": "quote-bid"
+   }
+  },
+  {
+   "sym": "TTMX",
+   "ticket": null,
+   "date": "2026-10-23",
+   "mode": "r4",
+   "entry": 2.86,
+   "shares_initial": 2256,
+   "entry_bar_utc": "2026-10-23T15:51:00Z",
+   "prev_close": null,
+   "exit_kind": "exit-r4-flatten",
+   "fills": [
+    {
+     "kind": "EXIT-R4-FLATTEN",
+     "time": "2026-10-23T15:01:15.130027-04:00",
+     "shares": 2256,
+     "px": 2.91,
+     "src": "stop level"
+    }
+   ],
+   "vwap": 2.91,
+   "shares_exited": 2256,
+   "scale_out": null,
+   "banked": 0.0,
+   "pnl": 112.8,
+   "peak": 2.9001,
+   "rungs": [],
+   "deployed": 6452.16,
+   "exit_time": "2026-10-23T15:01:15.130027-04:00",
+   "booked_at": "2026-10-23T15:01:15.130027-04:00",
+   "exit_parity": null,
+   "p3": {
+    "book": "r4",
+    "mode": "r4",
+    "reason": "flatten",
+    "decided_min": "14:55",
+    "model_exit": 2.8997,
+    "model_exit_min": "14:55",
+    "model_entry": 2.855,
+    "model_entry_min": "11:51",
+    "model_pnl": 100.84,
+    "exit_quote": {
+     "bid": 2.91,
+     "ask": 2.93,
+     "mid": 2.92,
+     "ts": "2026-10-23T19:00:09Z",
+     "age_s": 66.1
+    },
+    "entry_quote": {
+     "bid": 2.85,
+     "ask": 2.86,
+     "mid": 2.855,
+     "cost_bps_vs_mid": 17.51
+    },
+    "exit_cost_bps_vs_mid": 34.25,
+    "official_src": "quote-bid"
+   }
+  }
+ ]
+}

@@ -2,6 +2,27 @@
 
 ## PAPER-3BOOK
 
+### 2026-10-23 (PAPER-3BOOK day 14 on the scoreboard): full headless session; R4 LIVE +$168.50 on 2 trades, R15/RL no trades (all flat)
+
+The session ran headless from 09:11 until after 16:00. R4 was flat at 15:01:15 and its watcher was done at 15:07. R15 was DONE at 09:36 and its watcher was done at 15:02. RL ran every grid through 15:55 with no entry. The ledger was committed every ≤30 min and after every entry and exit. Zero real orders.
+
+- **R4 LIVE**: 2 trades, **+$168.50** (model fills +$123.12; cost 18.56 bps/side vs mid). That is +$233.93 vs the −$65.43/day expectation.
+  - BEZ 1114 @8.97 (09:35 grid, cand #3 after NERV VOLCAP and RHI SPREAD 0.58%). EXIT-R4-BEARISH decided on the 11:45 bar, booked 11:47:30 @9.02 bid: **+$55.70**.
+  - TTMX 2256 @2.86 (11:50 grid; AIOK vetoed HALT at locked 13.93/13.93, then PENU/TGRZ/BGM VOLCAP; size was capped by shares_cap at $6,452 notional). It peaked at 2.90 and drifted between 2.83 and 2.91 all afternoon. EXIT-R4-FLATTEN decided on the last printed bar (14:55), booked 15:01:15 @2.91 bid (quote ts 19:00:09Z, 66 s old; model px 2.8997): **+$112.80**.
+  - Refusals (unique name × grid): VOLCAP 4, SPREAD 1, HALT 1.
+  - Halal: both names REFUSE-TO-EVALUATE, so the halal-PASS P&L is $0.
+  - Cumulative over 14 days: −$2,007.83 on 16 trades.
+- **R4 PARITY (model)**: 2 legs, +$140.94 gross (+$95.75 net 15 bps).
+  - RHI 224 @44.50 (09:36) → bearish exit 11:11 @45.00.
+  - HLP 1440 @3.4899 (11:16) → 14:41 flatten @3.51.
+  - The RHI SHADOW leg (refused live on SPREAD, first refusal ask 44.75) would have made +$55.75, so the spread gate cost a little today.
+- **R15**: 0 trades. BE and MXL were the fresh in-universe names (both 10-22 pm). Both opened deeply red (−686 bp and −1080 bp), so the book was DONE at 09:36. Flat, against +$21.71/day expected.
+- **RL**: 0 trades. Breadth never qualified on any grid, and n_cand was 0 all afternoon. In the last hour br drifted from about 0.0075 down to 0.003. Flat, against +$5.77/day expected. Cumulative: +$36.34 on 3 trades.
+- **Ops**:
+  - The 2 h background-task limit killed all 3 watchers at 11:13. They were restarted at 11:14 (~1 min gap) with state reloaded and no exit missed. The watchers were then restarted proactively at 13:07, and RL alone again at 15:06.
+  - The R4/R15 watchers exit by themselves once their book is flat and past safety ("BOOK FLAT -- watcher done"). There is no need to restart them after their last exit.
+  - The R4 flatten waits for the first wall minute after the 15:00 bar completes. TTMX had no prints from 14:56, so the walk-back flattened on the 14:55 bar.
+
 ### 2026-10-20 (PAPER-3BOOK day 12): full headless session, first day with the PVB-FIX live; R4 LIVE −$6.91 on 2 trades, R15/RL no trades (all flat)
 
 The session ran headless from about 09:10 until after 16:00. R4 was flat at 15:01:01 (watcher done 15:07), R15 was DONE at 09:36 (watcher done 15:02), and RL ran every grid through 15:55 with no entry. The ledger was committed every ≤30 min and after every entry and exit. Zero real orders.
