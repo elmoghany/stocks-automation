@@ -31,7 +31,9 @@ def results():
         except ValueError:
             continue
         ts = ev.get("timestamp")
-        ep = _dt.datetime.fromisoformat(ts.replace("Z", "+00:00")).timestamp() if ts else 0
+        if ev.get("type") != "user" or not ts:  # skip api-request-blob copies (no timestamp)
+            continue
+        ep =_dt.datetime.fromisoformat(ts.replace("Z", "+00:00")).timestamp() if ts else 0
         content = (ev.get("message") or {}).get("content")
         if not isinstance(content, list):
             continue

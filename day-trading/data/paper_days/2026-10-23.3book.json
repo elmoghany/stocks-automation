@@ -27,7 +27,7 @@
  ],
  "errors": [],
  "ops": {
-  "last_cycle": "09:37:11",
+  "last_cycle": "10:02:17",
   "capability_probe": "09:11 ET: python OK; git status OK; MCP get_equity_quotes SPY OK (bid 760.65 ask 760.70) -> GREEN"
  }
 }
