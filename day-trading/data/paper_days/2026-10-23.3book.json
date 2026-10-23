@@ -41,14 +41,15 @@
   "[11:48] [11:47:30] R4 EXIT-R4-BEARISH BEZ @9.0200 x1114 P&L $+55.70 (bearish engulf decided 11:45 bar o9.09 c9.045 vs prior o9.0799 c9.085; fill = decision-time quote bid 9.02, age 36s; entry 8.97 09:37). R4 live FLAT; next decision grid 11:50. Model track still HOLDING HLP (entry 3.4899 11:16).",
   "[11:52] [11:51] R4 grid 11:50: AIOK VETO HALT (locked 13.93/13.93, no trade since 11:49); PENU/TGRZ/BGM VOLCAP -> ENTER TTMX 2256 @2.86 (bid 2.85), shares_cap-limited.",
   "[12:19] [12:19] ledger: R4 HOLD TTMX (bid 2.86 vs entry 2.86, book ~+65 incl BEZ +55.70); model HOLD HLP; R15 done; RL NOTHING through grid 12:15",
-  "[12:48] [12:48] ledger: R4 HOLD TTMX (bid 2.87 vs entry 2.86; book ~+146 incl BEZ +55.70); model HOLD HLP (~3.50/3.58); R15 done; RL NOTHING through grid 12:45"
+  "[12:48] [12:48] ledger: R4 HOLD TTMX (bid 2.87 vs entry 2.86; book ~+146 incl BEZ +55.70); model HOLD HLP (~3.50/3.58); R15 done; RL NOTHING through grid 12:45",
+  "[13:31] [13:31] ledger: R4 HOLD TTMX (bid 2.83-2.84 vs entry 2.86; book ~+11 incl BEZ +55.70); model HOLD HLP (3.44/3.53); R15 done; RL NOTHING through grid 13:30"
  ],
  "errors": [
   "[11:14] 11:13 all 3 watchers killed by 2h background-task limit (started 09:13-09:15); restarted 11:14 (r4 b33swu6zt, r15 btlxbw7ww, rl bx4uv9ul9); state reloaded from disk, BEZ peak 9.1592 intact; gap ~1 min, no exit missed (BEZ bid 8.80-8.90 well above stop). Next restart due ~13:14.",
   "[13:08] [13:07] proactive watcher restart ahead of 2h limit (old r4 b33swu6zt / r15 btlxbw7ww / rl bx4uv9ul9 stopped 13:07:2x; new r4 b55n57ep1, r15 boipjuq46, rl b89f54q0n); state reloaded from disk, TTMX peak 2.9000 intact; gap <30s, no exit missed. Next restart due ~15:07."
  ],
  "ops": {
-  "last_cycle": "13:08:20",
+  "last_cycle": "13:31:29",
   "capability_probe": "09:11 ET: python OK; git status OK; MCP get_equity_quotes SPY OK (bid 760.65 ask 760.70) -> GREEN"
  }
 }
