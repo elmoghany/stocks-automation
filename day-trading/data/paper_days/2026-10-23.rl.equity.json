@@ -7363,6 +7363,24 @@
    "book_pnl": 0,
    "deployed_notional": 0,
    "dd_pct": 0.0
+  },
+  {
+   "t": "2026-10-23T16:03:30.080179-04:00",
+   "marks": {},
+   "open_pnl": 0,
+   "realized": 0,
+   "book_pnl": 0,
+   "deployed_notional": 0,
+   "dd_pct": 0.0
+  },
+  {
+   "t": "2026-10-23T16:04:00.138415-04:00",
+   "marks": {},
+   "open_pnl": 0,
+   "realized": 0,
+   "book_pnl": 0,
+   "deployed_notional": 0,
+   "dd_pct": 0.0
   }
  ]
 }
