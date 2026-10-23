@@ -46,14 +46,16 @@
   "[13:58] [13:58] ledger: R4 HOLD TTMX (bid 2.85-2.86 vs entry 2.86; book ~+56..+78 incl BEZ +55.70); model HOLD HLP (3.44/3.51); R15 done; RL NOTHING through grid 13:55",
   "[14:26] [14:26] ledger: R4 entry window closed (last grid 14:25 HOLD TTMX, bid 2.87 vs entry 2.86; book ~+90 incl BEZ +55.70; 15:00 flatten pending); model HOLD HLP; R15 done; RL NOTHING through grid 14:25",
   "[14:53] [14:53] ledger: R4 HOLD TTMX (bid 2.89 vs entry 2.86; book ~+112 incl BEZ +55.70; 15:00 flatten pending); model HOLD HLP (3.45/3.60); R15 done; RL NOTHING through grid 14:50",
-  "[15:01] [15:01] [15:01:15] R4 EXIT-R4-FLATTEN TTMX @2.9100 x2256 P&L $+112.80 (flatten decided on last printed bar 14:55, model px 2.8997; fill = quote bid 2.91 ts 19:00:09Z age 66s; entry 2.86 11:52). R4 live FLAT, book +$168.50 (BEZ +55.70, TTMX +112.80). Model track DONE: RHI +0.50/sh bearish, HLP 3.4899->3.51 flatten. R15 done; RL NOTHING through grid 15:00."
+  "[15:01] [15:01] [15:01:15] R4 EXIT-R4-FLATTEN TTMX @2.9100 x2256 P&L $+112.80 (flatten decided on last printed bar 14:55, model px 2.8997; fill = quote bid 2.91 ts 19:00:09Z age 66s; entry 2.86 11:52). R4 live FLAT, book +$168.50 (BEZ +55.70, TTMX +112.80). Model track DONE: RHI +0.50/sh bearish, HLP 3.4899->3.51 flatten. R15 done; RL NOTHING through grid 15:00.",
+  "[15:26] [15:26] ledger: R4 FLAT/DONE book +$168.50 (BEZ +55.70, TTMX +112.80); R4/R15 watchers exited normally (15:07/15:02); R15 done, no trades; RL NOTHING through grid 15:25, RL watcher ban97ujww live"
  ],
  "errors": [
   "[11:14] 11:13 all 3 watchers killed by 2h background-task limit (started 09:13-09:15); restarted 11:14 (r4 b33swu6zt, r15 btlxbw7ww, rl bx4uv9ul9); state reloaded from disk, BEZ peak 9.1592 intact; gap ~1 min, no exit missed (BEZ bid 8.80-8.90 well above stop). Next restart due ~13:14.",
-  "[13:08] [13:07] proactive watcher restart ahead of 2h limit (old r4 b33swu6zt / r15 btlxbw7ww / rl bx4uv9ul9 stopped 13:07:2x; new r4 b55n57ep1, r15 boipjuq46, rl b89f54q0n); state reloaded from disk, TTMX peak 2.9000 intact; gap <30s, no exit missed. Next restart due ~15:07."
+  "[13:08] [13:07] proactive watcher restart ahead of 2h limit (old r4 b33swu6zt / r15 btlxbw7ww / rl bx4uv9ul9 stopped 13:07:2x; new r4 b55n57ep1, r15 boipjuq46, rl b89f54q0n); state reloaded from disk, TTMX peak 2.9000 intact; gap <30s, no exit missed. Next restart due ~15:07.",
+  "[15:07] [15:07] proactive RL watcher restart ahead of 2h limit (old rl b89f54q0n stopped 15:06; new rl ban97ujww); RL flat, nothing to reload. R15 watcher exited normally 15:02 (BOOK FLAT -- watcher done). R4 watcher (b55n57ep1) left to finish: R4 flat/DONE after 15:00 flatten, no restart needed. Next RL restart due ~17:07 (after RL 16:02 safety, so none expected)."
  ],
  "ops": {
-  "last_cycle": "15:01:32",
+  "last_cycle": "15:26:18",
   "capability_probe": "09:11 ET: python OK; git status OK; MCP get_equity_quotes SPY OK (bid 760.65 ask 760.70) -> GREEN"
  }
 }
