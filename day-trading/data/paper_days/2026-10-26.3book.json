@@ -43,11 +43,12 @@
   "[10:17] R4 10:15 grid: HFBL/WZRD/TSLI/ASTT VOLCAP, CCEL SPREAD 7.90%, SGRY GAP7; TSLR PASS -> ENTER 528 @18.91",
   "[11:17] 11:17 watchers r4/r15/rl hit the 2h background limit at 11:16 and were restarted 11:17 (state reloads from position files each tick; new ids bjx9wjhnl/bdd7gbpr8/bvgn05jst)",
   "[13:07] 13:07 watchers r4/r15/rl proactively restarted 13:06 before 2h limit (new ids bofutbth0/bqkovdxzz/biphtkjxh; expire ~15:06)",
-  "[14:26] R4 entry window closed after 14:25 grid (HOLD TSLR throughout 10:20-14:25; no new entries possible). RL NOTHING every grid 09:30-14:25 (breadth ~+0.012-0.017, n_cand 0). R4 flatten at 15:00 by watcher."
+  "[14:26] R4 entry window closed after 14:25 grid (HOLD TSLR throughout 10:20-14:25; no new entries possible). RL NOTHING every grid 09:30-14:25 (breadth ~+0.012-0.017, n_cand 0). R4 flatten at 15:00 by watcher.",
+  "[14:48] watchers r4/r15/rl proactively restarted 14:47 before 2h limit and before 15:00 R4 flatten (new ids bqc6toqhp/blr4efc6c/bpduis4ri; expire ~16:47)"
  ],
  "errors": [],
  "ops": {
-  "last_cycle": "14:26:37",
+  "last_cycle": "14:48:25",
   "capability_probe": "09:11 ET GREEN: python OK, git status OK, MCP get_equity_quotes SPY OK (bid 762.03 ask 762.12)"
  }
 }
