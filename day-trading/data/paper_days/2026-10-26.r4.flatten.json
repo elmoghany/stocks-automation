@@ -1,0 +1,62 @@
+{
+ "date": "2026-10-26",
+ "records": [
+  {
+   "sym": "CRCD",
+   "ticket": null,
+   "date": "2026-10-26",
+   "mode": "r4",
+   "entry": 2.12,
+   "shares_initial": 4716,
+   "entry_bar_utc": "2026-10-26T13:37:00Z",
+   "prev_close": null,
+   "exit_kind": "exit-r4-bearish",
+   "fills": [
+    {
+     "kind": "EXIT-R4-BEARISH",
+     "time": "2026-10-26T10:10:24.018873-04:00",
+     "shares": 4716,
+     "px": 2.16,
+     "src": "stop level"
+    }
+   ],
+   "vwap": 2.16,
+   "shares_exited": 4716,
+   "scale_out": null,
+   "banked": 0.0,
+   "pnl": 188.64,
+   "peak": 2.2185,
+   "rungs": [],
+   "deployed": 9997.92,
+   "exit_time": "2026-10-26T10:10:24.018873-04:00",
+   "booked_at": "2026-10-26T10:11:54.156339-04:00",
+   "exit_parity": null,
+   "p3": {
+    "book": "r4",
+    "mode": "r4",
+    "reason": "bearish",
+    "decided_min": "10:09",
+    "model_exit": 2.1699,
+    "model_exit_min": "10:10",
+    "model_entry": 2.14,
+    "model_entry_min": "09:36",
+    "model_pnl": 141.01,
+    "exit_quote": {
+     "bid": 2.16,
+     "ask": 2.17,
+     "mid": 2.165,
+     "ts": "2026-10-26T14:10:10.376236238Z",
+     "age_s": 13.6
+    },
+    "entry_quote": {
+     "bid": 2.11,
+     "ask": 2.12,
+     "mid": 2.115,
+     "cost_bps_vs_mid": 23.64
+    },
+    "exit_cost_bps_vs_mid": 23.09,
+    "official_src": "quote-bid"
+   }
+  }
+ ]
+}

@@ -24,11 +24,12 @@
  "notes": [
   "[09:11] SESSION full day (market_calendar: TRADING 2026-10-26 full, close 16:00). Universe asof 2026-10-02 (current month, no refresh).",
   "[09:17] R15 calendar: 67 rows, 1 in-universe: AGYS pm today NOT REPORTED -> no fresh reported name. Watchers r4/r15/rl started 09:16.",
-  "[09:37] R4 09:35 refusals: NTHI SPREAD 11.21%, QH VOLCAP, FOXX SPREAD 17.33%, ASTT SPREAD 0.75%, EAF SPREAD 3.70%, SMST SPREAD 0.97%; CRCD PASS (spread 0.47%, depth 22433) -> ENTER 4716 @2.12. R15 DONE (no fresh name). RL 09:30/09:35 NOTHING."
+  "[09:37] R4 09:35 refusals: NTHI SPREAD 11.21%, QH VOLCAP, FOXX SPREAD 17.33%, ASTT SPREAD 0.75%, EAF SPREAD 3.70%, SMST SPREAD 0.97%; CRCD PASS (spread 0.47%, depth 22433) -> ENTER 4716 @2.12. R15 DONE (no fresh name). RL 09:30/09:35 NOTHING.",
+  "[10:12] EXIT-R4-BEARISH CRCD @ 2.1600 x4716 P&L $+188.64 (signal decided 10:09, booked 10:11:54 by r4 watcher)"
  ],
  "errors": [],
  "ops": {
-  "last_cycle": "09:56:47",
+  "last_cycle": "10:12:18",
   "capability_probe": "09:11 ET GREEN: python OK, git status OK, MCP get_equity_quotes SPY OK (bid 762.03 ask 762.12)"
  }
 }
