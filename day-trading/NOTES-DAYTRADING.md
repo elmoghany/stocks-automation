@@ -2,6 +2,27 @@
 
 ## PAPER-3BOOK
 
+### 2026-10-26 (PAPER-3BOOK day 15 on the scoreboard): full headless session; R4 LIVE +$204.48 on 2 trades, R15/RL no trades (all flat)
+
+The session ran headless from 09:11 until after 16:00. R4 was flat at 15:01:21 and its watcher was done at 15:07:22. R15 was DONE at 09:37 and its watcher was done at 15:02:22. RL ran every grid through 15:55 with no entry. The ledger was committed at least every 30 min and after every entry and exit. Zero real orders.
+
+- **R4 LIVE**: 2 trades, **+$204.48** (model fills +$156.85; cost 13.0 bps/side vs mid). That is +$269.91 vs the −$65.43/day expectation.
+  - CRCD 4716 @2.12 (09:35 grid, cand #7 after NTHI/FOXX/ASTT/EAF/SMST SPREAD and QH VOLCAP; spread 0.47%, depth 22,433). EXIT-R4-BEARISH decided on the 10:09 bar, booked 10:11:54 @2.16 bid: **+$188.64**.
+  - TSLR 528 @18.91 (10:15 grid; HFBL/WZRD/TSLI/ASTT VOLCAP, CCEL SPREAD 7.90%, SGRY GAP7). It peaked at 19.23, then drifted from about 19.15 down to 18.93–19.02 all afternoon. No stop was armed. EXIT-R4-FLATTEN decided on the last printed bar (14:58), booked 15:01:21 @18.94 bid (quote 72 s old; model px 18.93): **+$15.84**.
+  - Refusals (unique name × grid): SPREAD 10, VOLCAP 9, GAP7 1.
+  - Halal: both names REFUSE-TO-EVALUATE, so the halal-PASS P&L is $0.
+  - Cumulative over 15 days: −$1,803.35 on 18 trades.
+- **R4 PARITY (model)**: 2 legs, +$556.95 gross (+$496.13 net 15 bps).
+  - EAF 1063 @9.3996 (09:36) → bearish exit 09:52 @10.03, +$670.12.
+  - CRCD 4545 @2.1999 (09:56) → 14:59 flatten @2.175, −$113.17.
+  - The EAF SHADOW leg (refused live on SPREAD 3.70%, first refusal ask 9.63) would have made +$415.20. Today the spread gate cost more than the whole live book made.
+- **R15**: 0 trades. The calendar had 67 rows with 1 in-universe name (AGYS, pm today, not yet reported), so there was no fresh reported name and the book was DONE at 09:37. Flat, against +$21.71/day expected.
+- **RL**: 0 trades. Breadth never qualified on any grid, and n_cand was 0 all day. br sat around +0.010 to +0.017 through 15:30, then drifted to 0.0065 by 15:55. Flat, against +$5.77/day expected. Cumulative: +$36.34 on 3 trades.
+- **Ops**:
+  - The 2 h background-task limit killed all 3 watchers at 11:16. They were restarted at 11:17 (~1 min gap) with state reloaded and no exit missed.
+  - The watchers were restarted proactively at 13:06, and again at 14:47 so the R4 flatten would not straddle an expiry.
+  - The R4 flatten booked at the first wall minute after the 15:00 bar completed (15:01:21). The P3 safety rung (15:05) was not needed.
+
 ### 2026-10-23 (PAPER-3BOOK day 14 on the scoreboard): full headless session; R4 LIVE +$168.50 on 2 trades, R15/RL no trades (all flat)
 
 The session ran headless from 09:11 until after 16:00. R4 was flat at 15:01:15 and its watcher was done at 15:07. R15 was DONE at 09:36 and its watcher was done at 15:02. RL ran every grid through 15:55 with no entry. The ledger was committed every ≤30 min and after every entry and exit. Zero real orders.
