@@ -35,7 +35,7 @@ def resolve(t):
     s = t.lstrip()
     if s.startswith("{"):
         return s
-    m = re.search(r"([A-Za-z]:[\\/][^\s\"'<>]+?\.(?:json|txt))", t)
+    m = re.search(r"([A-Za-z]:[\\/][^\"'<>\n]+?\.(?:json|txt))", t)
     if m and os.path.exists(m.group(1)):
         raw = open(m.group(1), encoding="utf-8", errors="ignore").read().strip()
         try:
