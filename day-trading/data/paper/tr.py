@@ -75,9 +75,13 @@ def run(args):
     return (r.stdout.strip() + " " + r.stderr.strip()[-400:]).strip()
 
 
+def fmt(a):
+    return "?" if a is None else f"{a:.0f}"
+
+
 def stale(age):
     if age is not None and age > MAXAGE:
-        sys.exit(f"STALE result {age:.0f}s old -> not used")
+        sys.exit(f"STALE result {fmt(age)}s old -> not used")
 
 
 TR, kind, rest = sys.argv[1], sys.argv[2], sys.argv[3:]
@@ -87,10 +91,15 @@ if kind in ("r4", "rl"):
     if not j:
         sys.exit(f"NO {kind} scan result in transcript tail")
     stale(age)
+    tcol = "P3 last time" if kind == "rl" else "TradeTime"
+    newest_tick = max((float(r["columns"].get(tcol) or 0) for r in json.loads(j)["data"]["result"]["results"]),
+                      default=0) / 1000
+    if time.time() - newest_tick > 180:
+        sys.exit(f"STALE {kind} scan: newest {tcol} {time.time() - newest_tick:.0f}s old -> not ingested")
     fn = f"data/paper/{kind}/scan_{day}_{hhmm}.json"
     open(fn, "w", encoding="utf-8").write(j)
     n = json.loads(j)["data"]["result"]
-    print(f"{kind.upper()} scan rows {len(n.get('results', []))}/{n.get('total_items')} age {age:.0f}s -> {fn}")
+    print(f"{kind.upper()} scan rows {len(n.get('results', []))}/{n.get('total_items')} age {fmt(age)}s -> {fn}")
     if kind == "rl":
         print("INGEST", run(["plan/p3_rl.py", "--snapshot", fn, "--at", grid])[:500])
         print("NOW", run(["plan/p3_rl.py", "--now", wall])[:1500])
@@ -112,7 +121,7 @@ elif kind == "hist":
         fn = f"data/paper/hist_{day}_{hhmm}b.json"
     open(fn, "w", encoding="utf-8").write(j)
     nb = {r.get("symbol"): len(r.get("bars") or []) for r in json.loads(j)["data"]["results"]}
-    print("HIST", fn, nb, f"age {age:.0f}s")
+    print("HIST", fn, nb, f"age {fmt(age)}s")
     print("INGEST", run(["plan/rh_bars_ingest.py", fn, day] + (rest or sorted(got)))[:600])
 elif kind == "quotes":
     j, age = newest(lambda s: s.startswith('{"data":{"results":[{"quote":'))
