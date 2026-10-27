@@ -7,7 +7,13 @@
   "rl"
  ],
  "trades": [],
- "notes": [],
+ "notes": [
+  "[09:11] SESSION full day (market_calendar: TRADING 2026-10-27 full, close 16:00). Universe asof 2026-10-02 (current month, no refresh).",
+  "[09:13] R15 calendar: 250 rows, 2 in-universe: AGYS 2026-10-26 pm (reported, FRESH), ZWS 2026-10-27 pm NOT REPORTED. Watchers r4/r15/rl started 09:14 (bg ids b3bfv8sie/b3d7n14d2/b50a112h9; 2h limit -> restart ~11:10)."
+ ],
  "errors": [],
- "ops": {}
+ "ops": {
+  "last_cycle": "09:13:58",
+  "capability_probe": "09:12 ET GREEN: python OK, git status OK, MCP get_equity_quotes SPY OK (bid 767.31 ask 767.35)"
+ }
 }
