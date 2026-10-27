@@ -1,0 +1,56 @@
+{
+ "date": "2026-10-27",
+ "records": [
+  {
+   "sym": "CWVX",
+   "ticket": null,
+   "date": "2026-10-27",
+   "mode": "r4",
+   "entry": 6.23,
+   "shares_initial": 1605,
+   "entry_bar_utc": "2026-10-27T13:42:00Z",
+   "prev_close": null,
+   "exit_kind": "exit-r4-bearish",
+   "fills": [
+    {
+     "kind": "EXIT-R4-BEARISH",
+     "time": "2026-10-27T12:04:23.004967-04:00",
+     "shares": 1605,
+     "px": 6.3263,
+     "src": "stop level"
+    }
+   ],
+   "vwap": 6.3263,
+   "shares_exited": 1605,
+   "scale_out": null,
+   "banked": 0.0,
+   "pnl": 154.56,
+   "peak": 6.36,
+   "rungs": [],
+   "deployed": 9999.15,
+   "exit_time": "2026-10-27T12:04:23.004967-04:00",
+   "booked_at": "2026-10-27T12:05:23.141348-04:00",
+   "exit_parity": null,
+   "p3": {
+    "book": "r4",
+    "mode": "r4",
+    "reason": "bearish",
+    "decided_min": "12:03",
+    "model_exit": 6.3263,
+    "model_exit_min": "12:04",
+    "model_entry": 6.2575,
+    "model_entry_min": "09:41",
+    "model_pnl": 110.42,
+    "exit_quote": null,
+    "entry_quote": {
+     "bid": 6.21,
+     "ask": 6.23,
+     "mid": 6.220000000000001,
+     "cost_bps_vs_mid": 16.08
+    },
+    "exit_cost_bps_vs_mid": null,
+    "official_src": "MODEL-PX (no fresh quote)"
+   }
+  }
+ ]
+}

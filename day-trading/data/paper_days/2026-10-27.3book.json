@@ -32,6 +32,19 @@
    "notional": 9999.15,
    "halal": "REFUSE-TO-EVALUATE",
    "model_note": "LIVE track grid 09:40 (1st ranked, coil 1.0, 2x CRWV ETF); spread 0.32% (book 6.21/6.23), depth 12903 to ask*1.005; shares_cap 45608; model track HOLDING AIOK (entry 09:37 @15.38)"
+  },
+  {
+   "book": "r4",
+   "sym": "CRDU",
+   "decision_min": "12:05",
+   "entry_time": "12:06",
+   "ask": 5.95,
+   "bid": 5.93,
+   "mid": 5.94,
+   "shares": 1680,
+   "notional": 9996.0,
+   "halal": "REFUSE-TO-EVALUATE",
+   "model_note": "R4 live re-entry after CWVX exit; grid 12:05 rank1 CRDU, book PASS spread 0.337% depth 9907 (asks<=5.98); entered 12:06:5x at ask"
   }
  ],
  "notes": [
@@ -41,15 +54,21 @@
   "[09:42] R4 ENTER CWVX 1605 @6.23 (bid 6.21) grid 09:40, 1st ranked PASS. RL 09:35 step GAP (agent missed the 09:36 RL scan while walking R4/R15 at 09:36-09:38); RL 09:40 NOTHING (breadth +0.77%). R4 model track HOLDING AIOK from 09:37 @15.38 (SHADOW: live refused AIOK HALT at 09:35).",
   "[10:38] EXIT-R15-H60 AGYS @ 116.00 x81 P&L $-483.57 (signal decided 10:36 on bid 116.00; booked 10:38:25 by r15 watcher; model fill = 10:37 open 116.80 since the 10:36 bar did not print). R15 book flat, DONE for the day.",
   "[10:57] 10:58 proactive watcher restart before the 2h background limit: r4 (holding CWVX) and rl watchers stopped+restarted (reload state files); r15 watcher stopped, not restarted (R15 done, AGYS exited 10:38).",
-  "[11:31] 11:31 R4 scan total_items 205 > 200-row frontend cap (sorted Coil desc, by design per p3_r4 docstring); truncated tail = lowest-coil names (~0.84), cannot reach top8. No action."
+  "[11:31] 11:31 R4 scan total_items 205 > 200-row frontend cap (sorted Coil desc, by design per p3_r4 docstring); truncated tail = lowest-coil names (~0.84), cannot reach top8. No action.",
+  "[12:06] 12:05:23 EXIT-R4-BEARISH CWVX @ 6.3263 x1605 P&L $+154.56 (decided 12:03, model exit 12:04 open 6.3263; official_src MODEL-PX). R4 live now flat, tickets_used 1.",
+  "[12:07] 12:07 R4 ENTER CRDU 1680 @5.95 (decision 12:05; bid 5.93; halal tag REFUSE-TO-EVALUATE, tag only)"
  ],
  "errors": [
   "[09:38] R15: agent ran p3_r15 --now 09:37 at wall 09:36:2x (wrong wall time) with bars only to 09:35 -> false 'AGYS 09:36 bar did not print, ticket spent' DONE, frozen. AGYS quote shows a trade 13:36:24Z (09:36 bar printed). Frozen decision moved aside to decision_2026-10-27.WRONG_WALLTIME_0937.json at 09:38; re-deciding with the real 09:36 bar (enter_by 09:41).",
-  "[10:53] 10:53 self-caught: at 10:51 cycle I fed EFOI 14:50Z interpolated gap-fill bar (vol 0) into cyc3 as a real bar; removed it from data/rh_bars/EFOI_2026-10-27.csv at 10:53. R4 model state at 10:52 unchanged (HOLDING EFOI), no decision consumed it beyond that."
+  "[10:53] 10:53 self-caught: at 10:51 cycle I fed EFOI 14:50Z interpolated gap-fill bar (vol 0) into cyc3 as a real bar; removed it from data/rh_bars/EFOI_2026-10-27.csv at 10:53. R4 model state at 10:52 unchanged (HOLDING EFOI), no decision consumed it beyond that.",
+  "[12:06] 12:06 self-caught defect: from ~10:51 (post context compaction) my cyc3.py helper passed bare HH:MM:SS quote timestamps to write_quote.py; paper_watch._parse_et rejects bare times, so every watcher quote read since ~10:51 returned None. Impact: R4 CWVX exit official fill fell back to MODEL-PX 6.3263 (P&L +154.56) instead of the decision-minute quote bid. Decision-minute quote actually captured at 12:04:07 cycle: CWVX bid 6.32 / ask 6.34 @ 2026-10-27T16:04:00Z -> honest quote-bid fill 6.32, P&L (6.32-6.23)*1605 = +144.45 (booked figure overstates by $10.11). Flatten file left as the watcher wrote it (no hand edits). Fix: cyc3.py now expands bare times to {day}T{ts}Z. R15 AGYS exit (10:38) unaffected: official_src quote-bid."
  ],
  "ops": {
-  "last_cycle": "11:51:35",
+  "last_cycle": "12:07:01",
   "capability_probe": "09:12 ET GREEN: python OK, git status OK, MCP get_equity_quotes SPY OK (bid 767.31 ask 767.35)",
   "scan_copy_note": "R4 scan files are compact copies of run_scan cells: rows below coil ~0.96 (flat) / ~0.98 (live+model holding) dropped, total_items kept; RL scan VWAP cells rounded to 6 decimals. RL 09:35 step GAP (missed)."
- }
+ },
+ "divergences": [
+  "[12:06] R4 CWVX exit official fill: booked MODEL-PX 6.3263 (+154.56) vs decision-minute quote bid 6.32 (+144.45); cause = stale-quote defect in my helper, see errors[] 12:06."
+ ]
 }
