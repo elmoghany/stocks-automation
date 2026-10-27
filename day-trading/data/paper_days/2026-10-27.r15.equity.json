@@ -453,6 +453,105 @@
    "book_pnl": -159.57,
    "deployed_notional": 9879.57,
    "dd_pct": -1.615
+  },
+  {
+   "t": "2026-10-27T09:38:49.952963-04:00",
+   "marks": {
+    "AGYS": 120.0
+   },
+   "open_pnl": -159.57,
+   "realized": 0,
+   "book_pnl": -159.57,
+   "deployed_notional": 9879.57,
+   "dd_pct": -1.615
+  },
+  {
+   "t": "2026-10-27T09:39:19.991274-04:00",
+   "marks": {
+    "AGYS": 120.68
+   },
+   "open_pnl": -104.49,
+   "realized": 0,
+   "book_pnl": -104.49,
+   "deployed_notional": 9879.57,
+   "dd_pct": -1.058
+  },
+  {
+   "t": "2026-10-27T09:39:50.038763-04:00",
+   "marks": {
+    "AGYS": 120.68
+   },
+   "open_pnl": -104.49,
+   "realized": 0,
+   "book_pnl": -104.49,
+   "deployed_notional": 9879.57,
+   "dd_pct": -1.058
+  },
+  {
+   "t": "2026-10-27T09:40:20.079720-04:00",
+   "marks": {
+    "AGYS": 120.68
+   },
+   "open_pnl": -104.49,
+   "realized": 0,
+   "book_pnl": -104.49,
+   "deployed_notional": 9879.57,
+   "dd_pct": -1.058
+  },
+  {
+   "t": "2026-10-27T09:40:50.120297-04:00",
+   "marks": {
+    "AGYS": 120.68
+   },
+   "open_pnl": -104.49,
+   "realized": 0,
+   "book_pnl": -104.49,
+   "deployed_notional": 9879.57,
+   "dd_pct": -1.058
+  },
+  {
+   "t": "2026-10-27T09:41:20.158626-04:00",
+   "marks": {
+    "AGYS": 120.68
+   },
+   "open_pnl": -104.49,
+   "realized": 0,
+   "book_pnl": -104.49,
+   "deployed_notional": 9879.57,
+   "dd_pct": -1.058
+  },
+  {
+   "t": "2026-10-27T09:41:50.201106-04:00",
+   "marks": {
+    "AGYS": 120.68
+   },
+   "open_pnl": -104.49,
+   "realized": 0,
+   "book_pnl": -104.49,
+   "deployed_notional": 9879.57,
+   "dd_pct": -1.058
+  },
+  {
+   "t": "2026-10-27T09:42:20.239721-04:00",
+   "marks": {
+    "AGYS": 120.68
+   },
+   "open_pnl": -104.49,
+   "realized": 0,
+   "book_pnl": -104.49,
+   "deployed_notional": 9879.57,
+   "dd_pct": -1.058
+  },
+  {
+   "t": "2026-10-27T09:42:50.281477-04:00",
+   "marks": {
+    "AGYS": 119.32
+   },
+   "open_pnl": -214.65,
+   "realized": 0,
+   "book_pnl": -214.65,
+   "deployed_notional": 9879.57,
+   "dd_pct": -2.173
   }
  ]
 }
