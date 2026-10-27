@@ -80,7 +80,7 @@
   "[12:06] 12:06 self-caught defect: from ~10:51 (post context compaction) my cyc3.py helper passed bare HH:MM:SS quote timestamps to write_quote.py; paper_watch._parse_et rejects bare times, so every watcher quote read since ~10:51 returned None. Impact: R4 CWVX exit official fill fell back to MODEL-PX 6.3263 (P&L +154.56) instead of the decision-minute quote bid. Decision-minute quote actually captured at 12:04:07 cycle: CWVX bid 6.32 / ask 6.34 @ 2026-10-27T16:04:00Z -> honest quote-bid fill 6.32, P&L (6.32-6.23)*1605 = +144.45 (booked figure overstates by $10.11). Flatten file left as the watcher wrote it (no hand edits). Fix: cyc3.py now expands bare times to {day}T{ts}Z. R15 AGYS exit (10:38) unaffected: official_src quote-bid."
  ],
  "ops": {
-  "last_cycle": "13:26 grid 13:25: R4 HOLD QNTU (book +344.16), model HOLD EFOI, RL NOTHING (br 0.023)",
+  "last_cycle": "13:51 grid 13:50: R4 HOLD QNTU (book +344.16), model HOLD EFOI, RL NOTHING (br 0.019)",
   "capability_probe": "09:12 ET GREEN: python OK, git status OK, MCP get_equity_quotes SPY OK (bid 767.31 ask 767.35)",
   "scan_copy_note": "R4 scan files are compact copies of run_scan cells: rows below coil ~0.96 (flat) / ~0.98 (live+model holding) dropped, total_items kept; RL scan VWAP cells rounded to 6 decimals. RL 09:35 step GAP (missed).",
   "rl_note": "13:05 RL step ingested at 13:07 (1 min late; R4 NEED_DATA->QNTU entry took priority)"
