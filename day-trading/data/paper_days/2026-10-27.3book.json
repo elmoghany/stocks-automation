@@ -6,14 +6,31 @@
   "r15",
   "rl"
  ],
- "trades": [],
+ "trades": [
+  {
+   "book": "r15",
+   "sym": "AGYS",
+   "decision_min": "09:35",
+   "entry_time": "09:38:04",
+   "ask": 121.97,
+   "bid": 120.0,
+   "mid": 120.985,
+   "shares": 81,
+   "notional": 9879.57,
+   "halal": "REFUSE-TO-EVALUATE",
+   "model_note": "R15 fresh earnings (AGYS 10-26 pm, 17.08h) + green 09:35 (+161.6bp); model entry 09:36 open 119.53, model notional 10000; exit due 10:36. Entered 09:38 after the agent's wall-time slip was corrected (see errors)."
+  }
+ ],
  "notes": [
   "[09:11] SESSION full day (market_calendar: TRADING 2026-10-27 full, close 16:00). Universe asof 2026-10-02 (current month, no refresh).",
-  "[09:13] R15 calendar: 250 rows, 2 in-universe: AGYS 2026-10-26 pm (reported, FRESH), ZWS 2026-10-27 pm NOT REPORTED. Watchers r4/r15/rl started 09:14 (bg ids b3bfv8sie/b3d7n14d2/b50a112h9; 2h limit -> restart ~11:10)."
+  "[09:13] R15 calendar: 250 rows, 2 in-universe: AGYS 2026-10-26 pm (reported, FRESH), ZWS 2026-10-27 pm NOT REPORTED. Watchers r4/r15/rl started 09:14 (bg ids b3bfv8sie/b3d7n14d2/b50a112h9; 2h limit -> restart ~11:10).",
+  "[09:38] R4 09:35 refusals: AIOK HALT (locked 15.75/15.75, no trade since 09:32), INFH SPREAD 1.73%, CRMX SPREAD 4.39%, FGC SPREAD 12.56%, WATT SPREAD 6.20%, KNSA SPREAD 1.00%, SMPL SPREAD 1.72%, NEBX SPREAD 1.20% (MFIC dropped from top-8 after bars) -> NOTHING; model ARMED AIOK. R15 ENTER AGYS 81 @121.97 (bid 120.00) 09:38. RL 09:30 NOTHING."
  ],
- "errors": [],
+ "errors": [
+  "[09:38] R15: agent ran p3_r15 --now 09:37 at wall 09:36:2x (wrong wall time) with bars only to 09:35 -> false 'AGYS 09:36 bar did not print, ticket spent' DONE, frozen. AGYS quote shows a trade 13:36:24Z (09:36 bar printed). Frozen decision moved aside to decision_2026-10-27.WRONG_WALLTIME_0937.json at 09:38; re-deciding with the real 09:36 bar (enter_by 09:41)."
+ ],
  "ops": {
-  "last_cycle": "09:13:58",
+  "last_cycle": "09:38:29",
   "capability_probe": "09:12 ET GREEN: python OK, git status OK, MCP get_equity_quotes SPY OK (bid 767.31 ask 767.35)"
  }
 }
