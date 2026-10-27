@@ -74,7 +74,9 @@
   "[13:02] 13:01:36 EXIT-SIGNAL CRDU bearish decided 13:00 quote bid 6.07/ask 6.09 ts 17:00:51Z | 13:02:06 EXIT-R4-BEARISH CRDU @ 6.0700 x1680 P&L $+201.60 (official = quote bid; fresh quote, no MODEL-PX fallback) | R4 book P&L $+356.16, flat",
   "[13:06] 13:06 R4 ENTER QNTU 200 @4.40 (bid 4.38, decision 13:05; CTOS SPREAD veto first). halal REFUSE-TO-EVALUATE (tag only)",
   "[14:26] 14:26 R4 last-entry grid (14:25) passed while holding QNTU; no further R4 entries today. R4 watcher flattens at 15:00.",
-  "[14:34] 14:34 watchers restarted (r4 bfb2ljoi1, rl b885nqji6) ahead of 2h background limit; QNTU state reloaded, no gap"
+  "[14:34] 14:34 watchers restarted (r4 bfb2ljoi1, rl b885nqji6) ahead of 2h background limit; QNTU state reloaded, no gap",
+  "[15:01] 15:01:16 EXIT-SIGNAL QNTU flatten decided 14:46 model px 4.3101 quote bid 4.32/ask 4.34 ts 18:59:56Z age 80s",
+  "[15:01] 15:01:16 EXIT-R4-FLATTEN QNTU @ 4.3200 x200 P&L $-16.00 (official quote-bid; model 4.3101 -> -17.98). R4 live book flat, P&L +340.16 (AIOK model leg excl.; CWVX +154.56, CRDU +201.60, QNTU -16.00)"
  ],
  "errors": [
   "[09:38] R15: agent ran p3_r15 --now 09:37 at wall 09:36:2x (wrong wall time) with bars only to 09:35 -> false 'AGYS 09:36 bar did not print, ticket spent' DONE, frozen. AGYS quote shows a trade 13:36:24Z (09:36 bar printed). Frozen decision moved aside to decision_2026-10-27.WRONG_WALLTIME_0937.json at 09:38; re-deciding with the real 09:36 bar (enter_by 09:41).",
@@ -82,7 +84,7 @@
   "[12:06] 12:06 self-caught defect: from ~10:51 (post context compaction) my cyc3.py helper passed bare HH:MM:SS quote timestamps to write_quote.py; paper_watch._parse_et rejects bare times, so every watcher quote read since ~10:51 returned None. Impact: R4 CWVX exit official fill fell back to MODEL-PX 6.3263 (P&L +154.56) instead of the decision-minute quote bid. Decision-minute quote actually captured at 12:04:07 cycle: CWVX bid 6.32 / ask 6.34 @ 2026-10-27T16:04:00Z -> honest quote-bid fill 6.32, P&L (6.32-6.23)*1605 = +144.45 (booked figure overstates by $10.11). Flatten file left as the watcher wrote it (no hand edits). Fix: cyc3.py now expands bare times to {day}T{ts}Z. R15 AGYS exit (10:38) unaffected: official_src quote-bid."
  ],
  "ops": {
-  "last_cycle": "14:51 R4 HOLD QNTU (q 4.30/4.32), model EFOI hold; RL 14:50 grid NOTHING br 0.023; R15 done",
+  "last_cycle": "15:01 R4 FLAT (QNTU flatten 4.32 -16.00, book +340.16); model EFOI still open; RL flat NOTHING; R15 done -483.57",
   "capability_probe": "09:12 ET GREEN: python OK, git status OK, MCP get_equity_quotes SPY OK (bid 767.31 ask 767.35)",
   "scan_copy_note": "R4 scan files are compact copies of run_scan cells: rows below coil ~0.96 (flat) / ~0.98 (live+model holding) dropped, total_items kept; RL scan VWAP cells rounded to 6 decimals. RL 09:35 step GAP (missed).",
   "rl_note": "13:05 RL step ingested at 13:07 (1 min late; R4 NEED_DATA->QNTU entry took priority)"
