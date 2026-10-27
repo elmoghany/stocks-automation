@@ -51,6 +51,63 @@
     "exit_cost_bps_vs_mid": null,
     "official_src": "MODEL-PX (no fresh quote)"
    }
+  },
+  {
+   "sym": "CRDU",
+   "ticket": null,
+   "date": "2026-10-27",
+   "mode": "r4",
+   "entry": 5.95,
+   "shares_initial": 1680,
+   "entry_bar_utc": "2026-10-27T16:06:00Z",
+   "prev_close": null,
+   "exit_kind": "exit-r4-bearish",
+   "fills": [
+    {
+     "kind": "EXIT-R4-BEARISH",
+     "time": "2026-10-27T13:01:36.394131-04:00",
+     "shares": 1680,
+     "px": 6.07,
+     "src": "stop level"
+    }
+   ],
+   "vwap": 6.07,
+   "shares_exited": 1680,
+   "scale_out": null,
+   "banked": 0.0,
+   "pnl": 201.6,
+   "peak": 6.1,
+   "rungs": [],
+   "deployed": 9996.0,
+   "exit_time": "2026-10-27T13:01:36.394131-04:00",
+   "booked_at": "2026-10-27T13:02:06.471269-04:00",
+   "exit_parity": null,
+   "p3": {
+    "book": "r4",
+    "mode": "r4",
+    "reason": "bearish",
+    "decided_min": "13:00",
+    "model_exit": 6.075,
+    "model_exit_min": "13:01",
+    "model_entry": 5.945,
+    "model_entry_min": "12:06",
+    "model_pnl": 218.4,
+    "exit_quote": {
+     "bid": 6.07,
+     "ask": 6.09,
+     "mid": 6.08,
+     "ts": "2026-10-27T17:00:51Z",
+     "age_s": 45.4
+    },
+    "entry_quote": {
+     "bid": 5.93,
+     "ask": 5.95,
+     "mid": 5.9399999999999995,
+     "cost_bps_vs_mid": 16.84
+    },
+    "exit_cost_bps_vs_mid": 16.45,
+    "official_src": "quote-bid"
+   }
   }
  ]
 }

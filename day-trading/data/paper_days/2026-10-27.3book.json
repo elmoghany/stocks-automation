@@ -57,7 +57,8 @@
   "[11:31] 11:31 R4 scan total_items 205 > 200-row frontend cap (sorted Coil desc, by design per p3_r4 docstring); truncated tail = lowest-coil names (~0.84), cannot reach top8. No action.",
   "[12:06] 12:05:23 EXIT-R4-BEARISH CWVX @ 6.3263 x1605 P&L $+154.56 (decided 12:03, model exit 12:04 open 6.3263; official_src MODEL-PX). R4 live now flat, tickets_used 1.",
   "[12:07] 12:07 R4 ENTER CRDU 1680 @5.95 (decision 12:05; bid 5.93; halal tag REFUSE-TO-EVALUATE, tag only)",
-  "[12:47] 12:48 watchers restarted (r4 b4cpaeoye, rl bfgeztmzd) ahead of 2h background limit; no gap (R4 CRDU state reloaded)"
+  "[12:47] 12:48 watchers restarted (r4 b4cpaeoye, rl bfgeztmzd) ahead of 2h background limit; no gap (R4 CRDU state reloaded)",
+  "[13:02] 13:01:36 EXIT-SIGNAL CRDU bearish decided 13:00 quote bid 6.07/ask 6.09 ts 17:00:51Z | 13:02:06 EXIT-R4-BEARISH CRDU @ 6.0700 x1680 P&L $+201.60 (official = quote bid; fresh quote, no MODEL-PX fallback) | R4 book P&L $+356.16, flat"
  ],
  "errors": [
   "[09:38] R15: agent ran p3_r15 --now 09:37 at wall 09:36:2x (wrong wall time) with bars only to 09:35 -> false 'AGYS 09:36 bar did not print, ticket spent' DONE, frozen. AGYS quote shows a trade 13:36:24Z (09:36 bar printed). Frozen decision moved aside to decision_2026-10-27.WRONG_WALLTIME_0937.json at 09:38; re-deciding with the real 09:36 bar (enter_by 09:41).",
@@ -65,7 +66,7 @@
   "[12:06] 12:06 self-caught defect: from ~10:51 (post context compaction) my cyc3.py helper passed bare HH:MM:SS quote timestamps to write_quote.py; paper_watch._parse_et rejects bare times, so every watcher quote read since ~10:51 returned None. Impact: R4 CWVX exit official fill fell back to MODEL-PX 6.3263 (P&L +154.56) instead of the decision-minute quote bid. Decision-minute quote actually captured at 12:04:07 cycle: CWVX bid 6.32 / ask 6.34 @ 2026-10-27T16:04:00Z -> honest quote-bid fill 6.32, P&L (6.32-6.23)*1605 = +144.45 (booked figure overstates by $10.11). Flatten file left as the watcher wrote it (no hand edits). Fix: cyc3.py now expands bare times to {day}T{ts}Z. R15 AGYS exit (10:38) unaffected: official_src quote-bid."
  ],
  "ops": {
-  "last_cycle": "12:48 grid 12:45 done: R4 HOLD CRDU, model HOLD EFOI, RL NOTHING (br 0.0196)",
+  "last_cycle": "13:02:17",
   "capability_probe": "09:12 ET GREEN: python OK, git status OK, MCP get_equity_quotes SPY OK (bid 767.31 ask 767.35)",
   "scan_copy_note": "R4 scan files are compact copies of run_scan cells: rows below coil ~0.96 (flat) / ~0.98 (live+model holding) dropped, total_items kept; RL scan VWAP cells rounded to 6 decimals. RL 09:35 step GAP (missed).",
   "rl_note": "12:05 RL step snapshot taken at 12:07 (2 min late; R4 CWVX exit + CRDU entry handled first). Breadth ~+2%, no qualifier possible."
