@@ -2,6 +2,35 @@
 
 ## PAPER-3BOOK
 
+### 2026-10-27 (PAPER-3BOOK day 16 on the scoreboard): full headless session; R4 LIVE +$340.16 on 3 trades, R15 −$483.57 on its first trade, RL no trades (all flat)
+
+The session ran headless from 09:11 until after 16:00. R4 was flat at 15:01:16 and its watcher was done at 15:07:16. R15 was DONE at 10:38 when AGYS exited. RL ran every grid through 15:55 with no entry. The ledger was committed at least every 30 min and after every entry and exit. Zero real orders.
+
+- **R4 LIVE**: 3 trades, **+$340.16** (model fills +$312.86; cost 19.8 bps/side vs mid). That is +$405.59 vs the −$65.43/day expectation.
+  - CWVX 1605 @6.23 (09:40 grid, 1st ranked PASS). EXIT-R4-BEARISH decided 12:03, booked 12:05:23 @6.3263: **+$154.56**. That fill is **MODEL-PX, not the quote bid**. The agent's cyc3 helper had written bare `HH:MM:SS` quote timestamps, the watcher's `_parse_et` rejected them as stale, and it fell back to the model price. At the quote bid (6.32) the trade would have been +$144.45, so the book is overstated by $10.11. The helper was fixed at 12:06 (full ISO timestamps), and both later exits booked at the fresh quote bid.
+  - CRDU 1680 @5.95 (12:05 grid). EXIT-R4-BEARISH decided 13:00, booked 13:02:06 @6.07 bid: **+$201.60**.
+  - QNTU 200 @4.40 (13:05 grid, after CTOS SPREAD; shares capped at 200). It did not print after 14:46. EXIT-R4-FLATTEN on the last printed bar, booked 15:01:16 @4.32 bid (quote 80 s old; model px 4.3101): **−$16.00**.
+  - Refusals (unique name × grid): SPREAD 8, VOLCAP 5, HALT 1 (AIOK locked 15.75/15.75 at 09:35), PINNED 1.
+  - Halal: all three names REFUSE-TO-EVALUATE, so the halal-PASS P&L is $0.
+  - Cumulative over 16 days: −$1,463.19 on 21 trades.
+- **R4 PARITY (model)**: 2 legs, +$520.83 gross (+$462.61 net 15 bps).
+  - AIOK 650 @15.38 (09:37) → bearish exit 09:40 @16.0098, +$409.37.
+  - EFOI 2103 @4.35 (09:46) → 14:44 flatten @4.403, +$111.46.
+  - SHADOW legs +$276.17. AIOK, refused live on HALT with first refusal ask 15.75, would have made +$164.71.
+- **R15**: 1 trade, **−$483.57**, the book's first trade on the scoreboard. AGYS (reported 2026-10-26 pm, fresh, green at 09:35) entered 81 @121.97 at 09:38 (bid 120.00, wide). EXIT-R15-H60 decided 10:36 on bid 116.00, booked 10:38:25. Costs:
+  - Entry cost was 83 bps/side vs mid, about $160 of the loss.
+  - The model fill shows as none/$0 in the EOD because the entry has no model price recorded. This should be looked at in p3_r15/p3_eod.
+  - That is −$505.28 vs +$21.71/day expected.
+- **RL**: 0 trades. n_cand was 0 on every grid, and br stayed about +0.018 to +0.025 all afternoon. Flat, against +$5.77/day expected. Cumulative: +$36.34 on 3 trades.
+- **Ops**:
+  - Watchers were restarted proactively at 10:58, 12:48 and 14:34 ahead of the 2 h background limit, with no gaps. The R15 watcher was not restarted after AGYS exited.
+  - An interpolated EFOI bar was ingested once, then removed and logged.
+  - RL steps that were late or missed:
+    - 09:35: GAP (the agent was busy with R4/R15 entries).
+    - 13:05: 1 min late (R4 entry).
+    - 15:00: 2 min late (QNTU flatten booking).
+  - Lesson: cyc3 quote timestamps must be full ISO strings, or the watcher silently books MODEL-PX.
+
 ### 2026-10-26 (PAPER-3BOOK day 15 on the scoreboard): full headless session; R4 LIVE +$204.48 on 2 trades, R15/RL no trades (all flat)
 
 The session ran headless from 09:11 until after 16:00. R4 was flat at 15:01:21 and its watcher was done at 15:07:22. R15 was DONE at 09:37 and its watcher was done at 15:02:22. RL ran every grid through 15:55 with no entry. The ledger was committed at least every 30 min and after every entry and exit. Zero real orders.
