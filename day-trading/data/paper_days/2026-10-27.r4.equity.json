@@ -906,6 +906,644 @@
    "book_pnl": -337.05,
    "deployed_notional": 9999.15,
    "dd_pct": -3.371
+  },
+  {
+   "t": "2026-10-27T10:00:21.889869-04:00",
+   "marks": {
+    "CWVX": 6.07
+   },
+   "open_pnl": -256.8,
+   "realized": 0,
+   "book_pnl": -256.8,
+   "deployed_notional": 9999.15,
+   "dd_pct": -2.568
+  },
+  {
+   "t": "2026-10-27T10:00:51.966391-04:00",
+   "marks": {
+    "CWVX": 6.07
+   },
+   "open_pnl": -256.8,
+   "realized": 0,
+   "book_pnl": -256.8,
+   "deployed_notional": 9999.15,
+   "dd_pct": -2.568
+  },
+  {
+   "t": "2026-10-27T10:01:22.012763-04:00",
+   "marks": {
+    "CWVX": 6.07
+   },
+   "open_pnl": -256.8,
+   "realized": 0,
+   "book_pnl": -256.8,
+   "deployed_notional": 9999.15,
+   "dd_pct": -2.568
+  },
+  {
+   "t": "2026-10-27T10:01:52.078184-04:00",
+   "marks": {
+    "CWVX": 6.03
+   },
+   "open_pnl": -321.0,
+   "realized": 0,
+   "book_pnl": -321.0,
+   "deployed_notional": 9999.15,
+   "dd_pct": -3.21
+  },
+  {
+   "t": "2026-10-27T10:02:22.125597-04:00",
+   "marks": {
+    "CWVX": 5.9729
+   },
+   "open_pnl": -412.65,
+   "realized": 0,
+   "book_pnl": -412.65,
+   "deployed_notional": 9999.15,
+   "dd_pct": -4.127
+  },
+  {
+   "t": "2026-10-27T10:02:52.198016-04:00",
+   "marks": {
+    "CWVX": 5.9729
+   },
+   "open_pnl": -412.65,
+   "realized": 0,
+   "book_pnl": -412.65,
+   "deployed_notional": 9999.15,
+   "dd_pct": -4.127
+  },
+  {
+   "t": "2026-10-27T10:03:22.246073-04:00",
+   "marks": {
+    "CWVX": 6.02
+   },
+   "open_pnl": -337.05,
+   "realized": 0,
+   "book_pnl": -337.05,
+   "deployed_notional": 9999.15,
+   "dd_pct": -3.371
+  },
+  {
+   "t": "2026-10-27T10:03:52.314006-04:00",
+   "marks": {
+    "CWVX": 6.02
+   },
+   "open_pnl": -337.05,
+   "realized": 0,
+   "book_pnl": -337.05,
+   "deployed_notional": 9999.15,
+   "dd_pct": -3.371
+  },
+  {
+   "t": "2026-10-27T10:04:22.373288-04:00",
+   "marks": {
+    "CWVX": 6.1495
+   },
+   "open_pnl": -129.2,
+   "realized": 0,
+   "book_pnl": -129.2,
+   "deployed_notional": 9999.15,
+   "dd_pct": -1.292
+  },
+  {
+   "t": "2026-10-27T10:04:52.471992-04:00",
+   "marks": {
+    "CWVX": 6.1495
+   },
+   "open_pnl": -129.2,
+   "realized": 0,
+   "book_pnl": -129.2,
+   "deployed_notional": 9999.15,
+   "dd_pct": -1.292
+  },
+  {
+   "t": "2026-10-27T10:05:22.518912-04:00",
+   "marks": {
+    "CWVX": 6.11
+   },
+   "open_pnl": -192.6,
+   "realized": 0,
+   "book_pnl": -192.6,
+   "deployed_notional": 9999.15,
+   "dd_pct": -1.926
+  },
+  {
+   "t": "2026-10-27T10:05:52.589490-04:00",
+   "marks": {
+    "CWVX": 6.11
+   },
+   "open_pnl": -192.6,
+   "realized": 0,
+   "book_pnl": -192.6,
+   "deployed_notional": 9999.15,
+   "dd_pct": -1.926
+  },
+  {
+   "t": "2026-10-27T10:06:22.637046-04:00",
+   "marks": {
+    "CWVX": 6.11
+   },
+   "open_pnl": -192.6,
+   "realized": 0,
+   "book_pnl": -192.6,
+   "deployed_notional": 9999.15,
+   "dd_pct": -1.926
+  },
+  {
+   "t": "2026-10-27T10:06:52.691462-04:00",
+   "marks": {
+    "CWVX": 6.12
+   },
+   "open_pnl": -176.55,
+   "realized": 0,
+   "book_pnl": -176.55,
+   "deployed_notional": 9999.15,
+   "dd_pct": -1.766
+  },
+  {
+   "t": "2026-10-27T10:07:22.736665-04:00",
+   "marks": {
+    "CWVX": 6.13
+   },
+   "open_pnl": -160.5,
+   "realized": 0,
+   "book_pnl": -160.5,
+   "deployed_notional": 9999.15,
+   "dd_pct": -1.605
+  },
+  {
+   "t": "2026-10-27T10:07:52.807590-04:00",
+   "marks": {
+    "CWVX": 6.13
+   },
+   "open_pnl": -160.5,
+   "realized": 0,
+   "book_pnl": -160.5,
+   "deployed_notional": 9999.15,
+   "dd_pct": -1.605
+  },
+  {
+   "t": "2026-10-27T10:08:22.877077-04:00",
+   "marks": {
+    "CWVX": 6.125
+   },
+   "open_pnl": -168.53,
+   "realized": 0,
+   "book_pnl": -168.53,
+   "deployed_notional": 9999.15,
+   "dd_pct": -1.685
+  },
+  {
+   "t": "2026-10-27T10:08:52.946799-04:00",
+   "marks": {
+    "CWVX": 6.125
+   },
+   "open_pnl": -168.53,
+   "realized": 0,
+   "book_pnl": -168.53,
+   "deployed_notional": 9999.15,
+   "dd_pct": -1.685
+  },
+  {
+   "t": "2026-10-27T10:09:23.003753-04:00",
+   "marks": {
+    "CWVX": 6.089
+   },
+   "open_pnl": -226.31,
+   "realized": 0,
+   "book_pnl": -226.31,
+   "deployed_notional": 9999.15,
+   "dd_pct": -2.263
+  },
+  {
+   "t": "2026-10-27T10:09:53.147119-04:00",
+   "marks": {
+    "CWVX": 6.089
+   },
+   "open_pnl": -226.31,
+   "realized": 0,
+   "book_pnl": -226.31,
+   "deployed_notional": 9999.15,
+   "dd_pct": -2.263
+  },
+  {
+   "t": "2026-10-27T10:10:23.202050-04:00",
+   "marks": {
+    "CWVX": 6.06
+   },
+   "open_pnl": -272.85,
+   "realized": 0,
+   "book_pnl": -272.85,
+   "deployed_notional": 9999.15,
+   "dd_pct": -2.729
+  },
+  {
+   "t": "2026-10-27T10:10:53.272329-04:00",
+   "marks": {
+    "CWVX": 6.06
+   },
+   "open_pnl": -272.85,
+   "realized": 0,
+   "book_pnl": -272.85,
+   "deployed_notional": 9999.15,
+   "dd_pct": -2.729
+  },
+  {
+   "t": "2026-10-27T10:11:23.330661-04:00",
+   "marks": {
+    "CWVX": 6.06
+   },
+   "open_pnl": -272.85,
+   "realized": 0,
+   "book_pnl": -272.85,
+   "deployed_notional": 9999.15,
+   "dd_pct": -2.729
+  },
+  {
+   "t": "2026-10-27T10:11:53.385890-04:00",
+   "marks": {
+    "CWVX": 6.01
+   },
+   "open_pnl": -353.1,
+   "realized": 0,
+   "book_pnl": -353.1,
+   "deployed_notional": 9999.15,
+   "dd_pct": -3.531
+  },
+  {
+   "t": "2026-10-27T10:12:23.421809-04:00",
+   "marks": {
+    "CWVX": 6.0287
+   },
+   "open_pnl": -323.09,
+   "realized": 0,
+   "book_pnl": -323.09,
+   "deployed_notional": 9999.15,
+   "dd_pct": -3.231
+  },
+  {
+   "t": "2026-10-27T10:12:53.477496-04:00",
+   "marks": {
+    "CWVX": 6.0287
+   },
+   "open_pnl": -323.09,
+   "realized": 0,
+   "book_pnl": -323.09,
+   "deployed_notional": 9999.15,
+   "dd_pct": -3.231
+  },
+  {
+   "t": "2026-10-27T10:13:23.525317-04:00",
+   "marks": {
+    "CWVX": 6.0
+   },
+   "open_pnl": -369.15,
+   "realized": 0,
+   "book_pnl": -369.15,
+   "deployed_notional": 9999.15,
+   "dd_pct": -3.692
+  },
+  {
+   "t": "2026-10-27T10:13:53.583970-04:00",
+   "marks": {
+    "CWVX": 6.0
+   },
+   "open_pnl": -369.15,
+   "realized": 0,
+   "book_pnl": -369.15,
+   "deployed_notional": 9999.15,
+   "dd_pct": -3.692
+  },
+  {
+   "t": "2026-10-27T10:14:23.630587-04:00",
+   "marks": {
+    "CWVX": 6.03
+   },
+   "open_pnl": -321.0,
+   "realized": 0,
+   "book_pnl": -321.0,
+   "deployed_notional": 9999.15,
+   "dd_pct": -3.21
+  },
+  {
+   "t": "2026-10-27T10:14:53.690623-04:00",
+   "marks": {
+    "CWVX": 6.03
+   },
+   "open_pnl": -321.0,
+   "realized": 0,
+   "book_pnl": -321.0,
+   "deployed_notional": 9999.15,
+   "dd_pct": -3.21
+  },
+  {
+   "t": "2026-10-27T10:15:23.740704-04:00",
+   "marks": {
+    "CWVX": 6.01
+   },
+   "open_pnl": -353.1,
+   "realized": 0,
+   "book_pnl": -353.1,
+   "deployed_notional": 9999.15,
+   "dd_pct": -3.531
+  },
+  {
+   "t": "2026-10-27T10:15:53.799896-04:00",
+   "marks": {
+    "CWVX": 6.01
+   },
+   "open_pnl": -353.1,
+   "realized": 0,
+   "book_pnl": -353.1,
+   "deployed_notional": 9999.15,
+   "dd_pct": -3.531
+  },
+  {
+   "t": "2026-10-27T10:16:23.848849-04:00",
+   "marks": {
+    "CWVX": 6.01
+   },
+   "open_pnl": -353.1,
+   "realized": 0,
+   "book_pnl": -353.1,
+   "deployed_notional": 9999.15,
+   "dd_pct": -3.531
+  },
+  {
+   "t": "2026-10-27T10:16:53.897212-04:00",
+   "marks": {
+    "CWVX": 6.02
+   },
+   "open_pnl": -337.05,
+   "realized": 0,
+   "book_pnl": -337.05,
+   "deployed_notional": 9999.15,
+   "dd_pct": -3.371
+  },
+  {
+   "t": "2026-10-27T10:17:23.935033-04:00",
+   "marks": {
+    "CWVX": 5.99
+   },
+   "open_pnl": -385.2,
+   "realized": 0,
+   "book_pnl": -385.2,
+   "deployed_notional": 9999.15,
+   "dd_pct": -3.852
+  },
+  {
+   "t": "2026-10-27T10:17:53.995085-04:00",
+   "marks": {
+    "CWVX": 5.99
+   },
+   "open_pnl": -385.2,
+   "realized": 0,
+   "book_pnl": -385.2,
+   "deployed_notional": 9999.15,
+   "dd_pct": -3.852
+  },
+  {
+   "t": "2026-10-27T10:18:24.044834-04:00",
+   "marks": {
+    "CWVX": 6.04
+   },
+   "open_pnl": -304.95,
+   "realized": 0,
+   "book_pnl": -304.95,
+   "deployed_notional": 9999.15,
+   "dd_pct": -3.05
+  },
+  {
+   "t": "2026-10-27T10:18:54.103563-04:00",
+   "marks": {
+    "CWVX": 6.04
+   },
+   "open_pnl": -304.95,
+   "realized": 0,
+   "book_pnl": -304.95,
+   "deployed_notional": 9999.15,
+   "dd_pct": -3.05
+  },
+  {
+   "t": "2026-10-27T10:19:24.153262-04:00",
+   "marks": {
+    "CWVX": 6.0606
+   },
+   "open_pnl": -271.89,
+   "realized": 0,
+   "book_pnl": -271.89,
+   "deployed_notional": 9999.15,
+   "dd_pct": -2.719
+  },
+  {
+   "t": "2026-10-27T10:19:54.212765-04:00",
+   "marks": {
+    "CWVX": 6.0606
+   },
+   "open_pnl": -271.89,
+   "realized": 0,
+   "book_pnl": -271.89,
+   "deployed_notional": 9999.15,
+   "dd_pct": -2.719
+  },
+  {
+   "t": "2026-10-27T10:20:24.262100-04:00",
+   "marks": {
+    "CWVX": 6.0606
+   },
+   "open_pnl": -271.89,
+   "realized": 0,
+   "book_pnl": -271.89,
+   "deployed_notional": 9999.15,
+   "dd_pct": -2.719
+  },
+  {
+   "t": "2026-10-27T10:20:54.314342-04:00",
+   "marks": {
+    "CWVX": 6.0606
+   },
+   "open_pnl": -271.89,
+   "realized": 0,
+   "book_pnl": -271.89,
+   "deployed_notional": 9999.15,
+   "dd_pct": -2.719
+  },
+  {
+   "t": "2026-10-27T10:21:24.362506-04:00",
+   "marks": {
+    "CWVX": 6.0606
+   },
+   "open_pnl": -271.89,
+   "realized": 0,
+   "book_pnl": -271.89,
+   "deployed_notional": 9999.15,
+   "dd_pct": -2.719
+  },
+  {
+   "t": "2026-10-27T10:21:54.410071-04:00",
+   "marks": {
+    "CWVX": 6.07
+   },
+   "open_pnl": -256.8,
+   "realized": 0,
+   "book_pnl": -256.8,
+   "deployed_notional": 9999.15,
+   "dd_pct": -2.568
+  },
+  {
+   "t": "2026-10-27T10:22:24.448626-04:00",
+   "marks": {
+    "CWVX": 6.03
+   },
+   "open_pnl": -321.0,
+   "realized": 0,
+   "book_pnl": -321.0,
+   "deployed_notional": 9999.15,
+   "dd_pct": -3.21
+  },
+  {
+   "t": "2026-10-27T10:22:54.509509-04:00",
+   "marks": {
+    "CWVX": 6.03
+   },
+   "open_pnl": -321.0,
+   "realized": 0,
+   "book_pnl": -321.0,
+   "deployed_notional": 9999.15,
+   "dd_pct": -3.21
+  },
+  {
+   "t": "2026-10-27T10:23:24.559064-04:00",
+   "marks": {
+    "CWVX": 6.03
+   },
+   "open_pnl": -321.0,
+   "realized": 0,
+   "book_pnl": -321.0,
+   "deployed_notional": 9999.15,
+   "dd_pct": -3.21
+  },
+  {
+   "t": "2026-10-27T10:23:54.612734-04:00",
+   "marks": {
+    "CWVX": 6.03
+   },
+   "open_pnl": -321.0,
+   "realized": 0,
+   "book_pnl": -321.0,
+   "deployed_notional": 9999.15,
+   "dd_pct": -3.21
+  },
+  {
+   "t": "2026-10-27T10:24:24.659511-04:00",
+   "marks": {
+    "CWVX": 6.0432
+   },
+   "open_pnl": -299.81,
+   "realized": 0,
+   "book_pnl": -299.81,
+   "deployed_notional": 9999.15,
+   "dd_pct": -2.998
+  },
+  {
+   "t": "2026-10-27T10:24:54.721951-04:00",
+   "marks": {
+    "CWVX": 6.0432
+   },
+   "open_pnl": -299.81,
+   "realized": 0,
+   "book_pnl": -299.81,
+   "deployed_notional": 9999.15,
+   "dd_pct": -2.998
+  },
+  {
+   "t": "2026-10-27T10:25:24.770130-04:00",
+   "marks": {
+    "CWVX": 6.081
+   },
+   "open_pnl": -239.15,
+   "realized": 0,
+   "book_pnl": -239.15,
+   "deployed_notional": 9999.15,
+   "dd_pct": -2.392
+  },
+  {
+   "t": "2026-10-27T10:25:54.843824-04:00",
+   "marks": {
+    "CWVX": 6.081
+   },
+   "open_pnl": -239.15,
+   "realized": 0,
+   "book_pnl": -239.15,
+   "deployed_notional": 9999.15,
+   "dd_pct": -2.392
+  },
+  {
+   "t": "2026-10-27T10:26:24.892681-04:00",
+   "marks": {
+    "CWVX": 6.081
+   },
+   "open_pnl": -239.15,
+   "realized": 0,
+   "book_pnl": -239.15,
+   "deployed_notional": 9999.15,
+   "dd_pct": -2.392
+  },
+  {
+   "t": "2026-10-27T10:26:54.944147-04:00",
+   "marks": {
+    "CWVX": 6.09
+   },
+   "open_pnl": -224.7,
+   "realized": 0,
+   "book_pnl": -224.7,
+   "deployed_notional": 9999.15,
+   "dd_pct": -2.247
+  },
+  {
+   "t": "2026-10-27T10:27:24.984577-04:00",
+   "marks": {
+    "CWVX": 6.07
+   },
+   "open_pnl": -256.8,
+   "realized": 0,
+   "book_pnl": -256.8,
+   "deployed_notional": 9999.15,
+   "dd_pct": -2.568
+  },
+  {
+   "t": "2026-10-27T10:27:55.048550-04:00",
+   "marks": {
+    "CWVX": 6.07
+   },
+   "open_pnl": -256.8,
+   "realized": 0,
+   "book_pnl": -256.8,
+   "deployed_notional": 9999.15,
+   "dd_pct": -2.568
+  },
+  {
+   "t": "2026-10-27T10:28:25.098393-04:00",
+   "marks": {
+    "CWVX": 6.05
+   },
+   "open_pnl": -288.9,
+   "realized": 0,
+   "book_pnl": -288.9,
+   "deployed_notional": 9999.15,
+   "dd_pct": -2.889
+  },
+  {
+   "t": "2026-10-27T10:28:55.159542-04:00",
+   "marks": {
+    "CWVX": 6.05
+   },
+   "open_pnl": -288.9,
+   "realized": 0,
+   "book_pnl": -288.9,
+   "deployed_notional": 9999.15,
+   "dd_pct": -2.889
   }
  ]
 }
