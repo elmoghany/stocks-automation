@@ -38,13 +38,14 @@
   "[09:11] SESSION full day (market_calendar: TRADING 2026-10-27 full, close 16:00). Universe asof 2026-10-02 (current month, no refresh).",
   "[09:13] R15 calendar: 250 rows, 2 in-universe: AGYS 2026-10-26 pm (reported, FRESH), ZWS 2026-10-27 pm NOT REPORTED. Watchers r4/r15/rl started 09:14 (bg ids b3bfv8sie/b3d7n14d2/b50a112h9; 2h limit -> restart ~11:10).",
   "[09:38] R4 09:35 refusals: AIOK HALT (locked 15.75/15.75, no trade since 09:32), INFH SPREAD 1.73%, CRMX SPREAD 4.39%, FGC SPREAD 12.56%, WATT SPREAD 6.20%, KNSA SPREAD 1.00%, SMPL SPREAD 1.72%, NEBX SPREAD 1.20% (MFIC dropped from top-8 after bars) -> NOTHING; model ARMED AIOK. R15 ENTER AGYS 81 @121.97 (bid 120.00) 09:38. RL 09:30 NOTHING.",
-  "[09:42] R4 ENTER CWVX 1605 @6.23 (bid 6.21) grid 09:40, 1st ranked PASS. RL 09:35 step GAP (agent missed the 09:36 RL scan while walking R4/R15 at 09:36-09:38); RL 09:40 NOTHING (breadth +0.77%). R4 model track HOLDING AIOK from 09:37 @15.38 (SHADOW: live refused AIOK HALT at 09:35)."
+  "[09:42] R4 ENTER CWVX 1605 @6.23 (bid 6.21) grid 09:40, 1st ranked PASS. RL 09:35 step GAP (agent missed the 09:36 RL scan while walking R4/R15 at 09:36-09:38); RL 09:40 NOTHING (breadth +0.77%). R4 model track HOLDING AIOK from 09:37 @15.38 (SHADOW: live refused AIOK HALT at 09:35).",
+  "[10:38] EXIT-R15-H60 AGYS @ 116.00 x81 P&L $-483.57 (signal decided 10:36 on bid 116.00; booked 10:38:25 by r15 watcher; model fill = 10:37 open 116.80 since the 10:36 bar did not print). R15 book flat, DONE for the day."
  ],
  "errors": [
   "[09:38] R15: agent ran p3_r15 --now 09:37 at wall 09:36:2x (wrong wall time) with bars only to 09:35 -> false 'AGYS 09:36 bar did not print, ticket spent' DONE, frozen. AGYS quote shows a trade 13:36:24Z (09:36 bar printed). Frozen decision moved aside to decision_2026-10-27.WRONG_WALLTIME_0937.json at 09:38; re-deciding with the real 09:36 bar (enter_by 09:41)."
  ],
  "ops": {
-  "last_cycle": "10:29:09",
+  "last_cycle": "10:38:41",
   "capability_probe": "09:12 ET GREEN: python OK, git status OK, MCP get_equity_quotes SPY OK (bid 767.31 ask 767.35)",
   "scan_copy_note": "R4 scan files are compact copies of run_scan cells: rows below coil ~0.96 (flat) / ~0.98 (live+model holding) dropped, total_items kept; RL scan VWAP cells rounded to 6 decimals. RL 09:35 step GAP (missed)."
  }
