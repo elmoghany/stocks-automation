@@ -47,7 +47,7 @@
   "[10:53] 10:53 self-caught: at 10:51 cycle I fed EFOI 14:50Z interpolated gap-fill bar (vol 0) into cyc3 as a real bar; removed it from data/rh_bars/EFOI_2026-10-27.csv at 10:53. R4 model state at 10:52 unchanged (HOLDING EFOI), no decision consumed it beyond that."
  ],
  "ops": {
-  "last_cycle": "11:01:35",
+  "last_cycle": "11:26:34",
   "capability_probe": "09:12 ET GREEN: python OK, git status OK, MCP get_equity_quotes SPY OK (bid 767.31 ask 767.35)",
   "scan_copy_note": "R4 scan files are compact copies of run_scan cells: rows below coil ~0.96 (flat) / ~0.98 (live+model holding) dropped, total_items kept; RL scan VWAP cells rounded to 6 decimals. RL 09:35 step GAP (missed)."
  }
