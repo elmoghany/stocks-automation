@@ -4112,6 +4112,490 @@
    "book_pnl": 282.91,
    "deployed_notional": 19995.15,
    "dd_pct": 1.415
+  },
+  {
+   "t": "2026-10-27T12:26:26.594842-04:00",
+   "marks": {
+    "CRDU": 6.0499
+   },
+   "open_pnl": 167.83,
+   "realized": 154.56,
+   "book_pnl": 322.39,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.612
+  },
+  {
+   "t": "2026-10-27T12:26:56.654824-04:00",
+   "marks": {
+    "CRDU": 6.0499
+   },
+   "open_pnl": 167.83,
+   "realized": 154.56,
+   "book_pnl": 322.39,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.612
+  },
+  {
+   "t": "2026-10-27T12:27:26.719236-04:00",
+   "marks": {
+    "CRDU": 6.05
+   },
+   "open_pnl": 168.0,
+   "realized": 154.56,
+   "book_pnl": 322.56,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.613
+  },
+  {
+   "t": "2026-10-27T12:27:56.789107-04:00",
+   "marks": {
+    "CRDU": 6.05
+   },
+   "open_pnl": 168.0,
+   "realized": 154.56,
+   "book_pnl": 322.56,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.613
+  },
+  {
+   "t": "2026-10-27T12:28:26.852513-04:00",
+   "marks": {
+    "CRDU": 6.0415
+   },
+   "open_pnl": 153.72,
+   "realized": 154.56,
+   "book_pnl": 308.28,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.542
+  },
+  {
+   "t": "2026-10-27T12:28:56.923471-04:00",
+   "marks": {
+    "CRDU": 6.0415
+   },
+   "open_pnl": 153.72,
+   "realized": 154.56,
+   "book_pnl": 308.28,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.542
+  },
+  {
+   "t": "2026-10-27T12:29:26.989669-04:00",
+   "marks": {
+    "CRDU": 6.04
+   },
+   "open_pnl": 151.2,
+   "realized": 154.56,
+   "book_pnl": 305.76,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.529
+  },
+  {
+   "t": "2026-10-27T12:29:57.062072-04:00",
+   "marks": {
+    "CRDU": 6.04
+   },
+   "open_pnl": 151.2,
+   "realized": 154.56,
+   "book_pnl": 305.76,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.529
+  },
+  {
+   "t": "2026-10-27T12:30:27.124479-04:00",
+   "marks": {
+    "CRDU": 6.03
+   },
+   "open_pnl": 134.4,
+   "realized": 154.56,
+   "book_pnl": 288.96,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.445
+  },
+  {
+   "t": "2026-10-27T12:30:57.197438-04:00",
+   "marks": {
+    "CRDU": 6.03
+   },
+   "open_pnl": 134.4,
+   "realized": 154.56,
+   "book_pnl": 288.96,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.445
+  },
+  {
+   "t": "2026-10-27T12:31:27.264302-04:00",
+   "marks": {
+    "CRDU": 6.0301
+   },
+   "open_pnl": 134.57,
+   "realized": 154.56,
+   "book_pnl": 289.13,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.446
+  },
+  {
+   "t": "2026-10-27T12:31:57.328236-04:00",
+   "marks": {
+    "CRDU": 6.0301
+   },
+   "open_pnl": 134.57,
+   "realized": 154.56,
+   "book_pnl": 289.13,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.446
+  },
+  {
+   "t": "2026-10-27T12:32:27.393217-04:00",
+   "marks": {
+    "CRDU": 6.055
+   },
+   "open_pnl": 176.4,
+   "realized": 154.56,
+   "book_pnl": 330.96,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.655
+  },
+  {
+   "t": "2026-10-27T12:32:57.469286-04:00",
+   "marks": {
+    "CRDU": 6.055
+   },
+   "open_pnl": 176.4,
+   "realized": 154.56,
+   "book_pnl": 330.96,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.655
+  },
+  {
+   "t": "2026-10-27T12:33:27.559797-04:00",
+   "marks": {
+    "CRDU": 6.07
+   },
+   "open_pnl": 201.6,
+   "realized": 154.56,
+   "book_pnl": 356.16,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.781
+  },
+  {
+   "t": "2026-10-27T12:33:57.634955-04:00",
+   "marks": {
+    "CRDU": 6.07
+   },
+   "open_pnl": 201.6,
+   "realized": 154.56,
+   "book_pnl": 356.16,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.781
+  },
+  {
+   "t": "2026-10-27T12:34:27.702816-04:00",
+   "marks": {
+    "CRDU": 6.055
+   },
+   "open_pnl": 176.4,
+   "realized": 154.56,
+   "book_pnl": 330.96,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.655
+  },
+  {
+   "t": "2026-10-27T12:34:57.775156-04:00",
+   "marks": {
+    "CRDU": 6.055
+   },
+   "open_pnl": 176.4,
+   "realized": 154.56,
+   "book_pnl": 330.96,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.655
+  },
+  {
+   "t": "2026-10-27T12:35:27.840744-04:00",
+   "marks": {
+    "CRDU": 6.06
+   },
+   "open_pnl": 184.8,
+   "realized": 154.56,
+   "book_pnl": 339.36,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.697
+  },
+  {
+   "t": "2026-10-27T12:35:57.893830-04:00",
+   "marks": {
+    "CRDU": 6.06
+   },
+   "open_pnl": 184.8,
+   "realized": 154.56,
+   "book_pnl": 339.36,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.697
+  },
+  {
+   "t": "2026-10-27T12:36:27.956436-04:00",
+   "marks": {
+    "CRDU": 6.0449
+   },
+   "open_pnl": 159.43,
+   "realized": 154.56,
+   "book_pnl": 313.99,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.57
+  },
+  {
+   "t": "2026-10-27T12:36:58.019701-04:00",
+   "marks": {
+    "CRDU": 6.0449
+   },
+   "open_pnl": 159.43,
+   "realized": 154.56,
+   "book_pnl": 313.99,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.57
+  },
+  {
+   "t": "2026-10-27T12:37:28.082615-04:00",
+   "marks": {
+    "CRDU": 6.03
+   },
+   "open_pnl": 134.4,
+   "realized": 154.56,
+   "book_pnl": 288.96,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.445
+  },
+  {
+   "t": "2026-10-27T12:37:58.157423-04:00",
+   "marks": {
+    "CRDU": 6.03
+   },
+   "open_pnl": 134.4,
+   "realized": 154.56,
+   "book_pnl": 288.96,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.445
+  },
+  {
+   "t": "2026-10-27T12:38:28.220303-04:00",
+   "marks": {
+    "CRDU": 6.035
+   },
+   "open_pnl": 142.8,
+   "realized": 154.56,
+   "book_pnl": 297.36,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.487
+  },
+  {
+   "t": "2026-10-27T12:38:58.294210-04:00",
+   "marks": {
+    "CRDU": 6.035
+   },
+   "open_pnl": 142.8,
+   "realized": 154.56,
+   "book_pnl": 297.36,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.487
+  },
+  {
+   "t": "2026-10-27T12:39:28.356808-04:00",
+   "marks": {
+    "CRDU": 6.04
+   },
+   "open_pnl": 151.2,
+   "realized": 154.56,
+   "book_pnl": 305.76,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.529
+  },
+  {
+   "t": "2026-10-27T12:39:58.430184-04:00",
+   "marks": {
+    "CRDU": 6.04
+   },
+   "open_pnl": 151.2,
+   "realized": 154.56,
+   "book_pnl": 305.76,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.529
+  },
+  {
+   "t": "2026-10-27T12:40:28.492945-04:00",
+   "marks": {
+    "CRDU": 6.03
+   },
+   "open_pnl": 134.4,
+   "realized": 154.56,
+   "book_pnl": 288.96,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.445
+  },
+  {
+   "t": "2026-10-27T12:40:58.566921-04:00",
+   "marks": {
+    "CRDU": 6.03
+   },
+   "open_pnl": 134.4,
+   "realized": 154.56,
+   "book_pnl": 288.96,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.445
+  },
+  {
+   "t": "2026-10-27T12:41:28.644456-04:00",
+   "marks": {
+    "CRDU": 6.025
+   },
+   "open_pnl": 126.0,
+   "realized": 154.56,
+   "book_pnl": 280.56,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.403
+  },
+  {
+   "t": "2026-10-27T12:41:58.709296-04:00",
+   "marks": {
+    "CRDU": 6.025
+   },
+   "open_pnl": 126.0,
+   "realized": 154.56,
+   "book_pnl": 280.56,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.403
+  },
+  {
+   "t": "2026-10-27T12:42:28.773543-04:00",
+   "marks": {
+    "CRDU": 6.01
+   },
+   "open_pnl": 100.8,
+   "realized": 154.56,
+   "book_pnl": 255.36,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.277
+  },
+  {
+   "t": "2026-10-27T12:42:58.850196-04:00",
+   "marks": {
+    "CRDU": 6.01
+   },
+   "open_pnl": 100.8,
+   "realized": 154.56,
+   "book_pnl": 255.36,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.277
+  },
+  {
+   "t": "2026-10-27T12:43:28.913917-04:00",
+   "marks": {
+    "CRDU": 6.005
+   },
+   "open_pnl": 92.4,
+   "realized": 154.56,
+   "book_pnl": 246.96,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.235
+  },
+  {
+   "t": "2026-10-27T12:43:58.985775-04:00",
+   "marks": {
+    "CRDU": 6.005
+   },
+   "open_pnl": 92.4,
+   "realized": 154.56,
+   "book_pnl": 246.96,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.235
+  },
+  {
+   "t": "2026-10-27T12:44:29.049306-04:00",
+   "marks": {
+    "CRDU": 5.991
+   },
+   "open_pnl": 68.88,
+   "realized": 154.56,
+   "book_pnl": 223.44,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.117
+  },
+  {
+   "t": "2026-10-27T12:44:59.135740-04:00",
+   "marks": {
+    "CRDU": 5.991
+   },
+   "open_pnl": 68.88,
+   "realized": 154.56,
+   "book_pnl": 223.44,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.117
+  },
+  {
+   "t": "2026-10-27T12:45:29.198401-04:00",
+   "marks": {
+    "CRDU": 6.02
+   },
+   "open_pnl": 117.6,
+   "realized": 154.56,
+   "book_pnl": 272.16,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.361
+  },
+  {
+   "t": "2026-10-27T12:45:59.248467-04:00",
+   "marks": {
+    "CRDU": 6.02
+   },
+   "open_pnl": 117.6,
+   "realized": 154.56,
+   "book_pnl": 272.16,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.361
+  },
+  {
+   "t": "2026-10-27T12:46:29.314266-04:00",
+   "marks": {
+    "CRDU": 6.02
+   },
+   "open_pnl": 117.6,
+   "realized": 154.56,
+   "book_pnl": 272.16,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.361
+  },
+  {
+   "t": "2026-10-27T12:46:59.379179-04:00",
+   "marks": {
+    "CRDU": 6.02
+   },
+   "open_pnl": 117.6,
+   "realized": 154.56,
+   "book_pnl": 272.16,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.361
+  },
+  {
+   "t": "2026-10-27T12:47:29.442828-04:00",
+   "marks": {
+    "CRDU": 6.02
+   },
+   "open_pnl": 117.6,
+   "realized": 154.56,
+   "book_pnl": 272.16,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.361
+  },
+  {
+   "t": "2026-10-27T12:47:34.433496-04:00",
+   "marks": {
+    "CRDU": 6.02
+   },
+   "open_pnl": 117.6,
+   "realized": 154.56,
+   "book_pnl": 272.16,
+   "deployed_notional": 19995.15,
+   "dd_pct": 1.361
   }
  ]
 }
