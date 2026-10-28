@@ -19,14 +19,28 @@
    "notional": 9968.4,
    "halal": "REFUSE-TO-EVALUATE",
    "model_note": "R15 fresh am earnings, green +335.8bp @09:35; model fill = 09:36 open; exit due 10:36"
+  },
+  {
+   "book": "r4",
+   "sym": "DRAL",
+   "decision_min": "09:35",
+   "entry_time": "09:37:40",
+   "ask": 8.48,
+   "bid": 8.47,
+   "mid": 8.475,
+   "shares": 1179,
+   "notional": 9997.92,
+   "halal": "REFUSE-TO-EVALUATE",
+   "model_note": "R4 LIVE grid 09:35 cand #6 (POM HALT, SNDC SPREAD 0.58%, SKHA NOBARS, KSMH VOLCAP, AXTC SPREAD 1.34%); depth 10025 vs want 1179; model track ARMED POM"
   }
  ],
  "notes": [
-  "[09:12] pre-open: universe asof 2026-10-02 (current month, no refresh); R15 fresh: AXGN am, OSW am, ZWS 10-27 pm; 3 watchers started 09:1x"
+  "[09:12] pre-open: universe asof 2026-10-02 (current month, no refresh); R15 fresh: AXGN am, OSW am, ZWS 10-27 pm; 3 watchers started 09:1x",
+  "[09:38] R4 09:35 refusals: POM HALT (locked 2.43/2.43, no trade since 13:34Z), SNDC SPREAD 0.58%, SKHA NOBARS, KSMH VOLCAP, AXTC SPREAD 1.34%, ULBI GAP7 -> DRAL PASS"
  ],
  "errors": [],
  "ops": {
-  "last_cycle": "09:36:28",
+  "last_cycle": "09:38:03",
   "capability_probe": "python OK; git status OK; get_equity_quotes SPY OK (bid 771.63 ask 771.69 @13:10:52Z)"
  }
 }
