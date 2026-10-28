@@ -1,0 +1,56 @@
+{
+ "date": "2026-10-28",
+ "records": [
+  {
+   "sym": "DRAL",
+   "ticket": null,
+   "date": "2026-10-28",
+   "mode": "r4",
+   "entry": 8.48,
+   "shares_initial": 1179,
+   "entry_bar_utc": "2026-10-28T13:37:00Z",
+   "prev_close": null,
+   "exit_kind": "exit-r4-flatten",
+   "fills": [
+    {
+     "kind": "EXIT-R4-FLATTEN",
+     "time": "2026-10-28T15:01:01.848545-04:00",
+     "shares": 1179,
+     "px": 8.62,
+     "src": "stop level"
+    }
+   ],
+   "vwap": 8.62,
+   "shares_exited": 1179,
+   "scale_out": null,
+   "banked": 0.0,
+   "pnl": 165.06,
+   "peak": 8.63,
+   "rungs": [],
+   "deployed": 9997.92,
+   "exit_time": "2026-10-28T15:01:01.848545-04:00",
+   "booked_at": "2026-10-28T15:01:01.848545-04:00",
+   "exit_parity": null,
+   "p3": {
+    "book": "r4",
+    "mode": "r4",
+    "reason": "flatten",
+    "decided_min": "13:09",
+    "model_exit": 8.62,
+    "model_exit_min": "13:09",
+    "model_entry": 8.5029,
+    "model_entry_min": "09:36",
+    "model_pnl": 138.06,
+    "exit_quote": null,
+    "entry_quote": {
+     "bid": 8.47,
+     "ask": 8.48,
+     "mid": 8.475000000000001,
+     "cost_bps_vs_mid": 5.9
+    },
+    "exit_cost_bps_vs_mid": null,
+    "official_src": "MODEL-PX (no fresh quote)"
+   }
+  }
+ ]
+}
