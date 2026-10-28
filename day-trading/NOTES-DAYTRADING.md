@@ -2,6 +2,27 @@
 
 ## PAPER-3BOOK
 
+### 2026-10-28 (PAPER-3BOOK day 17 on the scoreboard): headless session with a 1h50m ops gap; R4 LIVE +$165.06 on 1 trade, R15 +$54.00 on 1 trade, RL no trades (all flat)
+
+The session ran headless from 09:12 until after 16:00. **Ops gap 13:13–15:02:** the agent's turn ended after the 13:12 cycle and was not re-invoked until 15:02 (the R15 watcher-done notification). During the gap there were no minute cycles and no RL or R4 grid scans: RL grids 13:15–15:00 and R4 grids 13:15–14:25 were missed. The watchers kept running but got no fresh bars or quotes. Lesson for the agent: never end the turn mid-session. Waits must run in the foreground with an explicit timeout, never as a background wait for a notification.
+
+- **R4 LIVE**: 1 trade, **+$165.06** (model fills +$138.06). That is +$230.49 vs the −$65.43/day expectation.
+  - DRAL 1179 @8.48 (09:35 grid, after POM HALT, SNDC SPREAD 0.58%, SKHA NOBARS, KSMH VOLCAP, AXTC SPREAD, ULBI GAP7).
+  - Held all day with no trail exit. EXIT-R4-FLATTEN booked 15:01:01 @8.62. **This used a stale price**: model px from the 13:09 bar, quote None, because no bars were fed during the gap. The actual market at 15:00 was bar close 8.705, and the 15:03 quote was 8.68/8.70, so an honest flatten would have been about **+$236**. The booking is left as the watcher wrote it, with no manual sell. Trail exits during the gap could not be evaluated.
+  - Refusals (unique name × grid): SPREAD 2, VOLCAP 1, GAP7 1, HALT 1, NOBARS 1.
+  - Halal: REFUSE-TO-EVALUATE, so the halal-PASS P&L is $0.
+  - Cumulative over 17 days: −$1,298.13 on 22 trades.
+- **R4 PARITY (model)**: SNDC 1919 @5.21 (09:36) → 15:00 flatten @5.35, +$268.66 gross (+$238.26 net 15 bps).
+  - SHADOW: SNDC, refused live on SPREAD 0.58%, would have made +$308.16.
+- **R15**: 1 trade, **+$54.00**. AXGN 216 @46.15 → EXIT-R15-H60 @46.40, booked 10:39:05. The signal came on a 66 s-old quote, and the fresh 10:38 bid was 46.50. Entry cost was 70 bps vs mid.
+  - That is +$32.29 vs +$21.71/day expected. Cumulative: −$429.57 on 2 trades.
+- **RL**: 0 trades. n_cand was 0 on every evaluated grid, and br rose from +0.002 to +0.011 into the close. The 13:15–15:00 grids were missed in the gap.
+  - Flat, against +$5.77/day expected. Cumulative: +$36.34 on 3 trades.
+- **Ops**:
+  - All 3 watchers were killed by the 2 h background limit at 11:12 (about a 40 s gap, restarted, state kept).
+  - There was a controlled restart at 13:10 (about 15 s gap). R4 and RL were restarted again at 15:07.
+  - The R15 watcher exited itself (book flat) at 15:02, and R4 exited itself after the restart.
+
 ### 2026-10-27 (PAPER-3BOOK day 16 on the scoreboard): full headless session; R4 LIVE +$340.16 on 3 trades, R15 −$483.57 on its first trade, RL no trades (all flat)
 
 The session ran headless from 09:11 until after 16:00. R4 was flat at 15:01:16 and its watcher was done at 15:07:16. R15 was DONE at 10:38 when AGYS exited. RL ran every grid through 15:55 with no entry. The ledger was committed at least every 30 min and after every entry and exit. Zero real orders.
