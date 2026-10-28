@@ -39,11 +39,12 @@
   "[09:38] R4 09:35 refusals: POM HALT (locked 2.43/2.43, no trade since 13:34Z), SNDC SPREAD 0.58%, SKHA NOBARS, KSMH VOLCAP, AXTC SPREAD 1.34%, ULBI GAP7 -> DRAL PASS",
   "[10:39] 10:39 R15 EXIT-R15-H60 AXGN @46.40 x216 P&L +$54.00 (signal 10:36:05 on a 66s-old quote, bid 46.40; booked 10:39:05 after the 10:36 bar completed; fresh 10:38 bid was 46.50). R15 flat for the day.",
   "[11:12] 11:12 all 3 watchers were stopped by the harness 2h background limit (last tick 11:11:39); restarted 11:12:20-23 with the same args (append to logs), state reloaded: r4 DRAL open peak 8.56 kept, r15 flat +54.00, rl flat. Gap ~40s, no exit missed. Next forced restart ~13:12.",
-  "[13:11] 13:10 controlled watcher restart ahead of 2h harness limit (~13:12); r4/r15/rl stopped 13:10:2x, relaunched 13:10:3x (~15s gap); state reloaded (DRAL peak 8.63)"
+  "[13:11] 13:10 controlled watcher restart ahead of 2h harness limit (~13:12); r4/r15/rl stopped 13:10:2x, relaunched 13:10:3x (~15s gap); state reloaded (DRAL peak 8.63)",
+  "[15:03] OPS GAP 13:13-15:02: session turn ended after 13:12 cycle and was not re-invoked until 15:02 (R15 watcher-done notification). No minute cycles, no RL/R4 grid scans 13:15-15:00 (R4 window to 14:26 missed while holding; RL grids 13:15-15:00 missed). Watchers kept running but got no fresh bars/quotes. R4 15:00 flatten booked DRAL @ 8.62 (13:09 bar, quote None) = +165.06; actual market at 15:00: bar close 8.705, 15:03 bid 8.68/ask 8.70 -> honest flatten ~8.68 = ~+235.8. Booking left as written by watcher (no manual sell); trail exits during gap could not be evaluated. R4 model SNDC flattened 15:00 @ 5.35. Resumed 15:03."
  ],
  "errors": [],
  "ops": {
-  "last_cycle": "13:11:15",
+  "last_cycle": "15:03:30",
   "capability_probe": "python OK; git status OK; get_equity_quotes SPY OK (bid 771.63 ask 771.69 @13:10:52Z)"
  }
 }
