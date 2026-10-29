@@ -11159,3 +11159,8 @@ as `plan/paper_day_prompt.C37.txt`).
 - **Open item**: the RL scan's ticker list can only be re-saved interactively (create_scan is not on
   the headless allow-list); the monthly universe refresh flags UNIVERSE_REFRESH_NEEDED. Next refresh
   due 2026-11-02.
+
+### 2026-10-28 ops review (daily runs 10-21..10-28)
+- Scheduler launched all 6 sessions (10-21,22,23,26,27,28) at 09:10. No unexpected shutdowns since 2026-10-19 (System log events 41/6008: 10-14 14:38 in session, 10-18 x3 weekend, 10-19 18:40 after close).
+- **10-21: session agent stopped at 11:10 (no PC crash), no EOD, not on scoreboard.** The r4 watcher still flattened IMSR 3215 sh at 15:01 but booked it on the stale 11:09 price 3.015 (−$305.42). Reconstruction from RH 30-min bars: 15:00 ≈ 2.945 → ≈ **−$530** (estimate, bars not quotes). RL/R15 flat.
+- **10-28: 1h50m loop freeze 13:13–15:02** (turn ended mid-session; see memory paper-session-never-end-turn); R4 DRAL flatten booked on stale 13:09 price. Watchers also hit the harness 2h background limit (restarted 11:12, 13:10).
