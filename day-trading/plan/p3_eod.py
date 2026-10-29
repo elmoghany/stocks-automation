@@ -38,6 +38,13 @@ import p3_lib as P                                          # noqa: E402
 NAMES = {"r4": "R4 champion-replay coil, no stop (gapper scanner)",
          "r15": "R15 fresh earnings & green @09:35, h60",
          "rl": "RL-SCOUT v2 approach-4 seed-0 rule"}
+# Books stopped by the user (2026-10-28: R4 only). From this date on a stopped
+# book gets no scoreboard row, so its cumulative days/expected stop accruing.
+STOPPED = {"r15": "2026-10-29", "rl": "2026-10-29"}
+
+
+def is_stopped(book, date):
+    return book in STOPPED and date >= STOPPED[book]
 
 
 def book_trades(date, book):
@@ -173,6 +180,9 @@ def main():
         s = summarize(tr)
         e = exp.get("r4_live", exp.get("r4", {})) if book == "r4" \
             else exp.get(book, {})
+        if is_stopped(book, date):
+            e = {}
+            s["stopped"] = STOPPED[book]
         s["expectation"] = e
         if e:
             s["vs_expectation"] = dict(
@@ -198,6 +208,8 @@ def main():
             s["parity_book_pnl"] = par.get("pnl", 0.0)
             s["refused_by_reason"] = r4_refusals(date)
         eod[book] = s
+        if is_stopped(book, date):
+            continue
         sb["rows"].append(dict(date=date, book=book, trades=s["trades"],
                                pnl=s["pnl"], model_pnl=s["model_pnl"],
                                pnl_halal_pass=s["pnl_halal_pass"],
@@ -274,6 +286,8 @@ def main():
     for book in P.BOOKS:
         s, e = eod[book], eod[book].get("expectation") or {}
         lab = "r4 LIVE" if book == "r4" else book
+        if s.get("stopped"):
+            lab += f" (STOPPED since {s['stopped']})"
         L.append(f"| {lab} | {s['trades']} | {s['pnl']:+,.2f} | "
                  f"{s['model_pnl']:+,.2f} | {s['halal_pass_trades']} | "
                  f"{s['pnl_halal_pass']:+,.2f} | "
@@ -324,6 +338,8 @@ def main():
     for book in P.BOOKS:
         c = cum[book]
         lab = "r4 LIVE" if book == "r4" else book
+        if is_stopped(book, date):
+            lab += f" (STOPPED since {STOPPED[book]})"
         L.append(f"| {lab} | {c['days']} | {c['trades']} | {c['pnl']:+,.2f}"
                  f" | {c['pnl_ex_top5'] if c['pnl_ex_top5'] is not None else 'n/a (<6 trades)'}"
                  f" | {c['model_pnl']:+,.2f} | {c['pnl_halal_pass']:+,.2f} | "

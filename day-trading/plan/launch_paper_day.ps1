@@ -79,7 +79,8 @@ Log "starting headless claude session (allowedTools: $allowed)"
 # still writing its day-file skeleton.
 New-Item -ItemType File -Path "$root\day-trading\data\paper_days\LAUNCHED_BY_SCHEDULER_$day.flag" -Force | Out-Null
 Set-Location $root
-$p = Start-Process -FilePath $claude -ArgumentList @("-p", ('"{0}"' -f $prompt), "--permission-mode", "acceptEdits", "--allowedTools", ('"{0}"' -f $allowed)) `
+# MODEL 2026-10-28 (user order): the R4-only session runs on Sonnet 5.5, high effort.
+$p = Start-Process -FilePath $claude -ArgumentList @("-p", ('"{0}"' -f $prompt), "--model", "claude-sonnet-5-5", "--effort", "high", "--permission-mode", "acceptEdits", "--allowedTools", ('"{0}"' -f $allowed)) `
      -RedirectStandardOutput "$root\day-trading\data\scheduler_stdout_$day.txt" `
      -RedirectStandardError  "$root\day-trading\data\scheduler_stderr_$day.txt" `
      -NoNewWindow -PassThru

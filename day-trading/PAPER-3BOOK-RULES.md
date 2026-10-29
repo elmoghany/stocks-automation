@@ -2,6 +2,8 @@
 
 **Paper only, open-ended. Real orders never, unless the user explicitly authorizes them in conversation.**
 
+**User order, 2026-10-28: R15 and RL are STOPPED; only R4 runs (from 2026-10-29). The headless session runs on Sonnet 5.5, high effort (`--model claude-sonnet-5-5 --effort high` in plan/launch_paper_day.ps1). R15/RL rules below are kept for reference; p3_eod.py marks both STOPPED and gives them no scoreboard rows from 2026-10-29.**
+
 User decision, 2026-10-01: paper-trade three strategies side by side, with no end date. Run them every market day until the user says stop.
 
 - **R4**: CHAMPION-REPLAY "coil + no stop".

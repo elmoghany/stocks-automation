@@ -11164,3 +11164,9 @@ as `plan/paper_day_prompt.C37.txt`).
 - Scheduler launched all 6 sessions (10-21,22,23,26,27,28) at 09:10. No unexpected shutdowns since 2026-10-19 (System log events 41/6008: 10-14 14:38 in session, 10-18 x3 weekend, 10-19 18:40 after close).
 - **10-21: session agent stopped at 11:10 (no PC crash), no EOD, not on scoreboard.** The r4 watcher still flattened IMSR 3215 sh at 15:01 but booked it on the stale 11:09 price 3.015 (−$305.42). Reconstruction from RH 30-min bars: 15:00 ≈ 2.945 → ≈ **−$530** (estimate, bars not quotes). RL/R15 flat.
 - **10-28: 1h50m loop freeze 13:13–15:02** (turn ended mid-session; see memory paper-session-never-end-turn); R4 DRAL flatten booked on stale 13:09 price. Watchers also hit the harness 2h background limit (restarted 11:12, 13:10).
+
+### 2026-10-28 user order: R4 only, on Sonnet 5.5 high
+- R15 and RL STOPPED from 2026-10-29 (user: "stop r15 and rl do not run them"). Totals at stop (scoreboard, excl. lost-EOD days): R15 2 trades −$429.57; RL 3 trades +$36.34 (RL ≈ −$192 incl. 10-14 reconstruction).
+- Headless session model: `--model claude-sonnet-5-5 --effort high` (was the default Opus). Verified the flags work headless (`claude -p` returned claude-sonnet-5-5); launcher parses clean.
+- Prompt: R4-only override paragraph after the first line (first line unchanged). p3_eod.py: `STOPPED` dict — stopped books get no scoreboard row (cumulative days/expected freeze) and are labelled STOPPED in the .md. Regression: re-running EOD for 10-28 reproduces the committed scoreboard/md byte-for-byte; stopped-path test then restored.
+- Watchdog needs no change (it only checks books with open position files).
