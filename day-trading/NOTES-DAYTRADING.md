@@ -11170,3 +11170,9 @@ as `plan/paper_day_prompt.C37.txt`).
 - Headless session model: `--model claude-sonnet-5-5 --effort high` (was the default Opus). Verified the flags work headless (`claude -p` returned claude-sonnet-5-5); launcher parses clean.
 - Prompt: R4-only override paragraph after the first line (first line unchanged). p3_eod.py: `STOPPED` dict — stopped books get no scoreboard row (cumulative days/expected freeze) and are labelled STOPPED in the .md. Regression: re-running EOD for 10-28 reproduces the committed scoreboard/md byte-for-byte; stopped-path test then restored.
 - Watchdog needs no change (it only checks books with open position files).
+
+### 2026-10-28 user order: R4 stopped too -- all paper trading stopped
+- User: "let's stop r4". With R15/RL already stopped, no book runs. Disabled Task Scheduler `\Stocks\C37MorningLaunch` and `\Stocks\C37Watchdog` (HalalUniverseRefresh left enabled). The prompt now opens (after the unchanged first line) with ALL BOOKS STOPPED, so a manual or accidental launch exits without trading.
+- Final R4 LIVE (10-05..10-28, 18 sessions): scoreboard −$1,298.13 on 22 trades; ≈ −$1,091 on 24 trades including the 10-14 (+$737) and 10-21 (≈ −$530) reconstructions. Parity/model book (net 15 bps) +$1,203.
+- Final all books ≈ −$1,710 incl. reconstructions. No real orders were ever placed.
+- To resume: Enable-ScheduledTask both tasks, remove the ALL BOOKS STOPPED paragraph, and say which books (STOPPED dict in plan/p3_eod.py).
