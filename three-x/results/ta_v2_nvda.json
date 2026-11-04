@@ -1,0 +1,155 @@
+[
+ {
+  "ticker": "NVDA",
+  "date": "2026-07-06",
+  "rating": "Hold",
+  "alpha": "+7.0%",
+  "raw": "+7.6%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "NVDA",
+  "date": "2026-07-13",
+  "rating": "Hold",
+  "alpha": "-1.7%",
+  "raw": "-2.1%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "NVDA",
+  "date": "2026-07-20",
+  "rating": "Overweight",
+  "alpha": "-4.0%",
+  "raw": "-5.0%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "NVDA",
+  "date": "2026-07-27",
+  "rating": "Hold",
+  "alpha": "+3.5%",
+  "raw": "+7.6%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "NVDA",
+  "date": "2026-08-03",
+  "rating": "Hold",
+  "alpha": "+2.7%",
+  "raw": "+2.6%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "NVDA",
+  "date": "2026-08-10",
+  "rating": "Overweight",
+  "alpha": "+1.4%",
+  "raw": "+1.0%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "NVDA",
+  "date": "2026-08-17",
+  "rating": "Overweight",
+  "alpha": "-2.8%",
+  "raw": "-3.0%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "NVDA",
+  "date": "2026-08-24",
+  "rating": "Hold",
+  "alpha": "+2.6%",
+  "raw": "+2.1%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "NVDA",
+  "date": "2026-08-31",
+  "rating": "Overweight",
+  "alpha": "+2.8%",
+  "raw": "+2.9%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "NVDA",
+  "date": "2026-09-07",
+  "rating": "Overweight",
+  "alpha": "-4.8%",
+  "raw": "-5.9%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "NVDA",
+  "date": "2026-09-14",
+  "rating": "Hold",
+  "alpha": "+5.5%",
+  "raw": "+7.9%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "NVDA",
+  "date": "2026-09-21",
+  "rating": "Hold",
+  "alpha": "+0.5%",
+  "raw": "-0.7%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "NVDA",
+  "date": "2026-09-28",
+  "rating": "Overweight",
+  "alpha": "+3.3%",
+  "raw": "+5.3%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "NVDA",
+  "date": "2026-10-05",
+  "rating": "Overweight",
+  "alpha": "-4.3%",
+  "raw": "-4.5%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "NVDA",
+  "date": "2026-10-12",
+  "rating": "Overweight",
+  "alpha": "-4.1%",
+  "raw": "-5.3%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "NVDA",
+  "date": "2026-10-19",
+  "rating": "Hold",
+  "alpha": "+0.6%",
+  "raw": "+0.7%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "NVDA",
+  "date": "2026-10-26",
+  "rating": "Hold",
+  "alpha": "-3.2%",
+  "raw": "-5.2%",
+  "holding": "5d",
+  "pending": false
+ }
+]

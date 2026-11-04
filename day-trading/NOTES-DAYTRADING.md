@@ -1,5 +1,11 @@
 # Penny Stocks Trading Notes
 
+## Three-times campaign
+
+### 2026-11-04: no reliable 3x in 12 months; full report in `three-x/REPORT.md`
+
+Tested 1–2 stock strategies with TradingAgents, Vibe-Trading and Lumibot on $100k, backtest only. With both method and settings chosen on earlier data only, 3x came in 0–8% of 12-month periods, with a median of about 1.3–1.55x. Top-50 buy-and-hold has a 0.8% base rate. Vibe and Lumibot agree closely on the candidates.
+
 ## PAPER-3BOOK
 
 ### 2026-10-28 (PAPER-3BOOK day 17 on the scoreboard): headless session with a 1h50m ops gap; R4 LIVE +$165.06 on 1 trade, R15 +$54.00 on 1 trade, RL no trades (all flat)

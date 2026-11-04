@@ -77,6 +77,19 @@ tmp/
 temp/
 config.ini
 
+# 3x campaign: bulk curves and logs stay local, the summaries needed by the report are kept
+three-x/bridge_calls.jsonl
+three-x/results/*
+!three-x/results/pit_top50.json
+!three-x/results/walk_forward_summary.csv
+!three-x/results/walk_forward_episodes.csv
+!three-x/results/meta_walk_forward.csv
+!three-x/results/validate.csv
+!three-x/results/lumibot_checks.jsonl
+!three-x/results/ta_vibe.csv
+!three-x/results/ta_v2_*.json
+!three-x/results/current_picks.csv
+!three-x/results/vibe_agent_oos.json
 # Generated backtest results
 day-trading/plan/*.json
 earnings-trading/plan/*.json

@@ -1,0 +1,114 @@
+[
+ {
+  "strategy": "s4_volfilter_sma50",
+  "period": "2023",
+  "multiple": 1.94,
+  "max_dd": -0.22,
+  "trades": "12"
+ },
+ {
+  "strategy": "s4_volfilter_sma50",
+  "period": "2024",
+  "multiple": 0.98,
+  "max_dd": -0.2,
+  "trades": "12"
+ },
+ {
+  "strategy": "s4_volfilter_sma50",
+  "period": "2025",
+  "multiple": 1.61,
+  "max_dd": -0.25,
+  "trades": "5"
+ },
+ {
+  "strategy": "s4_volfilter_sma50",
+  "period": "last12m",
+  "multiple": 1.0,
+  "max_dd": -0.35,
+  "trades": "9"
+ },
+ {
+  "strategy": "s9_amd_nvda_sma100",
+  "period": "2023",
+  "multiple": 2.37,
+  "max_dd": -0.18,
+  "trades": "10"
+ },
+ {
+  "strategy": "s9_amd_nvda_sma100",
+  "period": "2024",
+  "multiple": 1.54,
+  "max_dd": -0.24,
+  "trades": "11"
+ },
+ {
+  "strategy": "s9_amd_nvda_sma100",
+  "period": "2025",
+  "multiple": 1.57,
+  "max_dd": -0.19,
+  "trades": "10"
+ },
+ {
+  "strategy": "s9_amd_nvda_sma100",
+  "period": "last12m",
+  "multiple": 1.11,
+  "max_dd": -0.28,
+  "trades": "24"
+ },
+ {
+  "strategy": "bh_amd",
+  "period": "2023",
+  "multiple": 2.23,
+  "max_dd": -0.27,
+  "trades": "1"
+ },
+ {
+  "strategy": "bh_amd",
+  "period": "2024",
+  "multiple": 0.84,
+  "max_dd": -0.44,
+  "trades": "1"
+ },
+ {
+  "strategy": "bh_amd",
+  "period": "2025",
+  "multiple": 1.75,
+  "max_dd": -0.4,
+  "trades": "1"
+ },
+ {
+  "strategy": "bh_amd",
+  "period": "last12m",
+  "multiple": 1.86,
+  "max_dd": -0.28,
+  "trades": "1"
+ },
+ {
+  "strategy": "bh_amd_nvda",
+  "period": "2023",
+  "multiple": 2.78,
+  "max_dd": -0.17,
+  "trades": "2"
+ },
+ {
+  "strategy": "bh_amd_nvda",
+  "period": "2024",
+  "multiple": 1.78,
+  "max_dd": -0.28,
+  "trades": "2"
+ },
+ {
+  "strategy": "bh_amd_nvda",
+  "period": "2025",
+  "multiple": 1.56,
+  "max_dd": -0.38,
+  "trades": "2"
+ },
+ {
+  "strategy": "bh_amd_nvda",
+  "period": "last12m",
+  "multiple": 1.43,
+  "max_dd": -0.24,
+  "trades": "2"
+ }
+]

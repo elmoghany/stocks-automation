@@ -1,0 +1,12 @@
+Design and backtest strategies whose goal is to turn $100,000 into $300,000 within 12 months, trading only AMD, or AMD plus one other US stock from: NVDA MSFT AAPL GOOGL AMZN META AVGO TSLA LLY V XOM MA JNJ PLTR CVX CSCO INTC MU ISRG NOW QCOM TXN.
+
+Hard limits: long-only, cash account, no margin, no leverage, no shorting, no options, no leveraged ETFs. Backtest only. Never connect to a broker or place an order.
+
+Method:
+1. Use your own backtest tool with source yfinance, codes like AMD.US, daily bars, initial_cash 100000.
+2. Develop only on 2015-01-01 to 2022-12-31. Try at least six genuinely different ideas, such as trend, breakout, pullback, volatility regime, relative-strength rotation between two names, and earnings or seasonal effects.
+3. Pick your best two from the development period only, then run them once, unchanged, on 2023-01-01 to 2023-12-31, 2024-01-01 to 2024-12-31, 2025-01-01 to 2025-12-31 and 2025-11-03 to 2026-11-03.
+4. Report a table with the multiple on starting capital and max drawdown per period, next to buy-and-hold of the same names.
+5. Say plainly whether any out-of-sample period reached 3x, and whether that came from the strategy or from the stock simply rising.
+
+Finish by printing the exact rules and parameters of each strategy you tried, so they can be re-run in another engine.

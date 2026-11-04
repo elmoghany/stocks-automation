@@ -1,0 +1,155 @@
+[
+ {
+  "ticker": "AMD",
+  "date": "2026-07-06",
+  "rating": "Underweight",
+  "alpha": "+5.7%",
+  "raw": "+6.2%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "AMD",
+  "date": "2026-07-13",
+  "rating": "Underweight",
+  "alpha": "-0.2%",
+  "raw": "-0.7%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "AMD",
+  "date": "2026-07-20",
+  "rating": "Hold",
+  "alpha": "-15.5%",
+  "raw": "-16.5%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "AMD",
+  "date": "2026-07-27",
+  "rating": "Hold",
+  "alpha": "+10.0%",
+  "raw": "+14.1%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "AMD",
+  "date": "2026-08-03",
+  "rating": "Hold",
+  "alpha": "-8.4%",
+  "raw": "-8.5%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "AMD",
+  "date": "2026-08-10",
+  "rating": "Hold",
+  "alpha": "+2.5%",
+  "raw": "+2.1%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "AMD",
+  "date": "2026-08-17",
+  "rating": "Underweight",
+  "alpha": "-0.9%",
+  "raw": "-1.1%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "AMD",
+  "date": "2026-08-24",
+  "rating": "Underweight",
+  "alpha": "-3.5%",
+  "raw": "-4.1%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "AMD",
+  "date": "2026-08-31",
+  "rating": "Hold",
+  "alpha": "+13.3%",
+  "raw": "+13.4%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "AMD",
+  "date": "2026-09-07",
+  "rating": "Hold",
+  "alpha": "+0.8%",
+  "raw": "-0.3%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "AMD",
+  "date": "2026-09-14",
+  "rating": "Hold",
+  "alpha": "+21.4%",
+  "raw": "+23.7%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "AMD",
+  "date": "2026-09-21",
+  "rating": "Hold",
+  "alpha": "-1.4%",
+  "raw": "-2.6%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "AMD",
+  "date": "2026-09-28",
+  "rating": "Hold",
+  "alpha": "+4.9%",
+  "raw": "+6.9%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "AMD",
+  "date": "2026-10-05",
+  "rating": "Hold",
+  "alpha": "-6.6%",
+  "raw": "-6.8%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "AMD",
+  "date": "2026-10-12",
+  "rating": "Underweight",
+  "alpha": "-10.5%",
+  "raw": "-11.7%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "AMD",
+  "date": "2026-10-19",
+  "rating": "Underweight",
+  "alpha": "+4.7%",
+  "raw": "+4.8%",
+  "holding": "5d",
+  "pending": false
+ },
+ {
+  "ticker": "AMD",
+  "date": "2026-10-26",
+  "rating": "Hold",
+  "alpha": "-11.6%",
+  "raw": "-13.6%",
+  "holding": "5d",
+  "pending": false
+ }
+]

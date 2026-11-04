@@ -1,0 +1,13 @@
+pool,lookback_y,pick,trailing,signal_now
+pit_only,1,pit__topk_qqq__every5_k1_n252,2.46,MU
+pit_only,2,pit__topk__every21_k1_n126,9.65,LLY
+pit_only,3,pit__topk__every21_k1_n252,22.69,MU
+pit_only,5,pit__topk__every21_k1_n126,23.07,LLY
+rotation_pit,1,pitamd__topk_qqq__every5_k1_n252,2.46,MU
+rotation_pit,2,pitamd__topk__every21_k1_n126,9.65,LLY
+rotation_pit,3,pitamd__topk__every21_k1_n252,22.69,MU
+rotation_pit,5,pitamd__topk__every21_k1_n126,24.07,LLY
+amd_pairs,1,AMD+MU__rotate__cash1_every21_n126,4.13,AMD
+amd_pairs,2,AMD+PLTR__rotate__every1_n10,12.34,AMD
+amd_pairs,3,AMD+PLTR__rotate__every21_n63,30.7,PLTR
+amd_pairs,5,AMD+PLTR__rotate__every21_n63,36.66,PLTR
