@@ -134,6 +134,7 @@ three-x/results/*
 !three-x/results/amd_tv_indicators.csv
 !three-x/results/amd_tv_signals.json
 !three-x/results/amd_quarter_extremes.csv
+!three-x/results/amd_quarter_timeline.csv
 # Generated backtest results
 day-trading/plan/*.json
 earnings-trading/plan/*.json

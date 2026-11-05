@@ -158,54 +158,114 @@ From `amd_2024_study.py`. Read after the fact, from few trades.
 - **Trades peaked early, then gave it back.** Best rule, buys through Feb 2025: best +19.1% ended −16.5%; +9.2% ended −8.4%; +18.6% ended +6.9%; +5.4% ended −13.7%; +3.0% ended −14.3%. The high came 12–36 trading days after buying, against 41–45 in the four biggest winners that followed.
 - **The best sell day flips between periods.** Across buy days, $1 through the Feb 2025 trade became $0.92 selling 15 days before and $0.63 selling 7 days before. From May 2025, it became $3.33 and $5.73. The "sell 7 days before" result comes from the later period.
 
-## Timeline of each quarter's low and high
+## Timeline of each quarter
 
-Closing prices. Before/After is in trading days: days before the next report, then days after the last one. % is against the last report-day close.
+Every report, every swing, and each quarter's lowest (LOW) and highest (HIGH) close. Closing prices. Before/After is in trading days: days before the next report, then days after the last one. "vs report" is against the last report-day close, and "Move" is against the row above. Swings are 10% or more; Aug 2023, Oct 2023 and Oct 2024 use 5%. The last close may not be final.
 
 ```
-Date       Event      Close    Before/After    %   RSI  Stoch
-Aug 01 23  EARNINGS  $117.60
-Aug 07 23  High      $116.81   60/4   -1%   55    55
-Oct 26 23  Low        $93.67   3/61   -20%   33     9
-Oct 31 23  EARNINGS   $98.50
-Nov 02 23  Low       $107.83   59/2   +9%   59    71
-Jan 25 24  High      $180.33   3/58   +83%   77    90
-Jan 30 24  EARNINGS  $172.06
-Mar 07 24  High      $211.38  37/26   +23%   75    91
-Apr 19 24  Low       $146.64   7/56   -15%   29     4
-Apr 30 24  EARNINGS  $158.38
-Jul 10 24  High      $183.96  14/48   +16%   70    92
-Jul 25 24  Low       $138.32   3/59   -13%   30     4
-Jul 30 24  EARNINGS  $138.44
-Aug 07 24  Low       $128.67   58/6   -7%   30    22
-Oct 08 24  High      $172.80  15/49   +25%   69    96
-Oct 29 24  EARNINGS  $166.25
-Nov 07 24  High      $149.82   58/7   -10%   47    21
-Jan 28 25  Low       $114.17   5/60   -31%   36    23
-Feb 04 25  EARNINGS  $119.50
-Mar 25 25  High      $114.81  29/34   -4%   63    94
-Apr 08 25  Low        $78.21  19/44   -35%   23     9
-May 06 25  EARNINGS   $98.62
-May 07 25  Low       $100.36   61/1   +2%   56    86
-Jul 30 25  High      $179.51   4/58   +82%   83    93
-Aug 05 25  EARNINGS  $174.31
-Sep 05 25  Low       $151.14  42/22   -13%   36    15
-Oct 29 25  High      $264.33   4/60   +52%   75    94
-Nov 04 25  EARNINGS  $250.05
-Dec 17 25  Low       $198.11  31/30   -21%   35    21
-Jan 23 26  High      $259.68   7/54   +4%   76    93
-Feb 03 26  EARNINGS  $242.11
-Mar 03 26  Low       $190.95  44/19   -21%   38    21
-May 01 26  High      $360.54   2/61   +49%   80    95
-May 05 26  EARNINGS  $355.26
-May 07 26  Low       $408.46   60/2   +15%   76    91
-Jun 30 26  High      $580.91  24/38   +64%   65    82
-Aug 04 26  EARNINGS  $518.58
-Sep 03 26  Low       $456.16  42/22   -12%   43    14
-Oct 06 26  High      $649.42  20/44   +25%   72    92
-Nov 03 26  EARNINGS  $483.90
-Nov 04 26  High      $488.78    ?/1   +1%   39    12   so far
-Nov 05 26  Low       $404.40    ?/2   -16%   30    12   so far, may not be final
+Date       Event      Close   Before/After  vs report   Move   RSI  Stoch
+Aug 01 23  EARNINGS   117.60                                     57    47
+Aug 02 23  next day   109.35      63/1       -7.0%   -7.0%   44    41
+Aug 07 23  HIGH       116.81      60/4       -0.7%   +6.8%   55    55
+Aug 24 23  swing      101.80     47/17      -13.4%  -12.8%   39    24
+Sep 05 23  swing      110.78     40/24       -5.8%   +8.8%   54    70
+Sep 26 23  swing       95.96     25/39      -18.4%  -13.4%   34    10
+Oct 10 23  swing      109.01     15/49       -7.3%  +13.6%   59    94
+Oct 26 23  LOW         93.67      3/61      -20.3%  -14.1%   33     9
+
+Oct 31 23  EARNINGS    98.50                             +5.2%   44    22
+Nov 01 23  next day   108.04      60/1       +9.7%   +9.7%   59    47
+Nov 02 23  LOW        107.83      59/2       +9.5%   -0.2%   59    71
+Nov 29 23  swing      123.85     41/20      +25.7%  +14.9%   69    82
+Dec 06 23  swing      116.82     36/25      +18.6%   -5.7%   51    17
+Dec 28 23  swing      148.76     21/40      +51.0%  +27.3%   77    97
+Jan 03 24  swing      135.32     18/43      +37.4%   -9.0%   52    43
+Jan 25 24  HIGH       180.33      3/58      +83.1%  +33.3%   77    90
+
+Jan 30 24  EARNINGS   172.06                             -4.6%   65    78
+Jan 31 24  next day   167.69      62/1       -2.5%   -2.5%   60    70
+Feb 21 24  swing      164.29     48/15       -4.5%   -2.0%   47    32
+Mar 07 24  HIGH       211.38     37/26      +22.9%  +28.7%   75    91
+Apr 19 24  LOW        146.64      7/56      -14.8%  -30.6%   29     4
+
+Apr 30 24  EARNINGS   158.38                             +8.0%   44    52
+May 01 24  next day   144.27      61/1       -8.9%   -8.9%   33    39
+Jul 10 24  HIGH       183.96     14/48      +16.2%  +27.5%   70    92
+Jul 25 24  LOW        138.32      3/59      -12.7%  -24.8%   30     4
+
+Jul 30 24  EARNINGS   138.44                             +0.1%   31     7
+Jul 31 24  next day   144.48      63/1       +4.4%   +4.4%   38    11
+Aug 07 24  LOW        128.67      58/6       -7.1%  -10.9%   30    22
+Aug 21 24  swing      157.81     48/16      +14.0%  +22.6%   61    92
+Sep 06 24  swing      134.35     37/27       -3.0%  -14.9%   39    13
+Oct 08 24  HIGH       172.80     15/49      +24.8%  +28.6%   69    96
+
+Oct 29 24  EARNINGS   166.25                             -3.8%   60    46
+Oct 30 24  next day   148.60      64/1      -10.6%  -10.6%   41    38
+Nov 04 24  swing      140.71      61/4      -15.4%   -5.3%   35     3
+Nov 07 24  HIGH       149.82      58/7       -9.9%   +6.5%   47    21
+Nov 15 24  swing      134.90     52/13      -18.9%  -10.0%   33     2
+Dec 04 24  swing      143.99     40/25      -13.4%   +6.7%   51    80
+Dec 19 24  swing      118.88     29/36      -28.5%  -17.4%   27     5
+Jan 06 25  swing      129.55     19/46      -22.1%   +9.0%   51    55
+Jan 10 25  swing      116.04     16/49      -30.2%  -10.4%   35    35
+Jan 22 25  swing      123.75      9/56      -25.6%   +6.6%   49    47
+Jan 28 25  LOW        114.17      5/60      -31.3%   -7.7%   36    23
+
+Feb 04 25  EARNINGS   119.50                             +4.7%   47    29
+Feb 05 25  next day   112.01      62/1       -6.3%   -6.3%   39    31
+Mar 10 25  swing       96.63     40/23      -19.1%  -13.7%   32    13
+Mar 25 25  HIGH       114.81     29/34       -3.9%  +18.8%   63    94
+Apr 08 25  LOW         78.21     19/44      -34.6%  -31.9%   23     9
+Apr 09 25  swing       96.84     18/45      -19.0%  +23.8%   47    24
+Apr 21 25  swing       85.56     11/52      -28.4%  -11.6%   39    37
+
+May 06 25  EARNINGS    98.62                            +15.3%   53    88
+May 07 25  LOW        100.36      61/1       +1.8%   +1.8%   56    86
+Jul 30 25  HIGH       179.51      4/58      +82.0%  +78.9%   83    93
+
+Aug 05 25  EARNINGS   174.31                             -2.9%   69    75
+Aug 06 25  next day   163.12      63/1       -6.4%   -6.4%   55    67
+Aug 13 25  swing      184.42      58/6       +5.8%  +13.1%   69    74
+Sep 05 25  LOW        151.14     42/22      -13.3%  -18.0%   36    15
+Oct 29 25  HIGH       264.33      4/60      +51.6%  +74.9%   75    94
+
+Nov 04 25  EARNINGS   250.05                             -5.4%   63    74
+Nov 05 25  next day   256.33      60/1       +2.5%   +2.5%   65    73
+Nov 07 25  swing      233.54      58/3       -6.6%   -8.9%   51    42
+Nov 12 25  swing      258.89      55/6       +3.5%  +10.9%   61    52
+Dec 17 25  LOW        198.11     31/30      -20.8%  -23.5%   35    21
+Jan 23 26  HIGH       259.68      7/54       +3.9%  +31.1%   76    93
+
+Feb 03 26  EARNINGS   242.11                             -6.8%   56    56
+Feb 04 26  next day   200.19      62/1      -17.3%  -17.3%   35    38
+Feb 05 26  swing      192.50      61/2      -20.5%   -3.8%   32    19
+Feb 09 26  swing      216.00      59/4      -10.8%  +12.2%   45    20
+Mar 03 26  LOW        190.95     44/19      -21.1%  -11.6%   38    21
+Mar 25 26  swing      220.27     28/35       -9.0%  +15.4%   61    82
+Mar 30 26  swing      196.04     25/38      -19.0%  -11.0%   45    31
+May 01 26  HIGH       360.54      2/61      +48.9%  +83.9%   80    95
+
+May 05 26  EARNINGS   355.26                             -1.5%   73    90
+May 06 26  next day   421.39      61/1      +18.6%  +18.6%   81    89
+May 07 26  LOW        408.46      60/2      +15.0%   -3.1%   76    91
+Jun 03 26  swing      542.52     42/20      +52.7%  +32.8%   78    93
+Jun 10 26  swing      452.40     37/25      +27.3%  -16.6%   50    41
+Jun 30 26  HIGH       580.91     24/38      +63.5%  +28.4%   65    82
+Jul 17 26  swing      495.76     12/50      +39.5%  -14.7%   46    25
+Jul 22 26  swing      552.33      9/53      +55.5%  +11.4%   56    63
+Jul 29 26  swing      429.56      4/58      +20.9%  -22.2%   36    15
+
+Aug 04 26  EARNINGS   518.58                            +20.7%   52    49
+Aug 05 26  next day   482.05      63/1       -7.0%   -7.0%   47    52
+Sep 03 26  LOW        456.16     42/22      -12.0%   -5.4%   43    14
+Oct 06 26  HIGH       649.42     20/44      +25.2%  +42.4%   72    92
+Oct 22 26  swing      507.93      8/56       -2.1%  -21.8%   37    11
+Oct 28 26  swing      578.44      4/60      +11.5%  +13.9%   54    40
+
+Nov 03 26  EARNINGS   483.90                            -16.3%   38     9
+Nov 04 26  HIGH       488.78       ?/1       +1.0%   +1.0%   39    12
+Nov 05 26  LOW        404.40       ?/2      -16.4%  -17.3%   30    12
 ```
 
 Generated with `amd_quarter_paths.py`, which writes `results/amd_quarter_paths.csv`. The October 2024 detail uses the same method with a 5% threshold.
