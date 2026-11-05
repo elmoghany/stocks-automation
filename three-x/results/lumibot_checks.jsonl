@@ -55,3 +55,5 @@
 {"name": "AMD__amdcycle__S_oct25_v3p5", "start": "2025-10-01", "end": "2026-11-05", "total_return": 0.13353737760200546, "max_dd": 0.21315746861953722, "multiple": 1.1335373776020055, "vibe_multiple": 1.137475170569396}
 {"name": "AMD__amdcycle__S_3y_v3p4", "start": "2023-11-06", "end": "2026-11-05", "total_return": 0.9828834829331214, "max_dd": 0.2528123405105687, "multiple": 1.9828834829331214, "vibe_multiple": 2.0123607376543027}
 {"name": "AMD__amdcycle__S_3y_v3p5", "start": "2023-11-06", "end": "2026-11-05", "total_return": 1.149926965233694, "max_dd": 0.25086731476616264, "multiple": 2.149926965233694, "vibe_multiple": 2.1639152043037173}
+{"name": "AMD__amdcycle__Q_oct25_time_d12_before7", "start": "2025-10-01", "end": "2026-11-05", "total_return": 1.5875281853961196, "max_dd": 0.2153827374047421, "multiple": 2.5875281853961196, "vibe_multiple": 2.637404383121525}
+{"name": "AMD__amdcycle__Q_3y_time_d12_before7", "start": "2023-11-06", "end": "2026-11-05", "total_return": 4.576489808468398, "max_dd": 0.5762733149908601, "multiple": 5.576489808468398, "vibe_multiple": 5.733206200940261}
