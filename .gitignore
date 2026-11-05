@@ -109,6 +109,8 @@ three-x/results/*
 !three-x/results/amd_cycle_steps.csv
 !three-x/results/amd_turns.csv
 !three-x/results/amd_placebo.csv
+!three-x/results/amd_pattern.csv
+!three-x/results/amd_pattern_test.csv
 # Generated backtest results
 day-trading/plan/*.json
 earnings-trading/plan/*.json

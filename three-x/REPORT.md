@@ -2,6 +2,30 @@
 
 Run 2026-11-04. Backtests only, no orders placed. Long-only, cash, one or two stocks. The original 3x campaign used the halal list. The 2x–3x update below dropped it for testing, at the user's request.
 
+## Update 2026-11-05: AMD's earnings pattern, and what it would have made
+
+Read from the last 12 reports (`amd_pattern.py`). All figures are medians of highs and lows picked afterwards.
+
+1. **Falls before the report:** starts about 3 weeks before and bottoms about 2 days before, −12%, in 12 of 12.
+2. **Small bounce into the report:** +4% from that low, in 10 of 12. The final 2 days alone rose in only 6 of 12.
+3. **Falls after the report:** −4% the next day, lowest close about 13 trading days after at −10%, in 10 of 12.
+4. **Big rise:** +34% from that low, peaking about 48 trading days after the report, in 11 of 11.
+
+Against fake dates 3–9 weeks from the reports, the fall before and the rise after look much the same (−11.2% and +29%). What differs is the next day (−4.4% vs +0.1%), the drop after (−10.4% vs −6.9%, and later), and the full cycle (6 of 11, 55%, vs 36%).
+
+Backtest in Vibe-Trading, $100k, cash between trades, through 2026-11-05 (`amd_pattern_test.py`). Today's bar moved during the run, so it may not be final.
+
+| Rule | From 2025-10-01 | Worst fall | Last 3 years | Worst fall |
+|---|---|---|---|---|
+| AMD held | $245,915 | −36% | $370,975 | −63% |
+| Buy on day 13, sell on day 48 | $170,957 | −17% | $371,476 | −41% |
+| Buy 10% below the report-day close, else on day 13, sell on day 48 | $160,544 | −17% | $326,166 | −43% |
+| Same, but skip the report if no 10% fall within 20 days | $152,946 | −15% | $110,083 | −41% |
+
+The pattern lost to holding from October 2025 mainly because it sold at $255 in April 2026 and rebought at $485 in May, after a +19% report. Lumibot gives 1.57x against 1.61x for the third row, but stops at the 2026-11-04 close, so its 2.92x for AMD held is not comparable. The pattern was read from these same reports, so these results flatter it.
+
+`amd_fallcycle.py` (buy each fall, sell the rebound) was stopped at the user's request before finishing, and it has no results yet. `amd_falls.py` lists the falls: 10 of 15% or more and 8 of 25% or more, including 36% from 2026-10-06 to today.
+
 ## Update 2026-11-05: AMD alone, last 3 years, weekly or monthly decisions
 
 Window: 2023-11-06 to 2026-11-04, $100k, cash allowed, 12 earnings reports, run in Vibe-Trading with next-open fills and 5 bp slippage. The user's scope was the last 3 years only, so earlier years were not tested. AMD held made 4.37x (1.30x, 1.64x, 2.06x by year), with a worst fall of −63%.

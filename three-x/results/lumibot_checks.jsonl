@@ -39,3 +39,5 @@
 {"name": "AMD__amdcycle__M_two_months_after_report", "start": "2023-11-06", "end": "2026-11-03", "total_return": 4.810209573616445, "max_dd": 0.46261554168452396, "multiple": 5.810209573616445, "vibe_multiple": 6.100721307076801}
 {"name": "AMD__amdcycle__W_cash_1w_before_until_1w_after", "start": "2023-11-06", "end": "2026-11-03", "total_return": 5.068621716060328, "max_dd": 0.4711082802395852, "multiple": 6.068621716060328, "vibe_multiple": 5.864524983009029}
 {"name": "AMD__amdcycle__hold", "start": "2023-11-06", "end": "2026-11-03", "total_return": 3.502102221929089, "max_dd": 0.6248825572426303, "multiple": 4.502102221929089, "vibe_multiple": 4.323752002271527}
+{"name": "AMD__amdcycle__P_oct25_dip10_else_day13", "start": "2025-10-01", "end": "2026-11-05", "total_return": 0.5696825439617919, "max_dd": 0.13811115293182363, "multiple": 1.5696825439617919, "vibe_multiple": 1.605435692887272}
+{"name": "AMD__amdcycle__P_oct25_hold", "start": "2025-10-01", "end": "2026-11-05", "total_return": 1.9233745637347468, "max_dd": 0.2908979671903053, "multiple": 2.923374563734747, "vibe_multiple": 2.4591478872248143}

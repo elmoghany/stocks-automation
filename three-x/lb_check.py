@@ -119,7 +119,7 @@ def stateful_plan(job):
     """Decisions for switch and AMD-first rules: the trade dates and each day's target weights."""
     codes, cfg = job["codes"], job["cfg"]
     tickers = sorted(set(codes) | {"SPY", "QQQ", "SMH"})
-    bars = yf.download(tickers, start="2012-01-01", end=sweep.END, auto_adjust=True, progress=False)
+    bars = yf.download(tickers, start="2012-01-01", end=cfg.get("end") or sweep.END, auto_adjust=True, progress=False)
     bars.index = pd.DatetimeIndex(bars.index).tz_localize(None).normalize()
     data = {}
     for c in codes:
@@ -127,7 +127,7 @@ def stateful_plan(job):
         data[c].attrs["bench"] = bars["Close"]["SPY"]
     if cfg["family"] == "amdcycle":
         sig = {codes[0]: rules._amdcycle(data[codes[0]], cfg)}
-        state = sig[codes[0]]
+        state = rules._amdcycle(data[codes[0]], {**cfg, "want_state": 1}) if cfg["rule"] == "fallcycle" else sig[codes[0]]
     elif cfg["family"] == "ladder":
         sig = rules._ladder(data, codes, cfg, {m: bars["Close"][m].dropna() for m in ("QQQ", "SMH")})
         state = sig.pop("__state__")

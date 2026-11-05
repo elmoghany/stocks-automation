@@ -2,6 +2,10 @@
 
 ## Three-times campaign
 
+### 2026-11-05: AMD earnings pattern backtested from October 2025: $160,544 vs $245,915 held
+
+Pattern from 12 reports: falls 12% into the report, bounces 4%, falls 10% after (low about day 13), rises 34% (high about day 48). Buying 10% below the report-day close or on day 13, and selling on day 48, lost to holding, mainly by sitting out April–May 2026 ($255 to $485). Worst fall −17% vs −36%. Details in `three-x/REPORT.md`. The buy-the-fall backtest `amd_fallcycle.py` was stopped at the user's request and has not been run.
+
 ### 2026-11-05: AMD alone, last 3 years: staying out around earnings beat holding; buying lows from readings did not
 
 Weekly or monthly decisions, cash allowed, user's scope of 3 years only. AMD held 4.37x. Details in `three-x/REPORT.md`.

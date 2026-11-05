@@ -216,7 +216,7 @@ def run_one(job):
         src = template.replace('PARAMS = {"family": "bh"}', "PARAMS = " + repr(cfg_run), 1)
         (run_dir / "code" / "signal_engine.py").write_text(src, encoding="utf-8")
     (run_dir / "config.json").write_text(json.dumps({
-        "codes": all_codes, "start_date": "2024-12-01" if cfg.get("interval") else start, "end_date": END, "source": "yfinance",
+        "codes": all_codes, "start_date": "2024-12-01" if cfg.get("interval") else start, "end_date": cfg.get("end") or END, "source": "yfinance",
         "interval": cfg.get("interval", "1D"), "engine": "daily", "initial_cash": CASH,
         "position_adjustment": "rebalance", "rebalance_tolerance": 0.1, "slippage_us": 0.0005,
     }), encoding="utf-8")

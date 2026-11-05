@@ -152,6 +152,15 @@ def _amdcycle(df, p):
         is at least buy_gap below its 50-day average. Sell when RSI is at or above sell_rsi, the close is at least
         sell_gap above that average, and at least wait weeks have passed since the last report. With stop, also sell
         if the close falls that far below the purchase price.
+      fallcycle: buy each big fall, sell the rebound, wait in cash for the next fall. The fall is measured from the
+        highest close of the past look bars, counting only bars since the last sale. The first part is bought at a fall
+        of fall; with steps of 2 or 3, further equal parts at 10 and 20 points deeper. Sold after at least min_days by
+        a gain from the average cost, by getting back within 5% of the high from before the fall ("near_high"), or by
+        RSI of 70 or more with the close 15% above its 50-day average ("stretched"). With pre_report, also sold on the
+        last check before a report when in profit.
+      pattern: from the study of the last 12 reports (amd_pattern.py). After each report, buy at the first close at
+        least dip below the report-day close within dip_days; "then" says what happens if that never comes: "buy" on
+        day entry, or "skip" that report. With dip 0, simply buy on day entry. Sell on day exit after the report.
     """
     close = df["close"]
     c = close.values
@@ -159,8 +168,11 @@ def _amdcycle(df, p):
     days = days.tz_localize(None) if days.tz is not None else days
     days = days.normalize()
     n, rule = len(c), p["rule"]
-    period = days.to_period("W-FRI" if p["cadence"] == "W" else "M")
-    decide = np.append(period[1:] != period[:-1], True)
+    if p["cadence"] == "D":  # watched every day; min_days keeps it from being day trading
+        decide = np.ones(n, dtype=bool)
+    else:
+        period = days.to_period("W-FRI" if p["cadence"] == "W" else "M")
+        decide = np.append(period[1:] != period[:-1], True)
     dec = np.nonzero(decide)[0]
     start = int(days.searchsorted(pd.Timestamp(p["trade_from"])))
     reports = sorted({int(days.searchsorted(pd.Timestamp(d))) for d in p["reports"] if pd.Timestamp(d) <= days[-1]})
@@ -168,6 +180,49 @@ def _amdcycle(df, p):
     pos = np.zeros(n)
     if rule == "hold":
         pos[start:] = 1.0
+    elif rule == "pattern":
+        for r in reports:
+            buy = r + p["entry"] if not p["dip"] or p["then"] == "buy" else None
+            if p["dip"]:
+                limit = min(r + p["dip_days"], n - 1)
+                hits = [i for i in range(r + 1, limit + 1) if c[i] <= c[r] * (1 - p["dip"]) and (p["then"] == "skip" or i <= r + p["entry"])]
+                if hits:
+                    buy = hits[0]
+            if buy is not None and start <= buy < n:
+                pos[buy:min(r + p["exit"], n)] = 1.0
+    elif rule == "fallcycle":
+        rsi, gap = _rsi(close, 14).values, (close / close.rolling(50).mean() - 1).values
+        where = {int(i): j for j, i in enumerate(dec)}
+        cash, shares, spent, stake, filled, prior, since, last_sale, trades = 1.0, 0.0, 0.0, 0.0, 0, 0.0, 0, 0, 0
+        state = np.zeros(n)
+        for i in range(n):
+            if decide[i] and i >= start:
+                if shares > 0:
+                    x, cost = p["exit"], spent / shares
+                    sell = (c[i] >= cost * (1 + p["gain"]) if x == "gain" else c[i] >= prior * 0.95 if x == "near_high"
+                            else rsi[i] >= 70 and gap[i] >= 0.15)
+                    if p.get("pre_report") and where[i] in last_before and c[i] > cost:
+                        sell = True
+                    if sell and since >= p["min_days"]:
+                        cash, shares, spent, filled, last_sale, since = cash + shares * c[i], 0.0, 0.0, 0, i, 0
+                        trades += 1
+                if shares > 0 and filled < p["steps"] and c[i] <= prior * (1 - p["fall"] - 0.10 * filled):
+                    buy = stake if filled < p["steps"] - 1 else cash
+                    shares, spent, cash, filled = shares + buy / c[i], spent + buy, cash - buy, filled + 1
+                    trades += 1
+                elif shares == 0:
+                    high = c[max(last_sale, i - p["look"] + 1):i + 1].max()
+                    if i > last_sale and c[i] <= high * (1 - p["fall"]):
+                        stake, prior, since = cash / p["steps"], high, 0
+                        buy = cash if p["steps"] == 1 else stake
+                        shares, spent, cash, filled = buy / c[i], buy, cash - buy, 1
+                        trades += 1
+            if shares > 0:
+                pos[i] = shares * c[i] / (cash + shares * c[i])
+                since += 1
+            state[i] = trades
+        if p.get("want_state"):
+            return pd.Series(state, index=close.index)
     elif rule == "swing":
         rsi, gap = _rsi(close, 14).values, (close / close.rolling(50).mean() - 1).values
         hold, cost = False, 0.0
