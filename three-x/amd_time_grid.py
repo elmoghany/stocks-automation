@@ -1,4 +1,4 @@
-"""Every combination of buy day (10-15 after a report) and sell day (5-15 before the next report), AMD, last 3 years.
+"""Every combination of buy day (10-20 after a report) and sell day (5-15 before the next report), AMD, last 3 years.
 
 Time only, no price triggers. Runs in Vibe-Trading, $100k, cash between trades, next-open fills, 5 bp slippage, data through
 2026-11-05. "Neighbors" averages the cells next to a combination: a real timing effect should not depend on one exact day.
@@ -19,7 +19,7 @@ import amd_cycle as A
 import amd_quarters as Q
 import sweep
 
-DAYS, BEFORE = range(10, 16), range(15, 4, -1)
+DAYS, BEFORE = range(10, 21), range(15, 4, -1)
 NAMES = {(d, b): f"time_d{d}_before{b}" for d in DAYS for b in BEFORE}
 Q.RULES["grid_hold"] = {"rule": "hold", "cadence": "W"}
 for (d, b), name in NAMES.items():

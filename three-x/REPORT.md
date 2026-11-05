@@ -2,14 +2,14 @@
 
 Run 2026-11-04. Backtests only, no orders placed. Long-only, cash, one or two stocks. The original 3x campaign used the halal list. The 2x–3x update below dropped it for testing, at the user's request.
 
-## Update 2026-11-05: buy days 10–15, sell 5–15 days before the next report
+## Update 2026-11-05: buy days 10–20, sell 5–15 days before the next report
 
-All 66 combinations, $100k, time only, in Vibe-Trading through 2026-11-05 (`amd_time_grid.py`, `results/amd_time_grid.csv`). AMD held made $361,160 over 3 years with a worst fall of −63%, and $239,504 since October 2025. Of the 66, 47 beat holding over 3 years and 8 since October 2025. The best is buy on day 12, sell 7 days before: $573,321 over 3 years, worst fall −59%, $263,740 since October 2025, and Lumibot gives 5.58x against 5.73x in Vibe-Trading.
+All 121 combinations, $100k, time only, in Vibe-Trading through 2026-11-05 (`amd_time_grid.py`, `results/amd_time_grid.csv`). AMD held made $361,160 over 3 years with a worst fall of −63%, and $239,504 since October 2025. Of the 121, 79 beat holding over 3 years and 15 since October 2025. The best is buy on day 12, sell 7 days before: $573,321 over 3 years, worst fall −59%, $263,740 since October 2025, and Lumibot gives 5.58x against 5.73x in Vibe-Trading.
 
-- **The sell day matters more than the buy day.** Selling 7–8 days before was best, averaging $523,060 and $486,654, against $340,000–$383,000 for 12–15 days before.
-- **One-day jumps.** Moving from 7 days to 6 days before cuts the best buy day's value from $573,321 to $466,458, so a few trades carry much of the difference.
-- **Today flatters every rule against holding.** The rules were in cash through today's fall (close $404.40), and holding was not.
-- **Check on later quarters.** Ranked on the first 8 quarters, the top pick was buy day 12, sell 5 days before: 2.26x, then 2.33x in the last 4. AMD held made about 1.94x from the Nov 2025 report to the Nov 2026 report. This range was narrowed after seeing earlier results over the same 3 years, so it is not a clean test.
+- **The sell day matters more than the buy day.** Nine of the best 10 sell 7 or 8 days before, and selling 12–15 days before was weakest.
+- **Bumpy results.** Moving from 7 days to 6 days before cuts the best buy day's value from $573,321 to $466,458, and buy day 16 makes $436k at 7 days before while day 17 makes $539k. A few trades carry much of these differences, so the exact best cell is partly luck.
+- **Today flatters every rule against holding.** The rules were in cash through today's fall (close $404.40). Holding through the November 4 close would be about $437,000.
+- **Check on later quarters.** Ranked on the first 8 quarters, the top pick was buy day 18, sell 5 days before: 2.29x, then 2.15x in the last 4. AMD held made 1.94x from the Nov 2025 report to the Nov 2026 report. This range was narrowed after seeing earlier results over the same 3 years, so it is not a clean test.
 
 ## Update 2026-11-05: strategy built from the six patterns in `AMD_QUARTERS.md`
 
