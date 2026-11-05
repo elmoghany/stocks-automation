@@ -2,6 +2,10 @@
 
 ## Three-times campaign
 
+### 2026-11-05: AMD strategy from the six patterns (v3.0–v3.5): well below holding
+
+Backtest only, no orders. v3.5 made $216,392 over 3 years and $113,748 since October 2025, against AMD held at $361,160 and $239,504. Mostly in cash, and missed large rises. None of 81 nearby settings of v3.4 beat holding. A single usual quarter does not look real (fit −0.02 vs +0.02 for random stretches). Shape comparison as a quarter unfolds was right 45–55% using only earlier quarters and did not help with money. Details in `three-x/REPORT.md`.
+
 ### 2026-11-05: AMD's exact path in each quarter
 
 Every 10%+ swing between reports is in `three-x/results/amd_quarter_paths.csv`. Of 12 quarters, 6 ended higher. After the report, 6 fell 10%+ from the report-day close, 3 fell less, and 3 had no real fall. Going into the next report, the last swing was up in 7 and down in 5, so a fall right before the report is less regular than the earlier "12 of 12" suggested; that figure counted any fall of 4% or more from a recent high.

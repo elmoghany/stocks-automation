@@ -2,6 +2,35 @@
 
 Run 2026-11-04. Backtests only, no orders placed. Long-only, cash, one or two stocks. The original 3x campaign used the halal list. The 2x–3x update below dropped it for testing, at the user's request.
 
+## Update 2026-11-05: strategy built from the six patterns in `AMD_QUARTERS.md`
+
+**The strategy made much less than holding AMD, and less than the simple time-only rules.** Backtest only, no orders. Run in Vibe-Trading with $100k, data through 2026-11-05 (`amd_strategy.py`). Settings were fixed before any backtest, and every addition stayed in. Today's price kept moving, so AMD held is $361,160 here against $366,795 above. All of this is in-sample, because the patterns were read from these same 3 years.
+
+| Version | Addition | Since Oct 2025 | 3 years | Worst fall (3 years) | Trades |
+|---|---|---|---|---|---|
+| AMD held | | $239,504 | $361,160 | −63% | |
+| v3.0 | Pattern 1: buy the second low | $258,222 | $110,622 | −44% | 7 |
+| v3.1 | + pattern 2: half size unless lows are rising | $189,468 | $106,935 | −28% | 7 |
+| v3.2 | + pattern 3: 10% trail on days 26–53 | $131,698 | $133,078 | −18% | 7 |
+| v3.3 | + pattern 4: sell half at +28% | $136,934 | $138,370 | −18% | 8 |
+| v3.4 | + pattern 6: day after the report | $172,216 | $201,236 | −23% | 18 |
+| v3.5 | + pattern 5: stay out of bad shapes | $113,748 | $216,392 | −23% | 16 |
+
+- **Mostly in cash.** v3.5 was invested 22% of the time on average, and reached 2x or 3x in none of the 12-month periods. It reached 20% in 3 of 12 quarters.
+- **Large misses.** In v3.4, the Aug 2025 quarter made −2.5% against AMD's +43.5%, and Feb 2026 made −3.9% against +46.7%.
+- **Depends on the start date.** v3.0 beats holding since October 2025 but makes $110,622 over 3 years.
+- **Nearby settings.** None of 81 variations of v3.4 beat holding, with 3-year values from $165,720 to $263,996.
+- **Simple rules did better.** Buying on day 13 and selling 15 days before the next report made $370,505 and $179,828. Buying on day 10 and selling 5 days before made $488,920 and $223,683. Those were also fitted to these years.
+- **Lumibot:** v3.4 1.74x and 1.98x against 1.72x and 2.01x in Vibe-Trading. v3.5 1.13x and 2.15x against 1.14x and 2.16x.
+
+### How a quarter usually behaves
+
+All 13 quarters were stretched onto one timeline by interpolation (`amd_typical_quarter.py`). The median falls to about −10% around day 21, rises to about +15% around day 48, and ends at −3%. But the middle half at the end runs from −13% to +46%, so the median describes few quarters. Each quarter's fit with the typical shape of the others averages −0.02, against +0.02 for random stretches of AMD, and 59% of random sets did at least as well. So there is no reliable single "usual quarter".
+
+### Pattern 5 as it unfolds
+
+Typical paths for each shape were compared with the quarter so far (`amd_shapes_live.py`). Shapes are labels I gave after the fact. Judged with later quarters allowed, the shape was right 46–62% of the time against about 25% by chance. Judged only from earlier quarters, which is what could really be done, it was right 45–55%. Either way it did not help with money: at day 20, quarters judged good then made +16% on average (3 quarters) and quarters judged bad +14% (8 quarters). It wrongly judged Aug 2025 (+54.2% afterward) and Feb 2026 (+75.8%) as bad.
+
 ## Update 2026-11-05: 20% every quarter, timed from earnings dates
 
 **No rule made 20% every quarter.** Across 204 rules and 12 quarters, the best reached 20% in 7 quarters, and every rule lost money in at least 2. Even perfect timing reaches 20% in only 11 of 12: the most available after the October 2024 report was +9%. No rule beat AMD held since October 2025, and 56 of 204 beat it over 3 years. Run in Vibe-Trading with $100k and data through 2026-11-05 (`amd_quarters.py`). Today's bar moved between runs, so AMD held is $243,119 here against $245,915 above.

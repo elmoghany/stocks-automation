@@ -115,6 +115,12 @@ three-x/results/*
 !three-x/results/amd_quarters_trades.csv
 !three-x/results/amd_quarter_shapes.csv
 !three-x/results/amd_quarter_paths.csv
+!three-x/results/amd_strategy.csv
+!three-x/results/amd_strategy_trades.csv
+!three-x/results/amd_typical_quarter.csv
+!three-x/results/amd_shape_templates.csv
+!three-x/results/amd_shape_tests.csv
+!three-x/results/amd_shape_blocks.json
 # Generated backtest results
 day-trading/plan/*.json
 earnings-trading/plan/*.json

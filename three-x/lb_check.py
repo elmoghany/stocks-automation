@@ -127,7 +127,7 @@ def stateful_plan(job):
         data[c].attrs["bench"] = bars["Close"]["SPY"]
     if cfg["family"] == "amdcycle":
         sig = {codes[0]: rules._amdcycle(data[codes[0]], cfg)}
-        state = rules._amdcycle(data[codes[0]], {**cfg, "want_state": 1}) if cfg["rule"] == "fallcycle" else sig[codes[0]]
+        state = rules._amdcycle(data[codes[0]], {**cfg, "want_state": 1}) if cfg["rule"] in ("fallcycle", "patterns") else sig[codes[0]]
     elif cfg["family"] == "ladder":
         sig = rules._ladder(data, codes, cfg, {m: bars["Close"][m].dropna() for m in ("QQQ", "SMH")})
         state = sig.pop("__state__")

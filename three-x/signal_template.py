@@ -167,6 +167,14 @@ def _amdcycle(df, p):
         next report, or earlier: at a gain of target ("sell"), or after reaching target, on a fall of trail from the peak.
         "day" buys on day number day, for rules based only on time from the report. With pre_leg, also hold from pre_leg
         trading days before each report until the open of the report day, so out before its after-close release.
+      patterns: from AMD_QUARTERS.md, one addition per version (amd_strategy.py). Pattern 1: after a fall of fall from the
+        high and a bounce of bounce, wait for a return to within near above the first low, then buy at a close confirm above
+        that second low; sell on a 25% trail from the peak, or below the first low by below. regime (pattern 2): half
+        size unless the last confirmed 10% swing low is above the one before. tops (pattern 3): 10% trail on trading days
+        26 to 53 after a report. rise (pattern 4): sell half at target, unless the setup fell 35% or more or took 40 or more
+        trading days. nextday (pattern 6): after a report, buy if the next day closes up and lows are rising; sell if down.
+        shape_blocks (pattern 5): dated ranges where the quarter so far looked like a bad shape, judged only from earlier
+        quarters (amd_shapes_live.py). In a range: sell and do not buy until it ends.
     """
     close = df["close"]
     c = close.values
@@ -186,6 +194,78 @@ def _amdcycle(df, p):
     pos = np.zeros(n)
     if rule == "hold":
         pos[start:] = 1.0
+    elif rule == "patterns":
+        fall, bounce, near, below, confirm = p["fall"], p["bounce"], p["near"], p["below"], p["confirm"]
+        cash, shares, peak, entry, stop_level, since, trades = 1.0, 0.0, 0.0, 0.0, 0.0, 0, 0
+        halved, keep_all, double = False, False, False
+        state = np.zeros(n)
+        report_days, last_r = set(reports), None
+        way, hi_i, lo_i, lows = 0, 0, 0, []
+        phase, ref, first, second, fall_start = 0, c[0], 0.0, 0.0, 0
+        blocked = np.zeros(n, dtype=bool)
+        for rng in p.get("shape_blocks", []):
+            blocked |= (days >= pd.Timestamp(rng["from"])) & (days <= pd.Timestamp(rng["to"]))
+        for i in range(n):
+            if c[i] > c[hi_i]:
+                hi_i = i
+            if c[i] < c[lo_i]:
+                lo_i = i
+            if way >= 0 and c[i] <= c[hi_i] * 0.90:
+                way, lo_i = -1, i
+            elif way <= 0 and c[i] >= c[lo_i] * 1.10:
+                lows.append(c[lo_i])
+                way, hi_i = 1, i
+            rising = len(lows) >= 2 and lows[-1] > lows[-2] and c[i] >= lows[-1]
+            if phase == 0:
+                ref = max(ref, c[i])
+                if c[i] <= ref * (1 - fall):
+                    phase, first, fall_start = 1, c[i], i
+            elif phase == 1:
+                first = min(first, c[i])
+                if c[i] >= first * (1 + bounce):
+                    phase = 2
+            elif phase == 2:
+                if c[i] >= ref * 0.95:
+                    phase, ref = 0, c[i]
+                elif c[i] <= first * (1 + near):
+                    phase, second = 3, c[i]
+            else:
+                second = min(second, c[i])
+                if c[i] < first * (1 - below):
+                    phase, first = 1, c[i]
+            buy_double = phase == 3 and c[i] >= second * (1 + confirm)
+            after_report = last_r is not None and last_r == i - 1
+            if i >= start:
+                if shares > 0:
+                    peak = max(peak, c[i])
+                    in_window = p.get("tops") and last_r is not None and 26 <= i - last_r <= 53
+                    sell = c[i] < peak * (0.90 if in_window else 0.75)
+                    if p.get("nextday") and after_report and c[i] < c[last_r]:
+                        sell = True
+                    broken = (double and c[i] < stop_level) or blocked[i]
+                    if (sell and since >= p["min_days"]) or broken:
+                        cash, shares, phase, ref, trades = cash + shares * c[i], 0.0, 0, c[i], trades + 1
+                    elif p.get("rise") and not halved and not keep_all and since >= p["min_days"] and c[i] >= entry * (1 + p["target"]):
+                        cash, shares, halved, trades = cash + shares * c[i] / 2, shares / 2, True, trades + 1
+                if shares == 0:
+                    buy_next = p.get("nextday") and after_report and c[i] > c[last_r] and rising
+                    if (buy_double or buy_next) and not blocked[i]:
+                        size = 0.5 if p.get("regime") and not rising else 1.0
+                        shares, cash = cash * size / c[i], cash * (1 - size)
+                        entry, peak, since, halved, double = c[i], c[i], 0, False, bool(buy_double)
+                        stop_level = first * (1 - below)
+                        keep_all = bool(buy_double) and (first <= ref * 0.65 or i - fall_start >= 40)
+                        trades += 1
+                        if buy_double:
+                            phase, ref = 0, c[i]
+            if shares > 0:
+                pos[i] = shares * c[i] / (cash + shares * c[i])
+                since += 1
+            state[i] = trades
+            if i in report_days:
+                last_r = i
+        if p.get("want_state"):
+            return pd.Series(state, index=close.index)
     elif rule == "quarter":
         for j, r in enumerate(reports):
             last = (reports[j + 1] if j + 1 < len(reports) else r + 63) - p["before_next"]
