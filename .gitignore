@@ -122,6 +122,7 @@ three-x/results/*
 !three-x/results/amd_shape_tests.csv
 !three-x/results/amd_shape_blocks.json
 !three-x/results/amd_time_grid.csv
+!three-x/results/amd_trade_review.csv
 # Generated backtest results
 day-trading/plan/*.json
 earnings-trading/plan/*.json
