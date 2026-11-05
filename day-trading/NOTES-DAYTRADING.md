@@ -2,6 +2,10 @@
 
 ## Three-times campaign
 
+### 2026-11-05: AMD's exact path in each quarter
+
+Every 10%+ swing between reports is in `three-x/results/amd_quarter_paths.csv`. Of 12 quarters, 6 ended higher. After the report, 6 fell 10%+ from the report-day close, 3 fell less, and 3 had no real fall. Going into the next report, the last swing was up in 7 and down in 5, so a fall right before the report is less regular than the earlier "12 of 12" suggested; that figure counted any fall of 4% or more from a recent high.
+
 ### 2026-11-05: AMD 20% every quarter, timed from earnings dates: not reached
 
 Across 204 rules and 12 quarters, the best made 20% in 7, and all lost in at least 2. Perfect timing reaches it in 11 of 12. Time-only rule (buy day 13, sell 15 days before the next report): $179,828 since October 2025, $370,505 over 3 years, against AMD held at $243,119 and $366,795. Selling earlier cost money ($489k, $382k, $172k at 5, 15, 30 days before). Fair test on the last 4 quarters: 1.59–1.75x vs 1.94x held. Details in `three-x/REPORT.md`.
