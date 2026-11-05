@@ -10,13 +10,27 @@ Every percent is measured between closing prices.
 - **Next day:** the next day's close against the report-day close.
 - **Quarter:** the next report-day close against this one.
 - **Each line below the heading:** one swing, showing direction, the closing price reached, the date, and the percent move from the price on the line before.
-- **Which swings are listed:** a fall counts once the price closes 10% below the latest high, and a rebound once it closes 10% above the latest low. Moves under 10% appear only at the start or end of a quarter. October 2024 uses 5%, because no rebound in it reached 10%.
+- **Which swings are listed:** a fall counts once the price closes 10% below the latest high, and a rebound once it closes 10% above the latest low. Moves under 10% appear only at the start or end of a quarter. August 2023, October 2023 and October 2024 use 5% instead, to show their smaller swings.
 
 ## The quarters
 
 ```
-OCT 31, 2023   close $98.50    next day +9.7%    quarter +74.7%
-  up     $172.06   Jan 30 2024   +74.7%
+AUG 01, 2023   close $117.60   next day -7.0%    quarter -16.2%   (swings of 5% or more)
+  down   $109.35   Aug 02 2023    -7.0%
+  up     $116.81   Aug 07 2023    +6.8%
+  down   $101.80   Aug 24 2023   -12.8%
+  up     $110.78   Sep 05 2023    +8.8%
+  down   $95.96    Sep 26 2023   -13.4%
+  up     $109.01   Oct 10 2023   +13.6%
+  down   $93.67    Oct 26 2023   -14.1%
+  up     $98.50    Oct 31 2023    +5.2%
+
+OCT 31, 2023   close $98.50    next day +9.7%    quarter +74.7%   (swings of 5% or more)
+  up     $123.85   Nov 29 2023   +25.7%
+  down   $116.82   Dec 06 2023    -5.7%
+  up     $148.76   Dec 28 2023   +27.3%
+  down   $135.32   Jan 03 2024    -9.0%
+  up     $172.06   Jan 30 2024   +27.2%
 
 JAN 30, 2024   close $172.06   next day -2.5%    quarter -8.0%
   down   $164.29   Feb 21 2024    -4.5%
@@ -104,28 +118,32 @@ NOV 03, 2026   close $483.90   next day +1.0%    so far -14.7%
 - AMD closed 2024 at $120.79 on December 31, 27% below its report-day close.
 - The quarter's lowest close was $114.17 on January 28, 2025, 31% below the report-day close. It has no line of its own because the rebound after it, to $119.50, was under 5%.
 
+## Notes on late 2023
+
+AMD closed 2023 at $147.41 on December 29. In the October 2023 quarter, the lowest close was $107.83 on November 2 and the highest was $180.33 on January 25, 2024.
+
 ## What the quarters have in common
 
-Of the 12 complete quarters, 6 ended higher and 6 ended lower. They don't repeat one fixed pattern.
+Of the 13 complete quarters, 6 ended higher and 7 ended lower. They don't repeat one fixed pattern.
 
 These groups are measured from the report-day close, not from a high.
 
-- **Fell 10% or more within 30 trading days (6):** Oct 2024, Feb 2025, Aug 2025, Nov 2025, Feb 2026, Aug 2026.
+- **Fell 10% or more within 30 trading days (7):** Aug 2023, Oct 2024, Feb 2025, Aug 2025, Nov 2025, Feb 2026, Aug 2026.
 - **Fell less than 10% (3):** Jan 2024, Apr 2024, Jul 2024.
 - **No real fall (3):** Oct 2023, May 2025, May 2026.
 
-The next day was down in 7 of 12 quarters. The last swing into the next report was up in 7 and down in 5.
+The next day was down in 8 of 13 quarters. The last swing into the next report was up in 8 and down in 5.
 
 ## Patterns noticed in this list
 
-Read by eye after the fact, with no backtest and no comparison with fake dates. Twelve quarters can suggest these, not prove them.
+Read by eye after the fact, with no backtest and no comparison with fake dates. Thirteen quarters can suggest these, not prove them.
 
-1. **Four quarter shapes.** Straight up: Oct 2023, May 2025. Fall after the report, then a big rise into the next one: Aug 2025, Nov 2025, Feb 2026. Peak mid-quarter, then fade into the next report: Jan 2024, Apr 2024, Aug 2026, and in part May 2026 and Jul 2024. Down most of the way: Oct 2024, Feb 2025.
-2. **Big falls bottom twice.** All 5 finished falls of 20%+ in a single swing came back to within −7% to +9% of the first low before the real rise: $146.64 then $144.27 (2024), $138.44 then $128.67 (2024), $78.21 then $85.56 (2025), $198.11 then $192.50, $190.95 and $196.04 (2025–26), $429.56 then $456.16 (2026). In 4 of the 5, the later low came after a report, on trading days 1 to 38.
-3. **Tops mostly come 5–10 weeks after a report.** Of the 8 highs before the 10%+ falls listed, 6 came on trading days 26–49 and 2 on day 6.
-4. **Two sizes of rise.** Four rises stopped at about 28% (+28.7, +27.5, +28.6, +28.4). The biggest (+65 to +81%) followed a long base, a crash, or a fall of about 18% in Sep 2025.
-5. **Two kinds of period.** Mar 2024 to Apr 2025 made lower highs and lower lows, from $211.38 to $78.21. Apr 2025 to Oct 2026 made mostly higher highs and higher lows, from $78.21 to $649.42. Falls recovered quickly in the second period and not in the first.
-6. **The day after a report leans toward the quarter.** Next day up: 4 of 5 quarters rose. Next day down: 2 of 7 rose. Part of that is mechanical, because the quarter includes that day. Without it: 4 of 5 and 3 of 7, one of those at +0.4%.
+1. **Four quarter shapes.** Mostly straight up: Oct 2023, May 2025. Fall after the report, then a big rise into the next one: Aug 2025, Nov 2025, Feb 2026. Peak mid-quarter, then fade into the next report: Jan 2024, Apr 2024, Aug 2026, and in part May 2026 and Jul 2024. Down most of the way: Aug 2023, Oct 2024, Feb 2025.
+2. **Big falls bottom twice.** All 5 finished falls of 20%+ in a single swing came back to within −7% to +9% of the first low before the real rise: $146.64 then $144.27 (2024), $138.44 then $128.67 (2024), $78.21 then $85.56 (2025), $198.11 then $192.50, $190.95 and $196.04 (2025–26), $429.56 then $456.16 (2026). In 4 of the 5, the later low came after a report, on trading days 1 to 38. Late 2023 looks similar on smaller falls: $95.96 then $93.67, then the rise.
+3. **The biggest tops mostly come 5–10 weeks after a report.** Of the 7 highs before falls of 20%+ in a single swing, 5 came on trading days 26–53, 1 on day 6 and 1 on the report day. Smaller tops have no such timing: of all 22 highs before falls of 10%+, 11 came on days 26–53, 10 on day 25 or earlier, and 1 on day 60.
+4. **Two sizes of rise.** Four rises stopped at about 28% (+28.7, +27.5, +28.6, +28.4). The biggest (+65 to +81%) followed a long base, a crash, or a fall of about 18% in Sep 2025. The +74.7% quarter from Oct 2023 also followed a long fall.
+5. **Three stretches.** Oct 2023 to Mar 2024 rose from $93.67 to $211.38. Mar 2024 to Apr 2025 made lower highs and lower lows, down to $78.21. Apr 2025 to Oct 2026 made mostly higher highs and higher lows, up to $649.42. Falls recovered quickly in the rising stretches and not in the falling one.
+6. **The day after a report leans toward the quarter.** Next day up: 4 of 5 quarters rose. Next day down: 2 of 8 rose. Part of that is mechanical, because the quarter includes that day. Without it: 4 of 5 and 3 of 8, one of those at +0.4%.
 
 No pattern found: the direction into a report does not tell the next-day move. A single swing's fall is usually 10–25%, but swings can stack, as in $172.80 to $78.21 (−55%).
 
