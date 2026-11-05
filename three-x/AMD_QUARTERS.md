@@ -158,6 +158,68 @@ From `amd_2024_study.py`. Read after the fact, from few trades.
 - **Trades peaked early, then gave it back.** Best rule, buys through Feb 2025: best +19.1% ended −16.5%; +9.2% ended −8.4%; +18.6% ended +6.9%; +5.4% ended −13.7%; +3.0% ended −14.3%. The high came 12–36 trading days after buying, against 41–45 in the four biggest winners that followed.
 - **The best sell day flips between periods.** Across buy days, $1 through the Feb 2025 trade became $0.92 selling 15 days before and $0.63 selling 7 days before. From May 2025, it became $3.33 and $5.73. The "sell 7 days before" result comes from the later period.
 
+## Each quarter as a trade
+
+Earnings, then the best buy, then the best sell after it in that quarter, known only afterwards. Closing prices, trading days. After counts from the report, Before counts to the next report, vs report is against the report-day close, and Gain is sell against buy.
+
+```
+Date       Event      Close   After  Before  vs report   Gain   RSI  Stoch
+Aug 01 23  EARNINGS   117.60                                   57    47
+Sep 26 23  BUY         95.96     39      25    -18.4%           34    10
+Oct 10 23  SELL       109.01     49      15     -7.3%  +13.6%   59    94
+
+Oct 31 23  EARNINGS    98.50                                   44    22
+Nov 02 23  BUY        107.83      2      59     +9.5%           59    71
+Jan 25 24  SELL       180.33     58       3    +83.1%  +67.2%   77    90
+
+Jan 30 24  EARNINGS   172.06                                   65    78
+Feb 21 24  BUY        164.29     15      48     -4.5%           47    32
+Mar 07 24  SELL       211.38     26      37    +22.9%  +28.7%   75    91
+
+Apr 30 24  EARNINGS   158.38                                   44    52
+May 01 24  BUY        144.27      1      61     -8.9%           33    39
+Jul 10 24  SELL       183.96     48      14    +16.2%  +27.5%   70    92
+
+Jul 30 24  EARNINGS   138.44                                   31     7
+Aug 07 24  BUY        128.67      6      58     -7.1%           30    22
+Oct 08 24  SELL       172.80     49      15    +24.8%  +34.3%   69    96
+
+Oct 29 24  EARNINGS   166.25                                   60    46
+Dec 19 24  BUY        118.88     36      29    -28.5%           27     5
+Jan 06 25  SELL       129.55     46      19    -22.1%   +9.0%   51    55
+
+Feb 04 25  EARNINGS   119.50                                   47    29
+Apr 08 25  BUY         78.21     44      19    -34.6%           23     9
+May 05 25  SELL       100.59     62       1    -15.8%  +28.6%   56    88
+
+May 06 25  EARNINGS    98.62                                   53    88
+May 07 25  BUY        100.36      1      61     +1.8%           56    86
+Jul 30 25  SELL       179.51     58       4    +82.0%  +78.9%   83    93
+
+Aug 05 25  EARNINGS   174.31                                   69    75
+Sep 05 25  BUY        151.14     22      42    -13.3%           36    15
+Oct 29 25  SELL       264.33     60       4    +51.6%  +74.9%   75    94
+
+Nov 04 25  EARNINGS   250.05                                   63    74
+Dec 17 25  BUY        198.11     30      31    -20.8%           35    21
+Jan 23 26  SELL       259.68     54       7     +3.9%  +31.1%   76    93
+
+Feb 03 26  EARNINGS   242.11                                   56    56
+Mar 03 26  BUY        190.95     19      44    -21.1%           38    21
+May 01 26  SELL       360.54     61       2    +48.9%  +88.8%   80    95
+
+May 05 26  EARNINGS   355.26                                   73    90
+May 07 26  BUY        408.46      2      60    +15.0%           76    91
+Jun 30 26  SELL       580.91     38      24    +63.5%  +42.2%   65    82
+
+Aug 04 26  EARNINGS   518.58                                   52    49
+Sep 03 26  BUY        456.16     22      42    -12.0%           43    14
+Oct 06 26  SELL       649.42     44      20    +25.2%  +42.4%   72    92
+
+Nov 03 26  EARNINGS   483.90                                   38     9
+Nov 05 26  BUY        404.40      2       ?    -16.4%           30    12   lowest so far, not known to be the low
+```
+
 ## Timeline of each quarter
 
 Every report, every swing, and each quarter's lowest (LOW) and highest (HIGH) close. Closing prices. Before/After is in trading days: days before the next report, then days after the last one. "vs report" is against the last report-day close, and "Move" is against the row above. Swings are 10% or more; Aug 2023, Oct 2023 and Oct 2024 use 5%. The last close may not be final.
