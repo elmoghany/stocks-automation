@@ -60,3 +60,5 @@
 {"name": "AMD__amdcycle__Q_oct25_time_d12_before7", "start": "2025-10-01", "end": "2026-11-05", "total_return": 1.5875281853961196, "max_dd": 0.2153827374047421, "multiple": 2.5875281853961196, "vibe_multiple": 2.637404383121525}
 {"name": "AMD__amdcycle__Q_3y_time_d12_before7", "start": "2023-11-06", "end": "2026-11-05", "total_return": 4.576489808468398, "max_dd": 0.5762733149908601, "multiple": 5.576489808468398, "vibe_multiple": 5.733206200940261}
 {"name": "AMD__amdcycle__Q_jan24_time_d12_before7", "start": "2024-01-30", "end": "2026-11-05", "total_return": 2.8107443418125406, "max_dd": 0.5761725171381168, "multiple": 3.8107443418125406, "vibe_multiple": 3.9371631730898673}
+{"name": "AMD__amdcycle__T_y2526_stochfast_below10__trail15", "start": "2025-01-02", "end": "2026-11-05", "total_return": 3.91365607458508, "max_dd": 0.2863132948548128, "multiple": 4.91365607458508, "vibe_multiple": 5.190820710074253}
+{"name": "AMD__amdcycle__T_y24_stochfast_below10__trail15", "start": "2024-01-02", "end": "2024-12-31", "total_return": -0.10193985158874452, "max_dd": 0.4605863568949479, "multiple": 0.8980601484112555, "vibe_multiple": 0.860564230489779}

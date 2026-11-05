@@ -135,6 +135,31 @@ def _single(df, p):
     raise ValueError(f)
 
 
+def _ta_signals(df):
+    """Buy and sell signals from standard indicators, using each bar's data and earlier bars only."""
+    c, h, l = df["close"], df["high"], df["low"]
+    rsi = _rsi(c, 14)
+    stoch = 100 * (c - l.rolling(14).min()) / (h.rolling(14).max() - l.rolling(14).min())
+    signal = stoch.rolling(3).mean()
+    tp = (h + l + c) / 3
+    cci = (tp - tp.rolling(20).mean()) / (0.015 * tp.rolling(20).apply(lambda x: np.abs(x - x.mean()).mean(), raw=True))
+    mid, sd = c.rolling(20).mean(), c.rolling(20).std()
+    band = (c - (mid - 2 * sd)) / (4 * sd)
+    roc = c.pct_change(12, fill_method=None) * 100
+    macd = c.ewm(span=12, adjust=False).mean() - c.ewm(span=26, adjust=False).mean()
+    macd_signal = macd.ewm(span=9, adjust=False).mean()
+    off_high = c / c.rolling(63).max() - 1
+    up = lambda a, x: (a > x) & (a.shift() <= x)
+    down = lambda a, x: (a < x) & (a.shift() >= x)
+    buys = {"stoch_below20": signal < 20, "stoch_up20": up(signal, 20), "stochfast_below10": stoch < 10, "cci_below100": cci < -100, "cci_up100": up(cci, -100),
+            "rsi_below40": rsi < 40, "rsi_up40": up(rsi, 40), "band_below0": band < 0, "band_up0": up(band, 0), "roc_below10": roc < -10, "off25": off_high <= -0.25,
+            "rsi40_off20": (rsi < 40) & (off_high <= -0.20)}
+    sells = {"stoch_above85": signal > 85, "stoch_down80": down(signal, 80), "cci_above100": cci > 100, "cci_down100": down(cci, 100), "rsi_down65": down(rsi, 65), "rsi_down70": down(rsi, 70),
+             "below20d": (c < mid) & (c.shift() >= mid.shift()), "macd_down": (macd < macd_signal) & (macd.shift() >= macd_signal.shift()), "macd_down_pos": (macd < macd_signal) & (macd.shift() >= macd_signal.shift()) & (macd > 0),
+             "band_down1": down(band, 1), "roc_above15": roc > 15}
+    return buys, sells
+
+
 def _amdcycle(df, p):
     """One stock or cash, deciding only at the last close of each week ("W") or month ("M"), from trade_from on.
 
@@ -175,6 +200,8 @@ def _amdcycle(df, p):
         trading days. nextday (pattern 6): after a report, buy if the next day closes up and lows are rising; sell if down.
         shape_blocks (pattern 5): dated ranges where the quarter so far looked like a bad shape, judged only from earlier
         quarters (amd_shapes_live.py). In a range: sell and do not buy until it ends.
+      ta: buy and sell on technical indicators only, no calendar (amd_ta_rules.py). Names are in _ta_signals. Each position is
+        held at least min_days. With above200, buy only while the close is above its 200-day average.
     """
     close = df["close"]
     c = close.values
@@ -194,6 +221,22 @@ def _amdcycle(df, p):
     pos = np.zeros(n)
     if rule == "hold":
         pos[start:] = 1.0
+    elif rule == "ta":
+        buys, sells = _ta_signals(df)
+        enter = buys[p["buy"]].fillna(False).values
+        if p.get("above200"):
+            enter = enter & (close > close.rolling(200).mean()).values
+        leave = sells[p["sell"]].fillna(False).values if p["sell"] in sells else np.zeros(n, dtype=bool)
+        trail = {"trail15": 0.85, "trail25": 0.75}.get(p["sell"])
+        hold, peak, since = False, 0.0, 0
+        for i in range(start, n):
+            if hold:
+                peak, since = max(peak, c[i]), since + 1
+                if since >= p["min_days"] and (leave[i] or (trail and c[i] < peak * trail)):
+                    hold = False
+            elif enter[i]:
+                hold, peak, since = True, c[i], 0
+            pos[i] = float(hold)
     elif rule == "patterns":
         fall, bounce, near, below, confirm = p["fall"], p["bounce"], p["near"], p["below"], p["confirm"]
         cash, shares, peak, entry, stop_level, since, trades = 1.0, 0.0, 0.0, 0.0, 0.0, 0, 0

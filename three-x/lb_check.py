@@ -123,7 +123,7 @@ def stateful_plan(job):
     bars.index = pd.DatetimeIndex(bars.index).tz_localize(None).normalize()
     data = {}
     for c in codes:
-        data[c] = pd.DataFrame({"open": bars["Open"][c], "close": bars["Close"][c], "volume": bars["Volume"][c]}).dropna()
+        data[c] = pd.DataFrame({"open": bars["Open"][c], "high": bars["High"][c], "low": bars["Low"][c], "close": bars["Close"][c], "volume": bars["Volume"][c]}).dropna()
         data[c].attrs["bench"] = bars["Close"]["SPY"]
     if cfg["family"] == "amdcycle":
         sig = {codes[0]: rules._amdcycle(data[codes[0]], cfg)}

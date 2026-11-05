@@ -126,6 +126,13 @@ three-x/results/*
 !three-x/results/amd_grid_2024.csv
 !three-x/results/amd_grid_2024_trades.csv
 !three-x/results/amd_grid_2024_all_trades.csv
+!three-x/results/amd_wide_grid.csv
+!three-x/results/amd_ta_study.csv
+!three-x/results/amd_ta_scan.csv
+!three-x/results/amd_ta_reliable.csv
+!three-x/results/amd_ta_rules.csv
+!three-x/results/amd_tv_indicators.csv
+!three-x/results/amd_tv_signals.json
 # Generated backtest results
 day-trading/plan/*.json
 earnings-trading/plan/*.json
