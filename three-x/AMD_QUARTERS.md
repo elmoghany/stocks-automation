@@ -116,4 +116,17 @@ These groups are measured from the report-day close, not from a high.
 
 The next day was down in 7 of 12 quarters. The last swing into the next report was up in 7 and down in 5.
 
+## Patterns noticed in this list
+
+Read by eye after the fact, with no backtest and no comparison with fake dates. Twelve quarters can suggest these, not prove them.
+
+1. **Four quarter shapes.** Straight up: Oct 2023, May 2025. Fall after the report, then a big rise into the next one: Aug 2025, Nov 2025, Feb 2026. Peak mid-quarter, then fade into the next report: Jan 2024, Apr 2024, Aug 2026, and in part May 2026 and Jul 2024. Down most of the way: Oct 2024, Feb 2025.
+2. **Big falls bottom twice.** All 5 finished falls of 20%+ in a single swing came back to within −7% to +9% of the first low before the real rise: $146.64 then $144.27 (2024), $138.44 then $128.67 (2024), $78.21 then $85.56 (2025), $198.11 then $192.50, $190.95 and $196.04 (2025–26), $429.56 then $456.16 (2026). In 4 of the 5, the later low came after a report, on trading days 1 to 38.
+3. **Tops mostly come 5–10 weeks after a report.** Of the 8 highs before the 10%+ falls listed, 6 came on trading days 26–49 and 2 on day 6.
+4. **Two sizes of rise.** Four rises stopped at about 28% (+28.7, +27.5, +28.6, +28.4). The biggest (+65 to +81%) followed a long base, a crash, or a fall of about 18% in Sep 2025.
+5. **Two kinds of period.** Mar 2024 to Apr 2025 made lower highs and lower lows, from $211.38 to $78.21. Apr 2025 to Oct 2026 made mostly higher highs and higher lows, from $78.21 to $649.42. Falls recovered quickly in the second period and not in the first.
+6. **The day after a report leans toward the quarter.** Next day up: 4 of 5 quarters rose. Next day down: 2 of 7 rose. Part of that is mechanical, because the quarter includes that day. Without it: 4 of 5 and 3 of 7, one of those at +0.4%.
+
+No pattern found: the direction into a report does not tell the next-day move. A single swing's fall is usually 10–25%, but swings can stack, as in $172.80 to $78.21 (−55%).
+
 Generated with `amd_quarter_paths.py`, which writes `results/amd_quarter_paths.csv`. The October 2024 detail uses the same method with a 5% threshold.
