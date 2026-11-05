@@ -99,7 +99,7 @@ class ConfigStrategy(Strategy):
 
 
 def curve_path(name):
-    for folder in ("curves", "curves_sector", "curves_ladder"):
+    for folder in ("curves", "curves_sector", "curves_ladder", "curves_amd"):
         if (HERE / "results" / folder / f"{name}.csv").exists():
             return HERE / "results" / folder / f"{name}.csv"
     return None
@@ -125,7 +125,10 @@ def stateful_plan(job):
     for c in codes:
         data[c] = pd.DataFrame({"open": bars["Open"][c], "close": bars["Close"][c], "volume": bars["Volume"][c]}).dropna()
         data[c].attrs["bench"] = bars["Close"]["SPY"]
-    if cfg["family"] == "ladder":
+    if cfg["family"] == "amdcycle":
+        sig = {codes[0]: rules._amdcycle(data[codes[0]], cfg)}
+        state = sig[codes[0]]
+    elif cfg["family"] == "ladder":
         sig = rules._ladder(data, codes, cfg, {m: bars["Close"][m].dropna() for m in ("QQQ", "SMH")})
         state = sig.pop("__state__")
     elif cfg["family"] == "first":
@@ -165,7 +168,7 @@ def run(job):
     start = datetime.fromisoformat(job["start"])
     end = datetime.fromisoformat(job["end"])
     params = {"codes": job["codes"], "cfg": job["cfg"], "signal_dates": signal_dates(job["name"], job["cfg"])}
-    if job["cfg"]["family"] in ("first", "switch", "ladder"):
+    if job["cfg"]["family"] in ("first", "switch", "ladder", "amdcycle"):
         params["signal_dates"], params["weights"] = stateful_plan(job)
     result = ConfigStrategy.backtest(
         YahooDataBacktesting, start, end, budget=100_000,

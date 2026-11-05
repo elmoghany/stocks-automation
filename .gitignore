@@ -104,6 +104,11 @@ three-x/results/*
 !three-x/results/sector_walk_forward.csv
 !three-x/results/sector_same_rule.csv
 !three-x/results/sector_hindsight.csv
+!three-x/results/amd_cycle.csv
+!three-x/results/amd_cycle_events.csv
+!three-x/results/amd_cycle_steps.csv
+!three-x/results/amd_turns.csv
+!three-x/results/amd_placebo.csv
 # Generated backtest results
 day-trading/plan/*.json
 earnings-trading/plan/*.json

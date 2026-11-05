@@ -176,6 +176,8 @@ def grid(name):
 def key(codes, cfg):
     if cfg.get("family") == "ladder":
         return f"{cfg['uni']}__ladder__{cfg['tag']}"
+    if cfg.get("family") == "amdcycle":
+        return f"AMD__amdcycle__{cfg['tag']}"
     tail = "_".join(f"{k}{v}" for k, v in sorted(cfg.items())
                     if k not in ("family", "regime_n", "regime_code", "elig", "uni", "bench_code", "interval", "pool", "partner_by_year"))
     tail = tail.replace("[", "").replace("]", "").replace(", ", "-").replace(".", "p")
@@ -188,7 +190,8 @@ def key(codes, cfg):
 def run_one(job):
     codes, cfg = job
     name = key(codes, cfg)
-    folder = ("curves_hourly" if cfg.get("interval") else "curves_ladder" if cfg.get("family") == "ladder"
+    folder = ("curves_hourly" if cfg.get("interval") else "curves_amd" if cfg.get("family") == "amdcycle"
+              else "curves_ladder" if cfg.get("family") == "ladder"
               else "curves_sector" if cfg.get("pool") == "sector" else "curves")
     keep = RESULTS / folder / f"{name}.csv"
     if keep.exists() or (RESULTS / "curves" / f"{name}.csv").exists():
@@ -198,7 +201,7 @@ def run_one(job):
     template = (HERE / "signal_template.py").read_text(encoding="utf-8")
     src = template.replace('PARAMS = {"family": "bh"}', "PARAMS = " + repr(cfg), 1)
     (run_dir / "code" / "signal_engine.py").write_text(src, encoding="utf-8")
-    start = "2015-01-01" if cfg.get("elig") else START
+    start = cfg.get("start") or ("2015-01-01" if cfg.get("elig") else START)
     all_codes = [f"{c}.US" for c in codes] + ([f"{cfg['regime_code']}.US"] if cfg.get("regime_code") else [])
     cfg_run = dict(cfg)
     if cfg.get("bench_code"):

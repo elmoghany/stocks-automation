@@ -40,6 +40,8 @@ def _latch(enter, leave):
 def _single(df, p):
     """Target exposure in [0, 1] for one stock."""
     f, c = p["family"], df["close"]
+    if f == "amdcycle":
+        return _amdcycle(df, p)
     if f == "bh":
         return pd.Series(1.0, index=c.index)
     if f == "sma_trend":
@@ -131,6 +133,92 @@ def _single(df, p):
         from_start = idx.groupby(ym).transform(lambda s: s - s.iloc[0])
         return ((from_end < p["before"]) | (from_start < p["after"])).astype(float)
     raise ValueError(f)
+
+
+def _amdcycle(df, p):
+    """One stock or cash, deciding only at the last close of each week ("W") or month ("M"), from trade_from on.
+
+    Report dates are used in advance: AMD announces them weeks ahead. Selling on the last decision before a report
+    fills at the next open, so the position is gone before the report's after-close release.
+      hold: bought once and held.
+      earn: out from k decisions before the last decision before a report until w decisions after it.
+      runup: in only from f decisions before the last decision before a report, until that decision ("before") or the
+        first decision after the report ("through").
+      after: in from a decisions after the first decision after a report, for b decisions.
+      dip: buy after a fall of dd from the highest close of the past look bars, counting only bars since the last sale;
+        with post=1 only within 20 bars after a report. Sold by target (+30, +50, +100%), a 25% trail from the high
+        since buying, regaining the high from before the fall, or on the last decision before the next report.
+      swing: from the study of AMD's turns (amd_turns.py). Buy when the 14-day RSI is at or below buy_rsi and the close
+        is at least buy_gap below its 50-day average. Sell when RSI is at or above sell_rsi, the close is at least
+        sell_gap above that average, and at least wait weeks have passed since the last report. With stop, also sell
+        if the close falls that far below the purchase price.
+    """
+    close = df["close"]
+    c = close.values
+    days = pd.DatetimeIndex(close.index)
+    days = days.tz_localize(None) if days.tz is not None else days
+    days = days.normalize()
+    n, rule = len(c), p["rule"]
+    period = days.to_period("W-FRI" if p["cadence"] == "W" else "M")
+    decide = np.append(period[1:] != period[:-1], True)
+    dec = np.nonzero(decide)[0]
+    start = int(days.searchsorted(pd.Timestamp(p["trade_from"])))
+    reports = sorted({int(days.searchsorted(pd.Timestamp(d))) for d in p["reports"] if pd.Timestamp(d) <= days[-1]})
+    last_before = {int(np.searchsorted(dec, r, "left")) - 1 for r in reports}
+    pos = np.zeros(n)
+    if rule == "hold":
+        pos[start:] = 1.0
+    elif rule == "swing":
+        rsi, gap = _rsi(close, 14).values, (close / close.rolling(50).mean() - 1).values
+        hold, cost = False, 0.0
+        for i in range(n):
+            if decide[i] and i >= start:
+                if hold:
+                    past = [r for r in reports if r < i]
+                    since = i - past[-1] if past else 10 ** 6
+                    target = rsi[i] >= p["sell_rsi"] and gap[i] >= p["sell_gap"] and since >= p["wait"] * 5
+                    if target or (p.get("stop") and c[i] <= cost * (1 - p["stop"])):
+                        hold = False
+                elif rsi[i] <= p["buy_rsi"] and gap[i] <= -p["buy_gap"]:
+                    hold, cost = True, c[i]
+            pos[i] = float(hold)
+    elif rule == "dip":
+        hold, cost, peak, prior, last_sale = False, 0.0, 0.0, 0.0, 0
+        where = {int(i): j for j, i in enumerate(dec)}
+        for i in range(n):
+            if hold:
+                peak = max(peak, c[i])
+            if decide[i] and i >= start:
+                x = p["exit"]
+                if hold:
+                    leave = (c[i] >= cost * (1 + p["gain"]) if x == "target" else c[i] < peak * 0.75 if x == "trail"
+                             else c[i] >= prior if x == "regain" else where[i] in last_before)
+                    if leave:
+                        hold, last_sale = False, i
+                else:
+                    high = c[max(last_sale, i - p["look"] + 1):i + 1].max()
+                    near = not p.get("post") or any(r < i <= r + 20 for r in reports)
+                    if c[i] <= high * (1 - p["dd"]) and near and not (x == "report" and where[i] in last_before):
+                        hold, cost, peak, prior = True, c[i], c[i], high
+            pos[i] = float(hold)
+    else:
+        flags = np.ones(len(dec)) if rule == "earn" else np.zeros(len(dec))
+        for r in reports:
+            before = int(np.searchsorted(dec, r, "left")) - 1
+            after = int(np.searchsorted(dec, r, "right"))
+            if rule == "earn":
+                flags[max(before - p["k"], 0):after + p["w"] - 1] = 0.0
+            elif rule == "runup":
+                flags[max(before - p["f"], 0):before if p["sell"] == "before" else after] = 1.0
+            else:
+                flags[after + p["a"]:after + p["a"] + p["b"]] = 1.0
+        state = pd.Series(np.nan, index=range(n))
+        state.iloc[dec] = flags
+        pos = state.ffill().fillna(0.0).values
+        pos[:start] = 0.0
+        first = dec[dec >= start][0]
+        pos[start:first] = 0.0  # nothing is bought before the first decision in the window
+    return pd.Series(pos, index=close.index)
 
 
 def _rotate(data, codes, p):

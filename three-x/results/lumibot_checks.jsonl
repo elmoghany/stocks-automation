@@ -36,3 +36,6 @@
 {"name": "broad_vol30_12m__ladder__v1p25_a3390d46", "start": "2025-06-11", "end": "2026-06-10", "total_return": 4.658813573556291, "max_dd": 0.28394270403450306, "multiple": 5.658813573556291, "vibe_multiple": 5.039866859159098}
 {"name": "broad_vol30_12m__ladder__v1p25_87067874", "start": "2024-03-08", "end": "2025-03-07", "total_return": -0.4968824391149902, "max_dd": 0.5256224920805355, "multiple": 0.5031175608850098, "vibe_multiple": 0.5246811475799771}
 {"name": "broad_vol30_12m__ladder__v1p25_87067874", "start": "2025-06-11", "end": "2026-06-10", "total_return": 0.1854250977153764, "max_dd": 0.680169898252543, "multiple": 1.1854250977153764, "vibe_multiple": 1.1446642384559118}
+{"name": "AMD__amdcycle__M_two_months_after_report", "start": "2023-11-06", "end": "2026-11-03", "total_return": 4.810209573616445, "max_dd": 0.46261554168452396, "multiple": 5.810209573616445, "vibe_multiple": 6.100721307076801}
+{"name": "AMD__amdcycle__W_cash_1w_before_until_1w_after", "start": "2023-11-06", "end": "2026-11-03", "total_return": 5.068621716060328, "max_dd": 0.4711082802395852, "multiple": 6.068621716060328, "vibe_multiple": 5.864524983009029}
+{"name": "AMD__amdcycle__hold", "start": "2023-11-06", "end": "2026-11-03", "total_return": 3.502102221929089, "max_dd": 0.6248825572426303, "multiple": 4.502102221929089, "vibe_multiple": 4.323752002271527}

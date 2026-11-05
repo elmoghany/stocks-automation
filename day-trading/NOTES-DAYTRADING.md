@@ -2,6 +2,15 @@
 
 ## Three-times campaign
 
+### 2026-11-05: AMD alone, last 3 years: staying out around earnings beat holding; buying lows from readings did not
+
+Weekly or monthly decisions, cash allowed, user's scope of 3 years only. AMD held 4.37x. Details in `three-x/REPORT.md`.
+
+- Best: buy at the first month-end after a report, sell two month-ends later: 6.10x, worst fall −47% vs −63%. Lumibot 5.81x.
+- Fair test: in the one unseen year it made 2.04x vs AMD's 2.06x. Real report dates ranked 1st of 13 against dates shifted up to 6 weeks. Not 3x a year.
+- Wait for a 20–25% fall: at most 3 of 48 rules beat holding. Study-based rule: 0.97x; none of 324 variations beat holding.
+- Only the reaction day stands out in the user's cycle (−2.6% average); all five steps together in 0 of 11 reports.
+
 ### 2026-11-05: AMD-first ladder v1.0–v1.26 and v2: no 2x or 3x rule passes; details in `three-x/REPORT.md`
 
 Goal was 3x (or 2x) in at least 50% of 12-month periods, with AMD first and a second stock. Tested 8,452 setups and 26 cumulative additions through Vibe-Trading, with Lumibot cross-checks. Halal was dropped for testing only.

@@ -2,6 +2,57 @@
 
 Run 2026-11-04. Backtests only, no orders placed. Long-only, cash, one or two stocks. The original 3x campaign used the halal list. The 2x–3x update below dropped it for testing, at the user's request.
 
+## Update 2026-11-05: AMD alone, last 3 years, weekly or monthly decisions
+
+Window: 2023-11-06 to 2026-11-04, $100k, cash allowed, 12 earnings reports, run in Vibe-Trading with next-open fills and 5 bp slippage. The user's scope was the last 3 years only, so earlier years were not tested. AMD held made 4.37x (1.30x, 1.64x, 2.06x by year), with a worst fall of −63%.
+
+**Best result: staying out around earnings beat holding, but it does not reach 3x a year, and its lead did not show up in the one fair year test.** Trying to buy lows and sell highs from readings or falls did worse than holding.
+
+| Rule | 3 years | By year | Worst fall | In market | 2x / 3x share of 12-month periods |
+|---|---|---|---|---|---|
+| AMD held | 4.37x | 1.30 / 1.64 / 2.06 | −63% | 100% | 29% / 17% |
+| Buy at the first month-end after a report, sell two month-ends later | 6.10x | 1.45 / 2.06 / 2.04 | −47% | 67% | 50% / 25% |
+| Weekly: sell 2 Fridays before a report, rebuy the first Friday after | 5.86x | 1.60 / 1.66 / 2.22 | −46% | 84% | 38% / 29% |
+| Best wait-for-25%-fall rule | 4.81x | 1.00 / 2.34 / 2.06 | −32% | 56% | 50% / 17% |
+| Study rule, set in advance | 0.97x | 0.98 / 0.99 / 1.00 | −57% | 39% | 0% / 0% |
+
+### The earnings cycle
+
+| Step | Average | Went the expected way | Ordinary AMD period |
+|---|---|---|---|
+| Dip, 4 weeks to 1 week before | +7.0% | Down in 6 of 12 | +4.2% |
+| Rise, last week before | +1.1% | Up in 7 of 12 | +1.3% |
+| Reaction, the day after | −2.6% (median −4.4%) | Down in 7 of 12 | +0.3% |
+| Drop, first 2 weeks after | +0.8% | Down in 5 of 11 | +2.4% |
+| Recovery, weeks 3–8 after | +6.7% | Up in 7 of 11 | +9.2% |
+
+Only the reaction day stands out (p = 0.013, before allowing for five tested steps). All five steps happened together in 0 of 11 reports. Moves that day are large, about 6% against 2% on an ordinary day, and go both ways: −17% in February 2026 and +19% in May 2026.
+
+### Study of lows and highs
+
+Swings of 20% or more come about every 2.7 months. Buying every low and selling every high would have made 66x, a ceiling known only afterwards.
+
+| | Lows (6) | Highs (7) | Normal day |
+|---|---|---|---|
+| 14-day RSI | 23–38 | 65–76 | 52 |
+| Against the 50-day average | 13–26% below | 14–41% above | 1% above |
+| Fall from the 1-year high | 25–57% | 0–18% | 19% |
+
+No high came within 4 weeks after a report, and most came 8–11 weeks after. Half the lows came within 2 weeks after a report.
+
+### Results
+
+- **Run 1, earnings timing (48 rules):** 11 beat holding. In the "skip the report" group, 8 of 18 beat it, with a median of 4.22x. Holding only the run-up never beat it (0 of 8).
+- **Run 2, wait for a fall:** 2 of 48 rules beat holding at a 20% fall and 3 of 48 at 25%, with few trades, mostly carried by April 2025.
+- **Run 3, from the study (324 rules):** none beat holding, and the median was 1.00x. The rule set in advance bought in April 2024 at 146.64, sat through the fall to 78, sold in June 2025 at 143.81, and was then in cash while AMD rose past 600. The readings describe turns, but they also appear on ordinary days and can be absent in a long rise.
+
+### Checks on the two best rules
+
+- **Fair test:** ranked on the first 2 years, the top pick was the month-end rule: 2.99x against 2.12x for AMD held, then 2.04x against 2.06x in year 3. So no lead in the one unseen year. Ranked backwards on the last 2 years, the top pick made 1.08x in year 1 against AMD's 1.30x.
+- **Shifted report dates:** real dates ranked 1st of 13 for both rules. Moved by up to 6 weeks either way, the medians were 2.34x and 3.10x. This supports timing around reports, but the rules were chosen by their results, and 1 of 13 is weak evidence by itself.
+- **Lumibot:** month-end rule 5.81x vs 6.10x in Vibe-Trading, weekly rule 6.07x vs 5.86x, AMD held 4.50x vs 4.32x.
+- **Limits:** 12 reports in one strong 3-year rise. The two rules were picked from those same 3 years. Report dates come from Yahoo and are assumed to be known in advance. Taxes on the extra trades are not modelled.
+
 ## Update 2026-11-05: 2x–3x with AMD first and a second stock
 
 **Nothing reaches the goal.** The target was 3x in at least 50% of 12-month periods, and for 2x the same 50% bar. Across 8,452 setups and 26 cumulative additions:
@@ -202,6 +253,7 @@ Run from `three-x/`:
 - Sweeps: `sweep.py <singles|pairs|pairs_cash|topk|batch2|overnight|first|auto|switch|sectors>`
 - Ladder: `build_growth_partner.py`, `build_growth_pool.py`, `build_earnings.py`, then `ladder.py 4 v1` or `ladder.py 4 v2`
 - Scoring: `analyze2.py`, `episodes.py`, `meta_wf.py`, `sector_score.py`, `ceiling.py`
+- AMD study: `amd_earnings.py`, `amd_turns.py`, `amd_cycle.py`, `amd_placebo.py`
 - Stress and cross-checks: `validate.py`, `lb_check.py`, `ta_to_vibe.py`
 - TradingAgents: `claude_bridge.py`, `ta_run.py`, `ta_audit.py`
 
