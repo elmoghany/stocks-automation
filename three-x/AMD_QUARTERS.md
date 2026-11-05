@@ -160,52 +160,52 @@ From `amd_2024_study.py`. Read after the fact, from few trades.
 
 ## Timeline of each quarter's low and high
 
-Closing prices. Days are trading days. "After" counts from the last report, "before" counts to the next one, and % is against the last report-day close.
+Closing prices. Before/After is in trading days: days before the next report, then days after the last one. % is against the last report-day close.
 
 ```
-Date       Event      Close    After  Before    %   RSI  Stoch
+Date       Event      Close    Before/After    %   RSI  Stoch
 Aug 01 23  EARNINGS  $117.60
-Aug 07 23  High      $116.81      4     60     -1%   55    55
-Oct 26 23  Low        $93.67     61      3    -20%   33     9
+Aug 07 23  High      $116.81   60/4   -1%   55    55
+Oct 26 23  Low        $93.67   3/61   -20%   33     9
 Oct 31 23  EARNINGS   $98.50
-Nov 02 23  Low       $107.83      2     59     +9%   59    71
-Jan 25 24  High      $180.33     58      3    +83%   77    90
+Nov 02 23  Low       $107.83   59/2   +9%   59    71
+Jan 25 24  High      $180.33   3/58   +83%   77    90
 Jan 30 24  EARNINGS  $172.06
-Mar 07 24  High      $211.38     26     37    +23%   75    91
-Apr 19 24  Low       $146.64     56      7    -15%   29     4
+Mar 07 24  High      $211.38  37/26   +23%   75    91
+Apr 19 24  Low       $146.64   7/56   -15%   29     4
 Apr 30 24  EARNINGS  $158.38
-Jul 10 24  High      $183.96     48     14    +16%   70    92
-Jul 25 24  Low       $138.32     59      3    -13%   30     4
+Jul 10 24  High      $183.96  14/48   +16%   70    92
+Jul 25 24  Low       $138.32   3/59   -13%   30     4
 Jul 30 24  EARNINGS  $138.44
-Aug 07 24  Low       $128.67      6     58     -7%   30    22
-Oct 08 24  High      $172.80     49     15    +25%   69    96
+Aug 07 24  Low       $128.67   58/6   -7%   30    22
+Oct 08 24  High      $172.80  15/49   +25%   69    96
 Oct 29 24  EARNINGS  $166.25
-Nov 07 24  High      $149.82      7     58    -10%   47    21
-Jan 28 25  Low       $114.17     60      5    -31%   36    23
+Nov 07 24  High      $149.82   58/7   -10%   47    21
+Jan 28 25  Low       $114.17   5/60   -31%   36    23
 Feb 04 25  EARNINGS  $119.50
-Mar 25 25  High      $114.81     34     29     -4%   63    94
-Apr 08 25  Low        $78.21     44     19    -35%   23     9
+Mar 25 25  High      $114.81  29/34   -4%   63    94
+Apr 08 25  Low        $78.21  19/44   -35%   23     9
 May 06 25  EARNINGS   $98.62
-May 07 25  Low       $100.36      1     61     +2%   56    86
-Jul 30 25  High      $179.51     58      4    +82%   83    93
+May 07 25  Low       $100.36   61/1   +2%   56    86
+Jul 30 25  High      $179.51   4/58   +82%   83    93
 Aug 05 25  EARNINGS  $174.31
-Sep 05 25  Low       $151.14     22     42    -13%   36    15
-Oct 29 25  High      $264.33     60      4    +52%   75    94
+Sep 05 25  Low       $151.14  42/22   -13%   36    15
+Oct 29 25  High      $264.33   4/60   +52%   75    94
 Nov 04 25  EARNINGS  $250.05
-Dec 17 25  Low       $198.11     30     31    -21%   35    21
-Jan 23 26  High      $259.68     54      7     +4%   76    93
+Dec 17 25  Low       $198.11  31/30   -21%   35    21
+Jan 23 26  High      $259.68   7/54   +4%   76    93
 Feb 03 26  EARNINGS  $242.11
-Mar 03 26  Low       $190.95     19     44    -21%   38    21
-May 01 26  High      $360.54     61      2    +49%   80    95
+Mar 03 26  Low       $190.95  44/19   -21%   38    21
+May 01 26  High      $360.54   2/61   +49%   80    95
 May 05 26  EARNINGS  $355.26
-May 07 26  Low       $408.46      2     60    +15%   76    91
-Jun 30 26  High      $580.91     38     24    +64%   65    82
+May 07 26  Low       $408.46   60/2   +15%   76    91
+Jun 30 26  High      $580.91  24/38   +64%   65    82
 Aug 04 26  EARNINGS  $518.58
-Sep 03 26  Low       $456.16     22     42    -12%   43    14
-Oct 06 26  High      $649.42     44     20    +25%   72    92
+Sep 03 26  Low       $456.16  42/22   -12%   43    14
+Oct 06 26  High      $649.42  20/44   +25%   72    92
 Nov 03 26  EARNINGS  $483.90
-Nov 04 26  High      $488.78      1      ?     +1%   39    12   so far
-Nov 05 26  Low       $404.40      2      ?    -16%   30    12   so far, may not be final
+Nov 04 26  High      $488.78    ?/1   +1%   39    12   so far
+Nov 05 26  Low       $404.40    ?/2   -16%   30    12   so far, may not be final
 ```
 
 Generated with `amd_quarter_paths.py`, which writes `results/amd_quarter_paths.csv`. The October 2024 detail uses the same method with a 5% threshold.
