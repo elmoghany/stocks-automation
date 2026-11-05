@@ -20,6 +20,7 @@ os.environ.setdefault("IS_BACKTESTING", "True")
 os.chdir(r"E:\strategy-repos\lb_runs") if Path(r"E:\strategy-repos\lb_runs").is_dir() else None
 
 import pandas as pd  # noqa: E402
+import yfinance as yf  # noqa: E402
 from lumibot.backtesting import YahooDataBacktesting  # noqa: E402
 from lumibot.entities import TradingFee  # noqa: E402
 from lumibot.strategies import Strategy  # noqa: E402
@@ -57,7 +58,9 @@ class ConfigStrategy(Strategy):
         if not self._rebalance_today(last_bar):
             return
         self.started = True
-        if p["family"] in ("rotate", "topk"):
+        if self.parameters.get("weights"):  # stateful rules: decided once over the full history
+            targets = self.parameters["weights"][last_bar]
+        elif p["family"] in ("rotate", "topk"):
             # Signal for today's bar: `every` is handled by _rebalance_today.
             today = {**p, "every": 1}
             if "elig" in p:  # the list is in Vibe's "NVDA.US" form, Lumibot's data is keyed "NVDA"
@@ -82,8 +85,10 @@ class ConfigStrategy(Strategy):
                 targets = {c: 0.0 for c in codes}
         value = self.portfolio_value
         for c, weight in sorted(targets.items(), key=lambda kv: kv[1]):  # sells first, so the cash exists
-            price = self.get_last_price(c)
             held = self.get_position(c)
+            if weight == 0 and not held:  # may not be listed yet on this date
+                continue
+            price = self.get_last_price(c)
             have = float(held.quantity) if held else 0.0
             want = int(value * weight * 0.995 / price)
             if abs(want - have) * price > value * 0.1 or (want == 0 and have > 0):
@@ -93,21 +98,53 @@ class ConfigStrategy(Strategy):
                     self.submit_order(self.create_order(c, want - have, "buy"))
 
 
+def curve_path(name):
+    for folder in ("curves", "curves_sector", "curves_ladder"):
+        if (HERE / "results" / folder / f"{name}.csv").exists():
+            return HERE / "results" / folder / f"{name}.csv"
+    return None
+
+
 def signal_dates(name, cfg):
     """The bars on which Vibe-Trading re-picked: every Nth bar of that run's own calendar."""
     every = cfg.get("every")
     if not every or every == 1:
         return None
-    idx = pd.read_csv(HERE / "results" / "curves" / f"{name}.csv", usecols=["timestamp"]).timestamp.str[:10]
+    idx = pd.read_csv(curve_path(name), usecols=["timestamp"]).timestamp.str[:10]
     first = cfg["n"] if cfg["family"] == "topk" else 0
     return set(idx.iloc[first::every])
+
+
+def stateful_plan(job):
+    """Decisions for switch and AMD-first rules: the trade dates and each day's target weights."""
+    codes, cfg = job["codes"], job["cfg"]
+    tickers = sorted(set(codes) | {"SPY", "QQQ", "SMH"})
+    bars = yf.download(tickers, start="2012-01-01", end=sweep.END, auto_adjust=True, progress=False)
+    bars.index = pd.DatetimeIndex(bars.index).tz_localize(None).normalize()
+    data = {}
+    for c in codes:
+        data[c] = pd.DataFrame({"open": bars["Open"][c], "close": bars["Close"][c], "volume": bars["Volume"][c]}).dropna()
+        data[c].attrs["bench"] = bars["Close"]["SPY"]
+    if cfg["family"] == "ladder":
+        sig = rules._ladder(data, codes, cfg, {m: bars["Close"][m].dropna() for m in ("QQQ", "SMH")})
+        state = sig.pop("__state__")
+    elif cfg["family"] == "first":
+        sig = rules._first(data, codes, cfg)
+        state = sig.pop("__state__")
+    else:
+        sig = rules._switch(data, codes, cfg)
+        state = sig[codes[0]] + 2 * sig[codes[1]]
+    weights = pd.DataFrame(sig)
+    keys = weights.index.strftime("%Y-%m-%d")
+    trade_days = set(keys[(state.diff().fillna(0) != 0).values])
+    return trade_days, {k: {c: float(v) for c, v in row.items()} for k, row in zip(keys, weights.to_dict("records"))}
 
 
 def resolve(job):
     """A job may name a sweep config instead of spelling out codes and cfg."""
     if "codes" in job:
         return job
-    for grid_name in ("pairs", "topk", "singles"):
+    for grid_name in ("pairs", "pairs_cash", "topk", "singles", "first", "auto", "switch", "sectors"):
         for codes, cfg in sweep.grid(grid_name):
             if sweep.key(codes, cfg) == job["name"]:
                 return {**job, "codes": codes, "cfg": cfg}
@@ -115,8 +152,8 @@ def resolve(job):
 
 
 def vibe_multiple(name, a, b):
-    path = HERE / "results" / "curves" / f"{name}.csv"
-    if not path.exists():
+    path = curve_path(name)
+    if path is None:
         return None
     eq = pd.read_csv(path, usecols=["timestamp", "equity"])
     eq = eq[(eq.timestamp.str[:10] >= a) & (eq.timestamp.str[:10] <= b)].equity
@@ -127,9 +164,12 @@ def run(job):
     job = resolve(job)
     start = datetime.fromisoformat(job["start"])
     end = datetime.fromisoformat(job["end"])
+    params = {"codes": job["codes"], "cfg": job["cfg"], "signal_dates": signal_dates(job["name"], job["cfg"])}
+    if job["cfg"]["family"] in ("first", "switch", "ladder"):
+        params["signal_dates"], params["weights"] = stateful_plan(job)
     result = ConfigStrategy.backtest(
         YahooDataBacktesting, start, end, budget=100_000,
-        parameters={"codes": job["codes"], "cfg": job["cfg"], "signal_dates": signal_dates(job["name"], job["cfg"])},
+        parameters=params,
         benchmark_asset="QQQ", buy_trading_fees=[SLIPPAGE], sell_trading_fees=[SLIPPAGE],
         show_plot=False, show_tearsheet=False, save_tearsheet=False, show_indicators=False,
         save_logfile=False, quiet_logs=True, show_progress_bar=False,

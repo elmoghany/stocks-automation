@@ -56,6 +56,61 @@ def rotation_configs():
     return out + [{**c, **REGIME} for c in out[:6]]
 
 
+# Partners for AMD from other sectors. "list" = on the project's halal list. "other" = not on it, but
+# held by the SPUS shariah ETF or given a PASS ruling (MRNA, KO): these need a halal decision before use.
+SECTORS = {
+    "energy": {"list": "XOM CVX EOG".split(), "other": "COP SLB DVN HAL".split()},
+    "bio": {"list": "LLY JNJ REGN VRTX ISRG".split(), "other": "ABBV GILD BIIB ABT TMO DHR MRK MRNA".split()},
+    "materials": {"list": "NEM SCCO".split(), "other": "FCX LIN NUE APD ALB".split()},
+    "consumer_ind": {"list": [], "other": "PG PEP KO NKE EMR".split()},
+    "growth": {"list": "NVDA MU PLTR AVGO TSLA META VRT ANET APP SHOP CRWD CVNA LRCX COHR PWR".split(),
+               "other": "CEG VST UBER AXON TSM NFLX COIN HOOD NET DELL RKLB IONQ".split()},
+}
+# Second stocks for the AMD-first rules: growth and high volume, plus four from other sectors.
+FIRST_PARTNERS = SECTORS["growth"]["list"] + SECTORS["growth"]["other"] + "XOM LLY REGN NEM".split()
+
+
+def first_configs():
+    entries = ("trend", "lthm", "minervini", "breakout", "selloff", "dip")
+    exits = ("sma50", "sma100", "trail25", "target50")
+    sizing = ({"mode": "first", "size": 1.0}, {"mode": "first", "size": 0.5},
+              {"mode": "first", "size": 1.0, "steps": 3, "fall": 0.10},
+              {"mode": "first", "size": 1.0, "steps": 4, "fall": 0.08},
+              {"mode": "both", "size": 0.5})
+    return [{"family": "first", "entry": e, "exit": x, "min_hold": 21, "bench_code": "SPY", **s}
+            for e in entries for x in exits for s in sizing]
+
+
+def first_jobs():
+    return [(["AMD", t], {**c, "pool": "sector"}) for t in FIRST_PARTNERS for c in first_configs()]
+
+
+def auto_jobs():
+    """AMD first, the second stock chosen each January from earlier data only (see build_growth_partner.py)."""
+    chosen = json.loads((RESULTS / "growth_partner.json").read_text(encoding="utf-8"))
+    jobs = []
+    for label, by_year in chosen.items():
+        names = sorted(set(by_year.values()) - {"AMD"})
+        for c in first_configs():
+            jobs.append((["AMD"] + names, {**c, "pool": "sector", "uni": label, "partner_by_year": by_year}))
+    return jobs
+
+
+def sector_jobs():
+    configs = rotation_configs()
+    configs = configs + [{**c, "cash": 1} for c in configs]
+    return [(["AMD", t], {**c, "pool": "sector"})
+            for groups in SECTORS.values() for names in groups.values() for t in names for c in configs]
+
+
+def switch_jobs():
+    """Hold a stock or cash for at least 21 or 42 trading days (about 30 or 60 calendar days)."""
+    configs = [{"family": "switch", "n": n, "trend_n": t, "min_hold": h, "sticky": s}
+               for n in (63, 126) for t in (0, 50, 200) for h in (21, 42) for s in (0, 1)]
+    return [(["AMD", t], {**c, "pool": "sector"})
+            for groups in SECTORS.values() for names in groups.values() for t in names for c in configs]
+
+
 def batch2_configs():
     out = [{"family": "gap_drift", "gap": g, "vol_mult": v, "hold": h} for g, v, h in
            ((0.03, 1.5, 20), (0.03, 2, 60), (0.05, 1.5, 40), (0.05, 2, 60), (0.08, 2, 60), (0.08, 2, 120), (0.05, 2, 120))]
@@ -97,6 +152,17 @@ def grid(name):
     if name == "smoke":
         return [(["AMD"], {"family": "bh"}), (["AMD"], {"family": "sma_trend", "n": 50}),
                 (["AMD", "NVDA"], {"family": "rotate", "n": 63, "every": 5})]
+    if name == "first":
+        return first_jobs()
+    if name == "auto":
+        return auto_jobs()
+    if name == "sectors":
+        return sector_jobs()
+    if name == "switch":
+        return switch_jobs()
+    if name == "refs":  # buy-and-hold curves for the reference comparisons
+        partners = [t for groups in SECTORS.values() for names in groups.values() for t in names]
+        return [([t], {"family": "bh", "pool": "sector"}) for t in partners]
     if name == "pairs_cash":
         return [(["AMD", t], {**c, "cash": 1}) for t in TOP50_HALAL for c in rotation_configs()]
     if name == "singles":
@@ -108,8 +174,10 @@ def grid(name):
 
 
 def key(codes, cfg):
+    if cfg.get("family") == "ladder":
+        return f"{cfg['uni']}__ladder__{cfg['tag']}"
     tail = "_".join(f"{k}{v}" for k, v in sorted(cfg.items())
-                    if k not in ("family", "regime_n", "regime_code", "elig", "uni", "bench_code", "interval"))
+                    if k not in ("family", "regime_n", "regime_code", "elig", "uni", "bench_code", "interval", "pool", "partner_by_year"))
     tail = tail.replace("[", "").replace("]", "").replace(", ", "-").replace(".", "p")
     gate = "_qqq" if cfg.get("regime_code") else ""
     gate += "_h1" if cfg.get("interval") else ""
@@ -120,15 +188,17 @@ def key(codes, cfg):
 def run_one(job):
     codes, cfg = job
     name = key(codes, cfg)
-    keep = RESULTS / ("curves_hourly" if cfg.get("interval") else "curves") / f"{name}.csv"
-    if keep.exists():
+    folder = ("curves_hourly" if cfg.get("interval") else "curves_ladder" if cfg.get("family") == "ladder"
+              else "curves_sector" if cfg.get("pool") == "sector" else "curves")
+    keep = RESULTS / folder / f"{name}.csv"
+    if keep.exists() or (RESULTS / "curves" / f"{name}.csv").exists():
         return name, "cached", None
     run_dir = RUNS / name
     (run_dir / "code").mkdir(parents=True, exist_ok=True)
     template = (HERE / "signal_template.py").read_text(encoding="utf-8")
     src = template.replace('PARAMS = {"family": "bh"}', "PARAMS = " + repr(cfg), 1)
     (run_dir / "code" / "signal_engine.py").write_text(src, encoding="utf-8")
-    start = "2015-01-01" if cfg.get("uni") else START
+    start = "2015-01-01" if cfg.get("elig") else START
     all_codes = [f"{c}.US" for c in codes] + ([f"{cfg['regime_code']}.US"] if cfg.get("regime_code") else [])
     cfg_run = dict(cfg)
     if cfg.get("bench_code"):
@@ -136,7 +206,10 @@ def run_one(job):
         cfg_run["bench_code"] = f"{cfg['bench_code']}.US"
     if cfg.get("regime_code"):
         cfg_run["regime_code"] = f"{cfg['regime_code']}.US"
-    if cfg.get("bench_code") or cfg.get("regime_code"):
+    if cfg.get("market"):
+        cfg_run["market"] = [f"{m}.US" for m in cfg["market"]]
+        all_codes += cfg_run["market"]
+    if cfg.get("bench_code") or cfg.get("regime_code") or cfg.get("market"):
         src = template.replace('PARAMS = {"family": "bh"}', "PARAMS = " + repr(cfg_run), 1)
         (run_dir / "code" / "signal_engine.py").write_text(src, encoding="utf-8")
     (run_dir / "config.json").write_text(json.dumps({

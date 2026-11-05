@@ -90,6 +90,20 @@ three-x/results/*
 !three-x/results/ta_v2_*.json
 !three-x/results/current_picks.csv
 !three-x/results/vibe_agent_oos.json
+!three-x/results/growth_partner.json
+!three-x/results/growth_pool.json
+!three-x/results/earnings_dates.json
+!three-x/results/vix_close.json
+!three-x/results/ladder.csv
+!three-x/results/ladder_v2.csv
+!three-x/results/ladder_base_choice.csv
+!three-x/results/ladder_hit_runs.csv
+!three-x/results/ceiling.csv
+!three-x/results/sector_holdout.csv
+!three-x/results/sector_nested.csv
+!three-x/results/sector_walk_forward.csv
+!three-x/results/sector_same_rule.csv
+!three-x/results/sector_hindsight.csv
 # Generated backtest results
 day-trading/plan/*.json
 earnings-trading/plan/*.json

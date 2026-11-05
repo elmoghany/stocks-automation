@@ -2,6 +2,16 @@
 
 ## Three-times campaign
 
+### 2026-11-05: AMD-first ladder v1.0–v1.26 and v2: no 2x or 3x rule passes; details in `three-x/REPORT.md`
+
+Goal was 3x (or 2x) in at least 50% of 12-month periods, with AMD first and a second stock. Tested 8,452 setups and 26 cumulative additions through Vibe-Trading, with Lumibot cross-checks. Halal was dropped for testing only.
+
+- Best rule chosen in advance: 2x in 27% of periods, the same as AMD held, with a lower median (1.43x vs 1.65x).
+- Ladder on 2022+ data: best kept version 26% 2x and 17% 3x, median 1.24x, against AMD held at 22%, 9% and 1.43x. Hits come from 1–2 rallies.
+- Train score kept rising while the unseen score collapsed (v1.23: 43%/16% train, 2%/0% unseen). The stricter v2 ladder did not fix it.
+- Hindsight: 37 setups pass, including AMD+CEG at 67%, but only 4 of 188 AMD+CEG setups do.
+- From v1.10 on, the 2022+ data is not clean. Adding versions is paused until new data or a forward paper run, which needs the user's go-ahead.
+
 ### 2026-11-04: no reliable 3x in 12 months; full report in `three-x/REPORT.md`
 
 Tested 1–2 stock strategies with TradingAgents, Vibe-Trading and Lumibot on $100k, backtest only. With both method and settings chosen on earlier data only, 3x came in 0–8% of 12-month periods, with a median of about 1.3–1.55x. Top-50 buy-and-hold has a 0.8% base rate. Vibe and Lumibot agree closely on the candidates.
