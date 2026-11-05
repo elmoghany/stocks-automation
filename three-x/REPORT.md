@@ -2,6 +2,26 @@
 
 Run 2026-11-04. Backtests only, no orders placed. Long-only, cash, one or two stocks. The original 3x campaign used the halal list. The 2x–3x update below dropped it for testing, at the user's request.
 
+## Update 2026-11-05: 20% every quarter, timed from earnings dates
+
+**No rule made 20% every quarter.** Across 204 rules and 12 quarters, the best reached 20% in 7 quarters, and every rule lost money in at least 2. Even perfect timing reaches 20% in only 11 of 12: the most available after the October 2024 report was +9%. No rule beat AMD held since October 2025, and 56 of 204 beat it over 3 years. Run in Vibe-Trading with $100k and data through 2026-11-05 (`amd_quarters.py`). Today's bar moved between runs, so AMD held is $243,119 here against $245,915 above.
+
+| Rule | Since Oct 2025 | 3 years | Quarters at 20%+ | Losing quarters | Worst fall (3 years) |
+|---|---|---|---|---|---|
+| AMD held | $243,119 | $366,795 | | | −63% |
+| Time only, set in advance: buy day 13, sell 15 days before the next report | $179,828 | $370,505 | 5 | 3 | −41% |
+| Set in advance: same, also buy next day after a 10%+ jump, and sell at +20% | $188,804 | $436,654 | 6 | 2 | −41% |
+| Most quarters at 20%: buy day 10, sell 15 days before | $186,774 | $382,083 | 7 | 4 | −44% |
+| Highest time-only without the extra trade: buy day 10, sell 5 days before | $223,683 | $488,920 | 4 | 4 | −57% |
+
+- **Selling earlier cost money.** Buying on day 10, 3-year value falls from $489k selling 5 days before the next report to $382k at 15 days and $172k at 30 days. Since October 2025 it falls from $224k to $187k to $135k. So dodging the usual pre-report fall did not pay.
+- **Buy day matters less.** Selling 5 days before, days 10–20 made $423–489k against $354–402k for days 1–5, with no smooth trend.
+- **The two weak quarters:** November 2025 went from −2.1% to +4% and stayed below 20%. Its best trade needed a buy on December 17, later than the pattern's low. May 2026 went from +5.1% to +15% with time only, and +25% with the jump rule.
+- **Losing quarters:** the October 2024 and February 2025 quarters lost 15% and 12% in both set-in-advance rules.
+- **The extra 3-day trade before reports:** median $292k with it, $283k without, so little difference.
+- **Fair test:** ranked on the first 8 quarters, the top time-only rule made 1.59x in the last 4, and the top rule overall made 1.75x. AMD held made 1.94x. Each reached 20% in 1 of those 4 quarters.
+- **Lumibot:** eight runs on four rules, within about 0.11x of Vibe-Trading.
+
 ## Update 2026-11-05: AMD's earnings pattern, and what it would have made
 
 Read from the last 12 reports (`amd_pattern.py`). All figures are medians of highs and lows picked afterwards.
@@ -277,7 +297,7 @@ Run from `three-x/`:
 - Sweeps: `sweep.py <singles|pairs|pairs_cash|topk|batch2|overnight|first|auto|switch|sectors>`
 - Ladder: `build_growth_partner.py`, `build_growth_pool.py`, `build_earnings.py`, then `ladder.py 4 v1` or `ladder.py 4 v2`
 - Scoring: `analyze2.py`, `episodes.py`, `meta_wf.py`, `sector_score.py`, `ceiling.py`
-- AMD study: `amd_earnings.py`, `amd_turns.py`, `amd_cycle.py`, `amd_placebo.py`
+- AMD study: `amd_earnings.py`, `amd_turns.py`, `amd_cycle.py`, `amd_placebo.py`, `amd_falls.py`, `amd_fallcycle.py`, `amd_pattern.py`, `amd_pattern_test.py`, `amd_quarters.py`
 - Stress and cross-checks: `validate.py`, `lb_check.py`, `ta_to_vibe.py`
 - TradingAgents: `claude_bridge.py`, `ta_run.py`, `ta_audit.py`
 

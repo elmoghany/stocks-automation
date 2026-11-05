@@ -2,6 +2,10 @@
 
 ## Three-times campaign
 
+### 2026-11-05: AMD 20% every quarter, timed from earnings dates: not reached
+
+Across 204 rules and 12 quarters, the best made 20% in 7, and all lost in at least 2. Perfect timing reaches it in 11 of 12. Time-only rule (buy day 13, sell 15 days before the next report): $179,828 since October 2025, $370,505 over 3 years, against AMD held at $243,119 and $366,795. Selling earlier cost money ($489k, $382k, $172k at 5, 15, 30 days before). Fair test on the last 4 quarters: 1.59–1.75x vs 1.94x held. Details in `three-x/REPORT.md`.
+
 ### 2026-11-05: AMD earnings pattern backtested from October 2025: $160,544 vs $245,915 held
 
 Pattern from 12 reports: falls 12% into the report, bounces 4%, falls 10% after (low about day 13), rises 34% (high about day 48). Buying 10% below the report-day close or on day 13, and selling on day 48, lost to holding, mainly by sitting out April–May 2026 ($255 to $485). Worst fall −17% vs −36%. Details in `three-x/REPORT.md`. The buy-the-fall backtest `amd_fallcycle.py` was stopped at the user's request and has not been run.

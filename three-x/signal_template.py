@@ -161,6 +161,12 @@ def _amdcycle(df, p):
       pattern: from the study of the last 12 reports (amd_pattern.py). After each report, buy at the first close at
         least dip below the report-day close within dip_days; "then" says what happens if that never comes: "buy" on
         day entry, or "skip" that report. With dip 0, simply buy on day entry. Sell on day exit after the report.
+      quarter: one trade per report. Buy the day after a report if it jumped gap_up or more. Otherwise "day13" buys on day
+        13; "dip10" at the first close 10% below the report-day close by day 13, else on day 13; "bounce" at the first
+        close bounce above the lowest close since the report, else on day 20. Sell before_next trading days before the
+        next report, or earlier: at a gain of target ("sell"), or after reaching target, on a fall of trail from the peak.
+        "day" buys on day number day, for rules based only on time from the report. With pre_leg, also hold from pre_leg
+        trading days before each report until the open of the report day, so out before its after-close release.
     """
     close = df["close"]
     c = close.values
@@ -180,6 +186,40 @@ def _amdcycle(df, p):
     pos = np.zeros(n)
     if rule == "hold":
         pos[start:] = 1.0
+    elif rule == "quarter":
+        for j, r in enumerate(reports):
+            last = (reports[j + 1] if j + 1 < len(reports) else r + 63) - p["before_next"]
+            if p.get("pre_leg") and r - p["pre_leg"] >= start:
+                pos[r - p["pre_leg"]:r - 1] = 1.0
+            buy = None
+            if p.get("gap_up") and r + 1 < n and c[r + 1] / c[r] - 1 >= p["gap_up"]:
+                buy = r + 1
+            elif p["buy_on"] == "day":
+                buy = r + p["day"]
+            elif p["buy_on"] == "day13":
+                buy = r + 13
+            elif p["buy_on"] == "dip10":
+                hits = [i for i in range(r + 1, min(r + 14, n)) if c[i] <= c[r] * 0.90]
+                buy = hits[0] if hits else r + 13
+            else:
+                buy, low = r + 20, np.inf
+                for i in range(r + 1, min(r + 21, n)):
+                    low = min(low, c[i])
+                    if low < c[r] and c[i] >= low * (1 + p["bounce"]):
+                        buy = i
+                        break
+            if buy < start or buy >= min(last, n):
+                continue
+            sell, peak = min(last, n), c[buy]
+            for i in range(buy + 1, min(last, n)):
+                peak = max(peak, c[i])
+                if p.get("target") and p.get("exit") == "sell" and c[i] >= c[buy] * (1 + p["target"]):
+                    sell = i
+                    break
+                if p.get("target") and p.get("exit") == "trail" and peak >= c[buy] * (1 + p["target"]) and c[i] <= peak * (1 - p["trail"]):
+                    sell = i
+                    break
+            pos[buy:sell] = 1.0
     elif rule == "pattern":
         for r in reports:
             buy = r + p["entry"] if not p["dip"] or p["then"] == "buy" else None
