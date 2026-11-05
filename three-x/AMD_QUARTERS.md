@@ -147,4 +147,15 @@ Read by eye after the fact, with no backtest and no comparison with fake dates. 
 
 No pattern found: the direction into a report does not tell the next-day move. A single swing's fall is usually 10–25%, but swings can stack, as in $172.80 to $78.21 (−55%).
 
+## What made 2024 different
+
+From `amd_2024_study.py`. Read after the fact, from few trades.
+
+- **It was AMD, not the market.** 2024 returns: AMD −18.1%, QQQ +25.6%, SMH +39.1%, NVDA +171.2%. In 2025 and 2026 AMD led all three.
+- **Lower highs.** $211.38 (Mar 7), $183.96 (Jul 10), $172.80 (Oct 8), $149.82 (Nov 7), $143.99 (Dec 4). The year ended at $120.79, 43% below its high.
+- **Rises stopped at about the same size.** +28.7%, +27.5%, +22.6%, +28.6%, none regaining the prior high, and each followed by a fall of about 15–25%.
+- **Falls ran into reports.** −25.1% into April 30 and −24.7% into July 30. Three of the four 2024 reports were followed by a next-day fall.
+- **Trades peaked early, then gave it back.** Best rule, buys through Feb 2025: best +19.1% ended −16.5%; +9.2% ended −8.4%; +18.6% ended +6.9%; +5.4% ended −13.7%; +3.0% ended −14.3%. The high came 12–36 trading days after buying, against 41–45 in the four biggest winners that followed.
+- **The best sell day flips between periods.** Across buy days, $1 through the Feb 2025 trade became $0.92 selling 15 days before and $0.63 selling 7 days before. From May 2025, it became $3.33 and $5.73. The "sell 7 days before" result comes from the later period.
+
 Generated with `amd_quarter_paths.py`, which writes `results/amd_quarter_paths.csv`. The October 2024 detail uses the same method with a 5% threshold.
