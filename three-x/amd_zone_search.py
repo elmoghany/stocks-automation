@@ -2,8 +2,8 @@
 
 Targets are the buys and sells in amd_quarter_trades.py, known only afterwards. A rule catches a target with a signal within 10 trading days. The
 shape score (F1) rewards catching targets and punishes false trades. A fast replay screens every setting: decided at the close, filled at the next open,
-5 bp per side, which earlier matched Vibe-Trading in every year. Fair test: rank on trades up to May 2025 and score after, then the reverse. The
-winners are re-run in Vibe-Trading, and Lumibot checks them next. Writes results/amd_zone_search.csv.
+5 bp per side, which earlier matched Vibe-Trading in every year. Fair test: rank on days up to May 2025 and score after, then the reverse. Each part's
+money comes from daily value, so a trade across the split counts in each part only for its own days. The winners are re-run in Vibe-Trading, and Lumibot checks them next. Writes results/amd_zone_search.csv.
 
 Usage: venvs/vt/Scripts/python amd_zone_search.py <lumibot job path>
 """
@@ -61,8 +61,31 @@ def shape(signals, targets):
     return (2 * caught * right / (caught + right) if caught + right else 0.0), caught, right, len(signals)
 
 
+def equity(pos):
+    """Daily value of a position decided at each close and filled at the next open, 5 bp per side, so a date split cuts trades fairly."""
+    was = np.r_[0.0, pos[:-1]]
+    before = np.r_[0.0, was[:-1]]
+    daily = np.ones(len(pos))
+    daily[1:] = np.where((was[1:] == 1) & (before[1:] == 1), closes[1:] / closes[:-1], 1.0)
+    daily[1:] = np.where((was[1:] == 1) & (before[1:] == 0), closes[1:] / opens[1:] * 0.9995, daily[1:])
+    daily[1:] = np.where((was[1:] == 0) & (before[1:] == 1), opens[1:] / closes[:-1] * 0.9995, daily[1:])
+    return np.cumprod(daily)
+
+
+def parts(pos):
+    eq = equity(pos)
+    return {"first": eq[split - 1] / eq[start], "last": eq[-1] / eq[split - 1], "all": eq[-1] / eq[start]}
+
+
+def held_parts():
+    pos = np.zeros(len(closes))
+    pos[start:] = 1.0
+    return parts(pos)
+
+
 def evaluate(p):
     pos = rules._zone_loop(*inputs, p, start)
+    money = parts(pos)
     change = np.diff(pos, prepend=0.0)
     buys, sells = np.nonzero(change > 0)[0], np.nonzero(change < 0)[0]
     out = {}
@@ -78,7 +101,7 @@ def evaluate(p):
         bt, st = buy_targets[(buy_targets >= lo) & (buy_targets < hi)], sell_targets[(sell_targets >= lo) & (sell_targets < hi)]
         f_b, c_b, r_b, n_b = shape(bs, bt)
         f_s, c_s, r_s, n_s = shape(ss, st)
-        mult = np.prod([m for b, m in trades if lo <= b < hi]) if trades else 1.0
+        mult = money[name]
         wins = [m > 1 for b, m in trades if lo <= b < hi]
         out.update({f"{name}_score": (f_b + f_s) / 2, f"{name}_buy_caught": c_b, f"{name}_buy_right": r_b, f"{name}_sell_caught": c_s, f"{name}_sell_right": r_s, f"{name}_buys": n_b, f"{name}_mult": mult, f"{name}_win": float(np.mean(wins)) if wins else np.nan})
     return {**p, **out}
@@ -121,7 +144,7 @@ def main():
     t.to_csv(RES / "amd_zone_search.csv", index=False)
     pd.set_option("display.width", 230, "display.max_columns", 40, "display.max_rows", 60)
     fmt = lambda v: f"{v:.2f}"
-    held = {k: closes[hi - 1] / opens[lo + 1] for k, lo, hi in (("first", start, split), ("last", split, len(idx)), ("all", start, len(idx)))}
+    held = held_parts()
     print(f"{len(t)} settings. AMD held: first part {held['first']:.2f}x, last part {held['last']:.2f}x, all {held['all']:.2f}x. Targets: {len(buy_targets)} buys, {len(sell_targets)} sells")
     print(f"beat held on all: {(t.all_mult > held['all']).sum()}; on the first part {(t.first_mult > held['first']).sum()}; on the last part {(t.last_mult > held['last']).sum()}; on both parts {((t.first_mult > held['first']) & (t.last_mult > held['last'])).sum()}")
     params = ["buy_s", "buy_r", "depth", "buy_up", "sell_s", "sell_r", "reach", "sell_dn", "min_days", "stop"]

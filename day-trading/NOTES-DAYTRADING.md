@@ -4,7 +4,11 @@
 
 ### 2026-11-06: AMD indicator signals for the buy and sell table: sells close, buys not
 
-Backtest only, no orders. 17,280 zone rules screened against the 10 buys and 10 sells known afterwards. Sells: caught 60–70%, right 70–86%. Buys: caught 20–40%, right 18–57%, below the user's 75% bar. Best money $578,183 vs about $338,000 held since August 2023, picked in hindsight. No setting beat holding both before and after May 2025; first-part picks made 1.28–2.18x vs 4.11x held in the last part. Next: buy side only. Details in `three-x/REPORT.md`.
+Backtest only, no orders. 17,280 zone rules screened against the 10 buys and 10 sells known afterwards. Sells: caught 60–70%, right 70–86%. Buys: caught 20–40%, right 18–57%, below the user's 75% bar. Best money $578,183 vs about $338,000 held since August 2023, picked in hindsight. Measured from daily value after a split bug was fixed, 974 settings beat holding both before and after May 2025, but first-part picks made 1.57x vs 4.15x held in the last part. Details in `three-x/REPORT.md`.
+
+### 2026-11-06: AMD buy signals: 75% bar reached on few signals
+
+1,142 buy rules with one fixed sell. Zone with QQQ below its 100-day average: right 86% of 7 and 80% of 5, $819,499 vs about $338,000 held, Lumibot 8.91x. Few signals and fragile; picked before May 2025 it made 3.71x vs 4.15x held afterward, and a fresh start in May 2025 made $216,578 vs $415,000 held. Day 13 with AMD above its 200-day average was steadiest: worst −21%, $419,242 from May 2025. The sell rule was chosen on the same data, so nothing here is clean. Needs a forward run.
 
 ### 2026-11-05: AMD strategy from the six patterns (v3.0–v3.5): well below holding
 

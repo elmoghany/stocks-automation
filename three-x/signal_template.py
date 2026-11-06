@@ -210,6 +210,30 @@ def _zone_loop(c, rsi, stoch, off, stretch, p, start):
     return pos
 
 
+def _buydates_loop(c, rsi, stoch, off, stretch, days, p, start):
+    """In or out at each close. Buys on p["buy_dates"] while out; those dates come from close-only signals in amd_buy_search.py. Sells as in _zone_loop."""
+    want = np.isin(days.values, pd.to_datetime(p["buy_dates"]).values)
+    pos = np.zeros(len(c))
+    hold, armed, peak, since = False, False, 0.0, 0
+    for i in range(start, len(c)):
+        x = c[i]
+        if not hold:
+            if want[i]:
+                hold, armed, since = True, False, 0
+        else:
+            since += 1
+            if stoch[i] > p["sell_s"] and rsi[i] > p["sell_r"]:
+                if not armed:
+                    armed, peak = True, x
+                peak = max(peak, x)
+            elif armed:
+                peak = max(peak, x)
+            if armed and x <= peak * (1 - p["sell_dn"]) and since >= p["min_days"]:
+                hold, armed = False, False
+        pos[i] = float(hold)
+    return pos
+
+
 def _amdcycle(df, p):
     """One stock or cash, deciding only at the last close of each week ("W") or month ("M"), from trade_from on.
 
@@ -251,6 +275,7 @@ def _amdcycle(df, p):
         shape_blocks (pattern 5): dated ranges where the quarter so far looked like a bad shape, judged only from earlier
         quarters (amd_shapes_live.py). In a range: sell and do not buy until it ends.
       zones: alternate buys near lows and sells near highs (amd_zone_search.py), see _zone_loop.
+      buydates: buy on listed signal dates, sell as in zones (amd_buy_verify.py), see _buydates_loop.
       ta: buy and sell on technical indicators only, no calendar (amd_ta_rules.py). Names are in _ta_signals. Each position is
         held at least min_days. With above200, buy only while the close is above its 200-day average.
     """
@@ -274,6 +299,8 @@ def _amdcycle(df, p):
         pos[start:] = 1.0
     elif rule == "zones":
         pos = _zone_loop(*_zone_inputs(df), p, start)
+    elif rule == "buydates":
+        pos = _buydates_loop(*_zone_inputs(df), days, p, start)
     elif rule == "ta":
         buys, sells = _ta_signals(df)
         enter = buys[p["buy"]].fillna(False).values
