@@ -160,6 +160,56 @@ def _ta_signals(df):
     return buys, sells
 
 
+def _zone_inputs(df):
+    """Daily readings for the zones rule: RSI14, slow stochastic, fall from the 63-day high, distance from the 50-day average."""
+    c, h, l = df["close"], df["high"], df["low"]
+    stoch = (100 * (c - l.rolling(14).min()) / (h.rolling(14).max() - l.rolling(14).min())).rolling(3).mean()
+    return c.values, _rsi(c, 14).values, stoch.values, (1 - c / c.rolling(63).max()).values, (c / c.rolling(50).mean() - 1).values
+
+
+def _zone_loop(c, rsi, stoch, off, stretch, p, start):
+    """In or out of the stock at each close. Arms in a zone, acts on its confirmation, and alternates buys and sells.
+
+    Buy zone: stochastic below buy_s, RSI below buy_r, and at least depth below the 63-day high. Confirmation: at once (0), a close
+    buy_up above the lowest close since arming, or RSI back above 40 (-1). The zone disarms after 30 bars without a buy.
+    Sell zone: stochastic above sell_s, RSI above sell_r, and at least reach above the 50-day average. Confirmation: at once (0), a close
+    sell_dn below the highest close since arming, or RSI back below 65 (-1). Each position is held at least min_days, and stop,
+    if set, sells at that fall from the purchase price.
+    """
+    n = len(c)
+    pos = np.zeros(n)
+    hold, armed, low, peak, cost, since, armed_at = False, False, 0.0, 0.0, 0.0, 0, 0
+    buy_s, buy_r, depth, buy_up = p["buy_s"], p["buy_r"], p["depth"], p["buy_up"]
+    sell_s, sell_r, reach, sell_dn = p["sell_s"], p["sell_r"], p["reach"], p["sell_dn"]
+    min_days, stop = p["min_days"], p["stop"]
+    for i in range(start, n):
+        x = c[i]
+        if not hold:
+            if stoch[i] < buy_s and rsi[i] < buy_r and off[i] >= depth:
+                if not armed:
+                    armed, low, armed_at = True, x, i
+                low = min(low, x)
+            elif armed:
+                low = min(low, x)
+                if i - armed_at > 30:
+                    armed = False
+            if armed and (buy_up == 0 or (buy_up > 0 and x >= low * (1 + buy_up)) or (buy_up < 0 and rsi[i] > 40 and rsi[i - 1] <= 40)):
+                hold, armed, cost, since, peak = True, False, x, 0, x
+        else:
+            since += 1
+            if stoch[i] > sell_s and rsi[i] > sell_r and stretch[i] >= reach:
+                if not armed:
+                    armed, peak = True, x
+                peak = max(peak, x)
+            elif armed:
+                peak = max(peak, x)
+            leave = armed and (sell_dn == 0 or (sell_dn > 0 and x <= peak * (1 - sell_dn)) or (sell_dn < 0 and rsi[i] < 65 and rsi[i - 1] >= 65))
+            if (leave and since >= min_days) or (stop and x <= cost * (1 - stop)):
+                hold, armed = False, False
+        pos[i] = float(hold)
+    return pos
+
+
 def _amdcycle(df, p):
     """One stock or cash, deciding only at the last close of each week ("W") or month ("M"), from trade_from on.
 
@@ -200,6 +250,7 @@ def _amdcycle(df, p):
         trading days. nextday (pattern 6): after a report, buy if the next day closes up and lows are rising; sell if down.
         shape_blocks (pattern 5): dated ranges where the quarter so far looked like a bad shape, judged only from earlier
         quarters (amd_shapes_live.py). In a range: sell and do not buy until it ends.
+      zones: alternate buys near lows and sells near highs (amd_zone_search.py), see _zone_loop.
       ta: buy and sell on technical indicators only, no calendar (amd_ta_rules.py). Names are in _ta_signals. Each position is
         held at least min_days. With above200, buy only while the close is above its 200-day average.
     """
@@ -221,6 +272,8 @@ def _amdcycle(df, p):
     pos = np.zeros(n)
     if rule == "hold":
         pos[start:] = 1.0
+    elif rule == "zones":
+        pos = _zone_loop(*_zone_inputs(df), p, start)
     elif rule == "ta":
         buys, sells = _ta_signals(df)
         enter = buys[p["buy"]].fillna(False).values

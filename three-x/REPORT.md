@@ -2,6 +2,28 @@
 
 Run 2026-11-04. Backtests only, no orders placed. Long-only, cash, one or two stocks. The original 3x campaign used the halal list. The 2x–3x update below dropped it for testing, at the user's request.
 
+## Update 2026-11-06: indicator signals for the buy and sell table
+
+The table in `AMD_QUARTERS.md` has 10 buys at lows and 10 sells at highs, known only afterwards. `amd_zone_search.py` screened 17,280 buy and sell zone rules against those dates (`results/amd_zone_search.csv`), counting a signal within 10 trading days as a catch. Winners were re-run in Vibe-Trading and Lumibot. AMD held since August 2023 made 3.38x: 0.81x before May 2025, 4.11x after.
+
+```
+Rule                    Value from $100k  Worst   Buys caught  Buys right  Sells caught  Sells right
+Best money              $578,183          -44%    20%          18%         70%           70%
+Closest to the table    $381,051          -38%    40%          57%         60%           86%
+```
+
+- **Best money:** buy on stochastic below 25 and RSI below 40. Sell after stochastic above 90 and RSI above 60, on a close 8% below the peak since then. Hold at least 15 days, no stop. Lumibot 6.34x through November 4; Vibe-Trading through that date would be about $699k, and the gap was not traced.
+- **Closest to the table:** buy on stochastic below 25, RSI below 40, at least 25% below the 63-day high, then a close 5% above the low since. Sell after stochastic above 80 and RSI above 65, on a close 8% below the peak. 25% stop. Lumibot 4.26x.
+- **The 75% bar:** sells can reach it (86%, on 7 signals, on the data used to pick the rule). Buys do not. Oversold readings often come weeks before the low.
+- **Fair test:** picks on the first part made 1.28–2.18x in the last, against 4.11x held. Picks on the last part made 1.00–1.73x in the first, against 0.81x held. 13,870 settings beat holding in the first part, none in the last, none in both. These rules beat holding in falling markets and trail it in strong ones.
+- **Selling on a fall works better than selling on the reading:** median 3.30x for an 8% fall from the peak, 1.80x for selling at once.
+
+Earlier searches for the same bar, same conclusion. `amd_ta_rules.py` (312 rules): none beat the buy day 12, sell 7 days before rule in 2025–26. `amd_ta_brainstorm.py` (722 buy and 702 sell signals, singles and pairs): signals passing in both 2025–26 and 2024 do not clearly beat rotated data. `amd_tv_indicators.py` (TradingView-style ideas from 12 repos, re-coded in Python, 34 buy and 33 sell signals, none looking ahead): buys pass 4 against a rotated median of 6; sells pass 2 against a rotated median of 0, beating 32 of 40 rotations, the only result here that beats its luck check. Those two sells are Volatility Ratio down close with QQQ above its 100-day average (83% of 6, 75% of 8), and Weis Wave down wave below the 200-day average (80% of 5, 80% of 5). Neither has been backtested for money yet.
+
+## Update 2026-11-05: wider buy and sell day grid
+
+All 1,335 combinations from January 30, 2024 (`amd_wide_grid.py`). The best is buy on day 2, sell 7 days before: $459,778, +74% a year, worst −51%, against AMD held at $243,752 ($294,759 through November 4). It lost in the weak period and made its gain in the strong one, and the best sell day flips between them: earlier in the weak period, later in the strong one. Perfect timing would have made +43% a quarter.
+
 ## Update 2026-11-05: buy days 10–20, sell 5–15 days before the next report
 
 All 121 combinations, $100k, time only, in Vibe-Trading through 2026-11-05 (`amd_time_grid.py`, `results/amd_time_grid.csv`). AMD held made $361,160 over 3 years with a worst fall of −63%, and $239,504 since October 2025. Of the 121, 79 beat holding over 3 years and 15 since October 2025. The best is buy on day 12, sell 7 days before: $573,321 over 3 years, worst fall −59%, $263,740 since October 2025, and Lumibot gives 5.58x against 5.73x in Vibe-Trading.

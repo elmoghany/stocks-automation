@@ -2,6 +2,10 @@
 
 ## Three-times campaign
 
+### 2026-11-06: AMD indicator signals for the buy and sell table: sells close, buys not
+
+Backtest only, no orders. 17,280 zone rules screened against the 10 buys and 10 sells known afterwards. Sells: caught 60–70%, right 70–86%. Buys: caught 20–40%, right 18–57%, below the user's 75% bar. Best money $578,183 vs about $338,000 held since August 2023, picked in hindsight. No setting beat holding both before and after May 2025; first-part picks made 1.28–2.18x vs 4.11x held in the last part. Next: buy side only. Details in `three-x/REPORT.md`.
+
 ### 2026-11-05: AMD strategy from the six patterns (v3.0–v3.5): well below holding
 
 Backtest only, no orders. v3.5 made $216,392 over 3 years and $113,748 since October 2025, against AMD held at $361,160 and $239,504. Mostly in cash, and missed large rises. None of 81 nearby settings of v3.4 beat holding. A single usual quarter does not look real (fit −0.02 vs +0.02 for random stretches). Shape comparison as a quarter unfolds was right 45–55% using only earlier quarters and did not help with money. Details in `three-x/REPORT.md`.
