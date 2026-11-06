@@ -139,6 +139,11 @@ three-x/results/*
 !three-x/results/amd_quarter_trades.csv
 !three-x/results/amd_zone_search.csv
 !three-x/results/amd_buy_search.csv
+three-x/paper/rh_snapshot.json
+three-x/paper/notify_queue.txt
+three-x/paper/run_log.txt
+three-x/paper/fetch_out.txt
+three-x/paper/fetch_err.txt
 # Generated backtest results
 day-trading/plan/*.json
 earnings-trading/plan/*.json

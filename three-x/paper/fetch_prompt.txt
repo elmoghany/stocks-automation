@@ -1,0 +1,17 @@
+Read-only price fetch for AMD paper trading. Never call any place_*, review_*, cancel_* or exercise_* tool. Do not run commands, edit other files, or decide anything about trades.
+
+1. Call mcp__robinhood-trading__get_equity_quotes with symbols ["AMD","QQQ"].
+2. Call mcp__robinhood-trading__get_equity_historicals with symbols ["AMD","QQQ"], interval "day", bounds "regular", adjustment_type "split", start_time 10 calendar days ago at 00:00:00Z, and end_time tomorrow at 00:00:00Z.
+3. Call mcp__robinhood-trading__get_equity_historicals with symbols ["AMD"], interval "5minute", bounds "regular", adjustment_type "split", start_time today at 00:00:00Z, and end_time tomorrow at 00:00:00Z. Take open_price of the first bar dated today that has volume above 0 and is not interpolated, or null if there is none. If the tool rejects "5minute", use null.
+4. Call mcp__robinhood-trading__get_earnings_results with symbol "AMD".
+
+Then use the Write tool to write E:\stocks-automation\three-x\paper\rh_snapshot.json, copying values exactly and adding nothing else:
+
+{
+ "daily": {"AMD": [<each AMD bar: begins_at, open_price, high_price, low_price, close_price, volume, and interpolated if present>], "QQQ": [<same for QQQ>]},
+ "quotes": {"AMD": {"close": <the quote's close object: date, price, interpolated>}, "QQQ": {"close": <same>}},
+ "first_5min_open_AMD": <number or null>,
+ "earnings": [<for the 3 latest quarters and any upcoming one: {"date": report.date, "timing": report.timing, "verified": report.verified, "actual": eps.actual}>]
+}
+
+If a tool fails, write what you have and leave the failed part empty. Reply with one line saying what was written.

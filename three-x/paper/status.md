@@ -1,4 +1,4 @@
-Last close 2026-11-05: $404.40. Updated 2026-11-06 03:38 ET, run close. Paper only: simulated fills, no real orders.
+Last close 2026-11-05: $404.40. Updated 2026-11-06 03:40 ET, run open. Paper only: simulated fills, no real orders.
 
 ```
 Book                          Position      Shares        Value   Return

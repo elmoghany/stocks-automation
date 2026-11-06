@@ -2,6 +2,10 @@
 
 Run 2026-11-04. Backtests only, no orders placed. Long-only, cash, one or two stocks. The original 3x campaign used the halal list. The 2x–3x update below dropped it for testing, at the user's request.
 
+## Update 2026-11-06: forward paper test started
+
+Five AMD methods now run as separate $100,000 paper books, from the November 5 close, in `paper/`. Fills are simulated at the next open plus 5 bp with Robinhood prices; no real orders are possible from this setup. Rules are frozen, so results from here on are the first ones not chosen with hindsight. `paper/status.md` shows the current values against AMD bought at the first open.
+
 ## Update 2026-11-06: better buy signals
 
 `amd_buy_search.py` tested 1,142 buy rules with one fixed sell: after stochastic above 90 and RSI above 60, sell on a close 8% below the peak. The rules were a second low, the day after earnings, and the earlier zone, each with or without a market filter. The sell was chosen earlier on the same data, so the buy results are not a clean test. `amd_buy_verify.py` re-ran the best in both backtesters.

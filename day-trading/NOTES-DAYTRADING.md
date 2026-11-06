@@ -2,6 +2,10 @@
 
 ## Three-times campaign
 
+### 2026-11-06: AMD paper books started
+
+Five $100,000 paper books from the November 5 close, on the user's order: day 13 with AMD above its 200-day average, month-end after a report, zone with QQQ below its 100-day average, second low, and buy day 12 sell 7 before. Robinhood supplies prices; it has no paper mode, so fills are simulated at the next open plus 5 bp and the order tools stay denied. `three-x/amd_paper.py verify` matched each rule's trades to its backtest. Task Scheduler runs `three-x/paper/run_paper.ps1` at 09:36 and 16:20 ET, with desktop notifications on each buy or sell. Current state is in `three-x/paper/status.md`.
+
 ### 2026-11-06: AMD indicator signals for the buy and sell table: sells close, buys not
 
 Backtest only, no orders. 17,280 zone rules screened against the 10 buys and 10 sells known afterwards. Sells: caught 60–70%, right 70–86%. Buys: caught 20–40%, right 18–57%, below the user's 75% bar. Best money $578,183 vs about $338,000 held since August 2023, picked in hindsight. Measured from daily value after a split bug was fixed, 974 settings beat holding both before and after May 2025, but first-part picks made 1.57x vs 4.15x held in the last part. Details in `three-x/REPORT.md`.
