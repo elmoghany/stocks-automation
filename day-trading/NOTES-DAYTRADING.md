@@ -2,6 +2,10 @@
 
 ## Three-times campaign
 
+### 2026-11-12: AMD fast run after a report: a rebound rule is right 75%, few trades
+
+The five paper books missed AMD's run from $404 to $585 after the Nov 3 report. `three-x/amd_surge_search.py` tested 3,900 rules, picked on Aug 2023 to Nov 5 2026 and checked on 2013 to Jul 2023, without using anything after Nov 5. Best: buy when AMD closes 8% above its post-report low within 10 sessions of a report, and sell 7 sessions before the next report. It was right in 5 of 5 recent trades (2.70x) and 12 of 16 early (75%), with a luck check of 3% early but 20% recent. Its neighbours are mixed. Chasing a run that is already up (thrust) and staying in by default (trend) fail the 75% bar on 2013–2023. No rule beats holding AMD. This week the rebound rule would have bought at the Nov 9 open, $473; it is not in the paper books. See `three-x/REPORT.md`.
+
 ### 2026-11-06: AMD paper books started
 
 Five $100,000 paper books from the November 5 close, on the user's order: day 13 with AMD above its 200-day average, month-end after a report, zone with QQQ below its 100-day average, second low, and buy day 12 sell 7 before. Robinhood supplies prices; it has no paper mode, so fills are simulated at the next open plus 5 bp and the order tools stay denied. `three-x/amd_paper.py verify` matched each rule's trades to its backtest. Task Scheduler runs `three-x/paper/run_paper.ps1` at 09:36 and 16:20 ET, with desktop notifications on each buy or sell. Current state is in `three-x/paper/status.md`.

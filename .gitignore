@@ -139,6 +139,9 @@ three-x/results/*
 !three-x/results/amd_quarter_trades.csv
 !three-x/results/amd_zone_search.csv
 !three-x/results/amd_buy_search.csv
+!three-x/results/amd_surge_search.csv
+!three-x/results/amd_surge_finalists.csv
+!three-x/results/amd_surge_patterns.log
 three-x/paper/rh_snapshot.json
 three-x/paper/notify_queue.txt
 three-x/paper/run_log.txt

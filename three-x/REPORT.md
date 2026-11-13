@@ -2,6 +2,28 @@
 
 Run 2026-11-04. Backtests only, no orders placed. Long-only, cash, one or two stocks. The original 3x campaign used the halal list. The 2x–3x update below dropped it for testing, at the user's request.
 
+## Update 2026-11-12: rules for a fast run after a report
+
+The paper books sat in cash while AMD went from $404 (Nov 5) to $585 (Nov 12) after its Nov 3 report. `amd_surge_patterns.py` looked at all 56 reports since 2013, and `amd_surge_search.py` tested 3,900 rules. Nothing after the Nov 5 close was used to score or pick; rules were scored on Aug 2023 to Nov 5 2026 and checked on 2013 to Jul 2023. "Right" means the trade made money.
+
+Patterns: within 20 sessions of the post-report low, AMD rose 15% or more after 48% of reports and 40% or more after 2 (2016, 2023), so this week is rare. Once a run was already up 25% in 10 sessions, the next 20 sessions had a median of −2% and were up 39% of the time. Chasing a run is not reliable.
+
+```
+Rule                                                     Aug 2023 - Nov 5 2026                 2013 - Jul 2023             Luck (recent / early)
+Rebound: within 10 sessions after a report, close 8%     5 trades, 100% right, avg +24.5%,     16 trades, 75% right,       20% / 3%
+  above the post-report low; sell 7 before next report   2.70x, in AMD 30% of the time         avg +12.2%, 5.3x
+Breakout: within 20 sessions after a report, close       5 trades, 80% right, avg +13.0%,      18 trades, 78% right,       35% / 1%
+  above 20-day high, AMD above 200-day; trail 20%,       1.77x                                 avg +14.3%, 7.8x
+  max 40 days, sell 7 before next report
+Thrust: +15% in 5 days, hold up to 60 days               7 trades, 71%, 6.39x                  26 trades, 58%, 2.5x        15% / 83%
+In AMD by default (20-day trend), trail 15%              17 trades, 65%, 5.14x                 55 trades, 65%, 6.7x        32% / 32%
+AMD held                                                 3.44x                                 45.2x
+```
+
+Luck is the share of 300 random buy-day sets, with the same count and the same sell, that did as well; under 5% is good. Only the rebound and breakout rules are right 75% of the time in both periods, and both pass the luck check only on the long early period, because the recent one has 5 trades. Neighbouring settings of the rebound rule are mixed (5 or 15 sessions, or 5% or 10% off the low, miss 75% in one period), so its exact numbers are partly fit. Thrust and trend made money recently by being in AMD during its rise, and fail on 2013–2023. No rule beats holding AMD.
+
+On this week, which was not used: the rebound rule signalled at the Nov 6 close ($449, 11% above the $404 low) and would have bought at the Nov 9 open, $473.39, worth $585.30 at the Nov 12 close (+24%). The breakout rule had not signalled, because AMD was still below its October high. These rules are not in the paper books.
+
 ## Update 2026-11-06: forward paper test started
 
 Five AMD methods now run as separate $100,000 paper books, from the November 5 close, in `paper/`. Fills are simulated at the next open plus 5 bp with Robinhood prices; no real orders are possible from this setup. Rules are frozen, so results from here on are the first ones not chosen with hindsight. `paper/status.md` shows the current values against AMD bought at the first open.
