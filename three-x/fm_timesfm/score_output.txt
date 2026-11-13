@@ -1,0 +1,17 @@
+results/fm_timesfm_forecasts.csv
+AMD held: validation 0.90x, test 4.06x. Target on test: 8.12x
+      variant  horizon  val_days  val_dir  val_ic  val_up_share  test_days  test_dir  test_ic  test_up_share  enter  leave  val_mult  test_mult  test_vs_held  test_trades  test_in_market  luck  median_grid_test
+    zero_shot       10       250     0.50   -0.01          0.46        335      0.44     0.01           0.56   0.03  -0.08      1.76       4.45          1.10            0            0.89  0.00              1.14
+    zero_shot        5       250     0.48   -0.02          0.50        340      0.47     0.08           0.59   0.03  -0.08      1.60       4.06          1.00            0            1.00  1.00              1.97
+     ft_peers        5       250     0.50   -0.07          0.50        340      0.52    -0.10           0.59   0.00  -0.02      1.22       2.88          0.71            2            0.98  0.99              1.59
+       ft_amd        5       250     0.47   -0.06          0.50        340      0.48    -0.11           0.59  -0.02  -0.02      1.06       2.81          0.69           10            0.93  0.86              1.34
+     ft_peers       10       250     0.46   -0.17          0.46        335      0.50    -0.04           0.56   0.00  -0.01      1.31       2.09          0.51            8            0.93  1.00              1.81
+     ft_peers       20       250     0.49   -0.09          0.46        325      0.46    -0.25           0.57   0.00   0.00      1.26       1.71          0.42           35            0.74  0.92              1.85
+       ft_amd       10       250     0.46   -0.22          0.46        335      0.41    -0.25           0.56  -0.02  -0.02      1.03       1.51          0.37           12            0.87  1.00              1.56
+    zero_shot       20       250     0.56    0.09          0.46        325      0.37    -0.11           0.57   0.05  -0.08      1.76       1.51          0.37            0            0.54  0.03              1.27
+zero_shot_log       20       250     0.46    0.09          0.46        325      0.39    -0.26           0.57   0.01   0.01      1.10       1.19          0.29           18            0.17  0.56              1.19
+       ft_amd       20       250     0.50   -0.23          0.46        325      0.38    -0.53           0.57   0.00  -0.01      1.18       1.14          0.28           16            0.70  0.99              1.21
+zero_shot_log       10       250     0.52   -0.06          0.46        335      0.45    -0.03           0.56   0.02  -0.01      1.37       0.90          0.22            5            0.10  0.86              1.25
+zero_shot_log        5       250     0.52   -0.03          0.50        340      0.46    -0.04           0.59   0.02  -0.01      1.20       0.83          0.21            5            0.20  0.93              1.12
+
+luck = share of 300 block-shuffled forecast orders doing as well on the test; under 0.05 is good. median_grid_test = test value of the median threshold pair, a check that the picked pair is not a fluke.

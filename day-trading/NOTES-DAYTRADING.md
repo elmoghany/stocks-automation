@@ -2,6 +2,10 @@
 
 ## Three-times campaign
 
+### 2026-11-13: AMD target 2x of holding: three forecasting models add nothing; diagnosis written
+
+User target: a buy/sell loop on AMD alone worth twice holding AMD. Sonnet helpers tested Kronos, Chronos-2 and TimesFM 2.5, as-is and fine-tuned on data to June 2024 (Cornell GPU), scored by `three-x/fm_eval.py` on Jul 2025 to Nov 11 2026 (held 4.06x, target 8.12x). Best real results: Chronos-2 0.85x of held, TimesFM 0.71x, Kronos 0.65x; direction accuracy near a coin flip; fine-tuning on one ticker overfit or did not help. `three-x/AMD_DIAGNOSIS.md`: 2x needs about 5 of 11 falls of 15%+ dodged within 3 sessions each way; the rules tried gave back in missed rises what they saved in falls; the one hindsight 2x rule is what the best of its 1,142 settings would give by chance. See `three-x/REPORT.md`.
+
 ### 2026-11-12: AMD fast run after a report: a rebound rule is right 75%, few trades
 
 The five paper books missed AMD's run from $404 to $585 after the Nov 3 report. `three-x/amd_surge_search.py` tested 3,900 rules, picked on Aug 2023 to Nov 5 2026 and checked on 2013 to Jul 2023, without using anything after Nov 5. Best: buy when AMD closes 8% above its post-report low within 10 sessions of a report, and sell 7 sessions before the next report. It was right in 5 of 5 recent trades (2.70x) and 12 of 16 early (75%), with a luck check of 3% early but 20% recent. Its neighbours are mixed. Chasing a run that is already up (thrust) and staying in by default (trend) fail the 75% bar on 2013–2023. No rule beats holding AMD. This week the rebound rule would have bought at the Nov 9 open, $473; it is not in the paper books. See `three-x/REPORT.md`.

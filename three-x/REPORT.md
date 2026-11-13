@@ -2,6 +2,21 @@
 
 Run 2026-11-04. Backtests only, no orders placed. Long-only, cash, one or two stocks. The original 3x campaign used the halal list. The 2x–3x update below dropped it for testing, at the user's request.
 
+## Update 2026-11-13: three forecasting models and a diagnosis, against a 2x-of-hold target
+
+The user's new target: a buy/sell loop on AMD alone that ends with twice the value of holding AMD. Four helpers ran. `AMD_DIAGNOSIS.md` (scripts in `diag/`) measured what that requires and why earlier rules fell short. Kronos, Chronos-2 and TimesFM 2.5 were each run as-is and fine-tuned (AMD alone, and AMD plus peers) on data to June 2024 only, forecasting 5, 10 and 20 days ahead every day. `fm_eval.py` scored all three the same way: thresholds picked on Jul 2024 to Jun 2025, tested on Jul 2025 to Nov 11 2026, where holding made 4.06x (target 8.12x).
+
+```
+Model         Best real test result          vs held   Direction right   Read
+Kronos        2.63x (fine-tuned AMD, 20d)    0.65x     36-62%            no skill; untouched model predicted falls most days
+Chronos-2     3.46x (fine-tuned AMD, 20d)    0.85x     42-53%            no skill; small positive link (IC +0.13 to +0.17), luck 5-9%
+TimesFM 2.5   2.88x (fine-tuned peers, 5d)   0.71x     37-52%            no skill; fine-tuning overfit in seconds
+```
+
+Rows at 1.00x to 1.10x of held in the score files are the model buying once and never trading, which is holding. No variant came near the target, and fine-tuning on one ticker did not help. All three test periods are after the models' stated training data (Kronos to June 2024 per its paper; the other two list no stock data), though Chronos-2 publishes no cut-off.
+
+Diagnosis, Aug 2023 to Nov 11 2026: holding made $484,000 from $100,000, so the target is $967,000. Perfect timing with 4 round trips made $3.6 million, so the room exists. Reaching 2x needs about 5 of AMD's 11 falls of 15%+ dodged with exits and re-entries within 3 sessions; at 10 sessions late even all 11 give 1.46x. The 13 rules tried avoided falls (+2.19 log points on average) and gave nearly all of it back in cash during rises (−2.02). AMD's best 10 days hold 89% of its log return. The one hindsight rule at 2x (zone + QQQ, 2.32x) matches the best of about 570 random schedules and was the best of 1,142 settings; on 2013–2023 it made 0.08x of held. No simple signal (momentum, trend, volatility, reports, market) was stable across both periods and large enough.
+
 ## Update 2026-11-12: rules for a fast run after a report
 
 The paper books sat in cash while AMD went from $404 (Nov 5) to $585 (Nov 12) after its Nov 3 report. `amd_surge_patterns.py` looked at all 56 reports since 2013, and `amd_surge_search.py` tested 3,900 rules. Nothing after the Nov 5 close was used to score or pick; rules were scored on Aug 2023 to Nov 5 2026 and checked on 2013 to Jul 2023. "Right" means the trade made money.
